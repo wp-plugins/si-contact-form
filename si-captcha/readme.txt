@@ -1,6 +1,6 @@
 === SI CAPTCHA for Wordpress ===
 Contributors: Mike Challis
-Donate link: http://www.carmosaic.com/weather/scripts.php
+Donate link: http://www.proweatherstore.com/weather/scripts.php
 Tags: captcha, comments, spam
 Requires at least: 2.3
 Tested up to: 2.6.2
@@ -14,7 +14,7 @@ Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration fo
 In order to post comments, users will have to type in the phrase shown on the image. 
 This can help prevent spam from automated bots.
 
-[Plugin URI]: (http://www.carmosaic.com/weather/scripts-wordpress-captcha.php)
+[Plugin URI]: (http://www.proweatherstore.com/weather/scripts-wordpress-captcha.php)
 
 Requirements/Restrictions:
 -------------------------
