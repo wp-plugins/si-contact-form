@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.0
+Version: 1.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -35,7 +35,7 @@ if (!class_exists('siCaptcha')) {
 
 function add_tabs() {
     //add_options_page('Captcha Options', 'Captcha', 9, __FILE__,array(&$this,'options_page'));
-    add_submenu_page('plugins.php', __('Captcha Options'), __('Captcha Options'), 'manage_options', __FILE__,array(&$this,'options_page'));
+    add_submenu_page('plugins.php', __('Captcha Options', 'si-captcha'), __('Captcha Options', 'si-captcha'), 'manage_options', __FILE__,array(&$this,'options_page'));
 }
 
 function get_settings($value) {
@@ -58,7 +58,7 @@ function options_page() {
   global $si_captcha_nonce;
   if ($_POST['submit']) {
     if ( function_exists('current_user_can') && !current_user_can('manage_options') )
-                        die(__('You do not have permissions for managing this option'));
+                        die(__('You do not have permissions for managing this option', 'si-captcha'));
 
     $possible_options = array_keys($_POST);
     //if the options are part of an array
@@ -90,15 +90,14 @@ function options_page() {
   }
 ?>
 <?php if ( !empty($_POST ) ) : ?>
-<div id="message" class="updated fade"><p><strong><?php _e('Options saved.') ?></strong></p></div>
+<div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'si-captcha') ?></strong></p></div>
 <?php endif; ?>
 <div class="wrap">
-<h2><?php _e('Captcha Options') ?></h2>
+<h2><?php _e('Captcha Options', 'si-captcha') ?></h2>
 
 <p>
-Your theme must have a &lt;?php do_action('comment_form', $post->ID); ?&gt; tag inside your comments.php form. Most themes do.
-The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea,
-or the captcha image and captcha code entry might display after the submit button.
+<?php _e('Your theme must have a', 'si-captcha') ?> &lt;?php do_action('comment_form', $post->ID); ?&gt; <?php _e('tag inside your comments.php form. Most themes do.', 'si-captcha') ?>
+<?php _e('The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea, or the captcha image and captcha code entry might display after the submit button.', 'si-captcha') ?>
 </p>
 
 <form name="formoptions" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo plugin_basename(__FILE__); ?>&amp;updated=true">
@@ -110,50 +109,52 @@ or the captcha image and captcha code entry might display after the submit butto
 
         <tr>
         <th scope="row">
-    <label for="si_captcha_register"><?php _e('CAPTCHA on Register Form:') ?></label></th>
+    <label for="si_captcha_register"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></label></th>
         <td>
     <input name="si_captcha_register" id="si_captcha_register" type="checkbox"
     <?php if ( $this->get_settings('si_captcha_register') == 'true' ) echo ' checked="checked" '; ?> />
-    <?php _e('Enable CAPTCHA on the register form.') ?><br />
+    <?php _e('Enable CAPTCHA on the register form.', 'si-captcha') ?><br />
     </td>
         </tr>
 
         <tr>
         <th scope="row">
-    <label for="si_captcha_comment"><?php _e('CAPTCHA on Comment Form:') ?></label></th>
+    <label for="si_captcha_comment"><?php _e('CAPTCHA on Comment Form:', 'si-captcha') ?></label></th>
         <td>
     <input name="si_captcha_comment" id="si_captcha_comment" type="checkbox" <?php if ( $this->get_settings('si_captcha_comment') == 'true' ) echo ' checked="checked" '; ?> />
-    <?php _e('Enable CAPTCHA on the comment form.') ?><br />
+    <?php _e('Enable CAPTCHA on the comment form.', 'si-captcha') ?><br />
 
         <input name="si_captcha_perm" id="si_captcha_perm" type="checkbox" <?php if( $this->get_settings('si_captcha_perm') == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_captcha_perm" for="si_captcha_perm">Hide CAPTCHA for <strong>registered</strong> users who can:</label>
+        <label name="si_captcha_perm" for="si_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-captcha') ?>
+        <strong><?php _e('registered', 'si-captcha') ?></strong>
+         <?php _e('users who can:', 'si-captcha') ?></label>
         <?php $this->si_captcha_perm_dropdown('si_captcha_perm_level', $this->get_settings('si_captcha_perm_level'));  ?>
     </td>
         </tr>
 
     <tr>
         <th scope="row">
-    <label for="si_captcha_rearrange"><?php _e('Comment Form Rearrange:') ?></label></th>
+    <label for="si_captcha_rearrange"><?php _e('Comment Form Rearrange:', 'si-captcha') ?></label></th>
         <td>
     <input name="si_captcha_rearrange" id="si_captcha_rearrange" type="checkbox"
     <?php if ( $this->get_settings('si_captcha_rearrange') == 'true' ) echo ' checked="checked" '; ?> />
-    <?php _e('Change the display order of the catpcha input field on the comment form.(see note below)') ?><br />
+    <?php _e('Change the display order of the catpcha input field on the comment form. (see note below).', 'si-captcha') ?><br />
     </td>
         </tr>
 
         </table>
         </fieldset>
-<p><strong>Problem:</strong> Sometimes the captcha image and captcha input field are displayed AFTER the submit button on the comment form.<br />
-<strong>Fix:</strong> Edit your current theme comments.php file and locate this line:<br />
+<p><strong><?php _e('Problem:', 'si-captcha') ?></strong>
+<?php _e('Sometimes the captcha image and captcha input field are displayed AFTER the submit button on the comment form.', 'si-captcha') ?><br />
+<strong><?php _e('Fix:', 'si-captcha') ?></strong>
+<?php _e('Edit your current theme comments.php file and locate this line:', 'si-captcha') ?><br />
 &lt;?php do_action('comment_form', $post->ID); ?&gt;<br />
-This tag is exactly where the captcha image and captcha code entry will display on the form, so
-move the line to BEFORE the comment textarea, uncheck the option box above, and the problem should be fixed.<br/>
-Alernately you can just check the box above and javascript will attempt to rearrange it for you,
-but editing the comments.php, moving the tag, and unchecking this box is the best solution.<br />
-Why is it better to uncheck this and move the tag? because the XHTML will no longer validate on the comment page if it is checked.
+<?php _e('This tag is exactly where the captcha image and captcha code entry will display on the form, so move the line to BEFORE the comment textarea, uncheck the option box above, and the problem should be fixed.', 'si-captcha') ?><br />
+<?php _e('Alernately you can just check the box above and javascript will attempt to rearrange it for you, but editing the comments.php, moving the tag, and unchecking this box is the best solution.', 'si-captcha') ?><br />
+<?php _e('Why is it better to uncheck this and move the tag? because the XHTML will no longer validate on the comment page if it is checked.', 'si-captcha') ?>
 </p>
         <p class="submit">
-                <input type="submit" name="submit" value="<?php _e('Update Options') ?> &raquo;" />
+                <input type="submit" name="submit" value="<?php _e('Update Options', 'si-captcha') ?> &raquo;" />
         </p>
 </form>
 </div>
@@ -186,17 +187,17 @@ function captchaCheckRequires() {
   $ok = 'ok';
   // Test for some required things, print error message if not OK.
   if ( !extension_loaded("gd") ) {
-       echo '<p style="color:maroon">ERROR: si-captcha.php plugin says GD image support not detected in PHP!</p>';
-       echo '<p>Contact your web host and ask them why GD image support is not enabled for PHP.</p>';
+       echo '<p style="color:maroon">'.__('ERROR: si-captcha.php plugin says GD image support not detected in PHP!', 'si-captcha').'</p>';
+       echo '<p>'.__('Contact your web host and ask them why GD image support is not enabled for PHP.', 'si-captcha').'</p>';
       $ok = 'no';
   }
   if ( !function_exists("imagepng") ) {
-       echo '<p style="color:maroon">ERROR: si-captcha.php plugin says imagepng function not detected in PHP!</p>';
-       echo '<p>Contact your web host and ask them why imagepng function is not enabled for PHP.</p>';
+       echo '<p style="color:maroon">'.__('ERROR: si-captcha.php plugin says imagepng function not detected in PHP!', 'si-captcha').'</p>';
+       echo '<p>'.__('Contact your web host and ask them why imagepng function is not enabled for PHP.', 'si-captcha').'</p>';
       $ok = 'no';
   }
   if ( !file_exists("$captcha_path/securimage.php") ) {
-       echo '<p style="color:maroon">ERROR: si-captcha.php plugin says captcha_library not found</p>';
+       echo '<p style="color:maroon">'.__('ERROR: si-captcha.php plugin says captcha_library not found.', 'si-captcha').'</p>';
        $ok = 'no';
   }
   if ($ok == 'no')  return false;
@@ -230,18 +231,18 @@ echo '
 <div style="width: 250px;  height: 55px">
          <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
-         alt="CAPTCHA Image" title="CAPTCHA Image" />
-           <a href="'.$captcha_url.'/securimage_play.php" title="Audible Version of CAPTCHA">
-         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="Audio Version"
+         alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
+           <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
+         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
           style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
            <a href="#" title="Refresh Image" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
-         <img src="'.$captcha_url.'/images/refresh.gif" alt="Reload Image"
+         <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <div id="captchaInputDiv" style="display:block;" >
 <input id="captcha_code" name="captcha_code" type="text" style="width:65px;" tabindex="4" />
- <label for="captcha_code"><small>CAPTCHA Code (required)</small></label>
+ <label for="captcha_code"><small>'.__('CAPTCHA Code (required)', 'si-captcha').'</small></label>
 </div>
 </div>
 ';
@@ -257,10 +258,12 @@ if ($captcha_rearrange == 'true') {
                   oParent.appendChild(sSubstitue, sUrlInput);
       </script>
             <noscript>
-          <style type='text/css'>#submit {display:none;}</style><br/>
-           <input name="submit" type="submit" id="submit-alt" tabindex="6" value="Submit Comment"/>
-          </noscript>
+          <style type='text/css'>#submit {display:none;}</style><br />
 EOT;
+  echo '           <input name="submit" type="submit" id="submit-alt" tabindex="6" value="'.__('Submit Comment', 'si-captcha').'" />
+          </noscript>
+  ';
+
 }
 }else{
  echo '</div>';
@@ -284,18 +287,18 @@ echo '
 <div style="width: 250px;  height: 55px">
          <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
-         alt="CAPTCHA Image" title="CAPTCHA Image" />
-           <a href="'.$captcha_url.'/securimage_play.php" title="Audible Version of CAPTCHA">
-         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="Audio Version"
+         alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
+           <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
+         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
           style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
-           <a href="#" title="Refresh Image" style="border-style: none"
+           <a href="#" title="'.__('Refresh Image', 'si-captcha').'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
-         <img src="'.$captcha_url.'/images/refresh.gif" alt="Reload Image"
+         <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <p>
 <input id="captcha_code" name="captcha_code" type="text" style="width:65px;" tabindex="30" />
- <label for="captcha_code">CAPTCHA Code (required)</label>
+ <label for="captcha_code">'.__('CAPTCHA Code (required)', 'si-captcha').'</label>
 </p>
 ';
 }
@@ -308,7 +311,7 @@ function checkCaptchaRegisterPostNew($errors) {
    global $captcha_path;
 
    if (empty($_POST['captcha_code']) || $_POST['captcha_code'] == '') {
-                $errors->add('captcha_blank', '<strong>ERROR</strong>: Please complete the CAPTCHA.');
+                $errors->add('captcha_blank', '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Please complete the CAPTCHA.'));
                 return $errors;
    } else {
         $captcha_code = trim(strip_tags($_POST['captcha_code']));
@@ -322,7 +325,7 @@ function checkCaptchaRegisterPostNew($errors) {
        // ok can continue
 
    } else {
-    $errors->add('captcha_wrong', '<strong>ERROR</strong>: That CAPTCHA was incorrect.');
+    $errors->add('captcha_wrong', '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('That CAPTCHA was incorrect.'));
    }
    return($errors);
 }
@@ -332,7 +335,7 @@ function checkCaptchaRegisterPost() {
    global $errors, $captcha_path;
 
    if (empty($_POST['captcha_code']) || $_POST['captcha_code'] == '') {
-                $errors['captcha_blank'] = '<strong>ERROR</strong>: Please complete the CAPTCHA.';
+                $errors['captcha_blank'] = '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Please complete the CAPTCHA.');
                 return $errors;
    } else {
        $captcha_code = trim(strip_tags($_POST['captcha_code']));
@@ -345,7 +348,7 @@ function checkCaptchaRegisterPost() {
           // ok can continue
 
       } else {
-            $errors['captcha_wrong'] = '<strong>ERROR</strong>: That CAPTCHA was incorrect.';
+            $errors['captcha_wrong'] = '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('That CAPTCHA was incorrect.');
       }
    }
 
@@ -372,7 +375,7 @@ function checkCaptchaCommentPost($comment) {
     }
 
     if (empty($_POST['captcha_code']) || $_POST['captcha_code'] == '') {
-        wp_die( __('Error: You did not enter a Captcha phrase. Press your browsers back button and try again.'));
+        wp_die( __('Error: You did not enter a Captcha phrase. Press your browsers back button and try again.', 'si-captcha'));
     }
     $captcha_code = trim(strip_tags($_POST['captcha_code']));
 
@@ -384,7 +387,7 @@ function checkCaptchaCommentPost($comment) {
        // ok can continue
        return($comment);
    } else {
-       wp_die( __('Error: You entered in the wrong Captcha phrase. Press your browsers back button and try again.'));
+       wp_die( __('Error: You entered in the wrong Captcha phrase. Press your browsers back button and try again.', 'si-captcha'));
    }
 
 }
@@ -395,6 +398,12 @@ function unset_si_captcha_options () {
   delete_option('si_captcha_comment');
   delete_option('si_captcha_register');
   delete_option('si_captcha_rearrange');
+}
+
+function init() {
+                if (function_exists('load_plugin_textdomain')) {
+                        load_plugin_textdomain('si-captcha', 'wp-content/plugins/si-captcha');
+                }
 }
 
 } // end of class
@@ -419,6 +428,8 @@ if (isset($si_image_captcha)) {
 
 
   //Actions
+  add_action('init', array(&$si_image_captcha, 'init'));
+
   add_action('admin_menu', array(&$si_image_captcha,'add_tabs'),1);
 
 

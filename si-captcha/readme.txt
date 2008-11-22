@@ -11,7 +11,7 @@ Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration fo
 == Description ==
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
-In order to post comments, users will have to type in the phrase shown on the image. 
+In order to post comments, users will have to type in the phrase shown on the image.
 This can help prevent spam from automated bots.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-captcha.php)
@@ -21,7 +21,7 @@ Requirements/Restrictions:
 
 - Works with Wordpress 2.x.
 - PHP 4.0.6 or above with GD2 library support.
-- Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do. 
+- Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
   The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
 
 Captcha Image Support:
@@ -69,14 +69,14 @@ Here is a list of the options:
 
 2. CAPTCHA on Comment Form:  - Enable CAPTCHA on the comment form.
 
-3. CAPTCHA on Comment Form:  - Hide CAPTCHA for registered users (select permission level)  
+3. CAPTCHA on Comment Form:  - Hide CAPTCHA for registered users (select permission level)
 
 4. Comment Form Rearrange: - Changes the display order of the catpcha input field on the comment form
 
 
 == Usage ==
 
-Once activated, a captcha image and captcha code entry is added to the comment and register forms. 
+Once activated, a captcha image and captcha code entry is added to the comment and register forms.
 
 
 == Frequently Asked Questions ==
@@ -86,7 +86,7 @@ Once activated, a captcha image and captcha code entry is added to the comment a
 Edit your current theme comments.php file and locate this line:
 `<?php do_action('comment_form', $post->ID); ?>`
 This tag is exactly where the captcha image and captcha code entry will display on the form, so
-move the line to before the comment textarea, uncheck the 'Comment Form Rearrange' box on the 'Captcha options' page, 
+move the line to before the comment textarea, uncheck the 'Comment Form Rearrange' box on the 'Captcha options' page,
 and the problem should be fixed.
 
 = Alternate Fix for the captcha image display order =
@@ -101,3 +101,7 @@ Because the XHTML will no longer validate if it is checked.
 rel 1.0 (21 Aug 2008)
 -------
 - Initial Release
+
+rel 1.1 (21 Nov 2008)
+-------
+- Added I18n language translation feature
