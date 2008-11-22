@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: SI CAPTCHA
-Plugin URI: http://www.proweatherstore.com/weather/scripts-wordpress-captcha.php
+Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
 Version: 1.0
 Author: Mike Challis
-Author URI: http://www.proweatherstore.com/weather/scripts.php
+Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-/*  Copyright (C) 2008 Mike Challis  (http://www.proweatherstore.com/weather/contact_us.php)
+/*  Copyright (C) 2008 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
