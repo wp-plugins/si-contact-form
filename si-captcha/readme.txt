@@ -40,6 +40,7 @@ Features:
  * Allows Trackbacks and Pingbacks
  * Setting to hide the CAPTCHA from logged in users and or admins
  * Setting to show the CAPTCHA on the comment form, registration form, or both
+ * I18n language translation support
 
 
 == Installation ==
