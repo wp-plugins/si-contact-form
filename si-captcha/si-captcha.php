@@ -401,9 +401,9 @@ function unset_si_captcha_options () {
 }
 
 function init() {
-                if (function_exists('load_plugin_textdomain')) {
-                        load_plugin_textdomain('si-captcha', 'wp-content/plugins/si-captcha');
-                }
+   if (function_exists('load_plugin_textdomain')) {
+      load_plugin_textdomain('si-captcha', 'wp-content/plugins/si-captcha');
+   }
 }
 
 } // end of class
