@@ -46,7 +46,7 @@ Features:
 
 == Installation ==
 
-1. Upload the `si-captcha` folder to the `/wp-content/plugins/` directory
+1. Upload the `si-captcha-for-wordpress` folder to the `/wp-content/plugins/` directory
 
 2. Activate the plugin through the `Plugins` menu in WordPress
 
@@ -117,14 +117,21 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
-rel 1.0 (21 Aug 2008)
+rel 1.2 (23 Nov 2008)
 -------
-- Initial Release
+- Fixed install path from si-captcha to si-captcha-for-wordpress so automatic update works correctly
+
+rel 1.1.1 (22 Nov 2008)
+-------
+- Added Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 rel 1.1 (21 Nov 2008)
 -------
 - Added I18n language translation feature
 
-rel 1.1.1 (22 Nov 2008)
+rel 1.0 (21 Aug 2008)
 -------
-- Added Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+- Initial Release
+
+
+
