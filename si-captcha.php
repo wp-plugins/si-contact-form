@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.2
+Version: 1.2.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -402,12 +402,24 @@ function unset_si_captcha_options () {
 
 function init() {
    if (function_exists('load_plugin_textdomain')) {
-      load_plugin_textdomain('si-captcha', 'wp-content/plugins/si-captcha-for-wordpress');
+      #load_plugin_textdomain('si-captcha', 'wp-content/plugins/si-captcha-for-wordpress');
+      load_plugin_textdomain('si-captcha', false, dirname(plugin_basename(__FILE__)) );
    }
 }
 
 } // end of class
 } // end of if class
+
+// Pre-2.6 compatibility
+if ( ! defined( 'WP_CONTENT_URL' ) )
+      define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' );
+if ( ! defined( 'WP_CONTENT_DIR' ) )
+      define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
+if ( ! defined( 'WP_PLUGIN_URL' ) )
+      define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
+if ( ! defined( 'WP_PLUGIN_DIR' ) )
+      define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
+
 
 if (class_exists("siCaptcha")) {
  $si_image_captcha = new siCaptcha();
@@ -415,8 +427,8 @@ if (class_exists("siCaptcha")) {
 
 if (isset($si_image_captcha)) {
 
-  $captcha_url = get_option('siteurl') . '/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage';
-  $captcha_path = dirname(__FILE__) . '/captcha-secureimage';
+  $captcha_url = WP_PLUGIN_URL . '/si-captcha-for-wordpress/captcha-secureimage';
+  $captcha_path = WP_PLUGIN_DIR . '/si-captcha-for-wordpress/captcha-secureimage';
 
   if ( !function_exists("wp_nonce_field") ) {
         function si_captcha_nonce_field($action = -1) { return; }

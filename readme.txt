@@ -117,6 +117,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
+rel 1.2.1 (23 Nov 2008)
+-------
+- Fixed compatibility with custom WP_PLUGIN_DIR installations
+
 rel 1.2 (23 Nov 2008)
 -------
 - Fixed install path from si-captcha to si-captcha-for-wordpress so automatic update works correctly
