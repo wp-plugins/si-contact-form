@@ -50,7 +50,7 @@ Features:
 
 2. Activate the plugin through the `Plugins` menu in WordPress
 
-3. If you ever have to upgrade, simply repeat the installation steps with the new version.
+3. If you ever have to upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version. Or you can click on "Upgrade Automatically" if prompted from the admin menu.
 
 
 == Screenshots ==
