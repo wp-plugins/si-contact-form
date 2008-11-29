@@ -102,7 +102,7 @@ Because the XHTML will no longer validate if it is checked.
 = Is this plugin available in other languages? =
 
 Yes. To use a translated version, you need to obtain or make the language file for it. 
-At this point it would be useful to read [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") from the Codex. You will need an .mo file for SI CAPTCHA that corresponds with the "WPLANG" setting in your wp-config.php file. Translations are listed below -- if a translation for your language is available, all you need to do is place it in the `/wp-content/plugins/si-captcha` directory of your WordPress installation. If one is not available, and you also speak good English, please consider doing a translation yourself (see the next question).
+At this point it would be useful to read [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") from the Codex. You will need an .mo file for SI CAPTCHA that corresponds with the "WPLANG" setting in your wp-config.php file. Translations are listed below -- if a translation for your language is available, all you need to do is place it in the `/wp-content/plugins/si-captcha-for-wordpress` directory of your WordPress installation. If one is not available, and you also speak good English, please consider doing a translation yourself (see the next question).
 
 The following translations are included in the download zip file:
 
@@ -110,7 +110,7 @@ The following translations are included in the download zip file:
 
 = Can I provide a translation? =
 
-Of course! It will be very gratefully received. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-captcha-for-wordpress/trunk/si-captcha/si-captcha.pot ".pot file") and translate it. 
+Of course! It will be very gratefully received. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-captcha-for-wordpress/trunk/si-captcha.pot ".pot file") and translate it. 
 * There are some strings with a space in front or end -- please make sure you remember the space!
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com. 
 * If you have any questions, feel free to email me also. Thanks!
