@@ -85,8 +85,8 @@ Once activated, a captcha image and captcha code entry is added to the comment a
 
 = Sometimes the captcha image and captcha input field are displayed AFTER the submit button on the comment form. =
 
-Edit your current theme comments.php file and locate this line:
- `<?php do_action('comment_form', $post->ID); ?>`
+Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
+  The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
 This tag is exactly where the captcha image and captcha code entry will display on the form, so
 move the line to before the comment textarea, uncheck the 'Comment Form Rearrange' box on the 'Captcha options' page,
 and the problem should be fixed.
