@@ -107,6 +107,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 The following translations are included in the download zip file:
 
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* French (fr_FR) - Translated by Pierre
 
 = Can I provide a translation? =
 
