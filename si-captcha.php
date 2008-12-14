@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.2.1
+Version: 1.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -164,11 +164,11 @@ function options_page() {
 function si_captcha_perm_dropdown($select_name, $checked_value='') {
         // choices: Display text => permission_level
         $choices = array (
-                 'All registered users' => 'read',
-                 'Edit posts' => 'edit_posts',
-                 'Publish Posts' => 'publish_posts',
-                 'Moderate Comments' => 'moderate_comments',
-                 'Administer site' => 'level_10'
+                 __('All registered users', 'si-captcha') => 'read',
+                 __('Edit posts', 'si-captcha') => 'edit_posts',
+                 __('Publish Posts', 'si-captcha') => 'publish_posts',
+                 __('Moderate Comments', 'si-captcha') => 'moderate_comments',
+                 __('Administer site', 'si-captcha') => 'level_10'
                  );
         // print the <select> and loop through <options>
         echo '<select name="' . $select_name . '" id="' . $select_name . '">' . "\n";

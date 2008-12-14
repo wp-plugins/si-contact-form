@@ -117,6 +117,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
+rel 1.3 (14 Dec 2008)
+-------
+- Added language translation to the permissions drop down select on the options admin page, thanks Pierre
+- Added French language (fr_FR) - Translated by Pierre
+
 rel 1.2.1 (23 Nov 2008)
 -------
 - Fixed compatibility with custom `WP_PLUGIN_DIR` installations
