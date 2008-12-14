@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SI CAPTCHA in italiano\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-captcha-for-wordpress\n"
-"POT-Creation-Date: 2008-11-22 04:20+0000\n"
-"PO-Revision-Date: 2008-11-22 10:37+0100\n"
+"POT-Creation-Date: 2008-12-14 17:48+0000\n"
+"PO-Revision-Date: 2008-12-14 20:20+0100\n"
 "Last-Translator: Gianni Diurno (aka gidibao) <gidibao@gmail.com>\n"
 "Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -115,6 +115,26 @@ msgstr "Perché é meglio togliere il segno di spunta e spostare il tag? Perché
 #: si-captcha.php:157
 msgid "Update Options"
 msgstr "Aggiorna le opzioni"
+
+#: si-captcha.php:167
+msgid "All registered users"
+msgstr "Tutti gli utenti registrati"
+
+#: si-captcha.php:168
+msgid "Edit posts"
+msgstr "Modifica gli articoli"
+
+#: si-captcha.php:169
+msgid "Publish Posts"
+msgstr "Pubblica gli articoli"
+
+#: si-captcha.php:170
+msgid "Moderate Comments"
+msgstr "Modera i commenti"
+
+#: si-captcha.php:171
+msgid "Administer site"
+msgstr "Amministra sito"
 
 #: si-captcha.php:190
 msgid "ERROR: si-captcha.php plugin says GD image support not detected in PHP!"
