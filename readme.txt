@@ -107,7 +107,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 The following translations are included in the download zip file:
 
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
-* French (fr_FR) - Translated by Pierre
+* French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 
 = Can I provide a translation? =
 
@@ -121,7 +121,7 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 rel 1.3 (14 Dec 2008)
 -------
 - Added language translation to the permissions drop down select on the options admin page, thanks Pierre
-- Added French language (fr_FR) - Translated by Pierre
+- Added French language (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 
 rel 1.2.1 (23 Nov 2008)
 -------
