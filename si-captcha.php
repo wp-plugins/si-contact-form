@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.3
+Version: 1.3.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -35,7 +35,7 @@ if (!class_exists('siCaptcha')) {
 
 function add_tabs() {
     //add_options_page('Captcha Options', 'Captcha', 9, __FILE__,array(&$this,'options_page'));
-    add_submenu_page('plugins.php', __('Captcha Options', 'si-captcha'), __('Captcha Options', 'si-captcha'), 'manage_options', __FILE__,array(&$this,'options_page'));
+    add_submenu_page('plugins.php', __('SI Captcha Options', 'si-captcha'), __('SI Captcha Options', 'si-captcha'), 'manage_options', __FILE__,array(&$this,'options_page'));
 }
 
 function get_settings($value) {
@@ -93,10 +93,10 @@ function options_page() {
 <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'si-captcha') ?></strong></p></div>
 <?php endif; ?>
 <div class="wrap">
-<h2><?php _e('Captcha Options', 'si-captcha') ?></h2>
+<h2><?php _e('SI Captcha Options', 'si-captcha') ?></h2>
 
 <p>
-<?php _e('Your theme must have a', 'si-captcha') ?> &lt;?php do_action('comment_form', $post->ID); ?&gt; <?php _e('tag inside your comments.php form. Most themes do.', 'si-captcha') ?>
+<?php _e('Your theme must have a', 'si-captcha') ?> &lt;?php do_action('comment_form', $post->ID); ?&gt; <?php _e('tag inside your comments.php form. Most themes do.', 'si-captcha'); echo ' '; ?>
 <?php _e('The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea, or the captcha image and captcha code entry might display after the submit button.', 'si-captcha') ?>
 </p>
 
@@ -105,11 +105,11 @@ function options_page() {
         <input type="hidden" name="form_type" value="upload_options" />
     <?php si_captcha_nonce_field($si_captcha_nonce) ?>
         <fieldset class="options">
+
         <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
         <tr>
-        <th scope="row">
-    <label for="si_captcha_register"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></label></th>
+            <th scope="row"><label for="si_captcha_register"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></label></th>
         <td>
     <input name="si_captcha_register" id="si_captcha_register" type="checkbox"
     <?php if ( $this->get_settings('si_captcha_register') == 'true' ) echo ' checked="checked" '; ?> />
@@ -118,8 +118,7 @@ function options_page() {
         </tr>
 
         <tr>
-        <th scope="row">
-    <label for="si_captcha_comment"><?php _e('CAPTCHA on Comment Form:', 'si-captcha') ?></label></th>
+            <th scope="row"><label for="si_captcha_comment"><?php _e('CAPTCHA on Comment Form:', 'si-captcha') ?></label></th>
         <td>
     <input name="si_captcha_comment" id="si_captcha_comment" type="checkbox" <?php if ( $this->get_settings('si_captcha_comment') == 'true' ) echo ' checked="checked" '; ?> />
     <?php _e('Enable CAPTCHA on the comment form.', 'si-captcha') ?><br />
@@ -133,8 +132,7 @@ function options_page() {
         </tr>
 
     <tr>
-        <th scope="row">
-    <label for="si_captcha_rearrange"><?php _e('Comment Form Rearrange:', 'si-captcha') ?></label></th>
+        <th scope="row"><label for="si_captcha_rearrange"><?php _e('Comment Form Rearrange:', 'si-captcha') ?></label></th>
         <td>
     <input name="si_captcha_rearrange" id="si_captcha_rearrange" type="checkbox"
     <?php if ( $this->get_settings('si_captcha_rearrange') == 'true' ) echo ' checked="checked" '; ?> />
@@ -144,6 +142,7 @@ function options_page() {
 
         </table>
         </fieldset>
+
 <p><strong><?php _e('Problem:', 'si-captcha') ?></strong>
 <?php _e('Sometimes the captcha image and captcha input field are displayed AFTER the submit button on the comment form.', 'si-captcha') ?><br />
 <strong><?php _e('Fix:', 'si-captcha') ?></strong>
@@ -186,12 +185,12 @@ function captchaCheckRequires() {
 
   $ok = 'ok';
   // Test for some required things, print error message if not OK.
-  if ( !extension_loaded("gd") ) {
+  if ( !extension_loaded('gd') || !function_exists('gd_info') ) {
        echo '<p style="color:maroon">'.__('ERROR: si-captcha.php plugin says GD image support not detected in PHP!', 'si-captcha').'</p>';
        echo '<p>'.__('Contact your web host and ask them why GD image support is not enabled for PHP.', 'si-captcha').'</p>';
       $ok = 'no';
   }
-  if ( !function_exists("imagepng") ) {
+  if ( !function_exists('imagepng') ) {
        echo '<p style="color:maroon">'.__('ERROR: si-captcha.php plugin says imagepng function not detected in PHP!', 'si-captcha').'</p>';
        echo '<p>'.__('Contact your web host and ask them why imagepng function is not enabled for PHP.', 'si-captcha').'</p>';
       $ok = 'no';
@@ -228,7 +227,7 @@ echo '
 if ($this->captchaCheckRequires()) {
 
 echo '
-<div style="width: 250px;  height: 55px">
+<div style="width: 250px; height: 55px; padding-top: 10px;">
          <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
          alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
@@ -241,7 +240,7 @@ echo '
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <div id="captchaInputDiv" style="display:block;" >
-<input id="captcha_code" name="captcha_code" type="text" style="width:65px;" tabindex="4" />
+<input type="text" name="captcha_code" id="captcha_code" tabindex="4" style="width:65px;" />
  <label for="captcha_code"><small>'.__('CAPTCHA Code (required)', 'si-captcha').'</small></label>
 </div>
 </div>
@@ -297,9 +296,10 @@ echo '
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <p>
-<input id="captcha_code" name="captcha_code" type="text" style="width:65px;" tabindex="30" />
+<input type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" style="width:65px;" />
  <label for="captcha_code">'.__('CAPTCHA Code (required)', 'si-captcha').'</label>
 </p>
+<br />
 ';
 }
 

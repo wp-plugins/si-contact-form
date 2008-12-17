@@ -118,6 +118,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
+rel 1.3.1 (17 Dec 2008)
+-------
+- Changed screenshots to WP 2.7
+- Better detection of GD and a few misc. adjustments
+
 rel 1.3 (14 Dec 2008)
 -------
 - Added language translation to the permissions drop down select on the options admin page, thanks Pierre
