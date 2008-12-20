@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.3.1
+Version: 1.3.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -85,7 +85,6 @@ function options_page() {
          update_option( 'si_captcha_rearrange', 'true' );
         else
          update_option( 'si_captcha_rearrange', 'false' );
-
 
   }
 ?>
@@ -240,7 +239,7 @@ echo '
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <div id="captchaInputDiv" style="display:block;" >
-<input type="text" name="captcha_code" id="captcha_code" tabindex="4" style="width:65px;" />
+<input type="text" name="captcha_code" id="captcha_code" tabindex="4" aria-required=\'true\' style="width:65px;" />
  <label for="captcha_code"><small>'.__('CAPTCHA Code (required)', 'si-captcha').'</small></label>
 </div>
 </div>
@@ -296,7 +295,7 @@ echo '
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <p>
-<input type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" style="width:65px;" />
+<input type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" aria-required=\'true\' style="width:65px;" />
  <label for="captcha_code">'.__('CAPTCHA Code (required)', 'si-captcha').'</label>
 </p>
 <br />
