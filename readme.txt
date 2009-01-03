@@ -118,6 +118,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
+rel 1.3.3 (02 Jan 2009)
+-------
+-  Fixed a missing "Refresh Image" language variable
+
 rel 1.3.2 (19 Dec 2008)
 -------
 -  Added WAI ARIA property aria-required to captcha input form for more accessibility

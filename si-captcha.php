@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.3.2
+Version: 1.3.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -233,7 +233,7 @@ echo '
            <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
          <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
           style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
-           <a href="#" title="Refresh Image" style="border-style: none"
+           <a href="#" title="'.__('Refresh Image', 'si-captcha').'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
