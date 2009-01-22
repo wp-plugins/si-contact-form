@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.4
+Version: 1.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -357,6 +357,14 @@ function checkCaptchaRegisterPost() {
 // this function checks the captcha posted with the comment
 function checkCaptchaCommentPost($comment) {
     global $user_ID, $captcha_path;
+
+    // added for compatibility with WP Wall plugin
+    // this does NOT add CAPTCHA to WP Wall plugin,
+    // it just prevents the "Error: You did not enter a Captcha phrase." when submitting a WP Wall comment
+    if ( function_exists('WPWall_Widget') && isset($_POST['wpwall_comment']) ) {
+        // skip capthca
+        return $comment;
+    }
 
     // skip the captcha if user is loggged in and the settings allow
     if (isset($user_ID) && intval($user_ID) > 0 && $this->get_settings('si_captcha_perm') == 'true') {

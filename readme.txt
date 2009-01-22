@@ -108,6 +108,7 @@ The following translations are included in the download zip file:
 
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
+* Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 * Turkish (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
 
 = Can I provide a translation? =
@@ -118,6 +119,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Version History ==
+
+rel 1.5 (22 Jan 2009)
+-------
+- Added fix for compatibility with WP Wall plugin. This does NOT add CAPTCHA to WP Wall plugin, it just prevents the "Error: You did not enter a Captcha phrase." when submitting a WP Wall comment.
+- Added Norwegian language (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 
 rel 1.4 (04 Jan 2009)
 -------
