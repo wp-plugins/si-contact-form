@@ -104,10 +104,6 @@ Because the XHTML will no longer validate if it is checked.
 Yes. To use a translated version, you need to obtain or make the language file for it. 
 At this point it would be useful to read [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") from the Codex. You will need an .mo file for SI CAPTCHA that corresponds with the "WPLANG" setting in your wp-config.php file. Translations are listed below -- if a translation for your language is available, all you need to do is place it in the `/wp-content/plugins/si-captcha-for-wordpress` directory of your WordPress installation. If one is not available, and you also speak good English, please consider doing a translation yourself (see the next question).
 
-= Are the CAPTCHA audio files available in other languages? =
-
-Portuguese_brazil (pt_BR) audio files are available. Wait until after you install the plugin. Download the audio files:
-[Portuguese_brazil (pt_BR) audio files download](http://www.642weather/scripts/captcha-secureimage-pt_BR.zip) and follow instructions in the Readme.txt inside the zip file.
 
 The following translations are included in the download zip file:
 
@@ -116,6 +112,12 @@ The following translations are included in the download zip file:
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 * Portuguese_brazil (pt_BR) - Translated by [Newton Dan Faoro]
 * Turkish (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
+
+
+= Are the CAPTCHA audio files available in other languages? =
+
+Portuguese_brazil (pt_BR) audio files are available. Wait until after you install the plugin. Download the audio files:
+[Portuguese_brazil (pt_BR) audio files download](http://www.642weather/scripts/captcha-secureimage-pt_BR.zip) and follow instructions in the Readme.txt inside the zip file.
 
 = Can I provide a translation? =
 
