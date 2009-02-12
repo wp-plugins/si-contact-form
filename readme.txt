@@ -117,7 +117,7 @@ The following translations are included in the download zip file:
 = Are the CAPTCHA audio files available in other languages? =
 
 Portuguese brazil (pt_BR) audio files are available. Wait until after you install the plugin. Download the audio files:
-[Portuguese brazil (pt_BR) audio files download](http://www.642weather/scripts/captcha-secureimage-pt_BR.zip) and follow instructions in the Readme.txt inside the zip file.
+[Portuguese brazil (pt_BR) audio files download](http://www.642weather/weather/scripts/captcha-secureimage-pt_BR.zip) and follow instructions in the Readme.txt inside the zip file.
 
 = Can I provide a translation? =
 
