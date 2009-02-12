@@ -110,14 +110,14 @@ The following translations are included in the download zip file:
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
-* Portuguese_brazil (pt_BR) - Translated by [Newton Dan Faoro]
+* Portuguese brazil (pt_BR) - Translated by [Newton Dan Faoro]
 * Turkish (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
 
 
 = Are the CAPTCHA audio files available in other languages? =
 
-Portuguese_brazil (pt_BR) audio files are available. Wait until after you install the plugin. Download the audio files:
-[Portuguese_brazil (pt_BR) audio files download](http://www.642weather/scripts/captcha-secureimage-pt_BR.zip) and follow instructions in the Readme.txt inside the zip file.
+Portuguese brazil (pt_BR) audio files are available. Wait until after you install the plugin. Download the audio files:
+[Portuguese brazil (pt_BR) audio files download](http://www.642weather/scripts/captcha-secureimage-pt_BR.zip) and follow instructions in the Readme.txt inside the zip file.
 
 = Can I provide a translation? =
 
