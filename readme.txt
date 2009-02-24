@@ -107,6 +107,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
@@ -127,6 +128,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Version History ==
+
+rel 1.5.2 (24 Feb 2009)
+-------
+- Added Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 
 rel 1.5.1 (11 Feb 2009)
 -------
