@@ -50,7 +50,7 @@ Features:
 
 2. Activate the plugin through the `Plugins` menu in WordPress
 
-3. If you ever have to upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version. Or you can click on "Upgrade Automatically" if prompted from the admin menu.
+3. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version. 
 
 
 = Troubleshooting if the CAPTCHA form fields and image is not being shown: =
