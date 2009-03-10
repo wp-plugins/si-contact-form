@@ -53,6 +53,26 @@ Features:
 3. If you ever have to upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version. Or you can click on "Upgrade Automatically" if prompted from the admin menu.
 
 
+= Troubleshooting if the CAPTCHA form fields and image is not being shown: =
+
+Do this as a test:
+Activate the SI CAPTCHA plugin and temporarily change your theme to the "Wordpress Default" theme.
+Does the captcha image show now?
+If it does then the theme you are using is the cause.
+
+
+= Troubleshooting if the CAPTCHA image itself is not being shown: =
+
+This can happen if a server has too low a default permission level on new folders.
+Check and make sure the permission on all the captcha-secureimage folders are set to permission: 755
+
+all these folders need to be 755:
+- captcha-secureimage
+ - audio
+ - gdfonts
+ - images
+
+
 == Screenshots ==
 
 1. screenshot-1.jpg is the captcha on the comment form.
