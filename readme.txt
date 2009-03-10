@@ -67,10 +67,11 @@ This can happen if a server has too low a default permission level on new folder
 Check and make sure the permission on all the captcha-secureimage folders are set to permission: 755
 
 all these folders need to be 755:
-- captcha-secureimage
- - audio
- - gdfonts
- - images
+- si-captcha-for-wordpress
+  - captcha-secureimage
+     - audio
+     - gdfonts
+     - images
 
 
 == Screenshots ==
