@@ -60,6 +60,12 @@ Activate the SI CAPTCHA plugin and temporarily change your theme to the "Wordpre
 Does the captcha image show now?
 If it does then the theme you are using is the cause.
 
+Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
+  The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
+This tag is exactly where the captcha image and captcha code entry will display on the form, so
+move the line to before the comment textarea, uncheck the 'Comment Form Rearrange' box on the 'Captcha options' page,
+and the problem should be fixed.
+
 
 = Troubleshooting if the CAPTCHA image itself is not being shown: =
 
