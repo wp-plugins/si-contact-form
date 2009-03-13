@@ -60,7 +60,7 @@ msgstr "Skjul CAPTCHA for"
 
 #: si-captcha.php:127
 msgid "registered"
-msgstr "registreret"
+msgstr "registrerede"
 
 #: si-captcha.php:128
 msgid "users who can:"
@@ -136,11 +136,11 @@ msgstr "Kontakt dem der hoster dit website og spørg dem, hvorfor \"GD image\" i
 
 #: si-captcha.php:193
 msgid "ERROR: si-captcha.php plugin says imagepng function not detected in PHP!"
-msgstr "FEJL: si-captcha.php plugin'et siger at der imagepng funktionen ikke blev fundet i PHP!"
+msgstr "FEJL: si-captcha.php plugin'et siger at imagepng-funktionen ikke blev fundet i PHP!"
 
 #: si-captcha.php:194
 msgid "Contact your web host and ask them why imagepng function is not enabled for PHP."
-msgstr "Kontakt dem der hoster dit website og spørg dem, hvorfor imagepng funktionen ikke er slået til i PHP. "
+msgstr "Kontakt dem der hoster dit website og spørg dem, hvorfor imagepng-funktionen ikke er slået til i PHP. "
 
 #: si-captcha.php:198
 msgid "ERROR: si-captcha.php plugin says captcha_library not found."
