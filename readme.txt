@@ -157,6 +157,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
+rel 1.5.4 (19 Mar 2009)
+-------
+- Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
+
 rel 1.5.3 (12 Mar 2009)
 -------
 - Added German Language (de_DE) - Translated by [Sebastian Kreideweiﬂ](http://www.cps-it.de/)
