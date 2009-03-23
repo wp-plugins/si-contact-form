@@ -100,7 +100,10 @@ Here is a list of the options:
 
 3. CAPTCHA on Comment Form:  - Hide CAPTCHA for registered users (select permission level)
 
-4. Comment Form Rearrange: - Changes the display order of the catpcha input field on the comment form
+4. CAPTCHA on Comment Form:  - CSS class name for CAPTCHA input field on the comment form: 
+(Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)
+
+5. Comment Form Rearrange: - Changes the display order of the catpcha input field on the comment form
 
 
 == Usage ==
@@ -156,6 +159,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Version History ==
+
+rel 1.6 (23 Mar 2009)
+-------
+- Added new option on configuration page: You can set a CSS class name for CAPTCHA input field on the comment form: 
+(Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)
 
 rel 1.5.4 (19 Mar 2009)
 -------
