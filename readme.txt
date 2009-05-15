@@ -139,13 +139,15 @@ The following translations are included in the download zip file:
 
 * Belorussian (by_BY) - Translated by [Marcis Gasuns](http://www.comfi.com/)
 * Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
+* French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
-* French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
+
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 * Portuguese Brazil (pt_BR) - Translated by [Newton Dan Faoro]
 * Russian (ru_RU) - Translated by [Fat Cow](http://www.fatcow.com/)
 * Spanish (en_ES) - Translated by [LoPsT](http://www.lopst.com/)
+* Swedish (sv_SE) - Translated by [Benct]
 * Turkish (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
 
 
@@ -162,6 +164,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Version History ==
+
+rel 1.6.4 (15 May 2009)
+-------
+- Added Swedish Language (sv_SE) - Translated by [Benct]
 
 rel 1.6.3 (10 May 2009)
 -------
