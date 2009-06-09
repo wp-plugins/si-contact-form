@@ -1,0 +1,230 @@
+# SI CAPTCHA
+# This file is put in the public domain.
+#
+# Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
+# Description: A CAPTCHA to protect comment posts and or registrations in WordPress
+# Version: 1.1
+# Author: Mike Challis
+# Author URI: http://www.642weather.com/weather/scripts.php
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: si-captcha 1.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/si-captcha-for-wordpress\n"
+"POT-Creation-Date: 2008-12-14 17:48+0000\n"
+"PO-Revision-Date: 2009-06-08 13:20+0800\n"
+"Last-Translator: CJH <cjh@cjh.cc>\n"
+"Language-Team: Pierre\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: TAIWAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;sprintf\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./captcha-secureimage\n"
+
+#: si-captcha.php:38
+#: si-captcha.php:99
+msgid "SI Captcha Options"
+msgstr "SI Captcha 設定"
+
+#: si-captcha.php:62
+msgid "You do not have permissions for managing this option"
+msgstr "你沒有調整設定的權限"
+
+#: si-captcha.php:96
+msgid "Options saved."
+msgstr "設定已儲存"
+
+#: si-captcha.php:102
+msgid "Your theme must have a"
+msgstr "你的佈景主題必須有"
+
+#: si-captcha.php:102
+msgid "tag inside your comments.php form. Most themes do."
+msgstr "程式碼在comments.php裡面，大部分的佈景主題都有。"
+
+#: si-captcha.php:103
+msgid "The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea, or the captcha image and captcha code entry might display after the submit button."
+msgstr "最好將此程式碼放在「輸入回應的文字框」的前一行，如果此程式碼位置錯誤(放在「輸入回應的文字框」之後，或「送出回應」的按鈕之後)，你可能需要自行手動調整"
+
+#: si-captcha.php:115
+msgid "CAPTCHA on Register Form:"
+msgstr "註冊帳號頁面使用CAPTCHA："
+
+#: si-captcha.php:119
+msgid "Enable CAPTCHA on the register form."
+msgstr "在註冊帳號頁面啟用CAPTCHA"
+
+#: si-captcha.php:124
+msgid "CAPTCHA on Comment Form:"
+msgstr "文章回應頁面使用CAPTCHA："
+
+#: si-captcha.php:127
+msgid "Enable CAPTCHA on the comment form."
+msgstr "在文章回應頁面啟用CAPTCHA"
+
+#: si-captcha.php:130
+msgid "Hide CAPTCHA for"
+msgstr "隱藏CAPTCHA針對："
+
+#: si-captcha.php:131
+msgid "registered"
+msgstr "已註冊的"
+
+#: si-captcha.php:132
+msgid "users who can:"
+msgstr "使用者"
+
+#: si-captcha.php:135
+msgid "CSS class name for CAPTCHA input field on the comment form"
+msgstr "CAPTCHA 輸入文字框的CSS class名稱"
+
+#: si-captcha.php:136
+msgid "(Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)"
+msgstr "(只有在你的佈景主題有針對回應文字框設定CSS class時才填入，預設為空白)"
+
+#: si-captcha.php:141
+msgid "Comment Form Rearrange:"
+msgstr "自動排列："
+
+#: si-captcha.php:145
+msgid "Change the display order of the catpcha input field on the comment form. (see note below)."
+msgstr "自動調整留言驗證碼的顯示位置(請看下述說明)"
+
+#: si-captcha.php:152
+msgid "Problem:"
+msgstr "已知問題："
+
+#: si-captcha.php:153
+msgid "Sometimes the captcha image and captcha input field are displayed AFTER the submit button on the comment form."
+msgstr "有時留言驗證碼的輸入框，會跑到「送出回應」的按鈕之後"
+
+#: si-captcha.php:154
+msgid "Fix:"
+msgstr "如何修正："
+
+#: si-captcha.php:155
+msgid "Edit your current theme comments.php file and locate this line:"
+msgstr "編輯目前使用的佈景主題內的 comments.php 檔案，並搜尋下面這行程式碼："
+
+#: si-captcha.php:157
+msgid "This tag is exactly where the captcha image and captcha code entry will display on the form, so move the line to BEFORE the comment textarea, uncheck the option box above, and the problem should be fixed."
+msgstr "這行程式碼就是留言驗證碼會顯示的位置，只要將其移動到「輸入回應的文字框」之前，並取消勾選上面「自動排列」的選項，此問題即可修正"
+
+#: si-captcha.php:158
+msgid "Alernately you can just check the box above and javascript will attempt to rearrange it for you, but editing the comments.php, moving the tag, and unchecking this box is the best solution."
+msgstr "或者你也可以只選取上面「自動排列」的選項，javascript程式會嘗試調整位置，但直接以手動調整comments.php裡面的程式碼順序，才是最佳的解決方式"
+
+#: si-captcha.php:159
+msgid "Why is it better to uncheck this and move the tag? because the XHTML will no longer validate on the comment page if it is checked."
+msgstr "為何手動調整程式碼較好呢？因為若「自動排列」選項啟動，則XHTML will no longer validate on the comment page"
+
+#: si-captcha.php:162
+msgid "Update Options"
+msgstr "儲存設定"
+
+#: si-captcha.php:172
+msgid "All registered users"
+msgstr "所有已註冊使用者"
+
+#: si-captcha.php:173
+msgid "Edit posts"
+msgstr "擁有編輯文章權限者"
+
+#: si-captcha.php:174
+msgid "Publish Posts"
+msgstr "擁有發布文章權限者"
+
+#: si-captcha.php:175
+msgid "Moderate Comments"
+msgstr "擁有管理回應權限者"
+
+#: si-captcha.php:176
+msgid "Administer site"
+msgstr "擁有部落格管理介面權限者"
+
+#: si-captcha.php:195
+msgid "ERROR: si-captcha.php plugin says GD image support not detected in PHP!"
+msgstr "錯誤：沒有偵測到PHP的 GD image模組支援"
+
+#: si-captcha.php:196
+msgid "Contact your web host and ask them why GD image support is not enabled for PHP."
+msgstr "聯絡你的web供應商，詢問有關PHP的 GD image模組支援問題"
+
+#: si-captcha.php:200
+msgid "ERROR: si-captcha.php plugin says imagepng function not detected in PHP!"
+msgstr "錯誤：沒有偵測到PHP的imagepng函式"
+
+#: si-captcha.php:201
+msgid "Contact your web host and ask them why imagepng function is not enabled for PHP."
+msgstr "聯絡你的web供應商，詢問有關PHP的imagepng函式支援問題"
+
+#: si-captcha.php:205
+msgid "ERROR: si-captcha.php plugin says captcha_library not found."
+msgstr "錯誤：沒有找到 captcha_library"
+
+#: si-captcha.php:240
+#: si-captcha.php:302
+msgid "CAPTCHA Image"
+msgstr "辨識碼圖片"
+
+#: si-captcha.php:241
+#: si-captcha.php:303
+msgid "Audible Version of CAPTCHA"
+msgstr "辨識碼語音"
+
+#: si-captcha.php:242
+#: si-captcha.php:304
+msgid "Audio Version"
+msgstr "語音"
+
+#: si-captcha.php:244
+#: si-captcha.php:306
+msgid "Refresh Image"
+msgstr "重新載入圖片"
+
+#: si-captcha.php:246
+#: si-captcha.php:308
+msgid "Reload Image"
+msgstr "重新載入圖片"
+
+#: si-captcha.php:257
+#: si-captcha.php:313
+msgid "CAPTCHA Code (required)"
+msgstr "留言驗證碼(必須填寫)"
+
+#: si-captcha.php:275
+msgid "Submit Comment"
+msgstr "送出回應"
+
+#: si-captcha.php:327
+#: si-captcha.php:341
+#: si-captcha.php:351
+#: si-captcha.php:364
+msgid "ERROR"
+msgstr "錯誤"
+
+#: si-captcha.php:327
+#: si-captcha.php:351
+msgid "Please complete the CAPTCHA."
+msgstr "請輸入完整的驗證碼"
+
+#: si-captcha.php:341
+#: si-captcha.php:364
+msgid "That CAPTCHA was incorrect."
+msgstr "驗證碼不正確"
+
+#: si-captcha.php:399
+msgid "Error: You did not enter a Captcha phrase. Press your browsers back button and try again."
+msgstr "錯誤：沒有輸入任何留言驗證碼，請回到上一頁重新輸入"
+
+#: si-captcha.php:411
+msgid "Error: You entered in the wrong Captcha phrase. Press your browsers back button and try again."
+msgstr "錯誤：輸入的留言驗證碼不正確，請請回到上一頁重新輸入"
+

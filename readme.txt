@@ -142,12 +142,12 @@ The following translations are included in the download zip file:
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
-
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 * Portuguese Brazil (pt_BR) - Translated by [Newton Dan Faoro]
 * Russian (ru_RU) - Translated by [Fat Cow](http://www.fatcow.com/)
 * Spanish (en_ES) - Translated by [LoPsT](http://www.lopst.com/)
 * Swedish (sv_SE) - Translated by [Benct]
+* Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
 
 
@@ -164,6 +164,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Version History ==
+
+rel 1.6.5 (09 Jun 2009)
+-------
+- Added Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
 
 rel 1.6.4 (15 May 2009)
 -------

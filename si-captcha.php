@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.6.4
+Version: 1.6.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -26,12 +26,8 @@ Author URI: http://www.642weather.com/weather/scripts.php
 */
 
 if (!class_exists('siCaptcha')) {
-  session_cache_limiter ('private, must-revalidate');
-  if( !isset( $_SESSION ) ) {
-    session_start();
-  }
- class siCaptcha {
 
+ class siCaptcha {
 
 function add_tabs() {
     //add_options_page('Captcha Options', 'Captcha', 9, __FILE__,array(&$this,'options_page'));
@@ -423,6 +419,12 @@ function unset_si_captcha_options () {
 }
 
 function init() {
+
+  session_cache_limiter ('private, must-revalidate');
+  if( !isset( $_SESSION ) ) {
+    session_start();
+  }
+
    if (function_exists('load_plugin_textdomain')) {
       #load_plugin_textdomain('si-captcha', 'wp-content/plugins/si-captcha-for-wordpress');
       load_plugin_textdomain('si-captcha', false, dirname(plugin_basename(__FILE__)) );
