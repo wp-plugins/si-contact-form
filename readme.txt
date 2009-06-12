@@ -165,6 +165,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Version History ==
 
+rel 1.6.7 (12 Jun 2009)
+-------
+- WP 2.8 Compatible
+
 rel 1.6.6 (10 Jun 2009)
 -------
 - updated Russian Language (ru_RU) - Translated by [Neponyatka](http://www.free-lance.ru/users/neponyatka)

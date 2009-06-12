@@ -2,8 +2,8 @@
 /*
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
-Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-Version: 1.6.6
+Description: A CAPTCHA to protect comment posts and or registrations in WordPress. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">SI Captcha Options</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
+Version: 1.6.7
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
