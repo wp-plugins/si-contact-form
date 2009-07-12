@@ -3,7 +3,7 @@ Contributors: Mike Challis
 Donate link: http://www.642weather.com/weather/scripts.php
 Tags: captcha, comments, spam
 Requires at least: 2.3
-Tested up to: 2.8
+Tested up to: 2.8.1
 Stable tag: trunk
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
