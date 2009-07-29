@@ -164,111 +164,87 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com. 
 * If you have any questions, feel free to email me also. Thanks!
 
-== Version History ==
+== Changelog ==
 
-rel 1.6.8 (29 Jul 2009)
--------
-- Added Polish Language (pl_PL) - Translated by [Tomasz](http://www.ziolczynski.pl/)
+= 1.6.8 =
+- (29 Jul 2009) Added Polish Language (pl_PL) - Translated by [Tomasz](http://www.ziolczynski.pl/)
 
-rel 1.6.7 (12 Jun 2009)
--------
-- WP 2.8 Compatible
+= 1.6.7 = 
+- (12 Jun 2009) WP 2.8 Compatible
 
-rel 1.6.6 (10 Jun 2009)
--------
-- updated Russian Language (ru_RU) - Translated by [Neponyatka](http://www.free-lance.ru/users/neponyatka)
+= 1.6.6 = 
+- (10 Jun 2009) Updated Russian Language (ru_RU) - Translated by [Neponyatka](http://www.free-lance.ru/users/neponyatka)
 
-rel 1.6.5 (09 Jun 2009)
--------
-- Added Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
+= 1.6.5 = 
+- (09 Jun 2009) Added Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
 
-rel 1.6.4 (15 May 2009)
--------
-- Added Swedish Language (sv_SE) - Translated by [Benct]
+= 1.6.4 = 
+- (15 May 2009) Added Swedish Language (sv_SE) - Translated by [Benct]
 
-rel 1.6.3 (10 May 2009)
--------
-- Added Russian Language (ru_RU) - Translated by [Fat Cow](http://www.fatcow.com/)
+= 1.6.3 =
+- (10 May 2009) Added Russian Language (ru_RU) - Translated by [Fat Cow](http://www.fatcow.com/)
 
-rel 1.6.2 (05 May 2009)
--------
-- Added Spanish Language (en_ES) - Translated by [LoPsT](http://www.lopst.com/)
+= 1.6.2 =
+- (05 May 2009) Added Spanish Language (en_ES) - Translated by [LoPsT](http://www.lopst.com/)
 
-rel 1.6.1 (06 Apr 2009)
--------
-- Added Belorussian Language (by_BY) - Translated by [Marcis Gasuns](http://www.comfi.com/)
+= 1.6.1 =
+- (06 Apr 2009) Added Belorussian Language (by_BY) - Translated by [Marcis Gasuns](http://www.comfi.com/)
 - Fixed audio CAPTCHA link URL, it did not work properly on Safari 3.2.1 (Mac OS X 10.5.6).
 - Note: the proper way the audio CAPTCHA is supposed to work is like this: a dialog pops up, You have chosen to open:
 secureimage.wav What should (Firefox, Safari, IE, etc.) do with this file? Open with: (Choose) OR Save File. Be sure to select open, then it will play in WMP, Quicktime, Itunes, etc.
 
-rel 1.6 (23 Mar 2009)
--------
-- Added new option on configuration page: You can set a CSS class name for CAPTCHA input field on the comment form: 
+= 1.6 =
+- (23 Mar 2009) Added new option on configuration page: You can set a CSS class name for CAPTCHA input field on the comment form: 
 (Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)
 
-rel 1.5.4 (19 Mar 2009)
--------
+= 1.5.4 =
+- (19 Mar 2009)Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
+
+= 1.5.3 =
+- (12 Mar 2009) Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
 - Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 
-rel 1.5.3 (12 Mar 2009)
--------
-- Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
-- Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
+= 1.5.2 =
+- (24 Feb 2009) Added Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 
-rel 1.5.2 (24 Feb 2009)
--------
-- Added Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
+= 1.5.1 =
+- (11 Feb 2009) Added Portuguese_brazil Language (pt_BR) - Translated by [Newton Dan Faoro]
 
-rel 1.5.1 (11 Feb 2009)
--------
-- Added Portuguese_brazil Language (pt_BR) - Translated by [Newton Dan Faoro]
-
-rel 1.5 (22 Jan 2009)
--------
-- Added fix for compatibility with WP Wall plugin. This does NOT add CAPTCHA to WP Wall plugin, it just prevents the "Error: You did not enter a Captcha phrase." when submitting a WP Wall comment.
+= 1.5 =
+- (22 Jan 2009) Added fix for compatibility with WP Wall plugin. This does NOT add CAPTCHA to WP Wall plugin, it just prevents the "Error: You did not enter a Captcha phrase." when submitting a WP Wall comment.
 - Added Norwegian language (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 
-rel 1.4 (04 Jan 2009)
--------
-- Added Turkish language (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
+= 1.4 = 
+- (04 Jan 2009) Added Turkish language (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
 
-rel 1.3.3 (02 Jan 2009)
--------
--  Fixed a missing "Refresh Image" language variable
+= 1.3.3 =
+-  (02 Jan 2009) Fixed a missing "Refresh Image" language variable
 
-rel 1.3.2 (19 Dec 2008)
--------
--  Added WAI ARIA property aria-required to captcha input form for more accessibility
+= 1.3.2 =
+-  (19 Dec 2008) Added WAI ARIA property aria-required to captcha input form for more accessibility
 
-rel 1.3.1 (17 Dec 2008)
--------
-- Changed screenshots to WP 2.7
+= 1.3.1 =
+- (17 Dec 2008) Changed screenshots to WP 2.7
 - Better detection of GD and a few misc. adjustments
 
-rel 1.3 (14 Dec 2008)
--------
-- Added language translation to the permissions drop down select on the options admin page, thanks Pierre
+= 1.3 =
+- (14 Dec 2008) Added language translation to the permissions drop down select on the options admin page, thanks Pierre
 - Added French language (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 
-rel 1.2.1 (23 Nov 2008)
--------
-- Fixed compatibility with custom `WP_PLUGIN_DIR` installations
+= 1.2.1 =
+- (23 Nov 2008) Fixed compatibility with custom `WP_PLUGIN_DIR` installations
 
-rel 1.2 (23 Nov 2008)
--------
-- Fixed install path from `si-captcha` to `si-captcha-for-wordpress` so automatic update works correctly
+= 1.2 =
+- (23 Nov 2008) Fixed install path from `si-captcha` to `si-captcha-for-wordpress` so automatic update works correctly.
 
-rel 1.1.1 (22 Nov 2008)
--------
-- Added Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+= 1.1.1 =
+- (22 Nov 2008) Added Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
-rel 1.1 (21 Nov 2008)
--------
-- Added I18n language translation feature
+= 1.1 =
+- (21 Nov 2008) Added I18n language translation feature
 
-rel 1.0 (21 Aug 2008)
--------
-- Initial Release
+= 1.0 =
+- (21 Aug 2008) Initial Release
 
 
 
