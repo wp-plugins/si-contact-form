@@ -1,6 +1,7 @@
 === SI CAPTCHA for Wordpress ===
 Contributors: Mike Challis
-Donate link: http://www.642weather.com/weather/scripts.php
+Author URI: http://www.642weather.com/weather/scripts.php
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
 Tags: captcha, comments, spam
 Requires at least: 2.3
 Tested up to: 2.8.2
