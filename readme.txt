@@ -142,6 +142,7 @@ The following translations are included in the download zip file:
 * Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
+* Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
 * Polish (pl_PL) - Translated by [Tomasz](http://www.ziolczynski.pl/)
@@ -166,6 +167,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.6.9 =
+- (03 Aug 2009) Added Greek Language (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 
 = 1.6.8 =
 - (29 Jul 2009) Added Polish Language (pl_PL) - Translated by [Tomasz](http://www.ziolczynski.pl/)
