@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Fast and Secure Contact Form Options</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.00
+Version: 1.0.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -618,14 +618,12 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
     $forbidden = 0;
     $forbidden = $this->ctf_spamcheckpost();
     if ($forbidden) {
-       echo '<h1>'.__('Contact Form has Invalid Input', 'si-contact').'</h1>';
-       exit;
+       wp_die(__('Contact Form has Invalid Input', 'si-contact'));
     }
 
    // check for banned ip
    if( $ctf_enable_ip_bans && in_array($_SERVER['REMOTE_ADDR'], $ctf_banned_ips) ) {
-      echo '<h1>'.__('Your IP is Banned', 'si-contact').'</h1>';
-      exit;
+      wp_die(__('Your IP is Banned', 'si-contact'));
    }
 
    // CAPS Decapitator
@@ -1069,12 +1067,13 @@ function ctf_validate_email($email) {
 // helps spam protect email input
 // finds new lines injection attempts
 function ctf_forbidifnewlines($input) {
-   if (eregi("\r",  $input) ||
-       eregi("\n",  $input) ||
-       eregi("%0a", $input) ||
-       eregi("%0d", $input)) {
-       echo '<h1>'.__('Contact Form has Invalid Input', 'si-contact').'</h1>';
-       exit;
+   if (
+       stristr($input, "\r")  !== false ||
+       stristr($input, "\n")  !== false ||
+       stristr($input, "%0a") !== false ||
+       stristr($input, "%0d") !== false) {
+         wp_die(__('Contact Form has Invalid Input', 'si-contact'));
+
    }
 } // end function ctf_forbidifnewlines
 
