@@ -40,7 +40,7 @@ msgstr ""
 msgid ""
 "If you find this plugin useful to you,\r\n"
 "please consider making a small donation to help contribute to further "
-"developement.\r\n"
+"development.\r\n"
 "Thanks for your kind support!"
 msgstr ""
 

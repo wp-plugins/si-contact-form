@@ -171,7 +171,7 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 = 1.7 =
 - (26 Aug 2009) Added error code for when the user has cookies disabled (the CAPTCHA requires cookies)
 - added setting to enable aria-required form tags for screen readers(disabled by default)
-- added a donate button on the options page. If you find this plugin useful to you, please consider making a small donation to help contribute to further developement. Thanks for your kind support! - Mike Challis
+- added a donate button on the options page. If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support! - Mike Challis
 
 = 1.6.9 =
 - (03 Aug 2009) Added Greek Language (el) - Translated by [Ioannis](http://www.jbaron.gr/)

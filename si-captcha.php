@@ -133,7 +133,7 @@ function options_page() {
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
 <td><?php _e('If you find this plugin useful to you,
-please consider making a small donation to help contribute to further developement.
+please consider making a small donation to help contribute to further development.
 Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
 </tr></table>
 </form>
