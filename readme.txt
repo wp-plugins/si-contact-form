@@ -2,7 +2,7 @@
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
-Tags: captcha, comments, spam
+Tags: akismet, captcha, comments, spam
 Requires at least: 2.3
 Tested up to: 2.8.4
 Stable tag: trunk
@@ -13,18 +13,20 @@ Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration fo
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
 In order to post comments, users will have to type in the phrase shown on the image.
-This can help prevent spam from automated bots.
+This prevents spam from automated bots.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-captcha.php)
 
-
-Requirements/Restrictions:
--------------------------
-
-- Works with Wordpress 2.x.
-- PHP 4.0.6 or above with GD2 library support.
-- Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
-  The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
+Features:
+--------
+ * Configure from Admin panel
+ * JavaScript is not required
+ * Valid HTML
+ * Section 508 and WAI Accessibility Validation.
+ * Allows Trackbacks and Pingbacks
+ * Setting to hide the CAPTCHA from logged in users and or admins
+ * Setting to show the CAPTCHA on the comment form, registration form, or both
+ * I18n language translation support (see FAQ)
 
 Captcha Image Support:
 ---------------------
@@ -35,19 +37,17 @@ Captcha Image Support:
  * Generates audible CAPTCHA files in wav format
  * Refresh button to reload captcha if you cannot read it
 
-Features:
---------
- * Configure from Admin panel
- * JavaScript is not required
- * Allows Trackbacks and Pingbacks
- * Setting to hide the CAPTCHA from logged in users and or admins
- * Setting to show the CAPTCHA on the comment form, registration form, or both
- * I18n language translation support (see FAQ)
+Requirements/Restrictions:
+-------------------------
+ * Works with Wordpress 2.x.
+ * PHP 4.0.6 or above with GD2 library support.
+ * Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
+  The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
 
 
 == Installation ==
 
-1. Upload the `si-captcha-for-wordpress` folder to the `/wp-content/plugins/` directory
+1. Upload the `si-captcha-for-wordpress` folder to the `/wp-content/plugins/` directory, or download through the `Plugins` menu in WordPress
 
 2. Activate the plugin through the `Plugins` menu in WordPress
 
@@ -167,6 +167,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.7 =
+- (26 Aug 2009) Added error code for when the user has cookies disabled (the CAPTCHA requires cookies)
+- added setting to enable aria-required form tags for screen readers(disabled by default)
+- added a donate button on the options page. If you find this plugin useful to you, please consider making a small donation to help contribute to further developement. Thanks for your kind support! - Mike Challis
 
 = 1.6.9 =
 - (03 Aug 2009) Added Greek Language (el) - Translated by [Ioannis](http://www.jbaron.gr/)
