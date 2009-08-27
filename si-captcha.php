@@ -156,19 +156,18 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
         <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
 
         <tr>
-            <th scope="row"><label for="si_captcha_register"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></label></th>
+            <th scope="row"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></th>
         <td>
-    <input name="si_captcha_register" id="si_captcha_register" type="checkbox"
-    <?php if ( $this->get_settings('si_captcha_register') == 'true' ) echo ' checked="checked" '; ?> />
-    <?php _e('Enable CAPTCHA on the register form.', 'si-captcha') ?><br />
+    <input name="si_captcha_register" id="si_captcha_register" type="checkbox" <?php if ( $this->get_settings('si_captcha_register') == 'true' ) echo ' checked="checked" '; ?> />
+    <label for="si_captcha_register"><?php _e('Enable CAPTCHA on the register form.', 'si-captcha') ?></label><br />
     </td>
         </tr>
 
         <tr>
-            <th scope="row"><label for="si_captcha_comment"><?php _e('CAPTCHA on Comment Form:', 'si-captcha') ?></label></th>
+            <th scope="row"><?php _e('CAPTCHA on Comment Form:', 'si-captcha') ?></th>
         <td>
     <input name="si_captcha_comment" id="si_captcha_comment" type="checkbox" <?php if ( $this->get_settings('si_captcha_comment') == 'true' ) echo ' checked="checked" '; ?> />
-    <?php _e('Enable CAPTCHA on the comment form.', 'si-captcha') ?><br />
+    <label for="si_captcha_comment"><?php _e('Enable CAPTCHA on the comment form.', 'si-captcha') ?></label><br />
 
         <input name="si_captcha_perm" id="si_captcha_perm" type="checkbox" <?php if( $this->get_settings('si_captcha_perm') == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_captcha_perm" for="si_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-captcha') ?>
@@ -182,15 +181,15 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
         </tr>
 
     <tr>
-        <th scope="row"><label for="si_captcha_rearrange"><?php _e('Comment Form Rearrange:', 'si-captcha') ?></label></th>
+        <th scope="row"><?php _e('Comment Form Rearrange:', 'si-captcha') ?></th>
         <td>
-    <input name="si_captcha_rearrange" id="si_captcha_rearrange" type="checkbox"
-    <?php if ( $this->get_settings('si_captcha_rearrange') == 'true' ) echo ' checked="checked" '; ?> />
-    <?php _e('Change the display order of the catpcha input field on the comment form. (see note below).', 'si-captcha') ?><br />
+    <input name="si_captcha_rearrange" id="si_captcha_rearrange" type="checkbox" <?php if ( $this->get_settings('si_captcha_rearrange') == 'true' ) echo ' checked="checked" '; ?> />
+    <label for="si_captcha_rearrange"><?php _e('Change the display order of the catpcha input field on the comment form. (see note below).', 'si-captcha') ?></label><br />
     </td>
         </tr>
-
-
+    <tr>
+        <th scope="row"><?php _e('Accessibility:', 'si-captcha') ?></th>
+        <td>
        <input name="si_captcha_aria_required" id="si_captcha_aria_required" type="checkbox" <?php if( $this->get_settings('si_captcha_aria_required') == 'true' ) echo 'checked="checked"'; ?> />
        <label name="si_captcha_aria_required" for="si_captcha_aria_required"><?php _e('Enable aria-required tags for screen readers', 'si-captcha') ?>.</label>
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_captcha_aria_required_tip');"><?php _e('help', 'si-captcha'); ?></a>
@@ -199,9 +198,8 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
        Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required").
        WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.
        ', 'si-captcha') ?>
-
-
-
+      </td>
+    </tr>
         </table>
         </fieldset>
 
