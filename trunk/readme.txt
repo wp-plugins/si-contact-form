@@ -11,8 +11,7 @@ A Fast and Secure Contact Form for WordPress.
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message.
-Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
@@ -113,6 +112,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.0.1 =
+- (26 Aug 2009) fixed deprecated ereg_replace and eregi functions for PHP 5.3+ compatibility when error warnings are on
 
 = 1.0 =
 - (26 Aug 2009) Initial Release
