@@ -3,232 +3,280 @@
 # 
 # Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 # Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-# Version: 1.6
+# Version: 1.7
 # Author: Mike Challis
 # Author URI: http://www.642weather.com/weather/scripts.php
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.6\n"
+"Project-Id-Version: 1.7\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-captcha-for-wordpress\n"
 "POT-Creation-Date: 2008-12-14 17:48+0000\n"
-"PO-Revision-Date: 2009-03-23 17:48+0000\n"
+"PO-Revision-Date: 2009-08-26 17:48+0000\n"
 "Last-Translator: Mike Challis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: si-captcha.php:38 si-captcha.php:99
+#: si-captcha.php:34 si-captcha.php:112
 msgid "SI Captcha Options"
 msgstr ""
 
-#: si-captcha.php:62
+#: si-captcha.php:70
 msgid "You do not have permissions for managing this option"
 msgstr ""
 
-#: si-captcha.php:96
+#: si-captcha.php:109
 msgid "Options saved."
 msgstr ""
 
-#: si-captcha.php:102
+#: si-captcha.php:124
+msgid "Donate"
+msgstr ""
+
+#: si-captcha.php:135
+msgid ""
+"If you find this plugin useful to you,\r\n"
+"please consider making a small donation to help contribute to further "
+"developement.\r\n"
+"Thanks for your kind support!"
+msgstr ""
+
+#: si-captcha.php:141
+msgid "Usage"
+msgstr ""
+
+#: si-captcha.php:144
 msgid "Your theme must have a"
 msgstr ""
 
-#: si-captcha.php:102
+#: si-captcha.php:144
 msgid "tag inside your comments.php form. Most themes do."
 msgstr ""
 
-#: si-captcha.php:103
+#: si-captcha.php:145
 msgid ""
 "The best place to locate the tag is before the comment textarea, you may "
 "want to move it if it is below the comment textarea, or the captcha image "
 "and captcha code entry might display after the submit button."
 msgstr ""
 
-#: si-captcha.php:115
+#: si-captcha.php:148
+msgid "Options"
+msgstr ""
+
+#: si-captcha.php:159
 msgid "CAPTCHA on Register Form:"
 msgstr ""
 
-#: si-captcha.php:119
+#: si-captcha.php:163
 msgid "Enable CAPTCHA on the register form."
 msgstr ""
 
-#: si-captcha.php:124
+#: si-captcha.php:168
 msgid "CAPTCHA on Comment Form:"
 msgstr ""
 
-#: si-captcha.php:127
+#: si-captcha.php:171
 msgid "Enable CAPTCHA on the comment form."
 msgstr ""
 
-#: si-captcha.php:130
+#: si-captcha.php:174
 msgid "Hide CAPTCHA for"
 msgstr ""
 
-#: si-captcha.php:131
+#: si-captcha.php:175
 msgid "registered"
 msgstr ""
 
-#: si-captcha.php:132
+#: si-captcha.php:176
 msgid "users who can:"
 msgstr ""
 
-#: si-captcha.php:135
+#: si-captcha.php:179
 msgid "CSS class name for CAPTCHA input field on the comment form"
 msgstr ""
 
-#: si-captcha.php:136
+#: si-captcha.php:180
 msgid ""
 "(Enter a CSS class name only if your theme uses one for comment text inputs. "
 "Default is blank for none.)"
 msgstr ""
 
-#: si-captcha.php:141
+#: si-captcha.php:185
 msgid "Comment Form Rearrange:"
 msgstr ""
 
-#: si-captcha.php:145
+#: si-captcha.php:189
 msgid ""
 "Change the display order of the catpcha input field on the comment form. "
 "(see note below)."
 msgstr ""
 
-#: si-captcha.php:152
+#: si-captcha.php:195
+msgid "Enable aria-required tags for screen readers"
+msgstr ""
+
+#: si-captcha.php:196
+msgid "Click for Help!"
+msgstr ""
+
+#: si-captcha.php:196
+msgid "help"
+msgstr ""
+
+#: si-captcha.php:198
+msgid ""
+"aria-required is a form input WAI ARIA tag. Screen readers use it to "
+"determine which fields are required.\r\n"
+"       Enabling this is good for accessability, but will cause the HTML to "
+"fail the W3C Validation (there is no attribute \"aria-required\").\r\n"
+"       WAI ARIA attributes are soon to be accepted by the HTML validator, so "
+"you can safely ignore the validation error it will cause.\r\n"
+"       "
+msgstr ""
+
+#: si-captcha.php:208
 msgid "Problem:"
 msgstr ""
 
-#: si-captcha.php:153
+#: si-captcha.php:209
 msgid ""
 "Sometimes the captcha image and captcha input field are displayed AFTER the "
 "submit button on the comment form."
 msgstr ""
 
-#: si-captcha.php:154
+#: si-captcha.php:210
 msgid "Fix:"
 msgstr ""
 
-#: si-captcha.php:155
+#: si-captcha.php:211
 msgid "Edit your current theme comments.php file and locate this line:"
 msgstr ""
 
-#: si-captcha.php:157
+#: si-captcha.php:213
 msgid ""
 "This tag is exactly where the captcha image and captcha code entry will "
 "display on the form, so move the line to BEFORE the comment textarea, "
 "uncheck the option box above, and the problem should be fixed."
 msgstr ""
 
-#: si-captcha.php:158
+#: si-captcha.php:214
 msgid ""
 "Alernately you can just check the box above and javascript will attempt to "
 "rearrange it for you, but editing the comments.php, moving the tag, and "
 "unchecking this box is the best solution."
 msgstr ""
 
-#: si-captcha.php:159
+#: si-captcha.php:215
 msgid ""
 "Why is it better to uncheck this and move the tag? because the XHTML will no "
 "longer validate on the comment page if it is checked."
 msgstr ""
 
-#: si-captcha.php:162
+#: si-captcha.php:218
 msgid "Update Options"
 msgstr ""
 
-#: si-captcha.php:172
+#: si-captcha.php:228
 msgid "All registered users"
 msgstr ""
 
-#: si-captcha.php:173
+#: si-captcha.php:229
 msgid "Edit posts"
 msgstr ""
 
-#: si-captcha.php:174
+#: si-captcha.php:230
 msgid "Publish Posts"
 msgstr ""
 
-#: si-captcha.php:175
+#: si-captcha.php:231
 msgid "Moderate Comments"
 msgstr ""
 
-#: si-captcha.php:176
+#: si-captcha.php:232
 msgid "Administer site"
 msgstr ""
 
-#: si-captcha.php:195
+#: si-captcha.php:251
 msgid "ERROR: si-captcha.php plugin says GD image support not detected in PHP!"
 msgstr ""
 
-#: si-captcha.php:196
+#: si-captcha.php:252
 msgid ""
 "Contact your web host and ask them why GD image support is not enabled for "
 "PHP."
 msgstr ""
 
-#: si-captcha.php:200
+#: si-captcha.php:256
 msgid ""
 "ERROR: si-captcha.php plugin says imagepng function not detected in PHP!"
 msgstr ""
 
-#: si-captcha.php:201
+#: si-captcha.php:257
 msgid ""
 "Contact your web host and ask them why imagepng function is not enabled for "
 "PHP."
 msgstr ""
 
-#: si-captcha.php:205
+#: si-captcha.php:261
 msgid "ERROR: si-captcha.php plugin says captcha_library not found."
 msgstr ""
 
-#: si-captcha.php:240 si-captcha.php:302
+#: si-captcha.php:302 si-captcha.php:370
 msgid "CAPTCHA Image"
 msgstr ""
 
-#: si-captcha.php:241 si-captcha.php:303
+#: si-captcha.php:303 si-captcha.php:371
 msgid "Audible Version of CAPTCHA"
 msgstr ""
 
-#: si-captcha.php:242 si-captcha.php:304
+#: si-captcha.php:304 si-captcha.php:372
 msgid "Audio Version"
 msgstr ""
 
-#: si-captcha.php:244 si-captcha.php:306
+#: si-captcha.php:306 si-captcha.php:374
 msgid "Refresh Image"
 msgstr ""
 
-#: si-captcha.php:246 si-captcha.php:308
+#: si-captcha.php:308 si-captcha.php:376
 msgid "Reload Image"
 msgstr ""
 
-#: si-captcha.php:257 si-captcha.php:313
+#: si-captcha.php:319 si-captcha.php:381
 msgid "CAPTCHA Code (required)"
 msgstr ""
 
-#: si-captcha.php:275
+#: si-captcha.php:337
 msgid "Submit Comment"
 msgstr ""
 
-#: si-captcha.php:327 si-captcha.php:341 si-captcha.php:351 si-captcha.php:364
+#: si-captcha.php:395 si-captcha.php:399 si-captcha.php:412 si-captcha.php:423
+#: si-captcha.php:427 si-captcha.php:438 si-captcha.php:472
 msgid "ERROR"
 msgstr ""
 
-#: si-captcha.php:327 si-captcha.php:351
+#: si-captcha.php:395 si-captcha.php:423 si-captcha.php:472
+msgid "Could not read CAPTCHA cookie. Make sure you have cookies enabled."
+msgstr ""
+
+#: si-captcha.php:399 si-captcha.php:427
 msgid "Please complete the CAPTCHA."
 msgstr ""
 
-#: si-captcha.php:341 si-captcha.php:364
-msgid "That CAPTCHA was incorrect."
+#: si-captcha.php:412 si-captcha.php:438
+msgid "That CAPTCHA was incorrect. Make sure you have not disabled cookies."
 msgstr ""
 
-#: si-captcha.php:399
+#: si-captcha.php:475
 msgid ""
 "Error: You did not enter a Captcha phrase. Press your browsers back button "
 "and try again."
 msgstr ""
 
-#: si-captcha.php:411
+#: si-captcha.php:486
 msgid ""
 "Error: You entered in the wrong Captcha phrase. Press your browsers back "
 "button and try again."
