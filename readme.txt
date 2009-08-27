@@ -57,7 +57,7 @@ Requirements/Restrictions:
 
 2. Activate the plugin through the `Plugins` menu in WordPress.
 
-3. You must add the shortcode [si_contact_form] in a Page. That page will become your Contact Form.
+3. You must add the shortcode `[si_contact_form]` in a Page. That page will become your Contact Form.
 
 4. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
 
