@@ -11,7 +11,7 @@ A Fast and Secure Contact Form for WordPress.
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message.
 Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
