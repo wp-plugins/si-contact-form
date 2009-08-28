@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.0.3
+Version: 1.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -60,7 +60,7 @@ function get_settings($value) {
 if (!get_option($value)) {
         $defaults = array(
          'si_contact_welcome' => __('<p>Comments or questions are welcome.</p>', 'si-contact'),
-         'si_contact_email_to' => get_option('admin_email'),
+         'si_contact_email_to' => __('Webmaster', 'si-contact').','.get_option('admin_email'),
          'si_contact_email_from' => '',
          'si_contact_email_bcc' => '',
          'si_contact_email_language' => 'en-us',
@@ -164,7 +164,7 @@ function options_page() {
 <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'si-contact') ?></strong></p></div>
 <?php endif; ?>
 <div class="wrap">
-<h2><?php _e('SI Contact Form Options', 'si-contact') ?></h2>
+<h2><?php _e('Fast and Secure Contact Form Options', 'si-contact') ?></h2>
 
 <script type="text/javascript">
     function toggleVisibility(id) {
@@ -187,9 +187,7 @@ function options_page() {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you,
-please consider making a small donation to help contribute to further development.
-Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
+<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
 </tr></table>
 </form>
 
@@ -212,7 +210,8 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
     <tr>
          <th scope="row" style="width: 75px;"><?php _e('Form:', 'si-contact') ?></th>
       <td>
-        <label name="si_contact_welcome" for="si_contact_welcome"><?php _e('Welcome introduction', 'si-contact') ?>:</label><textarea rows="5" cols="40" name="si_contact_welcome" id="si_contact_welcome"><?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_welcome')));  ?></textarea>
+        <label name="si_contact_welcome" for="si_contact_welcome"><?php _e('Welcome introduction', 'si-contact') ?>:</label><br />
+        <textarea rows="2" cols="40" name="si_contact_welcome" id="si_contact_welcome"><?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_welcome')));  ?></textarea>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_contact_welcome_tip');"><?php _e('help', 'si-captcha'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_welcome_tip">
         <?php _e('This gets printed when the contact form is first presented. It is not printed when there is an input error and not printed after the form is completed.', 'si-contact') ?>
@@ -222,29 +221,61 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
     <tr>
          <th scope="row" style="width: 75px;"><?php _e('E-mail:', 'si-contact') ?></th>
       <td>
-        <label name="si_contact_email_to" for="si_contact_email_to"><?php _e('E-mail To', 'si-contact') ?>:</label><input name="si_contact_email_to" id="si_contact_email_to" type="text" value="<?php echo $this->get_settings('si_contact_email_to');  ?>" size="50" />
+      <?php
+       $ctf_contacts = array ();
+
+//$ctf_contacts_test = 'User,user@yourwebsite.com
+//Mike,test@gmail.com';
+
+//$ctf_contacts_test = 'test@gmail.com';
+$ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
+
+if(!preg_match("/,/", $ctf_contacts_test) && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $ctf_contacts_test)) {
+   $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact'),  'EMAIL' => $ctf_contacts_test );
+}
+
+$ctf_ct_arr = explode("\n",$ctf_contacts_test);
+foreach($ctf_ct_arr as $line) {
+    // echo '|'.$line.'|' ;
+   list($key, $value) = explode(",",$line);
+    $key = trim($key); $value = trim($value);
+   if ($key != '' && $value != ''
+   && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $value)) {
+      $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
+   }
+}
+
+
+      ?>
+        <label name="si_contact_email_to" for="si_contact_email_to"><?php _e('E-mail To', 'si-contact') ?>:</label>
+<?php
+if (empty($ctf_contacts)) {
+   echo '<span style="color:red;">'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact').'</span>'."\n";
+}
+?>
+        <br />
+        <textarea rows="2" cols="40" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->get_settings('si_contact_email_to');  ?></textarea>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php _e('help', 'si-captcha'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_to_tip">
-        <?php _e('E-mail address the messages are sent to (your email).', 'si-contact') ?>
+        <?php _e('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact') ?><br />
+        Manager,user1@example.com<br />
+        Service,user2@example.com
         </div>
         <br />
 
         <label name="si_contact_email_from" for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact') ?>:</label><input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $this->get_settings('si_contact_email_from');  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-captcha'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
-        <?php _e('E-mail address the messages are sent from.
-        Normally you should leave this blank.
-        Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain.
-        If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact') ?>
+        <?php _e('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact') ?>
         </div>
         <br />
 
         <label name="si_contact_double_bcc" for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact') ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php _e('help', 'si-captcha'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
-        <?php _e('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:<br />
+        <?php _e('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact') ?><br />
         user@example.com<br />
-        user@example.com, anotheruser@example.com', 'si-contact') ?>
+        user@example.com, anotheruser@example.com
         </div>
         <br />
 
@@ -344,10 +375,7 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
        <label name="si_contact_aria_required" for="si_contact_aria_required"><?php _e('Enable aria-required tags for screen readers', 'si-contact') ?>.</label>
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_contact_aria_required_tip');"><?php _e('help', 'si-captcha'); ?></a>
        <div style="text-align:left; display:none" id="si_contact_aria_required_tip">
-       <?php _e('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required.
-       Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required").
-       WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.
-       ', 'si-contact') ?>
+       <?php _e('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required. Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required"). WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.', 'si-contact') ?>
 
       </td>
     </tr>
@@ -418,12 +446,30 @@ function si_contact_form_short_code() {
 // Be careful not to break the array syntax
 // Add as many contacts as you need, the drop down list will be made automatically
 
-$ctf_contacts = array ( // <-- this must remain before your contact array
+$ctf_contacts = array ();
 
-array('CONTACT' => 'Joe Somebody',  'EMAIL' => 'joesomebody@yourwebsite.com'),
-array('CONTACT' => __('Webmaster', 'si-contact'), 'EMAIL' => $this->get_settings('si_contact_email_to')),
+//$ctf_contacts_test = 'User,user@yourwebsite.com
+//Mike,test@gmail.com';
 
-); // <-- this must remain after your contact array
+//$ctf_contacts_test = 'test@gmail.com';
+$ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
+
+if(!preg_match("/,/", $ctf_contacts_test) && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $ctf_contacts_test)) {
+   $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact'),  'EMAIL' => $ctf_contacts_test );
+}
+
+$ctf_ct_arr = explode("\n",$ctf_contacts_test);
+foreach($ctf_ct_arr as $line) {
+    // echo '|'.$line.'|' ;
+   list($key, $value) = explode(",",$line);
+    $key = trim($key); $value = trim($value);
+   if ($key != '' && $value != ''
+   && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $value)) {
+      $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
+   }
+}
+
+//print_r($ctf_contacts);
 
 // Email address(s) to receive Bcc (Blind Carbon Copy) messages
 // Yes you can send to multiple emails, both methods are acceptable
@@ -591,6 +637,9 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
     else if (!isset($contacts[$cid]['CONTACT'])) {
         $this->si_contact_error = 1;
         $si_contact_error_contact = __('Requested Contact not found.', 'si-contact');
+    }
+    if (empty($ctf_contacts)) {
+       $this->si_contact_error = 1;
     }
     $mail_to    = $this->ctf_clean_input($contacts[$cid]['EMAIL']);
     $to_contact = $this->ctf_clean_input($contacts[$cid]['CONTACT']);
@@ -821,17 +870,20 @@ if ($this->get_settings('si_contact_border_enable') == 'true') {
 if ($this->si_contact_error) {
     $string .= '<div '.$this->ctf_error_style.'>'.__('INPUT ERROR: Please make corrections below and try again.', 'si-contact').'</div>'."\n";
 }
+if (empty($ctf_contacts)) {
+   $string .= '<div '.$this->ctf_error_style.'>'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact').'</div>'."\n";
+}
 
 if (count($contacts) > 1) {
 
      $string .= '        <div '.$this->ctf_title_style.'>
-                <label for="CID">'.__('Department to Contact:', 'si-contact').'</label>
+                <label for="si_contact_CID">'.__('Department to Contact', 'si-contact').':</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_contact).'
         <div '.$this->ctf_field_style.'>
-                <select id="CID" name="CID" '.$this->ctf_aria_required.'>
+                <select id="si_contact_CID" name="si_contact_CID" '.$this->ctf_aria_required.'>
 ';
 
-    $string .= '                        <option value="">'.__('Select', 'si-contact').'</option>'."\n";
+    $string .= '                        <option value="">'.esc_attr(__('Select', 'si-contact')).'</option>'."\n";
 
      if ( !isset($cid) ) {
           $cid = $_GET['si_contact_CID'];
@@ -843,7 +895,7 @@ if (count($contacts) > 1) {
           if (!empty($cid) && $cid == $k) {
                     $selected = 'selected="selected"';
           }
-          $string .= '                        <option value="' . $k . '" ' . $selected . '>' . $v[CONTACT] . '</option>' . "\n";
+          $string .= '                        <option value="' . $k . '" ' . $selected . '>' . esc_attr($v[CONTACT]) . '</option>' . "\n";
           $selected = '';
       }
 
