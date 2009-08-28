@@ -39,7 +39,7 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.x.
+ * Works with Wordpress 2.3+
  * PHP 4.0.6 or above with GD2 library support.
  * Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
   The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
@@ -138,6 +138,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Arabic (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)
 * Belorussian (by_BY) - Translated by [Marcis Gasuns](http://www.comfi.com/)
 * Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
@@ -167,6 +168,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.7.5 =
+- (28 Aug 2009) Added Arabic Language (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)
+- CAPTCHA fix - Added Auto fail over to $use_gd_font if the PHP installation is configured without "--with-ttf".
+  Some users were reporting there was no error indicating this condition and the capcha was not working.
 
 = 1.7.4 =
 - (28 Aug 2009) Updated Italian language
