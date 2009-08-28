@@ -25,6 +25,7 @@ Features:
  * Valid HTML, Section 508 and WAI Accessibility HTML Validation.
  * JavaScript is not required.
  * Setting to hide the CAPTCHA from logged in users and or admins.
+ * Multi "email to" contact feature.
  * I18n language translation support (see FAQ)
 
 Security:
@@ -116,6 +117,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.1 =
+- (28 Aug 2009) Added multi "email to" contact feature. Add as many contacts as you need in Options. The drop down list on the contact form will be made automatically.
 
 = 1.0.3 =
 - (28 Aug 2009) fix options permission bug introduced by last update, sorry
