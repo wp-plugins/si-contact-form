@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.1
+Version: 1.1.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -221,32 +221,24 @@ function options_page() {
     <tr>
          <th scope="row" style="width: 75px;"><?php _e('E-mail:', 'si-contact') ?></th>
       <td>
-      <?php
-       $ctf_contacts = array ();
-
-//$ctf_contacts_test = 'User,user@yourwebsite.com
-//Mike,test@gmail.com';
-
-//$ctf_contacts_test = 'test@gmail.com';
+<?php
+// checks for properly configured E-mail address in options.
+$ctf_contacts = array ();
 $ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
-
 if(!preg_match("/,/", $ctf_contacts_test) && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $ctf_contacts_test)) {
    $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact'),  'EMAIL' => $ctf_contacts_test );
 }
-
 $ctf_ct_arr = explode("\n",$ctf_contacts_test);
 foreach($ctf_ct_arr as $line) {
     // echo '|'.$line.'|' ;
    list($key, $value) = explode(",",$line);
-    $key = trim($key); $value = trim($value);
+   $key = trim($key); $value = trim($value);
    if ($key != '' && $value != ''
    && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $value)) {
       $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
    }
 }
-
-
-      ?>
+?>
         <label name="si_contact_email_to" for="si_contact_email_to"><?php _e('E-mail To', 'si-contact') ?>:</label>
 <?php
 if (empty($ctf_contacts)) {
@@ -439,25 +431,21 @@ function captchaCheckRequires() {
 function si_contact_form_short_code() {
    global $captcha_path_cf;
 
-// Email Contacts
-// If you need to add more, carefully copy a line and add it below,
-// modify the CONTACT and EMAIL values inside the single quotes.
-// If you only want one, delete or comment out all but one array('CONTACT'... line
-// Be careful not to break the array syntax
-// Add as many contacts as you need, the drop down list will be made automatically
-
+// E-mail Contacts
+// the drop down list array will be made automatically by this code
 $ctf_contacts = array ();
+//$ctf_contacts_test = 'Manager,user1@example.com
+//Service,user2@example.com';
 
-//$ctf_contacts_test = 'User,user@yourwebsite.com
-//Mike,test@gmail.com';
-
-//$ctf_contacts_test = 'test@gmail.com';
+//$ctf_contacts_test = 'user1@example.com';
 $ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
 
+// check for single e-mail
 if(!preg_match("/,/", $ctf_contacts_test) && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $ctf_contacts_test)) {
    $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact'),  'EMAIL' => $ctf_contacts_test );
 }
 
+// check for multiple e-mail
 $ctf_ct_arr = explode("\n",$ctf_contacts_test);
 foreach($ctf_ct_arr as $line) {
     // echo '|'.$line.'|' ;
@@ -472,15 +460,9 @@ foreach($ctf_ct_arr as $line) {
 //print_r($ctf_contacts);
 
 // Email address(s) to receive Bcc (Blind Carbon Copy) messages
-// Yes you can send to multiple emails, both methods are acceptable
-// $ctf_email_address_bcc = 'user@example.com';
-// $ctf_email_address_bcc = 'user@example.com, anotheruser@example.com';
 $ctf_email_address_bcc = $this->get_settings('si_contact_email_bcc'); // optional
 
-// Normally this setting will be left blank, like this: $email_on_this_domain = '';
-// Some Web hosts do not allow your PHP to send email unless the From: email address
-// is from the same domain. If your form does not seem to be sending any email, then
-// set this to your email address on the SAME domain as your web site as a possible workaround
+// Normally this setting will be left blank in options.
 $ctf_email_on_this_domain =  $this->get_settings('si_contact_email_from'); // optional
 
 // Site Name / Title
@@ -584,7 +566,7 @@ window.onload=timedCount;
 EOT;
 
 $ctf_thank_you .= '
-<img src="$wp_plugin_url/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact')).'" />&nbsp;&nbsp;
+<img src="'.$wp_plugin_url.'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact')).'" />&nbsp;&nbsp;
 '.__('Redirecting', 'si-contact').' ... ';
 
 
@@ -815,7 +797,9 @@ $message
       $header .= 'Content-type: text/plain; Content-language: '.$ctf_language.'; charset="'.$ctf_charset.'"' . PHP_EOL;
       $header .= 'Content-transfer-encoding: '.$ctf_encoding . PHP_EOL;
 
-      // send the email
+      ini_set('sendmail_from', $email); // needed for some windows servers
+
+      // SMPT auth - send the email (not 100% sure this SMTP auth works with PHP mail)
       if(strtolower($ctf_ini_set) == "yes") {
        ini_set("SMTP", $ctf_smtp);
        ini_set("smtp_port", $ctf_smtp_port);
@@ -824,10 +808,8 @@ $message
        ini_set("sendmail_from", $ctf_sendmail_from);
        ini_set("sendmail_path", $ctf_sendmail_path);
       }
-      ini_set('sendmail_from', $email); // needed for some windows servers
-      mail($mail_to,$subj,$msg,$header);
-      ini_restore('sendmail_from');     // needed for some windows servers
 
+      mail($mail_to,$subj,$msg,$header);
       $message_sent = 1;
 
    } // end if ! error

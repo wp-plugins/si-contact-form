@@ -107,7 +107,8 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
-* Coming soon.. Please help translate.
+* Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
+* More are needed... Please help translate.
 
 = Can I provide a translation? =
 
@@ -117,6 +118,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.1.1 =
+- (28 Aug 2009) Added Turkish language (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
+- CAPTCHA fix - Added Auto fail over to $use_gd_font if the PHP installation is configured without "--with-ttf".
+  Some users were reporting there was no error indicating this condition and the captcha was not working.
 
 = 1.1 =
 - (28 Aug 2009) Added multi "email to" contact feature. Add as many contacts as you need in Options. The drop down list on the contact form will be made automatically.
