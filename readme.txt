@@ -168,6 +168,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.7.3 =
+- (28 Aug 2009) Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+
 = 1.7.2 =
 - (28 Aug 2009) fix options permission bug introduced by last update, sorry
 
