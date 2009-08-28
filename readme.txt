@@ -168,6 +168,12 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.7.2 =
+- (28 Aug 2009) fix options permission bug introduced by last update, sorry
+
+= 1.7.1 =
+- (27 Aug 2009) added settings link to the plugin action links
+
 = 1.7 =
 - (26 Aug 2009) Added error code for when the user has cookies disabled (the CAPTCHA requires cookies)
 - added setting to enable aria-required form tags for screen readers(disabled by default)

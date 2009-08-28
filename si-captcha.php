@@ -2,8 +2,8 @@
 /*
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
-Description: A CAPTCHA to protect comment posts and or registrations in WordPress. Prevents spam by requiring human interaction. Features: Refresh button to reload captcha if you cannot read it. Generates audible CAPTCHA files in wav format for accessibility. Section 508 and WAI Accessibility HTML Validation. Does not require JavaScript. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">SI Captcha Options</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.7
+Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both. This prevents spam from automated bots. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
+Version: 1.7.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -487,6 +487,17 @@ function checkCaptchaCommentPost($comment) {
 
 }
 
+function si_image_captcha_plugin_action_links( $links, $file ) {
+	if ( $file != plugin_basename( __FILE__ ))
+		return $links;
+
+	$settings_link = '<a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">' . esc_html( __( 'Settings', 'si-contact' ) ) . '</a>';
+
+	array_unshift( $links, $settings_link );
+
+	return $links;
+}
+
 function init() {
 
   // a PHP session cookie is set so that the captcha can be remembered and function
@@ -516,6 +527,19 @@ if ( ! defined( 'WP_PLUGIN_URL' ) )
 if ( ! defined( 'WP_PLUGIN_DIR' ) )
       define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 
+// Pre-2.8 compatibility
+if ( ! function_exists( 'esc_html' ) ) {
+	function esc_html( $text ) {
+		return wp_specialchars( $text );
+	}
+}
+
+// Pre-2.8 compatibility
+if ( ! function_exists( 'esc_attr' ) ) {
+	function esc_attr( $text ) {
+		return attribute_escape( $text );
+	}
+}
 
 if (class_exists("siCaptcha")) {
  $si_image_captcha = new siCaptcha();
@@ -541,6 +565,9 @@ if (isset($si_image_captcha)) {
 
   // si captcha admin options
   add_action('admin_menu', array(&$si_image_captcha,'add_tabs'),1);
+
+  // adds "Settings" link to the plugin action page
+  add_filter( 'plugin_action_links', array(&$si_image_captcha,'si_image_captcha_plugin_action_links'),10,2);
 
 
   if ($si_image_captcha->get_settings('si_captcha_comment') == 'true') {
