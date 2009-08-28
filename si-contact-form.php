@@ -2,8 +2,8 @@
 /*
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
-Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.0.2
+Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
+Version: 1.0.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -30,9 +30,9 @@ if (!class_exists('siContactForm')) {
  class siContactForm {
      var $si_contact_error;
 
-//function add_tabs() {
-//    add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact'), __('SI Contact Form Options', 'si-contact'), 'manage_options', __FILE__,array(&$this,'options_page'));
-//}
+function add_tabs() {
+    add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact'), __('SI Contact Form Options', 'si-contact'), 'manage_options', __FILE__,array(&$this,'options_page'));
+}
 
 function unset_si_contact_options () {
   delete_option('si_contact_welcome');
@@ -420,7 +420,7 @@ function si_contact_form_short_code() {
 
 $ctf_contacts = array ( // <-- this must remain before your contact array
 
-//array('CONTACT' => 'Joe Somebody',  'EMAIL' => 'joesomebody@yourwebsite.com'),
+array('CONTACT' => 'Joe Somebody',  'EMAIL' => 'joesomebody@yourwebsite.com'),
 array('CONTACT' => __('Webmaster', 'si-contact'), 'EMAIL' => $this->get_settings('si_contact_email_to')),
 
 ); // <-- this must remain after your contact array
@@ -535,11 +535,13 @@ function timedCount() {
 window.onload=timedCount;
 //-->
 </script>
-
-<img src="$wp_plugin_url/si-contact-form/ctf-loading.gif" alt="Redirecting" />&nbsp;&nbsp;
-Redirecting ...
-
 EOT;
+
+$ctf_thank_you .= '
+<img src="$wp_plugin_url/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact')).'" />&nbsp;&nbsp;
+'.__('Redirecting', 'si-contact').' ... ';
+
+
 // do not remove the above EOT line
 
 }
@@ -978,13 +980,13 @@ $string = '
 <div style="text-align:left; float:left; width: 205px; padding-top: 5px; ">
          <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
          src="'.$captcha_url_cf.'/securimage_show.php?sid='.md5(uniqid(time())).'"
-         alt="'.__('CAPTCHA Image', 'si-contact').'" title="'.__('CAPTCHA Image', 'si-contact').'" />
-           <a href="'.$captcha_url_cf.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-contact').'">
-         <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-contact').'"
+         alt="'.__('CAPTCHA Image', 'si-contact').'" title="'.esc_attr(__('CAPTCHA Image', 'si-contact')).'" />
+           <a href="'.$captcha_url_cf.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-contact')).'">
+         <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="'.esc_attr(__('Audio Version', 'si-contact')).'"
           style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
-           <a href="#" title="'.__('Refresh Image', 'si-contact').'" style="border-style: none"
+           <a href="#" title="'.esc_attr(__('Refresh Image', 'si-contact')).'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url_cf.'/securimage_show.php?sid=\' + Math.random(); return false">
-         <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="'.__('Reload Image', 'si-contact').'"
+         <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="'.esc_attr(__('Reload Image', 'si-contact')).'"
          style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <br /><br />
@@ -998,7 +1000,7 @@ function ctf_echo_if_error($this_error){
   if ($this->si_contact_error) {
     if (!empty($this_error)) {
          return '
-         <div '.$this->ctf_error_style.'>'.__('ERROR', 'si-contact').': ' . $this_error . '</div>'."\n";
+         <div '.$this->ctf_error_style.'>'.esc_html(__('ERROR', 'si-contact')).': ' . esc_html($this_error) . '</div>'."\n";
     }
   }
 } // end function ctf_echo_if_error
@@ -1235,7 +1237,7 @@ if (isset($si_contact_form)) {
   add_action('init', array(&$si_contact_form, 'init'));
 
   // si contact form admin options
-  //add_action('admin_menu', array(&$si_contact_form,'add_tabs'),1);
+  add_action('admin_menu', array(&$si_contact_form,'add_tabs'),1);
 
   // adds "Settings" link to the plugin action page
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);

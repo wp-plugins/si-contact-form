@@ -117,6 +117,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.0.3 =
+- (28 Aug 2009) fix options permission bug introduced by last update, sorry
+
 = 1.0.2 =
 - (27 Aug 2009) Added Akismet spam protection. Checks the form input with Akismet, but only if Akismet plugin is also installed.
 - added settings link to the plugin action links.
