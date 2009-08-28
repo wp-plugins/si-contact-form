@@ -132,9 +132,7 @@ function options_page() {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you,
-please consider making a small donation to help contribute to further development.
-Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
+<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
 </tr></table>
 </form>
 
@@ -194,10 +192,7 @@ Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
        <label name="si_captcha_aria_required" for="si_captcha_aria_required"><?php _e('Enable aria-required tags for screen readers', 'si-captcha') ?>.</label>
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_captcha_aria_required_tip');"><?php _e('help', 'si-captcha'); ?></a>
        <div style="text-align:left; display:none" id="si_captcha_aria_required_tip">
-       <?php _e('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required.
-       Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required").
-       WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.
-       ', 'si-captcha') ?>
+       <?php _e('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required. Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required"). WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.', 'si-captcha') ?>
       </td>
     </tr>
         </table>
