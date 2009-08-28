@@ -11,7 +11,7 @@ A Fast and Secure Contact Form for WordPress.
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. Easy and Quick 3 step install.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
@@ -30,6 +30,7 @@ Features:
 Security:
 --------
  * It has very tight security, it stops all the spammer tricks I have found.
+ * Akismet spam protection.
  * Filters all form inputs from html and other nasties.
  * Spamchecks email address input from common spammer tactics...
 prevents spammer forcing to:, cc:, bcc:, newlines, and other email injection attempts to spam the world.
@@ -88,12 +89,15 @@ all these folders need to be 755:
 = Do I have to also install the plugin "SI CAPTCHA for Wordpress"? =
 
 No, this plugin includes the CAPTCHA feature code for this contact form.
-The "SI CAPTCHA for Wordpress" plugin is for comment and registration forms spam protection.
+The "SI CAPTCHA for Wordpress" plugin is used for comment and registration forms spam protection only.
 
 = I use the plugin "SI CAPTCHA for Wordpress" for my comment and registration forms, is it still needed? =
 
 Yes, the plugin "SI CAPTCHA for Wordpress" should be installed if you want protection for the comment and registration forms.
 The two plugins are totally separate.
+
+= Does this contact form use Akismet spam protection? =
+Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated.
 
 = Is this plugin available in other languages? =
 
@@ -112,6 +116,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.0.2 =
+- (27 Aug 2009) Added Akismet spam protection. Checks the form input with Akismet, but only if Akismet plugin is also installed.
+- added settings link to the plugin action links.
 
 = 1.0.1 =
 - (26 Aug 2009) fixed deprecated ereg_replace and eregi functions for PHP 5.3+ compatibility when error warnings are on

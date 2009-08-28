@@ -2,8 +2,8 @@
 /*
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
-Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Fast and Secure Contact Form Options</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.0.1
+Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA. Does not require JavaScript. Easy and Quick 3 step install. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
+Version: 1.0.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -30,9 +30,9 @@ if (!class_exists('siContactForm')) {
  class siContactForm {
      var $si_contact_error;
 
-function add_tabs() {
-    add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact'), __('SI Contact Form Options', 'si-contact'), 'manage_options', __FILE__,array(&$this,'options_page'));
-}
+//function add_tabs() {
+//    add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact'), __('SI Contact Form Options', 'si-contact'), 'manage_options', __FILE__,array(&$this,'options_page'));
+//}
 
 function unset_si_contact_options () {
   delete_option('si_contact_welcome');
@@ -655,6 +655,36 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
        $this->si_contact_error = 1;
        $si_contact_error_message = __('Message text is required.', 'si-contact');
    }
+
+   // Check with Akismet, but only if Akismet is installed. (Recommended for spam control).
+   if(function_exists('akismet_http_post')){
+			global $akismet_api_host, $akismet_api_port;
+			$c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
+			$c['user_agent'] 		= $_SERVER['HTTP_USER_AGENT'];
+			$c['referrer']   		= $_SERVER['HTTP_REFERER'];
+			$c['blog']       		= get_option('home');
+			$c['permalink']       	= get_permalink();
+			$c['comment_type']      = 'sicontactform';
+			$c['comment_author']    = $name;
+			$c['comment_content']   = $message;
+            //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
+
+			$ignore = array( 'HTTP_COOKIE' );
+
+			foreach ( $_SERVER as $key => $value )
+				if ( !in_array( $key, $ignore ) )
+					$c["$key"] = $value;
+
+			$query_string = '';
+			foreach ( $c as $key => $data )
+				$query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
+			$response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
+			if ( 'true' == $response[1] ) {
+                $this->si_contact_error = 1; // Akismet says it is spam.
+                $si_contact_error_message = __('Contact Form has Invalid Input', 'si-contact');
+			}
+    } // end if(function_exists('akismet_http_post')){
+
    // add another field here like 4 lines above (only if you want it to be required)
 
   // begin captcha check if enabled
@@ -708,7 +738,7 @@ $message
       $userdomain = '';
       $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
       $user_info_string  = __('Sent from (ip address)', 'si-contact').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)" . PHP_EOL;
-      $user_info_string .= __('Coming from (referer)', 'si-contact').': '.$_SERVER['HTTP_REFERER'] . PHP_EOL;
+      $user_info_string .= __('Coming from (referer)', 'si-contact').': '.get_permalink() . PHP_EOL;
       $user_info_string .= __('Using (user agent)', 'si-contact').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . PHP_EOL . PHP_EOL;
       $msg .= $user_info_string;
 
@@ -764,7 +794,7 @@ if($message_sent) {
  $this->ctf_title_style = 'style="'.$this->get_settings('si_contact_title_style').'"';
  $this->ctf_field_style = 'style="'.$this->get_settings('si_contact_field_style').'"';
  $this->ctf_error_style = 'style="'.$this->get_settings('si_contact_error_style').'"';
- $ctf_field_size = $this->get_settings('si_contact_field_size');
+ $ctf_field_size = intval($this->get_settings('si_contact_field_size'));
 
 
  if ($this->get_settings('si_contact_aria_required') == 'true') {
@@ -875,7 +905,7 @@ $string .=   '
                 <label for="si_contact_message">'.__('Message', 'si-contact').': </label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_message).'
         <div '.$this->ctf_field_style.'>
-                <textarea id="si_contact_message" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.$this->get_settings('si_contact_text_cols').'" rows="'.$this->get_settings('si_contact_text_rows').'">' . $this->ctf_output_string($message) . '</textarea>
+                <textarea id="si_contact_message" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.intval($this->get_settings('si_contact_text_cols')).'" rows="'.intval($this->get_settings('si_contact_text_rows')).'">' . $this->ctf_output_string($message) . '</textarea>
         </div>
 ';
 
@@ -1048,8 +1078,8 @@ function ctf_validate_email($email) {
     return 0;
    }
    // Validate the syntax
-   if (eregi($regexp, $email)) {
-      list($username,$domaintld) = split("@",$email);
+   if (preg_match("/$regexp/", $email)) {
+      list($username,$domaintld) = explode("@",$email);
       // Validate the domain
       if ( function_exists("getmxrr") ) {
         if (getmxrr($domaintld,$mxrecords) ) {
@@ -1128,6 +1158,17 @@ function ctf_spamcheckpost() {
  return 0;
 } // end function ctf_spamcheckpost
 
+function si_contact_plugin_action_links( $links, $file ) {
+	if ( $file != plugin_basename( __FILE__ ))
+		return $links;
+
+	$settings_link = '<a href="plugins.php?page=si-contact-form/si-contact-form.php">' . esc_html( __( 'Settings', 'si-contact' ) ) . '</a>';
+
+	array_unshift( $links, $settings_link );
+
+	return $links;
+}
+
 function init() {
 
   // a PHP session cookie is set so that the captcha can be remembered and function
@@ -1158,6 +1199,19 @@ if ( ! defined( 'WP_PLUGIN_URL' ) )
 if ( ! defined( 'WP_PLUGIN_DIR' ) )
       define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 
+// Pre-2.8 compatibility
+if ( ! function_exists( 'esc_html' ) ) {
+	function esc_html( $text ) {
+		return wp_specialchars( $text );
+	}
+}
+
+// Pre-2.8 compatibility
+if ( ! function_exists( 'esc_attr' ) ) {
+	function esc_attr( $text ) {
+		return attribute_escape( $text );
+	}
+}
 
 if (class_exists("siContactForm")) {
  $si_contact_form = new siContactForm();
@@ -1181,7 +1235,10 @@ if (isset($si_contact_form)) {
   add_action('init', array(&$si_contact_form, 'init'));
 
   // si contact form admin options
-  add_action('admin_menu', array(&$si_contact_form,'add_tabs'),1);
+  //add_action('admin_menu', array(&$si_contact_form,'add_tabs'),1);
+
+  // adds "Settings" link to the plugin action page
+  add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);
 
   // use shortcode to print the contact form or process contact form logic
   add_shortcode('si_contact_form', array(&$si_contact_form,'si_contact_form_short_code'),1);
