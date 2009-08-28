@@ -121,8 +121,8 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 = 1.1.1 =
 - (28 Aug 2009) Added Turkish language (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
-- CAPTCHA fix - Added Auto fail over to $use_gd_font if the PHP installation is configured without "--with-ttf".
-  Some users were reporting there was no error indicating this condition and the captcha was not working.
+- CAPTCHA fix - Added Automatic fail over from TTF Fonts to GD Fonts if the PHP installation is configured without "--with-ttf".
+  Some users were reporting there was no error indicating this TTF Fonts not supported condition and the captcha was not working.
 
 = 1.1 =
 - (28 Aug 2009) Added multi "email to" contact feature. Add as many contacts as you need in Options. The drop down list on the contact form will be made automatically.
