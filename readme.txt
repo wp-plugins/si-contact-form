@@ -80,6 +80,10 @@ all these folders need to be 755:
      - gdfonts
      - images
 
+This script can be used to test if your PHP installation will support the CAPTCHA:
+Open this URL in your web browser to run the test:
+`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/secureimage_test.php`
+This link can be found on the `Captcha Settings` page.
 
 == Screenshots ==
 
@@ -169,6 +173,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.7.6 =
+- (29 Aug 2009) Added this script to be used to test if your PHP installation will support the CAPTCHA:
+Open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/secureimage_test.php`
 
 = 1.7.5 =
 - (28 Aug 2009) Added Arabic Language (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)

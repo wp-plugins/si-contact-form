@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both. This prevents spam from automated bots. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.7.5
+Version: 1.7.6
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -64,7 +64,7 @@ if (!get_option($value)) {
 } //end get_settings
 
 function options_page() {
-  global $si_captcha_nonce;
+  global $si_captcha_nonce, $captcha_url;
   if ($_POST['submit']) {
     if ( function_exists('current_user_can') && !current_user_can('manage_options') )
                         die(__('You do not have permissions for managing this option', 'si-captcha'));
@@ -152,7 +152,12 @@ function options_page() {
         <fieldset class="options">
 
         <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
-
+        <tr>
+             <th scope="row"><?php _e('CAPTCHA Support Test:', 'si-captcha') ?></th>
+          <td>
+            <a href="<?php echo "$captcha_url/secureimage_test.php"; ?>"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-captcha') ?></a>
+          </td>
+        </tr>
         <tr>
             <th scope="row"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></th>
         <td>
@@ -195,6 +200,7 @@ function options_page() {
        <?php _e('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required. Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required"). WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.', 'si-captcha') ?>
       </td>
     </tr>
+
         </table>
         </fieldset>
 
