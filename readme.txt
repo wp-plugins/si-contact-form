@@ -56,9 +56,9 @@ Requirements/Restrictions:
 
 1. Upload the `si-contact-form` folder to the `/wp-content/plugins/` directory, or download through the `Plugins` menu in WordPress
 
-2. Activate the plugin through the `Plugins` menu in WordPress.
+2. Activate the plugin through the `Plugins` menu in WordPress. Look for the Settings link to configure the Options. 
 
-3. You must add the shortcode `[si_contact_form]` in a Page. That page will become your Contact Form.
+3. You must add the shortcode `[si_contact_form]` in a Page. That page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si_contact_form]` in the page, click `Publish`. 
 
 4. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
 
@@ -83,6 +83,8 @@ all these folders need to be 755:
 2. screenshot-2.jpg is the contact form showing the inline error messages.
 
 3. screenshot-3.jpg is the `Contact Form options` tab on the `Admin Plugins` page.
+
+4. screenshot-4.jpg adding the shortcode `[si_contact_form]` in a Page.
 
 
 == Frequently Asked Questions ==
