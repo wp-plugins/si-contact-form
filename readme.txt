@@ -153,6 +153,7 @@ The following translations are included in the download zip file:
 * Swedish (sv_SE) - Translated by [Benct]
 * Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
+* More are needed... Please help translate.
 
 
 = Are the CAPTCHA audio files available in other languages? =
