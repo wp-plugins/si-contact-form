@@ -66,7 +66,7 @@ Requirements/Restrictions:
 = Troubleshooting if the CAPTCHA image itself is not being shown: =
 
 This can happen if a server has too low a default permission level on new folders.
-Check and make sure the permission on all the captcha-secureimage folders are set to permission: 755
+Check that the permission on all the captcha-secureimage folders are set to permission: 755
 
 all these folders need to be 755:
 - si-contact-form
@@ -75,6 +75,10 @@ all these folders need to be 755:
      - gdfonts
      - images
 
+This script can be used to test if your PHP installation will support the CAPTCHA:
+Open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/secureimage_test.php`
+This link can be found on the `Captcha Settings` page.
 
 == Screenshots ==
 
@@ -89,18 +93,19 @@ all these folders need to be 755:
 
 == Frequently Asked Questions ==
 
-= Do I have to also install the plugin "SI CAPTCHA for Wordpress"? =
+= Does this contact form use Akismet spam protection? =
+Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated.
+
+= Do I have to also install the plugin "SI CAPTCHA for Wordpress" for the CAPTCHA to work? =
 
 No, this plugin includes the CAPTCHA feature code for this contact form.
-The "SI CAPTCHA for Wordpress" plugin is used for comment and registration forms spam protection only.
+The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and registration forms spam protection.
 
 = I use the plugin "SI CAPTCHA for Wordpress" for my comment and registration forms, is it still needed? =
 
-Yes, the plugin "SI CAPTCHA for Wordpress" should be installed if you want protection for the comment and registration forms.
-The two plugins are totally separate.
+Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
+The two plugins have the same CAPTCHA library but are totally separate.
 
-= Does this contact form use Akismet spam protection? =
-Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated.
 
 = Is this plugin available in other languages? =
 
@@ -120,6 +125,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.1.3 =
+- (29 Aug 2009) Added this script to be used to test if your PHP installation will support the CAPTCHA:
+Open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/secureimage_test.php`
 
 = 1.1.2 =
 - (28 Aug 2009) Updated Turkish language (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)

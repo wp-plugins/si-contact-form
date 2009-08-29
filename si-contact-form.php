@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.1.2
+Version: 1.1.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -90,7 +90,7 @@ if (!get_option($value)) {
 } //end get_settings
 
 function options_page() {
-  global $si_contact_nonce;
+  global $si_contact_nonce, $captcha_url_cf;
   if ($_POST['submit']) {
     if ( function_exists('current_user_can') && !current_user_can('manage_options') )
                         die(__('You do not have permissions for managing this option', 'si-contact'));
@@ -250,8 +250,8 @@ if (empty($ctf_contacts)) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php _e('help', 'si-captcha'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_to_tip">
         <?php _e('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact') ?><br />
-        Manager,user1@example.com<br />
-        Service,user2@example.com
+        Webmaster,user1@example.com<br />
+        Sales,user2@example.com
         </div>
         <br />
 
@@ -318,6 +318,7 @@ if (empty($ctf_contacts)) {
         <strong><?php _e('registered', 'si-contact') ?></strong> <?php _e('users who can', 'si-contact') ?>:</label>
         <?php $this->si_contact_captcha_perm_dropdown('si_contact_captcha_perm_level', $this->get_settings('si_contact_captcha_perm_level'));  ?><br />
 
+        <a href="<?php echo "$captcha_url_cf/secureimage_test.php"; ?>"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-captcha') ?></a>
       </td>
     </tr>
 
@@ -508,16 +509,6 @@ $ctf_charset = $this->get_settings('si_contact_email_charset');
 
 // Content-transfer-encoding for email message header
 $ctf_encoding = $this->get_settings('si_contact_email_encoding');
-
-// OPTIONAL: You can change the default SMTP settings below...
-// NOTE most servers do not need these settings changed!!!
-$ctf_ini_set       = "no";        // "yes" to enable this feature (ONLY if needed)
-$ctf_smtp          = "localhost"; // sometimes mail.yourdomain.com Confirm with your host
-$ctf_smtp_port     = "25";        // Confirm with your host
-$ctf_smtp_username = "you";       // your mail username. If you do not know, ask your host
-$ctf_smtp_password = "123456";    // your mail password. If you do not know, ask your host
-$ctf_sendmail_from = "you@yourdomain.com";   // Your email
-$ctf_sendmail_path = "/usr/sbin/sendmail -t -i"; // If different, ask host
 
 // Redirect to Home Page after message is sent
 $ctf_redirect_enable = $this->get_settings('si_contact_redirect_enable');
@@ -798,16 +789,6 @@ $message
       $header .= 'Content-transfer-encoding: '.$ctf_encoding . PHP_EOL;
 
       ini_set('sendmail_from', $email); // needed for some windows servers
-
-      // SMPT auth - send the email (not 100% sure this SMTP auth works with PHP mail)
-      if(strtolower($ctf_ini_set) == "yes") {
-       ini_set("SMTP", $ctf_smtp);
-       ini_set("smtp_port", $ctf_smtp_port);
-       ini_set("smtp_password", $ctf_smtp_password);
-       ini_set("smtp_username", $ctf_smtp_username);
-       ini_set("sendmail_from", $ctf_sendmail_from);
-       ini_set("sendmail_path", $ctf_sendmail_path);
-      }
 
       mail($mail_to,$subj,$msg,$header);
       $message_sent = 1;
