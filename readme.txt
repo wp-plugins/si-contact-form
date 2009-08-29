@@ -121,6 +121,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.1.2 =
+- (28 Aug 2009) Updated Turkish language (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
+
 = 1.1.1 =
 - (28 Aug 2009) Added Turkish language (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
 - CAPTCHA fix - Added Automatic fail over from TTF Fonts to GD Fonts if the PHP installation is configured without "--with-ttf".
