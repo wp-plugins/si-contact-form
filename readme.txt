@@ -30,11 +30,10 @@ Features:
 
 Captcha Image Support:
 ---------------------
- * Captcha Image by www.phpcaptcha.org is included
- * Open-source free PHP CAPTCHA script
+ * Open-source free PHP CAPTCHA library by www.phpcaptcha.org is included
  * Abstract background with multi colored, angled, and transparent text
  * Arched lines through text
- * Generates audible CAPTCHA files in wav format
+ * Generates audible CAPTCHA files in WAV format
  * Refresh button to reload captcha if you cannot read it
 
 Requirements/Restrictions:
@@ -70,6 +69,9 @@ and the problem should be fixed.
 
 = Troubleshooting if the CAPTCHA image itself is not being shown: =
 
+By default, the admin will not see the CAPTCHA. If you click "log out", go look and it will be there.
+
+If the image is broken and you have the CAPTCHA entry box:
 This can happen if a server has too low a default permission level on new folders.
 Check and make sure the permission on all the captcha-secureimage folders are set to permission: 755
 
@@ -79,6 +81,9 @@ all these folders need to be 755:
      - audio
      - gdfonts
      - images
+
+Here is a tutorial about permissions:
+(http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
 This script can be used to test if your PHP installation will support the CAPTCHA:
 Open this URL in your web browser to run the test:
