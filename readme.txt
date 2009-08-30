@@ -127,7 +127,7 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 == Changelog ==
 
 = 1.1.4 =
-- (29 Aug 2009) Improved ctf_validate_email function and fixed a bug that invalidated email address with upper case
+- (29 Aug 2009) Improved `ctf_validate_email` function and fixed a bug that invalidated email address with upper case
 
 = 1.1.3 =
 - (29 Aug 2009) Added this script to be used to test if your PHP installation will support the CAPTCHA:
