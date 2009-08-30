@@ -133,6 +133,12 @@ You can just check the 'Comment Form Rearrange' box on the admin plugins 'Captch
 = Why is it better to uncheck the 'Comment Form Rearrange' box and move the tag? =
 Because the XHTML will no longer validate if it is checked.
 
+= Why do I get "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled."? =
+
+Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
+
+If you get this error, your browser is blocking cookies or you have another plugin that is improperly setting a session cookie before header output (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
+
 
 = Is this plugin available in other languages? =
 
