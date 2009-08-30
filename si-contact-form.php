@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.1.3
+Version: 1.1.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -225,7 +225,7 @@ function options_page() {
 // checks for properly configured E-mail address in options.
 $ctf_contacts = array ();
 $ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
-if(!preg_match("/,/", $ctf_contacts_test) && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $ctf_contacts_test)) {
+if(!preg_match("/,/", $ctf_contacts_test) && $this->ctf_validate_email($ctf_contacts_test)) {
    $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact'),  'EMAIL' => $ctf_contacts_test );
 }
 $ctf_ct_arr = explode("\n",$ctf_contacts_test);
@@ -233,8 +233,7 @@ foreach($ctf_ct_arr as $line) {
     // echo '|'.$line.'|' ;
    list($key, $value) = explode(",",$line);
    $key = trim($key); $value = trim($value);
-   if ($key != '' && $value != ''
-   && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $value)) {
+   if ($key != '' && $value != '' && $this->ctf_validate_email($value)) {
       $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
    }
 }
@@ -442,7 +441,7 @@ $ctf_contacts = array ();
 $ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
 
 // check for single e-mail
-if(!preg_match("/,/", $ctf_contacts_test) && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $ctf_contacts_test)) {
+if(!preg_match("/,/", $ctf_contacts_test) && $this->ctf_validate_email($ctf_contacts_test)) {
    $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact'),  'EMAIL' => $ctf_contacts_test );
 }
 
@@ -451,9 +450,8 @@ $ctf_ct_arr = explode("\n",$ctf_contacts_test);
 foreach($ctf_ct_arr as $line) {
     // echo '|'.$line.'|' ;
    list($key, $value) = explode(",",$line);
-    $key = trim($key); $value = trim($value);
-   if ($key != '' && $value != ''
-   && preg_match("/^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $value)) {
+   $key = trim($key); $value = trim($value);
+   if ($key != '' && $value != '' && $this->ctf_validate_email($value)) {
       $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
    }
 }
@@ -1083,32 +1081,35 @@ function ctf_name_case($name) {
    return $newname;
 } // end function ctf_name_case
 
-// checks proper email syntax
+// checks proper email syntax (not perfect, none of these are, but this is the best I can find)
 function ctf_validate_email($email) {
-   // Create the syntactical validation regular expression
-   $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$";
-   // Presume that the email is invalid
-   $valid = 0;
+
    //check for all the non-printable codes in the standard ASCII set,
    //including null bytes and newlines, and exit immediately if any are found.
    if (preg_match("/[\\000-\\037]/",$email)) {
-    return 0;
+      return false;
    }
-   // Validate the syntax
-   if (preg_match("/$regexp/", $email)) {
-      list($username,$domaintld) = explode("@",$email);
-      // Validate the domain
-      if ( function_exists("getmxrr") ) {
-        if (getmxrr($domaintld,$mxrecords) ) {
-             $valid = 1;
-        }
-      } else {
-             $valid = 1;
-      }
-   } else {
-      $valid = 0;
+   // Create the syntactical validation regular expression
+   // http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+   //$pattern = "/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|asia|cat|jobs|tel|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i";
+   //$pattern = "/^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+)(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/i";
+   $pattern = "/^[-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@(?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?$/iD";
+   if(!preg_match($pattern, $email)){
+      return false;
    }
-   return $valid;
+   // Validate the DNS
+   list($user,$domain) = explode('@',$email);
+   //if(function_exists("getmxrr") && getmxrr($domain, $mxhosts)) {
+   if(function_exists('checkdnsrr') && checkdnsrr($domain,"MX")) { // Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
+        return true;
+   }
+   else if(@fsockopen($domain, 25, $errno, $errstr, 5)) {
+        return true;
+   }
+   else {
+        return false;
+   }
+   return true;
 } // end function ctf_validate_email
 
 // helps spam protect email input
