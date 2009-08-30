@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.1.4
+Version: 1.1.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -69,7 +69,7 @@ if (!get_option($value)) {
          'si_contact_double_email' => 'false',
          'si_contact_domain_protect' => 'true',
          'si_contact_captcha_enable' => 'true',
-         'si_contact_captcha_perm' => 'true',
+         'si_contact_captcha_perm' => 'false',
          'si_contact_captcha_perm_level' => 'read',
          'si_contact_redirect_enable' => 'true',
          'si_contact_redirect_url' => 'index.php',
@@ -101,10 +101,10 @@ function options_page() {
                 update_option($option,str_replace('&quot;','"',trim($_POST[$option])));
         }
 
-      if ( !isset( $_POST['si_contact_welcome'] ) )
+    if ( !isset( $_POST['si_contact_welcome'] ) )
          update_option( 'si_contact_welcome', '' );
 
-     if ( !isset( $_POST['si_contact_email_from'] ) )
+    if ( !isset( $_POST['si_contact_email_from'] ) )
          update_option( 'si_contact_email_from', '' );
 
     if ( !isset( $_POST['si_contact_email_bcc'] ) )
@@ -125,7 +125,7 @@ function options_page() {
         else
          update_option( 'si_contact_captcha_enable', 'false' );
 
-     if ( isset( $_POST['si_contact_redirect_enable'] ) )
+    if ( isset( $_POST['si_contact_redirect_enable'] ) )
          update_option( 'si_contact_redirect_enable', 'true' );
         else
          update_option( 'si_contact_redirect_enable', 'false' );
@@ -154,9 +154,9 @@ function options_page() {
         else
          update_option( 'si_contact_aria_required', 'false' );
 
-     if (function_exists('wp_cache_flush')) {
+    if (function_exists('wp_cache_flush')) {
 	     wp_cache_flush();
-	 }
+	}
 
   }
 ?>
@@ -678,8 +678,8 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
        $si_contact_error_message = __('Message text is required.', 'si-contact');
    }
 
-   // Check with Akismet, but only if Akismet is installed. (Recommended for spam control).
-   if(function_exists('akismet_http_post')){
+   // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
+   if( function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
 			global $akismet_api_host, $akismet_api_port;
 			$c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 			$c['user_agent'] 		= $_SERVER['HTTP_USER_AGENT'];
@@ -1089,7 +1089,7 @@ function ctf_validate_email($email) {
    if (preg_match("/[\\000-\\037]/",$email)) {
       return false;
    }
-   // Create the syntactical validation regular expression
+   // regular expression used to perform the email check
    // http://fightingforalostcause.net/misc/2006/compare-email-regex.php
    //$pattern = "/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|asia|cat|jobs|tel|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i";
    //$pattern = "/^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+)(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/i";
@@ -1097,7 +1097,7 @@ function ctf_validate_email($email) {
    if(!preg_match($pattern, $email)){
       return false;
    }
-   // Validate the DNS
+   // Validate the domain exists with a DNS check
    list($user,$domain) = explode('@',$email);
    //if(function_exists("getmxrr") && getmxrr($domain, $mxhosts)) {
    if(function_exists('checkdnsrr') && checkdnsrr($domain,"MX")) { // Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
@@ -1120,7 +1120,8 @@ function ctf_forbidifnewlines($input) {
        stristr($input, "\n")  !== false ||
        stristr($input, "%0a") !== false ||
        stristr($input, "%0d") !== false) {
-         wp_die(__('Contact Form has Invalid Input', 'si-contact'));
+         //wp_die(__('Contact Form has Invalid Input', 'si-contact'));
+         $this->si_contact_error = 1;
 
    }
 } // end function ctf_forbidifnewlines

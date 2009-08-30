@@ -11,40 +11,39 @@ A Fast and Secure Contact Form for WordPress.
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. Easy and Quick 3 step install.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. Easy and Quick 3 step install.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
 Features:
 --------
  * Configure Options from Admin panel.
- * Uses simple error messages.
+ * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
  * Validates syntax of E-mail address (user@aol = bad, user@aol.com = good).
  * Optional redirect to home page after message sent.
  * Valid HTML, Section 508 and WAI Accessibility HTML Validation.
  * JavaScript is not required.
  * Setting to hide the CAPTCHA from logged in users and or admins.
- * Multi "email to" contact feature.
+ * Multi "E-mail to" contact support.
  * I18n language translation support (see FAQ)
 
 Security:
 --------
  * It has very tight security, it stops all the spammer tricks I have found.
- * Akismet spam protection.
- * Filters all form inputs from html and other nasties.
- * Spamchecks email address input from common spammer tactics...
-prevents spammer forcing to:, cc:, bcc:, newlines, and other email injection attempts to spam the world.
- * Makes sure the form was posted from your approved host name only.
+ * Akismet spam protection support.
+ * Filters all form inputs from HTML and other nasties.
+ * Spamchecks E-mail address input from common spammer tactics...
+prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection attempts to spam the world.
+ * Makes sure the contact form was posted from your blog domain name only.
  * E-mail message shows IP address and user agent (browser version) of user who contacted you
 
 Captcha Image Support:
 ---------------------
- * Captcha Image by www.phpcaptcha.org is included
- * Open-source free PHP CAPTCHA script
+ * Open-source free PHP CAPTCHA library by www.phpcaptcha.org is included (can be disabled in Options)
  * Abstract background with multi colored, angled, and transparent text
  * Arched lines through text
- * Generates audible CAPTCHA files in wav format
+ * Generates audible CAPTCHA files in WAV format
  * Refresh button to reload captcha if you cannot read it
 
 Requirements/Restrictions:
@@ -65,6 +64,9 @@ Requirements/Restrictions:
 
 = Troubleshooting if the CAPTCHA image itself is not being shown: =
 
+By default, the admin will not see the CAPTCHA. If you click "log out", go look and it will be there.
+
+If the image is broken and you have the CAPTCHA entry box:
 This can happen if a server has too low a default permission level on new folders.
 Check that the permission on all the captcha-secureimage folders are set to permission: 755
 
@@ -74,6 +76,9 @@ all these folders need to be 755:
      - audio
      - gdfonts
      - images
+
+Here is a tutorial about permissions:
+(http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
 This script can be used to test if your PHP installation will support the CAPTCHA:
 Open this URL in your web browser to run the test:
@@ -130,6 +135,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.1.5 = 
+- (30 Aug 2009) Improved Akismet function (checks for wordpress_api_key)
+- Hide CAPTCHA for registered users is now disabled by default(configurable in Options)
 
 = 1.1.4 =
 - (29 Aug 2009) Improved `ctf_validate_email` function and fixed a bug that invalidated email address with upper case
