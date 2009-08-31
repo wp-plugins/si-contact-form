@@ -143,6 +143,10 @@ Check your web browser settings and make sure you are not blocking cookies for y
 
 If you get this error, your browser is blocking cookies or you have another plugin that is improperly setting a session cookie before header output (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
 
+This `cookie_test.php` can be used to test if your browser is accepting cookies from your site:
+Open this URL in your web browser to run the test: (put your blog domain in the first part of the URL)
+`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/cookie_test.php`
+
 
 = Is this plugin available in other languages? =
 
@@ -183,6 +187,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.7.7 =
+- (30 Aug 2009) Added a `cookie_test.php` to help diagnose if a web browser has cookies disabled. (see the FAQ) 
 
 = 1.7.6 =
 - (29 Aug 2009) Added this script to be used to test if your PHP installation will support the CAPTCHA:
