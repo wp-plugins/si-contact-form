@@ -82,8 +82,7 @@ all these folders need to be 755:
      - gdfonts
      - images
 
-Here is a tutorial about permissions:
-(http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
+Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
 This script can be used to test if your PHP installation will support the CAPTCHA:
 Open this URL in your web browser to run the test:
