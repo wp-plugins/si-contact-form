@@ -77,8 +77,7 @@ all these folders need to be 755:
      - gdfonts
      - images
 
-Here is a tutorial about permissions:
-(http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
+Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
 This script can be used to test if your PHP installation will support the CAPTCHA:
 Open this URL in your web browser to run the test:
@@ -137,7 +136,7 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 == Changelog ==
 
 = 1.1.5 = 
-- (30 Aug 2009) Improved Akismet function (checks for wordpress_api_key)
+- (30 Aug 2009) Improved Akismet function (checks for `wordpress_api_key`)
 - Hide CAPTCHA for registered users is now disabled by default(configurable in Options)
 
 = 1.1.4 =
