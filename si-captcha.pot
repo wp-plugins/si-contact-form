@@ -3,17 +3,17 @@
 # 
 # Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 # Description: A CAPTCHA to protect comment posts and or registrations in WordPress
-# Version: 1.7
+# Version: 1.7.9
 # Author: Mike Challis
 # Author URI: http://www.642weather.com/weather/scripts.php
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.7\n"
+"Project-Id-Version: 1.7.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-captcha-for-wordpress\n"
 "POT-Creation-Date: 2008-12-14 17:48+0000\n"
-"PO-Revision-Date: 2009-08-26 17:48+0000\n"
+"PO-Revision-Date: 2009-08-31 17:48+0000\n"
 "Last-Translator: Mike Challis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
