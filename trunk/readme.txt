@@ -116,9 +116,10 @@ Check your web browser settings and make sure you are not blocking cookies for y
 
 If you get this error, your browser is blocking cookies or you have another plugin that is conflicting (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
 
-This `cookie_test.php` can be used to test if your browser is accepting cookies from your site:
-Open this URL in your web browser to run the test: (put your blog domain in the first part of the URL)
-`/wp-content/plugins/si-contact-form/captcha-secureimage/cookie_test.php`
+There is a Cookie Test that can be used to test if your browser is accepting cookies from your site:
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
 
 = Is this plugin available in other languages? =
 
@@ -139,6 +140,12 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.2.1 =
+- (31 Aug 2009) Added more diagnostic test scripts: a Cookie Test, Captcha test, and a PHP Requirements Test.
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
+
 = 1.2 =
 - (31 Aug 2009) Translations were not working
 
@@ -146,7 +153,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 - (31 Aug 2009) Cookie error improvements.
 
 = 1.1.6 =
-- (30 Aug 2009) Added a `cookie_test.php` to help diagnose if a web browser has cookies disabled. (see the FAQ) 
+- (30 Aug 2009) Added a Cookie Test to help diagnose if a web browser has cookies disabled.
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
 
 = 1.1.5 = 
 - (30 Aug 2009) Improved Akismet function (checks for `wordpress_api_key`)
