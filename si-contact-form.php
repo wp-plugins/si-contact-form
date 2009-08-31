@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.1.6
+Version: 1.1.7
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -403,29 +403,6 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
         echo "\t</select>\n";
  }
 
-function captchaCheckRequires() {
-  global $captcha_path_cf;
-
-  $ok = 'ok';
-  // Test for some required things, print error message if not OK.
-  if ( !extension_loaded('gd') || !function_exists('gd_info') ) {
-       echo '<p style="color:maroon">'.__('ERROR: si-contact-form.php plugin says GD image support not detected in PHP!', 'si-contact').'</p>';
-       echo '<p>'.__('Contact your web host and ask them why GD image support is not enabled for PHP.', 'si-contact').'</p>';
-      $ok = 'no';
-  }
-  if ( !function_exists('imagepng') ) {
-       echo '<p style="color:maroon">'.__('ERROR: si-contact-form.php plugin says imagepng function not detected in PHP!', 'si-contact').'</p>';
-       echo '<p>'.__('Contact your web host and ask them why imagepng function is not enabled for PHP.', 'si-contact').'</p>';
-      $ok = 'no';
-  }
-  if ( !file_exists("$captcha_path_cf/securimage.php") ) {
-       echo '<p style="color:maroon">'.__('ERROR: si-contact-form.php plugin says captcha_library not found.', 'si-contact').'</p>';
-       $ok = 'no';
-  }
-  if ($ok == 'no')  return false;
-  return true;
-}
-
 // this function prints the contact form
 // and does all the decision making to send the email or not
 function si_contact_form_short_code() {
@@ -714,7 +691,7 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
   if ( $this->isCaptchaEnabled() ) {
     if (!isset($_SESSION['securimage_code_value']) || empty($_SESSION['securimage_code_value'])) {
           $this->si_contact_error = 1;
-          $si_contact_error_captcha = __('Could not read CAPTCHA cookie. Make sure you have cookies enabled.', 'si-contact');
+          $si_contact_error_captcha = __('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-contact');
     }else{
        if (empty($captcha_code) || $captcha_code == '') {
          $this->si_contact_error = 1;
@@ -970,13 +947,34 @@ function isCaptchaEnabled() {
    return true;
 } // end function isCaptchaEnabled
 
+function captchaCheckRequires() {
+  global $captcha_path_cf;
+
+  $ok = 'ok';
+  // Test for some required things, print error message if not OK.
+  if ( !extension_loaded('gd') || !function_exists('gd_info') ) {
+      $this->captchaRequiresError .= '<p '.$this->ctf_error_style.'>'.__('ERROR: si-contact-form.php plugin says GD image support not detected in PHP!', 'si-contact').'</p>';
+      $this->captchaRequiresError .= '<p>'.__('Contact your web host and ask them why GD image support is not enabled for PHP.', 'si-contact').'</p>';
+      $ok = 'no';
+  }
+  if ( !function_exists('imagepng') ) {
+      $this->captchaRequiresError .= '<p '.$this->ctf_error_style.'>'.__('ERROR: si-contact-form.php plugin says imagepng function not detected in PHP!', 'si-contact').'</p>';
+      $this->captchaRequiresError .= '<p>'.__('Contact your web host and ask them why imagepng function is not enabled for PHP.', 'si-contact').'</p>';
+      $ok = 'no';
+  }
+  if ( !file_exists("$captcha_path_cf/securimage.php") ) {
+       $this->captchaRequiresError .= '<p '.$this->ctf_error_style.'>'.__('ERROR: si-contact-form.php plugin says captcha_library not found.', 'si-contact').'</p>';
+       $ok = 'no';
+  }
+  if ($ok == 'no')  return false;
+  return true;
+}
+
 // this function adds the captcha to the contact form
 function addCaptchaToContactForm($si_contact_error_captcha) {
    global $user_ID, $captcha_url_cf;
 
-   if ( !$this->isCaptchaEnabled() ) {
-        return true; // captcha setting is disabled for si contact
-   }
+  $string = '';
 
 // Test for some required things, print error message right here if not OK.
 if ($this->captchaCheckRequires()) {
@@ -1004,6 +1002,8 @@ $string = '
 </div>
 <br /><br />
 ';
+} else {
+      $string .= $this->captchaRequiresError;
 }
   return $string;
 } // end function addCaptchaToContactForm

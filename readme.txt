@@ -110,11 +110,11 @@ The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and regis
 Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
 The two plugins have the same CAPTCHA library but are totally separate.
 
-= Why do I get "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled."? =
+= Why do I get "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting."? =
 
 Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
 
-If you get this error, your browser is blocking cookies or you have another plugin that is improperly setting a session cookie before header output (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
+If you get this error, your browser is blocking cookies or you have another plugin that is conflicting (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
 
 This `cookie_test.php` can be used to test if your browser is accepting cookies from your site:
 Open this URL in your web browser to run the test: (put your blog domain in the first part of the URL)
@@ -138,6 +138,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.1.7 =
+- (31 Aug 2009) Cookie error improvements.
 
 = 1.1.6 =
 - (30 Aug 2009) Added a `cookie_test.php` to help diagnose if a web browser has cookies disabled. (see the FAQ) 
