@@ -76,6 +76,7 @@ all these folders need to be 755:
      - audio
      - gdfonts
      - images
+     - test
 
 Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
@@ -128,6 +129,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
 * More are needed... Please help translate.
 
@@ -139,6 +141,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.2.2 =
+- (31 Aug 2009) Added Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 1.2.1 =
 - (31 Aug 2009) Added more diagnostic test scripts: a Cookie Test, Captcha test, and a PHP Requirements Test.
