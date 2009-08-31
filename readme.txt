@@ -139,6 +139,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.2 =
+- (31 Aug 2009) Translations were not working
+
 = 1.1.7 =
 - (31 Aug 2009) Cookie error improvements.
 
