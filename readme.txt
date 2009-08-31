@@ -189,6 +189,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.7.9 =
+- (31 Aug 2009) Updated Italian language
+
 = 1.7.8 =
 - (31 Aug 2009) Improved cookie error
 
