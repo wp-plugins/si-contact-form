@@ -107,9 +107,10 @@ Check your web browser settings and make sure you are not blocking cookies for y
 
 If you get this error, your browser is blocking cookies or you have another plugin that is conflicting (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
 
-This `cookie_test.php` can be used to test if your browser is accepting cookies from your site:
-Open this URL in your web browser to run the test: (put your blog domain in the first part of the URL)
-`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/cookie_test.php`
+The Cookie Test can be used to test if your browser is accepting cookies from your site:
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/test/index.php`
 
 
 = Troubleshooting if the CAPTCHA form fields and image is not being shown: =
@@ -144,9 +145,9 @@ all these folders need to be 755:
 Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
 This script can be used to test if your PHP installation will support the CAPTCHA:
-Open this URL in your web browser to run the test:
-`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/secureimage_test.php`
-This link can be found on the `Captcha Settings` page.
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/test/index.php`
 
 
 = Is this plugin available in other languages? =
@@ -190,7 +191,11 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 == Changelog ==
 
 = 1.7.9 =
-- (31 Aug 2009) Updated Italian language
+- (31 Aug 2009) Added more diagnostic test scripts: a Cookie Test, Captcha test, and a PHP Requirements Test.
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/test/index.php`
+- Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 1.7.8 =
 - (31 Aug 2009) Improved cookie error
@@ -199,9 +204,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 - (30 Aug 2009) Added a `cookie_test.php` to help diagnose if a web browser has cookies disabled. (see the FAQ) 
 
 = 1.7.6 =
-- (29 Aug 2009) Added this script to be used to test if your PHP installation will support the CAPTCHA:
-Open this URL in your web browser to run the test:
-`/wp-content/plugins/si-contact-form/captcha-secureimage/secureimage_test.php`
+- (29 Aug 2009) Added this script to test if your PHP installation will support the CAPTCHA:
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-captcha-for-wordpress/captcha-secureimage/test/index.php`
 
 = 1.7.5 =
 - (28 Aug 2009) Added Arabic Language (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)
@@ -209,7 +215,7 @@ Open this URL in your web browser to run the test:
   Some users were reporting there was no error indicating this TTF Fonts not supported condition and the captcha was not working.
 
 = 1.7.4 =
-- (28 Aug 2009) Updated Italian language
+- (28 Aug 2009) Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 1.7.3 =
 - (28 Aug 2009) Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
