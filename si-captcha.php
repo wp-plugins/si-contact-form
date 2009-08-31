@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both. This prevents spam from automated bots. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.7.7
+Version: 1.7.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -241,7 +241,6 @@ function si_captcha_perm_dropdown($select_name, $checked_value='') {
  }
 
 function captchaCheckRequires() {
-
   global $captcha_path;
 
   $ok = 'ok';
@@ -316,7 +315,7 @@ if ($captcha_comment_class != '') {
 
 echo '/>
  <label for="captcha_code"><small>'.__('CAPTCHA Code (required)', 'si-captcha').'</small></label>
-</div>
+ </div>
 </div>
 ';
 
@@ -391,7 +390,7 @@ function checkCaptchaRegisterPostNew($errors) {
    global $captcha_path;
 
    if (!isset($_SESSION['securimage_code_value']) || empty($_SESSION['securimage_code_value'])) {
-          $errors->add('captcha_no_cookie', '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Could not read CAPTCHA cookie. Make sure you have cookies enabled.', 'si-captcha'));
+          $errors->add('captcha_no_cookie', '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-captcha'));
           return $errors;
    }else{
       if (empty($_POST['captcha_code']) || $_POST['captcha_code'] == '') {
@@ -419,7 +418,7 @@ function checkCaptchaRegisterPost() {
    global $errors, $captcha_path;
 
    if (!isset($_SESSION['securimage_code_value']) || empty($_SESSION['securimage_code_value'])) {
-          $errors['captcha_no_cookie'] = '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Could not read CAPTCHA cookie. Make sure you have cookies enabled.', 'si-captcha');
+          $errors['captcha_no_cookie'] = '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-captcha');
           return $errors;
    }else{
        if (empty($_POST['captcha_code']) || $_POST['captcha_code'] == '') {
@@ -468,7 +467,7 @@ function checkCaptchaCommentPost($comment) {
                return $comment;
     }
     if (!isset($_SESSION['securimage_code_value']) || empty($_SESSION['securimage_code_value'])) {
-          wp_die( '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Could not read CAPTCHA cookie. Make sure you have cookies enabled.', 'si-captcha'));
+          wp_die( '<strong>'.__('ERROR', 'si-captcha').'</strong>: '.__('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-captcha'));
     }else{
        if (empty($_POST['captcha_code']) || $_POST['captcha_code'] == '') {
            wp_die( __('Error: You did not enter a Captcha phrase. Press your browsers back button and try again.', 'si-captcha'));
