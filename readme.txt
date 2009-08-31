@@ -141,6 +141,7 @@ all these folders need to be 755:
      - audio
      - gdfonts
      - images
+     - test
 
 Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
