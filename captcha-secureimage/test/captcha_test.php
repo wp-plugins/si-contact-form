@@ -138,7 +138,8 @@ if (!$hide_form) {
 
  <p>
   This test will check the function of the CAPTCHA outside of the WordPress environment.
-  Type the phrase in the CAPTCHA field and click "submit" to see if the test passes.
+  If you are having a problem with the CAPTCHA, this test can help rule out a conflict with another plugin.
+  To begin the test, type the phrase in the CAPTCHA field and click "submit", then see if the test passes.
 
   <br /><br />
 Note: If you see any errors or warnings at the top of the page,
@@ -190,9 +191,9 @@ function echo_if_error($this_error){
 ?>
 
 <p>
+<a href="index.php">Try the PHP Requirements Test</a><br />
 <a href="cookie_test.php">Try the Cookie Test</a><br />
 <b><a href="captcha_test.php">Try the CAPTCHA Test again</a></b><br />
-<a href="index.php">Try the PHP Requirements Test</a><br />
 </p>
 
 <p>PHP Scripts by Mike Challis<br />

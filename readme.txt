@@ -1,4 +1,4 @@
-=== SI CAPTCHA for Wordpress ===
+=== SI CAPTCHA for WordPress ===
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
@@ -13,7 +13,7 @@ Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration fo
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
 In order to post comments, users will have to type in the phrase shown on the image.
-This prevents spam from automated bots.
+This prevents spam from automated bots. Works great with Akismet.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-captcha.php)
 
