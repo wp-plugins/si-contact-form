@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: SI CAPTCHA in italiano\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-captcha-for-wordpress\n"
 "POT-Creation-Date: 2008-12-14 17:48+0000\n"
-"PO-Revision-Date: 2009-08-31 10:26+0100\n"
+"PO-Revision-Date: 2009-09-01 01:50+0100\n"
 "Last-Translator: Gianni Diurno (aka gidibao) <gidibao@gmail.com>\n"
 "Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -188,98 +188,102 @@ msgstr "Modera i commenti"
 msgid "Administer site"
 msgstr "Amministra sito"
 
-#: si-captcha.php:250
+#: si-captcha.php:249
 msgid "ERROR: si-captcha.php plugin says GD image support not detected in PHP!"
 msgstr "ERRORE: il plugin si-captcha.php informa che il supporto GD image non é stato rilevato in PHP!"
 
-#: si-captcha.php:251
+#: si-captcha.php:250
 msgid "Contact your web host and ask them why GD image support is not enabled for PHP."
 msgstr "Contatta il tuo fornitore del servizio di hosting e domada perché il supporto GD image non sia stato abilitato per il PHP."
 
-#: si-captcha.php:255
+#: si-captcha.php:254
 msgid "ERROR: si-captcha.php plugin says imagepng function not detected in PHP!"
 msgstr "ERRORE: il plugin si-captcha.php informa che la funzione imagepng non é stata rilevata in PHP!"
 
-#: si-captcha.php:256
+#: si-captcha.php:255
 msgid "Contact your web host and ask them why imagepng function is not enabled for PHP."
 msgstr "Contatta il tuo fornitore del servizio di hosting e domada perché la funzione imagepng non sia stata abilitata per il PHP."
 
-#: si-captcha.php:260
+#: si-captcha.php:259
 msgid "ERROR: si-captcha.php plugin says captcha_library not found."
 msgstr "ERRORE: il plugin si-captcha.php informa che la captcha_library non é stata rilevata!"
 
-#: si-captcha.php:301
-#: si-captcha.php:369
+#: si-captcha.php:300
+#: si-captcha.php:368
 msgid "CAPTCHA Image"
 msgstr "Immagine CAPTCHA"
 
-#: si-captcha.php:302
-#: si-captcha.php:370
+#: si-captcha.php:301
+#: si-captcha.php:369
 msgid "Audible Version of CAPTCHA"
 msgstr "Versione ascoltabile del CAPTCHA"
 
-#: si-captcha.php:303
-#: si-captcha.php:371
+#: si-captcha.php:302
+#: si-captcha.php:370
 msgid "Audio Version"
 msgstr "Versione audio"
 
-#: si-captcha.php:305
-#: si-captcha.php:373
+#: si-captcha.php:304
+#: si-captcha.php:372
 msgid "Refresh Image"
 msgstr "Cambia immagine"
 
-#: si-captcha.php:307
-#: si-captcha.php:375
+#: si-captcha.php:306
+#: si-captcha.php:374
 msgid "Reload Image"
 msgstr "Ricarica immagine"
 
-#: si-captcha.php:318
-#: si-captcha.php:380
+#: si-captcha.php:317
+#: si-captcha.php:379
 msgid "CAPTCHA Code (required)"
 msgstr "Codice CAPTCHA (richiesto)"
 
-#: si-captcha.php:336
+#: si-captcha.php:335
 msgid "Submit Comment"
 msgstr "Invia il commento"
 
-#: si-captcha.php:394
-#: si-captcha.php:398
-#: si-captcha.php:411
-#: si-captcha.php:422
-#: si-captcha.php:426
-#: si-captcha.php:437
-#: si-captcha.php:471
+#: si-captcha.php:393
+#: si-captcha.php:397
+#: si-captcha.php:410
+#: si-captcha.php:421
+#: si-captcha.php:425
+#: si-captcha.php:436
+#: si-captcha.php:470
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: si-captcha.php:394
-#: si-captcha.php:422
-#: si-captcha.php:471
-msgid "Could not read CAPTCHA cookie. Make sure you have cookies enabled."
-msgstr "Impossibile la lettura del cookie per il CAPTCHA. Assicurati di avere i cookies attivati."
+#: si-captcha.php:393
+#: si-captcha.php:421
+#: si-captcha.php:470
+msgid "Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ."
+msgstr "Non é stato possibile leggere il CAPTCHA cookie. Assicurati di avere i cookie abilitati e nessun blocco attivo nelle impostazioni del tuo browser diversamente, potrebbe dipendere da un conflitto con un altro plugin. Vedi le FAQ."
 
-#: si-captcha.php:398
-#: si-captcha.php:426
+#: si-captcha.php:397
+#: si-captcha.php:425
 msgid "Please complete the CAPTCHA."
 msgstr "Completa il CAPTCHA."
 
-#: si-captcha.php:411
-#: si-captcha.php:437
+#: si-captcha.php:410
+#: si-captcha.php:436
 msgid "That CAPTCHA was incorrect. Make sure you have not disabled cookies."
 msgstr "Il CAPTCHA é errato. Assicurati di non avere i cookies disattivati."
 
-#: si-captcha.php:474
+#: si-captcha.php:473
 msgid "Error: You did not enter a Captcha phrase. Press your browsers back button and try again."
 msgstr "Errore: non hai inserito una frase Captcha. Premi il pulsante di ricarica del tuo browser e riprova."
 
-#: si-captcha.php:485
+#: si-captcha.php:484
 msgid "Error: You entered in the wrong Captcha phrase. Press your browsers back button and try again."
 msgstr "Errore: hai inserito una frase Captcha errata. Premi il pulsante di ricarica del tuo browser e riprova."
 
-#: si-captcha.php:495
+#: si-captcha.php:494
 msgid "Settings"
 msgstr "Impostazioni"
 
+#~ msgid "Could not read CAPTCHA cookie. Make sure you have cookies enabled."
+#~ msgstr ""
+#~ "Impossibile la lettura del cookie per il CAPTCHA. Assicurati di avere i "
+#~ "cookies attivati."
 #~ msgid "That CAPTCHA was incorrect."
 #~ msgstr "Il CAPTCHA inserito é errato."
 
