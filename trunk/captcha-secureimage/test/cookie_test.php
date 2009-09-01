@@ -20,15 +20,16 @@ if( !isset( $_SESSION ) ) {
 }
 
 $disabled_help = '
-This is the cause. The Captcha will not be able work. The contact form will display an error:
+<b><a href="cookie_test.php">Try the Cookie Test again</a> just to be sure</b><br />
+If the CAPTCHA is giving you a cookie error, this can be the cause.
+The Captcha will not be able work. The contact form will display an error:
 "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled."
 <br /><br />
 Solution: Please configure your browser to allow cookies.
 ';
 
 $enabled_help = '
-This is rules out your web browser as the cause of the CAPTCHA form
-displaying the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled."
+If the CAPTCHA is giving you a cookie error, this rules out your web browser as the cause.
 
 <br /><br />
 Solution: Try all 3 tests below.
@@ -77,10 +78,11 @@ body
 <h2>Cookies Test</h2>
 
 <p>
-You should see a message below letting you know if cookies are enabled in your browser.
+This script will test your web browser to see if it can read a cookie required by the (Secureimage) CAPTCHA.
+You should see a message below letting you know if cookies are properly enabled in your browser.
   <br /><br />
-Note: If you see any errors or warnings at the top of the page,
-especially "Warning: session_start...", they could be indicating a problem with your PHP server that will prevent the CAPTCHA from working.
+Note: If you see any errors or warnings at the top of the page, THEN THE TEST PROBABLY FAILED.
+If you see an error: "Warning: session_start...", it is indicating a problem with your PHP server that will prevent the CAPTCHA from working.
 </p>
 
 <p>
@@ -97,25 +99,34 @@ $cookie_message = '';
 if(isset($_GET['redirected']) and $_GET['redirected']==1) {
     if(!isset($_COOKIE['mycookie'])) {
         $cookie_message = '<p style="background-color:#CC6666; color:white; padding:10px;">
-        Problem found: Cookies are NOT enabled on your browser.<br />
+        Test Failed: Problem found: Cookies are NOT enabled on your browser.<br />
         '.$disabled_help.'
         </p>';
     }
     else{
         $cookie_message = '<p style="background-color:#99CC66; padding:10px;">
-        Cookies are enabled on your browser.
+        Test Passed: Cookies are enabled on your browser.
         <br /><br />
         '.$enabled_help.'
         </p>';
     }
+} else {
+      $cookie_message = '<p style="background-color:#CC6666; padding:10px;">
+        The test failed to check for cookies because of a PHP server error.
+        <br /><br />
+        The error message will indicate the cause of the problem.
+        You may have to contact your web host support department.
+        </p>';
+
+
 }
 echo $cookie_message;
 ?>
 
 <p>
+<a href="index.php">Try the PHP Requirements Test</a><br />
 <b><a href="cookie_test.php">Try the Cookie Test again</a></b><br />
 <a href="captcha_test.php">Try the CAPTCHA Test</a><br />
-<a href="index.php">Try the PHP Requirements Test</a><br />
 </p>
 
 <p>PHP Scripts by Mike Challis<br />

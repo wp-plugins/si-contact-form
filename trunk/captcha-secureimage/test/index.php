@@ -147,9 +147,9 @@ Based on the requirements, you do not have what it takes to run (Secureimage) CA
 <?php endif; ?>
 
 <p>
+<b><a href="index.php">Try the PHP Requirements Test again</a></b><br />
 <a href="cookie_test.php">Try the Cookie Test</a><br />
 <a href="captcha_test.php">Try the CAPTCHA Test</a><br />
-<b><a href="index.php">Try the PHP Requirements Test again</a></b><br />
 </p>
 
 <p>PHP Scripts by Mike Challis<br />
