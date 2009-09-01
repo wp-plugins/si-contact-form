@@ -99,7 +99,7 @@ This link can be found on the `Captcha Settings` page.
 == Frequently Asked Questions ==
 
 = Does this contact form use Akismet spam protection? =
-Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated.
+Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated. (Akismet is not required, it will just skip the check)
 
 = Do I have to also install the plugin "SI CAPTCHA for Wordpress" for the CAPTCHA to work? =
 
