@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.2.2
+Version: 1.2.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -988,17 +988,17 @@ $string = '
                 <input type="text" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' style="width:65px;" />
         </div>
 
-<div style="text-align:left; float:left; width: 205px; padding-top: 5px; ">
-         <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
+<div style="text-align:left; float:left; width:205px; padding-top:5px;">
+         <img id="siimage" style="border-style:none; margin:0; padding-right:5px;  float:left;"
          src="'.$captcha_url_cf.'/securimage_show.php?sid='.md5(uniqid(time())).'"
          alt="'.__('CAPTCHA Image', 'si-contact-form').'" title="'.esc_attr(__('CAPTCHA Image', 'si-contact-form')).'" />
            <a href="'.$captcha_url_cf.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-contact-form')).'">
          <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="'.esc_attr(__('Audio Version', 'si-contact-form')).'"
-          style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
+          style="border-style:none; margin:0; vertical-align:top;" onclick="this.blur()" /></a><br />
            <a href="#" title="'.esc_attr(__('Refresh Image', 'si-contact-form')).'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url_cf.'/securimage_show.php?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="'.esc_attr(__('Reload Image', 'si-contact-form')).'"
-         style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
+         style="border-style:none; margin:0; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <br /><br />
 ';
@@ -1098,16 +1098,17 @@ function ctf_validate_email($email) {
       return false;
    }
    // Validate the domain exists with a DNS check
+   // if the checks cannot be made (soft fail over to true)
    list($user,$domain) = explode('@',$email);
-   //if(function_exists("getmxrr") && getmxrr($domain, $mxhosts)) {
-   if(function_exists('checkdnsrr') && checkdnsrr($domain,"MX")) { // Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
-        return true;
+   if( function_exists('checkdnsrr') ) {
+      if( !checkdnsrr($domain,"MX") ) { // Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
+         return false;
+      }
    }
-   else if(@fsockopen($domain, 25, $errno, $errstr, 5)) {
-        return true;
-   }
-   else {
-        return false;
+   else if( function_exists("getmxrr") ) {
+      if ( !getmxrr($domain, $mxhosts) ) {
+         return false;
+      }
    }
    return true;
 } // end function ctf_validate_email
