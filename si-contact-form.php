@@ -989,7 +989,7 @@ $string = '
         </div>
 
 <div style="text-align:left; float:left; width:205px; padding-top:5px;">
-         <img id="siimage" style="border-style:none; margin:0; padding-right:5px;  float:left;"
+         <img id="siimage" style="border-style:none; margin:0; padding-right:5px; float:left;"
          src="'.$captcha_url_cf.'/securimage_show.php?sid='.md5(uniqid(time())).'"
          alt="'.__('CAPTCHA Image', 'si-contact-form').'" title="'.esc_attr(__('CAPTCHA Image', 'si-contact-form')).'" />
            <a href="'.$captcha_url_cf.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-contact-form')).'">
