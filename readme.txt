@@ -82,7 +82,7 @@ Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials
 
 This script can be used to test if your PHP installation will support the CAPTCHA:
 Open this URL in your web browser to run the test:
-`/wp-content/plugins/si-contact-form/captcha-secureimage/secureimage_test.php`
+`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
 This link can be found on the `Captcha Settings` page.
 
 == Screenshots ==
