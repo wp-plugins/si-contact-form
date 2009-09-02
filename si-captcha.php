@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both. This prevents spam from automated bots. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.7.9
+Version: 1.7.10
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -294,17 +294,17 @@ if ($this->captchaCheckRequires()) {
   }
 
 echo '
-<div style="width: 250px; height: 55px; padding-top: 10px;">
-         <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
+<div style="width: 250px; height: 55px; padding-top:10px;">
+         <img id="siimage" style="border-style:none; margin:0; padding-right:5px; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
          alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
            <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
          <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
-          style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
+          style="border-style:none; margin:0; vertical-align:top;" onclick="this.blur()" /></a><br />
            <a href="#" title="'.__('Refresh Image', 'si-captcha').'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
-         style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
+         style="border-style:none; margin:0; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <div id="captchaInputDiv" style="display:block;" >
 <input type="text" name="captcha_code" id="captcha_code" tabindex="4" '.$si_aria_required.' style="width:65px;" ';
@@ -363,16 +363,16 @@ if ($this->captchaCheckRequires()) {
 // the captch html
 echo '
 <div style="width: 250px;  height: 55px">
-         <img id="siimage" style="padding-right: 5px; border-style: none; float:left;"
+         <img id="siimage" style="border-style:none; margin:0; padding-right:5px; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
          alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
            <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
          <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
-          style="border-style: none; vertical-align:top; border-style: none;" onclick="this.blur()" /></a><br />
+          style="border-style:none; margin:0; vertical-align:top;" onclick="this.blur()" /></a><br />
            <a href="#" title="'.__('Refresh Image', 'si-captcha').'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
-         style="border-style: none; vertical-align:bottom;" onclick="this.blur()" /></a>
+         style="border-style:none; margin:0; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <p>
 <input type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />

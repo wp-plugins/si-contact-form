@@ -163,7 +163,7 @@ The following translations are included in the download zip file:
 * Belorussian (by_BY) - Translated by [Marcis Gasuns](http://www.comfi.com/)
 * Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
-* German (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
+* German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
@@ -190,6 +190,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.7.10 =
+- (02 Sep 2009) Updated Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
 
 = 1.7.9 =
 - (31 Aug 2009) Added more diagnostic test scripts: a Cookie Test, Captcha test, and a PHP Requirements Test.
@@ -270,7 +273,7 @@ secureimage.wav What should (Firefox, Safari, IE, etc.) do with this file? Open 
 - (19 Mar 2009)Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 
 = 1.5.3 =
-- (12 Mar 2009) Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://www.cps-it.de/)
+- (12 Mar 2009) Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 - Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 
 = 1.5.2 =
