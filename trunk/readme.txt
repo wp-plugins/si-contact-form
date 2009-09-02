@@ -130,6 +130,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 The following translations are included in the download zip file:
 
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
+* German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
@@ -143,6 +144,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+= 1.2.4 =
+- (02 Sep 2009) Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 
 = 1.2.3 =
 - (01 Sep 2009) Fixed email validation on some windows servers
