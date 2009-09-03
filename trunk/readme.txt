@@ -145,6 +145,9 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 
 == Changelog ==
 
+= 1.2.5 =
+- (02 Sep 2009) Added Norwegian language (nb_NO) - Translated by [Roger Sylte](http://roger.inro.net/)
+
 = 1.2.4 =
 - (02 Sep 2009) Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 
