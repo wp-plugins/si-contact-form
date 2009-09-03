@@ -166,7 +166,7 @@ The following translations are included in the download zip file:
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
-* Norwegian (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
+* Norwegian (nb_NO) - Translated by [Roger Sylte](http://roger.inro.net/)
 * Polish (pl_PL) - Translated by [Tomasz](http://www.ziolczynski.pl/)
 * Portuguese Brazil (pt_BR) - Translated by [Newton Dan Faoro]
 * Russian (ru_RU) - Translated by [Neponyatka](http://www.free-lance.ru/users/neponyatka)
@@ -190,6 +190,10 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * If you have any questions, feel free to email me also. Thanks!
 
 == Changelog ==
+
+
+= 1.7.11 =
+- (03 Sep 2009) Updated German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 
 = 1.7.10 =
 - (02 Sep 2009) Updated Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
@@ -270,7 +274,7 @@ secureimage.wav What should (Firefox, Safari, IE, etc.) do with this file? Open 
 (Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)
 
 = 1.5.4 =
-- (19 Mar 2009)Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
+- (19 Mar 2009) Updated Danish Language (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 
 = 1.5.3 =
 - (12 Mar 2009) Added German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
@@ -284,7 +288,7 @@ secureimage.wav What should (Firefox, Safari, IE, etc.) do with this file? Open 
 
 = 1.5 =
 - (22 Jan 2009) Added fix for compatibility with WP Wall plugin. This does NOT add CAPTCHA to WP Wall plugin, it just prevents the "Error: You did not enter a Captcha phrase." when submitting a WP Wall comment.
-- Added Norwegian language (nb_NO) - Translated by [Roger Sylte](http://www.taekwon-do.org/)
+- Added Norwegian language (nb_NO) - Translated by [Roger Sylte](http://roger.inro.net/)
 
 = 1.4 = 
 - (04 Jan 2009) Added Turkish language (tr_TR) - Translated by [Volkan](http://www.kirpininyeri.com/)
