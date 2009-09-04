@@ -129,6 +129,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
@@ -143,7 +144,34 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com.
 * If you have any questions, feel free to email me also. Thanks!
 
+= This contact form sends e-mail with unicode encoding UTF-8 for international character support. =
+
+English-language users will experience little to no impact. Any non-English questions or messages submitted will have unicode character encoding so that when you receive the e-mail, the language will still be viewable.
+
+If you receive an email with international characters and the characters look garbled with symbols and strange characters, your e-mail program may need to be set as follows: 
+
+How to set incoming messages character encoding to Unicode(UTF-8) in various mail clients:
+
+Evolution:
+View > Character Encoding > Unicode
+
+Outlook Express 6, Windows Mail:
+Please check "Tools->Options->Read->International Settings". Un-check "Use default encoding format for all incoming messages" 
+Now select "View->Encoding", select "Unicode(UTF-8)"
+
+Mozilla Thunderbird:
+Click on Inbox.
+Select "View->Character Encoding", select "Unicode(UTF-8)"
+
+Gmail:
+No setting necessary, it just works.
+
 == Changelog ==
+
+= 1.3 =
+- (04 Sep 2009) Added Feature: This contact form sends e-mail with unicode encoding UTF-8 for international character support.(fee FAQ)
+- Added Danish Language (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
+- fixed an issue with the "Welcome introduction" field translation not translating.
 
 = 1.2.5 =
 - (02 Sep 2009) Added Norwegian language (nb_NO) - Translated by [Roger Sylte](http://roger.inro.net/)

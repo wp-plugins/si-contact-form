@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.2.5
+Version: 1.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -63,9 +63,6 @@ if (!get_option($value)) {
          'si_contact_email_to' => __('Webmaster', 'si-contact-form').','.get_option('admin_email'),
          'si_contact_email_from' => '',
          'si_contact_email_bcc' => '',
-         'si_contact_email_language' => 'en-us',
-         'si_contact_email_charset' => 'iso-8859-1',
-         'si_contact_email_encoding' => 'quoted-printable',
          'si_contact_double_email' => 'false',
          'si_contact_domain_protect' => 'true',
          'si_contact_captcha_enable' => 'true',
@@ -210,8 +207,17 @@ function options_page() {
     <tr>
          <th scope="row" style="width: 75px;"><?php _e('Form:', 'si-contact-form') ?></th>
       <td>
-        <label name="si_contact_welcome" for="si_contact_welcome"><?php _e('Welcome introduction', 'si-contact-form') ?>:</label><br />
-        <textarea rows="2" cols="40" name="si_contact_welcome" id="si_contact_welcome"><?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_welcome')));  ?></textarea>
+        <label name="si_contact_welcome" for="si_contact_welcome"><?php _e('Welcome introduction', 'si-contact-form'); ?>:</label><br />
+        <textarea rows="2" cols="40" name="si_contact_welcome" id="si_contact_welcome"><?php
+
+// update translation for this setting (when switched from English to something else)
+if ($this->get_settings('si_contact_welcome') == '<p>Comments or questions are welcome.</p>') {
+   update_option( 'si_contact_welcome', __('<p>Comments or questions are welcome.</p>', 'si-contact-form')  );
+}
+
+        echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_welcome')));
+
+        ?></textarea>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_welcome_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_welcome_tip">
         <?php _e('This gets printed when the contact form is first presented. It is not printed when there is an input error and not printed after the form is completed.', 'si-contact-form') ?>
@@ -281,27 +287,6 @@ if (empty($ctf_contacts)) {
         echo " $blogdomain ";
         ?><?php _e('(recommended).', 'si-contact-form') ?>
         </label>
-        <br />
-
-        <label name="si_contact_email_language" for="si_contact_email_language"><?php _e('E-mail header field: language', 'si-contact-form') ?>:</label><input name="si_contact_email_language" id="si_contact_email_language" type="text" value="<?php echo $this->get_settings('si_contact_email_language');  ?>" size="10" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_language_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_email_language_tip">
-        <?php _e('Do not change unless you have good reason to.', 'si-contact-form') ?>
-        </div>
-        <br />
-
-        <label name="si_contact_email_charset" for="si_contact_email_charset"><?php _e('E-mail header field: charset', 'si-contact-form') ?>:</label><input name="si_contact_email_charset" id="si_contact_email_charset" type="text" value="<?php echo $this->get_settings('si_contact_email_charset');  ?>" size="15" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_charset_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_email_charset_tip">
-        <?php _e('Do not change unless you have good reason to.', 'si-contact-form') ?>
-        </div>
-        <br />
-
-        <label name="si_contact_email_encoding" for="si_contact_email_encoding"><?php _e('E-mail header field: encoding', 'si-contact-form') ?>:</label><input name="si_contact_email_encoding" id="si_contact_email_encoding" type="text" value="<?php echo $this->get_settings('si_contact_email_encoding');  ?>" size="20" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_encoding_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_email_encoding_tip">
-        <?php _e('Do not change unless you have good reason to.', 'si-contact-form') ?>
-        </div>
 
       </td>
     </tr>
@@ -476,14 +461,11 @@ $ctf_banned_ips = array(
 // SET  $ctf_wrap_message = 1;  ON,  $ctf_wrap_message = 0; for OFF.
 $ctf_wrap_message = 1;
 
-// Content-language for email message header
-$ctf_language = $this->get_settings('si_contact_email_language');
-
 // Charset for email message header
-$ctf_charset = $this->get_settings('si_contact_email_charset');
+$ctf_charset = 'utf-8';
 
 // Content-transfer-encoding for email message header
-$ctf_encoding = $this->get_settings('si_contact_email_encoding');
+$ctf_encoding = '8bit';
 
 // Redirect to Home Page after message is sent
 $ctf_redirect_enable = $this->get_settings('si_contact_redirect_enable');
@@ -494,6 +476,10 @@ $ctf_redirect_url = $this->get_settings('si_contact_redirect_url');
 
 // The $ctf_welcome_intro is what gets printed when the contact form is first presented.
 // It is not printed when there is an input error and not printed after the form is completed
+ // update translation for this setting (when switched from English to something else)
+if ($this->get_settings('si_contact_welcome') == '<p>Comments or questions are welcome.</p>') {
+   update_option( 'si_contact_welcome', __('<p>Comments or questions are welcome.</p>', 'si-contact-form')  );
+}
 $ctf_welcome_intro = '
 
 '.$this->get_settings('si_contact_welcome').'
@@ -746,21 +732,25 @@ $message
              $msg = wordwrap($msg, 70);
       }
 
-      // remove some characters that mess up From: $name <$email>
-      // remove single quote, double quote, semicolon, colon, comma
-      $name = $this->ctf_name_case(preg_replace(array ( '/\'/', '/"/', '/;/', '/:/', '/,/' ), '', $name));
+      // encode to UTF-8 for non Latin character support
+      $name = $this->fixEncoding($name);
+      $subj = $this->fixEncoding($subj);
+      $msg  = $this->fixEncoding($msg);
 
       // prepare the email header
       if ($ctf_email_on_this_domain != '') {
-           $header =  "From: $email_on_this_domain" . PHP_EOL;
+           $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
       } else {
-           $header =  "From: $name <$email>" . PHP_EOL;
+           $header = "From: =?UTF-8?B?" .base64_encode($name)."?= <$email>" . PHP_EOL;
       }
+      $subj = "=?UTF-8?B?" .base64_encode($subj)."?=" . PHP_EOL;
+
       if ($ctf_email_address_bcc !='') $header .= "Bcc: " . $ctf_email_address_bcc . PHP_EOL;
       $header .= "Reply-To: $email" . PHP_EOL;
       $header .= "Return-Path: $email" . PHP_EOL;
       $header .= 'MIME-Version: 1.0' . PHP_EOL;
-      $header .= 'Content-type: text/plain; Content-language: '.$ctf_language.'; charset="'.$ctf_charset.'"' . PHP_EOL;
+      //$header .= 'Content-type: text/plain; Content-language: '.$ctf_language.'; charset='.$ctf_charset.'; format=flowed' . PHP_EOL;
+      $header .= 'Content-type: text/plain; charset='.$ctf_charset.'; format=flowed' . PHP_EOL;
       $header .= 'Content-transfer-encoding: '.$ctf_encoding . PHP_EOL;
 
       ini_set('sendmail_from', $email); // needed for some windows servers
@@ -928,6 +918,14 @@ $string .= '
 }
  return $string;
 } // end function si_contact_form_short_code
+
+// Fixes the email encoding to uf8
+function fixEncoding($in_str) {
+  if(mb_detect_encoding($in_str) == "UTF-8" && mb_check_encoding($in_str,"UTF-8"))
+    return $in_str;
+  else
+    return utf8_encode($in_str);
+} // fixEncoding
 
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
