@@ -26,6 +26,7 @@ Features:
  * JavaScript is not required.
  * Setting to hide the CAPTCHA from logged in users and or admins.
  * Multi "E-mail to" contact support.
+ * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
 Security:
@@ -144,7 +145,7 @@ Of course! It will be very gratefully received. Please read [Translating WordPre
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com.
 * If you have any questions, feel free to email me also. Thanks!
 
-= This contact form sends e-mail with unicode encoding UTF-8 for international character support. =
+= This contact form sends E-mail with UTF-8 character encoding for US and International character support. =
 
 English-language users will experience little to no impact. Any non-English questions or messages submitted will have unicode character encoding so that when you receive the e-mail, the language will still be viewable.
 
@@ -169,7 +170,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 1.3 =
-- (04 Sep 2009) Added Feature: This contact form sends e-mail with unicode encoding UTF-8 for international character support.(fee FAQ)
+- (04 Sep 2009) Added Feature: This contact form sends E-mail with UTF-8 character encoding for US and International character support.(fee FAQ)
 - Added Danish Language (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
 - fixed an issue with the "Welcome introduction" field translation not translating.
 
