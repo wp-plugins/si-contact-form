@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.4
+Version: 1.4.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -296,7 +296,7 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
         Webmaster,user1@example.com<br />
         Sales,user2@example.com<br /><br />
 
-        <?php _e('Also, you can have multiple E-mails per contcact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
+        <?php _e('Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
         Webmaster,user1@example.com<br />
         Sales,user3@example.com;user4@example.com;user5@example.com
         </div>
@@ -618,6 +618,10 @@ $si_contact_error_subject = '';
 $si_contact_error_message = '';
 // add another field here like above
 
+// see if WP user
+global $current_user, $user_ID;
+get_currentuserinfo();
+
 // process form now
 if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send')) {
 
@@ -787,7 +791,13 @@ $message
       // add some info about sender to the email message
       $userdomain = '';
       $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-      $user_info_string  = __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)" . PHP_EOL;
+      $user_info_string = '';
+      if ($user_ID != '') {
+        //user logged in
+        $user_info_string .= __('From a WordPress user', 'si-contact-form').': '.$current_user->user_login . PHP_EOL;
+      }
+      $user_info_string .= __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)" . PHP_EOL;
+      $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . PHP_EOL;
       $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.get_permalink() . PHP_EOL;
       $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . PHP_EOL . PHP_EOL;
       $msg .= $user_info_string;
@@ -892,6 +902,20 @@ else {
 
 }
 
+// find logged in user's WP email address:
+// http://codex.wordpress.org/Function_Reference/get_currentuserinfo
+if ($email == '') {
+  if ($user_ID != '') {
+     //user logged in
+     $email = $current_user->user_email;
+     $email2 = $current_user->user_email;
+     if ($name == '') {
+        //$name = $current_user->user_firstname . ' ' . $current_user->user_lastname;
+        $name = $current_user->user_login;
+     }
+  }
+}
+
 $string .= '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_name">'.__('Name', 'si-contact-form').':</label>
@@ -899,6 +923,7 @@ $string .= '
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_name" name="si_contact_name" value="' . $this->ctf_output_string($name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
+
 if ($ctf_enable_double_email == 'true') {
  $string .= '
         <div '.$this->ctf_title_style.'>
