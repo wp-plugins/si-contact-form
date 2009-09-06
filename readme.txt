@@ -177,7 +177,7 @@ No setting necessary, it just works.
 
 = 1.4.1 =
 - (06 Sep 2009) - Added feature: Auto form fill email address and name (username) on the contact form for logged in users.
-- Added feature: prints "From a WordPress user: <username>" on email footer for logged in users.
+- Added feature: prints "From a WordPress user: `<username>`" on email footer for logged in users.
 - Added feature: Date/Time timestamp on email footer (uses Date/Time format from general options setting).
 - Added Russian Language (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 
