@@ -172,7 +172,7 @@ No setting necessary, it just works.
 = 1.4 =
 - (06 Sep 2009) Now uses wp_mail function so that users who use the SMTP mail plugins will be supported.
 - Now sends email encoded in the character encoding you write your blog in, (UTF-8 is recommended) see `Settings`, `Reading` admin options page.
-- New feature: Now you can have multiple E-mails per contcact, this is called a CC(Carbon Copy). If you need to add more than one contact, see the example: click "help" on the `Contact Form Options Page`. 
+- New feature: Now you can have multiple E-mails per contact, this is called a CC(Carbon Copy). If you need to add more than one contact, see the example: click "help" on the `Contact Form Options Page`. 
 - Fixed error "Bad parameters to mail() function" reported by a couple users.
 - Fixed error "Call to undefined function mb_detect_encoding()" reported by one user.
 - Many hours were put into this free plugin. Please donate, even small amounts like $2.99 are welcome.
