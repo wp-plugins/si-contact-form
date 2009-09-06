@@ -184,10 +184,14 @@ Portuguese brazil (pt_BR) audio files are available. Wait until after you instal
 
 = Can I provide a translation? =
 
-Of course! It will be very gratefully received. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-captcha-for-wordpress/trunk/si-captcha.pot ".pot file") and translate it. 
+Of course! It will be very gratefully received. Use PoEdit, it makes translation easy. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-captcha-for-wordpress/trunk/si-captcha.pot ".pot file") and translate it. 
 * There are some strings with a space in front or end -- please make sure you remember the space!
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com. 
 * If you have any questions, feel free to email me also. Thanks!
+
+= Is it possible to merge the translation files I sent to you with the ones of the newest version? =
+
+If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 == Changelog ==
 
