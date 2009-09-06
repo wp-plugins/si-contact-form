@@ -194,7 +194,7 @@ function options_page() {
 
 <h3><?php _e('Usage', 'si-contact-form') ?></h3>
 	<p>
-    <?php _e('You must add the shortcode <b>[si_contact_form]</b> in a Page. That page will become your Contact Form', 'si-contact-form') ?>.
+    <?php _e('You must add the shortcode <b>[si_contact_form]</b> in a Page. That page will become your Contact Form', 'si-contact-form') ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.jpg" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
     </p>
 
 <h3><?php _e('Options', 'si-contact-form') ?></h3>
@@ -296,7 +296,7 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
         Webmaster,user1@example.com<br />
         Sales,user2@example.com<br /><br />
 
-        <?php _e('Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
+        <?php _e('Also, you can have multiple E-mails per contcact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
         Webmaster,user1@example.com<br />
         Sales,user3@example.com;user4@example.com;user5@example.com
         </div>
