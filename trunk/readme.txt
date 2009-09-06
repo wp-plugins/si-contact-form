@@ -26,6 +26,7 @@ Features:
  * JavaScript is not required.
  * Setting to hide the CAPTCHA from logged in users and or admins.
  * Multi "E-mail to" contact support.
+ * Auto form fill email address and name (username) on the contact form for logged in users.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -37,7 +38,7 @@ Security:
  * Spamchecks E-mail address input from common spammer tactics...
 prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection attempts to spam the world.
  * Makes sure the contact form was posted from your blog domain name only.
- * E-mail message shows IP address and user agent (browser version) of user who contacted you
+ * E-mail message footer shows blog username(if logged on), Date/Time timestamp, IP address, and user agent (browser version) of user who contacted you.
 
 Captcha Image Support:
 ---------------------
@@ -134,16 +135,21 @@ The following translations are included in the download zip file:
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
 * More are needed... Please help translate.
 
 = Can I provide a translation? =
 
-Of course! It will be very gratefully received. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-contact-form/trunk/si-contact-form.pot ".pot file") and translate it.
+Of course! It will be very gratefully received. Use PoEdit, it makes translation easy. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-contact-form/trunk/si-contact-form.pot ".pot file") and translate it.
 * There are some strings with a space in front or end -- please make sure you remember the space!
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com.
 * If you have any questions, feel free to email me also. Thanks!
+
+= Is it possible to merge the translation files I sent to you with the ones of the newest version? =
+
+If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 = This contact form sends E-mail with UTF-8 character encoding for US and International character support. =
 
@@ -168,6 +174,12 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.4.1 =
+- (06 Sep 2009) - Added feature: Auto form fill email address and name (username) on the contact form for logged in users.
+- Added feature: prints "From a WordPress user: <username>" on email footer for logged in users.
+- Added feature: Date/Time timestamp on email footer (uses Date/Time format from general options setting).
+- Added Russian Language (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 
 = 1.4 =
 - (06 Sep 2009) Now uses wp_mail function so that users who use the SMTP mail plugins will be supported.
