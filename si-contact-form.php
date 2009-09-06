@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick email message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.3
+Version: 1.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -24,6 +24,10 @@ Author URI: http://www.642weather.com/weather/scripts.php
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
+//error_reporting(E_ALL ^ E_NOTICE); // Report all errors except E_NOTICE warnings
+//error_reporting(E_ALL); // Report all errors and warnings (very strict, use for testing only)
+//ini_set('display_errors', 1); // turn error reporting on
 
 if (!class_exists('siContactForm')) {
 
@@ -228,35 +232,73 @@ if ($this->get_settings('si_contact_welcome') == '<p>Comments or questions are w
          <th scope="row" style="width: 75px;"><?php _e('E-mail:', 'si-contact-form') ?></th>
       <td>
 <?php
-// checks for properly configured E-mail address in options.
+// checks for properly configured E-mail To: addresses in options.
 $ctf_contacts = array ();
 $ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
-if(!preg_match("/,/", $ctf_contacts_test) && $this->ctf_validate_email($ctf_contacts_test)) {
-   $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact-form'),  'EMAIL' => $ctf_contacts_test );
-}
-$ctf_ct_arr = explode("\n",$ctf_contacts_test);
-foreach($ctf_ct_arr as $line) {
-    // echo '|'.$line.'|' ;
-   list($key, $value) = explode(",",$line);
-   $key = trim($key); $value = trim($value);
-   if ($key != '' && $value != '' && $this->ctf_validate_email($value)) {
-      $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
-   }
-}
+$ctf_contacts_error = 0;
+if(!preg_match("/,/", $ctf_contacts_test) ) {
+    if($this->ctf_validate_email($ctf_contacts_test)) {
+        // user1@example.com
+       $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact-form'),  'EMAIL' => $ctf_contacts_test );
+    }
+} else {
+  $ctf_ct_arr = explode("\n",$ctf_contacts_test);
+  if (is_array($ctf_ct_arr) ) {
+    foreach($ctf_ct_arr as $line) {
+        // echo '|'.$line.'|' ;
+       list($key, $value) = explode(",",$line);
+       $key   = trim($key);
+       $value = trim($value);
+       if ($key != '' && $value != '') {
+          if(!preg_match("/;/", $value)) {
+               // just one email here
+               // Webmaster,user1@example.com
+               if ($this->ctf_validate_email($value)) {
+                  $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
+               } else {
+                  $ctf_contacts_error = 1;
+               }
+          } else {
+               // multiple emails here (additional ones will be Cc:)
+               // Webmaster,user1@example.com;user2@example.com
+               $multi_cc_arr = explode(";",$value);
+               $multi_cc_string = '';
+               foreach($multi_cc_arr as $multi_cc) {
+                  if ($this->ctf_validate_email($multi_cc)) {
+                     $multi_cc_string .= "$multi_cc,";
+                  } else {
+                     $ctf_contacts_error = 1;
+                  }
+               }
+               if ($multi_cc_string != '') {  // multi cc emails
+                  $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => rtrim($multi_cc_string, ','));
+               }
+         }
+      }
+   } // end foreach
+  } // end if (is_array($ctf_ct_arr) ) {
+} // end else
+
+//print_r($ctf_contacts);
+
 ?>
         <label name="si_contact_email_to" for="si_contact_email_to"><?php _e('E-mail To', 'si-contact-form') ?>:</label>
 <?php
-if (empty($ctf_contacts)) {
+if (empty($ctf_contacts) || $ctf_contacts_error ) {
    echo '<span style="color:red;">'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span>'."\n";
 }
 ?>
         <br />
-        <textarea rows="2" cols="40" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->get_settings('si_contact_email_to');  ?></textarea>
+        <textarea rows="3" cols="70" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->get_settings('si_contact_email_to');  ?></textarea>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_to_tip">
         <?php _e('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact-form') ?><br />
         Webmaster,user1@example.com<br />
-        Sales,user2@example.com
+        Sales,user2@example.com<br /><br />
+
+        <?php _e('Also, you can have multiple E-mails per contcact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
+        Webmaster,user1@example.com<br />
+        Sales,user3@example.com;user4@example.com;user5@example.com
         </div>
         <br />
 
@@ -270,9 +312,11 @@ if (empty($ctf_contacts)) {
         <label name="si_contact_double_bcc" for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form') ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
-        <?php _e('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact-form') ?><br />
-        user@example.com<br />
-        user@example.com, anotheruser@example.com
+        <?php _e('This Bcc address is global, which means that if you have multi "E-mail To" contacts, any contact selected will send to this also.', 'si-contact-form') ?>
+        <?php _e('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact-form') ?>
+        <br />
+        user1@example.com<br />
+        user1@example.com, user2@example.com
         </div>
         <br />
 
@@ -393,35 +437,55 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
 function si_contact_form_short_code() {
    global $captcha_path_cf;
 
-// E-mail Contacts
-// the drop down list array will be made automatically by this code
-$ctf_contacts = array ();
-//$ctf_contacts_test = 'Manager,user1@example.com
-//Service,user2@example.com';
-
-//$ctf_contacts_test = 'user1@example.com';
-$ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
-
-// check for single e-mail
-if(!preg_match("/,/", $ctf_contacts_test) && $this->ctf_validate_email($ctf_contacts_test)) {
-   $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact-form'),  'EMAIL' => $ctf_contacts_test );
-}
-
-// check for multiple e-mail
-$ctf_ct_arr = explode("\n",$ctf_contacts_test);
-foreach($ctf_ct_arr as $line) {
-    // echo '|'.$line.'|' ;
-   list($key, $value) = explode(",",$line);
-   $key = trim($key); $value = trim($value);
-   if ($key != '' && $value != '' && $this->ctf_validate_email($value)) {
-      $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
-   }
-}
-
-//print_r($ctf_contacts);
-
 // Email address(s) to receive Bcc (Blind Carbon Copy) messages
 $ctf_email_address_bcc = $this->get_settings('si_contact_email_bcc'); // optional
+
+// E-mail Contacts
+// the drop down list array will be made automatically by this code
+// checks for properly configured E-mail To: addresses in options.
+$ctf_contacts = array ();
+$ctf_contacts_test = trim($this->get_settings('si_contact_email_to'));
+if(!preg_match("/,/", $ctf_contacts_test) ) {
+    if($this->ctf_validate_email($ctf_contacts_test)) {
+        // user1@example.com
+       $ctf_contacts[] = array('CONTACT' => __('Webmaster', 'si-contact-form'),  'EMAIL' => $ctf_contacts_test );
+    }
+} else {
+  $ctf_ct_arr = explode("\n",$ctf_contacts_test);
+  if (is_array($ctf_ct_arr) ) {
+    foreach($ctf_ct_arr as $line) {
+       // echo '|'.$line.'|' ;
+       list($key, $value) = explode(",",$line);
+       $key   = trim($key);
+       $value = trim($value);
+       if ($key != '' && $value != '') {
+          if(!preg_match("/;/", $value)) {
+               // just one email here
+               // Webmaster,user1@example.com
+               if ($this->ctf_validate_email($value)) {
+                  $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
+               }
+          } else {
+               // multiple emails here (additional ones will be Cc:)
+               // Webmaster,user1@example.com;user2@example.com
+               $multi_cc_arr = explode(";",$value);
+               $multi_cc_string = '';
+               foreach($multi_cc_arr as $multi_cc) {
+                   if ($this->ctf_validate_email($multi_cc)) {
+                     $multi_cc_string .= "$multi_cc,";
+                   }
+               }
+               if ($multi_cc_string != '') { // multi cc emails
+                  $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => rtrim($multi_cc_string, ','));
+               }
+         }
+      }
+
+   } // end foreach
+  } // end if (is_array($ctf_ct_arr) ) {
+} // end else
+
+//print_r($ctf_contacts);
 
 // Normally this setting will be left blank in options.
 $ctf_email_on_this_domain =  $this->get_settings('si_contact_email_from'); // optional
@@ -460,12 +524,6 @@ $ctf_banned_ips = array(
 // Wordwrap E-Mail message text so lines are no longer than 70 characters.
 // SET  $ctf_wrap_message = 1;  ON,  $ctf_wrap_message = 0; for OFF.
 $ctf_wrap_message = 1;
-
-// Charset for email message header
-$ctf_charset = 'utf-8';
-
-// Content-transfer-encoding for email message header
-$ctf_encoding = '8bit';
 
 // Redirect to Home Page after message is sent
 $ctf_redirect_enable = $this->get_settings('si_contact_redirect_enable');
@@ -537,6 +595,7 @@ $contacts = $cont;
 unset($cont);
 
 // initialize vars
+$string = '';
 $this->si_contact_error = 0;
 $si_contact_error_print = '';
 $message_sent = 0;
@@ -556,7 +615,7 @@ $si_contact_error_name    = '';
 $si_contact_error_email   = '';
 $si_contact_error_email2  = '';
 $si_contact_error_subject = '';
-$si_contact_error_text    = '';
+$si_contact_error_message = '';
 // add another field here like above
 
 // process form now
@@ -586,7 +645,9 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
     }
     $subject      = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_subject']));
     $message      = $this->ctf_clean_input($_POST['si_contact_message']);
-    $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
+    if ( $this->isCaptchaEnabled() ) {
+     $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
+    }
     // add another field here like above
 
     // check posted input for email injection attempts
@@ -700,10 +761,14 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
 
   if (!$this->si_contact_error) {
      // ok to send the email, so prepare the email message
+
      // lines separated by \n on Unix and \r\n on Windows
      if (!defined('PHP_EOL')) define ('PHP_EOL', strtoupper(substr(PHP_OS,0,3) == 'WIN') ? "\r\n" : "\n");
 
-     $subj = "$ctf_sitename ".__('contact', 'si-contact-form').": $subject";
+     $subj = "$ctf_sitename ".__('contact', 'si-contact-form').": $subject" . PHP_EOL;
+
+     // fix: warning: mail(): Bad parameters to mail() function
+     $subj = str_replace("\n",'',$subj);
 
      $msg =  __('Sent from', 'si-contact-form')." $ctf_sitename ".__('contact form', 'si-contact-form').'
 
@@ -732,30 +797,21 @@ $message
              $msg = wordwrap($msg, 70);
       }
 
-      // encode to UTF-8 for non Latin character support
-      $name = $this->fixEncoding($name);
-      $subj = $this->fixEncoding($subj);
-      $msg  = $this->fixEncoding($msg);
-
       // prepare the email header
       if ($ctf_email_on_this_domain != '') {
-           $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
+          $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
       } else {
-           $header = "From: =?UTF-8?B?" .base64_encode($name)."?= <$email>" . PHP_EOL;
+          $header = "From: $name <$email>" . PHP_EOL;
       }
-      $subj = "=?UTF-8?B?" .base64_encode($subj)."?=" . PHP_EOL;
 
       if ($ctf_email_address_bcc !='') $header .= "Bcc: " . $ctf_email_address_bcc . PHP_EOL;
       $header .= "Reply-To: $email" . PHP_EOL;
       $header .= "Return-Path: $email" . PHP_EOL;
-      $header .= 'MIME-Version: 1.0' . PHP_EOL;
-      //$header .= 'Content-type: text/plain; Content-language: '.$ctf_language.'; charset='.$ctf_charset.'; format=flowed' . PHP_EOL;
-      $header .= 'Content-type: text/plain; charset='.$ctf_charset.'; format=flowed' . PHP_EOL;
-      $header .= 'Content-transfer-encoding: '.$ctf_encoding . PHP_EOL;
+      $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . PHP_EOL;
 
       ini_set('sendmail_from', $email); // needed for some windows servers
 
-      mail($mail_to,$subj,$msg,$header);
+      wp_mail($mail_to,$subj,$msg,$header);
       $message_sent = 1;
 
    } // end if ! error
