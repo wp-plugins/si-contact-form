@@ -296,7 +296,7 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
         Webmaster,user1@example.com<br />
         Sales,user2@example.com<br /><br />
 
-        <?php _e('Also, you can have multiple E-mails per contcact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
+        <?php _e('Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
         Webmaster,user1@example.com<br />
         Sales,user3@example.com;user4@example.com;user5@example.com
         </div>
