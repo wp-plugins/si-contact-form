@@ -26,8 +26,8 @@ Author URI: http://www.642weather.com/weather/scripts.php
 */
 
 //error_reporting(E_ALL ^ E_NOTICE); // Report all errors except E_NOTICE warnings
-error_reporting(E_ALL); // Report all errors and warnings (very strict, use for testing only)
-ini_set('display_errors', 1); // turn error reporting on
+//error_reporting(E_ALL); // Report all errors and warnings (very strict, use for testing only)
+//ini_set('display_errors', 1); // turn error reporting on
 
 if (!class_exists('siContactForm')) {
 
