@@ -113,7 +113,12 @@ The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and regis
 Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
 The two plugins have the same CAPTCHA library but are totally separate.
 
-= Why do I get "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting."? =
+= Why does the admin E-mail address appear on my contact page? =
+
+That is a feature called "Auto form fill for logged in user". It is doing that because you are logged in. Nobody else will ever see your E-mail there. If they are logged in, then their own E-mail will be filled in. Anybody who is not logged in gets a blank form.
+
+
+= Why do I get "ERROR: Could not read CAPTCHA cookie."? =
 
 Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
 
