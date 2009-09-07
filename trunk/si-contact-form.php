@@ -26,8 +26,8 @@ Author URI: http://www.642weather.com/weather/scripts.php
 */
 
 //error_reporting(E_ALL ^ E_NOTICE); // Report all errors except E_NOTICE warnings
-//error_reporting(E_ALL); // Report all errors and warnings (very strict, use for testing only)
-//ini_set('display_errors', 1); // turn error reporting on
+error_reporting(E_ALL); // Report all errors and warnings (very strict, use for testing only)
+ini_set('display_errors', 1); // turn error reporting on
 
 if (!class_exists('siContactForm')) {
 
@@ -92,7 +92,7 @@ if (!get_option($value)) {
 
 function options_page() {
   global $si_contact_nonce, $captcha_url_cf;
-  if ($_POST['submit']) {
+  if (isset($_POST['submit'])) {
     if ( function_exists('current_user_can') && !current_user_can('manage_options') )
                         die(__('You do not have permissions for managing this option', 'si-contact-form'));
 
@@ -614,6 +614,7 @@ $si_contact_error_contact = '';
 $si_contact_error_name    = '';
 $si_contact_error_email   = '';
 $si_contact_error_email2  = '';
+$si_contact_error_double_email = '';
 $si_contact_error_subject = '';
 $si_contact_error_message = '';
 // add another field here like above
