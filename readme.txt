@@ -195,6 +195,8 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 1.7.12 =
+- (08 Sep 2009) - Fixed redirect/logout problem on admin menu reported by a user.
 
 = 1.7.11 =
 - (03 Sep 2009) Updated German Language (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
