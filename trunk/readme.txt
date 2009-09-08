@@ -69,9 +69,7 @@ Requirements/Restrictions:
 = I just installed this and do not get any email from it, what could be wrong? =
 
 Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
-E-mail From (optional):
-
-Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set this to an email address on the SAME domain as your web site. This fix works when web hosts do not allow PHP to send email unless the "From:" email address is on the same web domain.
+"E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
 
 
 == Screenshots ==
@@ -90,8 +88,7 @@ Normally you should leave this blank because the email will be from the sender. 
 = I just installed this and do not get any email from it, what could be wrong? =
 
 Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
-E-mail From (optional):
-Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set this to an email address on the SAME domain as your web site. This fix works when web hosts do not allow PHP to send email unless the "From:" email address is on the same web domain.
+"E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
 
 = Why do I get "ERROR: Could not read CAPTCHA cookie."? =
 
