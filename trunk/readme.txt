@@ -61,31 +61,18 @@ Requirements/Restrictions:
 
 3. You must add the shortcode `[si_contact_form]` in a Page. That page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si_contact_form]` in the page, click `Publish`. 
 
-4. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
+4. Test an email from your form.
+
+5. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
 
 
-= Troubleshooting if the CAPTCHA image itself is not being shown: =
+= I just installed this and do not get any email from it, what could be wrong? =
 
-By default, the admin will not see the CAPTCHA. If you click "log out", go look and it will be there.
+Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
+E-mail From (optional):
 
-If the image is broken and you have the CAPTCHA entry box:
-This can happen if a server has too low a default permission level on new folders.
-Check that the permission on all the captcha-secureimage folders are set to permission: 755
+Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set this to an email address on the SAME domain as your web site. This fix works when web hosts do not allow PHP to send email unless the "From:" email address is on the same web domain.
 
-all these folders need to be 755:
-- si-contact-form
-  - captcha-secureimage
-     - audio
-     - gdfonts
-     - images
-     - test
-
-Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
-
-This script can be used to test if your PHP installation will support the CAPTCHA:
-Open this URL in your web browser to run the test:
-`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
-This link can be found on the `Captcha Settings` page.
 
 == Screenshots ==
 
@@ -129,6 +116,29 @@ The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and regis
 
 Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
 The two plugins have the same CAPTCHA library but are totally separate.
+
+= Troubleshooting if the CAPTCHA image itself is not being shown: =
+
+By default, the admin will not see the CAPTCHA. If you click "log out", go look and it will be there.
+
+If the image is broken and you have the CAPTCHA entry box:
+This can happen if a server has too low a default permission level on new folders.
+Check that the permission on all the captcha-secureimage folders are set to permission: 755
+
+all these folders need to be 755:
+- si-contact-form
+  - captcha-secureimage
+     - audio
+     - gdfonts
+     - images
+     - test
+
+Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
+
+This script can be used to test if your PHP installation will support the CAPTCHA:
+Open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
+This link can be found on the `Captcha Settings` page.
 
 
 = Is this plugin available in other languages? =
