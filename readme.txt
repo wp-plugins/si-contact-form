@@ -182,6 +182,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.4.3 =
+- (08 Sep 2009) - Fixed redirect/logout problem on admin menu reported by a user.
+- Removed blog name from top of email message body.
+
 = 1.4.2 =
 - (07 Sep 2009) - Added configurable email subject prefix in options.
 - Added configurable border width in options.

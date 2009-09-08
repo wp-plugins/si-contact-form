@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.4.2
+Version: 1.4.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -206,7 +206,7 @@ function options_page() {
 
 <h3><?php _e('Options', 'si-contact-form') ?></h3>
 
-<form name="formoptions" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo plugin_basename(__FILE__); ?>&amp;updated=true">
+<form name="formoptions" action="" method="post">
         <input type="hidden" name="action" value="update" />
         <input type="hidden" name="form_type" value="upload_options" />
     <?php si_contact_nonce_field($si_contact_nonce) ?>
@@ -790,14 +790,9 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
      // lines separated by \n on Unix and \r\n on Windows
      if (!defined('PHP_EOL')) define ('PHP_EOL', strtoupper(substr(PHP_OS,0,3) == 'WIN') ? "\r\n" : "\n");
 
-     $subj = $this->get_settings('si_contact_email_subject') .": $subject";
+     $subj = $this->ctf_stripslashes($this->get_settings('si_contact_email_subject')) ." $subject";
 
-     // fix: warning: mail(): Bad parameters to mail() function
-     //$subj = str_replace("\n",'',$subj);
-
-     $msg =  __('Sent from', 'si-contact-form')." $ctf_sitename ".__('contact form', 'si-contact-form').'
-
-'.__('To', 'si-contact-form').": $to_contact
+     $msg = __('To', 'si-contact-form').": $to_contact
 
 ".__('From', 'si-contact-form').":
 $name
