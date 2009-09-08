@@ -26,7 +26,7 @@ Features:
  * JavaScript is not required.
  * Setting to hide the CAPTCHA from logged in users and or admins.
  * Multi "E-mail to" contact support.
- * Auto form fill email address and name (username) on the contact form for logged in users.
+ * Auto form fill for logged in users.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -100,6 +100,23 @@ This link can be found on the `Captcha Settings` page.
 
 == Frequently Asked Questions ==
 
+= I just installed this and do not get any email from it, what could be wrong? =
+
+Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
+E-mail From (optional):
+Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set this to an email address on the SAME domain as your web site. This fix works when web hosts do not allow PHP to send email unless the "From:" email address is on the same web domain.
+
+= Why do I get "ERROR: Could not read CAPTCHA cookie."? =
+
+Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
+
+If you get this error, your browser is blocking cookies or you have another plugin that is conflicting (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
+
+There is a Cookie Test that can be used to test if your browser is accepting cookies from your site:
+Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
+or open this URL in your web browser to run the test:
+`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
+
 = Does this contact form use Akismet spam protection? =
 Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated. (Akismet is not required, it will just skip the check)
 
@@ -113,26 +130,6 @@ The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and regis
 Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
 The two plugins have the same CAPTCHA library but are totally separate.
 
-= Why does the admin E-mail address appear on my contact page? =
-
-That is a feature called "Auto form fill for logged in user". It is doing that because you are logged in. Nobody else will ever see your E-mail there. If they are logged in, then their own E-mail will be filled in. Anybody who is not logged in gets a blank form.
-
-= Why do I get "ERROR: Could not read CAPTCHA cookie."? =
-
-Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
-
-If you get this error, your browser is blocking cookies or you have another plugin that is conflicting (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
-
-There is a Cookie Test that can be used to test if your browser is accepting cookies from your site:
-Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
-or open this URL in your web browser to run the test:
-`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
-
-= I just installed this and do not get any email from it, what could be wrong? =
-
-Make sure you have the correct "E-mail To:"  set in options. If that is correct, then this setting in the contact form options might help you....
-E-mail From (optional):
-E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix. If you are still having trouble check your server's error log.
 
 = Is this plugin available in other languages? =
 
@@ -184,6 +181,12 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.4.2 =
+- (07 Sep 2009) - Added configurable email subject prefix in options.
+- Added configurable border width in options.
+- Auto form fill is now disabled for admin, but still works for other logged in users.
+- Other minor fixes.
 
 = 1.4.1 =
 - (06 Sep 2009) - Added feature: Auto form fill email address and name (username) on the contact form for logged in users.

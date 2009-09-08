@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.4.1
+Version: 1.4.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -43,12 +43,14 @@ function unset_si_contact_options () {
   delete_option('si_contact_email_to');
   delete_option('si_contact_email_from');
   delete_option('si_contact_email_bcc');
+  delete_option('si_contact_email_subject');
   delete_option('si_contact_double_email');
   delete_option('si_contact_domain_protect');
   delete_option('si_contact_captcha_enable');
   delete_option('si_contact_captcha_perm');
   delete_option('si_contact_captcha_perm_level');
   delete_option('si_contact_border_enable');
+  delete_option('si_contact_border_width');
   delete_option('si_contact_title_style');
   delete_option('si_contact_field_style');
   delete_option('si_contact_error_style');
@@ -67,6 +69,7 @@ if (!get_option($value)) {
          'si_contact_email_to' => __('Webmaster', 'si-contact-form').','.get_option('admin_email'),
          'si_contact_email_from' => '',
          'si_contact_email_bcc' => '',
+         'si_contact_email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
          'si_contact_double_email' => 'false',
          'si_contact_domain_protect' => 'true',
          'si_contact_captcha_enable' => 'true',
@@ -75,6 +78,7 @@ if (!get_option($value)) {
          'si_contact_redirect_enable' => 'true',
          'si_contact_redirect_url' => 'index.php',
          'si_contact_border_enable' => 'false',
+         'si_contact_border_width' => '375',
          'si_contact_title_style' => 'text-align:left;',
          'si_contact_field_style' => 'text-align:left;',
          'si_contact_error_style' => 'color:red; text-align:left;',
@@ -110,6 +114,9 @@ function options_page() {
 
     if ( !isset( $_POST['si_contact_email_bcc'] ) )
          update_option( 'si_contact_email_bcc', '' );
+
+    if ( !isset( $_POST['si_contact_email_subject'] ) )
+         update_option( 'si_contact_email_subject', '' );
 
     if ( isset( $_POST['si_contact_double_email'] ) )
          update_option( 'si_contact_double_email', 'true' );
@@ -289,7 +296,7 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
 }
 ?>
         <br />
-        <textarea rows="3" cols="70" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->get_settings('si_contact_email_to');  ?></textarea>
+        <textarea rows="3" cols="70" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_email_to')));  ?></textarea>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_to_tip">
         <?php _e('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact-form') ?><br />
@@ -309,7 +316,7 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
         </div>
         <br />
 
-        <label name="si_contact_double_bcc" for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form') ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
+        <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form') ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
         <?php _e('This Bcc address is global, which means that if you have multi "E-mail To" contacts, any contact selected will send to this also.', 'si-contact-form') ?>
@@ -317,6 +324,13 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
         <br />
         user1@example.com<br />
         user1@example.com, user2@example.com
+        </div>
+        <br />
+
+        <label name="si_contact_email_subject" for="si_contact_email_subject"><?php _e('E-mail Subject Prefix', 'si-contact-form') ?>:</label><input name="si_contact_email_subject" id="si_contact_email_subject" type="text" value="<?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_email_subject')));  ?>" size="55" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_email_subject_tip">
+        <?php _e('This will become a prefix of the subject for the E-mail you receive.', 'si-contact-form') ?>
         </div>
         <br />
 
@@ -370,7 +384,13 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
       <td>
 
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $this->get_settings('si_contact_border_enable') == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?></label><br />
+        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
+        <label for="si_contact_border_width"><?php _e('Border Width', 'si-contact-form') ?>:</label><input name="si_contact_border_width" id="si_contact_border_width" type="text" value="<?php echo $this->get_settings('si_contact_border_width');  ?>" size="3" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_width_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_border_width_tip">
+        <?php _e('Use to adjust the width of the contact form border (if border is enabled).', 'si-contact-form') ?>
+        </div>
+        <br />
 
 
         <label for="si_contact_title_style"><?php _e('CSS style for form input titles on the contact form', 'si-contact-form') ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_title_style')));  ?>" size="50" /><br />
@@ -463,7 +483,7 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
                // just one email here
                // Webmaster,user1@example.com
                if ($this->ctf_validate_email($value)) {
-                  $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
+                  $ctf_contacts[] = array('CONTACT' => $this->ctf_stripslashes($this->ctf_output_string($key)),  'EMAIL' => $value);
                }
           } else {
                // multiple emails here (additional ones will be Cc:)
@@ -476,7 +496,7 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
                    }
                }
                if ($multi_cc_string != '') { // multi cc emails
-                  $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => rtrim($multi_cc_string, ','));
+                  $ctf_contacts[] = array('CONTACT' => $this->ctf_stripslashes($this->ctf_output_string($key)),  'EMAIL' => rtrim($multi_cc_string, ','));
                }
          }
       }
@@ -770,10 +790,10 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
      // lines separated by \n on Unix and \r\n on Windows
      if (!defined('PHP_EOL')) define ('PHP_EOL', strtoupper(substr(PHP_OS,0,3) == 'WIN') ? "\r\n" : "\n");
 
-     $subj = "$ctf_sitename ".__('contact', 'si-contact-form').": $subject" . PHP_EOL;
+     $subj = $this->get_settings('si_contact_email_subject') .": $subject";
 
      // fix: warning: mail(): Bad parameters to mail() function
-     $subj = str_replace("\n",'',$subj);
+     //$subj = str_replace("\n",'',$subj);
 
      $msg =  __('Sent from', 'si-contact-form')." $ctf_sitename ".__('contact form', 'si-contact-form').'
 
@@ -822,7 +842,8 @@ $message
 
       ini_set('sendmail_from', $email); // needed for some windows servers
 
-      wp_mail($mail_to,$subj,$msg,$header);
+      if ( !wp_mail($mail_to,$subj,$msg,$header) )
+		die('<p>' . __('The e-mail could not be sent.') . "<br />\n" . __('Possible reason: your host may have disabled the mail() function...') . '</p>');
       $message_sent = 1;
 
    } // end if ! error
@@ -857,6 +878,7 @@ $string .= '
 
 if ($this->get_settings('si_contact_border_enable') == 'true') {
   $string .= '
+  <div style="width:'.intval($this->get_settings('si_contact_border_width')).'px;">
     <fieldset>
         <legend>'.__('Contact Form', 'si-contact-form').'</legend>';
 }
@@ -903,15 +925,14 @@ else {
 
 }
 
-// find logged in user's WP email address:
+// find logged in user's WP email address (auto form fill feature):
 // http://codex.wordpress.org/Function_Reference/get_currentuserinfo
 if ($email == '') {
-  if ($user_ID != '') {
+  if ($user_ID != '' && $current_user->user_login != 'admin') {
      //user logged in
      $email = $current_user->user_email;
      $email2 = $current_user->user_email;
      if ($name == '') {
-        //$name = $current_user->user_firstname . ' ' . $current_user->user_lastname;
         $name = $current_user->user_login;
      }
   }
@@ -989,6 +1010,7 @@ $string .= '
 if ($this->get_settings('si_contact_border_enable') == 'true') {
   $string .= '
     </fieldset>
+    </div>
   ';
 }
 $string .= '
