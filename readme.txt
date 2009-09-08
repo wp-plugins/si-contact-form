@@ -117,7 +117,6 @@ The two plugins have the same CAPTCHA library but are totally separate.
 
 That is a feature called "Auto form fill for logged in user". It is doing that because you are logged in. Nobody else will ever see your E-mail there. If they are logged in, then their own E-mail will be filled in. Anybody who is not logged in gets a blank form.
 
-
 = Why do I get "ERROR: Could not read CAPTCHA cookie."? =
 
 Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
@@ -128,6 +127,12 @@ There is a Cookie Test that can be used to test if your browser is accepting coo
 Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
 or open this URL in your web browser to run the test:
 `/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
+
+= I just installed this and do not get any email from it, what could be wrong? =
+
+Make sure you have the correct "E-mail To:"  set in options. If that is correct, then this setting in the contact form options might help you....
+E-mail From (optional):
+E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix. If you are still having trouble check your server's error log.
 
 = Is this plugin available in other languages? =
 
