@@ -182,6 +182,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.4.4 =
+- (08 Sep 2009) - Fixed error: "mail could not be sent because host may have disabled email function()"
+
 = 1.4.3 =
 - (08 Sep 2009) - Fixed redirect/logout problem on admin menu reported by a user.
 - Removed blog name from top of email message body.
