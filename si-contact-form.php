@@ -366,14 +366,26 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
         </div>
         <br />
 
-        <label name="si_contact_email_from" for="si_contact_email_from"><?php echo esc_html( __('E-mail From (optional)', 'si-contact-form')); ?>:</label><input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $this->get_settings('si_contact_email_from');  ?>" size="50" />
+        <label name="si_contact_email_from" for="si_contact_email_from"><?php echo esc_html( __('E-mail From (optional)', 'si-contact-form')); ?>:</label>
+<?php
+if ( $this->get_settings('si_contact_email_from') != '' && !$this->ctf_validate_email($this->get_settings('si_contact_email_from'))  ) {
+   echo '<span style="color:red;">'.esc_html( __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form')).'</span><br />'."\n";
+}
+?>
+        <input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $this->get_settings('si_contact_email_from');  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
         <?php echo esc_html( __('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form')); ?>
         </div>
         <br />
 
-        <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php echo esc_html( __('E-mail Bcc (optional)', 'si-contact-form')); ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
+        <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php echo esc_html( __('E-mail Bcc (optional)', 'si-contact-form')); ?>:</label>
+<?php
+if ( $this->get_settings('si_contact_email_bcc') != '' && !$this->ctf_validate_email($this->get_settings('si_contact_email_bcc'))  ) {
+   echo '<span style="color:red;">'.esc_html( __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form')).'</span><br />'."\n";
+}
+?>
+        <input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
         <?php echo esc_html( __('This Bcc address is global, which means that if you have multi "E-mail To" contacts, any contact selected will send to this also.', 'si-contact-form')); ?>
