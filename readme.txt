@@ -1,7 +1,7 @@
 === Fast and Secure Contact Form ===
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
 Tags: Akismet, captcha, contact, contact form, email, spam, multilingual
 Requires at least: 2.5
 Tested up to: 2.8.4
@@ -104,6 +104,10 @@ or open this URL in your web browser to run the test:
 
 = Does this contact form use Akismet spam protection? =
 Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated. (Akismet is not required, it will just skip the check)
+
+= Can it send mail using SMTP? =
+Yes, when you also have this plugin installed: 
+[WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/)
 
 = Do I have to also install the plugin "SI CAPTCHA for Wordpress" for the CAPTCHA to work? =
 
