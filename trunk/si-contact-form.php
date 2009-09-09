@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.4.4
+Version: 1.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -49,6 +49,8 @@ function unset_si_contact_options () {
   delete_option('si_contact_captcha_enable');
   delete_option('si_contact_captcha_perm');
   delete_option('si_contact_captcha_perm_level');
+  delete_option('si_contact_redirect_enable');
+  delete_option('si_contact_redirect_url');
   delete_option('si_contact_border_enable');
   delete_option('si_contact_border_width');
   delete_option('si_contact_title_style');
@@ -58,6 +60,17 @@ function unset_si_contact_options () {
   delete_option('si_contact_text_cols');
   delete_option('si_contact_text_rows');
   delete_option('si_contact_aria_required');
+  delete_option('si_contact_title_border');
+  delete_option('si_contact_title_dept');
+  delete_option('si_contact_title_name');
+  delete_option('si_contact_title_email');
+  delete_option('si_contact_title_email2');
+  delete_option('si_contact_title_email2_help');
+  delete_option('si_contact_title_subj');
+  delete_option('si_contact_title_mess');
+  delete_option('si_contact_title_capt');
+  delete_option('si_contact_title_submit');
+  delete_option('si_contact_text_message_sent');
 
 }
 
@@ -86,11 +99,22 @@ if (!get_option($value)) {
          'si_contact_text_cols' => '40',
          'si_contact_text_rows' => '15',
          'si_contact_aria_required' => 'false',
+         'si_contact_title_border' => '',
+         'si_contact_title_dept' => '',
+         'si_contact_title_name' => '',
+         'si_contact_title_email' => '',
+         'si_contact_title_email2' => '',
+         'si_contact_title_email2_help' => '',
+         'si_contact_title_subj' => '',
+         'si_contact_title_mess' => '',
+         'si_contact_title_capt' => '',
+         'si_contact_title_submit' => '',
+         'si_contact_text_message_sent' => '',
          );
         update_option($value,$defaults[$value]);
         return $defaults[$value];
 } else {
-        return get_option($value);
+        return $this->ctf_stripslashes(get_option($value));
 }
 } //end get_settings
 
@@ -106,61 +130,94 @@ function options_page() {
                 update_option($option,str_replace('&quot;','"',trim($_POST[$option])));
         }
 
-    if ( !isset( $_POST['si_contact_welcome'] ) )
-         update_option( 'si_contact_welcome', '' );
+    if (!isset( $_POST['si_contact_welcome'] ) )
+        update_option( 'si_contact_welcome', '' );
 
-    if ( !isset( $_POST['si_contact_email_from'] ) )
-         update_option( 'si_contact_email_from', '' );
+    if (!isset( $_POST['si_contact_email_from'] ) )
+        update_option( 'si_contact_email_from', '' );
 
-    if ( !isset( $_POST['si_contact_email_bcc'] ) )
-         update_option( 'si_contact_email_bcc', '' );
+    if (!isset( $_POST['si_contact_email_bcc'] ) )
+        update_option( 'si_contact_email_bcc', '' );
 
-    if ( !isset( $_POST['si_contact_email_subject'] ) )
-         update_option( 'si_contact_email_subject', '' );
+    if (!isset( $_POST['si_contact_email_subject'] ) )
+        update_option( 'si_contact_email_subject', '' );
 
     if ( isset( $_POST['si_contact_double_email'] ) )
-         update_option( 'si_contact_double_email', 'true' );
+        update_option( 'si_contact_double_email', 'true' );
         else
-         update_option( 'si_contact_double_email', 'false' );
+        update_option( 'si_contact_double_email', 'false' );
 
     if ( isset( $_POST['si_contact_domain_protect'] ) )
-         update_option( 'si_contact_domain_protect', 'true' );
+        update_option( 'si_contact_domain_protect', 'true' );
         else
-         update_option( 'si_contact_domain_protect', 'false' );
+        update_option( 'si_contact_domain_protect', 'false' );
 
     if ( isset( $_POST['si_contact_captcha_enable'] ) )
-         update_option( 'si_contact_captcha_enable', 'true' );
+        update_option( 'si_contact_captcha_enable', 'true' );
         else
-         update_option( 'si_contact_captcha_enable', 'false' );
+        update_option( 'si_contact_captcha_enable', 'false' );
 
     if ( isset( $_POST['si_contact_redirect_enable'] ) )
-         update_option( 'si_contact_redirect_enable', 'true' );
+        update_option( 'si_contact_redirect_enable', 'true' );
         else
-         update_option( 'si_contact_redirect_enable', 'false' );
+        update_option( 'si_contact_redirect_enable', 'false' );
 
     if ( isset( $_POST['si_contact_captcha_perm'] ) )
-         update_option( 'si_contact_captcha_perm', 'true' );
+        update_option( 'si_contact_captcha_perm', 'true' );
         else
-         update_option( 'si_contact_captcha_perm', 'false' );
+        update_option( 'si_contact_captcha_perm', 'false' );
 
     if ( isset( $_POST['si_contact_border_enable'] ) )
-         update_option( 'si_contact_border_enable', 'true' );
+        update_option( 'si_contact_border_enable', 'true' );
         else
-         update_option( 'si_contact_border_enable', 'false' );
+        update_option( 'si_contact_border_enable', 'false' );
 
-    if ( !isset( $_POST['si_contact_title_style'] ) )
-         update_option( 'si_contact_title_style', '' );
+    if (!isset( $_POST['si_contact_title_style'] ) )
+        update_option( 'si_contact_title_style', '' );
 
-    if ( !isset( $_POST['si_contact_field_style'] ) )
-         update_option( 'si_contact_field_style', '' );
+    if (!isset( $_POST['si_contact_field_style'] ) )
+        update_option( 'si_contact_field_style', '' );
 
-    if ( !isset( $_POST['si_contact_error_style'] ) )
-         update_option( 'si_contact_error_style', '' );
+    if (!isset( $_POST['si_contact_error_style'] ) )
+        update_option( 'si_contact_error_style', '' );
 
     if ( isset( $_POST['si_contact_aria_required'] ) )
-         update_option( 'si_contact_aria_required', 'true' );
+        update_option( 'si_contact_aria_required', 'true' );
         else
-         update_option( 'si_contact_aria_required', 'false' );
+        update_option( 'si_contact_aria_required', 'false' );
+
+    if (!isset( $_POST['si_contact_title_border'] ) )
+        update_option( 'si_contact_title_border', '' );
+
+    if (!isset( $_POST['si_contact_title_dept'] ) )
+        update_option( 'si_contact_title_dept', '' );
+
+    if (!isset( $_POST['si_contact_title_name'] ) )
+        update_option( 'si_contact_title_name', '' );
+
+    if (!isset( $_POST['si_contact_title_email'] ) )
+        update_option( 'si_contact_title_email', '' );
+
+    if (!isset( $_POST['si_contact_title_email2'] ) )
+        update_option( 'si_contact_title_email2', '' );
+
+    if (!isset( $_POST['si_contact_title_email2_help'] ) )
+        update_option( 'si_contact_title_email2_help', '' );
+
+    if (!isset( $_POST['si_contact_title_subj'] ) )
+        update_option( 'si_contact_title_subj', '' );
+
+    if (!isset( $_POST['si_contact_title_mess'] ) )
+        update_option( 'si_contact_title_mess', '' );
+
+    if (!isset( $_POST['si_contact_title_capt'] ) )
+        update_option( 'si_contact_title_capt', '' );
+
+    if (!isset( $_POST['si_contact_title_submit'] ) )
+        update_option( 'si_contact_title_submit', '' );
+
+    if (!isset( $_POST['si_contact_text_message_sent'] ) )
+        update_option( 'si_contact_text_message_sent', '' );
 
     if (function_exists('wp_cache_flush')) {
 	     wp_cache_flush();
@@ -169,10 +226,10 @@ function options_page() {
   }
 ?>
 <?php if ( !empty($_POST ) ) : ?>
-<div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'si-contact-form') ?></strong></p></div>
+<div id="message" class="updated fade"><p><strong><?php echo esc_html( __('Options saved.', 'si-contact-form')); ?></strong></p></div>
 <?php endif; ?>
 <div class="wrap">
-<h2><?php _e('Fast and Secure Contact Form Options', 'si-contact-form') ?></h2>
+<h2><?php echo esc_html( __('Fast and Secure Contact Form Options', 'si-contact-form')); ?></h2>
 
 <script type="text/javascript">
     function toggleVisibility(id) {
@@ -184,7 +241,7 @@ function options_page() {
     }
 </script>
 
-<h3><?php _e('Donate', 'si-contact-form') ?></h3>
+<h3><?php echo esc_html( __('Donate', 'si-contact-form')); ?></h3>
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <table style="background-color:#FFE991; border:none; margin: -5px 0;" width="500">
@@ -195,16 +252,16 @@ function options_page() {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form') ?> - Mike Challis</td>
+<td><?php echo esc_html( __('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form')); ?> - Mike Challis</td>
 </tr></table>
 </form>
 
-<h3><?php _e('Usage', 'si-contact-form') ?></h3>
+<h3><?php echo esc_html( __('Usage', 'si-contact-form')); ?></h3>
 	<p>
-    <?php _e('You must add the shortcode <b>[si_contact_form]</b> in a Page. That page will become your Contact Form', 'si-contact-form') ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.jpg" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
+    <?php echo __('You must add the shortcode <b>[si_contact_form]</b> in a Page. That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.jpg" target="_new"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
     </p>
 
-<h3><?php _e('Options', 'si-contact-form') ?></h3>
+<h3><?php echo esc_html( __('Options', 'si-contact-form')); ?></h3>
 
 <form name="formoptions" action="" method="post">
         <input type="hidden" name="action" value="update" />
@@ -216,9 +273,9 @@ function options_page() {
 
 
     <tr>
-         <th scope="row" style="width: 75px;"><?php _e('Form:', 'si-contact-form') ?></th>
+         <th scope="row" style="width: 75px;"><?php echo esc_html( __('Form:', 'si-contact-form')); ?></th>
       <td>
-        <label name="si_contact_welcome" for="si_contact_welcome"><?php _e('Welcome introduction', 'si-contact-form'); ?>:</label><br />
+        <label name="si_contact_welcome" for="si_contact_welcome"><?php echo esc_html( __('Welcome introduction', 'si-contact-form')); ?>:</label><br />
         <textarea rows="2" cols="40" name="si_contact_welcome" id="si_contact_welcome"><?php
 
 // update translation for this setting (when switched from English to something else)
@@ -226,17 +283,17 @@ if ($this->get_settings('si_contact_welcome') == '<p>Comments or questions are w
    update_option( 'si_contact_welcome', __('<p>Comments or questions are welcome.</p>', 'si-contact-form')  );
 }
 
-        echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_welcome')));
+        echo $this->ctf_output_string($this->get_settings('si_contact_welcome'));
 
         ?></textarea>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_welcome_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_welcome_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_welcome_tip">
         <?php _e('This gets printed when the contact form is first presented. It is not printed when there is an input error and not printed after the form is completed.', 'si-contact-form') ?>
         </div>
       </td>
     </tr>
     <tr>
-         <th scope="row" style="width: 75px;"><?php _e('E-mail:', 'si-contact-form') ?></th>
+         <th scope="row" style="width: 75px;"><?php echo esc_html( __('E-mail:', 'si-contact-form')); ?></th>
       <td>
 <?php
 // checks for properly configured E-mail To: addresses in options.
@@ -289,144 +346,175 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
 //print_r($ctf_contacts);
 
 ?>
-        <label name="si_contact_email_to" for="si_contact_email_to"><?php _e('E-mail To', 'si-contact-form') ?>:</label>
+        <label name="si_contact_email_to" for="si_contact_email_to"><?php echo esc_html( __('E-mail To', 'si-contact-form')); ?>:</label>
 <?php
 if (empty($ctf_contacts) || $ctf_contacts_error ) {
-   echo '<span style="color:red;">'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span>'."\n";
+   echo '<span style="color:red;">'.esc_html( __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form')).'</span>'."\n";
 }
 ?>
         <br />
-        <textarea rows="3" cols="70" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_email_to')));  ?></textarea>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <textarea rows="3" cols="70" name="si_contact_email_to" id="si_contact_email_to"><?php echo $this->ctf_output_string($this->get_settings('si_contact_email_to'));  ?></textarea>
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_to_tip">
-        <?php _e('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact-form') ?><br />
+        <?php echo esc_html( __('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact-form')); ?><br />
         Webmaster,user1@example.com<br />
         Sales,user2@example.com<br /><br />
 
-        <?php _e('Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form') ?><br />
+        <?php echo esc_html( __('Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form')); ?><br />
         Webmaster,user1@example.com<br />
         Sales,user3@example.com;user4@example.com;user5@example.com
         </div>
         <br />
 
-        <label name="si_contact_email_from" for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact-form') ?>:</label><input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $this->get_settings('si_contact_email_from');  ?>" size="50" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <label name="si_contact_email_from" for="si_contact_email_from"><?php echo esc_html( __('E-mail From (optional)', 'si-contact-form')); ?>:</label><input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $this->get_settings('si_contact_email_from');  ?>" size="50" />
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
-        <?php _e('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form') ?>
+        <?php echo esc_html( __('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form')); ?>
         </div>
         <br />
 
-        <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form') ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php echo esc_html( __('E-mail Bcc (optional)', 'si-contact-form')); ?>:</label><input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->get_settings('si_contact_email_bcc');  ?>" size="50" />
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
-        <?php _e('This Bcc address is global, which means that if you have multi "E-mail To" contacts, any contact selected will send to this also.', 'si-contact-form') ?>
-        <?php _e('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact-form') ?>
+        <?php echo esc_html( __('This Bcc address is global, which means that if you have multi "E-mail To" contacts, any contact selected will send to this also.', 'si-contact-form')); ?>
+        <?php echo esc_html( __('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact-form')); ?>
         <br />
         user1@example.com<br />
         user1@example.com, user2@example.com
         </div>
         <br />
 
-        <label name="si_contact_email_subject" for="si_contact_email_subject"><?php _e('E-mail Subject Prefix', 'si-contact-form') ?>:</label><input name="si_contact_email_subject" id="si_contact_email_subject" type="text" value="<?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_email_subject')));  ?>" size="55" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <label name="si_contact_email_subject" for="si_contact_email_subject"><?php _e('E-mail Subject Prefix', 'si-contact-form') ?>:</label><input name="si_contact_email_subject" id="si_contact_email_subject" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_email_subject'));  ?>" size="55" />
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_email_subject_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_subject_tip">
-        <?php _e('This will become a prefix of the subject for the E-mail you receive.', 'si-contact-form') ?>
+        <?php echo esc_html( __('This will become a prefix of the subject for the E-mail you receive.', 'si-contact-form')); ?>
         </div>
         <br />
 
         <input name="si_contact_double_email" id="si_contact_double_email" type="checkbox" <?php if( $this->get_settings('si_contact_double_email') == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_contact_double_email" for="si_contact_double_email"><?php _e('Enable double E-mail entry required on contact form.', 'si-contact-form') ?></label>
+        <label name="si_contact_double_email" for="si_contact_double_email"><?php echo esc_html( __('Enable double E-mail entry required on contact form.', 'si-contact-form')); ?></label>
         <br />
         <input name="si_contact_domain_protect" id="si_contact_domain_protect" type="checkbox" <?php if( $this->get_settings('si_contact_domain_protect') == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_contact_domain_protect" for="si_contact_domain_protect"><?php _e('Enable Form Post security by requiring domain name match for', 'si-contact-form') ?>
+        <label name="si_contact_domain_protect" for="si_contact_domain_protect"><?php echo esc_html( __('Enable Form Post security by requiring domain name match for', 'si-contact-form')); ?>
         <?php
         $uri = parse_url(get_option('siteurl'));
         $blogdomain = str_replace('www.','',$uri['host']);
         echo " $blogdomain ";
-        ?><?php _e('(recommended).', 'si-contact-form') ?>
+        ?><?php echo esc_html( __('(recommended).', 'si-contact-form')); ?>
         </label>
 
       </td>
     </tr>
 
     <tr>
-       <th scope="row" style="width: 75px;"><?php _e('CAPTCHA:', 'si-contact-form') ?></th>
+       <th scope="row" style="width: 75px;"><?php echo esc_html( __('CAPTCHA:', 'si-contact-form')); ?></th>
       <td>
         <input name="si_contact_captcha_enable" id="si_contact_captcha_enable" type="checkbox" <?php if ( $this->get_settings('si_contact_captcha_enable') == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_captcha_enable"><?php _e('Enable CAPTCHA (recommended).', 'si-contact-form') ?></label><br />
+        <label for="si_contact_captcha_enable"><?php echo esc_html( __('Enable CAPTCHA (recommended).', 'si-contact-form')); ?></label><br />
 
         <input name="si_contact_captcha_perm" id="si_contact_captcha_perm" type="checkbox" <?php if( $this->get_settings('si_contact_captcha_perm') == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_contact_captcha_perm" for="si_contact_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-contact-form') ?>
-        <strong><?php _e('registered', 'si-contact-form') ?></strong> <?php _e('users who can', 'si-contact-form') ?>:</label>
+        <label name="si_contact_captcha_perm" for="si_contact_captcha_perm"><?php echo esc_html( __('Hide CAPTCHA for', 'si-contact-form')); ?>
+        <strong><?php echo esc_html( __('registered', 'si-contact-form')); ?></strong> <?php echo esc_html( __('users who can', 'si-contact-form')); ?>:</label>
         <?php $this->si_contact_captcha_perm_dropdown('si_contact_captcha_perm_level', $this->get_settings('si_contact_captcha_perm_level'));  ?><br />
 
-        <a href="<?php echo "$captcha_url_cf/test/index.php"; ?>"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-contact-form') ?></a>
+        <a href="<?php echo "$captcha_url_cf/test/index.php"; ?>"><?php echo esc_html( __('Test if your PHP installation will support the CAPTCHA', 'si-contact-form')); ?></a>
       </td>
     </tr>
 
     <tr>
-         <th scope="row" style="width: 75px;"><?php _e('Redirect:', 'si-contact-form') ?></th>
+         <th scope="row" style="width: 75px;"><?php echo esc_html( __('Redirect:', 'si-contact-form')); ?></th>
       <td>
         <input name="si_contact_redirect_enable" id="si_contact_redirect_enable" type="checkbox" <?php if( $this->get_settings('si_contact_redirect_enable') == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_contact_redirect_enable" for="si_contact_redirect_enable"><?php _e('Enable redirect after the message sends', 'si-contact-form') ?>.</label><br  />
+        <label name="si_contact_redirect_enable" for="si_contact_redirect_enable"><?php echo esc_html( __('Enable redirect after the message sends', 'si-contact-form')); ?>.</label><br  />
 
-        <label name="si_contact_redirect_url" for="si_contact_redirect_url"><?php _e('Redirect URL', 'si-contact-form') ?>:</label><input name="si_contact_redirect_url" id="si_contact_redirect_url" type="text" value="<?php echo $this->get_settings('si_contact_redirect_url');  ?>" size="50" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_url_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <label name="si_contact_redirect_url" for="si_contact_redirect_url"><?php echo esc_html( __('Redirect URL', 'si-contact-form')); ?>:</label><input name="si_contact_redirect_url" id="si_contact_redirect_url" type="text" value="<?php echo $this->get_settings('si_contact_redirect_url');  ?>" size="50" />
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_redirect_url_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_redirect_url_tip">
-        <?php _e('After a user sends a message, the web browser will display "message sent" for 5 seconds, then redirect to this URL.', 'si-contact-form') ?>
+        <?php echo esc_html( __('After a user sends a message, the web browser will display "message sent" for 5 seconds, then redirect to this URL.', 'si-contact-form')); ?>
         </div>
         <br />
       </td>
     </tr>
 
-    <tr>
-       <th scope="row" style="width: 75px;"><?php _e('Style:', 'si-contact-form') ?></th>
-      <td>
+
+        </table>
+
+        <h3><a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Advanced Options', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_advanced');"><?php echo esc_html( __('Click for Advanced Options', 'si-contact-form')); ?></a></h3>
+        <div style="text-align:left; display:none" id="si_contact_advanced">
+
+         <table cellspacing="2" cellpadding="5" class="form-table">
+
+        <tr>
+         <th scope="row" style="width: 75px;"><?php echo esc_html( __('Style:', 'si-contact-form')); ?></th>
+        <td>
 
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $this->get_settings('si_contact_border_enable') == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
-        <label for="si_contact_border_width"><?php _e('Border Width', 'si-contact-form') ?>:</label><input name="si_contact_border_width" id="si_contact_border_width" type="text" value="<?php echo $this->get_settings('si_contact_border_width');  ?>" size="3" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_width_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <label for="si_contact_border_enable"><?php echo esc_html( __('Enable border on contact form', 'si-contact-form')) ?>.</label>
+        <label for="si_contact_border_width"><?php echo esc_html( __('Border Width', 'si-contact-form')); ?>:</label><input name="si_contact_border_width" id="si_contact_border_width" type="text" value="<?php echo absint($this->get_settings('si_contact_border_width'));  ?>" size="3" />
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_border_width_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_border_width_tip">
-        <?php _e('Use to adjust the width of the contact form border (if border is enabled).', 'si-contact-form') ?>
+        <?php echo esc_html( __('Use to adjust the width of the contact form border (if border is enabled).', 'si-contact-form')); ?>
         </div>
         <br />
 
 
-        <label for="si_contact_title_style"><?php _e('CSS style for form input titles on the contact form', 'si-contact-form') ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_title_style')));  ?>" size="50" /><br />
-        <label for="si_contact_field_style"><?php _e('CSS style for form input fields on the contact form', 'si-contact-form') ?>:</label><input name="si_contact_field_style" id="si_contact_field_style" type="text" value="<?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_field_style')));  ?>" size="50" /><br />
-        <label for="si_contact_error_style"><?php _e('CSS style for form input errors on the contact form', 'si-contact-form') ?>:</label><input name="si_contact_error_style" id="si_contact_error_style" type="text" value="<?php echo $this->ctf_stripslashes($this->ctf_output_string($this->get_settings('si_contact_error_style')));  ?>" size="50" /><br />
+        <label for="si_contact_title_style"><?php echo esc_html( __('CSS style for form input titles on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_style'));  ?>" size="50" /><br />
+        <label for="si_contact_field_style"><?php echo esc_html( __('CSS style for form input fields on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_field_style" id="si_contact_field_style" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_field_style'));  ?>" size="50" /><br />
+        <label for="si_contact_error_style"><?php echo esc_html( __('CSS style for form input errors on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_error_style" id="si_contact_error_style" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_error_style'));  ?>" size="50" /><br />
 
-       <label for="si_contact_field_size"><?php _e('Input Text Field Size', 'si-contact-form') ?>:</label><input name="si_contact_field_size" id="si_contact_field_size" type="text" value="<?php echo $this->get_settings('si_contact_field_size');  ?>" size="3" />
-       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_field_size_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <label for="si_contact_field_size"><?php echo esc_html( __('Input Text Field Size', 'si-contact-form')); ?>:</label><input name="si_contact_field_size" id="si_contact_field_size" type="text" value="<?php echo absint($this->get_settings('si_contact_field_size'));  ?>" size="3" />
+       <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_field_size_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
        <div style="text-align:left; display:none" id="si_contact_field_size_tip">
-       <?php _e('Use to adjust the size of the contact form text input fields.', 'si-contact-form') ?>
+       <?php echo esc_html( __('Use to adjust the size of the contact form text input fields.', 'si-contact-form')); ?>
        </div>
        <br />
 
-       <label for="si_contact_text_cols"><?php _e('Input Textarea Field Cols', 'si-contact-form') ?>:</label><input name="si_contact_text_cols" id="si_contact_text_cols" type="text" value="<?php echo $this->get_settings('si_contact_text_cols');  ?>" size="3" />
-       <label for="si_contact_text_rows"><?php _e('Rows', 'si-contact-form') ?>:</label><input name="si_contact_text_rows" id="si_contact_text_rows" type="text" value="<?php echo $this->get_settings('si_contact_text_rows');  ?>" size="3" />
-       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_text_rows_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <label for="si_contact_text_cols"><?php echo esc_html( __('Input Textarea Field Cols', 'si-contact-form')); ?>:</label><input name="si_contact_text_cols" id="si_contact_text_cols" type="text" value="<?php echo absint($this->get_settings('si_contact_text_cols'));  ?>" size="3" />
+       <label for="si_contact_text_rows"><?php echo esc_html( __('Rows', 'si-contact-form')); ?>:</label><input name="si_contact_text_rows" id="si_contact_text_rows" type="text" value="<?php echo absint($this->get_settings('si_contact_text_rows'));  ?>" size="3" />
+       <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_text_rows_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
        <div style="text-align:left; display:none" id="si_contact_text_rows_tip">
-       <?php _e('Use to adjust the size of the contact form message textarea.', 'si-contact-form') ?>
+       <?php echo esc_html( __('Use to adjust the size of the contact form message textarea.', 'si-contact-form')); ?>
        </div>
        <br />
 
        <input name="si_contact_aria_required" id="si_contact_aria_required" type="checkbox" <?php if( $this->get_settings('si_contact_aria_required') == 'true' ) echo 'checked="checked"'; ?> />
-       <label name="si_contact_aria_required" for="si_contact_aria_required"><?php _e('Enable aria-required tags for screen readers', 'si-contact-form') ?>.</label>
-       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_aria_required_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <label name="si_contact_aria_required" for="si_contact_aria_required"><?php echo esc_html( __('Enable aria-required tags for screen readers', 'si-contact-form')); ?>.</label>
+       <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_aria_required_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
        <div style="text-align:left; display:none" id="si_contact_aria_required_tip">
-       <?php _e('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required. Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required"). WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.', 'si-contact-form') ?>
+       <?php echo esc_html( __('aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required. Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute "aria-required"). WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause.', 'si-contact-form')); ?>
 
       </td>
     </tr>
+    <tr>
+         <th scope="row" style="width: 75px;"><?php echo esc_html( __('Fields:', 'si-contact-form')); ?></th>
+        <td>
+        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_text_fields_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_text_fields_tip">
+       <?php echo esc_html( __('Some people wanted to change the text labels for the contact form. These fields can be filled in to override the standard included field titles.', 'si-contact-form')); ?>
+       </div>
+       <br />
+         <label for="si_contact_title_border"><?php echo esc_html( __('Contact Form', 'si-contact-form')); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_border'));  ?>" size="50" /><br />
+         <label for="si_contact_title_dept"><?php echo esc_html( __('Department to Contact', 'si-contact-form')); ?>:</label><input name="si_contact_title_dept" id="si_contact_title_dept" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_dept'));  ?>" size="50" /><br />
+         <label for="si_contact_title_name"><?php echo esc_html( __('Name', 'si-contact-form')); ?>:</label><input name="si_contact_title_name" id="si_contact_title_name" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_name'));  ?>" size="50" /><br />
+         <label for="si_contact_title_email"><?php echo esc_html( __('E-Mail Address', 'si-contact-form')); ?>:</label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_email'));  ?>" size="50" /><br />
+         <label for="si_contact_title_email2"><?php echo esc_html( __('E-Mail Address again', 'si-contact-form')); ?>:</label><input name="si_contact_title_email2" id="si_contact_title_email2" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_email2'));  ?>" size="50" /><br />
+         <label for="si_contact_title_email2"><?php echo esc_html( __('Please enter your E-mail Address a second time.', 'si-contact-form')); ?></label><input name="si_contact_title_email2_help" id="si_contact_title_email2_help" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_email2_help'));  ?>" size="50" /><br />
+         <label for="si_contact_title_subj"><?php echo esc_html( __('Subject', 'si-contact-form')); ?>:</label><input name="si_contact_title_subj" id="si_contact_title_subj" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_subj'));  ?>" size="50" /><br />
+         <label for="si_contact_title_mess"><?php echo esc_html( __('Message', 'si-contact-form')); ?>:</label><input name="si_contact_title_mess" id="si_contact_title_mess" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_mess'));  ?>" size="50" /><br />
+         <label for="si_contact_title_capt"><?php echo esc_html( __('CAPTCHA Code', 'si-contact-form')); ?>:</label><input name="si_contact_title_capt" id="si_contact_title_capt" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_capt'));  ?>" size="50" /><br />
+         <label for="si_contact_title_submit"><?php echo esc_html( __('Submit', 'si-contact-form')); ?></label><input name="si_contact_title_submit" id="si_contact_title_submit" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_title_submit'));  ?>" size="50" /><br />
+         <label for="si_contact_text_message_sent"><?php echo esc_html( __('Your message has been sent, thank you.', 'si-contact-form')); ?></label><input name="si_contact_text_message_sent" id="si_contact_text_message_sent" type="text" value="<?php echo $this->ctf_output_string($this->get_settings('si_contact_text_message_sent'));  ?>" size="50" /><br />
 
-        </table>
+        </td>
+    </tr>
+    </table>
+  </div>
+
         </fieldset>
 
 
         <p class="submit">
-                <input type="submit" name="submit" value="<?php _e('Update Options', 'si-contact-form') ?> &raquo;" />
+                <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
         </p>
 </form>
 </div>
@@ -436,11 +524,11 @@ if (empty($ctf_contacts) || $ctf_contacts_error ) {
 function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
         // choices: Display text => permission_level
         $choices = array (
-                 __('All registered users', 'si-contact-form') => 'read',
-                 __('Edit posts', 'si-contact-form') => 'edit_posts',
-                 __('Publish Posts', 'si-contact-form') => 'publish_posts',
-                 __('Moderate Comments', 'si-contact-form') => 'moderate_comments',
-                 __('Administer site', 'si-contact-form') => 'level_10'
+                 esc_attr( __('All registered users', 'si-contact-form')) => 'read',
+                 esc_attr( __('Edit posts', 'si-contact-form')) => 'edit_posts',
+                 esc_attr( __('Publish Posts', 'si-contact-form')) => 'publish_posts',
+                 esc_attr( __('Moderate Comments', 'si-contact-form')) => 'moderate_comments',
+                 esc_attr( __('Administer site', 'si-contact-form')) => 'level_10'
                  );
         // print the <select> and loop through <options>
         echo '<select name="' . $select_name . '" id="' . $select_name . '">' . "\n";
@@ -483,7 +571,7 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
                // just one email here
                // Webmaster,user1@example.com
                if ($this->ctf_validate_email($value)) {
-                  $ctf_contacts[] = array('CONTACT' => $this->ctf_stripslashes($this->ctf_output_string($key)),  'EMAIL' => $value);
+                  $ctf_contacts[] = array('CONTACT' => $this->ctf_output_string($key),  'EMAIL' => $value);
                }
           } else {
                // multiple emails here (additional ones will be Cc:)
@@ -496,7 +584,7 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
                    }
                }
                if ($multi_cc_string != '') { // multi cc emails
-                  $ctf_contacts[] = array('CONTACT' => $this->ctf_stripslashes($this->ctf_output_string($key)),  'EMAIL' => rtrim($multi_cc_string, ','));
+                  $ctf_contacts[] = array('CONTACT' => $this->ctf_output_string($key),  'EMAIL' => rtrim($multi_cc_string, ','));
                }
          }
       }
@@ -567,7 +655,13 @@ $ctf_welcome_intro = '
 // The $thank_you is what gets printed after the form is sent.
 $ctf_thank_you = '
 <p>
-'.__('Your message has been sent, thank you.', 'si-contact-form').'
+';
+if ($this->get_settings('si_contact_text_message_sent') != '') {
+        $ctf_thank_you .= esc_html( $this->get_settings('si_contact_text_message_sent'));
+} else {
+        $ctf_thank_you .= esc_html(__('Your message has been sent, thank you.', 'si-contact-form'));
+}
+$ctf_thank_you .= '
 </p>
 ';
 
@@ -597,7 +691,7 @@ EOT;
 
 $ctf_thank_you .= '
 <img src="'.$wp_plugin_url.'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
-'.__('Redirecting', 'si-contact-form').' ... ';
+'.esc_html( __('Redirecting', 'si-contact-form')).' ... ';
 
 
 // do not remove the above EOT line
@@ -790,7 +884,7 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
      // lines separated by \n on Unix and \r\n on Windows
      if (!defined('PHP_EOL')) define ('PHP_EOL', strtoupper(substr(PHP_OS,0,3) == 'WIN') ? "\r\n" : "\n");
 
-     $subj = $this->ctf_stripslashes($this->get_settings('si_contact_email_subject')) ." $subject";
+     $subj = $this->get_settings('si_contact_email_subject') ." $subject";
 
      $msg = __('To', 'si-contact-form').": $to_contact
 
@@ -856,7 +950,7 @@ if($message_sent) {
  $this->ctf_title_style = 'style="'.$this->get_settings('si_contact_title_style').'"';
  $this->ctf_field_style = 'style="'.$this->get_settings('si_contact_field_style').'"';
  $this->ctf_error_style = 'style="'.$this->get_settings('si_contact_error_style').'"';
- $ctf_field_size = intval($this->get_settings('si_contact_field_size'));
+ $ctf_field_size = absint($this->get_settings('si_contact_field_size'));
 
 
  if ($this->get_settings('si_contact_aria_required') == 'true') {
@@ -873,9 +967,15 @@ $string .= '
 
 if ($this->get_settings('si_contact_border_enable') == 'true') {
   $string .= '
-  <div style="width:'.intval($this->get_settings('si_contact_border_width')).'px;">
+  <div style="width:'.absint($this->get_settings('si_contact_border_width')).'px;">
     <fieldset>
-        <legend>'.__('Contact Form', 'si-contact-form').'</legend>';
+        <legend>';
+     if ($this->get_settings('si_contact_title_border') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_border') );
+     } else {
+            $string .= esc_html( __('Contact Form', 'si-contact-form'));
+     }
+     $string .= '</legend>';
 }
 
 // print any input errors
@@ -889,7 +989,13 @@ if (empty($ctf_contacts)) {
 if (count($contacts) > 1) {
 
      $string .= '        <div '.$this->ctf_title_style.'>
-                <label for="si_contact_CID">'.__('Department to Contact', 'si-contact-form').':</label>
+                <label for="si_contact_CID">';
+     if ($this->get_settings('si_contact_title_dept') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_dept' ));
+     } else {
+            $string .= esc_html( __('Department to Contact', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_contact).'
         <div '.$this->ctf_field_style.'>
                 <select id="si_contact_CID" name="si_contact_CID" '.$this->ctf_aria_required.'>
@@ -907,7 +1013,7 @@ if (count($contacts) > 1) {
           if (!empty($cid) && $cid == $k) {
                     $selected = 'selected="selected"';
           }
-          $string .= '                        <option value="' . $k . '" ' . $selected . '>' . esc_attr($v[CONTACT]) . '</option>' . "\n";
+          $string .= '                        <option value="' . esc_attr($k) . '" ' . $selected . '>' . esc_attr($v[CONTACT]) . '</option>' . "\n";
           $selected = '';
       }
 
@@ -935,7 +1041,13 @@ if ($email == '') {
 
 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_name">'.__('Name', 'si-contact-form').':</label>
+                <label for="si_contact_name">';
+     if ($this->get_settings('si_contact_title_name') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_name') );
+     } else {
+            $string .= esc_html( __('Name', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_name).'
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_name" name="si_contact_name" value="' . $this->ctf_output_string($name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
@@ -944,25 +1056,49 @@ $string .= '
 if ($ctf_enable_double_email == 'true') {
  $string .= '
         <div '.$this->ctf_title_style.'>
-        <label for="si_contact_email">'.__('E-Mail Address', 'si-contact-form').': </label>
+        <label for="si_contact_email">';
+     if ($this->get_settings('si_contact_title_email') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_email') );
+     } else {
+            $string .= esc_html( __('E-Mail Address', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email).'
          '.$this->ctf_echo_if_error($si_contact_error_double_email).'
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_email" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
         <div '.$this->ctf_title_style.'>
-        <label for="si_contact_email2">'.__('E-Mail Address again', 'si-contact-form').': </label>
+        <label for="si_contact_email2">';
+     if ($this->get_settings('si_contact_title_email2') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_email2') );
+     } else {
+            $string .= esc_html( __('E-Mail Address again', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email2).'
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_email2" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
-                <br /><span class="small">'.__('Please enter your E-mail Address a second time.', 'si-contact-form').'</span>
+                <br /><span class="small">';
+     if ($this->get_settings('si_contact_title_email2_help') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_email2_help') );
+     } else {
+            $string .= esc_html( __('Please enter your E-mail Address a second time.', 'si-contact-form'));
+     }
+     $string .= '</span>
         </div>
         ';
 
  } else {
 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_email">'.__('E-Mail Address', 'si-contact-form').': </label>
+        <label for="si_contact_email">';
+     if ($this->get_settings('si_contact_title_email') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_email') );
+     } else {
+            $string .= esc_html( __('E-Mail Address', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email).'
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_email" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
@@ -972,7 +1108,13 @@ $string .= '
 
 $string .=   '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_subject">'.__('Subject', 'si-contact-form').': </label>
+                <label for="si_contact_subject">';
+     if ($this->get_settings('si_contact_title_subj') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_subj') );
+     } else {
+            $string .= esc_html( __('Subject', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_subject).'
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_subject" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
@@ -982,10 +1124,16 @@ $string .=   '
         be sure to change the label, id, name, string name, and si_contact_error_[string name]) -->
 
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_message">'.__('Message', 'si-contact-form').': </label>
+                <label for="si_contact_message">';
+     if ($this->get_settings('si_contact_title_mess') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_mess') );
+     } else {
+            $string .= esc_html( __('Message', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_message).'
         <div '.$this->ctf_field_style.'>
-                <textarea id="si_contact_message" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.intval($this->get_settings('si_contact_text_cols')).'" rows="'.intval($this->get_settings('si_contact_text_rows')).'">' . $this->ctf_output_string($message) . '</textarea>
+                <textarea id="si_contact_message" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.absint($this->get_settings('si_contact_text_cols')).'" rows="'.absint($this->get_settings('si_contact_text_rows')).'">' . $this->ctf_output_string($message) . '</textarea>
         </div>
 ';
 
@@ -999,7 +1147,13 @@ $string .= '
 <br />
 <div '.$this->ctf_field_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
-  <input type="submit" value="'.__('submit', 'si-contact-form').'" />
+  <input type="submit" value="';
+     if ($this->get_settings('si_contact_title_submit') != '') {
+            $string .= esc_attr( $this->get_settings('si_contact_title_submit') );
+     } else {
+            $string .= esc_attr( __('Submit', 'si-contact-form')).':';
+     }
+     $string .= '" />
 </div>
 ';
 if ($this->get_settings('si_contact_border_enable') == 'true') {
@@ -1079,7 +1233,13 @@ if ($this->captchaCheckRequires()) {
 // the captch html
 $string = '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_captcha_code">'.__('CAPTCHA Code', 'si-contact-form').': </label>
+                <label for="si_contact_captcha_code">';
+     if ($this->get_settings('si_contact_title_capt') != '') {
+            $string .= esc_html( $this->get_settings('si_contact_title_capt') );
+     } else {
+            $string .= esc_html( __('CAPTCHA Code', 'si-contact-form')).':';
+     }
+     $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_captcha).'
         <div '.$this->ctf_field_style.'>
                 <input type="text" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' style="width:65px;" />
@@ -1130,13 +1290,13 @@ function ctf_clean_input($string) {
     }
 } // end function ctf_clean_input
 
-// functions for protecting and validating form input vars
+// functions for protecting and validating form vars
 function ctf_sanitize_string($string) {
     $string = preg_replace("/ +/", ' ', trim($string));
     return preg_replace("/[<>]/", '_', $string);
 } // end function ctf_sanitize_string
 
-// functions for protecting and validating form input vars
+// functions for protecting and validating form vars
 function ctf_stripslashes($string) {
         if (get_magic_quotes_gpc()) {
                 return stripslashes($string);

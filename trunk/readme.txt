@@ -27,17 +27,18 @@ Features:
  * Setting to hide the CAPTCHA from logged in users and or admins.
  * Multi "E-mail to" contact support.
  * Auto form fill for logged in users.
+ * Customizable form field titles.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
 Security:
 --------
- * It has very tight security, it stops all the spammer tricks I have found.
+ * It has very tight security, stops spammer tricks.
  * Akismet spam protection support.
- * Filters all form inputs from HTML and other nasties.
- * Spamchecks E-mail address input from common spammer tactics...
+ * Spam checks E-mail address input from common spammer tactics...
 prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection attempts to spam the world.
  * Makes sure the contact form was posted from your blog domain name only.
+ * Filters all form inputs from HTML and other nasties.
  * E-mail message footer shows blog username(if logged on), Date/Time timestamp, IP address, and user agent (browser version) of user who contacted you.
 
 Captcha Image Support:
@@ -189,8 +190,13 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.5 =
+- (9 Sep 2009) - New feature: I added an "advanced options" section to the options page. Some people wanted to change the text labels for the contact form.
+These advanced options fields can be filled in to override the standard included field titles.
+- Other minor code changes.
+
 = 1.4.4 =
-- (08 Sep 2009) - Fixed error: "mail could not be sent because host may have disabled email function()"
+- (08 Sep 2009) - Fixed possible error: "mail could not be sent because host may have disabled email function()"
 
 = 1.4.3 =
 - (08 Sep 2009) - Fixed redirect/logout problem on admin menu reported by a user.
