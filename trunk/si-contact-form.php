@@ -2,8 +2,8 @@
 /*
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
-Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.5
+Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
+Version: 1.5.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -248,7 +248,7 @@ function options_page() {
         <tr>
         <td>
 <input type="hidden" name="cmd" value="_s-xclick" />
-<input type="hidden" name="hosted_button_id" value="8086141" />
+<input type="hidden" name="hosted_button_id" value="6105441" />
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
@@ -263,7 +263,7 @@ function options_page() {
 
 <h3><?php echo esc_html( __('Options', 'si-contact-form')); ?></h3>
 
-<form name="formoptions" action="" method="post">
+<form name="formoptions" action="#" method="post">
         <input type="hidden" name="action" value="update" />
         <input type="hidden" name="form_type" value="upload_options" />
     <?php si_contact_nonce_field($si_contact_nonce) ?>
@@ -973,7 +973,7 @@ if($message_sent) {
 
 $string .= '
 <!-- SI Contact Form plugin begin -->
-<form action="' . str_replace( '%7E', '~', $_SERVER['REQUEST_URI']) . '" id="si_contact_form" method="post">
+<form action="#" id="si_contact_form" method="post">
 ';
 
 
@@ -1163,7 +1163,7 @@ $string .= '
      if ($this->get_settings('si_contact_title_submit') != '') {
             $string .= esc_attr( $this->get_settings('si_contact_title_submit') );
      } else {
-            $string .= esc_attr( __('Submit', 'si-contact-form')).':';
+            $string .= esc_attr( __('Submit', 'si-contact-form'));
      }
      $string .= '" />
 </div>
