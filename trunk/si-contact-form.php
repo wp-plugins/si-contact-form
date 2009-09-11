@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.6
+Version: 1.6.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -1458,7 +1458,7 @@ function si_contact_init() {
   // upgrade path from old version
   if (!get_option('si_contact_form') && get_option('si_contact_email_to')) {
     // just now updating, migrate settings
-    $option_defaults = $si_contact_form->si_contact_migrate($option_defaults);
+    $option_defaults = $this->si_contact_migrate($option_defaults);
 
   }
 
