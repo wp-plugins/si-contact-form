@@ -201,6 +201,8 @@ No setting necessary, it just works.
 - If you get this error and cannot access your WP site: the manual fix is to edit line 1461 of si-contact-form.php and change 
 `$option_defaults = $si_contact_form->si_contact_migrate($option_defaults);`
 to `$option_defaults = $this->si_contact_migrate($option_defaults);`
+Or you can delete the `si-contact-form.php` file from the `plugins/si-contact-form/` directory
+then install this new version.  
 See this [forum post](http://wordpress.org/support/topic/309925)
 
 = 1.6 =
