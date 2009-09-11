@@ -197,9 +197,11 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 1.6.1 =
-- (10 Sep 2009) - Fixes error if you are upgrading from prior version: Fatal error: Call to a member function `si_contact_migrate()` on a non-object in si-contact-form.php on line 1461
-- If you get this error and cannot access your WP site: the manual fix is to edit line 1461 of si-contact-form.php and change `$option_defaults = $si_contact_form->si_contact_migrate($option_defaults);`
-to '$option_defaults = $this->si_contact_migrate($option_defaults);'
+- (11 Sep 2009) - Fixes error if you are upgrading from prior version: Fatal error: Call to a member function `si_contact_migrate()` on a non-object in si-contact-form.php on line 1461
+- If you get this error and cannot access your WP site: the manual fix is to edit line 1461 of si-contact-form.php and change 
+`$option_defaults = $si_contact_form->si_contact_migrate($option_defaults);`
+to `$option_defaults = $this->si_contact_migrate($option_defaults);`
+See this [forum post](http://wordpress.org/support/topic/309925)
 
 = 1.6 =
 - (10 Sep 2009) - Auto form fill is automatically skipped for any user with administrator role.
