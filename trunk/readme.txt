@@ -154,6 +154,7 @@ The following translations are included in the download zip file:
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
@@ -193,6 +194,17 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.6 =
+- (10 Sep 2009) - Auto form fill is automatically skipped for any user with administrator role.
+- New option: Auto form fill can be enabled/disabled in advanced options(enabled by default).
+- Plugin options are now stored in a single database row instead of many. (it will auto migrate/cleanup old database rows).
+- Language files are now stored in the `si-contact-form/languages` folder.
+- Options are deleted when this plugin is deleted.
+- Added help links on options page.
+- Added Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
+- Updated Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
+- Updated Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
 
 = 1.5 =
 - (9 Sep 2009) - New feature: I added an "advanced options" section to the options page. Some people wanted to change the text labels for the contact form.
