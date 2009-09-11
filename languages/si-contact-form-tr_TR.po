@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: 1.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
 "POT-Creation-Date: 2009-08-27 17:15+0000\n"
-"PO-Revision-Date: 2009-08-29 09:26+0200\n"
+"PO-Revision-Date: 2009-09-10 21:08+0200\n"
 "Last-Translator: Tolga Tapcalap <tapcalap@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -255,7 +255,7 @@ msgstr "aria-zorunlu bir WAI ARIA form giriş etiketidir. Ekran koruyucular bunu
 
 #: si-contact-form.php:388
 msgid "Update Options"
-msgstr "Güncelleme Seçenekleri"
+msgstr "Değişiklikleri Kaydet"
 
 #: si-contact-form.php:398
 msgid "All registered users"
