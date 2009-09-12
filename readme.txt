@@ -92,7 +92,7 @@ Make sure you have the correct "E-mail To:" set in options. If that is correct, 
 "E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
 
 = What is "ERROR: Misconfigured E-mail address in options.", what could be wrong? =
-First, make sure you have a valid "E-mail To:" set in options. This plugin uses an email validation check to make sure the email address has proper syntax and that a valid DNS record exists for the email domain name. If you have this error and you are sure your email address is correct, maybe your server is having trouble with the DNS check. I added a feature to the options panel to disable the DNS check on the domain during email validation. You may have to uncheck this option: "Enable checking DNS records for the domain name when checking for a valid E-mail address." Maybe the error will go away now.
+First, make sure you have a valid "E-mail To:" set in options. This plugin uses an email validation check to make sure the email address has proper syntax and that a valid DNS record exists for the email domain name. If you have this error and you are sure your email address is correct, maybe your server is having trouble with the DNS check. I added a feature to the options panel to disable the DNS check during email validation. You may have to uncheck this option: "Enable checking DNS records for the domain name when checking for a valid E-mail address." Maybe the error will go away now.
 
 = Why do I get "ERROR: Could not read CAPTCHA cookie."? =
 
@@ -144,7 +144,7 @@ Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials
 This script can be used to test if your PHP installation will support the CAPTCHA:
 Open this URL in your web browser to run the test:
 `/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
-This link can be found on the `Captcha Settings` page.
+This link can be found on the `Contact Form Options` page.
 
 
 = Is this plugin available in other languages? =
