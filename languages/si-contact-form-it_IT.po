@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Fast and Secure Contact Form in italiano\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
 "POT-Creation-Date: 2009-08-27 17:15+0000\n"
-"PO-Revision-Date: 2009-09-09 09:33+0100\n"
+"PO-Revision-Date: 2009-09-11 22:09+0100\n"
 "Last-Translator: Gianni Diurno (aka gidibao) <gidibao@gmail.com>\n"
 "Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -26,483 +26,525 @@ msgstr ""
 msgid "SI Contact Form Options"
 msgstr "SI Contact Form"
 
-#: si-contact-form.php:81
-#: si-contact-form.php:283
-#: si-contact-form.php:659
+#: si-contact-form.php:53
+#: si-contact-form.php:142
+#: si-contact-form.php:1423
 msgid "<p>Comments or questions are welcome.</p>"
 msgstr "<p>I commenti e le domande sono bene accetti.</p>"
 
-#: si-contact-form.php:82
-#: si-contact-form.php:306
-#: si-contact-form.php:571
+#: si-contact-form.php:58
+#: si-contact-form.php:239
+#: si-contact-form.php:521
+#: si-contact-form.php:1424
 msgid "Webmaster"
 msgstr "Webmaster"
 
-#: si-contact-form.php:85
+#: si-contact-form.php:63
+#: si-contact-form.php:1427
 msgid "Contact:"
 msgstr "Contatto:"
 
-#: si-contact-form.php:125
+#: si-contact-form.php:77
 msgid "You do not have permissions for managing this option"
 msgstr "Non hai i permessi per gestire questa opzione"
 
-#: si-contact-form.php:229
+#: si-contact-form.php:147
 msgid "Options saved."
 msgstr "Le opzioni sono state salvate."
 
-#: si-contact-form.php:232
+#: si-contact-form.php:150
 msgid "Fast and Secure Contact Form Options"
 msgstr "Opzioni Fast and Secure Contact Form"
 
-#: si-contact-form.php:244
+#: si-contact-form.php:163
+msgid "Changelog"
+msgstr "Changelog"
+
+#: si-contact-form.php:164
+msgid "FAQ"
+msgstr "FAQ"
+
+#: si-contact-form.php:165
+msgid "Rate This"
+msgstr "Valuta"
+
+#: si-contact-form.php:166
+msgid "Support"
+msgstr "Supporto"
+
+#: si-contact-form.php:167
+#: si-contact-form.php:175
 msgid "Donate"
 msgstr "Donazione"
 
-#: si-contact-form.php:255
+#: si-contact-form.php:168
+msgid "Free PHP Scripts"
+msgstr "Scripts PHP gratuiti"
+
+#: si-contact-form.php:169
+msgid "Contact"
+msgstr "Contatta"
+
+#: si-contact-form.php:187
 msgid "If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!"
 msgstr "Avessi trovato utile questo plugin, considera la possibilità di effettuare una piccola donazione per sostenerne lo sviluppo. Grazie per il tuo gentile supporto!"
 
-#: si-contact-form.php:259
+#: si-contact-form.php:202
+msgid "I have donated to help contribute for the development of this Contact Form."
+msgstr "Ho contribuito allo sviluppo di questo Contact Form."
+
+#: si-contact-form.php:205
 msgid "Usage"
 msgstr "Utilizzo"
 
-#: si-contact-form.php:261
+#: si-contact-form.php:207
 msgid "You must add the shortcode <b>[si_contact_form]</b> in a Page. That page will become your Contact Form"
 msgstr "Aggiungi in una pagina lo shortcode <b>[si_contact_form]</b>. Quella pagina diverrà il tuo modulo di contatto"
 
-#: si-contact-form.php:261
-#: si-contact-form.php:289
-#: si-contact-form.php:357
+#: si-contact-form.php:207
+#: si-contact-form.php:222
+#: si-contact-form.php:290
+#: si-contact-form.php:309
+#: si-contact-form.php:322
+#: si-contact-form.php:333
 #: si-contact-form.php:376
-#: si-contact-form.php:389
-#: si-contact-form.php:400
-#: si-contact-form.php:443
-#: si-contact-form.php:466
-#: si-contact-form.php:478
-#: si-contact-form.php:486
-#: si-contact-form.php:494
-#: si-contact-form.php:503
+#: si-contact-form.php:398
+#: si-contact-form.php:412
+#: si-contact-form.php:424
+#: si-contact-form.php:432
+#: si-contact-form.php:440
+#: si-contact-form.php:449
 msgid "help"
 msgstr "info"
 
-#: si-contact-form.php:264
+#: si-contact-form.php:210
 msgid "Options"
 msgstr "Opzioni"
 
-#: si-contact-form.php:276
+#: si-contact-form.php:218
+#: si-contact-form.php:393
 msgid "Form:"
 msgstr "Modulo:"
 
-#: si-contact-form.php:278
+#: si-contact-form.php:220
 msgid "Welcome introduction"
 msgstr "Messaggio introduttivo"
 
-#: si-contact-form.php:289
-#: si-contact-form.php:357
+#: si-contact-form.php:222
+#: si-contact-form.php:290
+#: si-contact-form.php:309
+#: si-contact-form.php:322
+#: si-contact-form.php:333
 #: si-contact-form.php:376
-#: si-contact-form.php:389
-#: si-contact-form.php:400
-#: si-contact-form.php:443
-#: si-contact-form.php:466
-#: si-contact-form.php:478
-#: si-contact-form.php:486
-#: si-contact-form.php:494
-#: si-contact-form.php:503
+#: si-contact-form.php:398
+#: si-contact-form.php:412
+#: si-contact-form.php:424
+#: si-contact-form.php:432
+#: si-contact-form.php:440
+#: si-contact-form.php:449
 msgid "Click for Help!"
 msgstr "Info!"
 
-#: si-contact-form.php:291
+#: si-contact-form.php:224
 msgid "This gets printed when the contact form is first presented. It is not printed when there is an input error and not printed after the form is completed."
 msgstr "Questo messaggio verrà mostrato alla presentazione del modulo di contatto. Non verrà pubblicato in presenza di errori di compilazione oppure dopo l'avvenuto completamento del modulo."
 
-#: si-contact-form.php:296
+#: si-contact-form.php:229
 msgid "E-mail:"
 msgstr "Email:"
 
-#: si-contact-form.php:349
+#: si-contact-form.php:282
 msgid "E-mail To"
 msgstr "Destinatario email"
 
-#: si-contact-form.php:352
-#: si-contact-form.php:372
-#: si-contact-form.php:385
-#: si-contact-form.php:998
+#: si-contact-form.php:285
+#: si-contact-form.php:305
+#: si-contact-form.php:318
+#: si-contact-form.php:944
 msgid "ERROR: Misconfigured E-mail address in options."
 msgstr "ERRORE: configurazione errata indirizzo email (nelle opzioni)."
 
-#: si-contact-form.php:359
+#: si-contact-form.php:292
 msgid "E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:"
 msgstr "L'indirizzo email per la ricezione dei messaggi (la tua email). Potrai aggiungere a tuo piacere quanti contatti desideri (il menu a tendina per la selezione verrà creato in automatico). Ogni contatto dovrà avere un proprio nome ed un indirizzo email separato da una virgola. Ogni contatto andrà separato premendo il tasto di Invio. Qualora desiderassi inserire più di un contatto, segui l'esempio qui sotto: "
 
-#: si-contact-form.php:363
+#: si-contact-form.php:296
 msgid "Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:"
 msgstr "Inoltre, potrai avere più email per contatto (in Copia Carbone). Separa ogni CC con un punto e virgola (segno di interpunzione). Qualora desiderassi aggiungere più di un contatto, ogniuno con una CC, segui l'esempio:"
 
-#: si-contact-form.php:369
+#: si-contact-form.php:302
 msgid "E-mail From (optional)"
 msgstr "Mittente email (facoltativo)"
 
-#: si-contact-form.php:378
+#: si-contact-form.php:311
 msgid "E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the \"From:\" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix."
 msgstr "L'indirizzo email dell'autore del messaggio. Generalmente, non sarà necessario che tu faccia uso di questa funzione. Alcuni web hosts non permettono di inviare via PHP le email a meno che il mittente (\"Da:\") non appartenga allo stesso dominio. Qualora il tuo modulo di contatto non ti inviasse alcuna email, l'iserimento di un indirizzo email con lo STESSO dominio del tuo sito potrebbe risolvere il problema."
 
-#: si-contact-form.php:382
+#: si-contact-form.php:315
 msgid "E-mail Bcc (optional)"
 msgstr "Copia carbone nascosta (facoltativo)"
 
-#: si-contact-form.php:391
+#: si-contact-form.php:324
 msgid "This Bcc address is global, which means that if you have multi \"E-mail To\" contacts, any contact selected will send to this also."
 msgstr "L'indirizzo email Bcc (Copia Carbone Nascosta) é generale. Ciò significa che, qualora avessi dei contatti multipli \"Destinatario email\", ogni contatto selezionato verrà altresì inviato all'indirizzo Bcc."
 
-#: si-contact-form.php:392
+#: si-contact-form.php:325
 msgid "E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:"
 msgstr "Lista degli indirizzi destinatari dei messaggi Bcc (Copia Carbone Nascosta). Potrai effettuare l'invio multiplo o singolo, entrambi i metodi sono consentiti:"
 
-#: si-contact-form.php:399
+#: si-contact-form.php:332
 msgid "E-mail Subject Prefix"
 msgstr "Prefisso oggetto email:"
 
-#: si-contact-form.php:402
+#: si-contact-form.php:335
 msgid "This will become a prefix of the subject for the E-mail you receive."
 msgstr "Questo sarà il prefisso per l'oggetto della email che riceverai."
 
-#: si-contact-form.php:407
+#: si-contact-form.php:340
 msgid "Enable double E-mail entry required on contact form."
 msgstr "Abilita la richiesta di inserire nel modulo due volte l'indirizzo email."
 
-#: si-contact-form.php:410
+#: si-contact-form.php:343
 msgid "Enable Form Post security by requiring domain name match for"
 msgstr "Abilita la sicurezza per il modulo richiedendo che il nome del dominio coincida con"
 
-#: si-contact-form.php:415
+#: si-contact-form.php:348
 msgid "(recommended)."
 msgstr "(raccomandato)."
 
-#: si-contact-form.php:422
+#: si-contact-form.php:355
 msgid "CAPTCHA:"
 msgstr "CAPTCHA:"
 
-#: si-contact-form.php:425
+#: si-contact-form.php:358
 msgid "Enable CAPTCHA (recommended)."
 msgstr "Attiva il CAPTCHA (raccomandato)."
 
-#: si-contact-form.php:428
+#: si-contact-form.php:361
 msgid "Hide CAPTCHA for"
 msgstr "Rimuovi il CAPTCHA per gli"
 
-#: si-contact-form.php:429
+#: si-contact-form.php:362
 msgid "registered"
 msgstr "utenti"
 
-#: si-contact-form.php:429
+#: si-contact-form.php:362
 msgid "users who can"
 msgstr "registrati che possono"
 
-#: si-contact-form.php:432
+#: si-contact-form.php:365
 msgid "Test if your PHP installation will support the CAPTCHA"
 msgstr "Verifica se la tua installazione PHP sarà in grado di supportare il CAPTCHA"
 
-#: si-contact-form.php:437
+#: si-contact-form.php:370
 msgid "Redirect:"
 msgstr "Reindirizzamento:"
 
-#: si-contact-form.php:440
+#: si-contact-form.php:373
 msgid "Enable redirect after the message sends"
 msgstr "Una volta inviato il messaggio attiva il reindirizzamento"
 
-#: si-contact-form.php:442
+#: si-contact-form.php:375
 msgid "Redirect URL"
 msgstr "URL reindirizzamento"
 
-#: si-contact-form.php:445
+#: si-contact-form.php:378
 msgid "After a user sends a message, the web browser will display \"message sent\" for 5 seconds, then redirect to this URL."
 msgstr "Una volta che l'utente avrà inviato un messaggio, il browser mostrerà per 5 secondi il testo \"messaggio inviato\" quindi, reindirizzerà a questo URL."
 
-#: si-contact-form.php:454
+#: si-contact-form.php:387
 msgid "Click for Advanced Options"
 msgstr "Clicca per le opzioni avanzate"
 
-#: si-contact-form.php:460
+#: si-contact-form.php:397
+msgid "Enable auto form fill"
+msgstr "Attiva compilazione automatica"
+
+#: si-contact-form.php:400
+msgid "Auto form fill email address and name (username) on the contact form for logged in users who are not administrators."
+msgstr "Compila in automatico i campi email e nome (nome utente) del moduo di contatto per gli utenti collegati che non sono amministratori."
+
+#: si-contact-form.php:406
 msgid "Style:"
 msgstr "Stile:"
 
-#: si-contact-form.php:464
+#: si-contact-form.php:410
 msgid "Enable border on contact form"
 msgstr "Attiva il bordo per modulo di contatto"
 
-#: si-contact-form.php:465
+#: si-contact-form.php:411
 msgid "Border Width"
 msgstr "Larghezza del bordo"
 
-#: si-contact-form.php:468
+#: si-contact-form.php:414
 msgid "Use to adjust the width of the contact form border (if border is enabled)."
 msgstr "Serve per la regolazione della larghezza del bordo del modulo di contatto (se il bordo é attivo)."
 
-#: si-contact-form.php:473
+#: si-contact-form.php:419
 msgid "CSS style for form input titles on the contact form"
 msgstr "Stile CSS per i titoli dei campi di inserimento nel modulo di contatto"
 
-#: si-contact-form.php:474
+#: si-contact-form.php:420
 msgid "CSS style for form input fields on the contact form"
 msgstr "Stile CSS per i campi di inserimento nel modulo di contatto"
 
-#: si-contact-form.php:475
+#: si-contact-form.php:421
 msgid "CSS style for form input errors on the contact form"
 msgstr "Stile CSS per gli errori di inserimento dati nel modulo di contatto"
 
-#: si-contact-form.php:477
+#: si-contact-form.php:423
 msgid "Input Text Field Size"
 msgstr "Dimensione campo inserimento testo"
 
-#: si-contact-form.php:480
+#: si-contact-form.php:426
 msgid "Use to adjust the size of the contact form text input fields."
 msgstr "Serve per le correzioni alla dimensione dei campi per l'inserimento dei dati del modulo di contatto"
 
-#: si-contact-form.php:484
+#: si-contact-form.php:430
 msgid "Input Textarea Field Cols"
 msgstr "Dimensione campo area di testo. Colonne"
 
-#: si-contact-form.php:485
+#: si-contact-form.php:431
 msgid "Rows"
 msgstr "Righe"
 
-#: si-contact-form.php:488
+#: si-contact-form.php:434
 msgid "Use to adjust the size of the contact form message textarea."
 msgstr "Serve per le correzioni alla dimensione dell'area di testo nel modulo di contatto"
 
-#: si-contact-form.php:493
+#: si-contact-form.php:439
 msgid "Enable aria-required tags for screen readers"
 msgstr "Attiva i tag aria-required"
 
-#: si-contact-form.php:496
+#: si-contact-form.php:442
 msgid "aria-required is a form input WAI ARIA tag. Screen readers use it to determine which fields are required. Enabling this is good for accessability, but will cause the HTML to fail the W3C Validation (there is no attribute \"aria-required\"). WAI ARIA attributes are soon to be accepted by the HTML validator, so you can safely ignore the validation error it will cause."
 msgstr "aria-required é un modulo di input tag WAI ARIA. Gli utenti lo utilizzeranno per determinare quali campi sono richiesti. Sebbene l'attivazione migliorerà l'accessibilità, ricordo che non verrà passata la W3C Validation (non esiste un attributo \"aria-required. Gli attributi WAI ARIA verranno a breve accettati dall'HTML validator quindi, puoi tranquillamente ignorare l'errore di convalida.       "
 
-#: si-contact-form.php:501
+#: si-contact-form.php:447
 msgid "Fields:"
 msgstr "Campi:"
 
-#: si-contact-form.php:505
+#: si-contact-form.php:451
 msgid "Some people wanted to change the text labels for the contact form. These fields can be filled in to override the standard included field titles."
 msgstr "Qualora desiderassi modificare il testo nelle etichette del modulo di contatto, utilizza questi campi per sovrascrivere il valore predefinito per i titoli."
 
-#: si-contact-form.php:508
-#: si-contact-form.php:988
+#: si-contact-form.php:454
+#: si-contact-form.php:934
 msgid "Contact Form"
 msgstr "Contact Form"
 
-#: si-contact-form.php:509
-#: si-contact-form.php:1008
+#: si-contact-form.php:455
+#: si-contact-form.php:954
 msgid "Department to Contact"
 msgstr "Titolo contatto"
 
-#: si-contact-form.php:510
-#: si-contact-form.php:1060
+#: si-contact-form.php:456
+#: si-contact-form.php:1011
 msgid "Name"
 msgstr "Nome"
 
-#: si-contact-form.php:511
-#: si-contact-form.php:1075
-#: si-contact-form.php:1111
+#: si-contact-form.php:457
+#: si-contact-form.php:1026
+#: si-contact-form.php:1062
 msgid "E-Mail Address"
 msgstr "Indirizzo email"
 
-#: si-contact-form.php:512
-#: si-contact-form.php:1088
+#: si-contact-form.php:458
+#: si-contact-form.php:1039
 msgid "E-Mail Address again"
 msgstr "Riscrivi l'indirizzo email"
 
-#: si-contact-form.php:513
-#: si-contact-form.php:1098
+#: si-contact-form.php:459
+#: si-contact-form.php:1049
 msgid "Please enter your E-mail Address a second time."
 msgstr "Inserisci nuovamente il tuo indirizzo email"
 
-#: si-contact-form.php:514
-#: si-contact-form.php:1127
+#: si-contact-form.php:460
+#: si-contact-form.php:1078
 msgid "Subject"
 msgstr "Oggetto"
 
-#: si-contact-form.php:515
-#: si-contact-form.php:907
-#: si-contact-form.php:1143
+#: si-contact-form.php:461
+#: si-contact-form.php:853
+#: si-contact-form.php:1094
 msgid "Message"
 msgstr "Messaggio"
 
-#: si-contact-form.php:516
-#: si-contact-form.php:1252
+#: si-contact-form.php:462
+#: si-contact-form.php:1203
 msgid "CAPTCHA Code"
 msgstr "Codice CAPTCHA"
 
-#: si-contact-form.php:517
-#: si-contact-form.php:1166
+#: si-contact-form.php:463
+#: si-contact-form.php:1117
 msgid "Submit"
 msgstr "Invia"
 
-#: si-contact-form.php:518
-#: si-contact-form.php:674
+#: si-contact-form.php:464
+#: si-contact-form.php:620
 msgid "Your message has been sent, thank you."
 msgstr "Il tuo messaggio é stato inviato! Grazie."
 
-#: si-contact-form.php:529
+#: si-contact-form.php:475
 msgid "Update Options"
 msgstr "Opzioni aggiornamento"
 
-#: si-contact-form.php:539
+#: si-contact-form.php:485
 msgid "All registered users"
 msgstr "tutti gli utenti registrati"
 
-#: si-contact-form.php:540
+#: si-contact-form.php:486
 msgid "Edit posts"
 msgstr "modificare gli articoli"
 
-#: si-contact-form.php:541
+#: si-contact-form.php:487
 msgid "Publish Posts"
 msgstr "pubblicare articoli"
 
-#: si-contact-form.php:542
+#: si-contact-form.php:488
 msgid "Moderate Comments"
 msgstr "moderare i commenti"
 
-#: si-contact-form.php:543
+#: si-contact-form.php:489
 msgid "Administer site"
 msgstr "amministrare il sito"
 
-#: si-contact-form.php:705
-#: si-contact-form.php:706
+#: si-contact-form.php:651
+#: si-contact-form.php:652
 msgid "Redirecting"
 msgstr "Reindirizzamento"
 
-#: si-contact-form.php:759
+#: si-contact-form.php:705
 msgid "Selecting a contact is required."
 msgstr "E' necessaria la selezione di un contatto."
 
-#: si-contact-form.php:763
+#: si-contact-form.php:709
 msgid "Requested Contact not found."
 msgstr "Il contatto richiesto non è stato trovato."
 
-#: si-contact-form.php:798
-#: si-contact-form.php:861
+#: si-contact-form.php:744
+#: si-contact-form.php:807
 msgid "Contact Form has Invalid Input"
 msgstr "Il modulo di contatto non é stato compilato correttamente"
 
-#: si-contact-form.php:803
+#: si-contact-form.php:749
 msgid "Your IP is Banned"
 msgstr "Il tuo IP é bannato"
 
-#: si-contact-form.php:813
+#: si-contact-form.php:759
 msgid "Your name is required."
 msgstr "Il nome é obbligatorio."
 
-#: si-contact-form.php:817
-#: si-contact-form.php:821
+#: si-contact-form.php:763
+#: si-contact-form.php:767
 msgid "A proper e-mail address is required."
 msgstr "E' necessario un indirizzo email valido."
 
-#: si-contact-form.php:825
+#: si-contact-form.php:771
 msgid "The two e-mail addresses did not match, please enter again."
 msgstr "I due indirizzi email non coincidono. Ripetere l'operazione."
 
-#: si-contact-form.php:829
+#: si-contact-form.php:775
 msgid "Subject text is required."
 msgstr "Non hai inserito l'oggetto!"
 
-#: si-contact-form.php:833
+#: si-contact-form.php:779
 msgid "Message text is required."
 msgstr "Non hai inserito il messaggio!"
 
-#: si-contact-form.php:872
+#: si-contact-form.php:818
 msgid "Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ."
 msgstr "Non é stato possibile leggere il CAPTCHA cookie. Assicurati di avere i cookie abilitati e nessun blocco attivo nelle impostazioni del tuo browser diversamente, potrebbe dipendere da un conflitto con un altro plugin. Vedi le FAQ."
 
-#: si-contact-form.php:876
+#: si-contact-form.php:822
 msgid "Please complete the CAPTCHA."
 msgstr "Inserisci il CAPTCHA."
 
-#: si-contact-form.php:886
+#: si-contact-form.php:832
 msgid "That CAPTCHA was incorrect."
 msgstr "Il CAPTCHA non é corretto."
 
-#: si-contact-form.php:901
+#: si-contact-form.php:847
 msgid "To"
 msgstr "A"
 
-#: si-contact-form.php:903
+#: si-contact-form.php:849
 msgid "From"
 msgstr "Da"
 
-#: si-contact-form.php:919
+#: si-contact-form.php:865
 msgid "From a WordPress user"
 msgstr "Da un utente WordPress"
 
-#: si-contact-form.php:921
+#: si-contact-form.php:867
 msgid "Sent from (ip address)"
 msgstr "Inviato da (indirizzo IP)"
 
-#: si-contact-form.php:922
+#: si-contact-form.php:868
 msgid "Date/Time"
 msgstr "Data/ora"
 
-#: si-contact-form.php:923
+#: si-contact-form.php:869
 msgid "Coming from (referer)"
 msgstr "In arrivo da (referente)"
 
-#: si-contact-form.php:924
+#: si-contact-form.php:870
 msgid "Using (user agent)"
 msgstr "User agent (in uso)"
 
-#: si-contact-form.php:995
+#: si-contact-form.php:941
 msgid "INPUT ERROR: Please make corrections below and try again."
 msgstr "ERRORE COMPILAZIONE: effettua le correzioni suggerite e riprova."
 
-#: si-contact-form.php:1016
+#: si-contact-form.php:962
 msgid "Select"
 msgstr "Seleziona"
 
-#: si-contact-form.php:1219
+#: si-contact-form.php:1170
 msgid "ERROR: si-contact-form.php plugin says GD image support not detected in PHP!"
 msgstr "ERRORE: il plugin si-contact-form.php non ha rilevato nel PHP il supporto GD image!"
 
-#: si-contact-form.php:1220
+#: si-contact-form.php:1171
 msgid "Contact your web host and ask them why GD image support is not enabled for PHP."
 msgstr "Contatta il tuo fornitore di servizi di hosting e domanda l'attivazione del supporto GD image."
 
-#: si-contact-form.php:1224
+#: si-contact-form.php:1175
 msgid "ERROR: si-contact-form.php plugin says imagepng function not detected in PHP!"
 msgstr "ERRORE: il plugin si-contact-form.php non ha rilevato nel PHP la funzione imagepng!"
 
-#: si-contact-form.php:1225
+#: si-contact-form.php:1176
 msgid "Contact your web host and ask them why imagepng function is not enabled for PHP."
 msgstr "Contatta il tuo fornitore di servizi di hosting e domanda l'attivazione della funzione imagepng."
 
-#: si-contact-form.php:1229
+#: si-contact-form.php:1180
 msgid "ERROR: si-contact-form.php plugin says captcha_library not found."
 msgstr "ERRORE: il plugin si-contact-form.php non ha rilevato la captcha_library!"
 
-#: si-contact-form.php:1263
+#: si-contact-form.php:1214
 msgid "CAPTCHA Image"
 msgstr "Immagine CAPTCHA"
 
-#: si-contact-form.php:1264
+#: si-contact-form.php:1215
 msgid "Audible Version of CAPTCHA"
 msgstr "Versione audio del CAPTCHA"
 
-#: si-contact-form.php:1265
+#: si-contact-form.php:1216
 msgid "Audio Version"
 msgstr "Versione audio"
 
-#: si-contact-form.php:1267
+#: si-contact-form.php:1218
 msgid "Refresh Image"
 msgstr "Refresh immagine"
 
-#: si-contact-form.php:1269
+#: si-contact-form.php:1220
 msgid "Reload Image"
 msgstr "Ricarica immagine"
 
-#: si-contact-form.php:1285
+#: si-contact-form.php:1236
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: si-contact-form.php:1454
+#: si-contact-form.php:1405
 msgid "Settings"
 msgstr "Impostazioni"
 
