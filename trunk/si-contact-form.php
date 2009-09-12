@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.6.1
+Version: 1.6.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -86,6 +86,7 @@ function si_contact_options_page() {
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : $option_defaults['email_subject'],
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
+         'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
          'captcha_perm' =>     (isset( $_POST['si_contact_captcha_perm'] ) ) ? 'true' : 'false',
          'captcha_perm_level' =>       $_POST['si_contact_captcha_perm_level'],
@@ -347,6 +348,9 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
         echo " $blogdomain ";
         ?><?php echo esc_html( __('(recommended).', 'si-contact-form')); ?>
         </label>
+        <br />
+        <input name="si_contact_email_check_dns" id="si_contact_email_check_dns" type="checkbox" <?php if( $si_contact_opt['email_check_dns'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label name="si_contact_email_check_dns" for="si_contact_email_check_dns"><?php echo esc_html( __('Enable checking DNS records for the domain name when checking for a valid E-mail address.', 'si-contact-form')); ?></label>
 
       </td>
     </tr>
@@ -1301,15 +1305,17 @@ function ctf_name_case($name) {
    return $newname;
 } // end function ctf_name_case
 
+
 // checks proper email syntax (not perfect, none of these are, but this is the best I can find)
 function ctf_validate_email($email) {
+   global $si_contact_opt;
 
    //check for all the non-printable codes in the standard ASCII set,
-   //including null bytes and newlines, and exit immediately if any are found.
+   //including null bytes and newlines, and return false immediately if any are found.
    if (preg_match("/[\\000-\\037]/",$email)) {
       return false;
    }
-   // regular expression used to perform the email check
+   // regular expression used to perform the email syltax check
    // http://fightingforalostcause.net/misc/2006/compare-email-regex.php
    //$pattern = "/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|asia|cat|jobs|tel|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i";
    //$pattern = "/^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+)(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/i";
@@ -1317,17 +1323,19 @@ function ctf_validate_email($email) {
    if(!preg_match($pattern, $email)){
       return false;
    }
-   // Validate the domain exists with a DNS check
-   // if the checks cannot be made (soft fail over to true)
-   list($user,$domain) = explode('@',$email);
-   if( function_exists('checkdnsrr') ) {
-      if( !checkdnsrr($domain,"MX") ) { // Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
-         return false;
-      }
-   }
-   else if( function_exists("getmxrr") ) {
-      if ( !getmxrr($domain, $mxhosts) ) {
-         return false;
+   // Make sure the domain exists with a DNS check (if enabled in options)
+   // MX records are not mandatory for email delivery, this is why this function also checks A and CNAME records.
+   // if the checkdnsrr function does not exist (skip this extra check, the syntax check will have to do)
+   // checkdnsrr available in Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
+   if ($si_contact_opt['email_check_dns'] == 'true') {
+      if( function_exists('checkdnsrr') ) {
+         list($user,$domain) = explode('@',$email);
+         if(!checkdnsrr($domain.'.', 'MX') &&
+            !checkdnsrr($domain.'.', 'A') &&
+            !checkdnsrr($domain.'.', 'CNAME')) {
+            // domain not found in DNS
+            return false;
+         }
       }
    }
    return true;
@@ -1399,13 +1407,14 @@ function ctf_spamcheckpost() {
 } // end function ctf_spamcheckpost
 
 function si_contact_plugin_action_links( $links, $file ) {
-	if ( $file != plugin_basename( __FILE__ ))
-		return $links;
+    //Static so we don't call plugin_basename on every plugin row.
+	static $this_plugin;
+	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
-	$settings_link = '<a href="plugins.php?page=si-contact-form/si-contact-form.php">' . esc_html( __( 'Settings', 'si-contact-form' ) ) . '</a>';
-
-	array_unshift( $links, $settings_link );
-
+	if ( $file == $this_plugin ){
+        $settings_link = '<a href="plugins.php?page=si-contact-form/si-contact-form.php">' . esc_html( __( 'Settings', 'si-contact-form' ) ) . '</a>';
+	    array_unshift( $links, $settings_link ); // before other links
+	}
 	return $links;
 }
 
@@ -1427,6 +1436,7 @@ function si_contact_init() {
          'email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
          'double_email' => 'false',
          'domain_protect' => 'true',
+         'email_check_dns' => 'true',
          'captcha_enable' => 'true',
          'captcha_perm' => 'false',
          'captcha_perm_level' => 'read',
