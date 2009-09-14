@@ -70,7 +70,11 @@ Requirements/Restrictions:
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
+1. Use the E-mail test feature in options, if you are not receiving mail, try it. It will display troubleshooting information.
+ 
+2. Look for a warning message on the Options page for when the web host has mail() function disabled.
+
+3. Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
 "E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
 
 
@@ -89,7 +93,11 @@ Make sure you have the correct "E-mail To:" set in options. If that is correct, 
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
+1. Use the E-mail test feature in options, if you are not receiving mail, try it. It will display troubleshooting information.
+ 
+2. Look for a warning message on the Options page for when the web host has mail() function disabled.
+
+3. Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
 "E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
 
 = What is "ERROR: Misconfigured E-mail address in options.", what could be wrong? =
@@ -200,6 +208,11 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.6.4 =
+- (14 Sep 2009) - Added E-mail test feature in options, if you are not receiving mail, try it. It will display troubleshooting information.
+- Added error check for wp_mail send, this is helful to troubleshoot mail delivery. 
+- Added a warning message on Options page for when the web host has mail() function disabled.
 
 = 1.6.3 =
 - (13 Sep 2009) - Added new advanced options for CSS style of captcha image, audio image, reload image, and submit button.

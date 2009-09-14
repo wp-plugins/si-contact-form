@@ -36,8 +36,10 @@ Solution: Try all 3 tests below.
 If all 3 pass,
 the problem could be another WordPress plugin is conflicting with the PHP session.
 What other plugins do you have installed?
-Can you temporarily deactivate them one at a time until the conflicting plugin is pinpointed?
-If a conflicting plugin is found I might be able to fix it, then we can notify the plugin author. Contact me below.
+Can you temporarily deactivate them all.
+Test, then if it works, activate them one at a time (then test) until the conflicting plugin is pinpointed?
+If a conflicting plugin is found I might be able to fix it (or not), then we can notify the plugin author.
+Contact me below.
 ';
 
 // Define a cookie and reload the page
