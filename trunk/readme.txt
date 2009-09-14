@@ -3,7 +3,7 @@ Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
 Tags: Akismet, captcha, contact, contact form, email, spam, multilingual
-Requires at least: 2.5
+Requires at least: 2.6
 Tested up to: 2.8.4
 Stable tag: trunk
 
