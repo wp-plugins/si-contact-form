@@ -20,14 +20,15 @@ Features:
  * Configure Options from Admin panel.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
- * Validates syntax of E-mail address (user@aol = bad, user@aol.com = good).
- * Optional redirect to home page after message sent.
- * Valid HTML, Section 508 and WAI Accessibility HTML Validation.
+ * Validates syntax of E-mail address.
+ * Optional redirect to any URL after message sent.
+ * Valid coding for HTML, XHTML, Section 508, and WAI Accessibility.
  * JavaScript is not required.
  * Setting to hide the CAPTCHA from logged in users and or admins.
  * Multi "E-mail to" contact support.
  * Auto form fill for logged in users.
  * Customizable form field titles.
+ * Customizable CSS style.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -162,6 +163,7 @@ The following translations are included in the download zip file:
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
+* Ukrainian (uk_UA) - Translated by [Wordpress.Ua](http://wordpress.ua/)
 * More are needed... Please help translate.
 
 = Can I provide a translation? =
@@ -198,6 +200,11 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.6.3 =
+- (13 Sep 2009) - Added new advanced options for CSS style of captcha image, audio image, reload image, and submit button.
+- Fixed coding for XHTML Strict validation.
+- Added Ukrainian language (uk_UA) - Translated by [Wordpress.Ua](http://wordpress.ua/)
 
 = 1.6.2 =
 - (11 Sep 2009) - Added new feature in options: "Enable checking DNS records for the domain name when checking for a
