@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.6.2
+Version: 1.6.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -97,6 +97,11 @@ function si_contact_options_page() {
          'title_style' =>         trim($_POST['si_contact_title_style']),
          'field_style' =>         trim($_POST['si_contact_field_style']),
          'error_style' =>         trim($_POST['si_contact_error_style']),
+         'captcha_div_style' =>   trim($_POST['si_contact_captcha_div_style']),
+         'captcha_image_style' => trim($_POST['si_contact_captcha_image_style']),
+         'audio_image_style' =>   trim($_POST['si_contact_audio_image_style']),
+         'reload_image_style' =>  trim($_POST['si_contact_reload_image_style']),
+         'button_style' =>        trim($_POST['si_contact_button_style']),
          'field_size' =>   absint(trim($_POST['si_contact_field_size'])),
          'text_cols' =>    absint(trim($_POST['si_contact_text_cols'])),
          'text_rows' =>    absint(trim($_POST['si_contact_text_rows'])),
@@ -406,23 +411,28 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
        </td>
       </tr>
 
-        <tr>
+      <tr>
          <th scope="row" style="width: 75px;"><?php echo esc_html( __('Style:', 'si-contact-form')); ?></th>
         <td>
 
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_border_enable"><?php echo esc_html( __('Enable border on contact form', 'si-contact-form')) ?>.</label>
-        <label for="si_contact_border_width"><?php echo esc_html( __('Border Width', 'si-contact-form')); ?>:</label><input name="si_contact_border_width" id="si_contact_border_width" type="text" value="<?php echo absint($si_contact_opt['border_width']);  ?>" size="3" />
+        <label for="si_contact_border_enable"><?php echo esc_html( __('Enable border on contact form', 'si-contact-form')) ?>.</label><br />
+        <label for="si_contact_border_width"><?php echo esc_html( __('Form DIV Width', 'si-contact-form')); ?>:</label><input name="si_contact_border_width" id="si_contact_border_width" type="text" value="<?php echo absint($si_contact_opt['border_width']);  ?>" size="3" />
         <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_border_width_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
         <div style="text-align:left; display:none" id="si_contact_border_width_tip">
         <?php echo esc_html( __('Use to adjust the width of the contact form border (if border is enabled).', 'si-contact-form')); ?>
         </div>
         <br />
 
-
         <label for="si_contact_title_style"><?php echo esc_html( __('CSS style for form input titles on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_style']);  ?>" size="50" /><br />
         <label for="si_contact_field_style"><?php echo esc_html( __('CSS style for form input fields on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_field_style" id="si_contact_field_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['field_style']);  ?>" size="50" /><br />
         <label for="si_contact_error_style"><?php echo esc_html( __('CSS style for form input errors on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_error_style" id="si_contact_error_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['error_style']);  ?>" size="50" /><br />
+        <label for="si_contact_captcha_div_style"><?php echo esc_html( __('CSS style for CAPTCHA DIV on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_captcha_div_style" id="si_contact_captcha_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_div_style']);  ?>" size="50" /><br />
+        <label for="si_contact_captcha_image_style"><?php echo esc_html( __('CSS style for CAPTCHA image on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_captcha_image_style" id="si_contact_captcha_image_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_image_style']);  ?>" size="50" /><br />
+        <label for="si_contact_audio_image_style"><?php echo esc_html( __('CSS style for Audio image on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_audio_image_style" id="si_contact_audio_image_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['audio_image_style']);  ?>" size="50" /><br />
+        <label for="si_contact_reload_image_style"><?php echo esc_html( __('CSS style for Reload image on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_reload_image_style" id="si_contact_reload_image_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['reload_image_style']);  ?>" size="50" /><br />
+        <label for="si_contact_button_style"><?php echo esc_html( __('CSS style for Submit button on the contact form', 'si-contact-form')); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['button_style']);  ?>" size="50" /><br />
+
 
        <label for="si_contact_field_size"><?php echo esc_html( __('Input Text Field Size', 'si-contact-form')); ?>:</label><input name="si_contact_field_size" id="si_contact_field_size" type="text" value="<?php echo absint($si_contact_opt['field_size']);  ?>" size="3" />
        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_field_size_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
@@ -923,13 +933,13 @@ if($message_sent) {
 
 $string .= '
 <!-- SI Contact Form plugin begin -->
-<form action="#" id="si_contact_form" method="post">
+<div style="width:'.absint($si_contact_opt['border_width']).'px;">
 ';
 
 
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
-  <div style="width:'.absint($si_contact_opt['border_width']).'px;">
+    <form action="#" id="si_contact_form" method="post">
     <fieldset>
         <legend>';
      if ($si_contact_opt['title_border'] != '') {
@@ -938,6 +948,11 @@ if ($si_contact_opt['border_enable'] == 'true') {
             $string .= esc_html( __('Contact Form', 'si-contact-form'));
      }
      $string .= '</legend>';
+} else {
+
+ $string .= '
+<form action="#" id="si_contact_form" method="post">
+';
 }
 
 // print any input errors
@@ -984,7 +999,7 @@ if (count($contacts) > 1) {
 }
 else {
 
-     $string .= '<input type="hidden" name="si_contact_CID" value="1" />'."\n";
+     $string .= '<div><input type="hidden" name="si_contact_CID" value="1" /></div>'."\n";
 
 }
 
@@ -1107,14 +1122,13 @@ $string .=   '
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
 if ( $this->isCaptchaEnabled() ) {
     $string .= $this->addCaptchaToContactForm($si_contact_error_captcha);
+} else {
+    $string .= '<div '.$this->ctf_field_style.'>';
 }
 
 $string .= '
-<br />
-<br />
-<div '.$this->ctf_field_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
-  <input type="submit" value="';
+  <input type="submit" style="'.$si_contact_opt['button_style'].'" value="';
      if ($si_contact_opt['title_submit'] != '') {
             $string .= esc_attr( $si_contact_opt['title_submit'] );
      } else {
@@ -1126,12 +1140,11 @@ $string .= '
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
     </fieldset>
-    </div>
   ';
 }
 $string .= '
 </form>
-
+</div>
 <!-- SI Contact Form plugin end -->
 ';
 
@@ -1212,19 +1225,17 @@ $string = '
                 <input type="text" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' style="width:65px;" />
         </div>
 
-<div style="text-align:left; float:left; width:205px; padding-top:5px;">
-         <img id="siimage" style="border-style:none; margin:0; padding-right:5px; float:left;"
+<div style="'.$si_contact_opt['captcha_div_style'].'">
+         <img id="siimage" style="'.$si_contact_opt['captcha_image_style'].'"
          src="'.$captcha_url_cf.'/securimage_show.php?sid='.md5(uniqid(time())).'"
          alt="'.__('CAPTCHA Image', 'si-contact-form').'" title="'.esc_attr(__('CAPTCHA Image', 'si-contact-form')).'" />
            <a href="'.$captcha_url_cf.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-contact-form')).'">
          <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="'.esc_attr(__('Audio Version', 'si-contact-form')).'"
-          style="border-style:none; margin:0; vertical-align:top;" onclick="this.blur()" /></a><br />
+          style="'.$si_contact_opt['audio_image_style'].'" onclick="this.blur()" /></a><br />
            <a href="#" title="'.esc_attr(__('Refresh Image', 'si-contact-form')).'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url_cf.'/securimage_show.php?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="'.esc_attr(__('Reload Image', 'si-contact-form')).'"
-         style="border-style:none; margin:0; vertical-align:bottom;" onclick="this.blur()" /></a>
-</div>
-<br /><br />
+         style="'.$si_contact_opt['reload_image_style'].'" onclick="this.blur()" /></a>
 ';
 } else {
       $string .= $this->captchaRequiresError;
@@ -1447,6 +1458,11 @@ function si_contact_init() {
          'title_style' => 'text-align:left;',
          'field_style' => 'text-align:left;',
          'error_style' => 'color:red; text-align:left;',
+         'captcha_div_style' => 'width:215px; padding-top:5px; text-align:left; float:left;',
+         'captcha_image_style' => 'padding-bottom:5px; float:left; border-style:none;',
+         'audio_image_style' => 'padding-top:2px; vertical-align:top; float:left; border-style:none;',
+         'reload_image_style' => 'vertical-align:top; float:left; border-style:none;',
+         'button_style' => 'margin 0;',
          'field_size' => '40',
          'text_cols' => '40',
          'text_rows' => '15',
