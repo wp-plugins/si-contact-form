@@ -2,8 +2,8 @@
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
-Tags: akismet, captcha, comments, spam, multilingual
-Requires at least: 2.3
+Tags: akismet, captcha, comment, comments, anti-spam, security, multilingual
+Requires at least: 2.6
 Tested up to: 2.8.4
 Stable tag: trunk
 
@@ -13,7 +13,7 @@ Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration fo
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
 In order to post comments, users will have to type in the phrase shown on the image.
-This prevents spam from automated bots. Works great with Akismet.
+This prevents spam from automated bots. Adds security. Works great with Akismet.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-captcha.php)
 
@@ -38,7 +38,7 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.3+
+ * Works with Wordpress 2.6+
  * PHP 4.0.6 or above with GD2 library support.
  * Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
   The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
@@ -194,6 +194,12 @@ Of course! It will be very gratefully received. Use PoEdit, it makes translation
 If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 == Changelog ==
+
+= 1.8 =
+- (15 Sep 2009) - Plugin options are now stored in a single database row instead of many. (and it will auto migrate/cleanup old options database rows).
+- Language files are now stored in the `si-captcha-for-wordpress/languages` folder.
+- Options are now deleted when this plugin is deleted.
+- Added proper nonce protection to options forms.
 
 = 1.7.12 =
 - (08 Sep 2009) - Fixed redirect/logout problem on admin menu reported by a user.

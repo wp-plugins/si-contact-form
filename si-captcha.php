@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both. This prevents spam from automated bots. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.7.12
+Version: 1.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -29,25 +29,19 @@ if (!class_exists('siCaptcha')) {
 
  class siCaptcha {
 
-function add_tabs() {
-    //add_options_page('Captcha Options', 'Captcha', 9, __FILE__,array(&$this,'options_page'));
-    add_submenu_page('plugins.php', __('SI Captcha Options', 'si-captcha'), __('SI Captcha Options', 'si-captcha'), 'manage_options', __FILE__,array(&$this,'options_page'));
+function si_captcha_add_tabs() {
+    add_submenu_page('plugins.php', __('SI Captcha Options', 'si-captcha'), __('SI Captcha Options', 'si-captcha'), 'manage_options', __FILE__,array(&$this,'si_captcha_options_page'));
 }
 
-function unset_si_captcha_options () {
-  delete_option('si_captcha_perm');
-  delete_option('si_captcha_perm_level');
-  delete_option('si_captcha_comment');
-  delete_option('si_captcha_comment_class');
-  delete_option('si_captcha_register');
-  delete_option('si_captcha_rearrange');
-  delete_option('si_captcha_aria_required');
+function si_captcha_unset_options() {
+  delete_option('si_captcha');
 }
 
-function get_settings($value) {
-// gets the settings, providing defaults if need be
-if (!get_option($value)) {
-        $defaults = array(
+function si_captcha_get_options() {
+  global $si_captcha_opt, $option_defaults;
+
+  $option_defaults = array(
+         'si_captcha_donated' => 'false',
          'si_captcha_perm' => 'true',
          'si_captcha_perm_level' => 'read',
          'si_captcha_comment' => 'true',
@@ -55,55 +49,69 @@ if (!get_option($value)) {
          'si_captcha_register' => 'true',
          'si_captcha_rearrange' => 'false',
          'si_captcha_aria_required' => 'false',
-         );
-        update_option($value,$defaults[$value]);
-        return $defaults[$value];
-} else {
-        return get_option($value);
-}
-} //end get_settings
+  );
 
-function options_page() {
-  global $si_captcha_nonce, $captcha_url;
-  if ($_POST['submit']) {
-    if ( function_exists('current_user_can') && !current_user_can('manage_options') )
-                        die(__('You do not have permissions for managing this option', 'si-captcha'));
-
-    $possible_options = array_keys($_POST);
-    //if the options are part of an array
-        foreach($possible_options as $option) {
-                update_option($option,trim($_POST[$option]));
-        }
-
-    if ( isset( $_POST['si_captcha_perm'] ) )
-         update_option( 'si_captcha_perm', 'true' );
-        else
-         update_option( 'si_captcha_perm', 'false' );
-
-    if ( isset( $_POST['si_captcha_comment'] ) )
-         update_option( 'si_captcha_comment', 'true' );
-        else
-         update_option( 'si_captcha_comment', 'false' );
-
-    if ( !isset( $_POST['si_captcha_comment_class'] ) )
-         update_option( 'si_captcha_comment_class', '' );
-
-    if ( isset( $_POST['si_captcha_register'] ) )
-         update_option( 'si_captcha_register', 'true' );
-        else
-         update_option( 'si_captcha_register', 'false' );
-
-    if ( isset( $_POST['si_captcha_rearrange'] ) )
-         update_option( 'si_captcha_rearrange', 'true' );
-        else
-         update_option( 'si_captcha_rearrange', 'false' );
-
-    if ( isset( $_POST['si_captcha_aria_required'] ) )
-         update_option( 'si_captcha_aria_required', 'true' );
-        else
-         update_option( 'si_captcha_aria_required', 'false' );
-
+  // upgrade path from old version
+  if (!get_option('si_captcha') && get_option('si_captcha_comment')) {
+    // just now updating, migrate settings
+    $option_defaults = $this->si_captcha_migrate($option_defaults);
   }
+
+  // install the option defaults
+  add_option('si_captcha', $option_defaults, '', 'yes');
+
+  // get the options from the database
+  $si_captcha_opt = get_option('si_captcha');
+
+  // array merge incase this version has added new options
+  $si_captcha_opt = array_merge($option_defaults, $si_captcha_opt);
+
+
+} // end function si_captcha_get_options
+
+function si_captcha_migrate($option_defaults) {
+  // read the options from the prior version
+   $new_options = array ();
+   foreach($option_defaults as $key => $val) {
+      $new_options[$key] = get_option( "$key" );
+      // now delete the options from the prior version
+      delete_option("$key");
+   }
+   // now the old settings will carry over to the new version
+   return $new_options;
+} // end function si_captcha_migrate
+
+function si_captcha_options_page() {
+  global $captcha_url, $si_captcha_opt, $option_defaults;
+
+  if ( function_exists('current_user_can') && !current_user_can('manage_options') )
+            die(__('You do not have permissions for managing this option', 'si-captcha'));
+
+  if (isset($_POST['submit'])) {
+        check_admin_referer( 'si-captcha-options_update'); // nonce
+   // post changes to the options array
+   $optionarray_update = array(
+         'si_captcha_donated' =>       (isset( $_POST['si_captcha_donated'] ) ) ? 'true' : 'false',// true or false
+         'si_captcha_perm' =>          (isset( $_POST['si_captcha_perm'] ) ) ? 'true' : 'false',
+         'si_captcha_perm_level' =>      (trim($_POST['si_captcha_perm_level']) != '' ) ? trim($_POST['si_captcha_perm_level']) : $option_defaults['si_captcha_perm_level'], // use default if empty
+         'si_captcha_comment' =>       (isset( $_POST['si_captcha_comment'] ) ) ? 'true' : 'false',
+         'si_captcha_comment_class' =>    trim($_POST['si_captcha_comment_class']),  // can be empty
+         'si_captcha_register' =>      (isset( $_POST['si_captcha_register'] ) ) ? 'true' : 'false',
+         'si_captcha_rearrange' =>     (isset( $_POST['si_captcha_rearrange'] ) ) ? 'true' : 'false',
+         'si_captcha_aria_required' => (isset( $_POST['si_captcha_aria_required'] ) ) ? 'true' : 'false',
+                   );
+
+    // save updated options to the database
+    update_option('si_captcha', $optionarray_update);
+
+    // get the options from the database
+    $si_captcha_opt = get_option('si_captcha');
+
+    if (function_exists('wp_cache_flush')) {
+	     wp_cache_flush();
+	}
+
+  } // end if (isset($_POST['submit']))
 ?>
 <?php if ( !empty($_POST ) ) : ?>
 <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'si-captcha') ?></strong></p></div>
@@ -121,7 +129,20 @@ function options_page() {
     }
 </script>
 
-<h3><?php _e('Donate', 'si-contact') ?></h3>
+<p>
+<a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/changelog/" target="_blank"><?php echo esc_html( __('Changelog', 'si-captcha')); ?></a> |
+<a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/faq/" target="_blank"><?php echo esc_html( __('FAQ', 'si-captcha')); ?></a> |
+<a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php echo esc_html( __('Rate This', 'si-captcha')); ?></a> |
+<a href="http://wordpress.org/tags/si-captcha-for-wordpress?forum_id=10" target="_blank"><?php echo esc_html( __('Support', 'si-captcha')); ?></a> |
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441" target="_blank"><?php echo esc_html( __('Donate', 'si-captcha')); ?></a> |
+<a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php echo esc_html( __('Free PHP Scripts', 'si-captcha')); ?></a> |
+<a href="http://www.642weather.com/weather/contact_us.php" target="_blank"><?php echo esc_html( __('Contact', 'si-captcha')); ?> Mike Challis</a>
+</p>
+
+<?php
+if ($si_captcha_opt['si_captcha_donated'] != 'true') {
+?>
+<h3><?php echo esc_html( __('Donate', 'si-captcha')); ?></h3>
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <table style="background-color:#FFE991; border:none; margin: -5px 0;" width="500">
@@ -132,23 +153,37 @@ function options_page() {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact') ?> - Mike Challis</td>
+<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-captcha') ?> - Mike Challis</td>
 </tr></table>
 </form>
+<br />
 
-<h3><?php _e('Usage', 'si-contact') ?></h3>
+<?php
+}
+?>
+
+<form name="formoptions" action="<?php echo admin_url( 'plugins.php?page=si-captcha-for-wordpress/si-captcha.php' ); ?>" method="post">
+        <input type="hidden" name="action" value="update" />
+        <input type="hidden" name="form_type" value="upload_options" />
+        <?php wp_nonce_field('si-captcha-options_update'); ?>
+
+      <input name="si_captcha_donated" id="si_captcha_donated" type="checkbox" <?php if( $si_captcha_opt['si_captcha_donated'] == 'true' ) echo 'checked="checked"'; ?> />
+      <label name="si_captcha_donated" for="si_captcha_donated"><?php echo esc_html( __('I have donated to help contribute for the development of this plugin.', 'si-captcha')); ?></label>
+      <br />
+
+<h3><?php _e('Usage', 'si-captcha') ?></h3>
 
 <p>
 <?php _e('Your theme must have a', 'si-captcha') ?> &lt;?php do_action('comment_form', $post->ID); ?&gt; <?php _e('tag inside your comments.php form. Most themes do.', 'si-captcha'); echo ' '; ?>
 <?php _e('The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea, or the captcha image and captcha code entry might display after the submit button.', 'si-captcha') ?>
 </p>
 
-<h3><?php _e('Options', 'si-contact') ?></h3>
+<h3><?php _e('Options', 'si-captcha') ?></h3>
 
-<form name="formoptions" action="" method="post">
-        <input type="hidden" name="action" value="update" />
-        <input type="hidden" name="form_type" value="upload_options" />
-    <?php si_captcha_nonce_field($si_captcha_nonce) ?>
+        <p class="submit">
+                <input type="submit" name="submit" value="<?php _e('Update Options', 'si-captcha') ?> &raquo;" />
+        </p>
+
         <fieldset class="options">
 
         <table width="100%" cellspacing="2" cellpadding="5" class="form-table">
@@ -161,7 +196,7 @@ function options_page() {
         <tr>
             <th scope="row"><?php _e('CAPTCHA on Register Form:', 'si-captcha') ?></th>
         <td>
-    <input name="si_captcha_register" id="si_captcha_register" type="checkbox" <?php if ( $this->get_settings('si_captcha_register') == 'true' ) echo ' checked="checked" '; ?> />
+    <input name="si_captcha_register" id="si_captcha_register" type="checkbox" <?php if ( $si_captcha_opt['si_captcha_register'] == 'true' ) echo ' checked="checked" '; ?> />
     <label for="si_captcha_register"><?php _e('Enable CAPTCHA on the register form.', 'si-captcha') ?></label><br />
     </td>
         </tr>
@@ -169,16 +204,16 @@ function options_page() {
         <tr>
             <th scope="row"><?php _e('CAPTCHA on Comment Form:', 'si-captcha') ?></th>
         <td>
-    <input name="si_captcha_comment" id="si_captcha_comment" type="checkbox" <?php if ( $this->get_settings('si_captcha_comment') == 'true' ) echo ' checked="checked" '; ?> />
+    <input name="si_captcha_comment" id="si_captcha_comment" type="checkbox" <?php if ( $si_captcha_opt['si_captcha_comment'] == 'true' ) echo ' checked="checked" '; ?> />
     <label for="si_captcha_comment"><?php _e('Enable CAPTCHA on the comment form.', 'si-captcha') ?></label><br />
 
-        <input name="si_captcha_perm" id="si_captcha_perm" type="checkbox" <?php if( $this->get_settings('si_captcha_perm') == 'true' ) echo 'checked="checked"'; ?> />
+        <input name="si_captcha_perm" id="si_captcha_perm" type="checkbox" <?php if( $si_captcha_opt['si_captcha_perm'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_captcha_perm" for="si_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-captcha') ?>
         <strong><?php _e('registered', 'si-captcha') ?></strong>
          <?php _e('users who can:', 'si-captcha') ?></label>
-        <?php $this->si_captcha_perm_dropdown('si_captcha_perm_level', $this->get_settings('si_captcha_perm_level'));  ?><br />
+        <?php $this->si_captcha_perm_dropdown('si_captcha_perm_level', $si_captcha_opt['si_captcha_perm_level']);  ?><br />
 
-        <?php _e('CSS class name for CAPTCHA input field on the comment form', 'si-captcha') ?>:<input name="si_captcha_comment_class" id="si_captcha_comment_class" type="text" value="<?php echo $this->get_settings('si_captcha_comment_class');  ?>" /><br />
+        <?php _e('CSS class name for CAPTCHA input field on the comment form', 'si-captcha') ?>:<input name="si_captcha_comment_class" id="si_captcha_comment_class" type="text" value="<?php echo $si_captcha_opt['si_captcha_comment_class'];  ?>" /><br />
         <?php _e('(Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)', 'si-captcha') ?>
     </td>
         </tr>
@@ -186,14 +221,14 @@ function options_page() {
     <tr>
         <th scope="row"><?php _e('Comment Form Rearrange:', 'si-captcha') ?></th>
         <td>
-    <input name="si_captcha_rearrange" id="si_captcha_rearrange" type="checkbox" <?php if ( $this->get_settings('si_captcha_rearrange') == 'true' ) echo ' checked="checked" '; ?> />
+    <input name="si_captcha_rearrange" id="si_captcha_rearrange" type="checkbox" <?php if ( $si_captcha_opt['si_captcha_rearrange'] == 'true' ) echo ' checked="checked" '; ?> />
     <label for="si_captcha_rearrange"><?php _e('Change the display order of the catpcha input field on the comment form. (see note below).', 'si-captcha') ?></label><br />
     </td>
         </tr>
     <tr>
         <th scope="row"><?php _e('Accessibility:', 'si-captcha') ?></th>
         <td>
-       <input name="si_captcha_aria_required" id="si_captcha_aria_required" type="checkbox" <?php if( $this->get_settings('si_captcha_aria_required') == 'true' ) echo 'checked="checked"'; ?> />
+       <input name="si_captcha_aria_required" id="si_captcha_aria_required" type="checkbox" <?php if( $si_captcha_opt['si_captcha_aria_required'] == 'true' ) echo 'checked="checked"'; ?> />
        <label name="si_captcha_aria_required" for="si_captcha_aria_required"><?php _e('Enable aria-required tags for screen readers', 'si-captcha') ?>.</label>
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-captcha'); ?>" onclick="toggleVisibility('si_captcha_aria_required_tip');"><?php _e('help', 'si-captcha'); ?></a>
        <div style="text-align:left; display:none" id="si_captcha_aria_required_tip">
@@ -219,7 +254,7 @@ function options_page() {
 </form>
 </div>
 <?php
-}// end options_page
+}// end function si_captcha_options_page
 
 function si_captcha_perm_dropdown($select_name, $checked_value='') {
         // choices: Display text => permission_level
@@ -238,7 +273,7 @@ function si_captcha_perm_dropdown($select_name, $checked_value='') {
                 $checked = '';
         endforeach;
         echo "\t</select>\n";
- }
+ } // end function si_captcha_perm_dropdown
 
 function captchaCheckRequires() {
   global $captcha_path;
@@ -261,23 +296,20 @@ function captchaCheckRequires() {
   }
   if ($ok == 'no')  return false;
   return true;
-}
+} // end function captchaCheckRequires
 
 // this function adds the captcha to the comment form
 function addCaptchaToCommentForm() {
-    global $user_ID, $captcha_url;
+    global $user_ID, $captcha_url, $si_captcha_opt;
 
     // skip the captcha if user is loggged in and the settings allow
-    if (isset($user_ID) && intval($user_ID) > 0 && $this->get_settings('si_captcha_perm') == 'true') {
+    if (isset($user_ID) && intval($user_ID) > 0 && $si_captcha_opt['si_captcha_perm'] == 'true') {
        // skip the CAPTCHA display if the minimum capability is met
-       if ( current_user_can( $this->get_settings('si_captcha_perm_level') ) ) {
+       if ( current_user_can( $si_captcha_opt['si_captcha_perm_level'] ) ) {
                // skip capthca
                return true;
         }
     }
-
-    $captcha_rearrange = $this->get_settings('si_captcha_rearrange');
-    $captcha_comment_class = $this->get_settings('si_captcha_comment_class');
 
 // the captch html
 echo '
@@ -287,30 +319,31 @@ echo '
 // Test for some required things, print error message right here if not OK.
 if ($this->captchaCheckRequires()) {
 
-  if ($this->get_settings('si_captcha_aria_required') == 'true') {
+  if ($si_captcha_opt['si_captcha_aria_required'] == 'true') {
          $si_aria_required = ' aria-required="true" ';
   } else {
          $si_aria_required = '';
   }
 
+// the captcha html - comment form
 echo '
 <div style="width: 250px; height: 55px; padding-top:10px;">
          <img id="siimage" style="border-style:none; margin:0; padding-right:5px; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
-         alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
-           <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
-         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
+         alt="'.esc_attr(__('CAPTCHA Image', 'si-captcha')).'" title="'.esc_attr(__('CAPTCHA Image', 'si-captcha')).'" />
+           <a href="'.$captcha_url.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-captcha')).'">
+         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.esc_attr(__('Audio Version', 'si-captcha')).'"
           style="border-style:none; margin:0; vertical-align:top;" onclick="this.blur()" /></a><br />
-           <a href="#" title="'.__('Refresh Image', 'si-captcha').'" style="border-style: none"
+           <a href="#" title="'.esc_attr(__('Refresh Image', 'si-captcha')).'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
-         <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
+         <img src="'.$captcha_url.'/images/refresh.gif" alt="'.esc_attr(__('Reload Image', 'si-captcha')).'"
          style="border-style:none; margin:0; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <div id="captchaInputDiv" style="display:block;" >
 <input type="text" name="captcha_code" id="captcha_code" tabindex="4" '.$si_aria_required.' style="width:65px;" ';
 
-if ($captcha_comment_class != '') {
-  echo 'class="'.$captcha_comment_class.'" ';
+if ($si_captcha_opt['si_captcha_comment_class'] != '') {
+  echo 'class="'.$si_captcha_opt['si_captcha_comment_class'].'" ';
 }
 
 echo '/>
@@ -321,7 +354,7 @@ echo '/>
 
 
 // rearrange submit button display order
-if ($captcha_rearrange == 'true') {
+if ($si_captcha_opt['si_captcha_rearrange'] == 'true') {
      print  <<<EOT
       <script type='text/javascript'>
           var sUrlInput = document.getElementById("url");
@@ -340,38 +373,38 @@ EOT;
 }else{
  echo '</div>';
 }
-        return true;
-}
+    return true;
+} // end function addCaptchaToCommentForm
 
 // this function adds the captcha to the comment form
 function addCaptchaToRegisterForm() {
-   global $captcha_url;
+   global $captcha_url, $si_captcha_opt;
 
-   if ($this->get_settings('si_captcha_register') != 'true') {
+   if ($si_captcha_opt['si_captcha_register'] != 'true') {
         return true; // captcha setting is disabled for registration
    }
 
 // Test for some required things, print error message right here if not OK.
 if ($this->captchaCheckRequires()) {
 
-  if ($this->get_settings('si_captcha_aria_required') == 'true') {
+  if ($si_captcha_opt['si_captcha_aria_required'] == 'true') {
          $si_aria_required = ' aria-required="true" ';
   } else {
          $si_aria_required = '';
   }
 
-// the captch html
+// the captcha html - register form
 echo '
 <div style="width: 250px;  height: 55px">
          <img id="siimage" style="border-style:none; margin:0; padding-right:5px; float:left;"
          src="'.$captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'"
-         alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.__('CAPTCHA Image', 'si-captcha').'" />
-           <a href="'.$captcha_url.'/securimage_play.php" title="'.__('Audible Version of CAPTCHA', 'si-captcha').'">
-         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.__('Audio Version', 'si-captcha').'"
+         alt="'.__('CAPTCHA Image', 'si-captcha').'" title="'.esc_attr(__('CAPTCHA Image', 'si-captcha')).'" />
+           <a href="'.$captcha_url.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-captcha')).'">
+         <img src="'.$captcha_url.'/images/audio_icon.gif" alt="'.esc_attr(__('Audio Version', 'si-captcha')).'"
           style="border-style:none; margin:0; vertical-align:top;" onclick="this.blur()" /></a><br />
-           <a href="#" title="'.__('Refresh Image', 'si-captcha').'" style="border-style: none"
+           <a href="#" title="'.esc_attr(__('Refresh Image', 'si-captcha')).'" style="border-style: none"
          onclick="document.getElementById(\'siimage\').src = \''.$captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
-         <img src="'.$captcha_url.'/images/refresh.gif" alt="'.__('Reload Image', 'si-captcha').'"
+         <img src="'.$captcha_url.'/images/refresh.gif" alt="'.esc_attr(__('Reload Image', 'si-captcha')).'"
          style="border-style:none; margin:0; vertical-align:bottom;" onclick="this.blur()" /></a>
 </div>
 <p>
@@ -382,8 +415,8 @@ echo '
 ';
 }
 
-        return true;
-}
+  return true;
+} // end function addCaptchaToRegisterForm
 
 // this function checks the captcha posted with registration on vers 2.5+
 function checkCaptchaRegisterPostNew($errors) {
@@ -411,7 +444,7 @@ function checkCaptchaRegisterPostNew($errors) {
       }
    }
    return($errors);
-}
+} // end function checkCaptchaRegisterPostNew
 
 // this function checks the captcha posted with registration pre vers 2.5
 function checkCaptchaRegisterPost() {
@@ -437,12 +470,12 @@ function checkCaptchaRegisterPost() {
           }
        }
    }
-}
+} // end function checkCaptchaRegisterPost
 
 
 // this function checks the captcha posted with the comment
 function checkCaptchaCommentPost($comment) {
-    global $user_ID, $captcha_path;
+    global $user_ID, $captcha_path, $si_captcha_opt;
 
     // added for compatibility with WP Wall plugin
     // this does NOT add CAPTCHA to WP Wall plugin,
@@ -453,9 +486,9 @@ function checkCaptchaCommentPost($comment) {
     }
 
     // skip the captcha if user is loggged in and the settings allow
-    if (isset($user_ID) && intval($user_ID) > 0 && $this->get_settings('si_captcha_perm') == 'true') {
+    if (isset($user_ID) && intval($user_ID) > 0 && $si_captcha_opt['si_captcha_perm'] == 'true') {
        // skip the CAPTCHA display if the minimum capability is met
-       if ( current_user_can( $this->get_settings('si_captcha_perm_level') ) ) {
+       if ( current_user_can( $si_captcha_opt['si_captcha_perm_level'] ) ) {
                // skip capthca
                return $comment;
         }
@@ -485,20 +518,21 @@ function checkCaptchaCommentPost($comment) {
        }
     }
 
-}
+} // end  function checkCaptchaCommentPost
 
-function si_image_captcha_plugin_action_links( $links, $file ) {
-	if ( $file != plugin_basename( __FILE__ ))
-		return $links;
+function si_captcha_plugin_action_links( $links, $file ) {
+    //Static so we don't call plugin_basename on every plugin row.
+	static $this_plugin;
+	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
-	$settings_link = '<a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">' . esc_html( __( 'Settings', 'si-contact' ) ) . '</a>';
-
-	array_unshift( $links, $settings_link );
-
+	if ( $file == $this_plugin ){
+	     $settings_link = '<a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">' . esc_html( __( 'Settings', 'si-captcha' ) ) . '</a>';
+	     array_unshift( $links, $settings_link );
+    }
 	return $links;
-}
+} // end function si_captcha_plugin_action_links
 
-function init() {
+function si_captcha_init() {
 
   // a PHP session cookie is set so that the captcha can be remembered and function
   // this has to be set before any header output
@@ -509,10 +543,12 @@ function init() {
     // echo "session started si captcha";
   }
 
-   if (function_exists('load_plugin_textdomain')) {
-      load_plugin_textdomain('si-captcha', false, dirname(plugin_basename(__FILE__)) );
-   }
-}
+  if (function_exists('load_plugin_textdomain')) {
+            load_plugin_textdomain('si-captcha', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)).'/languages', dirname(plugin_basename(__FILE__)).'/languages' );
+  }
+
+} // end function si_captcha_init
+
 
 } // end of class
 } // end of if class
@@ -547,37 +583,28 @@ if (class_exists("siCaptcha")) {
 
 if (isset($si_image_captcha)) {
 
-  $captcha_url = WP_PLUGIN_URL . '/si-captcha-for-wordpress/captcha-secureimage';
+  $captcha_url  = WP_PLUGIN_URL . '/si-captcha-for-wordpress/captcha-secureimage';
   $captcha_path = WP_PLUGIN_DIR . '/si-captcha-for-wordpress/captcha-secureimage';
 
-  // wp_nonce_field is used to make the admin option settings more secure
-  if ( !function_exists("wp_nonce_field") ) {
-        function si_captcha_nonce_field($action = -1) { return; }
-        $si_captcha_nonce = -1;
-  } else {
-        function si_captcha_nonce_field($action = -1) { return wp_nonce_field($action); }
-        $si_captcha_nonce = 'si-captcha-update-key';
-  }
-
-
   //Actions
-  add_action('init', array(&$si_image_captcha, 'init'));
+  add_action('init', array(&$si_image_captcha, 'si_captcha_init'));
+
+    // get the options now
+  $si_image_captcha->si_captcha_get_options();
 
   // si captcha admin options
-  add_action('admin_menu', array(&$si_image_captcha,'add_tabs'),1);
+  add_action('admin_menu', array(&$si_image_captcha,'si_captcha_add_tabs'),1);
 
   // adds "Settings" link to the plugin action page
-  add_filter( 'plugin_action_links', array(&$si_image_captcha,'si_image_captcha_plugin_action_links'),10,2);
+  add_filter( 'plugin_action_links', array(&$si_image_captcha,'si_captcha_plugin_action_links'),10,2);
 
-
-  if ($si_image_captcha->get_settings('si_captcha_comment') == 'true') {
+  if ($si_captcha_opt['si_captcha_comment'] == 'true') {
      // set the minimum capability needed to skip the captcha if there is one
      add_action('comment_form', array(&$si_image_captcha, 'addCaptchaToCommentForm'), 1);
      add_filter('preprocess_comment', array(&$si_image_captcha, 'checkCaptchaCommentPost'), 1);
   }
 
-
-  if ($si_image_captcha->get_settings('si_captcha_register') == 'true') {
+  if ($si_captcha_opt['si_captcha_register'] == 'true') {
     add_action('register_form', array(&$si_image_captcha, 'addCaptchaToRegisterForm'), 1);
 
     if (version_compare(get_bloginfo('version'), '2.5' ) >= 0)
@@ -586,8 +613,8 @@ if (isset($si_image_captcha)) {
        add_filter('registration_errors', array(&$si_image_captcha, 'checkCaptchaRegisterPost'), 1);
   }
 
-  // uncomment if you want the settings deleted when this plugin is deactivated
-  //register_deactivation_hook(__FILE__, array(&$si_image_captcha, 'unset_si_captcha_options'), 1);
+  // settings will be deleted when this plugin is deleted
+  register_deactivation_hook(__FILE__, array(&$si_image_captcha, 'si_captcha_unset_options'), 1);
 }
 
 ?>
