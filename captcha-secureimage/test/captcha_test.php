@@ -69,7 +69,20 @@ body
 <h2>CAPTCHA Test</h2>
 
 <?php
+
+// DISPLAY THE VARS
+/*
+echo "<pre>";
+echo "COOKIE ";
+var_dump($_COOKIE);
+echo "\n\n";
+echo "SESSION ";
+var_dump($_SESSION);
+echo "</pre>\n";
+*/
+
 //phpinfo();
+
 
 $error = 0;
 $hide_form = 0;
