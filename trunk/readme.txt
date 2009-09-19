@@ -54,6 +54,7 @@ Requirements/Restrictions:
 -------------------------
  * Works with Wordpress 2.6+
  * PHP 4.0.6 or above with GD2 library support.
+ * PHP register_globals must be set to OFF
 
 == Installation ==
 
