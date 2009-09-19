@@ -52,7 +52,7 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.5+
+ * Works with Wordpress 2.6+
  * PHP 4.0.6 or above with GD2 library support.
 
 == Installation ==
@@ -61,7 +61,7 @@ Requirements/Restrictions:
 
 2. Activate the plugin through the `Plugins` menu in WordPress. Look for the Settings link to configure the Options. 
 
-3. You must add the shortcode `[si_contact_form]` in a Page(not a Post). That Page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si_contact_form]` in the page, click `Publish`. 
+3. You must add the shortcode `[si_contact_form]` in a Page(not a Post). That Page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si_contact_form]` in the page, uncheck 'Allow Comments`, click `Publish`. 
 
 4. Test an email from your form.
 
@@ -208,6 +208,12 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.6.5 =
+- (18 Sep 2009) - Added proper nonce protection to options forms. 
+- Added option to reset the styles to defaults (incase you tried to adjust them and did not like the results).
+- Fixed typo in file name for Portuguese - Brazil language (pt_BR).
+- Fixed several language files [BR, FR, NO, DE...] had word "Submit" spelled as "submit".
 
 = 1.6.4 =
 - (14 Sep 2009) - Added E-mail test feature in options, if you are not receiving mail, try it. It will display troubleshooting information.
