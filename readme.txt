@@ -40,6 +40,7 @@ Requirements/Restrictions:
 -------------------------
  * Works with Wordpress 2.6+
  * PHP 4.0.6 or above with GD2 library support.
+ * PHP register_globals must be set to OFF.
  * Your theme must have a `<?php do_action('comment_form', $post->ID); ?>` tag inside your comments.php form. Most themes do.
   The best place to locate the tag is before the comment textarea, you may want to move it if it is below the comment textarea.
 
