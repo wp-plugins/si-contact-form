@@ -2,8 +2,8 @@
 /*
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
-Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 1.6.4
+Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
+Version: 1.6.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -24,10 +24,6 @@ Author URI: http://www.642weather.com/weather/scripts.php
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
-//error_reporting(E_ALL ^ E_NOTICE); // Report all errors except E_NOTICE warnings
-//error_reporting(E_ALL); // Report all errors and warnings (very strict, use for testing only)
-//ini_set('display_errors', 1); // turn error reporting on
 
 if (!class_exists('siContactForm')) {
 
@@ -67,7 +63,7 @@ function si_contact_update_lang() {
 } // end function si_contact_update_lang
 
 function si_contact_options_page() {
-  global $si_contact_nonce, $captcha_url_cf, $si_contact_opt, $option_defaults;
+  global $captcha_url_cf, $si_contact_opt, $option_defaults;
 
    if ( function_exists('current_user_can') && !current_user_can('manage_options') )
              die(__('You do not have permissions for managing this option', 'si-contact-form'));
@@ -77,7 +73,7 @@ function si_contact_options_page() {
 
 	// Send a test mail if necessary
 	if (isset($_POST['ctf_action']) && $_POST['ctf_action'] == __('Send Test', 'si-contact-form') && isset($_POST['si_contact_to'])) {
-
+        check_admin_referer( 'si-contact-form-email_test'); // nonce
         global $phpmailer;
        	// Make sure the PHPMailer class has been instantiated
 	    // (copied verbatim from wp-includes/pluggable.php)
@@ -134,7 +130,7 @@ function si_contact_options_page() {
 	} // end Send a test mail if necessary
 
   if (isset($_POST['submit']) && !isset($_POST['ctf_action'])) {
-
+     check_admin_referer( 'si-contact-form-options_update'); // nonce
    // post changes to the options array
    $optionarray_update = array(
          'donated' =>          (isset( $_POST['si_contact_donated'] ) ) ? 'true' : 'false',
@@ -185,6 +181,15 @@ function si_contact_options_page() {
            $optionarray_update[$key] = str_replace('&quot;','"',trim($val));
     }
 
+    if (isset($_POST['si_contact_reset_styles'])) {
+         // reset styles feature
+         $style_resets_arr= array('border_enable','border_width','title_style','field_style','error_style','captcha_div_style','captcha_image_style','audio_image_style','reload_image_style','button_style','field_size','text_cols','text_rows');
+         foreach($style_resets_arr as $style_reset) {
+           $optionarray_update[$style_reset] = $option_defaults[$style_reset];
+         }
+
+    }
+
     // save updated options to the database
     update_option('si_contact_form', $optionarray_update);
 
@@ -229,7 +234,7 @@ function si_contact_options_page() {
 <a href="http://wordpress.org/extend/plugins/si-contact-form/faq/" target="_blank"><?php echo esc_html( __('FAQ', 'si-contact-form')); ?></a> |
 <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php echo esc_html( __('Rate This', 'si-contact-form')); ?></a> |
 <a href="http://wordpress.org/tags/si-contact-form?forum_id=10" target="_blank"><?php echo esc_html( __('Support', 'si-contact-form')); ?></a> |
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441" target="_blank"><?php echo esc_html( __('Donate', 'si-contact-form')); ?></a> |
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141" target="_blank"><?php echo esc_html( __('Donate', 'si-contact-form')); ?></a> |
 <a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php echo esc_html( __('Free PHP Scripts', 'si-contact-form')); ?></a> |
 <a href="http://www.642weather.com/weather/contact_us.php" target="_blank"><?php echo esc_html( __('Contact', 'si-contact-form')); ?> Mike Challis</a>
 </p>
@@ -261,7 +266,7 @@ if ($si_contact_opt['donated'] != 'true') {
 <form name="formoptions" action="<?php echo admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php' ); ?>" method="post">
         <input type="hidden" name="action" value="update" />
         <input type="hidden" name="form_type" value="upload_options" />
-    <?php si_contact_nonce_field($si_contact_nonce) ?>
+        <?php wp_nonce_field('si-contact-form-options_update'); ?>
 
     <input name="si_contact_donated" id="si_contact_donated" type="checkbox" <?php if( $si_contact_opt['donated'] == 'true' ) echo 'checked="checked"'; ?> />
     <label name="si_contact_donated" for="si_contact_donated"><?php echo esc_html( __('I have donated to help contribute for the development of this Contact Form.', 'si-contact-form')); ?></label>
@@ -273,6 +278,10 @@ if ($si_contact_opt['donated'] != 'true') {
     </p>
 
 <h3><?php echo esc_html( __('Options', 'si-contact-form')); ?></h3>
+
+    <p class="submit">
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+    </p>
 
         <fieldset class="options">
 
@@ -479,6 +488,9 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
          <th scope="row" style="width: 75px;"><?php echo esc_html( __('Style:', 'si-contact-form')); ?></th>
         <td>
 
+        <input name="si_contact_reset_styles" id="si_contact_border_enable" type="checkbox" />
+        <label for="si_contact_reset_styles"><strong><?php echo esc_html( __('Reset the styles to default.', 'si-contact-form')) ?></strong></label><br />
+
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_border_enable"><?php echo esc_html( __('Enable border on contact form', 'si-contact-form')) ?>.</label><br />
         <label for="si_contact_border_width"><?php echo esc_html( __('Form DIV Width', 'si-contact-form')); ?>:</label><input name="si_contact_border_width" id="si_contact_border_width" type="text" value="<?php echo absint($si_contact_opt['border_width']);  ?>" size="3" />
@@ -548,13 +560,13 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
 
         </fieldset>
 
-
         <p class="submit">
                 <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
         </p>
 </form>
 
 <form action="<?php echo admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php' ); ?>" method="post">
+<?php wp_nonce_field('si-contact-form-email_test'); ?>
 <fieldset class="options">
 <legend><?php _e('Send a Test E-mail', 'si-contact-form'); ?></legend>
 <table class="optiontable">
@@ -989,7 +1001,7 @@ $message
       $header .= "Return-Path: $email" . PHP_EOL;
       $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . PHP_EOL;
 
-      ini_set('sendmail_from', $email); // needed for some windows servers
+      @ini_set('sendmail_from', $email); // needed for some windows servers
 
       if (!wp_mail($mail_to,$subj,$msg,$header)) {
 		die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . "<br />\n" .
@@ -1192,10 +1204,6 @@ $string .=   '
         <div '.$this->ctf_field_style.'>
                 <input type="text" id="si_contact_subject" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
-
-        <!-- if you add another field here (similar to the title and field div code above
-        be sure to change the label, id, name, string name, and si_contact_error_[string name]) -->
-
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_message">';
      if ($si_contact_opt['title_mess'] != '') {
@@ -1319,7 +1327,7 @@ $string = '
 <div style="'.$si_contact_opt['captcha_div_style'].'">
          <img id="siimage" style="'.$si_contact_opt['captcha_image_style'].'"
          src="'.$captcha_url_cf.'/securimage_show.php?sid='.md5(uniqid(time())).'"
-         alt="'.__('CAPTCHA Image', 'si-contact-form').'" title="'.esc_attr(__('CAPTCHA Image', 'si-contact-form')).'" />
+         alt="'.esc_attr(__('CAPTCHA Image', 'si-contact-form')).'" title="'.esc_attr(__('CAPTCHA Image', 'si-contact-form')).'" />
            <a href="'.$captcha_url_cf.'/securimage_play.php" title="'.esc_attr(__('Audible Version of CAPTCHA', 'si-contact-form')).'">
          <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="'.esc_attr(__('Audio Version', 'si-contact-form')).'"
           style="'.$si_contact_opt['audio_image_style'].'" onclick="this.blur()" /></a><br />
@@ -1656,15 +1664,6 @@ if (isset($si_contact_form)) {
 
   $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
   $captcha_path_cf = WP_PLUGIN_DIR . '/si-contact-form/captcha-secureimage';
-
-  // wp_nonce_field is used to make the admin option settings more secure
-  if ( !function_exists("wp_nonce_field") ) {
-        function si_contact_nonce_field($action = -1) { return; }
-        $si_contact_nonce = -1;
-  } else {
-        function si_contact_nonce_field($action = -1) { return wp_nonce_field($action); }
-        $si_contact_nonce = 'si-contact-update-key';
-  }
 
  // si_contact initialize options
   add_action('init', array(&$si_contact_form, 'si_contact_init'));

@@ -103,6 +103,10 @@ especially "Warning: session_start...", they could be indicating a problem with 
     <?php echo phpversion(); ?>
   </li>
   <li>
+    <strong>System:</strong>
+    <?php echo PHP_OS; ?>
+  </li>
+  <li>
     <strong>GD Support:</strong>
     <?php print_status($gd_support = extension_loaded('gd')); ?>
   </li>
