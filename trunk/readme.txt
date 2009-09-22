@@ -210,6 +210,11 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.6.6 =
+- (21 Sep 2009) - Fix "Invalid Input" error on installations where "Blog address" is different domain than "WordPress address".
+- More sanity checks on Form DIV Width setting.
+- Added ability to use dashes or underscores in shortcode: `[si-contact-form]` or `[si_contact_form]`.
+
 = 1.6.5 =
 - (18 Sep 2009) - Added proper nonce protection to options forms. 
 - Added option to reset the styles to defaults (incase you tried to adjust them and did not like the results).
