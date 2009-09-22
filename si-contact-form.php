@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.6.5
+Version: 1.6.6
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -148,7 +148,7 @@ function si_contact_options_page() {
          'redirect_enable' =>  (isset( $_POST['si_contact_redirect_enable'] ) ) ? 'true' : 'false',
          'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
-         'border_width' => absint(trim($_POST['si_contact_border_width'])),
+         'border_width' => ( is_numeric(trim($_POST['si_contact_border_width'])) && trim($_POST['si_contact_border_width']) > 99 ) ? absint(trim($_POST['si_contact_border_width'])) : $option_defaults['border_width'], // use default if empty
          'title_style' =>         trim($_POST['si_contact_title_style']),
          'field_style' =>         trim($_POST['si_contact_field_style']),
          'error_style' =>         trim($_POST['si_contact_error_style']),
@@ -157,7 +157,7 @@ function si_contact_options_page() {
          'audio_image_style' =>   trim($_POST['si_contact_audio_image_style']),
          'reload_image_style' =>  trim($_POST['si_contact_reload_image_style']),
          'button_style' =>        trim($_POST['si_contact_button_style']),
-         'field_size' =>   absint(trim($_POST['si_contact_field_size'])),
+         'field_size' => ( is_numeric(trim($_POST['si_contact_field_size'])) && trim($_POST['si_contact_field_size']) > 14 ) ? absint(trim($_POST['si_contact_field_size'])) : $option_defaults['field_size'], // use default if empty
          'text_cols' =>    absint(trim($_POST['si_contact_text_cols'])),
          'text_rows' =>    absint(trim($_POST['si_contact_text_rows'])),
          'aria_required' =>    (isset( $_POST['si_contact_aria_required'] ) ) ? 'true' : 'false',
@@ -187,7 +187,6 @@ function si_contact_options_page() {
          foreach($style_resets_arr as $style_reset) {
            $optionarray_update[$style_reset] = $option_defaults[$style_reset];
          }
-
     }
 
     // save updated options to the database
@@ -262,7 +261,6 @@ if ($si_contact_opt['donated'] != 'true') {
 <?php
 }
 ?>
-
 <form name="formoptions" action="<?php echo admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php' ); ?>" method="post">
         <input type="hidden" name="action" value="update" />
         <input type="hidden" name="form_type" value="upload_options" />
@@ -421,7 +419,7 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
         <input name="si_contact_domain_protect" id="si_contact_domain_protect" type="checkbox" <?php if( $si_contact_opt['domain_protect'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_domain_protect" for="si_contact_domain_protect"><?php echo esc_html( __('Enable Form Post security by requiring domain name match for', 'si-contact-form')); ?>
         <?php
-        $uri = parse_url(get_option('siteurl'));
+        $uri = parse_url(get_option('home'));
         $blogdomain = str_replace('www.','',$uri['host']);
         echo " $blogdomain ";
         ?><?php echo esc_html( __('(recommended).', 'si-contact-form')); ?>
@@ -462,7 +460,6 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
         <br />
       </td>
     </tr>
-
 
         </table>
 
@@ -612,7 +609,6 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
         echo "\t</select>\n";
 } // end function si_contact_captcha_perm_dropdown
 
-
 // this function prints the contact form
 // and does all the decision making to send the email or not
 function si_contact_form_short_code() {
@@ -681,7 +677,7 @@ $ctf_sitename = get_option('blogname');
 // Can be a single domain:      $ctf_domain = '642weather.com';
 // Can be an array of domains:  $ctf_domain = array('642weather.com','someothersite.com');
         // get blog domain
-        $uri = parse_url(get_option('siteurl'));
+        $uri = parse_url(get_option('home'));
         $blogdomain = str_replace('www.','',$uri['host']);
 
 $this->ctf_domain = $blogdomain;
@@ -927,6 +923,17 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
   // begin captcha check if enabled
   // captcha is optional but recommended to prevent spam bots from spamming your contact form
   if ( $this->isCaptchaEnabled() ) {
+
+/* uncomment for temporary advanced debugging only
+echo "<pre>";
+   echo "COOKIE ";
+   var_dump($_COOKIE);
+   echo "\n\n";
+   echo "SESSION ";
+   var_dump($_SESSION);
+echo "</pre>\n";
+*/
+
     if (!isset($_SESSION['securimage_code_value']) || empty($_SESSION['securimage_code_value'])) {
           $this->si_contact_error = 1;
           $si_contact_error_captcha = __('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-contact-form');
@@ -1257,7 +1264,7 @@ function fixEncoding($in_str) {
     return $in_str;
   else
     return utf8_encode($in_str);
-} // fixEncoding
+} // end function fixEncoding
 
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
@@ -1526,15 +1533,14 @@ function si_contact_plugin_action_links( $links, $file ) {
 	    array_unshift( $links, $settings_link ); // before other links
 	}
 	return $links;
-}
+} // end function si_contact_plugin_action_links
 
-
+// load things during init
 function si_contact_init() {
    global $si_contact_opt, $option_defaults;
 
-
    if (function_exists('load_plugin_textdomain')) {
-      load_plugin_textdomain('si-contact-form', WP_PLUGIN_DIR.'/'.dirname(plugin_basename(__FILE__)).'/languages', dirname(plugin_basename(__FILE__)).'/languages' );
+      load_plugin_textdomain('si-contact-form', false, dirname(plugin_basename(__FILE__)).'/languages' );
    }
 
     $option_defaults = array(
@@ -1601,17 +1607,20 @@ function si_contact_init() {
            $si_contact_opt[$key] = $this->ctf_stripslashes($val);
   }
 
+} // end function si_contact_init
+
+function si_contact_start_session() {
+    global $si_contact_opt;
   // a PHP session cookie is set so that the captcha can be remembered and function
   // this has to be set before any header output
-  //echo "starting session ctf";
-  session_cache_limiter ('private, must-revalidate');
+  // echo "starting session ctf";
   // start cookie session, but do not start session if captcha is disabled in options
   if( !isset( $_SESSION ) && $si_contact_opt['captcha_enable'] == 'true' ) { // play nice with other plugins
+    session_cache_limiter ('private, must-revalidate');
     session_start();
     //echo "session started ctf";
   }
-
-}
+} // end function si_contact_start_session
 
 function si_contact_migrate($option_defaults) {
   // read the options from the prior version
@@ -1627,20 +1636,10 @@ function si_contact_migrate($option_defaults) {
    delete_option('si_contact_email_encoding');
    // by returning this the old settings will carry over to the new version
    return $new_options;
-}
+} //  end function si_contact_migrate
 
 } // end of class
 } // end of if class
-
-// Pre-2.6 compatibility
-if ( ! defined( 'WP_CONTENT_URL' ) )
-      define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' );
-if ( ! defined( 'WP_CONTENT_DIR' ) )
-      define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
-if ( ! defined( 'WP_PLUGIN_URL' ) )
-      define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
-if ( ! defined( 'WP_PLUGIN_DIR' ) )
-      define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 
 // Pre-2.8 compatibility
 if ( ! function_exists( 'esc_html' ) ) {
@@ -1662,11 +1661,16 @@ if (class_exists("siContactForm")) {
 
 if (isset($si_contact_form)) {
 
-  $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
+  $captcha_url_cf  = get_option( 'home' ) . '/wp-content/plugins/si-contact-form/captcha-secureimage';
   $captcha_path_cf = WP_PLUGIN_DIR . '/si-contact-form/captcha-secureimage';
 
- // si_contact initialize options
-  add_action('init', array(&$si_contact_form, 'si_contact_init'));
+  // si_contact initialize options
+  add_action('init', array(&$si_contact_form, 'si_contact_init'),1);
+
+  // start the PHP session
+  add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
+  //add_action('parse_request', array(&$si_contact_form,'si_contact_start_session'),2);
+  //add_action('plugins_loaded', array(&$si_contact_form,'si_contact_start_session'),2);
 
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
@@ -1675,7 +1679,9 @@ if (isset($si_contact_form)) {
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);
 
   // use shortcode to print the contact form or process contact form logic
+  // can use dashes or underscores: [si-contact-form] or [si_contact_form]
   add_shortcode('si_contact_form', array(&$si_contact_form,'si_contact_form_short_code'),1);
+  add_shortcode('si-contact-form', array(&$si_contact_form,'si_contact_form_short_code'),1);
 
   // options deleted when this plugin is deleted
   register_deactivation_hook(__FILE__, array(&$si_contact_form, 'si_contact_unset_options'), 1);
