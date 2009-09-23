@@ -210,6 +210,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.6.8 =
+- (22 Sep 2009) - Fix, some sites reported a image path problem. (I think it is correct now). 
+
 = 1.6.7 =
 - (22 Sep 2009) - Fix, some sites reported a path problem with "Blog address" is different domain than "WordPress address".
 - Added setting to enable upper case alphabet correction. 
