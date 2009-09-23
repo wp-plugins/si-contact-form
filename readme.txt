@@ -210,6 +210,12 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.6.7 =
+- (22 Sep 2009) - Fix, some sites reported a path problem with "Blog address" is different domain than "WordPress address".
+- Added setting to enable upper case alphabet correction. 
+- Added more fields in "advanced options".
+- Minor code cleanup.
+
 = 1.6.6 =
 - (21 Sep 2009) - Fix "Invalid Input" error on installations where "Blog address" is different domain than "WordPress address".
 - More sanity checks on Form DIV Width setting.
