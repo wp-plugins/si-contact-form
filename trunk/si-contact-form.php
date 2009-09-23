@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.6.7
+Version: 1.6.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -1634,6 +1634,32 @@ function si_contact_migrate($option_defaults) {
    return $new_options;
 } //  end function si_contact_migrate
 
+function get_captcha_url_cf() {
+
+  // The captcha URL cannot be on a different domain as the site rewrites to or the cookie won't work
+  // also the path has to be correct or the image won't load.
+  // WP_PLUGIN_URL was not getting the job done! this code should fix it.
+
+  //http://media.example.com/wordpress   WordPress address get_option( 'siteurl' )
+  //http://tada.example.com              Blog address      get_option( 'home' )
+
+  //http://example.com/wordpress  WordPress address get_option( 'siteurl' )
+  //http://example.com/           Blog address      get_option( 'home' )
+
+  $site_uri = parse_url(get_option('home'));
+  $home_uri = parse_url(get_option('siteurl'));
+
+  $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
+
+  if ($site_uri['host'] == $home_uri['host']) {
+      $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
+  } else {
+      $captcha_url_cf  = get_option( 'home' ) . '/wp-content/plugins/si-contact-form/captcha-secureimage';
+  }
+
+  return $captcha_url_cf;
+}
+
 } // end of class
 } // end of if class
 
@@ -1657,7 +1683,7 @@ if (class_exists("siContactForm")) {
 
 if (isset($si_contact_form)) {
 
-  $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
+  $captcha_url_cf  = $si_contact_form->get_captcha_url_cf();
   $captcha_path_cf = WP_PLUGIN_DIR . '/si-contact-form/captcha-secureimage';
 
   // si_contact initialize options
