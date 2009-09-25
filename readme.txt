@@ -2,18 +2,18 @@
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
-Tags: akismet, captcha, comment, comments, anti-spam, security, multilingual
+Tags: akismet, captcha, comment, comments, login, anti-spam, security, multilingual, buddypress, wpmu, wordpressmu
 Requires at least: 2.6
 Tested up to: 2.8.4
 Stable tag: trunk
 
-Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
+Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. Also is fully WPMU and BuddyPress compatible.
 
 == Description ==
 
-Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, or both.
-In order to post comments, users will have to type in the phrase shown on the image.
-This prevents spam from automated bots. Adds security. Works great with Akismet.
+Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all.
+In order to post comments or regiser, users will have to type in the phrase shown on the image.
+This prevents spam from automated bots. Adds security. Works great with Akismet. Also is fully WPMU and BuddyPress compatible.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-captcha.php)
 
@@ -25,7 +25,7 @@ Features:
  * Section 508 and WAI Accessibility Validation.
  * Allows Trackbacks and Pingbacks
  * Setting to hide the CAPTCHA from logged in users and or admins
- * Setting to show the CAPTCHA on the comment form, registration form, or both
+ * Setting to show the CAPTCHA on the comment form, registration form, login, or all.
  * I18n language translation support (see FAQ)
 
 Captcha Image Support:
@@ -68,21 +68,23 @@ Requirements/Restrictions:
 After the plugin is activated, you can configure it by selecting the `Captcha options` tab on the `Admin Plugins` page.
 Here is a list of the options:
 
-1. CAPTCHA on Register Form: - Enable CAPTCHA on the register form.
+1. CAPTCHA on Login Form:    - Enable CAPTCHA on the Login form.(not enabled by default)
 
-2. CAPTCHA on Comment Form:  - Enable CAPTCHA on the comment form.
+2. CAPTCHA on Register Form: - Enable CAPTCHA on the register form.
 
-3. CAPTCHA on Comment Form:  - Hide CAPTCHA for registered users (select permission level)
+3. CAPTCHA on Comment Form:  - Enable CAPTCHA on the comment form.
 
-4. CAPTCHA on Comment Form:  - CSS class name for CAPTCHA input field on the comment form: 
+4. CAPTCHA on Comment Form:  - Hide CAPTCHA for registered users (select permission level)
+
+5. CAPTCHA on Comment Form:  - CSS class name for CAPTCHA input field on the comment form: 
 (Enter a CSS class name only if your theme uses one for comment text inputs. Default is blank for none.)
 
-5. Comment Form Rearrange: - Changes the display order of the catpcha input field on the comment form
+6. Comment Form Rearrange: - Changes the display order of the catpcha input field on the comment form.
 
 
 == Usage ==
 
-Once activated, a captcha image and captcha code entry is added to the comment and register forms.
+Once activated, a captcha image and captcha code entry is added to the comment and register forms. The Login form captcha is not enabled by default because it might be annoying to users. Only enable it if you are having spam problems related to bots automatically logging in
 
 
 == Frequently Asked Questions ==
@@ -195,6 +197,15 @@ Of course! It will be very gratefully received. Use PoEdit, it makes translation
 If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 == Changelog ==
+
+= 2.0 =
+- (25 Sep 2009) - Added full WPMU and BuddyPress compatibility. WPMU and BuddyPress users can now protect comment form, registration, and login from spam.
+- Added login form CAPTCHA. The Login form captcha is not enabled by default because it might be annoying to users. Only enable it if you are having spam problems related to bots automatically logging in.
+- New feature: An "advanced options" section to the options page. Some people wanted to change the text labels for the CAPTCHA and code input field.
+These advanced options fields can be filled in to override the standard included text labels.
+- Added new advanced options for editing inline CSS style of captcha image, audio image, and reload image.
+- Supports BuddyPress 1.0.3 and 1.1 
+- Minor code cleanup.
 
 = 1.8 =
 - (15 Sep 2009) - Plugin options are now stored in a single database row instead of many. (and it will auto migrate/cleanup old options database rows).
