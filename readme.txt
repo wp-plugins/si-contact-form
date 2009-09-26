@@ -198,6 +198,9 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.0.1 =
+- (25 Sep 2009) - BuddyPress 1.1 CSS fixes for the CAPTCHA position on the regstration form.
+
 = 2.0 =
 - (25 Sep 2009) - Added full WPMU and BuddyPress compatibility. WPMU and BuddyPress users can now protect comment form, registration, and login from spam.
 - Added login form CAPTCHA. The Login form captcha is not enabled by default because it might be annoying to users. Only enable it if you are having spam problems related to bots automatically logging in.

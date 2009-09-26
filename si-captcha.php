@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.0
+Version: 2.0.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -138,12 +138,11 @@ function si_captcha_options_page() {
                    );
 
    // deal with quotes
-    foreach($optionarray_update as $key => $val) {
-           $optionarray_update[$key] = str_replace('&quot;','"',trim($val));
-    }
+   foreach($optionarray_update as $key => $val) {
+          $optionarray_update[$key] = str_replace('&quot;','"',trim($val));
+   }
 
     if (isset($_POST['si_captcha_reset_styles'])) {
-          print_r($si_captcha_option_defaults);
          // reset styles feature
          $style_resets_arr= array('si_captcha_captcha_image_style','si_captcha_audio_image_style','si_captcha_refresh_image_style');
          foreach($style_resets_arr as $style_reset) {
@@ -344,9 +343,9 @@ else
         <input name="si_captcha_reset_styles" id="si_captcha_reset_styles" type="checkbox" />
         <label for="si_captcha_reset_styles"><strong><?php echo esc_html( __('Reset the styles to default.', 'si-captcha')) ?></strong></label><br />
 
-        <label for="si_captcha_captcha_image_style"><?php echo esc_html( __('CSS style for CAPTCHA image:', 'si-captcha')); ?></label><input name="si_captcha_captcha_image_style" id="si_captcha_captcha_image_style" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_captcha_image_style']);  ?>" size="50" /><br />
-        <label for="si_captcha_audio_image_style"><?php echo esc_html( __('CSS style for Audio image:', 'si-captcha')); ?></label><input name="si_captcha_audio_image_style" id="si_captcha_audio_image_style" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_audio_image_style']);  ?>" size="50" /><br />
-        <label for="si_captcha_refresh_image_style"><?php echo esc_html( __('CSS style for Refresh image:', 'si-captcha')); ?></label><input name="si_captcha_refresh_image_style" id="si_captcha_refresh_image_style" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_refresh_image_style']);  ?>" size="50" />
+        <label for="si_captcha_captcha_image_style"><?php echo esc_html( __('CSS style for CAPTCHA image:', 'si-captcha')); ?></label><input name="si_captcha_captcha_image_style" id="si_captcha_captcha_image_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_captcha_image_style']);  ?>" size="50" /><br />
+        <label for="si_captcha_audio_image_style"><?php echo esc_html( __('CSS style for Audio image:', 'si-captcha')); ?></label><input name="si_captcha_audio_image_style" id="si_captcha_audio_image_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_audio_image_style']);  ?>" size="50" /><br />
+        <label for="si_captcha_refresh_image_style"><?php echo esc_html( __('CSS style for Refresh image:', 'si-captcha')); ?></label><input name="si_captcha_refresh_image_style" id="si_captcha_refresh_image_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_refresh_image_style']);  ?>" size="50" />
         </td>
     </tr>
 
@@ -359,10 +358,10 @@ else
        <?php echo esc_html( __('Some people wanted to change the text labels. These fields can be filled in to override the standard text labels.', 'si-captcha')); ?>
        </div>
        <br />
-        <label for="si_captcha_label_captcha"><?php echo esc_html( __('CAPTCHA Code', 'si-captcha')); ?></label><input name="si_captcha_label_captcha" id="si_captcha_label_captcha" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_label_captcha']);  ?>" size="50" /><br />
-        <label for="si_captcha_tooltip_captcha"><?php echo esc_html( __('CAPTCHA Image', 'si-captcha')); ?></label><input name="si_captcha_tooltip_captcha" id="si_captcha_tooltip_captcha" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_tooltip_captcha']);  ?>" size="50" /><br />
-        <label for="si_captcha_tooltip_audio"><?php echo esc_html( __('CAPTCHA Audio', 'si-captcha')); ?></label><input name="si_captcha_tooltip_audio" id="si_captcha_tooltip_audio" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_tooltip_audio']);  ?>" size="50" /><br />
-        <label for="si_captcha_tooltip_refresh"><?php echo esc_html( __('Refresh Image', 'si-captcha')); ?></label><input name="si_captcha_tooltip_refresh" id="si_captcha_tooltip_refresh" type="text" value="<?php echo $this->si_output_string($si_captcha_opt['si_captcha_tooltip_refresh']);  ?>" size="50" />
+        <label for="si_captcha_label_captcha"><?php echo esc_html( __('CAPTCHA Code', 'si-captcha')); ?></label><input name="si_captcha_label_captcha" id="si_captcha_label_captcha" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_label_captcha']);  ?>" size="50" /><br />
+        <label for="si_captcha_tooltip_captcha"><?php echo esc_html( __('CAPTCHA Image', 'si-captcha')); ?></label><input name="si_captcha_tooltip_captcha" id="si_captcha_tooltip_captcha" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_tooltip_captcha']);  ?>" size="50" /><br />
+        <label for="si_captcha_tooltip_audio"><?php echo esc_html( __('CAPTCHA Audio', 'si-captcha')); ?></label><input name="si_captcha_tooltip_audio" id="si_captcha_tooltip_audio" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_tooltip_audio']);  ?>" size="50" /><br />
+        <label for="si_captcha_tooltip_refresh"><?php echo esc_html( __('Refresh Image', 'si-captcha')); ?></label><input name="si_captcha_tooltip_refresh" id="si_captcha_tooltip_refresh" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_tooltip_refresh']);  ?>" size="50" />
 
         </td>
     </tr>
@@ -924,11 +923,6 @@ function si_stripslashes($string) {
                 return $string;
         }
 } // end function si_stripslashes
-
-// for form vars
-function si_output_string($string) {
-    return str_replace('"', '&quot;', $string);
-} // end function si_output_string
 
 
 function get_captcha_url_si() {
