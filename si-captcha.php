@@ -527,7 +527,7 @@ echo '</div>
 } //  end function si_captcha_login_form
 
 
-// this function adds the captcha to the login form of buddypress versions before 1.1
+// this function adds the captcha to the login form of all buddypress versions
 function si_captcha_bp_login_form() {
    global $si_captcha_url, $si_captcha_opt;
 
@@ -542,7 +542,7 @@ if ($this->si_captcha_check_requires()) {
 
 // the captcha html - buddypress login form
 echo '
-<div style="width: 425px;  height: 45px">';
+<div style="width: 440px;  height: 45px">';
 $this->si_captcha_captcha_html('si_image_login');
 echo '<input type="text" name="captcha_code" id="captcha_code" class="input" '.$si_aria_required.' style="width:65px;" />
          <label for="captcha_code">';
