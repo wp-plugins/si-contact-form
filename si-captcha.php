@@ -639,7 +639,7 @@ if ($this->si_captcha_check_requires()) {
 
 // the captcha html - buddypress 1.1 register form
 echo '
-<div class="register-section">
+<div class="register-section" style="clear:left; margin-top:-10px;">
 <label for="captcha_code">';
   do_action( 'bp_captcha_code_errors' );
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
