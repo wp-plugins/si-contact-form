@@ -545,11 +545,11 @@ if ($this->si_captcha_check_requires()) {
 echo '
 <div style="width: 350px;  height: 45px">';
 $this->si_captcha_captcha_html('si_image_login');
-echo '</div>
-         <input type="text" name="captcha_code" id="captcha_code" class="input" '.$si_aria_required.' style="width:65px;" />
+echo '<input type="text" name="captcha_code" id="captcha_code" class="input" '.$si_aria_required.' style="width:65px;" />
          <label for="captcha_code">';
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
   echo '</label>
+</div>
 </div>
 ';
 }
