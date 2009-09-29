@@ -29,6 +29,7 @@ Features:
  * Auto form fill for logged in users.
  * Customizable form field titles.
  * Customizable CSS style.
+ * Optional extra fields.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -52,7 +53,7 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.6+
+ * Works with Wordpress 2.6+, WPMU, and BuddyPress
  * PHP 4.0.6 or above with GD2 library support.
  * PHP register_globals must be set to OFF
 
@@ -209,6 +210,9 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.7 =
+- (28 Sep 2009) - Added 8 optional extra fields. Some people requested extra contact form fields that could be used for phone number, company name, etc. To enable an extra field from the advanced options, just enter a label. Then check if you want the field to be required or not.
 
 = 1.6.8 =
 - (22 Sep 2009) - Fix, some sites reported a image path problem. (I think it is correct now). 
