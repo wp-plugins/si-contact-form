@@ -131,6 +131,11 @@ The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and regis
 = I use the plugin "SI CAPTCHA for Wordpress" for my comment and registration forms, is it still needed? =
 
 Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
+
+= Does this work on WPMU or BuddyPress? =
+Yes, If you use WPMU or BuddyPress you can have multiple blogs with individual contact forms on each one. On MPMU you would install it in `plugins`, not `mu-plugins`. Then each blog owner can have his own settings.
+
+
 The two plugins have the same CAPTCHA library but are totally separate.
 
 = Troubleshooting if the CAPTCHA image itself is not being shown: =
@@ -210,6 +215,9 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.7.1 =
+- (29 Sep 2009) - Fix credit link position. Some people wanted to change the error messages for the contact form. Advanced settings fields can be filled in to override the standard included error messages.
 
 = 1.7 =
 - (28 Sep 2009) - Added 8 optional extra fields. Some people requested extra contact form fields that could be used for phone number, company name, etc. To enable an extra field from the advanced options, just enter a label. Then check if you want the field to be required or not.
