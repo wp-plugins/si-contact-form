@@ -133,7 +133,7 @@ The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and regis
 Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
 
 = Does this work on WPMU or BuddyPress? =
-Yes, If you use WPMU or BuddyPress you can have multiple blogs with individual contact forms on each one. On MPMU you would install it in `plugins`, not `mu-plugins`. Then each blog owner can have his own settings.
+Yes, If you use WPMU or BuddyPress you can have multiple blogs with individual contact forms on each one. On WPMU you would install it in `plugins`, not `mu-plugins`. Then each blog owner can have his own settings.
 
 
 The two plugins have the same CAPTCHA library but are totally separate.
