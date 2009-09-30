@@ -217,7 +217,8 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 1.7.1 =
-- (29 Sep 2009) - Fix credit link position. Some people wanted to change the error messages for the contact form. Advanced settings fields can be filled in to override the standard included error messages.
+- (29 Sep 2009) - Fix credit link position. 
+- Some people wanted to change the error messages for the contact form. Advanced settings fields can be filled in to override the standard included error messages.
 
 = 1.7 =
 - (28 Sep 2009) - Added 8 optional extra fields. Some people requested extra contact form fields that could be used for phone number, company name, etc. To enable an extra field from the advanced options, just enter a label. Then check if you want the field to be required or not.
