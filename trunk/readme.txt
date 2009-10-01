@@ -7,7 +7,7 @@ Requires at least: 2.6
 Tested up to: 2.8.4
 Stable tag: trunk
 
-A Fast and Secure Contact Form for WordPress.
+This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem.
 
 == Description ==
 
