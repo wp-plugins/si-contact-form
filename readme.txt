@@ -216,6 +216,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.7.2 =
+- (30 Sep 2009) - Fixed settings were deleted at deactivation. Settings are now only deleted at uninstall.
+
 = 1.7.1 =
 - (29 Sep 2009) - Fix credit link position. 
 - Some people wanted to change the error messages for the contact form. Advanced settings fields can be filled in to override the standard included error messages.
