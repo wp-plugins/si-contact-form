@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: SI CAPTCHA
+Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.0.2
+Version: 2.0.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -378,8 +378,10 @@ else
 
 <p><?php _e('More WordPress plugins by Mike Challis:', 'si-captcha') ?></p>
 <ul>
-<li><a href="http://wordpress.org/extend/plugins/si-captcha/" target="_blank"><?php echo esc_html( __('Fast and Secure Contact Form', 'si-captcha')); ?></a></li>
-<li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php echo esc_html( __('SI CAPTCHA', 'si-captcha')); ?></a></li>
+<li><a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php echo esc_html( __('Fast and Secure Contact Form', 'si-captcha')); ?></a></li>
+<li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php echo esc_html( __('SI CAPTCHA Anti-Spam', 'si-captcha')); ?></a></li>
+<li><a href="http://wordpress.org/extend/plugins/visitor-maps/" target="_blank"><?php echo esc_html( __('Visitor Maps and Who\'s Online', 'si-captcha')); ?></a></li>
+
 </ul>
 </div>
 <?php
