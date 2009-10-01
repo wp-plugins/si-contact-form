@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.7.2
+Version: 1.7.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -271,7 +271,7 @@ if ($si_contact_opt['donated'] != 'true') {
         <tr>
         <td>
 <input type="hidden" name="cmd" value="_s-xclick" />
-<input type="hidden" name="hosted_button_id" value="6105441" />
+<input type="hidden" name="hosted_button_id" value="8086141" />
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
@@ -683,8 +683,10 @@ if ( !function_exists('mail') ) {
 
 <p><?php _e('More WordPress plugins by Mike Challis:', 'si-contact-form') ?></p>
 <ul>
-<li><a href="http://wordpress.org/extend/plugins/si-captcha/" target="_blank"><?php echo esc_html( __('Fast and Secure Contact Form', 'si-contact-form')); ?></a></li>
-<li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php echo esc_html( __('SI CAPTCHA', 'si-contact-form')); ?></a></li>
+<li><a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php echo esc_html( __('Fast and Secure Contact Form', 'si-contact-form')); ?></a></li>
+<li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php echo esc_html( __('SI CAPTCHA Anti-Spam', 'si-contact-form')); ?></a></li>
+<li><a href="http://wordpress.org/extend/plugins/visitor-maps/" target="_blank"><?php echo esc_html( __('Visitor Maps and Who\'s Online', 'si-contact-form')); ?></a></li>
+
 </ul>
 </div>
 <?php

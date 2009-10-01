@@ -183,7 +183,7 @@ The following translations are included in the download zip file:
 
 = Can I provide a translation? =
 
-Of course! It will be very gratefully received. Use PoEdit, it makes translation easy. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-contact-form/trunk/si-contact-form.pot ".pot file") and translate it.
+Of course! It will be very gratefully received. Use PoEdit, it makes translation easy. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-contact-form/trunk/languages/si-contact-form.pot ".pot file") and translate it.
 * There are some strings with a space in front or end -- please make sure you remember the space!
 * When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com.
 * If you have any questions, feel free to email me also. Thanks!
@@ -215,6 +215,9 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 1.7.3 =
+- (01 Oct 2009) - Updated links to my other plugins.
 
 = 1.7.2 =
 - (30 Sep 2009) - Fixed settings were deleted at deactivation. Settings are now only deleted at uninstall.
