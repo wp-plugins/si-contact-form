@@ -198,6 +198,9 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.0.2 =
+- (30 Sep 2009) - Fixed settings were deleted at deactivation. Settings are now only deleted at uninstall.
+
 = 2.0.1 =
 - (25 Sep 2009) - BuddyPress 1.1 CSS fixes for the CAPTCHA position on the regstration form.
 
