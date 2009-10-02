@@ -218,6 +218,7 @@ No setting necessary, it just works.
 
 = 1.7.3 =
 - (01 Oct 2009) - Updated links to my other plugins.
+- Danish (da_DK) - Updated by [Georg / Team Blogos](http://wordpress.blogos.dk)
 
 = 1.7.2 =
 - (30 Sep 2009) - Fixed settings were deleted at deactivation. Settings are now only deleted at uninstall.
