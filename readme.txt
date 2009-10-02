@@ -156,7 +156,10 @@ or open this URL in your web browser to run the test:
 = Is this plugin available in other languages? =
 
 Yes. To use a translated version, you need to obtain or make the language file for it. 
-At this point it would be useful to read [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") from the Codex. You will need an .mo file for SI CAPTCHA that corresponds with the "WPLANG" setting in your wp-config.php file. Translations are listed below -- if a translation for your language is available, all you need to do is place it in the `/wp-content/plugins/si-captcha-for-wordpress` directory of your WordPress installation. If one is not available, and you also speak good English, please consider doing a translation yourself (see the next question).
+At this point it would be useful to read [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") from the Codex.
+You will need an .mo file for this plugin that corresponds with the "WPLANG" setting in your wp-config.php file.
+Translations are listed below -- if a translation for your language is available, all you need to do is place it in the `/wp-content/plugins/si-captcha-for-wordpress/languages` directory of your WordPress installation.
+If one is not available, and you also speak good English, please consider doing a translation yourself (see the next question).
 
 
 The following translations are included in the download zip file:
