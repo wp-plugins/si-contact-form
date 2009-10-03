@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.7.3
+Version: 1.7.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -139,6 +139,7 @@ function si_contact_options_page() {
          'email_from' =>          trim($_POST['si_contact_email_from']),
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : $si_contact_option_defaults['email_subject'],
+         'hidden_subject_enable' =>  (isset( $_POST['si_contact_hidden_subject_enable'] ) ) ? 'true' : 'false',
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'name_case_enable' => (isset( $_POST['si_contact_name_case_enable'] ) ) ? 'true' : 'false',
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
@@ -433,6 +434,10 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
         <div style="text-align:left; display:none" id="si_contact_email_subject_tip">
         <?php echo esc_html( __('This will become a prefix of the subject for the E-mail you receive.', 'si-contact-form')); ?>
         </div>
+        <br />
+
+        <input name="si_contact_hidden_subject_enable" id="si_contact_hidden_subject_enable" type="checkbox" <?php if( $si_contact_opt['hidden_subject_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label name="si_contact_hidden_subject_enable" for="si_contact_hidden_subject_enable"><?php echo esc_html( __('Enable hidden E-mail subject (removes subject field from contact form).', 'si-contact-form')); ?></label>
         <br />
 
         <input name="si_contact_double_email" id="si_contact_double_email" type="checkbox" <?php if( $si_contact_opt['double_email'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -931,16 +936,17 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
     if (empty($ctf_contacts)) {
        $this->si_contact_error = 1;
     }
-    $mail_to    = $this->ctf_clean_input($contacts[$cid]['EMAIL']);
-    $to_contact = $this->ctf_clean_input($contacts[$cid]['CONTACT']);
-
+    $mail_to    = ( isset($contacts[$cid]['EMAIL']) )   ? $this->ctf_clean_input($contacts[$cid]['EMAIL'])  : '';
+    $to_contact = ( isset($contacts[$cid]['CONTACT']) ) ? $this->ctf_clean_input($contacts[$cid]['CONTACT']): '';
 
     $name    = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_name']));
     $email   = strtolower($this->ctf_clean_input($_POST['si_contact_email']));
     if ($ctf_enable_double_email == 'true') {
-       $email2   = strtolower($this->ctf_clean_input($_POST['si_contact_email2']));
+       $email2 = strtolower($this->ctf_clean_input($_POST['si_contact_email2']));
     }
-    $subject      = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_subject']));
+    if ($si_contact_opt['hidden_subject_enable'] != 'true') {
+       $subject = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_subject']));
+    }
     $message      = $this->ctf_clean_input($_POST['si_contact_message']);
     if ( $this->isCaptchaEnabled() ) {
      $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
@@ -1002,7 +1008,7 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
         }
       } // end foreach
 
-   if(empty($subject)) {
+   if ($si_contact_opt['hidden_subject_enable'] != 'true' && empty($subject)) {
        $this->si_contact_error = 1;
        $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? esc_html($si_contact_opt['error_subject']) : esc_html(  __('Subject text is required.', 'si-contact-form') );
    }
@@ -1086,7 +1092,7 @@ echo "</pre>\n";
      if (!defined('PHP_EOL'))
            define ('PHP_EOL', strtoupper(substr(PHP_OS,0,3) == 'WIN') ? "\r\n" : "\n");
 
-     $subj = $si_contact_opt['email_subject'] ." $subject";
+     $subj = ($si_contact_opt['hidden_subject_enable'] == 'true') ? $si_contact_opt['email_subject'] : $si_contact_opt['email_subject'] ." $subject";
 
      $msg = __('To', 'si-contact-form').": $to_contact
 
@@ -1206,16 +1212,16 @@ if (count($contacts) > 1) {
      $string .= ($si_contact_opt['title_dept'] != '') ? esc_html( $si_contact_opt['title_dept']) : esc_html( __('Department to Contact', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_contact).'
-        <div '.$this->ctf_field_style.'>
-                <select id="si_contact_CID" name="si_contact_CID" '.$this->ctf_aria_required.'>
+        <div style="text-align:left;">
+                <select '.$this->ctf_field_style.' id="si_contact_CID" name="si_contact_CID" '.$this->ctf_aria_required.'>
 ';
 
     $string .= '                        <option value="">';
     $string .= ($si_contact_opt['title_select'] != '') ? esc_attr($si_contact_opt['title_select']) : esc_attr( __('Select', 'si-contact-form'));
     $string .= '</option>'."\n";
 
-     if ( !isset($cid) ) {
-          $cid = $_GET['si_contact_CID'];
+     if ( !isset($cid) && isset($_GET['si_contact_CID']) ) {
+          $cid = (int)$_GET['si_contact_CID'];
      }
 
      $selected = '';
@@ -1224,7 +1230,7 @@ if (count($contacts) > 1) {
           if (!empty($cid) && $cid == $k) {
                     $selected = 'selected="selected"';
           }
-          $string .= '                        <option value="' . esc_attr($k) . '" ' . $selected . '>' . esc_attr($v[CONTACT]) . '</option>' . "\n";
+          $string .= '                        <option value="' . esc_attr($k) . '" ' . $selected . '>' . esc_attr($v['CONTACT']) . '</option>' . "\n";
           $selected = '';
       }
 
@@ -1261,8 +1267,8 @@ $string .= '
      $string .= ($si_contact_opt['title_name'] != '') ? esc_html( $si_contact_opt['title_name'] ) : esc_html( __('Name', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_name).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" id="si_contact_name" name="si_contact_name" value="' . $this->ctf_output_string($name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_name" name="si_contact_name" value="' . $this->ctf_output_string($name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
 
 if ($ctf_enable_double_email == 'true') {
@@ -1273,16 +1279,16 @@ if ($ctf_enable_double_email == 'true') {
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email).'
          '.$this->ctf_echo_if_error($si_contact_error_double_email).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" id="si_contact_email" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_email" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
         <div '.$this->ctf_title_style.'>
         <label for="si_contact_email2">';
      $string .= ($si_contact_opt['title_email2'] != '') ? esc_html($si_contact_opt['title_email2']) : esc_html( __('E-Mail Address again', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email2).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" id="si_contact_email2" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_email2" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
                 <br /><span class="small">';
      $string .= ($si_contact_opt['title_email2_help'] != '') ? esc_html( $si_contact_opt['title_email2_help'] ) : esc_html( __('Please enter your E-mail Address a second time.', 'si-contact-form'));
      $string .= '</span>
@@ -1296,8 +1302,8 @@ $string .= '
      $string .= ($si_contact_opt['title_email'] != '') ? esc_html( $si_contact_opt['title_email'] ) : esc_html( __('E-Mail Address', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" id="si_contact_email" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_email" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
 
 }
@@ -1310,33 +1316,37 @@ $string .= '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_ex_field'.$val.'_label">' . esc_html( $si_contact_opt['ex_field'.$val.'_label'] ).'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$val}).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" id="si_contact_ex_field'.$val.'" name="si_contact_ex_field'.$val.'" value="' . $this->ctf_output_string(${'ex_field'.$val}) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$val.'" name="si_contact_ex_field'.$val.'" value="' . $this->ctf_output_string(${'ex_field'.$val}) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
         }
       } // end foreach
 
-$string .=   '
+if ($si_contact_opt['hidden_subject_enable'] != 'true') {
+  $string .=   '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_subject">';
      $string .= ($si_contact_opt['title_subj'] != '') ? esc_html( $si_contact_opt['title_subj'] ) : esc_html( __('Subject', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_subject).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" id="si_contact_subject" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
-        </div>
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_subject" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        </div>';
+}
+
+$string .=   '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_message">';
      $string .= ($si_contact_opt['title_mess'] != '') ? esc_html( $si_contact_opt['title_mess'] ) : esc_html( __('Message', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_message).'
-        <div '.$this->ctf_field_style.'>
-                <textarea id="si_contact_message" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">' . $this->ctf_output_string($message) . '</textarea>
+        <div style="text-align:left;">
+                <textarea '.$this->ctf_field_style.' id="si_contact_message" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">' . $this->ctf_output_string($message) . '</textarea>
         </div>
 ';
 
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
-$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha) : '<div '.$this->ctf_field_style.'>';
+$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha) : '<div>';
 $string .= '
   <input type="hidden" name="si_contact_action" value="send" />
   <input type="submit" style="'.$si_contact_opt['button_style'].'" value="';
@@ -1432,8 +1442,8 @@ $string = '
      $string .= ($si_contact_opt['title_capt'] != '') ? esc_html( $si_contact_opt['title_capt'] ) : esc_html( __('CAPTCHA Code', 'si-contact-form')).':';
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_captcha).'
-        <div '.$this->ctf_field_style.'>
-                <input type="text" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' style="width:65px;" />
+        <div style="text-align:left;">
+                <input '.$this->ctf_field_style.' type="text" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' size="6" />
         </div>
 
 <div style="'.$si_contact_opt['captcha_div_style'].'">
@@ -1673,6 +1683,7 @@ function si_contact_init() {
          'email_from' => '',
          'email_bcc' => '',
          'email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
+         'hidden_subject_enable' => 'false',
          'double_email' => 'false',
          'name_case_enable' => 'true',
          'domain_protect' => 'true',
