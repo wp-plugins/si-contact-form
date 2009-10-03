@@ -200,6 +200,9 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.0.4 =
+- (03 Oct 2009) - Fixed session error on Buddypress versions.
+
 = 2.0.3 =
 - (01 Oct 2009) - Renamed to SI CAPTCHA Anti-Spam
 
