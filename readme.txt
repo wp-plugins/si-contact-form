@@ -217,7 +217,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 1.7.4 =
-- (03 Oct 2009) - Fixed advanmced setting: CSS style for form input fields. Changing background color did not work.
+- (03 Oct 2009) - Fixed advanced setting: CSS style for form input fields. Changing background color did not work.
 - Added setting to Enable hidden E-mail subject (removes subject field from contact form).  
 
 = 1.7.3 =
