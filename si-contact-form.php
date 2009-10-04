@@ -478,7 +478,7 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
         <strong><?php echo esc_html( __('registered', 'si-contact-form')); ?></strong> <?php echo esc_html( __('users who can', 'si-contact-form')); ?>:</label>
         <?php $this->si_contact_captcha_perm_dropdown('si_contact_captcha_perm_level', $si_contact_opt['captcha_perm_level']);  ?><br />
 
-        <a href="<?php echo "$captcha_url_cf/test/index.php"; ?>"><?php echo esc_html( __('Test if your PHP installation will support the CAPTCHA', 'si-contact-form')); ?></a>
+        <a href="<?php echo "$captcha_url_cf/test/index.php"; ?>" target="_new"><?php echo esc_html( __('Test if your PHP installation will support the CAPTCHA', 'si-contact-form')); ?></a>
       </td>
     </tr>
 
@@ -1443,7 +1443,7 @@ $string = '
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_captcha).'
         <div style="text-align:left;">
-                <input '.$this->ctf_field_style.' type="text" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' size="6" />
+                <input '.$this->ctf_field_style.' type="text" value="" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' size="6" />
         </div>
 
 <div style="'.$si_contact_opt['captcha_div_style'].'">
