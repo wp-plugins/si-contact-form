@@ -256,7 +256,7 @@ else
         <tr>
              <th scope="row"><?php _e('CAPTCHA Support Test:', 'si-captcha') ?></th>
           <td>
-            <a href="<?php echo "$si_captcha_url/test/index.php"; ?>"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-captcha') ?></a>
+            <a href="<?php echo "$si_captcha_url/test/index.php"; ?>" target="_new"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-captcha') ?></a>
           </td>
         </tr>
 
@@ -458,7 +458,7 @@ echo '
 $this->si_captcha_captcha_html();
 echo '</div>
 <div id="captchaInputDiv" style="display:block;" >
-<input type="text" name="captcha_code" id="captcha_code" tabindex="4" '.$si_aria_required.' style="width:65px;" ';
+<input type="text" value="" name="captcha_code" id="captcha_code" tabindex="4" '.$si_aria_required.' style="width:65px;" ';
 
 if ($si_captcha_opt['si_captcha_comment_class'] != '') {
   echo 'class="'.$si_captcha_opt['si_captcha_comment_class'].'" ';
@@ -515,7 +515,7 @@ echo '
 $this->si_captcha_captcha_html();
 echo '</div>
 <p>
-<input type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />
+<input value="" type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />
  <label for="captcha_code">';
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
   echo '</label>
@@ -546,7 +546,7 @@ if ($this->si_captcha_check_requires()) {
 echo '
 <div style="width: 440px;  height: 45px">';
 $this->si_captcha_captcha_html('si_image_login');
-echo '<input type="text" name="captcha_code" id="captcha_code" class="input" '.$si_aria_required.' style="width:65px;" />
+echo '<input type="text" value="" name="captcha_code" id="captcha_code" class="input" '.$si_aria_required.' style="width:65px;" />
          <label for="captcha_code">';
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
   echo '</label>
@@ -579,7 +579,7 @@ echo '
 $this->si_captcha_captcha_html();
 echo '</div>
 <p>
-<input type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />
+<input type="text" value="" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />
  <label for="captcha_code">';
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
   echo '</label>
@@ -613,7 +613,7 @@ echo '
 <label for="captcha_code">';
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
   echo '</label>
-<input type="text" name="captcha_code" id="captcha_code" '.$si_aria_required.' style="width:65px;" />
+<input type="text" value="" name="captcha_code" id="captcha_code" '.$si_aria_required.' style="width:65px;" />
 
 <div style="width: 250px;  height: 55px">';
 $this->si_captcha_captcha_html();
@@ -645,7 +645,7 @@ echo '
   do_action( 'bp_captcha_code_errors' );
   echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
   echo '</label>
-<input type="text" name="captcha_code" id="captcha_code" '.$si_aria_required.' style="width:65px;" />
+<input type="text" value="" name="captcha_code" id="captcha_code" '.$si_aria_required.' style="width:65px;" />
 
 <div style="width: 250px;  height: 55px">';
 $this->si_captcha_captcha_html();
