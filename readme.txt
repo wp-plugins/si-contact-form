@@ -123,6 +123,27 @@ Yes, it checks the form input with Akismet, but only if Akismet plugin is also i
 Yes, when you also have this plugin installed: 
 [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/)
 
+= My host says a fifth parameter -f should be added to the mail function. This will set the name of the from email address. =
+
+Your web host is being unusually restrictive. 
+I am using the built in mail function of wordpress, it cannot use the 5th parameter. I will not be able to add that.
+I bet you do not even get any mail from wordpress itself?  ... and most PHP programs you might install would not send any mail. 
+
+Here is another option for you:
+Get a free gmail account.
+Install the plugin called "WP Mail SMTP",  then set it to use gmail SMTP for mail.
+Set these settings for "WP Mail SMTP":
+Mailer: SMTP 
+SMTP Host: smtp.gmail.com 
+SMTP Port: 465 
+Encryption: SSL 
+Authentication: Yes 
+Username: your full gmail address 
+Password: your mail password
+
+Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
+
+
 = Do I have to also install the plugin "SI CAPTCHA for Wordpress" for the CAPTCHA to work? =
 
 No, this plugin includes the CAPTCHA feature code for this contact form.
