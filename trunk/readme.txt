@@ -133,13 +133,13 @@ Here is another option for you:
 Get a free gmail account.
 Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
 Set these settings for "WP Mail SMTP":
-Mailer: SMTP 
-SMTP Host: smtp.gmail.com 
-SMTP Port: 465 
-Encryption: SSL 
-Authentication: Yes 
-Username: your full gmail address 
-Password: your mail password
+Mailer: SMTP, 
+SMTP Host: smtp.gmail.com, 
+SMTP Port: 465, 
+Encryption: SSL, 
+Authentication: Yes, 
+Username: your full gmail address, 
+Password: your mail password.
 
 Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
 
