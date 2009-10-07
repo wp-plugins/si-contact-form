@@ -144,20 +144,19 @@ Password: your mail password.
 Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
 
 
-= Do I have to also install the plugin "SI CAPTCHA for Wordpress" for the CAPTCHA to work? =
+= Do I have to also install the plugin "SI CAPTCHA Anti-Spam" for the CAPTCHA to work? =
 
 No, this plugin includes the CAPTCHA feature code for this contact form.
 The "SI CAPTCHA for Wordpress" plugin is a separate plugin for comment and registration forms spam protection.
 
-= I use the plugin "SI CAPTCHA for Wordpress" for my comment and registration forms, is it still needed? =
+= I use the plugin "SI CAPTCHA Anti-Spam" for my comment and registration forms, is it still needed? =
 
-Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed.
+Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA for Wordpress" should be installed. 
+The two plugins have the same CAPTCHA library but are totally separate.
 
 = Does this work on WPMU or BuddyPress? =
 Yes, If you use WPMU or BuddyPress you can have multiple blogs with individual contact forms on each one. On WPMU you would install it in `plugins`, not `mu-plugins`. Then each blog owner can have his own settings.
 
-
-The two plugins have the same CAPTCHA library but are totally separate.
 
 = Troubleshooting if the CAPTCHA image itself is not being shown: =
 
