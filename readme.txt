@@ -131,7 +131,7 @@ I bet you do not even get any mail from wordpress itself?  ... and most PHP prog
 
 Here is another option for you:
 Get a free gmail account.
-Install the plugin called "WP Mail SMTP",  then set it to use gmail SMTP for mail.
+Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
 Set these settings for "WP Mail SMTP":
 Mailer: SMTP 
 SMTP Host: smtp.gmail.com 
