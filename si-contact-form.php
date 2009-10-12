@@ -1377,14 +1377,6 @@ $string .= '<!-- SI Contact Form plugin end -->
  return $string;
 } // end function si_contact_form_short_code
 
-// Fixes the email encoding to uf8
-function fixEncoding($in_str) {
-  if(mb_detect_encoding($in_str) == "UTF-8" && mb_check_encoding($in_str,"UTF-8"))
-    return $in_str;
-  else
-    return utf8_encode($in_str);
-} // end function fixEncoding
-
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
    global $user_ID, $si_contact_opt;
