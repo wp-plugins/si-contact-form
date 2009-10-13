@@ -167,6 +167,7 @@ The following translations are included in the download zip file:
 * Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
 * Arabic (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)
 * Belorussian (by_BY) - Translated by [Marcis Gasuns](http://www.comfi.com/)
+* Czech (cs_CZ) - Translated by [Radovan](http://algymsa.cz)
 * Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
@@ -200,6 +201,10 @@ Of course! It will be very gratefully received. Use PoEdit, it makes translation
 If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 == Changelog ==
+
+= 2.0.6 =
+- (13 Oct 2009) - Fixed array_merge error on WPMU, Buddypress.
+- Added Czech (cs_CZ) - Translated by [Radovan](http://algymsa.cz)
 
 = 2.0.5 =
 - (09 Oct 2009) - Added Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
