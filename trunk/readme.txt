@@ -193,6 +193,7 @@ The following translations are included in the download zip file:
 * Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
+* Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
@@ -235,6 +236,8 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Added Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 
 = 1.7.4 =
 - (03 Oct 2009) - Fixed advanced setting: CSS style for form input fields. Changing background color did not work.
