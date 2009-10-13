@@ -53,6 +53,17 @@ Requirements/Restrictions:
 3. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version. 
 
 
+
+1. This is how to install SI Captcha globally on WPMU or BuddyPress:
+
+2. Step 1: upload the `/si-captcha-for-wordpress/` folder and all it's contents to `/mu-plugins/`
+
+3. Step 2: MOVE the si-captcha.php from the `/si-captcha-for-wordpress/` folder to the `/mu-plugins/` folder.
+
+4. Site wide Settings are located in "Site Admin", "SI CAPTCHA Optioins" 
+
+
+
 == Screenshots ==
 
 1. screenshot-1.jpg is the captcha on the comment form.
