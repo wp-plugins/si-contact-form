@@ -190,6 +190,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
@@ -237,6 +238,7 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 - Added Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 
 = 1.7.4 =
