@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.6
-Tested up to: 2.8.4
+Tested up to: 2.8.5
 Stable tag: trunk
 
 This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem.
@@ -238,7 +238,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
+= 1.7.5 =
+- (21 Oct 2009) - Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 - Added Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 
 = 1.7.4 =
