@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
 Tags: akismet, captcha, comment, comments, login, anti-spam, spam, security, multilingual, buddypress, wpmu, wordpressmu
 Requires at least: 2.6
-Tested up to: 2.8.4
+Tested up to: 2.8.5
 Stable tag: trunk
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. Also is fully WPMU and BuddyPress compatible.
@@ -214,7 +214,8 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
-- Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
+= 2.0.7 =
+- (21 Oct 2009) - Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 
 = 2.0.6 =
 - (13 Oct 2009) - Fixed array_merge error on WPMU, Buddypress.
