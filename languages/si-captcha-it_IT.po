@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: SI CAPTCHA in italiano\n"
+"Project-Id-Version: SI CAPTCHA Anti-Spam in italiano\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-captcha-for-wordpress\n"
 "POT-Creation-Date: 2008-12-14 17:48+0000\n"
-"PO-Revision-Date: 2009-10-04 12:33+0100\n"
+"PO-Revision-Date: 2009-10-22 19:48+0100\n"
 "Last-Translator: Gianni Diurno (aka gidibao) <gidibao@gmail.com>\n"
 "Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -110,11 +110,11 @@ msgstr "Verifica se la tua installazione PHP supporta il CAPTCHA"
 
 #: si-captcha.php:264
 msgid "CAPTCHA on Login Form:"
-msgstr "CAPTCHA per il modulo dei commenti:"
+msgstr "CAPTCHA per il login:"
 
 #: si-captcha.php:267
 msgid "Enable CAPTCHA on the login form."
-msgstr "Attiva il CAPTCHA nel modulo dei commenti."
+msgstr "Attiva il CAPTCHA nel modulo di login."
 
 #: si-captcha.php:268
 #: si-captcha.php:305
