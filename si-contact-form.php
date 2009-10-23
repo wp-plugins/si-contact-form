@@ -542,7 +542,7 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
       ?>
 
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_enable_credit_link"><?php echo esc_html( __('Enable plugin credit link:', 'si-contact-form')) ?></label> <small><?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>
+        <label for="si_contact_enable_credit_link"><?php echo esc_html( __('Enable plugin credit link:', 'si-contact-form')) ?></label> <small><?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>
 
        </td>
       </tr>
@@ -1366,7 +1366,7 @@ $string .= '
 if ($si_contact_opt['enable_credit_link'] == 'true') {
 $string .= '
 <br clear="all" />
-<p><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
+<p><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
 <br clear="all" />
 ';
 }
