@@ -238,6 +238,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.7.6 =
+- (27 Oct 2009) - Added advanced option to edit the CSS style for contact drop down select on the contact form.
+- HTML validation fix.
+
 = 1.7.5 =
 - (21 Oct 2009) - Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 - Added Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
