@@ -3,12 +3,12 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.0.7
+Version: 2.0.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-/*  Copyright (C) 2008 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
+/*  Copyright (C) 2008-2009 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ function si_captcha_get_options() {
          'si_captcha_register' => 'true',
          'si_captcha_rearrange' => 'false',
          'si_captcha_aria_required' => 'false',
+         'si_captcha_captcha_div_style' =>   'display:block;',
          'si_captcha_captcha_image_style' => 'border-style:none; margin:0; padding-right:5px; float:left;',
          'si_captcha_audio_image_style' =>   'border-style:none; margin:0; vertical-align:top;',
          'si_captcha_refresh_image_style' => 'border-style:none; margin:0; vertical-align:bottom;',
@@ -133,6 +134,7 @@ function si_captcha_options_page() {
          'si_captcha_register' =>           (isset( $_POST['si_captcha_register'] ) ) ? 'true' : 'false',
          'si_captcha_rearrange' =>          (isset( $_POST['si_captcha_rearrange'] ) ) ? 'true' : 'false',
          'si_captcha_aria_required' =>      (isset( $_POST['si_captcha_aria_required'] ) ) ? 'true' : 'false',
+         'si_captcha_captcha_div_style' =>     trim($_POST['si_captcha_captcha_div_style']),
          'si_captcha_captcha_image_style' =>   trim($_POST['si_captcha_captcha_image_style']),
          'si_captcha_audio_image_style' =>     trim($_POST['si_captcha_audio_image_style']),
          'si_captcha_refresh_image_style' =>   trim($_POST['si_captcha_refresh_image_style']),
@@ -348,6 +350,7 @@ else
         <input name="si_captcha_reset_styles" id="si_captcha_reset_styles" type="checkbox" />
         <label for="si_captcha_reset_styles"><strong><?php echo esc_html( __('Reset the styles to default.', 'si-captcha')) ?></strong></label><br />
 
+        <label for="si_captcha_captcha_div_style"><?php echo esc_html( __('CSS style for CAPTCHA div:', 'si-captcha')); ?></label><input name="si_captcha_captcha_div_style" id="si_captcha_captcha_div_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_captcha_div_style']);  ?>" size="50" /><br />
         <label for="si_captcha_captcha_image_style"><?php echo esc_html( __('CSS style for CAPTCHA image:', 'si-captcha')); ?></label><input name="si_captcha_captcha_image_style" id="si_captcha_captcha_image_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_captcha_image_style']);  ?>" size="50" /><br />
         <label for="si_captcha_audio_image_style"><?php echo esc_html( __('CSS style for Audio image:', 'si-captcha')); ?></label><input name="si_captcha_audio_image_style" id="si_captcha_audio_image_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_audio_image_style']);  ?>" size="50" /><br />
         <label for="si_captcha_refresh_image_style"><?php echo esc_html( __('CSS style for Refresh image:', 'si-captcha')); ?></label><input name="si_captcha_refresh_image_style" id="si_captcha_refresh_image_style" type="text" value="<?php echo esc_attr($si_captcha_opt['si_captcha_refresh_image_style']);  ?>" size="50" />
@@ -449,7 +452,7 @@ function si_captcha_comment_form() {
 
 // the captch html
 echo '
-<div style="display:block;" id="captchaImgDiv">
+<div style="'.$si_captcha_opt['si_captcha_captcha_div_style'].'" id="captchaImgDiv">
 ';
 
 // Test for some required things, print error message right here if not OK.
@@ -462,7 +465,7 @@ echo '
 <div style="width: 250px; height: 55px; padding-top:10px;">';
 $this->si_captcha_captcha_html();
 echo '</div>
-<div id="captchaInputDiv" style="display:block;" >
+<div style="display:block;" id="captchaInputDiv">
 <input type="text" value="" name="captcha_code" id="captcha_code" tabindex="4" '.$si_aria_required.' style="width:65px;" ';
 
 if ($si_captcha_opt['si_captcha_comment_class'] != '') {

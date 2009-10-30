@@ -214,6 +214,9 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.0.8 =
+- (29 Oct 2009) - Added new setting in advanced options: "CSS style for CAPTCHA div".
+
 = 2.0.7 =
 - (21 Oct 2009) - Added Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 
