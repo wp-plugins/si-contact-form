@@ -238,6 +238,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.7.7 =
+- (30 Oct 2009) - Fixed issue on some sites with blank css fields that caused image misalignment.
+- Added advanced option to edit the CSS style for border on the contact form.
+
 = 1.7.6 =
 - (27 Oct 2009) - Added advanced option to edit the CSS style for contact drop down select on the contact form.
 - HTML validation fix.
