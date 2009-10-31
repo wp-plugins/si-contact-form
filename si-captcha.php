@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.0.8
+Version: 2.0.9
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -100,6 +100,14 @@ function si_captcha_get_options() {
            $si_captcha_opt[$key] = $this->si_stripslashes($val);
   }
 
+  if ($si_captcha_opt['si_captcha_captcha_image_style'] == '' && $si_captcha_opt['si_captcha_audio_image_style'] == '') {
+     // if default styles are missing, reset styles
+     $style_resets_arr = array('si_captcha_captcha_div_style','si_captcha_captcha_image_style','si_captcha_audio_image_style','si_captcha_refresh_image_style');
+     foreach($style_resets_arr as $style_reset) {
+           $si_captcha_opt[$style_reset] = $si_captcha_option_defaults[$style_reset];
+     }
+  }
+
 
 } // end function si_captcha_get_options
 
@@ -134,10 +142,10 @@ function si_captcha_options_page() {
          'si_captcha_register' =>           (isset( $_POST['si_captcha_register'] ) ) ? 'true' : 'false',
          'si_captcha_rearrange' =>          (isset( $_POST['si_captcha_rearrange'] ) ) ? 'true' : 'false',
          'si_captcha_aria_required' =>      (isset( $_POST['si_captcha_aria_required'] ) ) ? 'true' : 'false',
-         'si_captcha_captcha_div_style' =>     trim($_POST['si_captcha_captcha_div_style']),
-         'si_captcha_captcha_image_style' =>   trim($_POST['si_captcha_captcha_image_style']),
-         'si_captcha_audio_image_style' =>     trim($_POST['si_captcha_audio_image_style']),
-         'si_captcha_refresh_image_style' =>   trim($_POST['si_captcha_refresh_image_style']),
+         'si_captcha_captcha_div_style' =>    (trim($_POST['si_captcha_captcha_div_style']) != '' )   ? trim($_POST['si_captcha_captcha_div_style'])   : $si_captcha_option_defaults['si_captcha_captcha_div_style'], // use default if empty
+         'si_captcha_captcha_image_style' =>  (trim($_POST['si_captcha_captcha_image_style']) != '' ) ? trim($_POST['si_captcha_captcha_image_style']) : $si_captcha_option_defaults['si_captcha_captcha_image_style'],
+         'si_captcha_audio_image_style' =>    (trim($_POST['si_captcha_audio_image_style']) != '' )   ? trim($_POST['si_captcha_audio_image_style'])   : $si_captcha_option_defaults['si_captcha_audio_image_style'],
+         'si_captcha_refresh_image_style' =>  (trim($_POST['si_captcha_refresh_image_style']) != '' ) ? trim($_POST['si_captcha_refresh_image_style']) : $si_captcha_option_defaults['si_captcha_refresh_image_style'],
          'si_captcha_label_captcha' =>         trim($_POST['si_captcha_label_captcha']),
          'si_captcha_tooltip_captcha' =>       trim($_POST['si_captcha_tooltip_captcha']),
          'si_captcha_tooltip_audio' =>         trim($_POST['si_captcha_tooltip_audio']),
@@ -151,7 +159,7 @@ function si_captcha_options_page() {
 
     if (isset($_POST['si_captcha_reset_styles'])) {
          // reset styles feature
-         $style_resets_arr= array('si_captcha_captcha_image_style','si_captcha_audio_image_style','si_captcha_refresh_image_style');
+         $style_resets_arr= array('si_captcha_captcha_div_style','si_captcha_captcha_image_style','si_captcha_audio_image_style','si_captcha_refresh_image_style');
          foreach($style_resets_arr as $style_reset) {
            $optionarray_update[$style_reset] = $si_captcha_option_defaults[$style_reset];
          }
