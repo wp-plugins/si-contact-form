@@ -190,6 +190,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Bulgarian (bg_BG) - Translated by [Dimitar Atanasov]
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
@@ -237,6 +238,8 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Added Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net/)
 
 = 1.7.7 =
 - (30 Oct 2009) - Fixed issue on some sites with blank css fields that caused image misalignment.
