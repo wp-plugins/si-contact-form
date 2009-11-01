@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: si-contact-form 1.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
 "POT-Creation-Date: 2009-08-27 17:15+0000\n"
-"PO-Revision-Date: 2009-11-01 22:46+0200\n"
+"PO-Revision-Date: 2009-11-01 23:26+0200\n"
 "Last-Translator: Dimitar Atanasov <lirex@chereshka.net>\n"
 "Language-Team: Pierre Sudarovich\n"
 "MIME-Version: 1.0\n"
@@ -126,7 +126,7 @@ msgstr "Безплатни PHP скриптове"
 
 #: si-contact-form.php:263
 msgid "Contact"
-msgstr "Получател"
+msgstr "Свържи се с"
 
 #: si-contact-form.php:281
 msgid "If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!"
@@ -369,7 +369,7 @@ msgstr "Показване на кредити към създатела на п
 #: si-contact-form.php:547
 #: si-contact-form.php:1375
 msgid "Powered by"
-msgstr "Създаване и поддръжка от"
+msgstr "Създаване и поддръжка -"
 
 #. #-#-#-#-#  plugin.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Plugin Name of an extension
@@ -377,7 +377,7 @@ msgstr "Създаване и поддръжка от"
 #: si-contact-form.php:695
 #: si-contact-form.php:1375
 msgid "Fast and Secure Contact Form"
-msgstr "Hızlı ve Güvenli İletişim Formu"
+msgstr "Fast and Secure Contact Form"
 
 #: si-contact-form.php:553
 msgid "Style:"
@@ -483,12 +483,12 @@ msgstr "Форма за контакти"
 #: si-contact-form.php:612
 #: si-contact-form.php:1218
 msgid "Department to Contact"
-msgstr "Избери получател"
+msgstr "Изберете получател"
 
 #: si-contact-form.php:613
 #: si-contact-form.php:1226
 msgid "Select"
-msgstr "Избери"
+msgstr "-- избор --"
 
 #: si-contact-form.php:614
 #: si-contact-form.php:1273
@@ -570,7 +570,7 @@ msgstr "Някой хора искат да променят съобщения�
 #: si-contact-form.php:645
 #: si-contact-form.php:934
 msgid "Selecting a contact is required."
-msgstr "Избирането на получател е задължително."
+msgstr "Моля, изберете получател."
 
 #: si-contact-form.php:646
 #: si-contact-form.php:989
@@ -581,7 +581,7 @@ msgstr "Моля, въведете вашето име."
 #: si-contact-form.php:993
 #: si-contact-form.php:997
 msgid "A proper e-mail address is required."
-msgstr "Грешно въведен e-mail адрес."
+msgstr "Моля, въведете e-mail адрес."
 
 #: si-contact-form.php:648
 #: si-contact-form.php:1001
@@ -601,7 +601,7 @@ msgstr "Моля, въведете тема."
 #: si-contact-form.php:651
 #: si-contact-form.php:1021
 msgid "Message text is required."
-msgstr "Моля, въведете някакво съобщение."
+msgstr "Моля, въведете съобщение."
 
 #: si-contact-form.php:652
 #: si-contact-form.php:974
