@@ -18,6 +18,7 @@ Fast and Secure Contact Form for WordPress. This contact form lets your visitors
 Features:
 --------
  * Configure Options from Admin panel.
+ * Multi-Form feature that allows you to have up to four different forms on your site.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
  * Validates syntax of E-mail address.
@@ -63,7 +64,7 @@ Requirements/Restrictions:
 
 2. Activate the plugin through the `Plugins` menu in WordPress. Look for the Settings link to configure the Options. 
 
-3. You must add the shortcode `[si_contact_form]` in a Page(not a Post). That Page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si_contact_form]` in the page, uncheck `Allow Comments`, click `Publish`. 
+3. You must add the shortcode `[si-contact-form form='1']` in a Page(not a Post). That Page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si-contact-form form='1']` in the page, uncheck `Allow Comments`, click `Publish`. 
 
 4. Test an email from your form.
 
@@ -79,6 +80,20 @@ Requirements/Restrictions:
 3. Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
 "E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
 
+4. Here is another option for you:
+Get a free gmail account.
+Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
+Set these settings for "WP Mail SMTP":
+Mailer: SMTP, 
+SMTP Host: smtp.gmail.com, 
+SMTP Port: 465, 
+Encryption: SSL, 
+Authentication: Yes, 
+Username: your full gmail address, 
+Password: your mail password.
+
+Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
+
 
 == Screenshots ==
 
@@ -88,7 +103,7 @@ Requirements/Restrictions:
 
 3. screenshot-3.jpg is the `Contact Form options` tab on the `Admin Plugins` page.
 
-4. screenshot-4.jpg adding the shortcode `[si_contact_form]` in a Page.
+4. screenshot-4.jpg adding the shortcode `[si-contact-form form='1']` in a Page.
 
 
 == Frequently Asked Questions ==
@@ -239,6 +254,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.8 =
+- (02 Nov 2009) - Added Multi-Form feature that allows you to have up to four different forms on your site.
 - Added Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net/)
 
 = 1.7.7 =
