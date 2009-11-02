@@ -254,6 +254,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.8.1 =
+- (02 Nov 2009) - Fixed error "Could not read CAPTCHA cookie" on some installs in version 1.8
+
 = 1.8 =
 - (02 Nov 2009) - Added Multi-Form feature that allows you to have up to four different forms on your site.
 - Added Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net/)
