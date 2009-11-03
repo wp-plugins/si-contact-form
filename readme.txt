@@ -205,6 +205,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 
 The following translations are included in the download zip file:
 
+* Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
 * Bulgarian (bg_BG) - Translated by [Dimitar Atanasov]
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
@@ -255,6 +256,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+- Added Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
 
 = 1.8.1 =
 - (02 Nov 2009) - Fixed error "Could not read CAPTCHA cookie" on some installs using version 1.8
