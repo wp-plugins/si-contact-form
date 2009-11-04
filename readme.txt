@@ -214,6 +214,9 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.1 =
+- (03 Nov 2009) - Fix for settings not being deleted when plugin is deleted from admin page.
+
 = 2.0.9 =
 - (30 Oct 2009) - Fixed issue on some sites with blank css fields that caused image misalignment.
 

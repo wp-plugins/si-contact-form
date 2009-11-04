@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.0.9
+Version: 2.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -25,6 +25,14 @@ Author URI: http://www.642weather.com/weather/scripts.php
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// settings get deleted when plugin is deleted from admin plugins page
+// this must be outside the class or it does not work
+function si_captcha_unset_options() {
+
+   if (basename(dirname(__FILE__)) != "mu-plugins")
+      delete_option('si_captcha');
+}
+
 if (!class_exists('siCaptcha')) {
 
  class siCaptcha {
@@ -39,13 +47,6 @@ function si_captcha_add_tabs() {
    else if ($wpmu != 1) {
 		add_submenu_page('plugins.php', __('SI Captcha Options', 'si-captcha'), __('SI Captcha Options', 'si-captcha'), 'manage_options', __FILE__,array(&$this,'si_captcha_options_page'));
    }
-}
-
-function si_captcha_unset_options() {
-   global $wpmu;
-
-   if ($wpmu != 1)
-     delete_option('si_captcha');
 }
 
 function si_captcha_get_options() {
@@ -1070,7 +1071,7 @@ else if (basename(dirname(__FILE__)) == "si-captcha-for-wordpress" && function_e
 
   // options deleted when this plugin is deleted in WP 2.7+
   if ( function_exists('register_uninstall_hook') )
-     register_uninstall_hook(__FILE__, array(&$si_image_captcha, 'si_captcha_unset_options'), 1);
+     register_uninstall_hook(__FILE__, 'si_captcha_unset_options');
 }
 
 ?>
