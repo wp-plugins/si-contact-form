@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.8.1
+Version: 1.8.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -25,6 +25,25 @@ Author URI: http://www.642weather.com/weather/scripts.php
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// allow admin to override max allowed forms for multi-form feature
+if(!defined('SI_CONTACT_FORM_MAX_FORMS')) {
+    define('SI_CONTACT_FORM_MAX_FORMS',4); // allows up to 4 contact forms (do not change here, see below ...)
+    // if you need to add more contact forms, add this line in wp-config.php: define('SI_CONTACT_FORM_MAX_FORMS',5);
+    // be sure to change the number 5 to the amount you actually need, no more.
+}
+
+// settings get deleted when plugin is deleted from admin plugins page
+// this must be outside the class or it does not work
+function si_contact_unset_options() {
+
+  delete_option('si_contact_form');
+
+  // multi-forms (a unique configuration for each contact form)
+  for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FORMS; $i++) {
+    delete_option("si_contact_form$i");
+  }
+} // end function si_contact_unset_options
+
 if (!class_exists('siContactForm')) {
 
  class siContactForm {
@@ -32,13 +51,6 @@ if (!class_exists('siContactForm')) {
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact-form'), __('SI Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
-}
-
-function si_contact_unset_options() {
-  delete_option('si_contact_form');
-  delete_option('si_contact_form2');
-  delete_option('si_contact_form3');
-  delete_option('si_contact_form4');
 }
 
 function si_contact_update_lang() {
@@ -331,25 +343,19 @@ if ($form_id == 1) {
   echo __('Multi-forms:', 'si-contact-form');
   echo ' ';
   // multi-form selector
-  if ($form_id == 1)
-    echo '<b>'.sprintf(__('Form: %d', 'si-contact-form'),1).'</b>';
-  else
-    echo '<a href="' . admin_url(  "plugins.php?page=si-contact-form/si-contact-form.php" ) . '">'. sprintf(__('Form: %d', 'si-contact-form'),1). '</a>';
-
-  if ($form_id == 2)
-     echo ' | <b>' . sprintf(__('Form: %d', 'si-contact-form'),2).'</b>';
-  else
-    echo ' | <a href="' . admin_url(  "plugins.php?ctf_form_num=2&amp;page=si-contact-form/si-contact-form.php" ) . '">'. sprintf(__('Form: %d', 'si-contact-form'),2). '</a>';
-
-  if ($form_id == 3)
-     echo ' | <b>' .sprintf(__('Form: %d', 'si-contact-form'),3).'</b>';
-  else
-    echo ' | <a href="' . admin_url(  "plugins.php?ctf_form_num=3&amp;page=si-contact-form/si-contact-form.php" ) . '">'. sprintf(__('Form: %d', 'si-contact-form'),3). '</a>';
-
-  if ($form_id == 4)
-     echo ' | <b>' .sprintf(__('Form: %d', 'si-contact-form'),4).'</b>';
-  else
-    echo ' | <a href="' . admin_url(  "plugins.php?ctf_form_num=4&amp;page=si-contact-form/si-contact-form.php" ) . '">'. sprintf(__('Form: %d', 'si-contact-form'),4). '</a>';
+  for ($i = 1; $i <= SI_CONTACT_FORM_MAX_FORMS; $i++) {
+     if($i == 1) {
+         if ($form_id == 1)
+             echo '<b>'.sprintf(__('Form: %d', 'si-contact-form'),1).'</b>';
+         else
+             echo '<a href="' . admin_url(  "plugins.php?page=si-contact-form/si-contact-form.php" ) . '">'. sprintf(__('Form: %d', 'si-contact-form'),1). '</a>';
+     } else {
+        if ($form_id == $i)
+             echo ' | <b>' . sprintf(__('Form: %d', 'si-contact-form'),$i).'</b>';
+        else
+             echo ' | <a href="' . admin_url(  "plugins.php?ctf_form_num=$i&amp;page=si-contact-form/si-contact-form.php" ) . '">'. sprintf(__('Form: %d', 'si-contact-form'),$i). '</a>';
+     }
+  }
   ?>
   </h3>
   <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_multi_tip');"><?php echo esc_html( __('Multi-forms help', 'si-contact-form')); ?></a>
@@ -810,8 +816,8 @@ function si_contact_form_short_code($atts) {
 
    extract(shortcode_atts(array( 'form' => '' ), $atts));
     $form_num = '';
-    if ( isset($form) && preg_match("/^[1-4]{1}$/i", $form) ) {
-       $form_num = $form;
+    if ( isset($form) && is_numeric($form) && $form <= SI_CONTACT_FORM_MAX_FORMS ) {
+       $form_num = (int)$form;
        if ($form_num == 1)
          $form_num = '';
     }
@@ -1762,8 +1768,8 @@ function si_contact_plugin_action_links( $links, $file ) {
 
 function si_contact_form_num() {
     $form_num = '';
-    if ( isset($_GET['ctf_form_num']) && preg_match("/^[1-4]{1}$/i", $_GET['ctf_form_num']) ) {
-       $form_num = $_GET['ctf_form_num'];
+    if ( isset($_GET['ctf_form_num']) && is_numeric($_GET['ctf_form_num']) && $_GET['ctf_form_num'] <= SI_CONTACT_FORM_MAX_FORMS ) {
+       $form_num = (int)$_GET['ctf_form_num'];
     }
     return $form_num;
 } // end function si_contact_form_num
@@ -1858,9 +1864,11 @@ function si_contact_get_options($form_num) {
 
   // install the option defaults
   add_option('si_contact_form',  $si_contact_option_defaults, '', 'yes');
-  add_option('si_contact_form2', $si_contact_option_defaults, '', 'yes');
-  add_option('si_contact_form3', $si_contact_option_defaults, '', 'yes');
-  add_option('si_contact_form4', $si_contact_option_defaults, '', 'yes');
+
+  // multi-form
+  for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FORMS; $i++) {
+     add_option("si_contact_form$i", $si_contact_option_defaults, '', 'yes');
+  }
 
   // get the options from the database
   $si_contact_opt = get_option("si_contact_form$form_num");
@@ -1983,7 +1991,7 @@ if (isset($si_contact_form)) {
 
     // options deleted when this plugin is deleted in WP 2.7+
   if ( function_exists('register_uninstall_hook') )
-     register_uninstall_hook(__FILE__, array(&$si_contact_form, 'si_contact_unset_options'), 1);
+     register_uninstall_hook(__FILE__, 'si_contact_unset_options');
 
 }
 

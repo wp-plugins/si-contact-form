@@ -18,7 +18,7 @@ Fast and Secure Contact Form for WordPress. This contact form lets your visitors
 Features:
 --------
  * Configure Options from Admin panel.
- * Multi-Form feature that allows you to have up to four different forms on your site.
+ * Multi-Form feature that allows you to have many different forms on your site.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
  * Validates syntax of E-mail address.
@@ -116,6 +116,25 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 
 3. Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
 "E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
+
+4. Here is another option for you:
+Get a free gmail account.
+Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
+Set these settings for "WP Mail SMTP":
+Mailer: SMTP, 
+SMTP Host: smtp.gmail.com, 
+SMTP Port: 465, 
+Encryption: SSL, 
+Authentication: Yes, 
+Username: your full gmail address, 
+Password: your mail password.
+
+Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
+
+= I need more than 4 contact forms, how do I increase the number of forms available? =
+
+If you need to add more contact forms, add this line in wp-config.php: `define('SI_CONTACT_FORM_MAX_FORMS',5);`
+be sure to change the number 5 to the amount you actually need, no more.
 
 = What is "ERROR: Misconfigured E-mail address in options.", what could be wrong? =
 First, make sure you have a valid "E-mail To:" set in options. This plugin uses an email validation check to make sure the email address has proper syntax and that a valid DNS record exists for the email domain name. If you have this error and you are sure your email address is correct, maybe your server is having trouble with the DNS check. I added a feature to the options panel to disable the DNS check during email validation. You may have to uncheck this option: "Enable checking DNS records for the domain name when checking for a valid E-mail address." Maybe the error will go away now.
@@ -255,6 +274,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.8.2 =
+- (03 Nov 2009) - Added feature to increase the number of forms available (see faq if you need it).
+- Fix for settings not being deleted when plugin is deleted from admin page.
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 - Added Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
 
