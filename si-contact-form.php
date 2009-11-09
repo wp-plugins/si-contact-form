@@ -339,7 +339,7 @@ if ($form_id == 1) {
 <h3><?php echo esc_html( __('Options', 'si-contact-form')); ?></h3>
 
  <h3>
-  <?
+  <?php
   echo __('Multi-forms:', 'si-contact-form');
   echo ' ';
   // multi-form selector
@@ -936,7 +936,7 @@ $ctf_thank_you = '
 <p>
 ';
 if ($si_contact_opt['text_message_sent'] != '') {
-        $ctf_thank_you .= esc_html( $si_contact_opt['text_message_sent']);
+        $ctf_thank_you .= $si_contact_opt['text_message_sent'];
 } else {
         $ctf_thank_you .= esc_html(__('Your message has been sent, thank you.', 'si-contact-form'));
 }
