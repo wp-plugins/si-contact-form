@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.8.2
+Version: 1.8.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -1452,8 +1452,9 @@ $string .=   '
 ';
 
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
-$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha) : '<div>';
+$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha)."\n</div>\n<br clear=\"all\" />\n"  : '';
 $string .= '
+<div '.$this->ctf_title_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
   <input type="submit" style="'.$si_contact_opt['button_style'].'" value="';
      $string .= ($si_contact_opt['title_submit'] != '') ? esc_attr( $si_contact_opt['title_submit'] ) : esc_attr( __('Submit', 'si-contact-form'));
@@ -1471,7 +1472,6 @@ $string .= '
 ';
 if ($si_contact_opt['enable_credit_link'] == 'true') {
 $string .= '
-<br clear="all" />
 <p><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
 <br clear="all" />
 ';
