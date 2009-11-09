@@ -274,6 +274,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.8.3 =
+- (09 Nov 2009) - Fix Submit button spacing.
+
 = 1.8.2 =
 - (03 Nov 2009) - Added feature to increase the number of forms available (see faq if you need it).
 - Fix for settings not being deleted when plugin is deleted from admin page.
