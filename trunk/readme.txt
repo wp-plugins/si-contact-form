@@ -274,6 +274,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.8.4 =
+- (10 Nov 2009) - Added advanced option to edit the CAPTCHA input field size.
+- Other minor fixes.
+
 = 1.8.3 =
 - (09 Nov 2009) - Fix Submit button spacing.
 

@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.8.3
+Version: 1.8.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -187,6 +187,7 @@ function si_contact_options_page() {
          'reload_image_style' =>  ( trim($_POST['si_contact_reload_image_style']) != '' ) ? trim($_POST['si_contact_reload_image_style']) : $si_contact_option_defaults['reload_image_style'],
          'button_style' =>        ( trim($_POST['si_contact_button_style']) != '' ) ? trim($_POST['si_contact_button_style']) : $si_contact_option_defaults['button_style'],
          'field_size' => ( is_numeric(trim($_POST['si_contact_field_size'])) && trim($_POST['si_contact_field_size']) > 14 ) ? absint(trim($_POST['si_contact_field_size'])) : $si_contact_option_defaults['field_size'], // use default if empty
+         'captcha_field_size' => ( is_numeric(trim($_POST['si_contact_captcha_field_size'])) && trim($_POST['si_contact_captcha_field_size']) > 4 ) ? absint(trim($_POST['si_contact_captcha_field_size'])) : $si_contact_option_defaults['captcha_field_size'],
          'text_cols' =>    absint(trim($_POST['si_contact_text_cols'])),
          'text_rows' =>    absint(trim($_POST['si_contact_text_rows'])),
          'aria_required' =>    (isset( $_POST['si_contact_aria_required'] ) ) ? 'true' : 'false',
@@ -660,6 +661,13 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
        <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_field_size_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
        <div style="text-align:left; display:none" id="si_contact_field_size_tip">
        <?php echo esc_html( __('Use to adjust the size of the contact form text input fields.', 'si-contact-form')); ?>
+       </div>
+       <br />
+
+       <label for="si_contact_captcha_field_size"><?php echo esc_html( __('Input CAPTCHA Field Size', 'si-contact-form')); ?>:</label><input name="si_contact_captcha_field_size" id="si_contact_captcha_field_size" type="text" value="<?php echo absint($si_contact_opt['captcha_field_size']);  ?>" size="3" />
+       <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_captcha_field_size_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_captcha_field_size_tip">
+       <?php echo esc_html( __('Use to adjust the size of the contact form CAPTCHA input field.', 'si-contact-form')); ?>
        </div>
        <br />
 
@@ -1541,7 +1549,7 @@ $string = '
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_captcha).'
         <div style="text-align:left;">
-                <input '.$this->ctf_field_style.' type="text" value="" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' size="6" />
+                <input '.$this->ctf_field_style.' type="text" value="" name="si_contact_captcha_code" id="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
         </div>
 
 <div style="'.$si_contact_opt['captcha_div_style'].'">
@@ -1816,6 +1824,7 @@ function si_contact_get_options($form_num) {
          'reload_image_style' => 'vertical-align:top; float:left; border-style:none; margin:0;',
          'button_style' => 'margin 0;',
          'field_size' => '40',
+         'captcha_field_size' => '6',
          'text_cols' => '40',
          'text_rows' => '15',
          'aria_required' => 'false',
