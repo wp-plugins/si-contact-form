@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.1
+Version: 2.1.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -127,10 +127,11 @@ function si_captcha_migrate($si_captcha_option_defaults) {
 function si_captcha_options_page() {
   global $wpmu, $si_captcha_url, $si_captcha_opt, $si_captcha_option_defaults;
 
-  if ( function_exists('current_user_can') && !current_user_can('manage_options') )
+  if (isset($_POST['submit'])) {
+
+      if ( function_exists('current_user_can') && !current_user_can('manage_options') )
             die(__('You do not have permissions for managing this option', 'si-captcha'));
 
-  if (isset($_POST['submit'])) {
         check_admin_referer( 'si-captcha-options_update'); // nonce
    // post changes to the options array
    $optionarray_update = array(
@@ -222,8 +223,8 @@ if ($si_captcha_opt['si_captcha_donated'] != 'true') {
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <table style="background-color:#FFE991; border:none; margin: -5px 0;" width="500">
-        <tr>
-        <td>
+  <tr>
+    <td>
 <input type="hidden" name="cmd" value="_s-xclick" />
 <input type="hidden" name="hosted_button_id" value="6105441" />
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
@@ -456,7 +457,7 @@ function si_captcha_comment_form() {
        if ( current_user_can( $si_captcha_opt['si_captcha_perm_level'] ) ) {
                // skip capthca
                return true;
-        }
+       }
     }
 
 // the captch html
@@ -471,21 +472,20 @@ if ($this->si_captcha_check_requires()) {
 
 // the captcha html - comment form
 echo '
-<div style="width: 250px; height: 55px; padding-top:10px;">';
-$this->si_captcha_captcha_html();
-echo '</div>
-<div style="display:block;" id="captchaInputDiv">
+<div style="display:block; padding-top:5px;" id="captchaInputDiv">
 <input type="text" value="" name="captcha_code" id="captcha_code" tabindex="4" '.$si_aria_required.' style="width:65px;" ';
 
 if ($si_captcha_opt['si_captcha_comment_class'] != '') {
   echo 'class="'.$si_captcha_opt['si_captcha_comment_class'].'" ';
 }
-
 echo '/>
  <label for="captcha_code"><small>';
-  echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
+ echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
  echo '</small></label>
  </div>
+<div style="width: 250px; height: 55px; padding-top:10px;">';
+$this->si_captcha_captcha_html();
+echo '</div>
 </div>
 ';
 
@@ -526,17 +526,27 @@ if ($this->si_captcha_check_requires()) {
 
   $si_aria_required = ($si_captcha_opt['si_captcha_aria_required'] == 'true') ? ' aria-required="true" ' : '';
 
-// the captcha html - register form
+// the captcha html - login form
 echo '
-<div style="width: 250px;  height: 55px">';
+<p>
+ <label>';
+  echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
+  echo '<br />
+<input type="text" name="captcha_code" id="captcha_code" class="input" value="" size="12" tabindex="30" '.$si_aria_required.'
+    style="font-size: 24px;
+	width: 97%;
+	padding: 3px;
+	margin-top: 2px;
+	margin-right: 6px;
+	margin-bottom: 16px;
+	border: 1px solid #e5e5e5;
+	background: #fbfbfb;"
+    /></label>
+</p>
+<div style="width:250px; height:55px;">';
 $this->si_captcha_captcha_html();
 echo '</div>
-<p>
-<input value="" type="text" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />
- <label for="captcha_code">';
-  echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
-  echo '</label>
-</p>
+
 <br />
 ';
 }
@@ -561,7 +571,7 @@ if ($this->si_captcha_check_requires()) {
 
 // the captcha html - buddypress login form
 echo '
-<div style="width: 440px;  height: 45px">';
+<div style="width:440px; height:45px">';
 $this->si_captcha_captcha_html('si_image_login');
 echo '<input type="text" value="" name="captcha_code" id="captcha_code" class="input" '.$si_aria_required.' style="width:65px;" />
          <label for="captcha_code">';
@@ -592,15 +602,24 @@ if ($this->si_captcha_check_requires()) {
 
 // the captcha html - register form
 echo '
+<p>
+ <label>';
+  echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
+  echo '<br />
+<input type="text" value="" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.'
+style="font-size: 24px;
+	width: 97%;
+	padding: 3px;
+	margin-top: 2px;
+	margin-right: 6px;
+	margin-bottom: 16px;
+	border: 1px solid #e5e5e5;
+	background: #fbfbfb;"
+/></label>
+</p>
 <div style="width: 250px;  height: 55px">';
 $this->si_captcha_captcha_html();
 echo '</div>
-<p>
-<input type="text" value="" name="captcha_code" id="captcha_code" class="input" tabindex="30" '.$si_aria_required.' style="width:65px;" />
- <label for="captcha_code">';
-  echo ($si_captcha_opt['si_captcha_label_captcha'] != '') ? esc_html( $si_captcha_opt['si_captcha_label_captcha'] ) : esc_html( __('CAPTCHA Code', 'si-captcha'));
-  echo '</label>
-</p>
 <br />
 ';
 }
