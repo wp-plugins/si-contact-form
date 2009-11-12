@@ -216,6 +216,11 @@ Open this URL in your web browser to run the test:
 `/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
 This link can be found on the `Contact Form Options` page.
 
+= How can I add the contact form to a template manually rather than use shortcode in a page? =
+
+Use this code:
+`<?php if ( isset($si_contact_form) ) echo $si_contact_form->si_contact_form_short_code( array( 'form' => '1' ) ); ?>`
+                         
 
 = Is this plugin available in other languages? =
 
