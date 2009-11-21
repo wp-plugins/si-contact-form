@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.8.4
+Version: 1.9
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -170,6 +170,7 @@ function si_contact_options_page() {
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
+         'enable_audio_flash' => (isset( $_POST['si_contact_enable_audio_flash'] ) ) ? 'true' : 'false',
          'captcha_perm' =>     (isset( $_POST['si_contact_captcha_perm'] ) ) ? 'true' : 'false',
          'captcha_perm_level' =>       $_POST['si_contact_captcha_perm_level'],
          'redirect_enable' =>  (isset( $_POST['si_contact_redirect_enable'] ) ) ? 'true' : 'false',
@@ -545,6 +546,9 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
       <td>
         <input name="si_contact_captcha_enable" id="si_contact_captcha_enable" type="checkbox" <?php if ( $si_contact_opt['captcha_enable'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_captcha_enable"><?php echo esc_html( __('Enable CAPTCHA (recommended).', 'si-contact-form')); ?></label><br />
+
+        <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_enable_audio_flash"><?php echo esc_html( __('Enable Flash Audio for the CAPTCHA.', 'si-contact-form')); ?></label><br />
 
         <input name="si_contact_captcha_perm" id="si_contact_captcha_perm" type="checkbox" <?php if( $si_contact_opt['captcha_perm'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_captcha_perm" for="si_contact_captcha_perm"><?php echo esc_html( __('Hide CAPTCHA for', 'si-contact-form')); ?>
@@ -1133,8 +1137,8 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
    if( function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
 			global $akismet_api_host, $akismet_api_port;
 			$c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
-			$c['user_agent'] 		= $_SERVER['HTTP_USER_AGENT'];
-			$c['referrer']   		= $_SERVER['HTTP_REFERER'];
+			$c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
+			$c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
 			$c['blog']       		= get_option('home');
 			$c['permalink']       	= get_permalink();
 			$c['comment_type']      = 'sicontactform';
@@ -1182,7 +1186,7 @@ echo "</pre>\n";
          $this->si_contact_error = 1;
          $si_contact_error_captcha = ($si_contact_opt['error_captcha_blank'] != '') ? esc_html($si_contact_opt['error_captcha_blank']) : esc_html( __('Please complete the CAPTCHA.', 'si-contact-form') );
        } else {
-         include_once "$captcha_path_cf/securimage.php";
+         require_once "$captcha_path_cf/securimage.php";
          $img = new Securimage();
          $valid = $img->check("$captcha_code");
          // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
@@ -1311,9 +1315,9 @@ if ($si_contact_opt['border_enable'] == 'true') {
 
 // print any input errors
 if ($this->si_contact_error) {
-    $string .= '<div '.$this->ctf_error_style.'>'.
-   ($si_contact_opt['error_correct'] != '') ? esc_html($si_contact_opt['error_correct']) : esc_html( __('Please make corrections below and try again.', 'si-contact-form') )
-    .'</div>'."\n";
+    $string .= '<div '.$this->ctf_error_style.'>';
+    $string .= ($si_contact_opt['error_correct'] != '') ? esc_html($si_contact_opt['error_correct']) : esc_html( __('Please make corrections below and try again.', 'si-contact-form') );
+    $string .= '</div>'."\n";
 }
 if (empty($ctf_contacts)) {
    $string .= '<div '.$this->ctf_error_style.'>'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</div>'."\n";
@@ -1524,7 +1528,7 @@ function captchaCheckRequires() {
       $this->captchaRequiresError .= '<p>'.__('Contact your web host and ask them why imagepng function is not enabled for PHP.', 'si-contact-form').'</p>';
       $ok = 'no';
   }
-  if ( !file_exists("$captcha_path_cf/securimage.php") ) {
+  if ( !@strtolower(ini_get('safe_mode')) == 'on' && !file_exists("$captcha_path_cf/securimage.php") ) {
        $this->captchaRequiresError .= '<p '.$this->ctf_error_style.'>'.__('ERROR: si-contact-form.php plugin says captcha_library not found.', 'si-contact-form').'</p>';
        $ok = 'no';
   }
@@ -1559,16 +1563,32 @@ $string = '
          $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
          $string .='" title="';
          $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
-         $string .= '" />
-           <a href="'.$captcha_url_cf.'/securimage_play.php" title="';
+         $string .= '" />';
+
+    if($si_contact_opt['enable_audio_flash'] == 'true') {
+              $string .= '
+         <object type="application/x-shockwave-flash"
+                data="'.$captcha_url_cf.'/securimage_play.swf?audio='.$captcha_url_cf.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
+                id="SecurImage_as3" width="19" height="19" align="middle">
+			    <param name="allowScriptAccess" value="sameDomain" />
+			    <param name="allowFullScreen" value="false" />
+			    <param name="movie" value="'.$captcha_url_cf.'/securimage_play.swf?audio='.$captcha_url_cf.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
+			    <param name="quality" value="high" />
+			    <param name="bgcolor" value="#ffffff" />
+		 </object>
+              <br />';
+   }else{
+         $string .= '<a href="'.$captcha_url_cf.'/securimage_play.php" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '">
          <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '" ';
          $string .= ($si_contact_opt['audio_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['audio_image_style'] ).'"' : '';
-         $string .= ' onclick="this.blur()" /></a><br />
-           <a href="#" title="';
+         $string .= ' onclick="this.blur()" /></a><br />';
+   }
+
+         $string .= '<a href="#" title="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
          $string .= '" onclick="document.getElementById(\'si_image_ctf\').src = \''.$captcha_url_cf.'/securimage_show.php?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="';
@@ -1807,6 +1827,7 @@ function si_contact_get_options($form_num) {
          'domain_protect' => 'true',
          'email_check_dns' => 'true',
          'captcha_enable' => 'true',
+         'enable_audio_flash' => 'false',
          'captcha_perm' => 'false',
          'captcha_perm_level' => 'read',
          'redirect_enable' => 'true',

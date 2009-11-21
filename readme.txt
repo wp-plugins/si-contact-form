@@ -278,6 +278,11 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.9 =
+- (20 Nov 2009) - Updated to SecureImage CAPTCHA library version 2.0
+- New CAPTCHA features include: increased CAPTCHA difficulty using mathematical distortion, streaming MP3 audio of CAPTCHA code using Flash, random audio distortion, better distortion lines, random backgrounds and more.
+- Other minor fixes.
+
 = 1.8.4 =
 - (10 Nov 2009) - Added advanced option to edit the CAPTCHA input field size.
 - Other minor fixes.
