@@ -214,6 +214,11 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.2 =
+- (20 Nov 2009) - Updated to SecureImage CAPTCHA library version 2.0
+- New CAPTCHA features include: increased CAPTCHA difficulty using mathematical distortion, streaming MP3 audio of CAPTCHA code using Flash, random audio distortion, better distortion lines, random backgrounds and more.
+- Other minor fixes.
+
 = 2.1.1 =
 - (10 Nov 2009) - Fix style and input alignments.
 

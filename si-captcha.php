@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.1.1
+Version: 2.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -61,6 +61,7 @@ function si_captcha_get_options() {
          'si_captcha_login' => 'false',
          'si_captcha_register' => 'true',
          'si_captcha_rearrange' => 'false',
+         'si_captcha_enable_audio_flash' => 'false',
          'si_captcha_aria_required' => 'false',
          'si_captcha_captcha_div_style' =>   'display:block;',
          'si_captcha_captcha_image_style' => 'border-style:none; margin:0; padding-right:5px; float:left;',
@@ -143,6 +144,7 @@ function si_captcha_options_page() {
          'si_captcha_login' =>              (isset( $_POST['si_captcha_login'] ) ) ? 'true' : 'false',
          'si_captcha_register' =>           (isset( $_POST['si_captcha_register'] ) ) ? 'true' : 'false',
          'si_captcha_rearrange' =>          (isset( $_POST['si_captcha_rearrange'] ) ) ? 'true' : 'false',
+         'si_captcha_enable_audio_flash' => (isset( $_POST['si_captcha_enable_audio_flash'] ) ) ? 'true' : 'false',
          'si_captcha_aria_required' =>      (isset( $_POST['si_captcha_aria_required'] ) ) ? 'true' : 'false',
          'si_captcha_captcha_div_style' =>    (trim($_POST['si_captcha_captcha_div_style']) != '' )   ? trim($_POST['si_captcha_captcha_div_style'])   : $si_captcha_option_defaults['si_captcha_captcha_div_style'], // use default if empty
          'si_captcha_captcha_image_style' =>  (trim($_POST['si_captcha_captcha_image_style']) != '' ) ? trim($_POST['si_captcha_captcha_image_style']) : $si_captcha_option_defaults['si_captcha_captcha_image_style'],
@@ -331,9 +333,17 @@ else
      <?php _e('Why is it better to uncheck this and move the tag? because the XHTML will no longer validate on the comment page if it is checked.', 'si-captcha') ?>
     </p>
     </div>
+      </td>
+    </tr>
 
-    </td>
-        </tr>
+    <tr>
+        <th scope="row"><?php _e('CAPTCHA Options:', 'si-captcha') ?></th>
+        <td>
+       <input name="si_captcha_enable_audio_flash" id="si_captcha_enable_audio_flash" type="checkbox" <?php if( $si_captcha_opt['si_captcha_enable_audio_flash'] == 'true' ) echo 'checked="checked"'; ?> />
+       <label name="si_captcha_enable_audio_flash" for="si_captcha_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-captcha') ?></label>
+       </td>
+    </tr>
+
     <tr>
         <th scope="row"><?php _e('Accessibility:', 'si-captcha') ?></th>
         <td>
@@ -439,7 +449,7 @@ function si_captcha_check_requires() {
        echo '<p>'.__('Contact your web host and ask them why imagepng function is not enabled for PHP.', 'si-captcha').'</p>';
       $ok = 'no';
   }
-  if ( !file_exists("$si_captcha_path/securimage.php") ) {
+  if ( !@strtolower(ini_get('safe_mode')) == 'on' && !file_exists("$si_captcha_path/securimage.php") ) {
        echo '<p style="color:maroon">'.__('ERROR: si-captcha.php plugin says captcha_library not found.', 'si-captcha').'</p>';
        $ok = 'no';
   }
@@ -707,7 +717,7 @@ function si_captcha_bp_signup_validate() {
       } else {
         $captcha_code = trim(strip_tags($_POST['captcha_code']));
       }
-      include "$si_captcha_path/securimage.php";
+      require_once "$si_captcha_path/securimage.php";
       $img = new Securimage();
       $valid = $img->check("$captcha_code");
       // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
@@ -736,7 +746,7 @@ function si_captcha_wpmu_signup_post($errors) {
       } else {
         $captcha_code = trim(strip_tags($_POST['captcha_code']));
       }
-      include "$si_captcha_path/securimage.php";
+      require_once "$si_captcha_path/securimage.php";
       $img = new Securimage();
       $valid = $img->check("$captcha_code");
       // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
@@ -766,7 +776,7 @@ function si_captcha_register_post($errors) {
         $captcha_code = trim(strip_tags($_POST['captcha_code']));
       }
 
-      include "$si_captcha_path/securimage.php";
+      require_once "$si_captcha_path/securimage.php";
       $img = new Securimage();
       $valid = $img->check("$captcha_code");
       // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
@@ -812,7 +822,7 @@ function si_captcha_comment_post($comment) {
            wp_die( __('Error: You did not enter a Captcha phrase. Press your browsers back button and try again.', 'si-captcha'));
        }
        $captcha_code = trim(strip_tags($_POST['captcha_code']));
-       include_once "$si_captcha_path/securimage.php";
+       require_once "$si_captcha_path/securimage.php";
        $img = new Securimage();
        $valid = $img->check("$captcha_code");
        // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
@@ -837,17 +847,32 @@ function si_captcha_captcha_html($label = 'si_image') {
   echo ($si_captcha_opt['si_captcha_tooltip_captcha'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-captcha'));
   echo '" title="';
   echo ($si_captcha_opt['si_captcha_tooltip_captcha'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-captcha'));
-  echo '" />
-  <a href="'.$si_captcha_url.'/securimage_play.php" title="';
-  echo ($si_captcha_opt['si_captcha_tooltip_audio'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-captcha'));
-  echo '">
-  <img src="'.$si_captcha_url.'/images/audio_icon.gif" alt="';
-  echo ($si_captcha_opt['si_captcha_tooltip_audio'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-captcha'));
-  echo  '" ';
-  //audio style="border-style:none; margin:0; vertical-align:top;"
-  echo ($si_captcha_opt['si_captcha_audio_image_style'] != '') ? 'style="' . esc_attr( $si_captcha_opt['si_captcha_audio_image_style'] ).'"' : '';
-  echo ' onclick="this.blur()" /></a><br />
-  <a href="#" title="';
+  echo '" />';
+
+  if($si_captcha_opt['si_captcha_enable_audio_flash'] == 'true') {
+        echo '
+        <object type="application/x-shockwave-flash"
+                data="'.$si_captcha_url.'/securimage_play.swf?audio='.$si_captcha_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
+                id="SecurImage_as3" width="19" height="19" align="middle">
+			    <param name="allowScriptAccess" value="sameDomain" />
+			    <param name="allowFullScreen" value="false" />
+			    <param name="movie" value="'.$si_captcha_url.'/securimage_play.swf?audio='.$si_captcha_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
+			    <param name="quality" value="high" />
+			    <param name="bgcolor" value="#ffffff" />
+		</object>
+        <br />';
+  }else{
+        echo '<a href="'.$si_captcha_url.'/securimage_play.php" title="';
+        echo ($si_captcha_opt['si_captcha_tooltip_audio'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-captcha'));
+        echo '">
+        <img src="'.$si_captcha_url.'/images/audio_icon.gif" alt="';
+        echo ($si_captcha_opt['si_captcha_tooltip_audio'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-captcha'));
+        echo  '" ';
+        echo ($si_captcha_opt['si_captcha_audio_image_style'] != '') ? 'style="' . esc_attr( $si_captcha_opt['si_captcha_audio_image_style'] ).'"' : '';
+        echo ' onclick="this.blur()" /></a><br />';
+  }
+
+  echo '<a href="#" title="';
   echo ($si_captcha_opt['si_captcha_tooltip_refresh'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-captcha'));
   echo '" onclick="document.getElementById(\''.$label.'\').src = \''.$si_captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
   <img src="'.$si_captcha_url.'/images/refresh.gif" alt="';
@@ -925,7 +950,7 @@ function si_wp_authenticate_username_password($user, $username, $password) {
 
       $captcha_code = trim(strip_tags($_POST['captcha_code']));
 
-      include "$si_captcha_path/securimage.php";
+      require_once "$si_captcha_path/securimage.php";
       $img = new Securimage();
       $valid = $img->check("$captcha_code");
       // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
