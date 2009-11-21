@@ -238,6 +238,7 @@ The following translations are included in the download zip file:
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
+* Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
 * Ukrainian (uk_UA) - Translated by [Wordpress.Ua](http://wordpress.ua/)
@@ -277,6 +278,8 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Added Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
 
 = 1.9 =
 - (20 Nov 2009) - Updated to SecureImage CAPTCHA library version 2.0
