@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.2
+Version: 2.2.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -850,13 +850,15 @@ function si_captcha_captcha_html($label = 'si_image') {
   echo '" />';
 
   if($si_captcha_opt['si_captcha_enable_audio_flash'] == 'true') {
+        $parseUrl = parse_url($si_captcha_url);
+        $secureimage_url = $parseUrl['path'];
         echo '
         <object type="application/x-shockwave-flash"
-                data="'.$si_captcha_url.'/securimage_play.swf?audio='.$si_captcha_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
+                data="'.$secureimage_url.'/securimage_play.swf?audio='.$secureimage_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
                 id="SecurImage_as3" width="19" height="19" align="middle">
 			    <param name="allowScriptAccess" value="sameDomain" />
 			    <param name="allowFullScreen" value="false" />
-			    <param name="movie" value="'.$si_captcha_url.'/securimage_play.swf?audio='.$si_captcha_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
+			    <param name="movie" value="'.$secureimage_url.'/securimage_play.swf?audio='.$secureimage_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
 			    <param name="quality" value="high" />
 			    <param name="bgcolor" value="#ffffff" />
 		</object>
