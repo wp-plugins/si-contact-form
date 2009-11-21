@@ -2,11 +2,7 @@
 
 /**
  * Project:     Securimage: A PHP class for creating and managing form CAPTCHA images<br />
- * File:        form.php<br /><br />
- *
- * This is a very simple form sending a username and password.<br />
- * It demonstrates how you can integrate the image script into your code.<br />
- * By creating a new instance of the class and passing the user entered code as the only parameter, you can then immediately call $obj->checkCode() which will return true if the code is correct, or false otherwise.<br />
+ * File:        securimage.php<br />
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,14 +27,15 @@
  * @link http://www.phpcaptcha.org Securimage PHP CAPTCHA
  * @link http://www.phpcaptcha.org/latest.zip Download Latest Version
  * @link http://www.phpcaptcha.org/Securimage_Docs/ Online Documentation
- * @copyright 2007 Drew Phillips
- * @author drew010 <drew@drew-phillips.com>
- * @version 1.0.3.1 (March 23, 2008)
+ * @copyright 2009 Drew Phillips
+ * @author Drew Phillips <drew@drew-phillips.com>
+ * @version 2.0 BETA (November 15, 2009)
  * @package Securimage
  *
  */
 
-  session_start();
+
+session_start();  // Start the session where the code will be stored.
 
 ?>
 <html>
@@ -54,19 +51,32 @@ if (empty($_POST)) { ?>
 Username:<br />
 <input type="text" name="username" /><br />
 Password:<br />
-<input type="text" name="password" /><br />
+<input type="text" name="password" /><br /><br />
 
-<div style="width: 430px;  height: 55px">
-<img id="siimage" align="left" style="padding-right: 5px; border: 0" src="securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" />
-<a tabindex="-1" style="border-style: none" href="securimage_play.php" title="Audible Version of CAPTCHA">
-<img src="images/audio_icon.gif" alt="Audio Version" align="top" border="0" onclick="this.blur()" /></a><br />
-<a tabindex="-1" style="border-style: none" href="#" title="Refresh Image" onclick="document.getElementById('siimage').src = 'securimage_show.php?sid=' + Math.random(); return false">
-<img src="images/refresh.gif" alt="Reload Image" border="0" onclick="this.blur()" align="bottom" /></a>
+<div style="width: 430px; float: left; height: 90px">
+      <img id="siimage" align="left" style="padding-right: 5px; border: 0" src="securimage_show.php?sid=<?php echo md5(time()) ?>" />
+
+        <object type="application/x-shockwave-flash"
+                data="securimage_play.swf?audio=securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
+                id="SecurImage_as3" width="19" height="19" align="middle">
+			    <param name="allowScriptAccess" value="sameDomain" />
+			    <param name="allowFullScreen" value="false" />
+			    <param name="movie" value="securimage_play.swf?audio=securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
+			    <param name="quality" value="high" />
+			    <param name="bgcolor" value="#ffffff" />
+		 </object>
+
+
+        <br />
+        
+        <!-- pass a session id to the query string of the script to prevent ie caching -->
+        <a tabindex="-1" style="border-style: none" href="#" title="Refresh Image" onclick="document.getElementById('siimage').src = 'securimage_show.php?sid=' + Math.random(); return false"><img src="images/refresh.gif" alt="Reload Image" border="0" onclick="this.blur()" align="bottom" /></a>
 </div>
+<div style="clear: both"></div>
+Code:<br />
 
-<br />
-
-<input type="text" name="code" /><br />
+<!-- NOTE: the "name" attribute is "code" so that $img->check($_POST['code']) will check the submitted form field -->
+<input type="text" name="code" size="12" /><br /><br />
 
 <input type="submit" value="Submit Form" />
 </form>
@@ -78,7 +88,7 @@ Password:<br />
   $valid = $img->check($_POST['code']);
 
   if($valid == true) {
-    echo "<center>Thanks, you entered the correct code.</center>";
+    echo "<center>Thanks, you entered the correct code.<br />Click <a href=\"{$_SERVER['PHP_SELF']}\">here</a> to go back.</center>";
   } else {
     echo "<center>Sorry, the code you entered was invalid.  <a href=\"javascript:history.go(-1)\">Go back</a> to try again.</center>";
   }
