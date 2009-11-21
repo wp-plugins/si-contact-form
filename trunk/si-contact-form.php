@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.9
+Version: 1.9.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -1566,16 +1566,18 @@ $string = '
          $string .= '" />';
 
     if($si_contact_opt['enable_audio_flash'] == 'true') {
-              $string .= '
-         <object type="application/x-shockwave-flash"
-                data="'.$captcha_url_cf.'/securimage_play.swf?audio='.$captcha_url_cf.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
+        $parseUrl = parse_url($captcha_url_cf);
+        $secureimage_url = $parseUrl['path'];
+        $string .= '
+        <object type="application/x-shockwave-flash"
+                data="'.$secureimage_url.'/securimage_play.swf?audio='.$secureimage_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5"
                 id="SecurImage_as3" width="19" height="19" align="middle">
 			    <param name="allowScriptAccess" value="sameDomain" />
 			    <param name="allowFullScreen" value="false" />
-			    <param name="movie" value="'.$captcha_url_cf.'/securimage_play.swf?audio='.$captcha_url_cf.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
+			    <param name="movie" value="'.$secureimage_url.'/securimage_play.swf?audio='.$secureimage_url.'/securimage_play.php&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5" />
 			    <param name="quality" value="high" />
 			    <param name="bgcolor" value="#ffffff" />
-		 </object>
+		</object>
               <br />';
    }else{
          $string .= '<a href="'.$captcha_url_cf.'/securimage_play.php" title="';
