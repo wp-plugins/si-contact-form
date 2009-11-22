@@ -279,6 +279,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added 5 random CAPTCHA fonts
+
 = 1.9.1 =
 - (21 Nov 2009) - Fixed Flash audio was not working.
 - Added Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
