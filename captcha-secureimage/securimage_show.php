@@ -44,7 +44,13 @@ $img->code_length = 4;
 $img->image_width = 175;
 $img->image_height = 60;
 $img->perturbation = 0.7; // 1.0 = high distortion, higher numbers = more distortion
-$img->ttf_file = './AHGBold.ttf';
+
+$img->charset = 'ABCDEFHKLMNPRSTUVWYZabcdefhkmnpstuvwyz234578';
+//$img->ttf_file = './ttffonts/AHGBold.ttf';   // single font
+
+$img->ttf_font_directory = './ttffonts';  // random fonts
+$img->ttf_file = $img->getFontFromDirectory(); // random fonts
+
 $img->multi_text_color = array(
 '#6666FF','#660000','#3333CC','#993300','#0060CC',
 '#339900','#6633CC','#330000','#006666','#CC3366',

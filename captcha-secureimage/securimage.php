@@ -229,6 +229,9 @@ class Securimage {
 	 */
 	var $background_directory = null; //'./backgrounds';
 
+    var $ttf_font_directory = null; //'./ttffonts';
+
+
 	/**
 	 * The text color to use for drawing characters as a Securimage_Color.<br />
 	 * This value is ignored if $use_multi_text is set to true.<br />
@@ -641,6 +644,31 @@ class Securimage {
 
 			if (sizeof($images) > 0) {
 				return rtrim($this->background_directory, '/') . '/' . $images[rand(0, sizeof($images)-1)];
+			}
+		}
+
+		return false;
+	}
+
+     /**
+	 * Return the full path to a random font from the font directory.
+	 *
+	 *
+	 * @return mixed  false if none found, string $path if found
+	 */
+	function getFontFromDirectory()
+	{
+		$fonts = array();
+
+		if ($dh = opendir($this->ttf_font_directory)) {
+			while (($file = readdir($dh)) !== false) {
+				if (preg_match('/(ttf)$/i', $file)) $fonts[] = $file;
+			}
+
+			closedir($dh);
+
+			if (sizeof($fonts) > 0) {
+				return rtrim($this->ttf_font_directory, '/') . '/' . $fonts[rand(0, sizeof($fonts)-1)];
 			}
 		}
 
