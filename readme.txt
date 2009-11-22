@@ -214,6 +214,8 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+- Added 5 random CAPTCH fonts
+
 = 2.2.1 =
 - (21 Nov 2009) - Fixed Flash audio was not working.
 
