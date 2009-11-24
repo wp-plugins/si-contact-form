@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.9.1
+Version: 1.9.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -30,6 +30,12 @@ if(!defined('SI_CONTACT_FORM_MAX_FORMS')) {
     define('SI_CONTACT_FORM_MAX_FORMS',4); // allows up to 4 contact forms (do not change here, see below ...)
     // if you need to add more contact forms, add this line in wp-config.php: define('SI_CONTACT_FORM_MAX_FORMS',5);
     // be sure to change the number 5 to the amount you actually need, no more.
+}
+// allow admin to override max allowed extra formfields
+if(!defined('SI_CONTACT_FORM_MAX_FIELDS')) {
+    define('SI_CONTACT_FORM_MAX_FIELDS',8); // allows up to 8 extra form fields (do not change here, see below ...)
+    // if you need to add more extra form fields, add this line in wp-config.php: define('SI_CONTACT_FORM_MAX_FIELDS',10);
+    // be sure to change the number 10 to the amount you actually need, no more.
 }
 
 // settings get deleted when plugin is deleted from admin plugins page
@@ -223,9 +229,9 @@ function si_contact_options_page() {
   );
 
     // optional extra fields
-    foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
-        $optionarray_update['ex_field'.$val.'_req'] = (isset( $_POST['si_contact_ex_field'.$val.'_req'] ) ) ? 'true' : 'false';
-        $optionarray_update['ex_field'.$val.'_label'] = trim($_POST['si_contact_ex_field'.$val.'_label']);
+    for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
+        $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
+        $optionarray_update['ex_field'.$i.'_label'] = trim($_POST['si_contact_ex_field'.$i.'_label']);
     }
 
     // deal with quotes
@@ -611,13 +617,13 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
        <br />
       <?php
       // optional extra fields
-      foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
+      for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
       ?>
-       <label for="<?php echo 'ex_field'.$val.'_label' ?>"><?php printf(__('Label for extra form field %d:', 'si-contact-form'),$val); ?></label>
-       <input name="si_contact_<?php echo 'ex_field'.$val.'_label' ?>" id="si_contact_<?php echo 'ex_field'.$val.'_label' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$val.'_label']);  ?>" size="20" />
+       <label for="<?php echo 'ex_field'.$i.'_label' ?>"><?php printf(__('Label for extra form field %d:', 'si-contact-form'),$i); ?></label>
+       <input name="si_contact_<?php echo 'ex_field'.$i.'_label' ?>" id="si_contact_<?php echo 'ex_field'.$i.'_label' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$i.'_label']);  ?>" size="20" />
 
-       <input name="si_contact_<?php echo 'ex_field'.$val.'_req' ?>" id="<?php echo 'ex_field'.$val.'_req' ?>" type="checkbox" <?php if( $si_contact_opt['ex_field'.$val.'_req'] == 'true' ) echo 'checked="checked"'; ?> />
-       <label for="si_contact_<?php echo 'ex_field'.$val.'_enable' ?>"><?php echo __('Required field', 'si-contact-form'); ?></label>
+       <input name="si_contact_<?php echo 'ex_field'.$i.'_req' ?>" id="<?php echo 'ex_field'.$i.'_req' ?>" type="checkbox" <?php if( $si_contact_opt['ex_field'.$i.'_req'] == 'true' ) echo 'checked="checked"'; ?> />
+       <label for="si_contact_<?php echo 'ex_field'.$i.'_enable' ?>"><?php echo __('Required field', 'si-contact-form'); ?></label>
        <br />
 
       <?php
@@ -1015,10 +1021,10 @@ $captcha_code  = '';
 // add another field here like above
 
 // optional extra fields
-foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
-   if ($si_contact_opt['ex_field'.$val.'_label'] != '') {
-      ${'ex_field'.$val} = '';
-      ${'si_contact_error_ex_field'.$val} = '';
+for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
+   if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
+      ${'ex_field'.$i} = '';
+      ${'si_contact_error_ex_field'.$i} = '';
    }
 }
 
@@ -1114,12 +1120,12 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
    }
 
    // optional extra fields
-      foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
-        if ($si_contact_opt['ex_field'.$val.'_label'] != '') {
-          ${'ex_field'.$val} = $this->ctf_clean_input($_POST["si_contact_ex_field$val"]);
-          if(empty(${'ex_field'.$val}) && $si_contact_opt['ex_field'.$val.'_req'] == 'true') {
+      for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
+        if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
+          ${'ex_field'.$i} = $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+          if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
              $this->si_contact_error = 1;
-             ${'si_contact_error_ex_field'.$val} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
+             ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
           }
         }
       } // end foreach
@@ -1217,9 +1223,9 @@ $name
 $email
 ";
 // optional extra fields
-foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
-   if ($si_contact_opt['ex_field'.$val.'_label'] != '') {
-     $msg .= $si_contact_opt['ex_field'.$val.'_label']." ${'ex_field'.$val}
+for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
+   if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
+     $msg .= $si_contact_opt['ex_field'.$i.'_label']." ${'ex_field'.$i}
 ";
    }
 }
@@ -1427,15 +1433,15 @@ $string .= '
 }
 
 // optional extra fields
-      foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
-        if ($si_contact_opt['ex_field'.$val.'_label'] != '') {
+      for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
+        if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
 
         $string .=   '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$val.'_label">' . esc_html( $si_contact_opt['ex_field'.$val.'_label'] ).'</label>
-        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$val}).'
+                <label for="si_contact_ex_field'.$i.'_label">' . esc_html( $si_contact_opt['ex_field'.$i.'_label'] ).'</label>
+        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div style="text-align:left;">
-                <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$val.'" name="si_contact_ex_field'.$val.'" value="' . $this->ctf_output_string(${'ex_field'.$val}) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
         }
       } // end foreach
@@ -1882,9 +1888,9 @@ function si_contact_get_options($form_num) {
   );
 
    // optional extra fields
-  foreach( array(1, 2, 3, 4, 5, 6, 7, 8) as $val ) {
-        $si_contact_option_defaults['ex_field'.$val.'_req'] = 'false';
-        $si_contact_option_defaults['ex_field'.$val.'_label'] = '';
+  for ($i = 2; $i <= SI_CONTACT_FORM_MAX_FIELDS; $i++) {
+        $si_contact_option_defaults['ex_field'.$i.'_req'] = 'false';
+        $si_contact_option_defaults['ex_field'.$i.'_label'] = '';
   }
 
 

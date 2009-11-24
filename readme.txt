@@ -136,6 +136,11 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 If you need to add more contact forms, add this line in wp-config.php: `define('SI_CONTACT_FORM_MAX_FORMS',5);`
 be sure to change the number 5 to the amount you actually need, no more.
 
+= I need more than 8 extra form fields, how do I increase the number available? =
+
+If you need to add more extra form fields, add this line in wp-config.php: `define('SI_CONTACT_FORM_MAX_FIELDS',10);`
+be sure to change the number 10 to the amount you actually need, no more.
+
 = What is "ERROR: Misconfigured E-mail address in options.", what could be wrong? =
 First, make sure you have a valid "E-mail To:" set in options. This plugin uses an email validation check to make sure the email address has proper syntax and that a valid DNS record exists for the email domain name. If you have this error and you are sure your email address is correct, maybe your server is having trouble with the DNS check. I added a feature to the options panel to disable the DNS check during email validation. You may have to uncheck this option: "Enable checking DNS records for the domain name when checking for a valid E-mail address." Maybe the error will go away now.
 
@@ -279,7 +284,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Added 5 random CAPTCHA fonts
+= 1.9.2 =
+- (23 Nov 2009) - Added 5 random CAPTCHA fonts.
+- Added feature to increase the number of extra form fields available (see faq if you need it).
+- Fixed fail over to GD Fonts on the CAPTCHA when TTF Fonts are not enabled in PHP (it was broken).
 
 = 1.9.1 =
 - (21 Nov 2009) - Fixed Flash audio was not working.
