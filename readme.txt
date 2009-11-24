@@ -284,7 +284,7 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-= 1.9.3=
+= 1.9.3 =
 - (23 Nov 2009) - Fix completely broke CAPTCHA, sorry about that
 
 = 1.9.2 =
