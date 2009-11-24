@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Project:     Securimage: A PHP class for creating and managing form CAPTCHA images<br />
  * File:        securimage.php<br />
@@ -229,9 +228,6 @@ class Securimage {
 	 */
 	var $background_directory = null; //'./backgrounds';
 
-    var $ttf_font_directory = null; //'./ttffonts';
-
-
 	/**
 	 * The text color to use for drawing characters as a Securimage_Color.<br />
 	 * This value is ignored if $use_multi_text is set to true.<br />
@@ -433,7 +429,7 @@ class Securimage {
 		$this->wordlist_file = './words/words.txt';
 		$this->use_wordlist  = false;
 
-		$this->gd_font_file  = '';
+		$this->gd_font_file  = './gdfonts/bubblebath.gdf';
 		$this->use_gd_font   = false;
 		$this->gd_font_size  = 24;
 		$this->text_x_start  = 15;
@@ -446,7 +442,7 @@ class Securimage {
 		$this->text_angle_maximum = 0;
 
 		$this->image_bg_color   = '#ffffff';
-        $this->text_color       = '#3d3d3d';
+        $this->text_color       = '#ff0000';
         $this->multi_text_color = array('#0020CC','#0030EE','#0040CC','#0050EE','#0060CC');
 		$this->use_multi_text   = false;
 
@@ -650,31 +646,6 @@ class Securimage {
 		return false;
 	}
 
-     /**
-	 * Return the full path to a random font from the font directory.
-	 *
-	 *
-	 * @return mixed  false if none found, string $path if found
-	 */
-	function getFontFromDirectory()
-	{
-		$fonts = array();
-
-		if ($dh = opendir($this->ttf_font_directory)) {
-			while (($file = readdir($dh)) !== false) {
-				if (preg_match('/(ttf)$/i', $file)) $fonts[] = $file;
-			}
-
-			closedir($dh);
-
-			if (sizeof($fonts) > 0) {
-				return rtrim($this->ttf_font_directory, '/') . '/' . $fonts[rand(0, sizeof($fonts)-1)];
-			}
-		}
-
-		return false;
-	}
-
 	/**
 	 * Draw random curvy lines over the image<br />
 	 * Modified code from HKCaptcha
@@ -731,9 +702,9 @@ class Securimage {
 	{
 		$width2 = $this->image_width * $this->iscale;
 		$height2 = $this->image_height * $this->iscale;
-		$text_color = $this->getColorArray($this->text_color, '#3d3d3d');
-
-		if ($this->use_gd_font == true || !function_exists('imagettftext')  ) {
+		$text_color = $this->text_color;
+        $gd_info = gd_info();
+		if ($this->use_gd_font == true || !function_exists('imagettftext') || $gd_info['FreeType Support'] == false ) {
 			if (!is_int($this->gd_font_file)) { //is a file name
 				$font = @imageloadfont($this->gd_font_file);
 				if ($font == false) {
@@ -747,6 +718,7 @@ class Securimage {
 			$color = imagecolorallocate($this->im, hexdec(substr($text_color, 1, 2)), hexdec(substr($text_color, 3, 2)), hexdec(substr($text_color, 5, 2)));
 			imagestring($this->im, $font, $this->text_x_start, ($this->image_height / 2) - ($this->gd_font_size / 2), $this->code, $color);
 		} else { //ttf font
+            $text_color = $this->getColorArray($this->text_color, '#3d3d3d');
 			$font_size = $height2 * .35;
 			$bb = imagettfbbox($font_size, 0, $this->ttf_file, $this->code);
 			$tx = $bb[4] - $bb[0];

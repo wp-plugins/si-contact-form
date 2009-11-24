@@ -215,6 +215,7 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 == Changelog ==
 
 - Added 5 random CAPTCHA fonts
+- Fixed fail over to GD Fonts on the CAPTCHA when TTF Fonts are not enabled in PHP (it was broken)
 
 = 2.2.1 =
 - (21 Nov 2009) - Fixed Flash audio was not working.
