@@ -210,9 +210,13 @@ all these folders need to be 755:
   - languages
   - captcha-secureimage
      - audio
+     - backgrounds
      - gdfonts
      - images
+     - list
      - test
+     - ttffonts
+     - words
 
 Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
@@ -283,6 +287,8 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Fix blank CAPTCHA text issue some users were having.
 
 = 1.9.3 =
 - (23 Nov 2009) - Fix completely broke CAPTCHA, sorry about that
