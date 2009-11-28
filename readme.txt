@@ -152,9 +152,13 @@ all these folders need to be 755:
 - si-captcha-for-wordpress
   - captcha-secureimage
      - audio
+     - backgrounds
      - gdfonts
      - images
+     - list
      - test
+     - ttffonts
+     - words
 
 Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
 
