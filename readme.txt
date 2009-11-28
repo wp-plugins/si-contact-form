@@ -214,6 +214,8 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+- Fix blank CAPTCHA text issue some users were having.
+
 = 2.2.3 =
 - (23 Nov 2009) - Fix completely broke CAPTCHA, sorry about that
 

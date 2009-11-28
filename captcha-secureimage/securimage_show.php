@@ -48,7 +48,7 @@ $img->perturbation = 0.7; // 1.0 = high distortion, higher numbers = more distor
 $img->charset = 'ABCDEFHKLMNPRSTUVWYZabcdefhkmnpstuvwyz234578';
 //$img->ttf_file = './ttffonts/AHGBold.ttf';   // single font
 
-$img->ttf_font_directory = './ttffonts';  // random fonts
+$img->ttf_font_directory = getcwd() . '/ttffonts';  // random fonts
 $img->ttf_file = $img->getFontFromDirectory(); // random fonts
 
 $img->multi_text_color = array(
@@ -61,7 +61,7 @@ $img->text_transparency_percentage = 20;
 $img->num_lines = 6;
 $img->line_color = new Securimage_Color(rand(0, 64), rand(64, 128), rand(128, 255));
 $img->image_type = 'png';
-$img->background_directory = './backgrounds';
+$img->background_directory = getcwd() . '/backgrounds';
 $img->show(''); // alternate use:  $img->show('./backgrounds/1.gif');
 
 
