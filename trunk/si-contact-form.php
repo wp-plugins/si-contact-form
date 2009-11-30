@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.9.3
+Version: 1.9.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -176,6 +176,7 @@ function si_contact_options_page() {
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
+         'captcha_difficulty' =>  $_POST['si_contact_captcha_difficulty'],
          'enable_audio_flash' => (isset( $_POST['si_contact_enable_audio_flash'] ) ) ? 'true' : 'false',
          'captcha_perm' =>     (isset( $_POST['si_contact_captcha_perm'] ) ) ? 'true' : 'false',
          'captcha_perm_level' =>       $_POST['si_contact_captcha_perm_level'],
@@ -552,6 +553,25 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
       <td>
         <input name="si_contact_captcha_enable" id="si_contact_captcha_enable" type="checkbox" <?php if ( $si_contact_opt['captcha_enable'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_captcha_enable"><?php echo esc_html( __('Enable CAPTCHA (recommended).', 'si-contact-form')); ?></label><br />
+
+        <label for="si_contact_captcha_difficulty"><?php echo esc_html(__('CAPTCHA difficulty level:', 'si-contact-form')); ?></label>
+      <select id="si_contact_captcha_difficulty" name="si_contact_captcha_difficulty">
+<?php
+$captcha_difficulty_array = array(
+'low' => esc_attr(__('Low', 'si-contact-form')),
+'medium' => esc_attr(__('Medium', 'si-contact-form')),
+'high' => esc_attr(__('High', 'si-contact-form')),
+);
+$selected = '';
+foreach ($captcha_difficulty_array as $k => $v) {
+ if ($si_contact_opt['captcha_difficulty'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
+
 
         <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_audio_flash"><?php echo esc_html( __('Enable Flash Audio for the CAPTCHA.', 'si-contact-form')); ?></label><br />
@@ -1551,6 +1571,13 @@ function addCaptchaToContactForm($si_contact_error_captcha) {
 // Test for some required things, print error message right here if not OK.
 if ($this->captchaCheckRequires()) {
 
+  $captcha_level_file = 'securimage_show_medium.php';
+  if ($si_contact_opt['captcha_difficulty'] == 'low') {
+      $captcha_level_file = 'securimage_show_low.php';
+  } else if ($si_contact_opt['captcha_difficulty'] == 'high') {
+      $captcha_level_file = 'securimage_show_high.php';
+  }
+
 // the captch html
 $string = '
         <div '.$this->ctf_title_style.'>
@@ -1565,7 +1592,7 @@ $string = '
 <div style="'.$si_contact_opt['captcha_div_style'].'">
          <img id="si_image_ctf" ';
          $string .= ($si_contact_opt['captcha_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['captcha_image_style'] ).'"' : '';
-         $string .= ' src="'.$captcha_url_cf.'/securimage_show.php?sid='.md5(uniqid(time())).'" alt="';
+         $string .= ' src="'.$captcha_url_cf.'/'.$captcha_level_file.'?sid='.md5(uniqid(time())).'" alt="';
          $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
          $string .='" title="';
          $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
@@ -1598,7 +1625,7 @@ $string = '
 
          $string .= '<a href="#" title="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
-         $string .= '" onclick="document.getElementById(\'si_image_ctf\').src = \''.$captcha_url_cf.'/securimage_show.php?sid=\' + Math.random(); return false">
+         $string .= '" onclick="document.getElementById(\'si_image_ctf\').src = \''.$captcha_url_cf.'/'.$captcha_level_file.'?sid=\' + Math.random(); return false">
          <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
          $string .=  '" ';
@@ -1835,6 +1862,7 @@ function si_contact_get_options($form_num) {
          'domain_protect' => 'true',
          'email_check_dns' => 'true',
          'captcha_enable' => 'true',
+         'captcha_difficulty' => 'medium',
          'enable_audio_flash' => 'false',
          'captcha_perm' => 'false',
          'captcha_perm_level' => 'read',

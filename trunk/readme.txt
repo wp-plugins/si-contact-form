@@ -245,6 +245,7 @@ The following translations are included in the download zip file:
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 * Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
@@ -288,7 +289,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Fix blank CAPTCHA text issue some users were having.
+= 1.9.4 =
+- (30 Nov 2009) - Fix blank CAPTCHA text issue some users were having.
+- Added CAPTCHA difficulty level setting on the settings page (Low, Medium, Or High).
+- Added Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 
 = 1.9.3 =
 - (23 Nov 2009) - Fix completely broke CAPTCHA, sorry about that
