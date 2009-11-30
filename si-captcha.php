@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.2.3
+Version: 2.2.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -54,6 +54,7 @@ function si_captcha_get_options() {
 
   $si_captcha_option_defaults = array(
          'si_captcha_donated' => 'false',
+         'si_captcha_captcha_difficulty' => 'medium',
          'si_captcha_perm' => 'true',
          'si_captcha_perm_level' => 'read',
          'si_captcha_comment' => 'true',
@@ -136,6 +137,7 @@ function si_captcha_options_page() {
         check_admin_referer( 'si-captcha-options_update'); // nonce
    // post changes to the options array
    $optionarray_update = array(
+         'si_captcha_captcha_difficulty' =>   (trim($_POST['si_captcha_captcha_difficulty']) != '' ) ? trim($_POST['si_captcha_captcha_difficulty']) : $si_captcha_option_defaults['si_captcha_captcha_difficulty'], // use default if empty
          'si_captcha_donated' =>            (isset( $_POST['si_captcha_donated'] ) ) ? 'true' : 'false',// true or false
          'si_captcha_perm' =>               (isset( $_POST['si_captcha_perm'] ) ) ? 'true' : 'false',
          'si_captcha_perm_level' =>           (trim($_POST['si_captcha_perm_level']) != '' ) ? trim($_POST['si_captcha_perm_level']) : $si_captcha_option_defaults['si_captcha_perm_level'], // use default if empty
@@ -277,6 +279,28 @@ else
           <td>
             <a href="<?php echo "$si_captcha_url/test/index.php"; ?>" target="_new"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-captcha') ?></a>
           </td>
+        </tr>
+
+        <tr>
+            <th scope="row"><?php _e('CAPTCHA difficulty:', 'si-captcha') ?></th>
+        <td>
+        <label for="si_captcha_captcha_difficulty"><?php echo esc_html(__('CAPTCHA difficulty level:', 'si-captcha')); ?></label>
+      <select id="si_captcha_captcha_difficulty" name="si_captcha_captcha_difficulty">
+<?php
+$captcha_difficulty_array = array(
+'low' => esc_attr(__('Low', 'si-captcha')),
+'medium' => esc_attr(__('Medium', 'si-captcha')),
+'high' => esc_attr(__('High', 'si-captcha')),
+);
+$selected = '';
+foreach ($captcha_difficulty_array as $k => $v) {
+ if ($si_captcha_opt['si_captcha_captcha_difficulty'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+    </td>
         </tr>
 
         <tr>
@@ -840,10 +864,17 @@ function si_captcha_comment_post($comment) {
 function si_captcha_captcha_html($label = 'si_image') {
   global $si_captcha_url, $si_captcha_opt;
 
+  $captcha_level_file = 'securimage_show_medium.php';
+  if ($si_captcha_opt['si_captcha_captcha_difficulty'] == 'low') {
+      $captcha_level_file = 'securimage_show_low.php';
+  } else if ($si_captcha_opt['si_captcha_captcha_difficulty'] == 'high') {
+      $captcha_level_file = 'securimage_show_high.php';
+  }
+
   echo '<img id="'.$label.'" ';
   //captcha style="border-style:none; margin:0; padding-right:5px; float:left;"
   echo ($si_captcha_opt['si_captcha_captcha_image_style'] != '') ? 'style="' . esc_attr( $si_captcha_opt['si_captcha_captcha_image_style'] ).'"' : '';
-  echo ' src="'.$si_captcha_url.'/securimage_show.php?sid='.md5(uniqid(time())).'" alt="';
+  echo ' src="'.$si_captcha_url.'/'.$captcha_level_file.'?sid='.md5(uniqid(time())).'" alt="';
   echo ($si_captcha_opt['si_captcha_tooltip_captcha'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-captcha'));
   echo '" title="';
   echo ($si_captcha_opt['si_captcha_tooltip_captcha'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-captcha'));
@@ -876,7 +907,7 @@ function si_captcha_captcha_html($label = 'si_image') {
 
   echo '<a href="#" title="';
   echo ($si_captcha_opt['si_captcha_tooltip_refresh'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-captcha'));
-  echo '" onclick="document.getElementById(\''.$label.'\').src = \''.$si_captcha_url.'/securimage_show.php?sid=\' + Math.random(); return false">
+  echo '" onclick="document.getElementById(\''.$label.'\').src = \''.$si_captcha_url.'/'.$captcha_level_file.'?sid=\' + Math.random(); return false">
   <img src="'.$si_captcha_url.'/images/refresh.gif" alt="';
   echo ($si_captcha_opt['si_captcha_tooltip_refresh'] != '') ? esc_attr( $si_captcha_opt['si_captcha_tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-captcha'));
   echo '" ';

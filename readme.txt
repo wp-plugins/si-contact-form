@@ -188,10 +188,12 @@ The following translations are included in the download zip file:
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
+* Indonesian (id_ID) - Translated by [Masino Sinaga](http://www.openscriptsolution.com)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Norwegian (nb_NO) - Translated by [Roger Sylte](http://roger.inro.net/)
 * Polish (pl_PL) - Translated by [Tomasz](http://www.ziolczynski.pl/)
 * Portuguese Brazil (pt_BR) - Translated by [Newton Dan Faoro]
+* Romanian (ro_RO) - Translated by [Laszlo SZOKE](http://www.naturaumana.ro)
 * Russian (ru_RU) - Translated by [Neponyatka](http://www.free-lance.ru/users/neponyatka)
 * Spanish (en_ES) - Translated by [LoPsT](http://www.lopst.com/)
 * Swedish (sv_SE) - Translated by [Benct]
@@ -218,7 +220,11 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
-- Fix blank CAPTCHA text issue some users were having.
+= 2.2.4 =
+- (30 Nov 2009) - Fix blank CAPTCHA text issue some users were having.
+- Added CAPTCHA difficulty level setting on the settings page (Low, Medium, Or High).
+- Added Indonesian (id_ID) - Translated by [Masino Sinaga](http://www.openscriptsolution.com).
+- Added Romanian (ro_RO) - Translated by [Laszlo SZOKE](http://www.naturaumana.ro).
 
 = 2.2.3 =
 - (23 Nov 2009) - Fix completely broke CAPTCHA, sorry about that
