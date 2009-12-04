@@ -289,6 +289,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.9.5 =
+- (04 Dec 2009) - Fix slashes issue on some servers.
+- More improvements for CAPTCHA images and fonts.
+
 = 1.9.4 =
 - (30 Nov 2009) - Fix blank CAPTCHA text issue some users were having.
 - Added CAPTCHA difficulty level setting on the settings page (Low, Medium, Or High).
