@@ -244,6 +244,7 @@ The following translations are included in the download zip file:
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
+* Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
@@ -288,6 +289,8 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Added Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 
 = 1.9.5 =
 - (04 Dec 2009) - Fix slashes issue on some servers.
