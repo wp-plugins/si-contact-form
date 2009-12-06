@@ -220,6 +220,9 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+= 2.2.5 =
+- (06 Dec 2009) - More improvements for CAPTCHA images and fonts.
+
 = 2.2.4 =
 - (30 Nov 2009) - Fix blank CAPTCHA text issue some users were having.
 - Added CAPTCHA difficulty level setting on the settings page (Low, Medium, Or High).

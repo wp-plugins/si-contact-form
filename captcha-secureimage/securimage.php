@@ -429,15 +429,15 @@ class Securimage {
 
 		$this->code_length   = 6;
 		$this->charset       = 'ABCDEFGHKLMNPRSTUVWYZabcdefghklmnprstuvwyz23456789';
-		$this->wordlist_file = './words/words.txt';
+		$this->wordlist_file = getcwd() . '/words/words.txt';
 		$this->use_wordlist  = false;
 
-		$this->gd_font_file  = './gdfonts/bubblebath.gdf';
+		$this->gd_font_file  = getcwd() . '/gdfonts/bubblebath.gdf';
 		$this->use_gd_font   = false;
 		$this->gd_font_size  = 24;
 		$this->text_x_start  = 15;
 
-		$this->ttf_file      = './AHGBold.ttf';
+		$this->ttf_file      = getcwd() . '/AHGBold.ttf';
 
 		$this->perturbation       = 0.75;
 		$this->iscale             = 5;
@@ -458,9 +458,9 @@ class Securimage {
 
 		$this->image_signature = '';
 		$this->signature_color = '#2050CC';
-		$this->signature_font  = './AHGBold.ttf';
+		$this->signature_font  = getcwd() . '/AHGBold.ttf';
 
-		$this->audio_path   = './audio/';
+		$this->audio_path   = getcwd() . '/audio/';
 		$this->audio_format = 'mp3';
 		$this->session_name = '';
 	}
@@ -636,8 +636,14 @@ class Securimage {
 
 		if ($dh = opendir($this->background_directory)) {
 			while (($file = readdir($dh)) !== false) {
-				if (preg_match('/(jpg|gif|png)$/i', $file)) $images[] = $file;
-			}
+               $supported_formats = array();
+               $gd_support = extension_loaded('gd');
+               if ($gd_support) $gd_info = gd_info(); else $gd_info = array();
+               if ($gd_support && $gd_info['JPG Support']) $supported_formats[] = 'jpg';
+               if ($gd_support && $gd_info['PNG Support']) $supported_formats[] = 'png';
+               if ($gd_support && $gd_info['GIF Create Support']) $supported_formats[] = 'gif';
+               if (preg_match('/('.implode('|', $supported_formats).')$/i', $file)) $images[] = $file;
+            }
 
 			closedir($dh);
 
