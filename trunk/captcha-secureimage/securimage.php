@@ -639,7 +639,7 @@ class Securimage {
                $supported_formats = array();
                $gd_support = extension_loaded('gd');
                if ($gd_support) $gd_info = gd_info(); else $gd_info = array();
-               if ($gd_support && $gd_info['JPG Support']) $supported_formats[] = 'jpg';
+               if ($gd_support && ( (isset($gd_info['JPG Support']) && $gd_info['JPG Support'] === true) || isset($gd_info['JPEG Support']) && $gd_info['JPEG Support'] === true ) ) $supported_formats[] = 'jpg';
                if ($gd_support && $gd_info['PNG Support']) $supported_formats[] = 'png';
                if ($gd_support && $gd_info['GIF Create Support']) $supported_formats[] = 'gif';
                if (preg_match('/('.implode('|', $supported_formats).')$/i', $file)) $images[] = $file;
