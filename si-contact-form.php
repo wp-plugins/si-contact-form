@@ -503,7 +503,7 @@ if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contac
         <?php echo esc_html( __('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact-form')); ?>
         <br />
         user1@example.com<br />
-        user1@example.com, user2@example.com
+        user1@example.com,user2@example.com
         </div>
         <br />
 
