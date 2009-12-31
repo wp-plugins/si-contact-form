@@ -291,7 +291,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 1.9.6 =
-- (31 Dec 2009) - 
+- (31 Dec 2009) - New setting for a few people why had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)". 
 - Added Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 
 = 1.9.5 =
