@@ -223,7 +223,7 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 == Changelog ==
 
 = 2.2.7 =
-- (31 Dec 2009) - New setting for a few people why had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)". 
+- (31 Dec 2009) - New setting for a few people who had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)". 
 - Added Slovakian (sk_SK) - Translated by [Marek Chochol]
 - Updated Arabic (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)
 
