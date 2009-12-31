@@ -196,6 +196,7 @@ The following translations are included in the download zip file:
 * Portuguese Brazil (pt_BR) - Translated by [Newton Dan Faoro]
 * Romanian (ro_RO) - Translated by [Laszlo SZOKE](http://www.naturaumana.ro)
 * Russian (ru_RU) - Translated by [Neponyatka](http://www.free-lance.ru/users/neponyatka)
+* Slovakian (sk_SK) - Translated by [Marek Chochol]
 * Spanish (en_ES) - Translated by [LoPsT](http://www.lopst.com/)
 * Swedish (sv_SE) - Translated by [Benct]
 * Traditional Chinese, Taiwan Language (zh_TW) - Translated by [Cjh]
@@ -220,6 +221,11 @@ Of course! It will be very gratefully received. Use PoEdit, it makes translation
 If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 == Changelog ==
+
+= 2.2.7 =
+- (31 Dec 2009) - New setting for a few people why had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)". 
+- Added Slovakian (sk_SK) - Translated by [Marek Chochol]
+- Updated Arabic (ar) - Translated by [Amine Roukh](http://amine27.zici.fr/)
 
 = 2.2.6 =
 - (16 Dec 2009) - Added SSL compatibility.

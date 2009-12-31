@@ -3,7 +3,7 @@
 Plugin Name: SI CAPTCHA Anti-Spam
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-captcha.php
 Description: Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. This prevents spam from automated bots. Also is WPMU and BuddyPress compatible. <a href="plugins.php?page=si-captcha-for-wordpress/si-captcha.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441">Donate</a>
-Version: 2.2.6
+Version: 2.2.7
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -63,6 +63,7 @@ function si_captcha_get_options() {
          'si_captcha_register' => 'true',
          'si_captcha_rearrange' => 'false',
          'si_captcha_enable_audio_flash' => 'false',
+         'si_captcha_no_trans' => 'false',
          'si_captcha_aria_required' => 'false',
          'si_captcha_captcha_div_style' =>   'display:block;',
          'si_captcha_captcha_image_style' => 'border-style:none; margin:0; padding-right:5px; float:left;',
@@ -147,6 +148,7 @@ function si_captcha_options_page() {
          'si_captcha_register' =>           (isset( $_POST['si_captcha_register'] ) ) ? 'true' : 'false',
          'si_captcha_rearrange' =>          (isset( $_POST['si_captcha_rearrange'] ) ) ? 'true' : 'false',
          'si_captcha_enable_audio_flash' => (isset( $_POST['si_captcha_enable_audio_flash'] ) ) ? 'true' : 'false',
+         'si_captcha_no_trans' =>           (isset( $_POST['si_captcha_no_trans'] ) ) ? 'true' : 'false',
          'si_captcha_aria_required' =>      (isset( $_POST['si_captcha_aria_required'] ) ) ? 'true' : 'false',
          'si_captcha_captcha_div_style' =>    (trim($_POST['si_captcha_captcha_div_style']) != '' )   ? trim($_POST['si_captcha_captcha_div_style'])   : $si_captcha_option_defaults['si_captcha_captcha_div_style'], // use default if empty
          'si_captcha_captcha_image_style' =>  (trim($_POST['si_captcha_captcha_image_style']) != '' ) ? trim($_POST['si_captcha_captcha_image_style']) : $si_captcha_option_defaults['si_captcha_captcha_image_style'],
@@ -364,7 +366,11 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <th scope="row"><?php _e('CAPTCHA Options:', 'si-captcha') ?></th>
         <td>
        <input name="si_captcha_enable_audio_flash" id="si_captcha_enable_audio_flash" type="checkbox" <?php if( $si_captcha_opt['si_captcha_enable_audio_flash'] == 'true' ) echo 'checked="checked"'; ?> />
-       <label name="si_captcha_enable_audio_flash" for="si_captcha_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-captcha') ?></label>
+       <label name="si_captcha_enable_audio_flash" for="si_captcha_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-captcha') ?></label><br />
+
+       <input name="si_captcha_no_trans" id="si_captcha_no_trans" type="checkbox" <?php if ( $si_captcha_opt['si_captcha_no_trans'] == 'true' ) echo ' checked="checked" '; ?> />
+       <label for="si_captcha_no_trans"><?php echo esc_html( __('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-captcha')); ?></label><br />
+
        </td>
     </tr>
 
@@ -870,6 +876,8 @@ function si_captcha_captcha_html($label = 'si_image') {
   } else if ($si_captcha_opt['si_captcha_captcha_difficulty'] == 'high') {
       $captcha_level_file = 'securimage_show_high.php';
   }
+  if ($si_captcha_opt['si_captcha_no_trans'] == 'true')
+     $captcha_level_file = 'securimage_show_no_trans.php';
 
   echo '<img id="'.$label.'" ';
   //captcha style="border-style:none; margin:0; padding-right:5px; float:left;"
