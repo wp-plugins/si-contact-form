@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 1.9.5
+Version: 1.9.6
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -177,6 +177,7 @@ function si_contact_options_page() {
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
          'captcha_difficulty' =>  $_POST['si_contact_captcha_difficulty'],
+         'captcha_no_trans' =>    (isset( $_POST['si_contact_captcha_no_trans'] ) ) ? 'true' : 'false',
          'enable_audio_flash' => (isset( $_POST['si_contact_enable_audio_flash'] ) ) ? 'true' : 'false',
          'captcha_perm' =>     (isset( $_POST['si_contact_captcha_perm'] ) ) ? 'true' : 'false',
          'captcha_perm_level' =>       $_POST['si_contact_captcha_perm_level'],
@@ -572,6 +573,8 @@ foreach ($captcha_difficulty_array as $k => $v) {
 </select>
 <br />
 
+        <input name="si_contact_captcha_no_trans" id="si_contact_captcha_no_trans" type="checkbox" <?php if ( $si_contact_opt['captcha_no_trans'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_captcha_no_trans"><?php echo esc_html( __('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-contact-form')); ?></label><br />
 
         <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_audio_flash"><?php echo esc_html( __('Enable Flash Audio for the CAPTCHA.', 'si-contact-form')); ?></label><br />
@@ -1577,6 +1580,8 @@ if ($this->captchaCheckRequires()) {
   } else if ($si_contact_opt['captcha_difficulty'] == 'high') {
       $captcha_level_file = 'securimage_show_high.php';
   }
+  if ($si_contact_opt['captcha_no_trans'] == 'true')
+     $captcha_level_file = 'securimage_show_no_trans.php';
 
 // the captch html
 $string = '
@@ -1863,6 +1868,7 @@ function si_contact_get_options($form_num) {
          'email_check_dns' => 'true',
          'captcha_enable' => 'true',
          'captcha_difficulty' => 'medium',
+         'captcha_no_trans' => 'false',
          'enable_audio_flash' => 'false',
          'captcha_perm' => 'false',
          'captcha_perm_level' => 'read',

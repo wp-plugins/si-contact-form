@@ -157,6 +157,10 @@ if (!$hide_form) {
   <br /><br />
 Note: If you see any errors or warnings at the top of the page,
 especially "Warning: session_start...", they could be indicating a problem with your PHP server that will prevent the CAPTCHA from working.
+
+ <br /><br />
+Note: If the CAPTCHA image is missing the text, go to the plugin settings and check the setting "Disable CAPTCHA transparent text".
+It will not fix it on the test page, but it might fix it on the wordpress forms.
 </p>
 
  <form action="captcha_test.php" id="captcha_test" method="post">
