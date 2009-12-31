@@ -290,6 +290,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 1.9.6 =
+- (31 Dec 2009) - 
 - Added Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 
 = 1.9.5 =
