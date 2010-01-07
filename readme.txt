@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.6
-Tested up to: 2.9
+Tested up to: 2.9.1
 Stable tag: trunk
 
 This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem.
@@ -291,7 +291,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 1.9.6 =
-- (31 Dec 2009) - New setting for a few people who had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)". 
+- (31 Dec 2009) - New setting for a few people who had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)".
 - Added Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 
 = 1.9.5 =
