@@ -185,7 +185,7 @@ The following translations are included in the download zip file:
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Czech (cs_CZ) - Translated by [Radovan](http://algymsa.cz)
 * Danish (da_DK) - Translated by [Parry](http://www.detheltnyestore.dk/)
-* Dutch (nl_NL) - Translated by [Robert Jan Lamers]
+* Dutch (nl_NL) - Translated by [Robert Jan Lamers](http://www.salek.nl/)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
@@ -224,7 +224,7 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 == Changelog ==
 
 = 2.2.8 =
-- (14 Jan 2010) - Added Dutch (nl_NL) - Translated by [Robert Jan Lamers]
+- (14 Jan 2010) - Added Dutch (nl_NL) - Translated by [Robert Jan Lamers](http://www.salek.nl/)
 
 = 2.2.7 =
 - (31 Dec 2009) - New setting for a few people who had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)". 
