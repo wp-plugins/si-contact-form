@@ -22,6 +22,7 @@ Features:
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
  * Validates syntax of E-mail address.
+ * Can hide subject and message fields for use as a newsletter signup.
  * Optional redirect to any URL after message sent.
  * Valid coding for HTML, XHTML, Section 508, and WAI Accessibility.
  * JavaScript is not required.
@@ -30,7 +31,7 @@ Features:
  * Auto form fill for logged in users.
  * Customizable form field titles.
  * Customizable CSS style.
- * Optional extra fields.
+ * Optional extra fields of any type: text, textarea, checkbox, radio, select.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -289,6 +290,12 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.0 =
+- (26 Jan 2010) - Added required field indicators (can be disabled in settings if you do not like them).
+- Added setting to adjust redirect delay seconds(range of 1-5 recommended).
+- Added setting to hide message entry, now you can hide subject and message fields for use as a newsletter signup.
+- Added selectable extra field types: text, textarea, checkbox, radio, select. Note: When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue 
 
 = 1.9.6 =
 - (31 Dec 2009) - New setting for a few people who had problems with the text transparency "Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this)".
