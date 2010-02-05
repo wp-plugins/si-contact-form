@@ -12,7 +12,7 @@ Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration fo
 == Description ==
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all.
-In order to post comments or regiser, users will have to type in the phrase shown on the image.
+In order to post comments or register, users will have to type in the code shown on the image.
 This prevents spam from automated bots. Adds security. Works great with Akismet. Also is fully WPMU and BuddyPress compatible.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-captcha.php)
