@@ -247,6 +247,7 @@ The following translations are included in the download zip file:
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Polish (pl_PL) - Translated by [Pawel Mezyk]
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
@@ -290,6 +291,11 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.0.1 =
+- (06 Feb 2010) - Fix Invalid Input error when the word "donkey" is in the input string.
+- Added Polish (pl_PL) - Translated by [Pawel Mezyk]
+- Fixed Greek language file name.
 
 = 2.0 =
 - (26 Jan 2010) - Added required field indicators (can be disabled in settings if you do not like them).
