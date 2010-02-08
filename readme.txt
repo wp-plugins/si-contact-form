@@ -292,6 +292,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Updated German (de_DE)
+
 = 2.0.1 =
 - (06 Feb 2010) - Fix Invalid Input error when the word "donkey" is in the input string.
 - Added Polish (pl_PL) - Translated by [Pawel Mezyk]
