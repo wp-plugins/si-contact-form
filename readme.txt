@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6105441
 Tags: akismet, captcha, comment, comments, login, anti-spam, spam, security, multilingual, buddypress, wpmu, wordpressmu
 Requires at least: 2.6
-Tested up to: 2.9.1
+Tested up to: 2.9.2
 Stable tag: trunk
 
 Adds CAPTCHA anti-spam methods to WordPress on the comment form, registration form, login, or all. Also is fully WPMU and BuddyPress compatible.
@@ -222,6 +222,9 @@ Of course! It will be very gratefully received. Use PoEdit, it makes translation
 If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
 
 == Changelog ==
+
+= 2.2.9 =
+- (16 Feb 2010) - Fixed XMLRPC logins did not work when "Enable CAPTCHA on the login form" was enabled.
 
 = 2.2.8 =
 - (14 Jan 2010) - Added Dutch (nl_NL) - Translated by [Robert Jan Lamers](http://www.salek.nl/)
