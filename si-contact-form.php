@@ -497,8 +497,28 @@ if ( $si_contact_opt['email_from'] != '' && !$this->ctf_validate_email($si_conta
 
         <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php echo esc_html( __('E-mail Bcc (optional)', 'si-contact-form')); ?>:</label>
 <?php
-if ( $si_contact_opt['email_bcc'] != '' && !$this->ctf_validate_email($si_contact_opt['email_bcc'])  ) {
-   echo '<span style="color:red;">'.esc_html( __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form')).'</span><br />'."\n";
+if ( $si_contact_opt['email_bcc'] != ''){
+         $bcc_fail = 0;
+          if(!preg_match("/,/", $si_contact_opt['email_bcc'])) {
+               // just one email here
+               // user1@example.com
+               if (!$this->ctf_validate_email($si_contact_opt['email_bcc'])) {
+                  $bcc_fail = 1;
+               }
+          } else {
+               // multiple emails here
+               // user1@example.com,user2@example.com
+               $bcc_arr = explode(",",$si_contact_opt['email_bcc']);
+               foreach($bcc_arr as $b_cc) {
+                   if (!$this->ctf_validate_email($b_cc)) {
+                     $bcc_fail = 1;
+                     break;
+                   }
+               }
+         }
+  if ($bcc_fail)  {
+    echo '<span style="color:red;">'.esc_html( __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form')).'</span><br />'."\n";
+  }
 }
 ?>
         <input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $si_contact_opt['email_bcc'];  ?>" size="50" />

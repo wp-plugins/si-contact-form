@@ -293,6 +293,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 - Updated German (de_DE)
+- Fixed multiple BCC feature, it was only accepting one BCC.
 
 = 2.0.1 =
 - (06 Feb 2010) - Fix Invalid Input error when the word "donkey" is in the input string.
