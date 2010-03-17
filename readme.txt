@@ -223,6 +223,8 @@ If you use PoEdit to translate, it is easy to translate for a new version. You c
 
 == Changelog ==
 
+- Updated Danish (da_DK) 
+
 = 2.2.9 =
 - (16 Feb 2010) - Fixed XMLRPC logins did not work when "Enable CAPTCHA on the login form" was enabled.
 
