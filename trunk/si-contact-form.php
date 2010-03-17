@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 2.0.1
+Version: 2.0.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -665,9 +665,7 @@ foreach ($captcha_difficulty_array as $k => $v) {
        </div>
        <br />
 
-       <strong><?php echo esc_html( __('Extra fields:', 'si-contact-form')); ?></strong>
-       <a style="cursor:pointer;" title="<?php echo esc_html( __('Click for Help!', 'si-contact-form')); ?>" onclick="toggleVisibility('si_contact_extra_fields_tip');"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
-       <div style="text-align:left; display:none" id="si_contact_extra_fields_tip">
+       <strong><?php echo esc_html( __('Extra fields:', 'si-contact-form')); ?></strong><br />
        <?php echo esc_html( __('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form')); ?>
        <?php echo esc_html( __('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue', 'si-contact-form')); ?>
        </div>
@@ -1561,11 +1559,13 @@ $string .= '
 
            // find the label and the options inside $si_contact_opt['ex_field'.$i.'_label']
            // the drop down list array will be made automatically by this code
-$exf_array = array ();
+$exf_opts_array = array();
 $exf_opts_label = '';
 $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
 if(!preg_match("/,/", $exf_array_test) ) {
        // error
+       $this->si_contact_error = 1;
+       $string .= $this->ctf_echo_if_error(__('Error: A select field is not configured properly in settings.', 'si-contact-form'));
 } else {
        list($exf_opts_label, $value) = explode(",",$exf_array_test);
        $exf_opts_label   = trim($exf_opts_label);
@@ -1573,6 +1573,8 @@ if(!preg_match("/,/", $exf_array_test) ) {
        if ($exf_opts_label != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // error
+               $this->si_contact_error = 1;
+               $string .= $this->ctf_echo_if_error(__('Error: A select field is not configured properly in settings.', 'si-contact-form'));
           } else {
                // multiple options
                $exf_opts_array = explode(";",$value);
@@ -1601,11 +1603,13 @@ $string .= '</select>
 
            // find the label and the options inside $si_contact_opt['ex_field'.$i.'_label']
            // the radio list array will be made automatically by this code
-$exf_array = array ();
+$exf_opts_array = array();
 $exf_opts_label = '';
 $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-if(!preg_match("/,/", $exf_array_test) ) {
+if(!preg_match('/,/', $exf_array_test) ) {
        // error
+       $this->si_contact_error = 1;
+       $string .= $this->ctf_echo_if_error(__('Error: A radio field is not configured properly in settings.', 'si-contact-form'));
 } else {
        list($exf_opts_label, $value) = explode(",",$exf_array_test);
        $exf_opts_label   = trim($exf_opts_label);
@@ -1613,6 +1617,8 @@ if(!preg_match("/,/", $exf_array_test) ) {
        if ($exf_opts_label != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // error
+               $this->si_contact_error = 1;
+               $string .= $this->ctf_echo_if_error(__('Error: A radio field is not configured properly in settings.', 'si-contact-form'));
           } else {
                // multiple options
                $exf_opts_array = explode(";",$value);
@@ -1629,8 +1635,8 @@ $selected = '';
 $ex_cnt = 0;
 foreach ($exf_opts_array as $k) {
  if (${'ex_field'.$i} == "$k")  $selected = ' checked="checked"';
- $string .= '&nbsp;&nbsp;<label for="si_contact_ex_field'.$i.'_'.$ex_cnt.'">' . esc_html( $k ).'</label>
-     <input type="radio" '.$this->ctf_field_style.' id="si_contact_ex_field'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected.' />'."\n";
+ $string .= '<br /><input type="radio" '.$this->ctf_field_style.' id="si_contact_ex_field'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected.' />
+ <label for="si_contact_ex_field'.$i.'_'.$ex_cnt.'">' . esc_html( $k ).'</label>'."\n";
  $selected = '';
  $ex_cnt++;
 }
