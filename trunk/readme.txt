@@ -11,7 +11,7 @@ This contact form lets your visitors send you a quick E-mail message. Blocks all
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. Easy and Quick 3 step install.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, extra optional fields, and an option to redirect visitors to any URL after the message is sent. Does not require JavaScript.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
