@@ -1997,6 +1997,7 @@ function ctf_spamcheckpost() {
  foreach($_POST as $k => $v){
    $v = strtolower($v);
    $v = str_replace('donkey','',$v); // fixes invalid input with "donkey" in string
+   $v = str_replace('monkey','',$v); // fixes invalid input with "monkey" in string  
    if( preg_match($input_expl, $v) ){
      return 4;
    }
