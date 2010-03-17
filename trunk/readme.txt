@@ -293,7 +293,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 2.0.2 =
-- (13 Mar 2010) - Added radio and select configuration error checking. Fix display of radio input fields to be on seperate lines.
+- (16 Mar 2010) - Added radio and select configuration error checking. Fix display of radio input fields to be on separate lines.
 - Fixed multiple BCC feature, it was only accepting one BCC.
 - Updated German (de_DE) and Bulgarian (bg_BG)
 
