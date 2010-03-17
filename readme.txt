@@ -239,7 +239,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 The following translations are included in the download zip file:
 
 * Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
-* Bulgarian (bg_BG) - Translated by [Dimitar Atanasov]
+* Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net)
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
@@ -292,8 +292,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Updated German (de_DE)
+= 2.0.2 =
+- (06 Feb 2010) - Added radio and select configuration error checking. Fix display of radio input fields to be on seperate lines.
 - Fixed multiple BCC feature, it was only accepting one BCC.
+- Updated German (de_DE) and Bulgarian (bg_BG)
 
 = 2.0.1 =
 - (06 Feb 2010) - Fix Invalid Input error when the word "donkey" is in the input string.
