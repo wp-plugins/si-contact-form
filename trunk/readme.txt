@@ -294,7 +294,7 @@ No setting necessary, it just works.
 
 = 2.5.0 =
 - (05 Apr 2010) - Added setting to add optional drop down list for email subject.
-- Added setting to make chaptcha image smaller.
+- Added setting to make the CAPTCHA image smaller.
 - Added settings to increase number of forms and have more extra fields (editing code is no longer needed).
 - Fixed so multiple forms can be on the same page. 
 - Added editable text label setting for (* denotes required field).
@@ -302,7 +302,7 @@ No setting necessary, it just works.
 Acceptable Examples:
 text-align:left; color:#000000; background-color:#CCCCCC;
 style="text-align:left; color:#000000; background-color:#CCCCCC;"
-class="input".
+class="input"
 - Split code into 4 smaller files for better performance.
 - Other bug fixes.
 
