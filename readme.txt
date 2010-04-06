@@ -134,13 +134,13 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 
 = I need more than 4 contact forms, how do I increase the number of forms available? =
 
-If you need to add more contact forms, add this line in wp-config.php: `define('SI_CONTACT_FORM_MAX_FORMS',5);`
-be sure to change the number 5 to the amount you actually need, no more.
+On the plugin settings page, change "Number of available Multi-forms", then click Update Options.
+For best performance, only change the number to the amount you actually need.
 
 = I need more than 8 extra form fields, how do I increase the number available? =
 
-If you need to add more extra form fields, add this line in wp-config.php: `define('SI_CONTACT_FORM_MAX_FIELDS',10);`
-be sure to change the number 10 to the amount you actually need, no more.
+On the plugin settings page, click Advanced Options, change "Number of available extra fields", then click Update Options.
+For best performance, only change the number to the amount you actually need.
 
 = What is "ERROR: Misconfigured E-mail address in options.", what could be wrong? =
 First, make sure you have a valid "E-mail To:" set in options. This plugin uses an email validation check to make sure the email address has proper syntax and that a valid DNS record exists for the email domain name. If you have this error and you are sure your email address is correct, maybe your server is having trouble with the DNS check. I added a feature to the options panel to disable the DNS check during email validation. You may have to uncheck this option: "Enable checking DNS records for the domain name when checking for a valid E-mail address." Maybe the error will go away now.
@@ -291,6 +291,20 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.5.0 =
+- (05 Apr 2010) - Added setting to add optional drop down list for email subject.
+- Added setting to make chaptcha image smaller.
+- Added settings to increase number of forms and have more extra fields (editing code is no longer needed).
+- Fixed so multiple forms can be on the same page. 
+- Added editable text label setting for (* denotes required field).
+- Added more style settings in Advanced Options. You can use inline css, or add a class property to be used by your own stylsheet.
+Acceptable Examples:
+text-align:left; color:#000000; background-color:#CCCCCC;
+style="text-align:left; color:#000000; background-color:#CCCCCC;"
+class="input".
+- Split code into 4 smaller files for better performance.
+- Other bug fixes.
 
 = 2.0.2 =
 - (16 Mar 2010) - Added radio and select configuration error checking. Fix display of radio input fields to be on separate lines.
