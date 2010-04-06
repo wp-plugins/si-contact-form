@@ -38,11 +38,9 @@ include 'securimage.php';
 
 $img = new securimage();
 
-
 //Change some settings
 $img->code_length = 4;
-$img->image_width = 175;
-$img->image_height = 60;
+
 $img->perturbation = 0.6; // 1.0 = high distortion, higher numbers = more distortion
 
 $img->charset = 'ABCDEFHKLMNPRSTUVWYZ234578';

@@ -114,7 +114,7 @@ if ($requires == 'fail') {
 if (isset($_POST['action']) && ($_POST['action'] == 'check')) {
    $code    = htmlspecialchars(strip_tags($_POST['code']));
    // check the cookie can be read
-   if (!isset($_SESSION['securimage_code_value']) || empty($_SESSION['securimage_code_value'])) {
+   if (!isset($_SESSION['securimage_code_ctf_1']) || empty($_SESSION['securimage_code_ctf_1'])) {
           $error = 1;
           $error_captcha = 'Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings.';
    }else{
