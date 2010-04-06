@@ -292,6 +292,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+
 = 2.5.0 =
 - (05 Apr 2010) - Added setting to add optional drop down list for email subject.
 - Added setting to make the CAPTCHA image smaller.
