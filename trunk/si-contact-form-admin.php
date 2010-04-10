@@ -174,7 +174,7 @@
 
     if (isset($_POST['si_contact_reset_styles'])) {
          // reset styles feature
-         $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','captcha_div_style','captcha_image_style','audio_image_style','reload_image_style','button_style','field_size','text_cols','text_rows');
+         $style_resets_arr = array('border_enable','form_style','border_style','required_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style','captcha_image_style','audio_image_style','reload_image_style','button_style','field_size','captcha_field_size','text_cols','text_rows');
          foreach($style_resets_arr as $style_reset) {
            $optionarray_update[$style_reset] = $si_contact_option_defaults[$style_reset];
          }

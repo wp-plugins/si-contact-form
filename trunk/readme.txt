@@ -292,6 +292,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.5.1 =
+- (09 Apr 2010) - Fixed bug in reset styles feature.
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 2.5.0 =
