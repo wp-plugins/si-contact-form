@@ -1,4 +1,4 @@
-# Translation of the WordPress plugin Fast and Secure Contact Form 2.5.0 by Mike Challis.
+# Translation of the WordPress plugin Fast and Secure Contact Form 2.5.2 by Mike Challis.
 # Copyright (C) 2010 Mike Challis
 # This file is distributed under the same license as the Fast and Secure Contact Form package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Fast and Secure Contact Form 2.5.0\n"
+"Project-Id-Version: Fast and Secure Contact Form 2.5.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-04-06 01:56+0000\n"
+"POT-Creation-Date: 2010-04-16 18:57+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -497,7 +497,7 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (Fast and Secure Contact Form 2.5.0)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Fast and Secure Contact Form 2.5.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: si-contact-form-admin.php:656 si-contact-form-admin.php:842
 #: si-contact-form-display.php:376
