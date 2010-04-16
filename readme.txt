@@ -246,6 +246,7 @@ The following translations are included in the download zip file:
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
+* Hungarian (hu_HU) - Translated by [Jozsef Burgyan]
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Polish (pl_PL) - Translated by [Pawel Mezyk]
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
@@ -291,6 +292,11 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.5.2 =
+- (16 Apr 2010) - 
+- Added Hungarian (hu_HU) - Translated by [Jozsef Burgyan]
+- Updated Polish (pl_PL) - Translated by [Pawel Mezyk]
 
 = 2.5.1 =
 - (09 Apr 2010) - Fixed bug in reset styles feature.
