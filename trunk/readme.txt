@@ -253,6 +253,7 @@ The following translations are included in the download zip file:
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 * Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
+* Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
 * Ukrainian (uk_UA) - Translated by [Wordpress.Ua](http://wordpress.ua/)
@@ -292,6 +293,8 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Added Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
 
 = 2.5.2 =
 - (16 Apr 2010) - 
