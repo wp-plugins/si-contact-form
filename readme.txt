@@ -246,7 +246,7 @@ The following translations are included in the download zip file:
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
 * Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
-* Hungarian (hu_HU) - Translated by [Jozsef Burgyan]
+* Hungarian (hu_HU) - Translated by [Jozsef Burgyan](http://dmgmedia.hu)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Polish (pl_PL) - Translated by [Pawel Mezyk]
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
@@ -298,7 +298,7 @@ No setting necessary, it just works.
 
 = 2.5.2 =
 - (16 Apr 2010) - 
-- Added Hungarian (hu_HU) - Translated by [Jozsef Burgyan]
+- Added Hungarian (hu_HU) - Translated by [Jozsef Burgyan](http://dmgmedia.hu)
 - Updated Polish (pl_PL) - Translated by [Pawel Mezyk]
 
 = 2.5.1 =
