@@ -294,11 +294,13 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.5.3 =
+- (23 Apr 2010) - Added Dutch (nl_NL) - Translated by [Mark Visser]
 - Added Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
 
-= 2.5.2 =
-- (16 Apr 2010) - 
-- Added Hungarian (hu_HU) - Translated by [Jozsef Burgyan](http://dmgmedia.hu)
+
+= 2.5.2 = 
+- (16 Apr 2010) - Added Hungarian (hu_HU) - Translated by [Jozsef Burgyan](http://dmgmedia.hu)
 - Updated Polish (pl_PL) - Translated by [Pawel Mezyk]
 
 = 2.5.1 =
