@@ -98,13 +98,13 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 
 == Screenshots ==
 
-1. screenshot-1.jpg is the contact form.
+1. screenshot-1.gif is the contact form.
 
-2. screenshot-2.jpg is the contact form showing the inline error messages.
+2. screenshot-2.gif is the contact form showing the inline error messages.
 
-3. screenshot-3.jpg is the `Contact Form options` tab on the `Admin Plugins` page.
+3. screenshot-3.gif is the `Contact Form options` tab on the `Admin Plugins` page.
 
-4. screenshot-4.jpg adding the shortcode `[si-contact-form form='1']` in a Page.
+4. screenshot-4.gif adding the shortcode `[si-contact-form form='1']` in a Page.
 
 
 == Frequently Asked Questions ==
