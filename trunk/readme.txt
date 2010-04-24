@@ -294,6 +294,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Improved CAPTCHA testpage
+
 = 2.5.3 =
 - (23 Apr 2010) - Added Dutch (nl_NL) - Translated by [Mark Visser]
 - Added Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
