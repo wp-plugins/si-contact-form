@@ -195,73 +195,76 @@ echo "</pre>\n";*/
           $subj = ($si_contact_opt['hidden_subject_enable'] == 'true') ? $si_contact_opt['email_subject'] : $subject;
      }
 
-     $msg = __('To', 'si-contact-form').": $to_contact
+     $msg = __('To', 'si-contact-form').": $to_contact\n\n".__('From', 'si-contact-form').":\n$name\n$email\n\n";
 
-".__('From', 'si-contact-form').":
-$name
-$email
+     // optional extra fields
+     for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+        if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && !empty(${'ex_field'.$i}) ) {
+           if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
+              list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
+              $msg .= $exf_opts_label."\n${'ex_field'.$i}\n\n";
+           } else {
+              $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n${'ex_field'.$i}\n\n";
+           }
+       }
+    }
+    if ($si_contact_opt['hidden_message_enable'] != 'true') {
+        $msg .= __('Message', 'si-contact-form').":\n$message\n\n";
+    }
 
-";
-// optional extra fields
-for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
-   if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && !empty(${'ex_field'.$i}) ) {
-     if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
-      list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
-        $msg .= $exf_opts_label."
-${'ex_field'.$i}\n\n";
-     } else {
-        $msg .= $si_contact_opt['ex_field'.$i.'_label']."
-${'ex_field'.$i}\n\n";
-     }
-
-   }
-}
-$msg .= __('Message', 'si-contact-form').":
-$message
-
-";
-
-      // add some info about sender to the email message
-      $userdomain = '';
-      $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-      $user_info_string = '';
-      if ($user_ID != '' && !current_user_can('level_10') ) {
+    // add some info about sender to the email message
+    $userdomain = '';
+    $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+    $user_info_string = '';
+    if ($user_ID != '' && !current_user_can('level_10') ) {
         //user logged in
         $user_info_string .= __('From a WordPress user', 'si-contact-form').': '.$current_user->user_login . PHP_EOL;
-      }
-      $user_info_string .= __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)" . PHP_EOL;
-      $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . PHP_EOL;
-      $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.get_permalink() . PHP_EOL;
-      $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . PHP_EOL . PHP_EOL;
-      $msg .= $user_info_string;
+    }
+    $user_info_string .= __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)" . PHP_EOL;
+    $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . PHP_EOL;
+    $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.get_permalink() . PHP_EOL;
+    $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . PHP_EOL . PHP_EOL;
+    $msg .= $user_info_string;
 
-      // wordwrap email message
-      if ($ctf_wrap_message) {
+    // wordwrap email message
+    if ($ctf_wrap_message) {
              $msg = wordwrap($msg, 70);
-      }
+    }
 
-      // prepare the email header
-      if ($ctf_email_on_this_domain != '') {
-          $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
-      } else {
-          $header = "From: $name <$email>" . PHP_EOL;
-      }
+    $header = '';
+    // prepare the email header
+    if ($ctf_email_on_this_domain != '') {
+         // $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
+         $this->si_contact_mail_from = $ctf_email_on_this_domain;
+         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
+    } else {
+         // $header = "From: $name <$email>" . PHP_EOL;
+         $this->si_contact_mail_from = $email;
+         $this->si_contact_from_name = $name;
+         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+         add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+    }
 
-      if ($ctf_email_address_bcc !='')
+    if ($ctf_email_address_bcc !='')
             $header .= "Bcc: " . $ctf_email_address_bcc . PHP_EOL;
-      $header .= "Reply-To: $email" . PHP_EOL;
-      $header .= "Return-Path: $email" . PHP_EOL;
-      $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . PHP_EOL;
+    $header .= "Reply-To: $email" . PHP_EOL;
+    $header .= "Return-Path: $email" . PHP_EOL;
 
-      @ini_set('sendmail_from', $email); // needed for some windows servers
+    /* almost made X-Priority: 1 an option but class-phpmailer.php already sets X-Priority: 3.
+       It is hard coded to do that. So you would have both 1 and 3 in the mail header and I cannot do that. */
+    // $header .= "X-Priority: 1 (High)" . PHP_EOL;
 
-      if (!wp_mail($mail_to,$subj,$msg,$header)) {
+    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . PHP_EOL;
+
+    // @ini_set('sendmail_from', $email); // needed for some windows servers
+
+    if (!wp_mail($mail_to,$subj,$msg,$header)) {
 		die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . "<br />\n" .
         __('Possible reason: your host may have disabled the mail() function.', 'si-contact-form') . '</p>');
-      }
+    }
 
-      $message_sent = 1;
+    $message_sent = 1;
 
-   } // end if ! error
+  } // end if ! error
 
 ?>
