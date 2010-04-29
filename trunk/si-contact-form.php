@@ -911,6 +911,15 @@ function get_captcha_url_cf() {
   return $captcha_url_cf;
 }
 
+function si_contact_form_mail_from() {
+ return $this->si_contact_mail_from;
+}
+
+function si_contact_form_from_name() {
+ return $this->si_contact_from_name;
+}
+
+
 function si_contact_convert_css($string) {
 
     if( preg_match("/^style=\"(.*)\"$/i", $string) ){
