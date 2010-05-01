@@ -1,4 +1,4 @@
-# Translation of the WordPress plugin Fast and Secure Contact Form 2.5.2 by Mike Challis.
+# Translation of the WordPress plugin Fast and Secure Contact Form 2.5.4 by Mike Challis.
 # Copyright (C) 2010 Mike Challis
 # This file is distributed under the same license as the Fast and Secure Contact Form package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Fast and Secure Contact Form 2.5.2\n"
+"Project-Id-Version: Fast and Secure Contact Form 2.5.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-04-16 18:57+0000\n"
+"POT-Creation-Date: 2010-05-01 06:51+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -497,7 +497,7 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (Fast and Secure Contact Form 2.5.2)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Fast and Secure Contact Form 2.5.4)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: si-contact-form-admin.php:656 si-contact-form-admin.php:842
 #: si-contact-form-display.php:376
@@ -683,7 +683,7 @@ msgid "Subject"
 msgstr ""
 
 #: si-contact-form-admin.php:759 si-contact-form-display.php:344
-#: si-contact-form-process.php:219
+#: si-contact-form-process.php:212
 msgid "Message"
 msgstr ""
 
@@ -838,35 +838,35 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: si-contact-form-process.php:200
+#: si-contact-form-process.php:198
 msgid "From"
 msgstr ""
 
-#: si-contact-form-process.php:230
+#: si-contact-form-process.php:221
 msgid "From a WordPress user"
 msgstr ""
 
-#: si-contact-form-process.php:232
+#: si-contact-form-process.php:223
 msgid "Sent from (ip address)"
 msgstr ""
 
-#: si-contact-form-process.php:233
+#: si-contact-form-process.php:224
 msgid "Date/Time"
 msgstr ""
 
-#: si-contact-form-process.php:234
+#: si-contact-form-process.php:225
 msgid "Coming from (referer)"
 msgstr ""
 
-#: si-contact-form-process.php:235
+#: si-contact-form-process.php:226
 msgid "Using (user agent)"
 msgstr ""
 
-#: si-contact-form-process.php:259
+#: si-contact-form-process.php:262
 msgid "The e-mail could not be sent."
 msgstr ""
 
-#: si-contact-form-process.php:260
+#: si-contact-form-process.php:263
 msgid "Possible reason: your host may have disabled the mail() function."
 msgstr ""
 
