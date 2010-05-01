@@ -294,6 +294,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.5.4 =
+- (01 May 2010) - 
 - Fixed small issue with "enable hidden message" option.
 - Fixed small issue with "email from" option.
 - Improved CAPTCHA testpage.
