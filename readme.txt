@@ -209,8 +209,7 @@ Check that the permission on all the captcha-secureimage folders are set to perm
 all these folders need to be 755:
 - si-contact-form
   - languages
-  - css
-  - js
+  - date
   - captcha-secureimage
      - audio
      - backgrounds
