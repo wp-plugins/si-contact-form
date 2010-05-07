@@ -7,11 +7,11 @@ Requires at least: 2.6
 Tested up to: 2.9.2
 Stable tag: trunk
 
-This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem.
+A super customizable contact form that lets your visitors send you email. Blocks all common spammer tactics. Spam is no longer a problem.
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, extra optional fields, and an option to redirect visitors to any URL after the message is sent. Does not require JavaScript.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Does not require JavaScript.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
@@ -31,7 +31,7 @@ Features:
  * Auto form fill for logged in users.
  * Customizable form field titles.
  * Customizable CSS style.
- * Optional extra fields of any type: text, textarea, checkbox, radio, select.
+ * Optional extra fields of any type: text, textarea, checkbox, radio, select, date.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -209,6 +209,8 @@ Check that the permission on all the captcha-secureimage folders are set to perm
 all these folders need to be 755:
 - si-contact-form
   - languages
+  - css
+  - js
   - captcha-secureimage
      - audio
      - backgrounds
@@ -294,9 +296,12 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.5.5 =
+- (07 May 2010) - Fixed to be compatible with *www.com domain name.
+- Added extra field type for "date", this new field can be used for a hotel registration form and uses a popup "Epoch DHTML Calendar" 1.06 by Nick Baicoianu from meanfreepath.com
+
 = 2.5.4 =
-- (01 May 2010) - 
-- Fixed small issue with "enable hidden message" option.
+- (01 May 2010) - Fixed small issue with "enable hidden message" option.
 - Fixed small issue with "email from" option.
 - Improved CAPTCHA testpage.
 

@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 2.5.4
+Version: 2.5.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -197,7 +197,7 @@ $ctf_sitename = get_option('blogname');
 // Can be an array of domains:  $ctf_domain = array('642weather.com','someothersite.com');
         // get blog domain
         $uri = parse_url(get_option('home'));
-        $blogdomain = str_replace('www.','',$uri['host']);
+        $blogdomain = preg_replace("/^www\./i",'',$uri['host']);
 
 $this->ctf_domain = $blogdomain;
 
@@ -638,8 +638,8 @@ function ctf_spamcheckpost() {
    if( isset($_SERVER['HTTP_REFERER']) and trim($_SERVER['HTTP_REFERER']) != '' ) {
       $fromArray = parse_url(strtolower($_SERVER['HTTP_REFERER']));
       // Test to see if the $fromArray used www to get here.
-      $wwwUsed = strpos($fromArray['host'], "www.");
-      if(!in_array(($wwwUsed === false ? $fromArray['host'] : substr(stristr($fromArray['host'], '.'), 1)), $authHosts)){
+      $wwwUsed = preg_match("/^www\./i",$fromArray['host']);
+      if(!in_array((!$wwwUsed ? $fromArray['host'] : preg_replace("/^www\./i",'',$fromArray['host'])), $authHosts ) ){
          return 3;
       }
    }
@@ -919,7 +919,6 @@ function si_contact_form_from_name() {
  return $this->si_contact_from_name;
 }
 
-
 function si_contact_convert_css($string) {
 
     if( preg_match("/^style=\"(.*)\"$/i", $string) ){
@@ -960,6 +959,9 @@ if (isset($si_contact_form)) {
 
   // si_contact initialize options
   add_action('init', array(&$si_contact_form, 'si_contact_init'),1);
+
+  //wp_enqueue_style('si_contact_form', plugins_url('si-contact-form/ctf_epoch_styles.css'), false, false, 'all');
+  //wp_enqueue_script('si_contact_form', plugins_url('si-contact-form/ctf_epoch_classes.js'), '', '', true);
 
   // start the PHP session
   add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);

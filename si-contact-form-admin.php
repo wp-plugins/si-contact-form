@@ -505,7 +505,7 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <label name="si_contact_domain_protect" for="si_contact_domain_protect"><?php echo esc_html( __('Enable Form Post security by requiring domain name match for', 'si-contact-form')); ?>
         <?php
         $uri = parse_url(get_option('home'));
-        $blogdomain = str_replace('www.','',$uri['host']);
+        $blogdomain = preg_replace("/^www\./i",'',$uri['host']);
         echo " $blogdomain ";
         ?><?php echo esc_html( __('(recommended).', 'si-contact-form')); ?>
         </label>
@@ -625,6 +625,7 @@ $field_type_array = array(
 'checkbox' => esc_attr(__('checkbox', 'si-contact-form')),
 'radio' => esc_attr(__('radio', 'si-contact-form')),
 'select' => esc_attr(__('select', 'si-contact-form')),
+'date' => esc_attr(__('date', 'si-contact-form')),
 );
       // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
