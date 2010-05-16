@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.6
-Tested up to: 2.9.2
+Tested up to: 3.0
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all common spammer tactics. Spam is no longer a problem.
@@ -294,6 +294,9 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.5.6 =
+- (15 May 2010) - Made WP3 Compatible
 
 = 2.5.5 =
 - (07 May 2010) - Fixed to be compatible with *www.com domain name.

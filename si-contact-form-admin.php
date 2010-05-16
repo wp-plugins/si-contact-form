@@ -103,11 +103,12 @@
          'captcha_difficulty' =>  $_POST['si_contact_captcha_difficulty'],
          'captcha_small' =>     (isset( $_POST['si_contact_captcha_small'] ) ) ? 'true' : 'false',
          'captcha_no_trans' =>    (isset( $_POST['si_contact_captcha_no_trans'] ) ) ? 'true' : 'false',
+         'enable_audio' =>        (isset( $_POST['si_contact_enable_audio'] ) ) ? 'true' : 'false',
          'enable_audio_flash' => (isset( $_POST['si_contact_enable_audio_flash'] ) ) ? 'true' : 'false',
          'captcha_perm' =>     (isset( $_POST['si_contact_captcha_perm'] ) ) ? 'true' : 'false',
          'captcha_perm_level' =>       $_POST['si_contact_captcha_perm_level'],
          'redirect_enable' =>  (isset( $_POST['si_contact_redirect_enable'] ) ) ? 'true' : 'false',
-         'redirect_seconds' => ( is_numeric(trim($_POST['si_contact_redirect_seconds'])) && trim($_POST['si_contact_redirect_seconds']) < 6 ) ? absint(trim($_POST['si_contact_redirect_seconds'])) : $si_contact_option_defaults['redirect_seconds'],
+         'redirect_seconds' => ( is_numeric(trim($_POST['si_contact_redirect_seconds'])) && trim($_POST['si_contact_redirect_seconds']) < 61 ) ? absint(trim($_POST['si_contact_redirect_seconds'])) : $si_contact_option_defaults['redirect_seconds'],
          'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
          'req_field_indicator_enable' =>    (isset( $_POST['si_contact_req_field_indicator_enable'] ) ) ? 'true' : 'false',
@@ -271,7 +272,7 @@ if ($si_contact_gb['donated'] != 'true') {
 
 
 <p>
-<?php echo __('You must add the shortcode in a Page(not a post). That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.jpg" target="_new"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
+<?php echo __('You must add the shortcode in a Page(not a post). That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php echo esc_html( __('help', 'si-contact-form')); ?></a>
 <br />
 <?php echo __('Shortcode for this form:', 'si-contact-form') . " <b>[si-contact-form form='$form_id']</b>"; ?>
 </p>
@@ -548,6 +549,9 @@ foreach ($captcha_difficulty_array as $k => $v) {
 
         <input name="si_contact_captcha_no_trans" id="si_contact_captcha_no_trans" type="checkbox" <?php if ( $si_contact_opt['captcha_no_trans'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_captcha_no_trans"><?php echo esc_html( __('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-contact-form')); ?></label><br />
+
+        <input name="si_contact_enable_audio" id="si_contact_enable_audio" type="checkbox" <?php if ( $si_contact_opt['enable_audio'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_enable_audio"><?php echo esc_html( __('Enable Audio for the CAPTCHA.', 'si-contact-form')); ?></label><br />
 
         <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_audio_flash"><?php echo esc_html( __('Enable Flash Audio for the CAPTCHA.', 'si-contact-form')); ?></label><br />
