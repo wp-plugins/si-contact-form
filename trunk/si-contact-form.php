@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 2.5.5
+Version: 2.5.6
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -438,7 +438,8 @@ $string = '
          $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
          $string .= '" />';
 
-    if($si_contact_opt['enable_audio_flash'] == 'true') {
+    if($si_contact_opt['enable_audio'] == 'true') {
+       if($si_contact_opt['enable_audio_flash'] == 'true') {
         $parseUrl = parse_url($captcha_url_cf);
         $secureimage_url = $parseUrl['path'];
         $string .= '
@@ -452,7 +453,7 @@ $string = '
 			    <param name="bgcolor" value="#ffffff" />
 		</object>
               <br />';
-   }else{
+      }else{
          $string .= '<a href="'.$captcha_url_cf.'/securimage_play.php?ctf_form_num='.$form_id_num.'" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '">
@@ -461,6 +462,7 @@ $string = '
          $string .= '" ';
          $string .= ($si_contact_opt['audio_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['audio_image_style'] ).'"' : '';
          $string .= ' onclick="this.blur()" /></a><br />';
+      }
    }
 
          $string .= '<a href="#" title="';
@@ -721,6 +723,7 @@ function si_contact_get_options($form_num) {
          'captcha_small' => 'false',
          'captcha_difficulty' => 'medium',
          'captcha_no_trans' => 'false',
+         'enable_audio' => 'true',
          'enable_audio_flash' => 'false',
          'captcha_perm' => 'false',
          'captcha_perm_level' => 'read',
