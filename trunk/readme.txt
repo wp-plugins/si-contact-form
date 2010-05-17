@@ -295,6 +295,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Minor fix for XHTML Strict compliance
+
 = 2.5.6 =
 - (15 May 2010) - Made WP3 Compatible
 
