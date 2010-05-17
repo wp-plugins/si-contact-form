@@ -227,7 +227,7 @@ $string .=   '
 
  $this->ctf_submit_style = $this->si_contact_convert_css($si_contact_opt['button_style']);
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
-$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha,$form_id_num)."\n</div>\n<br clear=\"all\" />\n"  : '';
+$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha,$form_id_num)."\n</div>\n<div style=\"clear:both\"></div>\n"  : '';
 $string .= '
 <div '.$this->ctf_title_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
@@ -248,8 +248,8 @@ $string .= '
 ';
 if ($si_contact_opt['enable_credit_link'] == 'true') {
 $string .= '
-<p><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
-<br clear="all" />
+<p><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
+<br style="clear:both" />
 ';
 }
 $string .= '<!-- Fast and Secure Contact Form plugin end -->
