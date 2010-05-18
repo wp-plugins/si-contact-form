@@ -452,7 +452,7 @@ $string = '
 			    <param name="quality" value="high" />
 			    <param name="bgcolor" value="#ffffff" />
 		</object>
-              <br />';
+        <br />';
       }else{
          $string .= '<a href="'.$captcha_url_cf.'/securimage_play.php?ctf_form_num='.$form_id_num.'" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
@@ -476,6 +476,7 @@ $string = '
          $string .=  '" ';
          $string .= ($si_contact_opt['reload_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['reload_image_style'] ).'"' : '';
          $string .=  ' onclick="this.blur()" /></a>
+   </div>
 ';
 } else {
       $string .= $this->captchaRequiresError;
@@ -740,10 +741,10 @@ function si_contact_get_options($form_num) {
          'field_style' => 'text-align:left;',
          'field_div_style' => 'text-align:left;',
          'error_style' => 'color:red; text-align:left;',
-         'captcha_div_style' => 'width:215px; padding-top:5px; text-align:left; float:left;',
-         'captcha_image_style' => 'padding-bottom:10px; float:left; border-style:none; margin:0;',
-         'audio_image_style' => 'padding-top:2px; vertical-align:top; float:left; border-style:none; margin:0;',
-         'reload_image_style' => 'vertical-align:top; float:left; border-style:none; margin:0;',
+         'captcha_div_style' => 'width: 250px; height: 55px; padding-top:10px;',
+         'captcha_image_style' => 'border-style:none; margin:0; padding-right:5px; float:left;',
+         'audio_image_style' => 'border-style:none; margin:0; vertical-align:top;',
+         'reload_image_style' => 'border-style:none; margin:0; vertical-align:bottom;',
          'button_style' => 'margin:0; cursor:pointer;',
          'field_size' => '40',
          'captcha_field_size' => '6',
@@ -837,6 +838,33 @@ function si_contact_get_options($form_num) {
      }
   }
 
+  // reset captcha styles on version 2.5.7
+  if ( !isset($si_contact_gb['2.5.7']) ) {
+     $style_resets_arr = array('captcha_div_style','captcha_image_style','audio_image_style','reload_image_style');
+       foreach($style_resets_arr as $style_reset) {
+           $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
+       }
+       update_option("si_contact_form", $si_contact_opt);
+     for ($i = 2; $i <= $si_contact_max_forms; $i++) {
+       // get the options from the database
+       $si_contact_opt{$i} = get_option("si_contact_form$i");
+       foreach($style_resets_arr as $style_reset) {
+           $si_contact_opt{$i}[$style_reset] = $si_contact_option_defaults[$style_reset];
+       }
+       update_option("si_contact_form$i", $si_contact_opt{$i});
+       unset($si_contact_opt{$i});
+     }
+       $si_contact_opt = get_option("si_contact_form$form_num");
+       $si_contact_opt = array_merge($si_contact_option_defaults, $si_contact_opt);
+       foreach($si_contact_opt as $key => $val) {
+           $si_contact_opt[$key] = $this->ctf_stripslashes($val);
+       }
+      $si_contact_gb['2.5.7'] = 1;
+      update_option("si_contact_form_gb", $si_contact_gb);
+      $si_contact_gb = get_option("si_contact_form_gb");
+      $si_contact_gb = array_merge($si_contact_gb_defaults, $si_contact_gb);
+  }
+
 } // end function si_contact_get_options
 
 function si_contact_start_session() {
@@ -887,6 +915,7 @@ function si_contact_migrate2($si_contact_gb_defaults) {
    //print_r($new_options); exit;
    return $new_options;
 } //  end function si_contact_migrate2
+
 
 function get_captcha_url_cf() {
 

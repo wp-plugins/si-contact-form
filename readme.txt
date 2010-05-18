@@ -296,6 +296,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 - Minor fix for XHTML Strict compliance
+- Improve CAPTCHA CSS code
 
 = 2.5.6 =
 - (15 May 2010) - Made WP3 Compatible
