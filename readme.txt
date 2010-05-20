@@ -295,6 +295,7 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Fixed to allow HTML in extra field labels
 
 = 2.6 =
 - (19 May 2010) - Fix for XHTML Strict compliance
