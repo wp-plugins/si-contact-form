@@ -855,9 +855,9 @@ function si_contact_get_options($form_num) {
        foreach($style_resets_arr as $style_reset) {
            $si_contact_opt{$i}[$style_reset] = $si_contact_option_defaults[$style_reset];
        }
-       if($si_contact_opt{$i}['hidden_subject_enable'] == 'true')
+       if(isset($si_contact_opt{$i}['hidden_subject_enable']) && $si_contact_opt{$i}['hidden_subject_enable'] == 'true')
             $si_contact_opt{$i}['subject_type'] = 'not_available';
-       if($si_contact_opt{$i}['hidden_message_enable'] == 'true')
+       if(isset($si_contact_opt{$i}['hidden_message_enable']) && $si_contact_opt{$i}['hidden_message_enable'] == 'true')
             $si_contact_opt{$i}['message_type'] = 'not_available';
        update_option("si_contact_form$i", $si_contact_opt{$i});
        unset($si_contact_opt{$i});
