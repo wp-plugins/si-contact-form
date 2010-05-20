@@ -295,8 +295,16 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Minor fix for XHTML Strict compliance
-- Improve CAPTCHA CSS code
+
+= 2.6 =
+- (19 May 2010) - Fix for XHTML Strict compliance
+- Improved CAPTCHA CSS code (better alignment captcha, refresh, and audio images)
+- Added advanced options for date format on extra 'date' fields (mm/dd/yyyy, dd/mm/yyyy)
+- Added advanced options to set checkboxes with children (Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes)
+- Added advanced options to set a default selected item for select and radio fields.
+- Added advanced options to make name, email, subject, or message fields (not_available, not_required, or required)
+this feature can be used to make an anonymous comment form. Also can be used to disable name and email to make them reordered when using extra fields.
+- Updated Spanish (es_ES) - Translated by Sergio Torres
 
 = 2.5.6 =
 - (15 May 2010) - Made WP3 Compatible
