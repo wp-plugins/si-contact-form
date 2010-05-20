@@ -727,7 +727,7 @@ CalCell.prototype.onclick = function ()
 			owner.selectedDates = new Array(cell.date);
 			if(owner.tgt) //if there is a target element to place the value in, do so
 			{
-				owner.tgt.value = owner.selectedDates[0].dateFormat();
+				owner.tgt.value = owner.selectedDates[0].dateFormat(ctf_date_format);
 				if(owner.mode == 'popup') {
 					owner.hide();
 				}

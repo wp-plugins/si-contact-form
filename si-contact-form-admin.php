@@ -85,6 +85,8 @@
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb_defaults['max_forms'],
          'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 100 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb_defaults['max_fields'],
          );
+   if(isset($si_contact_gb['2.5.7'] ))
+                 $optionarray_gb_update['2.5.7'] = $si_contact_gb['2.5.7'];
 
    $optionarray_update = array(
          'welcome' =>             trim($_POST['si_contact_welcome']),  // can be empty
@@ -93,8 +95,10 @@
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : $si_contact_option_defaults['email_subject'],
          'email_subject_list' =>           trim($_POST['si_contact_email_subject_list']),
-         'hidden_subject_enable' =>  (isset( $_POST['si_contact_hidden_subject_enable'] ) ) ? 'true' : 'false',
-         'hidden_message_enable' =>  (isset( $_POST['si_contact_hidden_message_enable'] ) ) ? 'true' : 'false',
+         'name_type' =>             $_POST['si_contact_name_type'],
+         'email_type' =>            $_POST['si_contact_email_type'],
+         'subject_type' =>            $_POST['si_contact_subject_type'],
+         'message_type' =>          $_POST['si_contact_message_type'],
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'name_case_enable' => (isset( $_POST['si_contact_name_case_enable'] ) ) ? 'true' : 'false',
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
@@ -111,6 +115,7 @@
          'redirect_seconds' => ( is_numeric(trim($_POST['si_contact_redirect_seconds'])) && trim($_POST['si_contact_redirect_seconds']) < 61 ) ? absint(trim($_POST['si_contact_redirect_seconds'])) : $si_contact_option_defaults['redirect_seconds'],
          'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
+         'date_format' =>               $_POST['si_contact_date_format'],
          'req_field_indicator_enable' =>    (isset( $_POST['si_contact_req_field_indicator_enable'] ) ) ? 'true' : 'false',
          'form_style' =>          ( trim($_POST['si_contact_form_style']) != '' ) ? trim($_POST['si_contact_form_style']) : $si_contact_option_defaults['form_style'],
          'border_style' =>          ( trim($_POST['si_contact_border_style']) != '' ) ? trim($_POST['si_contact_border_style']) : $si_contact_option_defaults['border_style'],
@@ -163,9 +168,18 @@
 
     // optional extra fields
     for ($i = 1; $i <= $optionarray_gb_update['max_fields']; $i++) {
-        $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
         $optionarray_update['ex_field'.$i.'_label'] = trim($_POST['si_contact_ex_field'.$i.'_label']);
         $optionarray_update['ex_field'.$i.'_type'] = trim($_POST['si_contact_ex_field'.$i.'_type']);
+        $optionarray_update['ex_field'.$i.'_default'] = ( is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) > 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '1'; // use default if empty
+        $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
+        if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
+                $optionarray_update['ex_field'.$i.'_default'] = '1';
+        }
+        if ($optionarray_update['ex_field'.$i.'_label'] == '') {
+          $optionarray_update['ex_field'.$i.'_type'] = 'text';
+          $optionarray_update['ex_field'.$i.'_default'] = '1';
+          $optionarray_update['ex_field'.$i.'_req'] = 'false';
+        }
     }
 
     // deal with quotes
@@ -481,14 +495,6 @@ if ( $si_contact_opt['email_bcc'] != ''){
         </div>
         <br />
 
-        <input name="si_contact_hidden_subject_enable" id="si_contact_hidden_subject_enable" type="checkbox" <?php if( $si_contact_opt['hidden_subject_enable'] == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_contact_hidden_subject_enable" for="si_contact_hidden_subject_enable"><?php echo esc_html( __('Enable hidden E-mail subject (removes subject field from contact form).', 'si-contact-form')); ?></label>
-        <br />
-
-        <input name="si_contact_hidden_message_enable" id="si_contact_hidden_message_enable" type="checkbox" <?php if( $si_contact_opt['hidden_message_enable'] == 'true' ) echo 'checked="checked"'; ?> />
-        <label name="si_contact_hidden_message_enable" for="si_contact_hidden_message_enable"><?php echo esc_html( __('Enable hidden message (removes message field from contact form).', 'si-contact-form')); ?></label>
-        <br />
-
         <input name="si_contact_double_email" id="si_contact_double_email" type="checkbox" <?php if( $si_contact_opt['double_email'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_double_email" for="si_contact_double_email"><?php echo esc_html( __('Enable double E-mail entry required on contact form.', 'si-contact-form')); ?></label>
         <br />
@@ -613,13 +619,74 @@ foreach ($captcha_difficulty_array as $k => $v) {
        </div>
        <br />
 
+      <label for="si_contact_name_type"><?php echo esc_html(__('Name field:', 'si-contact-form')); ?></label>
+      <select id="si_contact_name_type" name="si_contact_name_type">
+<?php
+$name_type_array = array(
+'not_available' => esc_attr(__('Not Available', 'si-contact-form')),
+'not_required' => esc_attr(__('Not Required', 'si-contact-form')),
+'required' => esc_attr(__('Required', 'si-contact-form')),
+);
+$selected = '';
+foreach ($name_type_array as $k => $v) {
+ if ($si_contact_opt['name_type'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
+
+      <label for="si_contact_email_type"><?php echo esc_html(__('E-mail field:', 'si-contact-form')); ?></label>
+      <select id="si_contact_email_type" name="si_contact_email_type">
+<?php
+$selected = '';
+foreach ($name_type_array as $k => $v) {
+ if ($si_contact_opt['email_type'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
+
+      <label for="si_contact_subject_type"><?php echo esc_html(__('Subject field:', 'si-contact-form')); ?></label>
+      <select id="si_contact_subject_type" name="si_contact_subject_type">
+<?php
+$selected = '';
+foreach ($name_type_array as $k => $v) {
+ if ($si_contact_opt['subject_type'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
+
+
+      <label for="si_contact_message_type"><?php echo esc_html(__('Message field:', 'si-contact-form')); ?></label>
+      <select id="si_contact_message_type" name="si_contact_message_type">
+<?php
+$selected = '';
+foreach ($name_type_array as $k => $v) {
+ if ($si_contact_opt['message_type'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
+
        <strong><?php echo esc_html( __('Extra fields:', 'si-contact-form')); ?></strong>
 
       <label for="si_contact_max_fields"><?php echo esc_html( __('Number of available extra fields', 'si-contact-form')); ?>:</label><input name="si_contact_max_fields" id="si_contact_max_fields" type="text" value="<?php echo absint($si_contact_gb['max_fields']);  ?>" size="3" />
 
        <br />
        <?php echo esc_html( __('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form')); ?>
-       <?php echo esc_html( __('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue', 'si-contact-form')); ?>
+       <?php echo esc_html( __('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form')); ?>
+       <?php echo esc_html( __('To make "Green" the defult selection: set default to 2. (Default is for radio and select types).', 'si-contact-form')); ?>
+       <?php echo esc_html( __('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form')); ?>
+
        </div>
        <br />
       <?php
@@ -649,6 +716,9 @@ foreach ($field_type_array as $k => $v) {
 ?>
 </select>
 
+      <label for="<?php echo 'ex_field'.$i.'_default' ?>"><?php printf(__('Default:', 'si-contact-form'),$i); ?></label>
+       <input name="si_contact_<?php echo 'ex_field'.$i.'_default' ?>" id="si_contact_<?php echo 'ex_field'.$i.'_default' ?>" type="text" value="<?php echo $this->ctf_output_string(isset($si_contact_opt['ex_field'.$i.'_default']) ? $si_contact_opt['ex_field'.$i.'_default'] : 1);  ?>" size="2" />
+
        <input name="si_contact_<?php echo 'ex_field'.$i.'_req' ?>" id="<?php echo 'ex_field'.$i.'_req' ?>" type="checkbox" <?php if( $si_contact_opt['ex_field'.$i.'_req'] == 'true' ) echo 'checked="checked"'; ?> />
        <label for="si_contact_<?php echo 'ex_field'.$i.'_enable' ?>"><?php echo __('Required field', 'si-contact-form'); ?></label>
        <br />
@@ -656,6 +726,19 @@ foreach ($field_type_array as $k => $v) {
       <?php
       } // end foreach
       ?>
+
+      <label for="si_contact_date_format"><?php echo esc_html(__('Date format:', 'si-contact-form')); ?></label>
+      <select id="si_contact_date_format" name="si_contact_date_format">
+<?php
+$selected = '';
+foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
+ if ($si_contact_opt['date_format'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$k.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
 
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_credit_link"><?php echo esc_html( __('Enable plugin credit link:', 'si-contact-form')) ?></label> <small><?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>

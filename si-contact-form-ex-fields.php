@@ -5,6 +5,7 @@
            $ex_req_field_ind = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $req_field_ind : '';
            $ex_req_field_aria = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $this->ctf_aria_required : '';
            if(!$si_contact_opt['ex_field'.$i.'_type'] ) $si_contact_opt['ex_field'.$i.'_type'] = 'text';
+           if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '1';
 
           switch ($si_contact_opt['ex_field'.$i.'_type']) {
            case 'text':
@@ -27,7 +28,50 @@
                 <textarea '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" '.$ex_req_field_aria.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">' . $this->ctf_output_string(${'ex_field'.$i}) . '</textarea>
         </div>';
               break;
+
            case 'checkbox':
+
+$exf_opts_array = array();
+$exf_opts_label = '';
+$exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+if(preg_match("/,/", $exf_array_test) ) {
+       list($exf_opts_label, $value) = explode(",",$exf_array_test);
+       $exf_opts_label   = trim($exf_opts_label);
+       $value = trim($value);
+       if ($exf_opts_label != '' && $value != '') {
+          if(!preg_match("/;/", $value)) {
+               // error
+               $this->si_contact_error = 1;
+               $string .= $this->ctf_echo_if_error(__('Error: A checkbox field is not configured properly in settings.', 'si-contact-form'));
+          } else {
+               // multiple options
+               $exf_opts_array = explode(";",$value);
+         }
+      }
+
+  // checkbox children
+
+           $string .=   '
+        <div '.$this->ctf_title_style.'>
+          <label>' . esc_html( $exf_opts_label ).'</label>'."\n";
+
+     $ex_cnt = 1;
+  foreach ($exf_opts_array as $k) {
+
+     $string .=   '<br /><input type="checkbox" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
+                 if ( isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' )
+                    $string .= ' checked="checked" ';
+                 $string .= '/>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . esc_html( $k ).'</label>'."\n";
+     $ex_cnt++;
+  }
+
+   $string .=   '
+        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i})."\n";
+
+} else {
+
+  // single
 
                $string .=   '
         <div '.$this->ctf_title_style.'>
@@ -35,11 +79,14 @@
                  if ( ${'ex_field'.$i} == 'selected' )
                     $string .= ' checked="checked" ';
                  $string .= '/>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . esc_html( $si_contact_opt['ex_field'.$i.'_label'] ).'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . esc_html( $si_contact_opt['ex_field'.$i.'_label'] ).$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 ';
 
+} // end else
+
              break;
+             
            case 'select':
 
            // find the label and the options inside $si_contact_opt['ex_field'.$i.'_label']
@@ -75,11 +122,23 @@ if(!preg_match("/,/", $exf_array_test) ) {
                <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'">
         ';
 
+$exf_opts_ct = 1;
 $selected = '';
 foreach ($exf_opts_array as $k) {
- if (${'ex_field'.$i} == "$k")  $selected = ' selected="selected"';
+ if (${'ex_field'.$i} != '') {
+    if (${'ex_field'.$i} == "$k") {
+      $selected = ' selected="selected"';
+    }
+ }else{
+    if ($exf_opts_ct == $si_contact_opt['ex_field'.$i.'_default']) {
+      $selected = ' selected="selected"';
+    }
+ }
+
  $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
+ $exf_opts_ct++;
  $selected = '';
+
 }
 $string .= '</select>
         </div>';
@@ -113,13 +172,20 @@ if(!preg_match('/,/', $exf_array_test) ) {
 
            $string .=   '
         <div '.$this->ctf_title_style.'>
-         '.esc_html( $exf_opts_label ).$ex_req_field_ind.'
-        ';
+          <label>' . esc_html( $exf_opts_label ).$ex_req_field_ind.'</label>'."\n";
 
 $selected = '';
-$ex_cnt = 0;
+$ex_cnt = 1;
 foreach ($exf_opts_array as $k) {
- if (${'ex_field'.$i} == "$k")  $selected = ' checked="checked"';
+ if (${'ex_field'.$i} != '') {
+    if (${'ex_field'.$i} == "$k") {
+      $selected = ' checked="checked"';
+    }
+ }else{
+    if ($ex_cnt == $si_contact_opt['ex_field'.$i.'_default']) {
+      $selected = ' checked="checked"';
+    }
+ }
  $string .= '<br /><input type="radio" '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected.' />
  <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . esc_html( $k ).'</label>'."\n";
  $selected = '';
@@ -136,7 +202,7 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="';
-                $string .=   ( isset(${'ex_field'.$i}) && ${'ex_field'.$i} != '') ? $this->ctf_output_string(${'ex_field'.$i}): 'mm/dd/yyyy';
+                $string .=   ( isset(${'ex_field'.$i}) && ${'ex_field'.$i} != '') ? $this->ctf_output_string(${'ex_field'.$i}): $si_contact_opt['date_format'];
                 $string .=   '" '.$ex_req_field_aria.' size="15" />
         </div>';
 
@@ -164,6 +230,12 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 	var ctf_clearbtn_caption = \''.__('Clear', 'si-contact-form').'\';
 	var ctf_clearbtn_title = \''.__('Clears any dates selected on the calendar', 'si-contact-form').'\';
 	var ctf_maxrange_caption = \''.__('This is the maximum range', 'si-contact-form').'\';
+    var ctf_date_format = \'';
+ if($si_contact_opt['date_format'] == 'mm/dd/yyyy')
+      $string .=   'm/d/Y';
+  if($si_contact_opt['date_format'] == 'dd/mm/yyyy')
+      $string .=   'd/m/Y';
+ $string .= '\';
 </script>
 <script type="text/javascript" src="'.WP_PLUGIN_URL.'/si-contact-form/date/ctf_epoch_classes.js?'.time().'"></script>
 <script type="text/javascript">

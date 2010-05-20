@@ -18,32 +18,42 @@
     $mail_to    = ( isset($contacts[$cid]['EMAIL']) )   ? $this->ctf_clean_input($contacts[$cid]['EMAIL'])  : '';
     $to_contact = ( isset($contacts[$cid]['CONTACT']) ) ? $this->ctf_clean_input($contacts[$cid]['CONTACT']): '';
 
-    $name    = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_name']));
-    $email   = strtolower($this->ctf_clean_input($_POST['si_contact_email']));
-    if ($ctf_enable_double_email == 'true') {
-       $email2 = strtolower($this->ctf_clean_input($_POST['si_contact_email2']));
+    if ($si_contact_opt['name_type'] != 'not_available') {
+       if (isset($_POST['si_contact_name']))
+         $name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_name']));
     }
-    if ($si_contact_opt['hidden_subject_enable'] != 'true') {
+    if ($si_contact_opt['email_type'] != 'not_available') {
+       if (isset($_POST['si_contact_email']))
+         $email = strtolower($this->ctf_clean_input($_POST['si_contact_email']));
+       if ($ctf_enable_double_email == 'true') {
+         if (isset($_POST['si_contact_email2']))
+          $email2 = strtolower($this->ctf_clean_input($_POST['si_contact_email2']));
+       }
+    }
 
-      if(isset($_POST['si_contact_subject'])) {
+    if ($si_contact_opt['subject_type'] != 'not_available') {
+        if(isset($_POST['si_contact_subject'])) {
             $subject = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_subject']));
-      }else{
-         $sid = $this->ctf_clean_input($_POST['si_contact_subject_ID']);
-         if(empty($sid)) {
-             $this->si_contact_error = 1;
-             $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? esc_html($si_contact_opt['error_subject']) : esc_html( __('Selecting a subject is required.', 'si-contact-form') );
-         }
-         else if (empty($subjects) || !isset($subjects[$sid])) {
-             $this->si_contact_error = 1;
-             $si_contact_error_subject = __('Requested subject not found.', 'si-contact-form');
-         } else {
-             $subject = $this->ctf_clean_input($subjects[$sid]);
-         }
-      }
-    } // end if hidden  subject
+        }else{
+          if ($si_contact_opt['subject_type'] == 'required') {
+            $sid = $this->ctf_clean_input($_POST['si_contact_subject_ID']);
+            if(empty($sid)) {
+               $this->si_contact_error = 1;
+               $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? esc_html($si_contact_opt['error_subject']) : esc_html( __('Selecting a subject is required.', 'si-contact-form') );
+            }
+            else if (empty($subjects) || !isset($subjects[$sid])) {
+               $this->si_contact_error = 1;
+               $si_contact_error_subject = __('Requested subject not found.', 'si-contact-form');
+            } else {
+               $subject = $this->ctf_clean_input($subjects[$sid]);
+           }
+          }
+       }
+    }
 
-    if ($si_contact_opt['hidden_message_enable'] != 'true') {
-       $message = $this->ctf_clean_input($_POST['si_contact_message']);
+    if ($si_contact_opt['message_type'] != 'not_available') {
+       if (isset($_POST['si_contact_message']))
+         $message = $this->ctf_clean_input($_POST['si_contact_message']);
     }
     if ( $this->isCaptchaEnabled() ) {
      $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
@@ -76,47 +86,82 @@
       $message = $this->ctf_name_case($message);
    }
 
-   if(empty($name)) {
+   if(empty($name) && $si_contact_opt['name_type'] == 'required') {
        $this->si_contact_error = 1;
        $si_contact_error_name =  ($si_contact_opt['error_name'] != '') ? esc_html($si_contact_opt['error_name']) : esc_html( __('Your name is required.', 'si-contact-form') );
    }
-   if (!$this->ctf_validate_email($email)) {
-       $this->si_contact_error = 1;
-       $si_contact_error_email = ($si_contact_opt['error_email'] != '') ? esc_html($si_contact_opt['error_email']) : esc_html(  __('A proper e-mail address is required.', 'si-contact-form') );
-   }
-   if ($ctf_enable_double_email == 'true' && !$this->ctf_validate_email($email2)) {
-       $this->si_contact_error = 1;
-       $si_contact_error_email2 = ($si_contact_opt['error_email'] != '') ? esc_html($si_contact_opt['error_email']) : esc_html(  __('A proper e-mail address is required.', 'si-contact-form') );
-   }
-   if ($ctf_enable_double_email == 'true' && ($email != $email2) ) {
-       $this->si_contact_error = 1;
-       $si_contact_error_double_email = ($si_contact_opt['error_email2'] != '') ? esc_html($si_contact_opt['error_email2']) : esc_html(  __('The two e-mail addresses did not match, please enter again.', 'si-contact-form') );
+   if($si_contact_opt['email_type'] == 'required') {
+     if (!$this->ctf_validate_email($email)) {
+         $this->si_contact_error = 1;
+         $si_contact_error_email = ($si_contact_opt['error_email'] != '') ? esc_html($si_contact_opt['error_email']) : esc_html(  __('A proper e-mail address is required.', 'si-contact-form') );
+     }
+     if ($ctf_enable_double_email == 'true' && !$this->ctf_validate_email($email2)) {
+         $this->si_contact_error = 1;
+         $si_contact_error_email2 = ($si_contact_opt['error_email'] != '') ? esc_html($si_contact_opt['error_email']) : esc_html(  __('A proper e-mail address is required.', 'si-contact-form') );
+     }
+     if ($ctf_enable_double_email == 'true' && ($email != $email2)) {
+         $this->si_contact_error = 1;
+         $si_contact_error_double_email = ($si_contact_opt['error_email2'] != '') ? esc_html($si_contact_opt['error_email2']) : esc_html(  __('The two e-mail addresses did not match, please enter again.', 'si-contact-form') );
+     }
    }
 
    // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
-          ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
-          if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
-             $this->si_contact_error = 1;
-             ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
-          }
-        }
+          if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+             // see if checkbox children
+             $exf_opts_array = array();
+             $exf_opts_label = '';
+             $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+             if(preg_match("/,/", $exf_array_test) ) {
+                  list($exf_opts_label, $value) = explode(",",$exf_array_test);
+                  $exf_opts_label   = trim($exf_opts_label);
+                  $value = trim($value);
+                  if ($exf_opts_label != '' && $value != '') {
+                     if(!preg_match("/;/", $value)) {
+                        // error
+                        //$this->si_contact_error = 1;
+                        // $string .= $this->ctf_echo_if_error(__('Error: A checkbox field is not configured properly in settings.', 'si-contact-form'));
+                     } else {
+                        // multiple options
+                         $exf_opts_array = explode(";",$value);
+                     }
+                     $ex_cnt = 1;
+                    foreach ($exf_opts_array as $k) {
+                      ${'ex_field'.$i.'_'.$ex_cnt} = ( empty($_POST["si_contact_ex_field$i".'_'.$ex_cnt]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i".'_'.$ex_cnt]);
+                      $ex_cnt++;
+                    }
+                }
+             }else{
+                ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                    $this->si_contact_error = 1;
+                    ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
+                }
+             }
+           }else{  // end label'] == 'checkbox'
+                ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                  $this->si_contact_error = 1;
+                  ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
+                }
+           }
+        }  // end if label != ''
       } // end foreach
 
-   if ($si_contact_opt['hidden_subject_enable'] != 'true' && empty($subject)) {
+   if ($si_contact_opt['subject_type'] == 'required' && empty($subject)) {
        $this->si_contact_error = 1;
        if (count($subjects) == 0) {
          $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? esc_html($si_contact_opt['error_subject']) : esc_html(  __('Subject text is required.', 'si-contact-form') );
        }
    }
-   if($si_contact_opt['hidden_message_enable'] != 'true' &&  empty($message)) {
+   if($si_contact_opt['message_type'] == 'required' &&  empty($message)) {
        $this->si_contact_error = 1;
        $si_contact_error_message = ($si_contact_opt['error_message'] != '') ? esc_html($si_contact_opt['error_message']) : esc_html(  __('Message text is required.', 'si-contact-form') );
    }
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
-   if($si_contact_opt['hidden_message_enable'] != 'true' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
+   if($si_contact_opt['message_type'] != 'not_available' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
 			global $akismet_api_host, $akismet_api_port;
 			$c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 			$c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
@@ -189,26 +234,56 @@ echo "</pre>\n";*/
      if (!defined('PHP_EOL'))
            define ('PHP_EOL', strtoupper(substr(PHP_OS,0,3) == 'WIN') ? "\r\n" : "\n");
 
-     if(isset($_POST['si_contact_subject'])) {
-          $subj = ($si_contact_opt['hidden_subject_enable'] == 'true') ? $si_contact_opt['email_subject'] : $si_contact_opt['email_subject'] ." $subject";
+     if($subject != '') {
+          $subj = $si_contact_opt['email_subject'] ." $subject";
      }else{
-          $subj = ($si_contact_opt['hidden_subject_enable'] == 'true') ? $si_contact_opt['email_subject'] : $subject;
+          $subj = $si_contact_opt['email_subject'];
      }
 
-     $msg = __('To', 'si-contact-form').": $to_contact\n\n".__('From', 'si-contact-form').":\n$name\n$email\n\n";
+     $msg =  __('To', 'si-contact-form').": $to_contact\n\n";
+     if ($name != '' || $email != '')
+         $msg .= __('From', 'si-contact-form').":\n$name\n$email\n\n";
 
      // optional extra fields
      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
-        if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && !empty(${'ex_field'.$i}) ) {
+        if ( $si_contact_opt['ex_field'.$i.'_label'] != '' ) {
            if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
               list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
               $msg .= $exf_opts_label."\n${'ex_field'.$i}\n\n";
+           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+              $exf_opts_array = array();
+              $exf_opts_label = '';
+              $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+             if(preg_match("/,/", $exf_array_test) ) {
+                  list($exf_opts_label, $value) = explode(",",$exf_array_test);
+                  $exf_opts_label   = trim($exf_opts_label);
+                 $value = trim($value);
+                 if ($exf_opts_label != '' && $value != '') {
+                     if(!preg_match("/;/", $value)) {
+                        // error
+                        //A checkbox field is not configured properly in settings.
+                     } else {
+                         // multiple options
+                         $exf_opts_array = explode(";",$value);
+                     }
+                     $msg .= $exf_opts_label."\n";
+                    // loop
+                    $ex_cnt = 1;
+                    foreach ($exf_opts_array as $k) {
+                     $msg .= ' * '.$k."\n";
+                     $ex_cnt++;
+                    }
+                   $msg .= "\n";
+                }
+             } else {
+                 $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n${'ex_field'.$i}\n\n";
+             }
            } else {
               $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n${'ex_field'.$i}\n\n";
            }
        }
     }
-    if ($si_contact_opt['hidden_message_enable'] != 'true') {
+    if ($message != '') {
         $msg .= __('Message', 'si-contact-form').":\n$message\n\n";
     }
 
@@ -233,9 +308,12 @@ echo "</pre>\n";*/
 
     $header = '';
     // prepare the email header
-    if ($ctf_email_on_this_domain != '') {
+    if ($ctf_email_on_this_domain != '' ) {
          // $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
          $this->si_contact_mail_from = $ctf_email_on_this_domain;
+         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
+    } else if($email == '' || $name == '') {
+         $this->si_contact_mail_from = get_option('admin_email');
          add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
     } else {
          // $header = "From: $name <$email>" . PHP_EOL;
@@ -247,8 +325,10 @@ echo "</pre>\n";*/
 
     if ($ctf_email_address_bcc !='')
             $header .= "Bcc: " . $ctf_email_address_bcc . PHP_EOL;
-    $header .= "Reply-To: $email" . PHP_EOL;
-    $header .= "Return-Path: $email" . PHP_EOL;
+    if($email != '') {
+       $header .= "Reply-To: $email" . PHP_EOL;
+       $header .= "Return-Path: $email" . PHP_EOL;
+    }
 
     /* almost made X-Priority: 1 an option but class-phpmailer.php already sets X-Priority: 3.
        It is hard coded to do that. So you would have both 1 and 3 in the mail header and I cannot do that. */

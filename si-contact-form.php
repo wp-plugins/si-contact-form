@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 2.5.6
+Version: 2.6
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -714,8 +714,10 @@ function si_contact_get_options($form_num) {
          'email_bcc' => '',
          'email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
          'email_subject_list' => '',
-         'hidden_subject_enable' => 'false',
-         'hidden_message_enable' => 'false',
+         'name_type' => 'required',
+         'email_type' => 'required',
+         'subject_type' => 'required',
+         'message_type' => 'required',
          'double_email' => 'false',
          'name_case_enable' => 'false',
          'domain_protect' => 'true',
@@ -731,6 +733,7 @@ function si_contact_get_options($form_num) {
          'redirect_enable' => 'true',
          'redirect_seconds' => '3',
          'redirect_url' => 'index.php',
+         'date_format' => 'mm/dd/yyyy',
          'req_field_indicator_enable' => 'true',
          'border_enable' => 'false',
          'form_style' => 'width:375px;',
@@ -784,6 +787,7 @@ function si_contact_get_options($form_num) {
 
    // optional extra fields
   for ($i = 1; $i <= $si_contact_gb_defaults['max_fields']; $i++) {
+        $si_contact_option_defaults['ex_field'.$i.'_default'] = '1';
         $si_contact_option_defaults['ex_field'.$i.'_req'] = 'false';
         $si_contact_option_defaults['ex_field'.$i.'_label'] = '';
         $si_contact_option_defaults['ex_field'.$i.'_type'] = 'text';
@@ -851,6 +855,10 @@ function si_contact_get_options($form_num) {
        foreach($style_resets_arr as $style_reset) {
            $si_contact_opt{$i}[$style_reset] = $si_contact_option_defaults[$style_reset];
        }
+       if($si_contact_opt{$i}['hidden_subject_enable'] == 'true')
+            $si_contact_opt{$i}['subject_type'] = 'not_available';
+       if($si_contact_opt{$i}['hidden_message_enable'] == 'true')
+            $si_contact_opt{$i}['message_type'] = 'not_available';
        update_option("si_contact_form$i", $si_contact_opt{$i});
        unset($si_contact_opt{$i});
      }
