@@ -270,16 +270,19 @@ echo "</pre>\n";*/
                     // loop
                     $ex_cnt = 1;
                     foreach ($exf_opts_array as $k) {
-                     $msg .= ' * '.$k."\n";
+                     if(${'ex_field'.$i.'_'.$ex_cnt} == 'selected')
+                       $msg .= ' * '.$k."\n";
                      $ex_cnt++;
                     }
                    $msg .= "\n";
                 }
              } else {
-                 $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n${'ex_field'.$i}\n\n";
+                 if(${'ex_field'.$i} == 'selected')
+                   $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('selected', 'si-contact-form')."\n\n";
              }
            } else {
-              $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n${'ex_field'.$i}\n\n";
+              if(${'ex_field'.$i} == 'selected')
+                $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('selected', 'si-contact-form')."\n\n";  
            }
        }
     }

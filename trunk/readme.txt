@@ -295,6 +295,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.6.1 =
+- (19 May 2010) - Fixed bug: all checkboxes appeared selected in the email 
 - Fixed to allow HTML in extra field labels
 
 = 2.6 =
