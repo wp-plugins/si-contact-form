@@ -281,7 +281,9 @@ echo "</pre>\n";*/
                    $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('selected', 'si-contact-form')."\n\n";
              }
            } else {  // text, textarea, date
-                $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n".${'ex_field'.$i}."\n\n";
+               if(${'ex_field'.$i} != ''){
+                   $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n".${'ex_field'.$i}."\n\n";
+               }
            }
        }
     }
