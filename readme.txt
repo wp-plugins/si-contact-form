@@ -295,6 +295,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.6.2 =
+- (21 May 2010) - Fixed major bug: All text and textarea fields were missing from email. Sorry for the inconvenience.
+
 = 2.6.1 =
 - (19 May 2010) - Fixed bug: all checkboxes appeared selected in the email 
 - Fixed to allow HTML in extra field labels

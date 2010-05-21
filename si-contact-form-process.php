@@ -269,20 +269,19 @@ echo "</pre>\n";*/
                      $msg .= $exf_opts_label."\n";
                     // loop
                     $ex_cnt = 1;
-                    foreach ($exf_opts_array as $k) {
+                    foreach ($exf_opts_array as $k) {  // checkbox multi
                      if(${'ex_field'.$i.'_'.$ex_cnt} == 'selected')
                        $msg .= ' * '.$k."\n";
                      $ex_cnt++;
                     }
                    $msg .= "\n";
                 }
-             } else {
+             } else {  // checkbox single
                  if(${'ex_field'.$i} == 'selected')
                    $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('selected', 'si-contact-form')."\n\n";
              }
-           } else {
-              if(${'ex_field'.$i} == 'selected')
-                $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('selected', 'si-contact-form')."\n\n";  
+           } else {  // text, textarea, date
+                $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n".${'ex_field'.$i}."\n\n";
            }
        }
     }
