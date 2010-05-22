@@ -87,6 +87,8 @@
          );
    if(isset($si_contact_gb['2.5.7'] ))
                  $optionarray_gb_update['2.5.7'] = $si_contact_gb['2.5.7'];
+   if(isset($si_contact_gb['2.6.3'] ))
+                 $optionarray_gb_update['2.6.3'] = $si_contact_gb['2.6.3'];
 
    $optionarray_update = array(
          'welcome' =>             trim($_POST['si_contact_welcome']),  // can be empty
@@ -170,14 +172,14 @@
     for ($i = 1; $i <= $optionarray_gb_update['max_fields']; $i++) {
         $optionarray_update['ex_field'.$i.'_label'] = trim($_POST['si_contact_ex_field'.$i.'_label']);
         $optionarray_update['ex_field'.$i.'_type'] = trim($_POST['si_contact_ex_field'.$i.'_type']);
-        $optionarray_update['ex_field'.$i.'_default'] = ( is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) > 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '1'; // use default if empty
+        $optionarray_update['ex_field'.$i.'_default'] = ( is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
         if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
                 $optionarray_update['ex_field'.$i.'_default'] = '1';
         }
         if ($optionarray_update['ex_field'.$i.'_label'] == '') {
           $optionarray_update['ex_field'.$i.'_type'] = 'text';
-          $optionarray_update['ex_field'.$i.'_default'] = '1';
+          $optionarray_update['ex_field'.$i.'_default'] = '0';
           $optionarray_update['ex_field'.$i.'_req'] = 'false';
         }
     }
@@ -684,7 +686,7 @@ foreach ($name_type_array as $k => $v) {
        <br />
        <?php echo esc_html( __('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form')); ?>
        <?php echo esc_html( __('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form')); ?>
-       <?php echo esc_html( __('To make "Green" the defult selection: set default to 2. (Default is for radio and select types).', 'si-contact-form')); ?>
+       <?php echo esc_html( __('To make "Green" the defult selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form')); ?>
        <?php echo esc_html( __('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form')); ?>
 
        </div>
@@ -717,7 +719,7 @@ foreach ($field_type_array as $k => $v) {
 </select>
 
       <label for="<?php echo 'ex_field'.$i.'_default' ?>"><?php printf(__('Default:', 'si-contact-form'),$i); ?></label>
-       <input name="si_contact_<?php echo 'ex_field'.$i.'_default' ?>" id="si_contact_<?php echo 'ex_field'.$i.'_default' ?>" type="text" value="<?php echo $this->ctf_output_string(isset($si_contact_opt['ex_field'.$i.'_default']) ? $si_contact_opt['ex_field'.$i.'_default'] : 1);  ?>" size="2" />
+       <input name="si_contact_<?php echo 'ex_field'.$i.'_default' ?>" id="si_contact_<?php echo 'ex_field'.$i.'_default' ?>" type="text" value="<?php echo $this->ctf_output_string(isset($si_contact_opt['ex_field'.$i.'_default']) ? $si_contact_opt['ex_field'.$i.'_default'] : 0);  ?>" size="2" />
 
        <input name="si_contact_<?php echo 'ex_field'.$i.'_req' ?>" id="<?php echo 'ex_field'.$i.'_req' ?>" type="checkbox" <?php if( $si_contact_opt['ex_field'.$i.'_req'] == 'true' ) echo 'checked="checked"'; ?> />
        <label for="si_contact_<?php echo 'ex_field'.$i.'_enable' ?>"><?php echo __('Required field', 'si-contact-form'); ?></label>

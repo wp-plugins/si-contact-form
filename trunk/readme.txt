@@ -295,6 +295,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Fixed so checkboxes can have default selected
+
 = 2.6.2 =
 - (21 May 2010) - Fixed major bug: All text and textarea extra fields were missing from email. Sorry for the inconvenience. There are so many who use it,  I updated it right away.
 
