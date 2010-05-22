@@ -76,8 +76,15 @@ if(preg_match("/,/", $exf_array_test) ) {
                $string .=   '
         <div '.$this->ctf_title_style.'>
             <input type="checkbox" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
-                 if ( ${'ex_field'.$i} == 'selected' )
-                    $string .= ' checked="checked" ';
+    if (${'ex_field'.$i} != '') {
+      if (${'ex_field'.$i} == 'selected') {
+         $string .= ' checked="checked" ';
+      }
+    }else{
+      if ($si_contact_opt['ex_field'.$i.'_default'] == '1') {
+         $string .= ' checked="checked" ';
+      }
+    }
                  $string .= '/>
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
