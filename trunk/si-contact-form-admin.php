@@ -175,7 +175,7 @@
         $optionarray_update['ex_field'.$i.'_default'] = ( is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
         if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
-                $optionarray_update['ex_field'.$i.'_default'] = '1';
+                $optionarray_update['ex_field'.$i.'_default'] = '0';
         }
         if ($optionarray_update['ex_field'.$i.'_label'] == '') {
           $optionarray_update['ex_field'.$i.'_type'] = 'text';
