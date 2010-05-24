@@ -81,7 +81,7 @@ if(preg_match("/,/", $exf_array_test) ) {
          $string .= ' checked="checked" ';
       }
     }else{
-      if ($si_contact_opt['ex_field'.$i.'_default'] == '1') {
+      if (!isset($_POST['si_contact_action']) && $si_contact_opt['ex_field'.$i.'_default'] == '1') {
          $string .= ' checked="checked" ';
       }
     }
