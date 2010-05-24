@@ -249,7 +249,7 @@
 <a href="http://wordpress.org/tags/si-contact-form?forum_id=10" target="_blank"><?php echo esc_html( __('Support', 'si-contact-form')); ?></a> |
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141" target="_blank"><?php echo esc_html( __('Donate', 'si-contact-form')); ?></a> |
 <a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php echo esc_html( __('Free PHP Scripts', 'si-contact-form')); ?></a> |
-<a href="http://www.642weather.com/weather/contact_us.php" target="_blank"><?php echo esc_html( __('Contact', 'si-contact-form')); ?> Mike Challis</a>
+<a href="http://www.642weather.com/weather/wxblog/support/" target="_blank"><?php echo esc_html( __('Contact', 'si-contact-form')); ?> Mike Challis</a>
 </p>
 
 <?php
