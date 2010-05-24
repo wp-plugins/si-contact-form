@@ -296,6 +296,8 @@ No setting necessary, it just works.
 == Changelog ==
 
 - Fixed so checkboxes can have default selected
+- Fixed HTML5 compatible(with CAPTCHA flash audio off)
+- Fixed required indicator now has proper class `<span class="required">*</span>` 
 
 = 2.6.2 =
 - (21 May 2010) - Fixed major bug: All text and textarea extra fields were missing from email. Sorry for the inconvenience. There are so many who use it,  I updated it right away.
