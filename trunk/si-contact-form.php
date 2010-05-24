@@ -314,7 +314,7 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
       ${'si_contact_error_ex_field'.$i} = '';
    }
 }
-$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '*' : '';
+$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">*</span>' : '';
 $si_contact_error_captcha = '';
 $si_contact_error_contact = '';
 $si_contact_error_name    = '';
@@ -399,7 +399,7 @@ function captchaCheckRequires() {
 // this function adds the captcha to the contact form
 function addCaptchaToContactForm($si_contact_error_captcha,$form_id_num) {
    global $user_ID, $captcha_url_cf, $si_contact_opt;
-   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '*' : '';
+   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">*</span>' : '';
 
   $string = '';
 
@@ -445,7 +445,7 @@ $string = '
         $string .= '
         <object type="application/x-shockwave-flash"
                 data="'.$secureimage_url.'/securimage_play.swf?ctf_form_num='.$form_id_num.'&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5&amp;audio='.$secureimage_url.'/securimage_play.php?ctf_form_num='.$form_id_num.'"
-                id="SecurImage_as3_'.$form_id_num.'" width="19" height="19" align="middle">
+                id="SecurImage_as3_'.$form_id_num.'" width="19" height="19">
 			    <param name="allowScriptAccess" value="sameDomain" />
 			    <param name="allowFullScreen" value="false" />
 			    <param name="movie" value="'.$secureimage_url.'/securimage_play.swf?ctf_form_num='.$form_id_num.'&amp;bgColor1=#8E9CB6&amp;bgColor2=#fff&amp;iconColor=#000&amp;roundedCorner=5&amp;audio='.$secureimage_url.'/securimage_play.php?ctf_form_num='.$form_id_num.'" />
