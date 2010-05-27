@@ -860,7 +860,7 @@ foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
          echo '<br />'. sprintf(__('(form %d)', 'si-contact-form'),$form_id);
          ?></th>
         <td>
-        <label for="si_contact_tooltip_required"><?php echo esc_html( __('(*denotes required field)', 'si-contact-form')); ?></label><input name="si_contact_tooltip_required" id="si_contact_tooltip_required" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_required']);  ?>" size="50" /><br />
+        <label for="si_contact_tooltip_required"><?php echo esc_html( __('(denotes required field)', 'si-contact-form')); ?></label><input name="si_contact_tooltip_required" id="si_contact_tooltip_required" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_required']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_captcha"><?php echo esc_html( __('CAPTCHA Image', 'si-contact-form')); ?></label><input name="si_contact_tooltip_captcha" id="si_contact_tooltip_captcha" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_captcha']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_audio"><?php echo esc_html( __('CAPTCHA Audio', 'si-contact-form')); ?></label><input name="si_contact_tooltip_audio" id="si_contact_tooltip_audio" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_audio']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_refresh"><?php echo esc_html( __('Refresh Image', 'si-contact-form')); ?></label><input name="si_contact_tooltip_refresh" id="si_contact_tooltip_refresh" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_refresh']);  ?>" size="50" />
