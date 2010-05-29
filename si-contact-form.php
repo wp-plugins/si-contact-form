@@ -244,7 +244,7 @@ $ctf_thank_you = '
 if ($si_contact_opt['text_message_sent'] != '') {
         $ctf_thank_you .= $si_contact_opt['text_message_sent'];
 } else {
-        $ctf_thank_you .= esc_html(__('Your message has been sent, thank you.', 'si-contact-form'));
+        $ctf_thank_you .= __('Your message has been sent, thank you.', 'si-contact-form');
 }
 $ctf_thank_you .= '
 </p>
@@ -276,7 +276,7 @@ EOT;
 
 $ctf_thank_you .= '
 <img src="'.$wp_plugin_url.'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
-'.esc_html( __('Redirecting', 'si-contact-form')).' ... ';
+'.__('Redirecting', 'si-contact-form').' ... ';
 
 
 // do not remove the above EOT line
@@ -429,7 +429,7 @@ if ($this->captchaCheckRequires()) {
 $string = '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_captcha_code'.$form_id_num.'">';
-     $string .= ($si_contact_opt['title_capt'] != '') ? esc_html( $si_contact_opt['title_capt'] ) : esc_html( __('CAPTCHA Code', 'si-contact-form')).':';
+     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':';
      $string .= $req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_captcha).'
         <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>
@@ -499,7 +499,7 @@ function ctf_echo_if_error($this_error){
   if ($this->si_contact_error) {
     if (!empty($this_error)) {
          return '
-         <div '.$this->ctf_error_style.'>'.esc_html($this_error) . '</div>'."\n";
+         <div '.$this->ctf_error_style.'>'. $this_error . '</div>'."\n";
     }
   }
 } // end function ctf_echo_if_error
@@ -681,7 +681,7 @@ function si_contact_plugin_action_links( $links, $file ) {
 	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
 	if ( $file == $this_plugin ){
-        $settings_link = '<a href="plugins.php?page=si-contact-form/si-contact-form.php">' . esc_html( __( 'Settings', 'si-contact-form' ) ) . '</a>';
+        $settings_link = '<a href="plugins.php?page=si-contact-form/si-contact-form.php">' . __( 'Settings', 'si-contact-form' ) . '</a>';
 	    array_unshift( $links, $settings_link ); // before other links
 	}
 	return $links;

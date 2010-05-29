@@ -6,7 +6,7 @@
     $cid = $this->ctf_clean_input($_POST['si_contact_CID']);
     if(empty($cid)) {
        $this->si_contact_error = 1;
-       $si_contact_error_contact = ($si_contact_opt['error_contact_select'] != '') ? esc_html($si_contact_opt['error_contact_select']) : esc_html( __('Selecting a contact is required.', 'si-contact-form') );
+       $si_contact_error_contact = ($si_contact_opt['error_contact_select'] != '') ? $si_contact_opt['error_contact_select'] : __('Selecting a contact is required.', 'si-contact-form');
     }
     else if (!isset($contacts[$cid]['CONTACT'])) {
         $this->si_contact_error = 1;
@@ -39,7 +39,7 @@
             $sid = $this->ctf_clean_input($_POST['si_contact_subject_ID']);
             if(empty($sid)) {
                $this->si_contact_error = 1;
-               $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? esc_html($si_contact_opt['error_subject']) : esc_html( __('Selecting a subject is required.', 'si-contact-form') );
+               $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? $si_contact_opt['error_subject'] : __('Selecting a subject is required.', 'si-contact-form');
             }
             else if (empty($subjects) || !isset($subjects[$sid])) {
                $this->si_contact_error = 1;
@@ -88,20 +88,20 @@
 
    if(empty($name) && $si_contact_opt['name_type'] == 'required') {
        $this->si_contact_error = 1;
-       $si_contact_error_name =  ($si_contact_opt['error_name'] != '') ? esc_html($si_contact_opt['error_name']) : esc_html( __('Your name is required.', 'si-contact-form') );
+       $si_contact_error_name =  ($si_contact_opt['error_name'] != '') ? $si_contact_opt['error_name'] : __('Your name is required.', 'si-contact-form');
    }
    if($si_contact_opt['email_type'] == 'required') {
      if (!$this->ctf_validate_email($email)) {
          $this->si_contact_error = 1;
-         $si_contact_error_email = ($si_contact_opt['error_email'] != '') ? esc_html($si_contact_opt['error_email']) : esc_html(  __('A proper e-mail address is required.', 'si-contact-form') );
+         $si_contact_error_email = ($si_contact_opt['error_email'] != '') ? $si_contact_opt['error_email'] : __('A proper e-mail address is required.', 'si-contact-form');
      }
      if ($ctf_enable_double_email == 'true' && !$this->ctf_validate_email($email2)) {
          $this->si_contact_error = 1;
-         $si_contact_error_email2 = ($si_contact_opt['error_email'] != '') ? esc_html($si_contact_opt['error_email']) : esc_html(  __('A proper e-mail address is required.', 'si-contact-form') );
+         $si_contact_error_email2 = ($si_contact_opt['error_email'] != '') ? $si_contact_opt['error_email'] : __('A proper e-mail address is required.', 'si-contact-form');
      }
      if ($ctf_enable_double_email == 'true' && ($email != $email2)) {
          $this->si_contact_error = 1;
-         $si_contact_error_double_email = ($si_contact_opt['error_email2'] != '') ? esc_html($si_contact_opt['error_email2']) : esc_html(  __('The two e-mail addresses did not match, please enter again.', 'si-contact-form') );
+         $si_contact_error_double_email = ($si_contact_opt['error_email2'] != '') ? $si_contact_opt['error_email2'] : __('The two e-mail addresses did not match, please enter again.', 'si-contact-form');
      }
    }
 
@@ -136,14 +136,14 @@
                 ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
                 if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
                     $this->si_contact_error = 1;
-                    ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
+                    ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
                 }
              }
            }else{  // end label'] == 'checkbox'
                 ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
                 if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
                   $this->si_contact_error = 1;
-                  ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? esc_html($si_contact_opt['error_field']) : esc_html(  __('This field is required.', 'si-contact-form') );
+                  ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
                 }
            }
         }  // end if label != ''
@@ -152,12 +152,12 @@
    if ($si_contact_opt['subject_type'] == 'required' && empty($subject)) {
        $this->si_contact_error = 1;
        if (count($subjects) == 0) {
-         $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? esc_html($si_contact_opt['error_subject']) : esc_html(  __('Subject text is required.', 'si-contact-form') );
+         $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? $si_contact_opt['error_subject'] : __('Subject text is required.', 'si-contact-form');
        }
    }
    if($si_contact_opt['message_type'] == 'required' &&  empty($message)) {
        $this->si_contact_error = 1;
-       $si_contact_error_message = ($si_contact_opt['error_message'] != '') ? esc_html($si_contact_opt['error_message']) : esc_html(  __('Message text is required.', 'si-contact-form') );
+       $si_contact_error_message = ($si_contact_opt['error_message'] != '') ? $si_contact_opt['error_message'] : __('Message text is required.', 'si-contact-form');
    }
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
@@ -185,7 +185,7 @@
 			$response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
 			if ( 'true' == $response[1] ) {
                 $this->si_contact_error = 1; // Akismet says it is spam.
-                $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? esc_html($si_contact_opt['error_input']) : esc_html( __('Contact Form has Invalid Input', 'si-contact-form') );
+                $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Contact Form has Invalid Input', 'si-contact-form');
 			}
     } // end if(function_exists('akismet_http_post')){
 
@@ -209,7 +209,7 @@ echo "</pre>\n";*/
     }else{
        if (empty($captcha_code) || $captcha_code == '') {
          $this->si_contact_error = 1;
-         $si_contact_error_captcha = ($si_contact_opt['error_captcha_blank'] != '') ? esc_html($si_contact_opt['error_captcha_blank']) : esc_html( __('Please complete the CAPTCHA.', 'si-contact-form') );
+         $si_contact_error_captcha = ($si_contact_opt['error_captcha_blank'] != '') ? $si_contact_opt['error_captcha_blank'] : __('Please complete the CAPTCHA.', 'si-contact-form');
        } else {
          require_once "$captcha_path_cf/securimage.php";
          $img = new Securimage();
@@ -220,7 +220,7 @@ echo "</pre>\n";*/
              // ok can continue
          } else {
               $this->si_contact_error = 1;
-              $si_contact_error_captcha = ($si_contact_opt['error_captcha_wrong'] != '') ? esc_html($si_contact_opt['error_captcha_wrong']) : esc_html( __('That CAPTCHA was incorrect.', 'si-contact-form') );
+              $si_contact_error_captcha = ($si_contact_opt['error_captcha_wrong'] != '') ? $si_contact_opt['error_captcha_wrong'] : __('That CAPTCHA was incorrect.', 'si-contact-form');
          }
     }
    }
