@@ -396,10 +396,20 @@ function captchaCheckRequires() {
   return true;
 }
 
+function ctf_sfc_filter($classes) {
+$classes[] = 'ctf-captcha';
+return $classes;
+}
+
+
 // this function adds the captcha to the contact form
 function addCaptchaToContactForm($si_contact_error_captcha,$form_id_num) {
    global $user_ID, $captcha_url_cf, $si_contact_opt;
    $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">*</span>' : '';
+
+// fix for simple facebook connect plugin
+// http://wordpress.org/support/topic/402560
+add_filter('sfc_img_exclude',array(&$this,'ctf_sfc_filter'),1);
 
   $string = '';
 
@@ -427,7 +437,7 @@ $string = '
         </div>
 
 <div style="'.$si_contact_opt['captcha_div_style'].'">
-         <img id="si_image_ctf'.$form_id_num.'" ';
+         <img class="ctf-captcha" id="si_image_ctf'.$form_id_num.'" ';
          $string .= ($si_contact_opt['captcha_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['captcha_image_style'] ).'"' : '';
          $string .= ' src="'.$captcha_url_cf.'/'.$captcha_level_file.'?';
          if($si_contact_opt['captcha_small'] == 'true')

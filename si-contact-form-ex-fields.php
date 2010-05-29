@@ -5,7 +5,7 @@
            $ex_req_field_ind = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $req_field_ind : '';
            $ex_req_field_aria = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $this->ctf_aria_required : '';
            if(!$si_contact_opt['ex_field'.$i.'_type'] ) $si_contact_opt['ex_field'.$i.'_type'] = 'text';
-           if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '1';
+           if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '0';
 
           switch ($si_contact_opt['ex_field'.$i.'_type']) {
            case 'text':
@@ -72,17 +72,16 @@ if(preg_match("/,/", $exf_array_test) ) {
 } else {
 
   // single
-
                $string .=   '
         <div '.$this->ctf_title_style.'>
             <input type="checkbox" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
     if (${'ex_field'.$i} != '') {
       if (${'ex_field'.$i} == 'selected') {
-         $string .= ' checked="checked" ';
+         $string .= 'checked="checked" ';
       }
     }else{
       if (!isset($_POST['si_contact_action']) && $si_contact_opt['ex_field'.$i.'_default'] == '1') {
-         $string .= ' checked="checked" ';
+         $string .= 'checked="checked" ';
       }
     }
                  $string .= '/>
