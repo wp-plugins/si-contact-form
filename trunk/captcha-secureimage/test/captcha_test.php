@@ -215,11 +215,11 @@ function echo_if_error($this_error){
 
 <p>PHP Scripts by Mike Challis<br />
 <a href="http://www.642weather.com/weather/scripts.php">Free PHP Scripts</a><br />
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=2319642">Donate</a>, even small amounts are appreciated
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8086141">Donate</a>, even small amounts are appreciated
 <br />
 <br />
-Contact me: <a href="http://www.642weather.com/weather/contact_us.php">(Mike Challis)</a><br />
-I will need to know this information: (fill in this information on my contact form)<br />
+Contact me: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a><br />
+I will need to know this information: (fill in this information on my support form)<br />
 Plugin: Fast and Secure Contact Form<br />
 Plugin Version:<br />
 Your web site URL:<br />
