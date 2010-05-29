@@ -295,29 +295,31 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Fixed so checkboxes can have default selected
-- Fixed HTML5 compatible(with CAPTCHA flash audio off)
-- Fixed required indicator now has proper class `<span class="required">*</span>` 
+- Fixed so checkboxes can have default selected.
+- Fixed HTML5 compatible(with CAPTCHA flash audio off).
+- Fixed required indicator now has proper class `<span class="required">*</span>`. 
+- Fixed syntax bug on extra 'date' fields.
+- Fixed for Simple Facebook Connect compatibility (fixes broken CAPTCHA caused by SFC Like and Share plugins).
 
 = 2.6.2 =
 - (21 May 2010) - Fixed major bug: All text and textarea extra fields were missing from email. Sorry for the inconvenience. There are so many who use it,  I updated it right away.
 
 = 2.6.1 =
-- (19 May 2010) - Fixed bug: all checkboxes appeared selected in the email 
-- Fixed to allow HTML in extra field labels
+- (19 May 2010) - Fixed bug: all checkboxes appeared selected in the email. 
+- Fixed to allow HTML in extra field labels.
 
 = 2.6 =
-- (19 May 2010) - Fix for XHTML Strict compliance
-- Improved CAPTCHA CSS code (better alignment captcha, refresh, and audio images)
-- Added advanced options for date format on extra 'date' fields (mm/dd/yyyy, dd/mm/yyyy)
-- Added advanced options to set checkboxes with children (Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes)
+- (19 May 2010) - Fix for XHTML Strict compliance.
+- Improved CAPTCHA CSS code (better alignment captcha, refresh, and audio images).
+- Added advanced options for date format on extra 'date' fields (mm/dd/yyyy, dd/mm/yyyy).
+- Added advanced options to set checkboxes with children (Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes).
 - Added advanced options to set a default selected item for select and radio fields.
-- Added advanced options to make name, email, subject, or message fields (not_available, not_required, or required)
+- Added advanced options to make name, email, subject, or message fields (not_available, not_required, or required).
 this feature can be used to make an anonymous comment form. Also can be used to disable name and email to make them reordered when using extra fields.
-- Updated Spanish (es_ES) - Translated by Sergio Torres
+- Updated Spanish (es_ES) - Translated by Sergio Torres.
 
 = 2.5.6 =
-- (15 May 2010) - Made WP3 Compatible
+- (15 May 2010) - Made WP3 Compatible.
 
 = 2.5.5 =
 - (07 May 2010) - Fixed to be compatible with *www.com domain name.

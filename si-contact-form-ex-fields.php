@@ -245,12 +245,19 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 </script>
 <script type="text/javascript" src="'.WP_PLUGIN_URL.'/si-contact-form/date/ctf_epoch_classes.js?'.time().'"></script>
 <script type="text/javascript">
+var ';
+        $ex_date_var_string = '';
+        foreach ($ex_date_found as $v) {
+          $ex_date_var_string .= "dp_cal$form_id_num".'_'."$v,";
+        }
+        $ex_date_var_string = substr($ex_date_var_string,0,-1);
+$string .= "$ex_date_var_string;\n";
+$string .= 'window.onload = function () {
 ';
         foreach ($ex_date_found as $v) {
-          $string .= "var dp_cal$form_id_num".'_'."$v  = new Epoch('epoch_popup$form_id_num".'_'."$v','popup',document.getElementById('si_contact_ex_field$form_id_num".'_'."$v'));\n";
+          $string .= "dp_cal$form_id_num".'_'."$v  = new Epoch('epoch_popup$form_id_num".'_'."$v','popup',document.getElementById('si_contact_ex_field$form_id_num".'_'."$v'));\n";
         }
-
-$string .=   "</script>\n";
+$string .=   "};\n</script>\n";
 
      }
 
