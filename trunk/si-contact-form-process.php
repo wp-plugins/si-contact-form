@@ -311,16 +311,18 @@ echo "</pre>\n";*/
     }
 
     $header = '';
+    $header_php = '';
     // prepare the email header
     if ($ctf_email_on_this_domain != '' ) {
-         // $header =  "From: $ctf_email_on_this_domain" . PHP_EOL;
+         $header_php =  "From: $ctf_email_on_this_domain" . PHP_EOL;
          $this->si_contact_mail_from = $ctf_email_on_this_domain;
          add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
     } else if($email == '' || $name == '') {
+         $header_php =  "From: ". get_option('admin_email') . PHP_EOL;
          $this->si_contact_mail_from = get_option('admin_email');
          add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
     } else {
-         // $header = "From: $name <$email>" . PHP_EOL;
+         $header_php = "From: $name <$email>" . PHP_EOL;
          $this->si_contact_mail_from = $email;
          $this->si_contact_from_name = $name;
          add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
@@ -341,11 +343,17 @@ echo "</pre>\n";*/
     $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . PHP_EOL;
 
     // @ini_set('sendmail_from', $email); // needed for some windows servers
-
-    if (!wp_mail($mail_to,$subj,$msg,$header)) {
-		die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . "<br />\n" .
-        __('Possible reason: your host may have disabled the mail() function.', 'si-contact-form') . '</p>');
+    if ($si_contact_opt['php_mailer_enable'] == 'php') {
+       $header_php .= $header;
+      if (!mail($mail_to,$subj,$msg,$header_php)) {
+		  die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+      }
+    } else {
+      if (!wp_mail($mail_to,$subj,$msg,$header)) {
+		  die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+      }
     }
+
 
     $message_sent = 1;
 

@@ -295,6 +295,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.6.3 =
+- (30 May 2010) - Added setting to switch from wordpress mail function to PHP mail function. This setting can resolve some rare mail delivery problems.
 - Fixed so checkboxes can have default selected.
 - Fixed HTML5 compatible(with CAPTCHA flash audio off).
 - Fixed required indicator now has proper class `<span class="required">*</span>`. 

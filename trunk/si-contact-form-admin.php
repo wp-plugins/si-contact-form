@@ -93,6 +93,7 @@
    $optionarray_update = array(
          'welcome' =>             trim($_POST['si_contact_welcome']),  // can be empty
          'email_to' =>          ( trim($_POST['si_contact_email_to']) != '' ) ? trim($_POST['si_contact_email_to']) : $si_contact_option_defaults['email_to'], // use default if empty
+         'php_mailer_enable' =>        $_POST['si_contact_php_mailer_enable'],
          'email_from' =>          trim($_POST['si_contact_email_from']),
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : $si_contact_option_defaults['email_subject'],
@@ -521,6 +522,24 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <br />
         <input name="si_contact_email_check_dns" id="si_contact_email_check_dns" type="checkbox" <?php if( $si_contact_opt['email_check_dns'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_email_check_dns" for="si_contact_email_check_dns"><?php _e('Enable checking DNS records for the domain name when checking for a valid E-mail address.', 'si-contact-form'); ?></label>
+        <br />
+
+       <label for="si_contact_php_mailer_enable"><?php _e('Send E-mail function:', 'si-contact-form'); ?></label>
+      <select id="si_contact_php_mailer_enable" name="si_contact_php_mailer_enable">
+<?php
+
+$selected = '';
+foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'php' => esc_attr(__('PHP', 'si-contact-form'))) as $k => $v) {
+ if ($si_contact_opt['php_mailer_enable'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_php_mailer_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_php_mailer_enable_tip">
+        <?php _e('Emails are normally sent by the wordpress mail function. If you are not receiving email from your contact form. Try setting this to "PHP", then test the form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
+        </div>
 
       </td>
     </tr>
