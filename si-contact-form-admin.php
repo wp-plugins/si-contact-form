@@ -119,6 +119,8 @@
          'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
          'date_format' =>               $_POST['si_contact_date_format'],
+         'req_field_indicator' =>       $_POST['si_contact_req_field_indicator'],
+         'req_field_label_enable' =>    (isset( $_POST['si_contact_req_field_label_enable'] ) ) ? 'true' : 'false',
          'req_field_indicator_enable' =>    (isset( $_POST['si_contact_req_field_indicator_enable'] ) ) ? 'true' : 'false',
          'form_style' =>          ( trim($_POST['si_contact_form_style']) != '' ) ? trim($_POST['si_contact_form_style']) : $si_contact_option_defaults['form_style'],
          'border_style' =>          ( trim($_POST['si_contact_border_style']) != '' ) ? trim($_POST['si_contact_border_style']) : $si_contact_option_defaults['border_style'],
@@ -777,9 +779,6 @@ foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
         <input name="si_contact_reset_styles" id="si_contact_reset_styles" type="checkbox" />
         <label for="si_contact_reset_styles"><strong><?php _e('Reset the styles to default.', 'si-contact-form') ?></strong></label><br />
 
-        <input name="si_contact_req_field_indicator_enable" id="si_contact_req_field_indicator_enable" type="checkbox" <?php if ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_req_field_indicator_enablee"><?php _e('Enable required field indicators on contact form', 'si-contact-form') ?>.</label><br />
-
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label><br />
 
@@ -857,6 +856,16 @@ foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
        <?php _e('Some people wanted to change the text labels for the contact form. These fields can be filled in to override the standard included field titles.', 'si-contact-form'); ?>
        </div>
        <br />
+
+        <input name="si_contact_req_field_indicator_enable" id="si_contact_req_field_indicator_enable" type="checkbox" <?php if ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_req_field_indicator_enable"><?php _e('Enable required field indicators on contact form', 'si-contact-form') ?>.</label>
+        <br />
+        <label for="si_contact_req_field_indicator"><?php _e('Required field indicator:', 'si-contact-form'); ?></label><input name="si_contact_req_field_indicator" id="si_contact_req_field_indicator" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['req_field_indicator']);  ?>" size="20" /><br />
+
+        <input name="si_contact_req_field_label_enable" id="si_contact_req_field_label_enable" type="checkbox" <?php if ( $si_contact_opt['req_field_label_enable'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_req_field_label_enable"><?php _e('Enable required field label on contact form:', 'si-contact-form') ?></label> <?php echo ($si_contact_opt['tooltip_required'] != '') ? $si_contact_opt['req_field_indicator'] .$si_contact_opt['tooltip_required'] : $si_contact_opt['req_field_indicator'] . __('(denotes required field)', 'si-contact-form'); ?><br />
+
+
          <label for="si_contact_title_border"><?php _e('Contact Form', 'si-contact-form'); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_border']);  ?>" size="50" /><br />
          <label for="si_contact_title_dept"><?php _e('Department to Contact', 'si-contact-form'); ?>:</label><input name="si_contact_title_dept" id="si_contact_title_dept" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_dept']);  ?>" size="50" /><br />
          <label for="si_contact_title_select"><?php _e('Select', 'si-contact-form'); ?>:</label><input name="si_contact_title_select" id="si_contact_title_select" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_select']);  ?>" size="50" /><br />

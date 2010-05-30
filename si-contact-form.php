@@ -314,7 +314,7 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
       ${'si_contact_error_ex_field'.$i} = '';
    }
 }
-$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">*</span>' : '';
+$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 $si_contact_error_captcha = '';
 $si_contact_error_contact = '';
 $si_contact_error_name    = '';
@@ -405,7 +405,7 @@ return $classes;
 // this function adds the captcha to the contact form
 function addCaptchaToContactForm($si_contact_error_captcha,$form_id_num) {
    global $user_ID, $captcha_url_cf, $si_contact_opt;
-   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">*</span>' : '';
+   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 
 // fix for simple facebook connect plugin
 // http://wordpress.org/support/topic/402560
@@ -746,6 +746,8 @@ function si_contact_get_options($form_num) {
          'redirect_url' => 'index.php',
          'date_format' => 'mm/dd/yyyy',
          'req_field_indicator_enable' => 'true',
+         'req_field_label_enable' => 'true',
+         'req_field_indicator' => '*',
          'border_enable' => 'false',
          'form_style' => 'width:375px;',
          'border_style' => 'border:1px solid black;',
