@@ -47,9 +47,9 @@ if (empty($ctf_contacts)) {
    $string .= '<div '.$this->ctf_error_style.'>'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</div>'."\n";
 }
 
-if ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) {
+if ($si_contact_opt['req_field_label_enable'] == 'true' && $si_contact_opt['req_field_indicator_enable'] == 'true' ) {
    $string .=  '<div '.$this->ctf_required_style.'>';
-   $string .= ($si_contact_opt['tooltip_required'] != '') ? '<span class="required">*</span>' .$si_contact_opt['tooltip_required'] : '<span class="required">*</span>' . __('(denotes required field)', 'si-contact-form');
+   $string .= ($si_contact_opt['tooltip_required'] != '') ? '<span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' .$si_contact_opt['tooltip_required'] : '<span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' . __('(denotes required field)', 'si-contact-form');
    $string .= '</div>
 ';
 }

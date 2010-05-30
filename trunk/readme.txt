@@ -243,6 +243,7 @@ The following translations are included in the download zip file:
 * Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net)
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
+* Finnish (fi) - Translated by [Mikko Vahatalo](http://www.guimikko.com/) 
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
 * Greek (el) - Translated by [Ioannis](http://www.jbaron.gr/)
@@ -294,6 +295,10 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Added more field indicator options in Advanced Options - Fields
+- Added Finnish (fi) - Translated by [Mikko Vahatalo](http://www.guimikko.com/) 
+- Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 2.6.3 =
 - (30 May 2010) - Added setting to switch from wordpress mail function to PHP mail function. This setting can resolve some rare mail delivery problems.
