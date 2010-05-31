@@ -96,7 +96,7 @@
          'php_mailer_enable' =>        $_POST['si_contact_php_mailer_enable'],
          'email_from' =>          trim($_POST['si_contact_email_from']),
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
-         'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : $si_contact_option_defaults['email_subject'],
+         'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : '',
          'email_subject_list' =>           trim($_POST['si_contact_email_subject_list']),
          'name_type' =>             $_POST['si_contact_name_type'],
          'email_type' =>            $_POST['si_contact_email_type'],
@@ -293,7 +293,7 @@ if ($si_contact_gb['donated'] != 'true') {
 <p>
 <?php _e('You must add the shortcode in a Page(not a post). That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
 <br />
-<?php _e('Shortcode for this form:', 'si-contact-form') . " <b>[si-contact-form form='$form_id']</b>"; ?>
+<?php _e('Shortcode for this form:', 'si-contact-form'); echo " <b>[si-contact-form form='$form_id']</b>"; ?>
 </p>
 
 

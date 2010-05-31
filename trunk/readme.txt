@@ -296,6 +296,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Fixed missing shortcode example on admin page.
+- Fixed so subject prefix can be blank.
 - Added more field indicator options in Advanced Options - Fields
 - Added Finnish (fi) - Translated by [Mikko Vahatalo](http://www.guimikko.com/) 
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
