@@ -314,13 +314,26 @@ echo "</pre>\n";*/
     $header_php = '';
     // prepare the email header
     if ($ctf_email_on_this_domain != '' ) {
-         $header_php =  "From: $ctf_email_on_this_domain" . PHP_EOL;
-         $this->si_contact_mail_from = $ctf_email_on_this_domain;
-         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
+         if(!preg_match("/,/", $ctf_email_on_this_domain)) {
+           // just an email: user1@example.com
+           $header_php =  "From: $ctf_email_on_this_domain" . PHP_EOL;
+           $this->si_contact_mail_from = $ctf_email_on_this_domain;
+           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+         } else {
+           // name and email: webmaster,user1@example.com
+           list($key, $value) = explode(",",$ctf_email_on_this_domain);
+           $key   = trim($key);
+           $value = trim($value);
+           $header_php =  "From: $key <$value>" . PHP_EOL;
+           $this->si_contact_from_name = $key;
+           add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+           $this->si_contact_mail_from = $value;
+           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+         }
     } else if($email == '' || $name == '') {
          $header_php =  "From: ". get_option('admin_email') . PHP_EOL;
          $this->si_contact_mail_from = get_option('admin_email');
-         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'));
+         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
     } else {
          $header_php = "From: $name <$email>" . PHP_EOL;
          $this->si_contact_mail_from = $email;

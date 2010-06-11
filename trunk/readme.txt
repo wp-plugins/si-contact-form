@@ -296,6 +296,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.6.4 =
+- (11 Jun 2010) - Added ability to set both a name and email on the "E-mail From (optional):" field .You can enter just an email: user1@example.com
+Or enter name and email: webmaster,user1@example.com 
 - Fixed missing shortcode example on admin page.
 - Fixed so subject prefix can be blank.
 - Added more field indicator options in Advanced Options - Fields
