@@ -434,41 +434,62 @@ if ( !function_exists('mail') ) {
 
         <label name="si_contact_email_from" for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact-form'); ?>:</label>
 <?php
-if ( $si_contact_opt['email_from'] != '' && !$this->ctf_validate_email($si_contact_opt['email_from'])  ) {
-   echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+if ( $si_contact_opt['email_from'] != '' ) {
+    $from_fail = 0;
+    if(!preg_match("/,/", $si_contact_opt['email_from'])) {
+        // just one email here
+        // user1@example.com
+        if (!$this->ctf_validate_email($si_contact_opt['email_from'])) {
+           $from_fail = 1;
+        }
+    } else {
+        // name and email here
+        // webmaster,user1@example.com
+        list($key, $value) = explode(",",$si_contact_opt['email_from']);
+        $key   = trim($key);
+        $value = trim($value);
+        if (!$this->ctf_validate_email($value)) {
+           $from_fail = 1;
+        }
+   }
+   if ($from_fail)  {
+     echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+   }
 }
 ?>
         <input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $si_contact_opt['email_from'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
-        <?php _e('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?>
+        <?php _e('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?><br />
+        <?php _e('Enter just an email: user1@example.com', 'si-contact-form'); ?><br />
+        <?php _e('Or enter name and email: webmaster,user1@example.com ', 'si-contact-form'); ?>
         </div>
         <br />
 
         <label name="si_contact_email_bcc" for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form'); ?>:</label>
 <?php
 if ( $si_contact_opt['email_bcc'] != ''){
-         $bcc_fail = 0;
-          if(!preg_match("/,/", $si_contact_opt['email_bcc'])) {
-               // just one email here
-               // user1@example.com
-               if (!$this->ctf_validate_email($si_contact_opt['email_bcc'])) {
-                  $bcc_fail = 1;
-               }
-          } else {
-               // multiple emails here
-               // user1@example.com,user2@example.com
-               $bcc_arr = explode(",",$si_contact_opt['email_bcc']);
-               foreach($bcc_arr as $b_cc) {
-                   if (!$this->ctf_validate_email($b_cc)) {
-                     $bcc_fail = 1;
-                     break;
-                   }
-               }
+    $bcc_fail = 0;
+    if(!preg_match("/,/", $si_contact_opt['email_bcc'])) {
+         // just one email here
+         // user1@example.com
+         if (!$this->ctf_validate_email($si_contact_opt['email_bcc'])) {
+             $bcc_fail = 1;
          }
-  if ($bcc_fail)  {
-    echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
-  }
+    } else {
+         // multiple emails here
+         // user1@example.com,user2@example.com
+         $bcc_arr = explode(",",$si_contact_opt['email_bcc']);
+         foreach($bcc_arr as $b_cc) {
+             if (!$this->ctf_validate_email($b_cc)) {
+                $bcc_fail = 1;
+                break;
+             }
+         }
+   }
+   if ($bcc_fail)  {
+      echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+   }
 }
 ?>
         <input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $si_contact_opt['email_bcc'];  ?>" size="50" />
