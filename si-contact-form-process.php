@@ -180,8 +180,11 @@
 					$c["$key"] = $value;
 
 			$query_string = '';
-			foreach ( $c as $key => $data )
+			foreach ( $c as $key => $data ) {
+			  if( is_string($data) ) {
 				$query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
+              }
+            }
 			$response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
 			if ( 'true' == $response[1] ) {
                 $this->si_contact_error = 1; // Akismet says it is spam.
