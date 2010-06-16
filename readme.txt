@@ -296,6 +296,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Single checkbox can have a comma in the label(as long is there is no semicolon because then it becomes a multi-checkbox).
+
 = 2.6.4 =
 - (11 Jun 2010) - Added ability to set both a name and email on the "E-mail From (optional):" field .You can enter just an email: user1@example.com
 Or enter name and email: webmaster,user1@example.com 

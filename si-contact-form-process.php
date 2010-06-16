@@ -257,7 +257,7 @@ echo "</pre>\n";*/
               $exf_opts_array = array();
               $exf_opts_label = '';
               $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-             if(preg_match("/,/", $exf_array_test) ) {
+             if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test) ) {
                   list($exf_opts_label, $value) = explode(",",$exf_array_test);
                   $exf_opts_label   = trim($exf_opts_label);
                  $value = trim($value);
