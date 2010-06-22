@@ -357,13 +357,13 @@ if($message_sent) {
 
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
-   global $user_ID, $si_contact_opt;
+   global $si_contact_opt;
 
    if ($si_contact_opt['captcha_enable'] !== 'true') {
         return false; // captcha setting is disabled for si contact
    }
    // skip the captcha if user is loggged in and the settings allow
-   if (isset($user_ID) && intval($user_ID) > 0 && $si_contact_opt['captcha_perm'] == 'true') {
+   if (is_user_logged_in() && $si_contact_opt['captcha_perm'] == 'true') {
        // skip the CAPTCHA display if the minimum capability is met
        if ( current_user_can( $si_contact_opt['captcha_perm_level'] ) ) {
                // skip capthca
@@ -404,7 +404,7 @@ return $classes;
 
 // this function adds the captcha to the contact form
 function addCaptchaToContactForm($si_contact_error_captcha,$form_id_num) {
-   global $user_ID, $captcha_url_cf, $si_contact_opt;
+   global $captcha_url_cf, $si_contact_opt;
    $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 
 // fix for simple facebook connect plugin
