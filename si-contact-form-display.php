@@ -19,13 +19,14 @@ if ($this->si_contact_error)
 
 $string .= '
 <!-- Fast and Secure Contact Form plugin begin -->
+<a name="FSContact'.$form_id_num.'" id="FSContact'.$form_id_num.'"></a>
 <div '.$this->ctf_form_style.'>
 ';
 
 
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
-    <form action="'.get_permalink().'" id="si_contact_form'.$form_id_num.'" method="post">
+    <form action="'.get_permalink().'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
     <fieldset '.$this->ctf_border_style.'>
         <legend>';
      $string .= ($si_contact_opt['title_border'] != '') ? $si_contact_opt['title_border'] : __('Contact Form', 'si-contact-form');
@@ -33,7 +34,7 @@ if ($si_contact_opt['border_enable'] == 'true') {
 } else {
 
  $string .= '
-<form action="'.get_permalink().'" id="si_contact_form'.$form_id_num.'" method="post">
+<form action="'.get_permalink().'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
 ';
 }
 
