@@ -296,6 +296,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added HTML anchor tags to bring focus to the form when used on a page with lots of content before the form. 
+
 = 2.6.5 =
 - (23 Jun 2010) - CSS fix form field margins were too big on Twenty Ten Theme in WP 3.0
 - Single checkbox can have a comma in the label(as long is there is no semicolon because then it becomes a multi-checkbox).
