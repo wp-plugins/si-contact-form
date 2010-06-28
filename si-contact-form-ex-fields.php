@@ -25,7 +25,9 @@
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
-                <textarea '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" '.$ex_req_field_aria.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">' . $this->ctf_output_string(${'ex_field'.$i}) . '</textarea>
+                <textarea '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" '.$ex_req_field_aria.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">';
+                $string .= ($si_contact_opt['textarea_html_allow'] == 'true') ? $this->ctf_stripslashes(${'ex_field'.$i}) : $this->ctf_output_string(${'ex_field'.$i});
+                $string .= '</textarea>
         </div>';
               break;
 
@@ -200,6 +202,22 @@ foreach ($exf_opts_array as $k) {
 $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         </div>';
              break;
+
+           case 'attachment':
+         if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
+                 $string .=   '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <br /><small>'.sprintf(__('(Acceptable file types: %1$s. Maximum file size: %2$s)', 'si-contact-form'),$si_contact_opt['attach_types'],$si_contact_opt['attach_size']).'</small>
+
+        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
+        <div '.$this->ctf_field_div_style.'>
+                <input '.$this->ctf_field_style.' type="file" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="'.$ctf_field_size.'" />
+        </div>';
+        }
+          break;
+
+
              case 'date':
 
                  $string .=   '

@@ -105,10 +105,41 @@
      }
    }
 
+// check attachment directory
+$attach_dir_error = 0;
+if ($have_attach){
+	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
+	if ( !is_dir($attach_dir) ) {
+        $this->si_contact_error = 1;
+		$attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) does not exist or is not writable. Create the folder or change its permission manually.', 'si-contact-form' ), $attach_dir );
+	} else {
+       // delete files over 3 minutes old in the attachment directory
+       $this->si_contact_clean_attach_dir($attach_dir);
+	}
+}
+
+
    // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
-          if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+
+          if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
+              // need to test if a file was selected for attach.
+              $ex_field_file = $_FILES["si_contact_ex_field$i"];
+              if ($ex_field_file[name] == '' && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                   $this->si_contact_error = 1;
+                   ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
+              }
+              // validate the attachment now
+              $ex_field_file_check = $this->si_contact_validate_attach( $ex_field_file );
+              if (!$ex_field_file_check['valid']) {
+                 $this->si_contact_error = 1;
+                 ${'si_contact_error_ex_field'.$i} = $ex_field_file_check['error'];
+              } else {
+                ${'ex_field'.$i} = $ex_field_file_check['file_name'];  // needed for email message
+              }
+              unset($ex_field_file);
+          }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
              // see if checkbox children
              $exf_opts_array = array();
              $exf_opts_label = '';
@@ -119,9 +150,8 @@
                   $value = trim($value);
                   if ($exf_opts_label != '' && $value != '') {
                      if(!preg_match("/;/", $value)) {
-                        // error
-                        //$this->si_contact_error = 1;
-                        // $string .= $this->ctf_echo_if_error(__('Error: A checkbox field is not configured properly in settings.', 'si-contact-form'));
+                        $this->si_contact_error = 1;
+                        ${'si_contact_error_ex_field'.$i} = __('Error: A checkbox field is not configured properly in settings.', 'si-contact-form');
                      } else {
                         // multiple options
                          $exf_opts_array = explode(";",$value);
@@ -140,7 +170,11 @@
                 }
              }
            }else{  // end label'] == 'checkbox'
-                ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
+                      ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
+                }else{
+                     ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                }
                 if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
                   $this->si_contact_error = 1;
                   ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
@@ -250,7 +284,9 @@ echo "</pre>\n";*/
      // optional extra fields
      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ( $si_contact_opt['ex_field'.$i.'_label'] != '' ) {
-           if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
+           if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] == 'wordpress' ) {
+               $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}\n\n";
+           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
               list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
               $msg .= $exf_opts_label."\n${'ex_field'.$i}\n\n";
            } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
@@ -285,7 +321,11 @@ echo "</pre>\n";*/
              }
            } else {  // text, textarea, date
                if(${'ex_field'.$i} != ''){
-                   $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n".${'ex_field'.$i}."\n\n";
+                   if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
+                        $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n".$this->ctf_stripslashes(${'ex_field'.$i})."\n\n";
+                   }else{
+                        $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n".${'ex_field'.$i}."\n\n";
+                   }
                }
            }
        }
@@ -306,7 +346,8 @@ echo "</pre>\n";*/
     $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . PHP_EOL;
     $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.get_permalink() . PHP_EOL;
     $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . PHP_EOL . PHP_EOL;
-    $msg .= $user_info_string;
+    if ($si_contact_opt['sender_info_enable'] == 'true')
+       $msg .= $user_info_string;
 
     // wordwrap email message
     if ($ctf_wrap_message) {
@@ -358,21 +399,35 @@ echo "</pre>\n";*/
 
     $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . PHP_EOL;
 
-    // @ini_set('sendmail_from', $email); // needed for some windows servers
     if ($si_contact_opt['php_mailer_enable'] == 'php') {
        $header_php .= $header;
       if (!mail($mail_to,$subj,$msg,$header_php)) {
 		  die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
       }
     } else {
-      if (!wp_mail($mail_to,$subj,$msg,$header)) {
-		  die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
-      }
+        if ( $this->uploaded_files ) {
+			    $attach_this_mail = array();
+			    foreach ( $this->uploaded_files as $path ) {
+				    $attach_this_mail[] = $path;
+			    }
+			    if (!wp_mail($mail_to,$subj,$msg,$header,$attach_this_mail))
+		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+		} else {
+		        if (!wp_mail($mail_to,$subj,$msg,$header))
+		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+		}
     }
 
 
     $message_sent = 1;
 
   } // end if ! error
+
+if ($have_attach){
+  // unlink attachment temp files
+  foreach ( (array) $this->uploaded_files as $path ) {
+   @unlink( $path );
+  }
+}
 
 ?>
