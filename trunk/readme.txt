@@ -11,13 +11,13 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Does not require JavaScript.
+Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Super customizable.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
 Features:
 --------
- * Configure Options from Admin panel.
+ * Super customizable Options from Admin panel.
  * Multi-Form feature that allows you to have many different forms on your site.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
@@ -32,6 +32,7 @@ Features:
  * Customizable form field titles.
  * Customizable CSS style.
  * Optional extra fields of any type: text, textarea, checkbox, radio, select, date.
+ * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -56,7 +57,7 @@ Captcha Image Support:
 Requirements/Restrictions:
 -------------------------
  * Works with Wordpress 2.6+, WPMU, and BuddyPress
- * PHP 4.0.6 or above with GD2 library support.
+ * PHP 4.3.9 or above with GD2 library support. PHP5 is recommended.
  * PHP register_globals must be set to OFF
 
 == Installation ==
@@ -208,6 +209,7 @@ Check that the permission on all the captcha-secureimage folders are set to perm
 
 all these folders need to be 755:
 - si-contact-form
+  - attachments
   - languages
   - date
   - captcha-secureimage
@@ -296,6 +298,10 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.7 =
+- (27 Jun 2010) - Added file attachment feature, see here for details: http://wordpress.org/support/topic/416371
+- Added setting: "Enable users to send HTML code in the textarea extra field types."(off by default).
+- Added setting: "Enable sender information in E-mail footer."(on by default).
 - Added HTML anchor tags to bring focus to the form when used on a page with lots of content before the form. 
 
 = 2.6.5 =

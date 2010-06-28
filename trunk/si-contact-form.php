@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 2.6.5
+Version: 2.7
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -42,6 +42,7 @@ if (!class_exists('siContactForm')) {
 
  class siContactForm {
      var $si_contact_error;
+     var $uploaded_files;
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact-form'), __('SI Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
@@ -308,10 +309,13 @@ $message       = '';
 $captcha_code  = '';
 
 // optional extra fields
+$have_attach = '';
 for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
    if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
       ${'ex_field'.$i} = '';
       ${'si_contact_error_ex_field'.$i} = '';
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment')
+         $have_attach = 'enctype="multipart/form-data" '; // for <form post
    }
 }
 $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
@@ -354,6 +358,126 @@ if($message_sent) {
 
  return $string;
 } // end function si_contact_form_short_code
+
+function si_contact_init_attach_dir($dir) {
+
+	wp_mkdir_p( trailingslashit( $dir ) );
+	@chmod( $dir, 0733 );
+	$htaccess_file = trailingslashit( $dir ) . '.htaccess';
+	if ( file_exists( $htaccess_file ) )
+		return;
+
+	if ( $handle = @fopen( $htaccess_file, 'w' ) ) {
+		fwrite( $handle, "Deny from all\n" );
+		fclose( $handle );
+	}
+}
+
+function si_contact_clean_attach_dir($dir) {
+    // deletes files over 3 minutes old in the attachment directory
+
+  	if ( ! is_dir( $dir ) )
+		return false;
+	if ( ! is_readable( $dir ) )
+		return false;
+	if ( ! is_writable( $dir ) )
+		return false;
+
+	if ( $handle = @opendir( $dir ) ) {
+		while ( false !== ( $file = readdir( $handle ) ) ) {
+			if ( $file == "." || $file == ".." || $file == ".htaccess" )
+				continue;
+
+			$stat = stat( $dir . $file );
+			if ( $stat['mtime'] + 180 < time() ) // 3 min
+				@unlink( $dir . $file );
+		}
+		closedir( $handle );
+	}
+}
+
+function si_contact_validate_attach( $file ) {
+    global $si_contact_opt;
+
+    $result['valid'] = true;
+
+    if ($si_contact_opt['php_mailer_enable'] != 'wordpress') {
+        $result['valid'] = false;
+		$result['error'] = __('Attachments not supported.', 'si-contact-form');
+		return $result;
+    }
+
+	if ( ($file['error'] && UPLOAD_ERR_NO_FILE != $file['error']) || !is_uploaded_file( $file['tmp_name'] ) ) {
+		$result['valid'] = false;
+		$result['error'] = __('Attachment upload failed.', 'si-contact-form');
+		return $result;
+	}
+
+	if ( empty( $file['tmp_name'] ) ) {
+		$result['valid'] = false;
+		$result['error'] = __('This field is required.', 'si-contact-form');
+		return $result;
+	}
+
+    // check file types
+    $file_type_pattern = $si_contact_opt['attach_types'];
+	if ( $file_type_pattern == '' )
+		$file_type_pattern = 'doc,pdf,txt,gif,jpg,jpeg,png';
+    $file_type_pattern = str_replace(',','|',$si_contact_opt['attach_types']);
+	$file_type_pattern = trim( $file_type_pattern, '|' );
+	$file_type_pattern = '(' . $file_type_pattern . ')';
+	$file_type_pattern = '/\.' . $file_type_pattern . '$/i';
+
+	if ( ! preg_match( $file_type_pattern, $file['name'] ) ) {
+		$result['valid'] = false;
+		$result['error'] = __('Attachment file type not allowed.', 'si-contact-form');
+		return $result;
+	}
+
+    // check size
+    $allowed_size = 1048576; // 1mb default
+	if ( preg_match( '/^([[0-9.]+)([kKmM]?[bB])?$/', $si_contact_opt['attach_size'], $matches ) ) {
+	     $allowed_size = (int) $matches[1];
+		 $kbmb = strtolower( $matches[2] );
+		 if ( 'kb' == $kbmb ) {
+		     $allowed_size *= 1024;
+		 } elseif ( 'mb' == $kbmb ) {
+		     $allowed_size *= 1024 * 1024;
+		 }
+	}
+	if ( $file['size'] > $allowed_size ) {
+		$result['valid'] = false;
+		$result['error'] = __('Attachment file size is too large.', 'si-contact-form');
+		return $result;
+	}
+
+	$filename = $file['name'];
+
+	// safer file names for scripts.
+	if ( preg_match( '/\.(php|pl|py|rb|cgi)\d?$/', $filename ) )
+		$filename .= '.txt';
+
+ 	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
+
+	$filename = wp_unique_filename( $attach_dir, $filename );
+
+	$new_file = trailingslashit( $attach_dir ) . $filename;
+
+	if ( false === @move_uploaded_file( $file['tmp_name'], $new_file ) ) {
+		$result['valid'] = false;
+		$result['error'] = __('Attachment upload failed while moving file.', 'si-contact-form');
+		return $result;
+	}
+
+	// uploaded only readable for the owner process
+	@chmod( $new_file, 0400 );
+
+	$this->uploaded_files[] = $new_file;
+
+    $result['file_name'] = $filename; // needed for email message
+
+	return $result;
+}
 
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
@@ -731,6 +855,7 @@ function si_contact_get_options($form_num) {
          'message_type' => 'required',
          'double_email' => 'false',
          'name_case_enable' => 'false',
+         'sender_info_enable' => 'true',
          'domain_protect' => 'true',
          'email_check_dns' => 'true',
          'captcha_enable' => 'true',
@@ -745,6 +870,9 @@ function si_contact_get_options($form_num) {
          'redirect_seconds' => '3',
          'redirect_url' => 'index.php',
          'date_format' => 'mm/dd/yyyy',
+         'attach_types' =>  'doc,pdf,txt,gif,jpg,jpeg,png',
+         'attach_size' =>   '1mb',
+         'textarea_html_allow' => 'false',
          'req_field_indicator_enable' => 'true',
          'req_field_label_enable' => 'true',
          'req_field_indicator' => '*',

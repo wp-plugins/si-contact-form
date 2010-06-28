@@ -104,6 +104,7 @@
          'message_type' =>          $_POST['si_contact_message_type'],
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'name_case_enable' => (isset( $_POST['si_contact_name_case_enable'] ) ) ? 'true' : 'false',
+         'sender_info_enable' =>   (isset( $_POST['si_contact_sender_info_enable'] ) ) ? 'true' : 'false',
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
@@ -119,6 +120,9 @@
          'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
          'date_format' =>               $_POST['si_contact_date_format'],
+         'attach_types' =>      trim(str_replace('.','',$_POST['si_contact_attach_types'])),
+         'attach_size' =>       ( preg_match('/^([[0-9.]+)([kKmM]?[bB])?$/',$_POST['si_contact_attach_size']) ) ? trim($_POST['si_contact_attach_size']) : $si_contact_option_defaults['attach_size'],
+         'textarea_html_allow' =>    (isset( $_POST['si_contact_textarea_html_allow'] ) ) ? 'true' : 'false',
          'req_field_indicator' =>       $_POST['si_contact_req_field_indicator'],
          'req_field_label_enable' =>    (isset( $_POST['si_contact_req_field_label_enable'] ) ) ? 'true' : 'false',
          'req_field_indicator_enable' =>    (isset( $_POST['si_contact_req_field_indicator_enable'] ) ) ? 'true' : 'false',
@@ -534,6 +538,14 @@ if ( $si_contact_opt['email_bcc'] != ''){
         </div>
         <br />
 
+        <input name="si_contact_sender_info_enable" id="si_contact_sender_info_enable" type="checkbox" <?php if( $si_contact_opt['sender_info_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label name="si_contact_sender_info_enable" for="si_contact_sender_info_enable"><?php _e('Enable sender information in E-mail footer.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_sender_info_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_sender_info_enable_tip">
+        <?php _e('You will receive in the E-mail, detailed information about the sender. Such as IP Address, date, time, and which web browser they used.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
         <input name="si_contact_domain_protect" id="si_contact_domain_protect" type="checkbox" <?php if( $si_contact_opt['domain_protect'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_domain_protect" for="si_contact_domain_protect"><?php _e('Enable Form Post security by requiring domain name match for', 'si-contact-form'); ?>
         <?php
@@ -740,6 +752,7 @@ $field_type_array = array(
 'checkbox' => esc_attr(__('checkbox', 'si-contact-form')),
 'radio' => esc_attr(__('radio', 'si-contact-form')),
 'select' => esc_attr(__('select', 'si-contact-form')),
+'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
 );
       // optional extra fields
@@ -783,6 +796,41 @@ foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
 ?>
 </select>
 <br />
+
+
+        <label for="si_contact_attach_types"><?php _e('Attached files acceptable types', 'si-contact-form'); ?>:</label><input name="si_contact_attach_types" id="si_contact_attach_types" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['attach_types']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_attach_types_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_attach_types_tip">
+        <?php _e('Set the acceptable file types for the file attachment feature. Any file type not on this list will be rejected.', 'si-contact-form'); ?>
+        <?php _e('Separate each file type with a comma character. example:', 'si-contact-form'); ?>
+        doc,pdf,txt,gif,jpg,jpeg,png
+        </div>
+        <br />
+
+        <label for="si_contact_attach_size"><?php _e('Attached files maximum size allowed', 'si-contact-form'); ?>:</label><input name="si_contact_attach_size" id="si_contact_attach_size" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['attach_size']);  ?>" size="30" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_attach_size_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_attach_size_tip">
+        <?php _e('Set the acceptable maximum file size for the file attachment feature.', 'si-contact-form'); ?><br />
+        <?php _e('example: 1mb equals one Megabyte, 1kb equals one Kilobyte', 'si-contact-form');
+        $max_upload = (int)(ini_get('upload_max_filesize'));
+        $max_post = (int)(ini_get('post_max_size'));
+        $memory_limit = (int)(ini_get('memory_limit'));
+        $upload_mb = min($max_upload, $max_post, $memory_limit);
+        ?><br />
+        <?php _e('Note: Maximum size is limited to available server resources and various PHP settings. Very few servers will accept more than 2mb. Sizes under 1mb will usually have best results. examples:', 'si-contact-form'); ?>
+        500kb, 800kb, 1mb, 1.5mb, 2mb
+        <?php _e('Note: If you set the value higher than your server can handle, users will have problems uploading big files. The form can time out and may not even show an error.', 'si-contact-form'); ?>
+        <b><?php _e('Your server will not allow uploading files larger than than:', 'si-contact-form');  echo " $upload_mb"; ?>mb</b>
+        </div>
+        <br />
+
+        <input name="si_contact_textarea_html_allow" id="si_contact_textarea_html_allow" type="checkbox" <?php if( $si_contact_opt['textarea_html_allow'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label name="si_contact_textarea_html_allow" for="si_contact_textarea_html_allow"><?php _e('Enable users to send HTML code in the textarea extra field types.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_textarea_html_allow_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_textarea_html_allow_tip">
+        <?php _e('Enable only if you want users to be able to send HTML code in the textarea extra field types. This is disabled by default for better security. HTML code is only needed for sharing embedded video links, PHP code samples, etc.', 'si-contact-form'); ?>
+        </div>
+        <br />
 
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <small><?php _e('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>

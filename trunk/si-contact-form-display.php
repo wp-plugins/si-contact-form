@@ -26,7 +26,7 @@ $string .= '
 
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
-    <form action="'.get_permalink().'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
+    <form '.$have_attach.'action="'.get_permalink().'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
     <fieldset '.$this->ctf_border_style.'>
         <legend>';
      $string .= ($si_contact_opt['title_border'] != '') ? $si_contact_opt['title_border'] : __('Contact Form', 'si-contact-form');
@@ -34,8 +34,26 @@ if ($si_contact_opt['border_enable'] == 'true') {
 } else {
 
  $string .= '
-<form action="'.get_permalink().'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
+<form '.$have_attach.'action="'.get_permalink().'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
 ';
+}
+
+// check attachment directory
+$attach_dir_error = 0;
+if ($have_attach){
+	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
+    $this->si_contact_init_attach_dir($attach_dir);
+    if ($si_contact_opt['php_mailer_enable'] == 'php'){
+       $this->si_contact_error = 1;
+	   $attach_dir_error = __( 'This contact form has file attachment fields. Attachments are only supported when the Send E-Mail function is set to WordPress. You can find this setting on the contact form settings page.', 'si-contact-form' );
+    }
+	if ( !is_dir($attach_dir) ) {
+        $this->si_contact_error = 1;
+		$attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) does not exist or is not writable. Create the folder or change its permission manually.', 'si-contact-form' ), $attach_dir );
+	} else {
+       // delete files over 5 minutes old in the attachment directory
+       $this->si_contact_clean_attach_dir($attach_dir);
+	}
 }
 
 // print any input errors
@@ -43,6 +61,11 @@ if ($this->si_contact_error) {
     $string .= '<div '.$this->ctf_error_style.'>';
     $string .= ($si_contact_opt['error_correct'] != '') ? $si_contact_opt['error_correct'] : __('Please make corrections below and try again.', 'si-contact-form');
     $string .= '</div>'."\n";
+    if($have_attach && $attach_dir_error) {
+      $string .= '<div '.$this->ctf_error_style.'>';
+      $string .= $attach_dir_error;
+      $string .= '</div>'."\n";
+    }
 }
 if (empty($ctf_contacts)) {
    $string .= '<div '.$this->ctf_error_style.'>'.__('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</div>'."\n";
