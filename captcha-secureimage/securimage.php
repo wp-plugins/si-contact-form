@@ -772,6 +772,8 @@ class Securimage {
             $text_color = $this->getColorArray($this->text_color, '#3d3d3d');
 			$font_size = $height2 * .35;
 			$bb = imagettfbbox($font_size, 0, $this->ttf_file, $this->code);
+                        // repeat this line to fix random missing text on some Debian servers
+			$bb = imagettfbbox($font_size, 0, $this->ttf_file, $this->code);
 			$tx = $bb[4] - $bb[0];
 			$ty = $bb[5] - $bb[1];
 			$x  = floor($width2 / 2 - $tx / 2 - $bb[0]);
@@ -1279,6 +1281,8 @@ class Securimage {
 		} else {
 			 
 			$bbox = imagettfbbox(10, 0, $this->signature_font, $this->image_signature);
+                        // repeat this line to fix random missing text on some Debian servers			
+                        $bbox = imagettfbbox(10, 0, $this->signature_font, $this->image_signature);
 			$textlen = $bbox[2] - $bbox[0];
 			$x = $this->image_width - $textlen - 5;
 			$y = $this->image_height - 3;
