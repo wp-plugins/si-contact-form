@@ -298,6 +298,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Fixed rare problem on some servers, CAPTCHA image had missing letters.
+
 = 2.7 =
 - (27 Jun 2010) - Added file attachment feature, see here for details: http://wordpress.org/support/topic/416371
 - Added setting: "Enable users to send HTML code in the textarea extra field types."(off by default).
