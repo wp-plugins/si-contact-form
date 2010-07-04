@@ -298,6 +298,11 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.7.1 =
+- (04 Jul 2010) - Added fieldset(group) feature to extra fields. The fieldset is used to draw a box around related form elements.
+- Added more language strings to date field.
+- Added setting: "Date field - Calendar Start Day of the Week:"
+- Added new setting: "Move extra fields to after the Message field."
 - Fixed rare problem on some servers, CAPTCHA image had missing letters.
 
 = 2.7 =

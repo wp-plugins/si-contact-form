@@ -119,7 +119,9 @@
          'redirect_seconds' => ( is_numeric(trim($_POST['si_contact_redirect_seconds'])) && trim($_POST['si_contact_redirect_seconds']) < 61 ) ? absint(trim($_POST['si_contact_redirect_seconds'])) : $si_contact_option_defaults['redirect_seconds'],
          'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
+         'ex_fields_after_msg' => (isset( $_POST['si_contact_ex_fields_after_msg'] ) ) ? 'true' : 'false',
          'date_format' =>               $_POST['si_contact_date_format'],
+         'cal_start_day' =>     ( preg_match('/^[0-6]?$/',$_POST['si_contact_cal_start_day']) ) ? trim($_POST['si_contact_cal_start_day']) : $si_contact_option_defaults['cal_start_day'],
          'attach_types' =>      trim(str_replace('.','',$_POST['si_contact_attach_types'])),
          'attach_size' =>       ( preg_match('/^([[0-9.]+)([kKmM]?[bB])?$/',$_POST['si_contact_attach_size']) ) ? trim($_POST['si_contact_attach_size']) : $si_contact_option_defaults['attach_size'],
          'textarea_html_allow' =>    (isset( $_POST['si_contact_textarea_html_allow'] ) ) ? 'true' : 'false',
@@ -742,7 +744,7 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
        <?php _e('To make "Green" the defult selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form'); ?>
        <?php _e('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?>
-
+       <?php _e('The fieldset(group) is used to draw a box around related form elements. The fieldset label is used to identify the group.', 'si-contact-form'); ?>
        </div>
        <br />
       <?php
@@ -754,6 +756,7 @@ $field_type_array = array(
 'select' => esc_attr(__('select', 'si-contact-form')),
 'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
+'fieldset' => esc_attr(__('fieldset(group)', 'si-contact-form')),
 );
       // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
@@ -784,18 +787,41 @@ foreach ($field_type_array as $k => $v) {
       } // end foreach
       ?>
 
-      <label for="si_contact_date_format"><?php _e('Date format:', 'si-contact-form'); ?></label>
+      <input name="si_contact_ex_fields_after_msg" id="si_contact_ex_fields_after_msg" type="checkbox" <?php if( $si_contact_opt['ex_fields_after_msg'] == 'true' ) echo 'checked="checked"'; ?> />
+      <label name="si_contact_ex_fields_after_msg" for="si_contact_ex_fields_after_msg"><?php _e('Move extra fields to after the Message field.', 'si-contact-form'); ?></label>
+      <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_ex_fields_after_msg_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+      <div style="text-align:left; display:none" id="si_contact_ex_fields_after_msg_tip">
+      <?php _e('Normally the extra fields are inserted into the form between the E-mail address and the Subject fields. Enabling this setting will move the extra fields to after the Message field.', 'si-contact-form'); ?>
+      </div>
+      <br />
+
+      <label for="si_contact_date_format"><?php _e('Date field - Date format:', 'si-contact-form'); ?></label>
       <select id="si_contact_date_format" name="si_contact_date_format">
 <?php
 $selected = '';
-foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
+$cal_date_array = array(
+'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
+'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
+);
+foreach ($cal_date_array as $k => $v) {
  if ($si_contact_opt['date_format'] == "$k")  $selected = ' selected="selected"';
- echo '<option value="'.$k.'"'.$selected.'>'.$k.'</option>'."\n";
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
  $selected = '';
 }
 ?>
 </select>
-<br />
+       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_date_format_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_date_format_tip">
+       <?php _e('Use to set the date format for the date field.', 'si-contact-form'); ?>
+       </div>
+       <br />
+
+       <label for="si_contact_cal_start_day"><?php _e('Date field - Calendar Start Day of the Week', 'si-contact-form'); ?>:</label><input name="si_contact_cal_start_day" id="si_contact_cal_start_day" type="text" value="<?php echo absint($si_contact_opt['cal_start_day']);  ?>" size="3" />
+       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_cal_start_day_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_cal_start_day_tip">
+       <?php _e('Use to set the day the week the date field calendar will start on: 0(Sun) to 6(Sat).', 'si-contact-form'); ?>
+       </div>
+       <br />
 
 
         <label for="si_contact_attach_types"><?php _e('Attached files acceptable types', 'si-contact-form'); ?>:</label><input name="si_contact_attach_types" id="si_contact_attach_types" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['attach_types']);  ?>" size="60" />
@@ -833,7 +859,7 @@ foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
         <br />
 
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <small><?php _e('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>
+        <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <small><?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>
 
        </td>
       </tr>
@@ -849,7 +875,12 @@ foreach (array('mm/dd/yyyy','dd/mm/yyyy') as $k) {
         <label for="si_contact_reset_styles"><strong><?php _e('Reset the styles to default.', 'si-contact-form') ?></strong></label><br />
 
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label><br />
+        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_border_enable_tip">
+       <?php _e('Enable to draw a fieldset box around all the form elements. The default label for the fieldset is "Contact Form:", but you can change it in the "Fields:" section below.', 'si-contact-form'); ?>
+       </div>
+        <br />
 
         <strong><?php _e('Modifiable CSS Style Feature:', 'si-contact-form'); ?></strong>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_css_tip');"><?php _e('help', 'si-contact-form'); ?></a>

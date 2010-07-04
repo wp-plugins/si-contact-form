@@ -123,7 +123,9 @@ if ($have_attach){
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
 
-          if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
+          if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
+                  
+          }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
               // need to test if a file was selected for attach.
               $ex_field_file = $_FILES["si_contact_ex_field$i"];
               if ($ex_field_file[name] == '' && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
@@ -281,10 +283,16 @@ echo "</pre>\n";*/
      if ($name != '' || $email != '')
          $msg .= __('From', 'si-contact-form').":\n$name\n$email\n\n";
 
+    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
+        $msg .= __('Message', 'si-contact-form').":\n$message\n\n";
+    }
+
      // optional extra fields
      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ( $si_contact_opt['ex_field'.$i.'_label'] != '' ) {
-           if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] == 'wordpress' ) {
+           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
+                  $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n";
+           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] == 'wordpress' ) {
                $msg .= $si_contact_opt['ex_field'.$i.'_label']."\n * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}\n\n";
            } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
               list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
@@ -330,7 +338,7 @@ echo "</pre>\n";*/
            }
        }
     }
-    if ($message != '') {
+    if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":\n$message\n\n";
     }
 
