@@ -1,4 +1,4 @@
-# Translation of the WordPress plugin Fast and Secure Contact Form 2.7 by Mike Challis.
+# Translation of the WordPress plugin Fast and Secure Contact Form 2.7.1 by Mike Challis.
 # Copyright (C) 2010 Mike Challis
 # This file is distributed under the same license as the Fast and Secure Contact Form package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Fast and Secure Contact Form 2.7\n"
+"Project-Id-Version: Fast and Secure Contact Form 2.7.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-06-28 00:26+0000\n"
+"POT-Creation-Date: 2010-07-04 22:52+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "You do not have permissions for managing this option"
 msgstr ""
 
-#: si-contact-form-admin.php:23 si-contact-form-admin.php:1022
+#: si-contact-form-admin.php:23 si-contact-form-admin.php:1053
 msgid "Send Test"
 msgstr ""
 
@@ -58,122 +58,126 @@ msgstr ""
 msgid "Test failed: Invalid E-mail address"
 msgstr ""
 
-#: si-contact-form-admin.php:232 si-contact-form.php:59
+#: si-contact-form-admin.php:234 si-contact-form.php:59
 #: si-contact-form.php:845
 msgid "<p>Comments or questions are welcome.</p>"
 msgstr ""
 
-#: si-contact-form-admin.php:237
+#: si-contact-form-admin.php:239
 msgid "Options saved."
 msgstr ""
 
-#: si-contact-form-admin.php:240
+#: si-contact-form-admin.php:242
 msgid "Fast and Secure Contact Form Options"
 msgstr ""
 
-#: si-contact-form-admin.php:253
+#: si-contact-form-admin.php:255
 msgid "Changelog"
 msgstr ""
 
-#: si-contact-form-admin.php:254
+#: si-contact-form-admin.php:256
 msgid "FAQ"
 msgstr ""
 
-#: si-contact-form-admin.php:255
+#: si-contact-form-admin.php:257
 msgid "Rate This"
 msgstr ""
 
-#: si-contact-form-admin.php:256
+#: si-contact-form-admin.php:258
 msgid "Support"
 msgstr ""
 
-#: si-contact-form-admin.php:257 si-contact-form-admin.php:265
+#: si-contact-form-admin.php:259 si-contact-form-admin.php:267
 msgid "Donate"
 msgstr ""
 
-#: si-contact-form-admin.php:258
+#: si-contact-form-admin.php:260
 msgid "Free PHP Scripts"
 msgstr ""
 
-#: si-contact-form-admin.php:259
+#: si-contact-form-admin.php:261
 msgid "Contact"
 msgstr ""
 
-#: si-contact-form-admin.php:277
+#: si-contact-form-admin.php:279
 msgid ""
 "If you find this plugin useful to you, please consider making a small "
 "donation to help contribute to further development. Thanks for your kind "
 "support!"
 msgstr ""
 
-#: si-contact-form-admin.php:291
+#: si-contact-form-admin.php:293
 msgid ""
 "I have donated to help contribute for the development of this Contact Form."
 msgstr ""
 
-#: si-contact-form-admin.php:294
+#: si-contact-form-admin.php:296
 msgid "Usage"
 msgstr ""
 
-#: si-contact-form-admin.php:298
+#: si-contact-form-admin.php:300
 msgid ""
 "You must add the shortcode in a Page(not a post). That page will become your "
 "Contact Form"
 msgstr ""
 
-#: si-contact-form-admin.php:298 si-contact-form-admin.php:351
-#: si-contact-form-admin.php:427 si-contact-form-admin.php:465
-#: si-contact-form-admin.php:500 si-contact-form-admin.php:511
-#: si-contact-form-admin.php:519 si-contact-form-admin.php:534
-#: si-contact-form-admin.php:543 si-contact-form-admin.php:574
-#: si-contact-form-admin.php:644 si-contact-form-admin.php:672
-#: si-contact-form-admin.php:802 si-contact-form-admin.php:811
-#: si-contact-form-admin.php:829 si-contact-form-admin.php:855
-#: si-contact-form-admin.php:867 si-contact-form-admin.php:888
-#: si-contact-form-admin.php:895 si-contact-form-admin.php:903
-#: si-contact-form-admin.php:911 si-contact-form-admin.php:923
-#: si-contact-form-admin.php:974
+#: si-contact-form-admin.php:300 si-contact-form-admin.php:353
+#: si-contact-form-admin.php:429 si-contact-form-admin.php:467
+#: si-contact-form-admin.php:502 si-contact-form-admin.php:513
+#: si-contact-form-admin.php:521 si-contact-form-admin.php:536
+#: si-contact-form-admin.php:545 si-contact-form-admin.php:576
+#: si-contact-form-admin.php:646 si-contact-form-admin.php:674
+#: si-contact-form-admin.php:792 si-contact-form-admin.php:813
+#: si-contact-form-admin.php:820 si-contact-form-admin.php:828
+#: si-contact-form-admin.php:837 si-contact-form-admin.php:855
+#: si-contact-form-admin.php:879 si-contact-form-admin.php:886
+#: si-contact-form-admin.php:898 si-contact-form-admin.php:919
+#: si-contact-form-admin.php:926 si-contact-form-admin.php:934
+#: si-contact-form-admin.php:942 si-contact-form-admin.php:954
+#: si-contact-form-admin.php:1005
 msgid "help"
 msgstr ""
 
-#: si-contact-form-admin.php:300
+#: si-contact-form-admin.php:302
 msgid "Shortcode for this form:"
 msgstr ""
 
-#: si-contact-form-admin.php:304
+#: si-contact-form-admin.php:306
 msgid "Options"
 msgstr ""
 
-#: si-contact-form-admin.php:308
+#: si-contact-form-admin.php:310
 msgid "Multi-forms:"
 msgstr ""
 
-#: si-contact-form-admin.php:314 si-contact-form-admin.php:316
-#: si-contact-form-admin.php:319 si-contact-form-admin.php:321
+#: si-contact-form-admin.php:316 si-contact-form-admin.php:318
+#: si-contact-form-admin.php:321 si-contact-form-admin.php:323
 #, php-format
 msgid "Form: %d"
 msgstr ""
 
-#: si-contact-form-admin.php:326 si-contact-form-admin.php:351
-#: si-contact-form-admin.php:427 si-contact-form-admin.php:465
-#: si-contact-form-admin.php:500 si-contact-form-admin.php:511
-#: si-contact-form-admin.php:519 si-contact-form-admin.php:534
-#: si-contact-form-admin.php:543 si-contact-form-admin.php:574
-#: si-contact-form-admin.php:644 si-contact-form-admin.php:672
-#: si-contact-form-admin.php:802 si-contact-form-admin.php:811
-#: si-contact-form-admin.php:829 si-contact-form-admin.php:855
-#: si-contact-form-admin.php:867 si-contact-form-admin.php:888
-#: si-contact-form-admin.php:895 si-contact-form-admin.php:903
-#: si-contact-form-admin.php:911 si-contact-form-admin.php:923
-#: si-contact-form-admin.php:974
+#: si-contact-form-admin.php:328 si-contact-form-admin.php:353
+#: si-contact-form-admin.php:429 si-contact-form-admin.php:467
+#: si-contact-form-admin.php:502 si-contact-form-admin.php:513
+#: si-contact-form-admin.php:521 si-contact-form-admin.php:536
+#: si-contact-form-admin.php:545 si-contact-form-admin.php:576
+#: si-contact-form-admin.php:646 si-contact-form-admin.php:674
+#: si-contact-form-admin.php:792 si-contact-form-admin.php:813
+#: si-contact-form-admin.php:820 si-contact-form-admin.php:828
+#: si-contact-form-admin.php:837 si-contact-form-admin.php:855
+#: si-contact-form-admin.php:879 si-contact-form-admin.php:886
+#: si-contact-form-admin.php:898 si-contact-form-admin.php:919
+#: si-contact-form-admin.php:926 si-contact-form-admin.php:934
+#: si-contact-form-admin.php:942 si-contact-form-admin.php:954
+#: si-contact-form-admin.php:1005
 msgid "Click for Help!"
 msgstr ""
 
-#: si-contact-form-admin.php:326
+#: si-contact-form-admin.php:328
 msgid "Multi-forms help"
 msgstr ""
 
-#: si-contact-form-admin.php:328
+#: si-contact-form-admin.php:330
 msgid ""
 "This multi-form feature allows you to have up to four different forms on "
 "your site. Each form has unique settings and shortcode. Select the form you "
@@ -181,70 +185,70 @@ msgid ""
 "form you selected. Be sure to use the correct shortcode to call the form."
 msgstr ""
 
-#: si-contact-form-admin.php:332
+#: si-contact-form-admin.php:334
 msgid "Number of available Multi-forms"
 msgstr ""
 
-#: si-contact-form-admin.php:335 si-contact-form-admin.php:658
-#: si-contact-form-admin.php:999
+#: si-contact-form-admin.php:337 si-contact-form-admin.php:660
+#: si-contact-form-admin.php:1030
 msgid "Update Options"
 msgstr ""
 
-#: si-contact-form-admin.php:345 si-contact-form-admin.php:665
+#: si-contact-form-admin.php:347 si-contact-form-admin.php:667
 msgid "Form:"
 msgstr ""
 
-#: si-contact-form-admin.php:346 si-contact-form-admin.php:360
-#: si-contact-form-admin.php:585 si-contact-form-admin.php:633
-#: si-contact-form-admin.php:654 si-contact-form-admin.php:666
-#: si-contact-form-admin.php:844 si-contact-form-admin.php:920
-#: si-contact-form-admin.php:957 si-contact-form-admin.php:971
+#: si-contact-form-admin.php:348 si-contact-form-admin.php:362
+#: si-contact-form-admin.php:587 si-contact-form-admin.php:635
+#: si-contact-form-admin.php:656 si-contact-form-admin.php:668
+#: si-contact-form-admin.php:870 si-contact-form-admin.php:951
+#: si-contact-form-admin.php:988 si-contact-form-admin.php:1002
 #, php-format
 msgid "(form %d)"
 msgstr ""
 
-#: si-contact-form-admin.php:349
+#: si-contact-form-admin.php:351
 msgid "Welcome introduction"
 msgstr ""
 
-#: si-contact-form-admin.php:353
+#: si-contact-form-admin.php:355
 msgid ""
 "This gets printed when the contact form is first presented. It is not "
 "printed when there is an input error and not printed after the form is "
 "completed."
 msgstr ""
 
-#: si-contact-form-admin.php:359
+#: si-contact-form-admin.php:361
 msgid "E-mail:"
 msgstr ""
 
-#: si-contact-form-admin.php:371 si-contact-form.php:64
+#: si-contact-form-admin.php:373 si-contact-form.php:64
 #: si-contact-form.php:151 si-contact-form.php:846
 msgid "Webmaster"
 msgstr ""
 
-#: si-contact-form-admin.php:414
+#: si-contact-form-admin.php:416
 msgid "E-mail To"
 msgstr ""
 
-#: si-contact-form-admin.php:417 si-contact-form-admin.php:460
-#: si-contact-form-admin.php:495 si-contact-form-display.php:71
+#: si-contact-form-admin.php:419 si-contact-form-admin.php:462
+#: si-contact-form-admin.php:497 si-contact-form-display.php:71
 msgid "ERROR: Misconfigured E-mail address in options."
 msgstr ""
 
-#: si-contact-form-admin.php:421 si-contact-form-admin.php:1014
+#: si-contact-form-admin.php:423 si-contact-form-admin.php:1045
 msgid ""
 "Warning: Your web host has the mail() function disabled. PHP cannot send "
 "email."
 msgstr ""
 
-#: si-contact-form-admin.php:422 si-contact-form-admin.php:1015
+#: si-contact-form-admin.php:424 si-contact-form-admin.php:1046
 msgid ""
 "Have them fix it. Or you can install the \"WP Mail SMTP\" plugin and "
 "configure it to use SMTP."
 msgstr ""
 
-#: si-contact-form-admin.php:429
+#: si-contact-form-admin.php:431
 msgid ""
 "E-mail address the messages are sent to (your email). Add as many contacts "
 "as you need, the drop down list on the contact form will be made "
@@ -253,18 +257,18 @@ msgid ""
 "one contact, follow this example:"
 msgstr ""
 
-#: si-contact-form-admin.php:433
+#: si-contact-form-admin.php:435
 msgid ""
 "Also, you can have multiple E-mails per contact, this is called a CC(Carbon "
 "Copy). Separate each CC with a semicolon. If you need to add more than one "
 "contact, each with a CC, follow this example:"
 msgstr ""
 
-#: si-contact-form-admin.php:439
+#: si-contact-form-admin.php:441
 msgid "E-mail From (optional)"
 msgstr ""
 
-#: si-contact-form-admin.php:467
+#: si-contact-form-admin.php:469
 msgid ""
 "E-mail address the messages are sent from. Normally you should leave this "
 "blank. Some web hosts do not allow PHP to send E-mail unless the \"From:\" E-"
@@ -273,508 +277,558 @@ msgid ""
 "web site as a possible fix."
 msgstr ""
 
-#: si-contact-form-admin.php:468
+#: si-contact-form-admin.php:470
 msgid "Enter just an email: user1@example.com"
 msgstr ""
 
-#: si-contact-form-admin.php:469
+#: si-contact-form-admin.php:471
 msgid "Or enter name and email: webmaster,user1@example.com "
 msgstr ""
 
-#: si-contact-form-admin.php:473
+#: si-contact-form-admin.php:475
 msgid "E-mail Bcc (optional)"
 msgstr ""
 
-#: si-contact-form-admin.php:502
+#: si-contact-form-admin.php:504
 msgid ""
 "This Bcc address is global, which means that if you have multi \"E-mail To\" "
 "contacts, any contact selected will send to this also."
 msgstr ""
 
-#: si-contact-form-admin.php:503
+#: si-contact-form-admin.php:505
 msgid ""
 "E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send "
 "to multiple or single, both methods are acceptable:"
 msgstr ""
 
-#: si-contact-form-admin.php:510
+#: si-contact-form-admin.php:512
 msgid "E-mail Subject Prefix"
 msgstr ""
 
-#: si-contact-form-admin.php:513
+#: si-contact-form-admin.php:515
 msgid "This will become a prefix of the subject for the E-mail you receive."
 msgstr ""
 
-#: si-contact-form-admin.php:517
+#: si-contact-form-admin.php:519
 msgid "Optional E-mail Subject List"
 msgstr ""
 
-#: si-contact-form-admin.php:521
+#: si-contact-form-admin.php:523
 msgid ""
 "Optional E-mail subject drop down list. Add as many subject options as you "
 "need, the drop down list on the contact form will be made automatically. "
 "Separate each subject option by pressing enter. Follow this example:"
 msgstr ""
 
-#: si-contact-form-admin.php:529
+#: si-contact-form-admin.php:531
 msgid "Enable double E-mail entry required on contact form."
 msgstr ""
 
-#: si-contact-form-admin.php:533
+#: si-contact-form-admin.php:535
 msgid "Enable upper case alphabet correction."
 msgstr ""
 
-#: si-contact-form-admin.php:536
+#: si-contact-form-admin.php:538
 msgid ""
 "Automatically corrects form input using a function knowing about alphabet "
 "case (example: correct caps on McDonald, or correct USING ALL CAPS)."
 msgstr ""
 
-#: si-contact-form-admin.php:537
+#: si-contact-form-admin.php:539
 msgid ""
 "Enable on English language only because it can cause accent character "
 "problems if enabled on other languages."
 msgstr ""
 
-#: si-contact-form-admin.php:542
+#: si-contact-form-admin.php:544
 msgid "Enable sender information in E-mail footer."
 msgstr ""
 
-#: si-contact-form-admin.php:545
+#: si-contact-form-admin.php:547
 msgid ""
 "You will receive in the E-mail, detailed information about the sender. Such "
 "as IP Address, date, time, and which web browser they used."
 msgstr ""
 
-#: si-contact-form-admin.php:550
+#: si-contact-form-admin.php:552
 msgid "Enable Form Post security by requiring domain name match for"
 msgstr ""
 
-#: si-contact-form-admin.php:555
+#: si-contact-form-admin.php:557
 msgid "(recommended)."
 msgstr ""
 
-#: si-contact-form-admin.php:559
+#: si-contact-form-admin.php:561
 msgid ""
 "Enable checking DNS records for the domain name when checking for a valid E-"
 "mail address."
 msgstr ""
 
-#: si-contact-form-admin.php:562
+#: si-contact-form-admin.php:564
 msgid "Send E-mail function:"
 msgstr ""
 
-#: si-contact-form-admin.php:567
+#: si-contact-form-admin.php:569
 msgid "WordPress"
 msgstr ""
 
-#: si-contact-form-admin.php:567
+#: si-contact-form-admin.php:569
 msgid "PHP"
 msgstr ""
 
-#: si-contact-form-admin.php:576
+#: si-contact-form-admin.php:578
 msgid ""
 "Emails are normally sent by the wordpress mail function. If you are not "
 "receiving email from your contact form. Try setting this to \"PHP\", then "
 "test the form again. In some cases, this will resolve the problem."
 msgstr ""
 
-#: si-contact-form-admin.php:584
+#: si-contact-form-admin.php:586
 msgid "CAPTCHA:"
 msgstr ""
 
-#: si-contact-form-admin.php:589
+#: si-contact-form-admin.php:591
 msgid "Enable CAPTCHA (recommended)."
 msgstr ""
 
-#: si-contact-form-admin.php:591
+#: si-contact-form-admin.php:593
 msgid "CAPTCHA difficulty level:"
 msgstr ""
 
-#: si-contact-form-admin.php:595
+#: si-contact-form-admin.php:597
 msgid "Low"
 msgstr ""
 
-#: si-contact-form-admin.php:596
+#: si-contact-form-admin.php:598
 msgid "Medium"
 msgstr ""
 
-#: si-contact-form-admin.php:597
+#: si-contact-form-admin.php:599
 msgid "High"
 msgstr ""
 
-#: si-contact-form-admin.php:610
+#: si-contact-form-admin.php:612
 msgid "Enable smaller size CAPTCHA image."
 msgstr ""
 
-#: si-contact-form-admin.php:613
+#: si-contact-form-admin.php:615
 msgid ""
 "Disable CAPTCHA transparent text (only if captcha text is missing on the "
 "image, try this fix)."
 msgstr ""
 
-#: si-contact-form-admin.php:616
+#: si-contact-form-admin.php:618
 msgid "Enable Audio for the CAPTCHA."
 msgstr ""
 
-#: si-contact-form-admin.php:619
+#: si-contact-form-admin.php:621
 msgid "Enable Flash Audio for the CAPTCHA."
 msgstr ""
 
-#: si-contact-form-admin.php:622
+#: si-contact-form-admin.php:624
 msgid "Hide CAPTCHA for"
 msgstr ""
 
-#: si-contact-form-admin.php:623
+#: si-contact-form-admin.php:625
 msgid "registered"
 msgstr ""
 
-#: si-contact-form-admin.php:623
+#: si-contact-form-admin.php:625
 msgid "users who can"
 msgstr ""
 
-#: si-contact-form-admin.php:626
+#: si-contact-form-admin.php:628
 msgid "Test if your PHP installation will support the CAPTCHA"
 msgstr ""
 
-#: si-contact-form-admin.php:632
+#: si-contact-form-admin.php:634
 msgid "Redirect:"
 msgstr ""
 
-#: si-contact-form-admin.php:637
+#: si-contact-form-admin.php:639
 msgid "Enable redirect after the message sends"
 msgstr ""
 
-#: si-contact-form-admin.php:640
+#: si-contact-form-admin.php:642
 msgid "Redirect delay in seconds"
 msgstr ""
 
-#: si-contact-form-admin.php:643
+#: si-contact-form-admin.php:645
 msgid "Redirect URL"
 msgstr ""
 
-#: si-contact-form-admin.php:646
+#: si-contact-form-admin.php:648
 msgid ""
 "After a user sends a message, the web browser will display \"message sent\" "
 "for 5 seconds, then redirect to this URL."
 msgstr ""
 
-#: si-contact-form-admin.php:654
+#: si-contact-form-admin.php:656
 msgid "Click for Advanced Options"
 msgstr ""
 
-#: si-contact-form-admin.php:671
+#: si-contact-form-admin.php:673
 msgid "Enable auto form fill"
 msgstr ""
 
-#: si-contact-form-admin.php:674
+#: si-contact-form-admin.php:676
 msgid ""
 "Auto form fill email address and name (username) on the contact form for "
 "logged in users who are not administrators."
 msgstr ""
 
-#: si-contact-form-admin.php:678
+#: si-contact-form-admin.php:680
 msgid "Name field:"
 msgstr ""
 
-#: si-contact-form-admin.php:682
+#: si-contact-form-admin.php:684
 msgid "Not Available"
 msgstr ""
 
-#: si-contact-form-admin.php:683
+#: si-contact-form-admin.php:685
 msgid "Not Required"
 msgstr ""
 
-#: si-contact-form-admin.php:684
+#: si-contact-form-admin.php:686
 msgid "Required"
 msgstr ""
 
-#: si-contact-form-admin.php:696
+#: si-contact-form-admin.php:698
 msgid "E-mail field:"
 msgstr ""
 
-#: si-contact-form-admin.php:709
+#: si-contact-form-admin.php:711
 msgid "Subject field:"
 msgstr ""
 
-#: si-contact-form-admin.php:723
+#: si-contact-form-admin.php:725
 msgid "Message field:"
 msgstr ""
 
-#: si-contact-form-admin.php:736
+#: si-contact-form-admin.php:738
 msgid "Extra fields:"
 msgstr ""
 
-#: si-contact-form-admin.php:738
+#: si-contact-form-admin.php:740
 msgid "Number of available extra fields"
 msgstr ""
 
-#: si-contact-form-admin.php:741
+#: si-contact-form-admin.php:743
 msgid ""
 "You can use extra contact form fields for phone number, company name, etc. "
 "To enable an extra field, just enter a label. Then check if you want the "
 "field to be required or not. To disable, empty the label."
 msgstr ""
 
-#: si-contact-form-admin.php:742
+#: si-contact-form-admin.php:744
 msgid ""
 "When using select or radio field types, first enter the label and a comma. "
 "Next include the options separating with a semicolon like this example: "
 "Color:,Red;Green;Blue."
 msgstr ""
 
-#: si-contact-form-admin.php:743
+#: si-contact-form-admin.php:745
 msgid ""
 "To make \"Green\" the defult selection: set default to 2. (Default is for "
 "checkbox, radio, and select types)."
 msgstr ""
 
-#: si-contact-form-admin.php:744
+#: si-contact-form-admin.php:746
 msgid ""
 "You can also use a multiple checkbox like this example: Pizza Toppings:,"
 "olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for "
 "the \"Pizza Toppings\" label."
 msgstr ""
 
-#: si-contact-form-admin.php:750
-msgid "text"
-msgstr ""
-
-#: si-contact-form-admin.php:751
-msgid "textarea"
+#: si-contact-form-admin.php:747
+msgid ""
+"The fieldset(group) is used to draw a box around related form elements. The "
+"fieldset label is used to identify the group."
 msgstr ""
 
 #: si-contact-form-admin.php:752
-msgid "checkbox"
+msgid "text"
 msgstr ""
 
 #: si-contact-form-admin.php:753
-msgid "radio"
+msgid "textarea"
 msgstr ""
 
 #: si-contact-form-admin.php:754
-msgid "select"
+msgid "checkbox"
 msgstr ""
 
 #: si-contact-form-admin.php:755
-msgid "attachment"
+msgid "radio"
 msgstr ""
 
 #: si-contact-form-admin.php:756
+msgid "select"
+msgstr ""
+
+#: si-contact-form-admin.php:757
+msgid "attachment"
+msgstr ""
+
+#: si-contact-form-admin.php:758
 msgid "date"
 msgstr ""
 
-#: si-contact-form-admin.php:761
+#: si-contact-form-admin.php:759
+msgid "fieldset(group)"
+msgstr ""
+
+#: si-contact-form-admin.php:764
 #, php-format
 msgid "Label for extra form field %d:"
 msgstr ""
 
-#: si-contact-form-admin.php:764
+#: si-contact-form-admin.php:767
 msgid "Field type:"
 msgstr ""
 
-#: si-contact-form-admin.php:776
+#: si-contact-form-admin.php:779
 msgid "Default:"
 msgstr ""
 
-#: si-contact-form-admin.php:780
+#: si-contact-form-admin.php:783
 msgid "Required field"
 msgstr ""
 
-#: si-contact-form-admin.php:787
-msgid "Date format:"
+#: si-contact-form-admin.php:791
+msgid "Move extra fields to after the Message field."
 msgstr ""
 
-#: si-contact-form-admin.php:801
+#: si-contact-form-admin.php:794
+msgid ""
+"Normally the extra fields are inserted into the form between the E-mail "
+"address and the Subject fields. Enabling this setting will move the extra "
+"fields to after the Message field."
+msgstr ""
+
+#: si-contact-form-admin.php:798
+msgid "Date field - Date format:"
+msgstr ""
+
+#: si-contact-form-admin.php:803 si-contact-form-ex-fields.php:231
+msgid "mm/dd/yyyy"
+msgstr ""
+
+#: si-contact-form-admin.php:804 si-contact-form-ex-fields.php:232
+msgid "dd/mm/yyyy"
+msgstr ""
+
+#: si-contact-form-admin.php:815
+msgid "Use to set the date format for the date field."
+msgstr ""
+
+#: si-contact-form-admin.php:819
+msgid "Date field - Calendar Start Day of the Week"
+msgstr ""
+
+#: si-contact-form-admin.php:822
+msgid ""
+"Use to set the day the week the date field calendar will start on: 0(Sun) to "
+"6(Sat)."
+msgstr ""
+
+#: si-contact-form-admin.php:827
 msgid "Attached files acceptable types"
 msgstr ""
 
-#: si-contact-form-admin.php:804
+#: si-contact-form-admin.php:830
 msgid ""
 "Set the acceptable file types for the file attachment feature. Any file type "
 "not on this list will be rejected."
 msgstr ""
 
-#: si-contact-form-admin.php:805
+#: si-contact-form-admin.php:831
 msgid "Separate each file type with a comma character. example:"
 msgstr ""
 
-#: si-contact-form-admin.php:810
+#: si-contact-form-admin.php:836
 msgid "Attached files maximum size allowed"
 msgstr ""
 
-#: si-contact-form-admin.php:813
+#: si-contact-form-admin.php:839
 msgid "Set the acceptable maximum file size for the file attachment feature."
 msgstr ""
 
-#: si-contact-form-admin.php:814
+#: si-contact-form-admin.php:840
 msgid "example: 1mb equals one Megabyte, 1kb equals one Kilobyte"
 msgstr ""
 
-#: si-contact-form-admin.php:820
+#: si-contact-form-admin.php:846
 msgid ""
 "Note: Maximum size is limited to available server resources and various PHP "
 "settings. Very few servers will accept more than 2mb. Sizes under 1mb will "
 "usually have best results. examples:"
 msgstr ""
 
-#: si-contact-form-admin.php:822
+#: si-contact-form-admin.php:848
 msgid ""
 "Note: If you set the value higher than your server can handle, users will "
 "have problems uploading big files. The form can time out and may not even "
 "show an error."
 msgstr ""
 
-#: si-contact-form-admin.php:823
+#: si-contact-form-admin.php:849
 msgid "Your server will not allow uploading files larger than than:"
 msgstr ""
 
-#: si-contact-form-admin.php:828
+#: si-contact-form-admin.php:854
 msgid "Enable users to send HTML code in the textarea extra field types."
 msgstr ""
 
-#: si-contact-form-admin.php:831
+#: si-contact-form-admin.php:857
 msgid ""
 "Enable only if you want users to be able to send HTML code in the textarea "
 "extra field types. This is disabled by default for better security. HTML "
 "code is only needed for sharing embedded video links, PHP code samples, etc."
 msgstr ""
 
-#: si-contact-form-admin.php:836
+#: si-contact-form-admin.php:862
 msgid "Enable plugin credit link:"
 msgstr ""
 
-#: si-contact-form-admin.php:836 si-contact-form-display.php:292
+#: si-contact-form-admin.php:862 si-contact-form-display.php:305
 msgid "Powered by"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (Fast and Secure Contact Form 2.7)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Fast and Secure Contact Form 2.7.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: si-contact-form-admin.php:836 si-contact-form-admin.php:1029
-#: si-contact-form-display.php:292
+#: si-contact-form-admin.php:862 si-contact-form-admin.php:1060
+#: si-contact-form-display.php:305
 msgid "Fast and Secure Contact Form"
 msgstr ""
 
-#: si-contact-form-admin.php:843
+#: si-contact-form-admin.php:869
 msgid "Style:"
 msgstr ""
 
-#: si-contact-form-admin.php:849
+#: si-contact-form-admin.php:875
 msgid "Reset the styles to default."
 msgstr ""
 
-#: si-contact-form-admin.php:852
+#: si-contact-form-admin.php:878
 msgid "Enable border on contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:854
+#: si-contact-form-admin.php:881
+msgid ""
+"Enable to draw a fieldset box around all the form elements. The default "
+"label for the fieldset is \"Contact Form:\", but you can change it in the "
+"\"Fields:\" section below."
+msgstr ""
+
+#: si-contact-form-admin.php:885
 msgid "Modifiable CSS Style Feature:"
 msgstr ""
 
-#: si-contact-form-admin.php:857
+#: si-contact-form-admin.php:888
 msgid "Use to adjust the font colors or other styling of the contact form."
 msgstr ""
 
-#: si-contact-form-admin.php:858
+#: si-contact-form-admin.php:889
 msgid ""
 "You can use inline css, or add a class property to be used by your own "
 "stylsheet."
 msgstr ""
 
-#: si-contact-form-admin.php:859
+#: si-contact-form-admin.php:890
 msgid "Acceptable Examples:"
 msgstr ""
 
-#: si-contact-form-admin.php:866
+#: si-contact-form-admin.php:897
 msgid "CSS style for form DIV on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:869
+#: si-contact-form-admin.php:900
 msgid ""
 "Use to adjust the style of the contact form border (if border is enabled)."
 msgstr ""
 
-#: si-contact-form-admin.php:873
+#: si-contact-form-admin.php:904
 msgid "CSS style for border on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:874
+#: si-contact-form-admin.php:905
 msgid "CSS style for required field text on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:875
+#: si-contact-form-admin.php:906
 msgid "CSS style for form input titles on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:876
+#: si-contact-form-admin.php:907
 msgid "CSS style for form input fields on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:877
+#: si-contact-form-admin.php:908
 msgid "CSS style for form input fields DIV on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:878
+#: si-contact-form-admin.php:909
 msgid "CSS style for form input errors on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:879
+#: si-contact-form-admin.php:910
 msgid "CSS style for contact drop down select on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:880
+#: si-contact-form-admin.php:911
 msgid "CSS style for CAPTCHA DIV on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:881
+#: si-contact-form-admin.php:912
 msgid "CSS style for CAPTCHA image on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:882
+#: si-contact-form-admin.php:913
 msgid "CSS style for Audio image on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:883
+#: si-contact-form-admin.php:914
 msgid "CSS style for Reload image on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:884
+#: si-contact-form-admin.php:915
 msgid "CSS style for Submit button on the contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:887
+#: si-contact-form-admin.php:918
 msgid "Input Text Field Size"
 msgstr ""
 
-#: si-contact-form-admin.php:890
+#: si-contact-form-admin.php:921
 msgid "Use to adjust the size of the contact form text input fields."
 msgstr ""
 
-#: si-contact-form-admin.php:894
+#: si-contact-form-admin.php:925
 msgid "Input CAPTCHA Field Size"
 msgstr ""
 
-#: si-contact-form-admin.php:897
+#: si-contact-form-admin.php:928
 msgid "Use to adjust the size of the contact form CAPTCHA input field."
 msgstr ""
 
-#: si-contact-form-admin.php:901
+#: si-contact-form-admin.php:932
 msgid "Input Textarea Field Cols"
 msgstr ""
 
-#: si-contact-form-admin.php:902
+#: si-contact-form-admin.php:933
 msgid "Rows"
 msgstr ""
 
-#: si-contact-form-admin.php:905
+#: si-contact-form-admin.php:936
 msgid "Use to adjust the size of the contact form message textarea."
 msgstr ""
 
-#: si-contact-form-admin.php:910
+#: si-contact-form-admin.php:941
 msgid "Enable aria-required tags for screen readers"
 msgstr ""
 
-#: si-contact-form-admin.php:913
+#: si-contact-form-admin.php:944
 msgid ""
 "aria-required is a form input WAI ARIA tag. Screen readers use it to "
 "determine which fields are required. Enabling this is good for "
@@ -784,184 +838,184 @@ msgid ""
 "cause."
 msgstr ""
 
-#: si-contact-form-admin.php:919
+#: si-contact-form-admin.php:950
 msgid "Fields:"
 msgstr ""
 
-#: si-contact-form-admin.php:925
+#: si-contact-form-admin.php:956
 msgid ""
 "Some people wanted to change the text labels for the contact form. These "
 "fields can be filled in to override the standard included field titles."
 msgstr ""
 
-#: si-contact-form-admin.php:930
+#: si-contact-form-admin.php:961
 msgid "Enable required field indicators on contact form"
 msgstr ""
 
-#: si-contact-form-admin.php:932
+#: si-contact-form-admin.php:963
 msgid "Required field indicator:"
 msgstr ""
 
-#: si-contact-form-admin.php:935
+#: si-contact-form-admin.php:966
 msgid "Enable required field label on contact form:"
 msgstr ""
 
-#: si-contact-form-admin.php:935 si-contact-form-admin.php:960
+#: si-contact-form-admin.php:966 si-contact-form-admin.php:991
 #: si-contact-form-display.php:76
 msgid "(denotes required field)"
 msgstr ""
 
-#: si-contact-form-admin.php:938 si-contact-form-display.php:32
+#: si-contact-form-admin.php:969 si-contact-form-display.php:32
 msgid "Contact Form"
 msgstr ""
 
-#: si-contact-form-admin.php:939 si-contact-form-display.php:85
+#: si-contact-form-admin.php:970 si-contact-form-display.php:85
 msgid "Department to Contact"
 msgstr ""
 
-#: si-contact-form-admin.php:940 si-contact-form-display.php:93
-#: si-contact-form-display.php:219
+#: si-contact-form-admin.php:971 si-contact-form-display.php:93
+#: si-contact-form-display.php:221
 msgid "Select"
 msgstr ""
 
-#: si-contact-form-admin.php:941 si-contact-form-display.php:141
+#: si-contact-form-admin.php:972 si-contact-form-display.php:141
 msgid "Name"
 msgstr ""
 
-#: si-contact-form-admin.php:942 si-contact-form-display.php:155
+#: si-contact-form-admin.php:973 si-contact-form-display.php:155
 #: si-contact-form-display.php:181
 msgid "E-Mail Address"
 msgstr ""
 
-#: si-contact-form-admin.php:943 si-contact-form-display.php:166
+#: si-contact-form-admin.php:974 si-contact-form-display.php:166
 msgid "E-Mail Address again"
 msgstr ""
 
-#: si-contact-form-admin.php:944 si-contact-form-display.php:172
+#: si-contact-form-admin.php:975 si-contact-form-display.php:172
 msgid "Please enter your E-mail Address a second time."
 msgstr ""
 
-#: si-contact-form-admin.php:945 si-contact-form-display.php:208
-#: si-contact-form-display.php:242
+#: si-contact-form-admin.php:976 si-contact-form-display.php:210
+#: si-contact-form-display.php:244
 msgid "Subject"
 msgstr ""
 
-#: si-contact-form-admin.php:946 si-contact-form-display.php:258
-#: si-contact-form-process.php:334
+#: si-contact-form-admin.php:977 si-contact-form-display.php:260
+#: si-contact-form-process.php:287 si-contact-form-process.php:342
 msgid "Message"
 msgstr ""
 
-#: si-contact-form-admin.php:947 si-contact-form.php:556
+#: si-contact-form-admin.php:978 si-contact-form.php:556
 msgid "CAPTCHA Code"
 msgstr ""
 
-#: si-contact-form-admin.php:948 si-contact-form-display.php:277
+#: si-contact-form-admin.php:979 si-contact-form-display.php:290
 msgid "Submit"
 msgstr ""
 
-#: si-contact-form-admin.php:949 si-contact-form.php:248
+#: si-contact-form-admin.php:980 si-contact-form.php:248
 msgid "Your message has been sent, thank you."
 msgstr ""
 
-#: si-contact-form-admin.php:956
+#: si-contact-form-admin.php:987
 msgid "Tooltips:"
 msgstr ""
 
-#: si-contact-form-admin.php:961 si-contact-form.php:570
+#: si-contact-form-admin.php:992 si-contact-form.php:570
 #: si-contact-form.php:572
 msgid "CAPTCHA Image"
 msgstr ""
 
-#: si-contact-form-admin.php:962 si-contact-form.php:592
+#: si-contact-form-admin.php:993 si-contact-form.php:592
 #: si-contact-form.php:595
 msgid "CAPTCHA Audio"
 msgstr ""
 
-#: si-contact-form-admin.php:963 si-contact-form.php:603
+#: si-contact-form-admin.php:994 si-contact-form.php:603
 #: si-contact-form.php:609
 msgid "Refresh Image"
 msgstr ""
 
-#: si-contact-form-admin.php:970
+#: si-contact-form-admin.php:1001
 msgid "Errors:"
 msgstr ""
 
-#: si-contact-form-admin.php:976
+#: si-contact-form-admin.php:1007
 msgid ""
 "Some people wanted to change the error messages for the contact form. These "
 "fields can be filled in to override the standard included error messages."
 msgstr ""
 
-#: si-contact-form-admin.php:979 si-contact-form-process.php:9
+#: si-contact-form-admin.php:1010 si-contact-form-process.php:9
 msgid "Selecting a contact is required."
 msgstr ""
 
-#: si-contact-form-admin.php:980 si-contact-form-process.php:91
+#: si-contact-form-admin.php:1011 si-contact-form-process.php:91
 msgid "Your name is required."
 msgstr ""
 
-#: si-contact-form-admin.php:981 si-contact-form-process.php:96
+#: si-contact-form-admin.php:1012 si-contact-form-process.php:96
 #: si-contact-form-process.php:100
 msgid "A proper e-mail address is required."
 msgstr ""
 
-#: si-contact-form-admin.php:982 si-contact-form-process.php:104
+#: si-contact-form-admin.php:1013 si-contact-form-process.php:104
 msgid "The two e-mail addresses did not match, please enter again."
 msgstr ""
 
-#: si-contact-form-admin.php:983 si-contact-form-process.php:131
-#: si-contact-form-process.php:169 si-contact-form-process.php:180
+#: si-contact-form-admin.php:1014 si-contact-form-process.php:133
+#: si-contact-form-process.php:171 si-contact-form-process.php:182
 #: si-contact-form.php:418
 msgid "This field is required."
 msgstr ""
 
-#: si-contact-form-admin.php:984 si-contact-form-process.php:189
+#: si-contact-form-admin.php:1015 si-contact-form-process.php:191
 msgid "Subject text is required."
 msgstr ""
 
-#: si-contact-form-admin.php:985 si-contact-form-process.php:194
+#: si-contact-form-admin.php:1016 si-contact-form-process.php:196
 msgid "Message text is required."
 msgstr ""
 
-#: si-contact-form-admin.php:986 si-contact-form-process.php:76
-#: si-contact-form-process.php:225
+#: si-contact-form-admin.php:1017 si-contact-form-process.php:76
+#: si-contact-form-process.php:227
 msgid "Contact Form has Invalid Input"
 msgstr ""
 
-#: si-contact-form-admin.php:987 si-contact-form-process.php:249
+#: si-contact-form-admin.php:1018 si-contact-form-process.php:251
 msgid "Please complete the CAPTCHA."
 msgstr ""
 
-#: si-contact-form-admin.php:988 si-contact-form-process.php:260
+#: si-contact-form-admin.php:1019 si-contact-form-process.php:262
 msgid "That CAPTCHA was incorrect."
 msgstr ""
 
-#: si-contact-form-admin.php:989 si-contact-form-display.php:62
+#: si-contact-form-admin.php:1020 si-contact-form-display.php:62
 msgid "Please make corrections below and try again."
 msgstr ""
 
-#: si-contact-form-admin.php:1006
+#: si-contact-form-admin.php:1037
 msgid "Send a Test E-mail"
 msgstr ""
 
-#: si-contact-form-admin.php:1009
+#: si-contact-form-admin.php:1040
 msgid "To:"
 msgstr ""
 
-#: si-contact-form-admin.php:1011
+#: si-contact-form-admin.php:1042
 msgid ""
 "Type an email address here and then click Send Test to generate a test email."
 msgstr ""
 
-#: si-contact-form-admin.php:1027
+#: si-contact-form-admin.php:1058
 msgid "More WordPress plugins by Mike Challis:"
 msgstr ""
 
-#: si-contact-form-admin.php:1030
+#: si-contact-form-admin.php:1061
 msgid "SI CAPTCHA Anti-Spam"
 msgstr ""
 
-#: si-contact-form-admin.php:1031
+#: si-contact-form-admin.php:1062
 msgid "Visitor Maps and Who's Online"
 msgstr ""
 
@@ -980,116 +1034,116 @@ msgid ""
 "change its permission manually."
 msgstr ""
 
-#: si-contact-form-ex-fields.php:47 si-contact-form-process.php:154
+#: si-contact-form-ex-fields.php:55 si-contact-form-process.php:156
 msgid "Error: A checkbox field is not configured properly in settings."
 msgstr ""
 
-#: si-contact-form-ex-fields.php:108 si-contact-form-ex-fields.php:117
+#: si-contact-form-ex-fields.php:116 si-contact-form-ex-fields.php:125
 msgid "Error: A select field is not configured properly in settings."
 msgstr ""
 
-#: si-contact-form-ex-fields.php:164 si-contact-form-ex-fields.php:173
+#: si-contact-form-ex-fields.php:172 si-contact-form-ex-fields.php:181
 msgid "Error: A radio field is not configured properly in settings."
 msgstr ""
 
-#: si-contact-form-ex-fields.php:211
+#: si-contact-form-ex-fields.php:219
 #, php-format
 msgid "(Acceptable file types: %1$s. Maximum file size: %2$s)"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "Su"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "Mo"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "Tu"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "We"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "Th"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "Fr"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:250
+#: si-contact-form-ex-fields.php:261
 msgid "Sa"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Jan"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Feb"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Mar"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Apr"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "May"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Jun"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Jul"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Aug"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Sep"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Oct"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Nov"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:251
+#: si-contact-form-ex-fields.php:262
 msgid "Dec"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:252
+#: si-contact-form-ex-fields.php:263
 msgid "Go to the next month"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:253
+#: si-contact-form-ex-fields.php:264
 msgid "Go to the previous month"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:254
+#: si-contact-form-ex-fields.php:265
 msgid "Clear"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:255
+#: si-contact-form-ex-fields.php:266
 msgid "Clears any dates selected on the calendar"
 msgstr ""
 
-#: si-contact-form-ex-fields.php:256
+#: si-contact-form-ex-fields.php:267
 msgid "This is the maximum range"
 msgstr ""
 
@@ -1109,51 +1163,51 @@ msgstr ""
 msgid "Your IP is Banned"
 msgstr ""
 
-#: si-contact-form-process.php:245
+#: si-contact-form-process.php:247
 msgid ""
 "Could not read CAPTCHA cookie. Make sure you have cookies enabled and not "
 "blocking in your web browser settings. Or another plugin is conflicting. See "
 "plugin FAQ."
 msgstr ""
 
-#: si-contact-form-process.php:280
+#: si-contact-form-process.php:282
 msgid "To"
 msgstr ""
 
-#: si-contact-form-process.php:282
+#: si-contact-form-process.php:284
 msgid "From"
 msgstr ""
 
-#: si-contact-form-process.php:288
+#: si-contact-form-process.php:296
 msgid "File is attached:"
 msgstr ""
 
-#: si-contact-form-process.php:320
+#: si-contact-form-process.php:328
 msgid "selected"
 msgstr ""
 
-#: si-contact-form-process.php:343
+#: si-contact-form-process.php:351
 msgid "From a WordPress user"
 msgstr ""
 
-#: si-contact-form-process.php:345
+#: si-contact-form-process.php:353
 msgid "Sent from (ip address)"
 msgstr ""
 
-#: si-contact-form-process.php:346
+#: si-contact-form-process.php:354
 msgid "Date/Time"
 msgstr ""
 
-#: si-contact-form-process.php:347
+#: si-contact-form-process.php:355
 msgid "Coming from (referer)"
 msgstr ""
 
-#: si-contact-form-process.php:348
+#: si-contact-form-process.php:356
 msgid "Using (user agent)"
 msgstr ""
 
-#: si-contact-form-process.php:405 si-contact-form-process.php:414
-#: si-contact-form-process.php:417
+#: si-contact-form-process.php:413 si-contact-form-process.php:422
+#: si-contact-form-process.php:425
 msgid "The e-mail could not be sent."
 msgstr ""
 
