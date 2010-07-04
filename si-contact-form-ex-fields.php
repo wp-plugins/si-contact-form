@@ -1,5 +1,5 @@
 <?php
-
+      $ex_fieldset = 0;
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
            $ex_req_field_ind = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $req_field_ind : '';
@@ -8,6 +8,14 @@
            if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '0';
 
           switch ($si_contact_opt['ex_field'.$i.'_type']) {
+           case 'fieldset':
+                if($ex_fieldset)
+                   $string .=   "</fieldset>\n";
+                $string .=   '<fieldset '.$this->ctf_border_style.'>
+        <legend>' . $si_contact_opt['ex_field'.$i.'_label'] ."</legend>\n";
+                $ex_fieldset = 1;
+           break;
+
            case 'text':
 
                  $string .=   '
@@ -219,14 +227,17 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 
 
              case 'date':
-
+            $cal_date_array = array(
+'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
+'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
+);
                  $string .=   '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' .$si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="';
-                $string .=   ( isset(${'ex_field'.$i}) && ${'ex_field'.$i} != '') ? $this->ctf_output_string(${'ex_field'.$i}): $si_contact_opt['date_format'];
+                $string .=   ( isset(${'ex_field'.$i}) && ${'ex_field'.$i} != '') ? $this->ctf_output_string(${'ex_field'.$i}): $cal_date_array[$si_contact_opt['date_format']];
                 $string .=   '" '.$ex_req_field_aria.' size="15" />
         </div>';
 
@@ -254,6 +265,7 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 	var ctf_clearbtn_caption = \''.__('Clear', 'si-contact-form').'\';
 	var ctf_clearbtn_title = \''.__('Clears any dates selected on the calendar', 'si-contact-form').'\';
 	var ctf_maxrange_caption = \''.__('This is the maximum range', 'si-contact-form').'\';
+    var ctf_cal_start_day = '.$si_contact_opt['cal_start_day'].';
     var ctf_date_format = \'';
  if($si_contact_opt['date_format'] == 'mm/dd/yyyy')
       $string .=   'm/d/Y';
@@ -278,5 +290,6 @@ $string .= 'window.onload = function () {
 $string .=   "};\n</script>\n";
 
      }
-
+     if($ex_fieldset)
+        $string .=   "</fieldset>\n";
 ?>

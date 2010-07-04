@@ -190,6 +190,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
   }
 }
 
+if ($si_contact_opt['ex_fields_after_msg'] != 'true') {
      // are there any optional extra fields/
      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
@@ -198,6 +199,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
            break;
         }
       }
+}
 
 if($si_contact_opt['subject_type'] != 'not_available' ) {
    if (count($subjects) > 0) {
@@ -264,6 +266,17 @@ $string .=   '
                 <textarea '.$this->ctf_field_style.' id="si_contact_message'.$form_id_num.'" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">' . $this->ctf_output_string($message) . '</textarea>
         </div>
 ';
+}
+
+if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
+     // are there any optional extra fields/
+     for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+        if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
+           // include the code to display extra fields
+           include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-ex-fields.php');
+           break;
+        }
+      }
 }
 
  $this->ctf_submit_style = $this->si_contact_convert_css($si_contact_opt['button_style']);
