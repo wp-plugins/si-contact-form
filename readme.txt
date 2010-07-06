@@ -298,6 +298,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+- Updated German (de_DE) - Translated by [Rico]
+
 = 2.7.1 =
 - (04 Jul 2010) - Added fieldset(group) feature to extra fields. The fieldset is used to draw a box around related form elements.
 - Added more language strings to date field.
