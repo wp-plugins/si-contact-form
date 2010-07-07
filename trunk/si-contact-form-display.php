@@ -246,11 +246,12 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
            $string .= $req_field_ind;
      $string .= '</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_subject).'
-        <div '.$this->ctf_field_div_style.'>';
-          $string .= '<input '.$this->ctf_field_style.' type="text" id="si_contact_subject'.$form_id_num.'" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />';
+        <div '.$this->ctf_field_div_style.'>
+          <input '.$this->ctf_field_style.' type="text" id="si_contact_subject'.$form_id_num.'" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />';
        }
 
-        $string .= '</div>';
+        $string .= '
+        </div>';
 }
 
 if($si_contact_opt['message_type'] != 'not_available' ) {
