@@ -298,6 +298,7 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Fixed "Attachment upload failed" message when attachment is not set to required.
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 - Updated German (de_DE) - Translated by [Rico]
 

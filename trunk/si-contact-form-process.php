@@ -127,18 +127,22 @@ if ($have_attach){
 
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
               // need to test if a file was selected for attach.
-              $ex_field_file = $_FILES["si_contact_ex_field$i"];
-              if ($ex_field_file[name] == '' && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+              $ex_field_file['name'] = '';
+              if(isset($_FILES["si_contact_ex_field$i"]))
+                  $ex_field_file = $_FILES["si_contact_ex_field$i"];
+              if ($ex_field_file['name'] == '' && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
                    $this->si_contact_error = 1;
                    ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
               }
-              // validate the attachment now
-              $ex_field_file_check = $this->si_contact_validate_attach( $ex_field_file );
-              if (!$ex_field_file_check['valid']) {
-                 $this->si_contact_error = 1;
-                 ${'si_contact_error_ex_field'.$i} = $ex_field_file_check['error'];
-              } else {
-                ${'ex_field'.$i} = $ex_field_file_check['file_name'];  // needed for email message
+              if($ex_field_file['name'] != ''){  // may not be required
+                 // validate the attachment now
+                 $ex_field_file_check = $this->si_contact_validate_attach( $ex_field_file );
+                 if (!$ex_field_file_check['valid']) {
+                     $this->si_contact_error = 1;
+                     ${'si_contact_error_ex_field'.$i} = $ex_field_file_check['error'];
+                 } else {
+                    ${'ex_field'.$i} = $ex_field_file_check['file_name'];  // needed for email message
+                 }
               }
               unset($ex_field_file);
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
@@ -293,7 +297,7 @@ echo "</pre>\n";*/
         if ( $si_contact_opt['ex_field'.$i.'_label'] != '' ) {
            if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
                   $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
-           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] == 'wordpress' ) {
+           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] == 'wordpress' && ${'ex_field'.$i} != '') {
                $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
            } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
               list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
