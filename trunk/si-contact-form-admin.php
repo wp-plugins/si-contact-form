@@ -97,10 +97,11 @@
          'email_from' =>          trim($_POST['si_contact_email_from']),
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : '',
-         'email_subject_list' =>           trim($_POST['si_contact_email_subject_list']),
+         'email_subject_list' =>  trim($_POST['si_contact_email_subject_list']),
+         'name_format' =>           $_POST['si_contact_name_format'],
          'name_type' =>             $_POST['si_contact_name_type'],
          'email_type' =>            $_POST['si_contact_email_type'],
-         'subject_type' =>            $_POST['si_contact_subject_type'],
+         'subject_type' =>          $_POST['si_contact_subject_type'],
          'message_type' =>          $_POST['si_contact_message_type'],
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'name_case_enable' => (isset( $_POST['si_contact_name_case_enable'] ) ) ? 'true' : 'false',
@@ -125,6 +126,9 @@
          'attach_types' =>      trim(str_replace('.','',$_POST['si_contact_attach_types'])),
          'attach_size' =>       ( preg_match('/^([[0-9.]+)([kKmM]?[bB])?$/',$_POST['si_contact_attach_size']) ) ? trim($_POST['si_contact_attach_size']) : $si_contact_option_defaults['attach_size'],
          'textarea_html_allow' =>    (isset( $_POST['si_contact_textarea_html_allow'] ) ) ? 'true' : 'false',
+         'auto_respond_enable' =>    (isset( $_POST['si_contact_auto_respond_enable'] ) ) ? 'true' : 'false',
+         'auto_respond_message' => trim($_POST['si_contact_auto_respond_message']),  // can be empty
+         'auto_respond_subject' => trim($_POST['si_contact_auto_respond_subject']),  // can be empty
          'req_field_indicator' =>       $_POST['si_contact_req_field_indicator'],
          'req_field_label_enable' =>    (isset( $_POST['si_contact_req_field_label_enable'] ) ) ? 'true' : 'false',
          'req_field_indicator_enable' =>    (isset( $_POST['si_contact_req_field_indicator_enable'] ) ) ? 'true' : 'false',
@@ -183,6 +187,7 @@
         $optionarray_update['ex_field'.$i.'_type'] = trim($_POST['si_contact_ex_field'.$i.'_type']);
         $optionarray_update['ex_field'.$i.'_default'] = ( is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
+        $optionarray_update['ex_field'.$i.'_notes'] = trim($_POST['si_contact_ex_field'.$i.'_notes']);
         if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
                 $optionarray_update['ex_field'.$i.'_default'] = '0';
         }
@@ -190,6 +195,7 @@
           $optionarray_update['ex_field'.$i.'_type'] = 'text';
           $optionarray_update['ex_field'.$i.'_default'] = '0';
           $optionarray_update['ex_field'.$i.'_req'] = 'false';
+          $optionarray_update['ex_field'.$i.'_notes'] = '';
         }
     }
 
@@ -693,6 +699,28 @@ foreach ($name_type_array as $k => $v) {
 }
 ?>
 </select>
+
+      <label for="si_contact_name_format"><?php _e('Name field format:', 'si-contact-form'); ?></label>
+      <select id="si_contact_name_format" name="si_contact_name_format">
+<?php
+$name_format_array = array(
+'name' => esc_attr(__('Name', 'si-contact-form')),
+'first_last' => esc_attr(__('First Name, Last Name', 'si-contact-form')),
+'first_middle_i_last' => esc_attr(__('First Name, Middle Initial, Last Name', 'si-contact-form')),
+'first_middle_last' => esc_attr(__('First Name, Middle Name, Last Name', 'si-contact-form')),
+);
+$selected = '';
+foreach ($name_format_array as $k => $v) {
+ if ($si_contact_opt['name_format'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_name_format_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_name_format_tip">
+       <?php _e('Select how the name field is formatted on the form.', 'si-contact-form'); ?>
+       </div>
 <br />
 
       <label for="si_contact_email_type"><?php _e('E-mail field:', 'si-contact-form'); ?></label>
@@ -741,12 +769,16 @@ foreach ($name_type_array as $k => $v) {
 
        <br />
        <?php _e('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form'); ?>
+       <br />
        <?php _e('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
        <?php _e('To make "Green" the defult selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form'); ?>
        <?php _e('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?>
-       <?php _e('The fieldset(group) is used to draw a box around related form elements. The fieldset label is used to identify the group.', 'si-contact-form'); ?>
-       </div>
        <br />
+       <?php _e('The fieldset(group) is used to draw a box around related form elements. The fieldset label is used to identify the group.', 'si-contact-form'); ?>
+       <br />
+       <?php _e('Use the optional notes/help to print some notes or instructions before a form field. This is for the form display only, not E-mail. HTML is allowed.', 'si-contact-form'); ?>
+       <br /><br />
+
       <?php
 $field_type_array = array(
 'text' => esc_attr(__('text', 'si-contact-form')),
@@ -781,6 +813,10 @@ foreach ($field_type_array as $k => $v) {
 
        <input name="si_contact_<?php echo 'ex_field'.$i.'_req' ?>" id="<?php echo 'ex_field'.$i.'_req' ?>" type="checkbox" <?php if( $si_contact_opt['ex_field'.$i.'_req'] == 'true' ) echo 'checked="checked"'; ?> />
        <label for="si_contact_<?php echo 'ex_field'.$i.'_enable' ?>"><?php _e('Required field', 'si-contact-form'); ?></label>
+       <br />
+
+       <label for="<?php echo 'ex_field'.$i.'_notes' ?>"><?php printf(__('Optional notes/help for form field %d:', 'si-contact-form'),$i); ?></label>
+       <input name="si_contact_<?php echo 'ex_field'.$i.'_notes' ?>" id="si_contact_<?php echo 'ex_field'.$i.'_notes' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$i.'_notes']);  ?>" size="100" />
        <br />
 
       <?php
@@ -860,6 +896,31 @@ foreach ($cal_date_array as $k => $v) {
 
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <small><?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast and Secure Contact Form', 'si-contact-form'); ?></a></small>
+        <br />
+
+        <input name="si_contact_auto_respond_enable" id="si_contact_auto_respond_enable" type="checkbox" <?php if( $si_contact_opt['auto_respond_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label name="si_contact_auto_respond_enable" for="si_contact_auto_respond_enable"><?php _e('Enable autoresponder E-mail message.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_enable_tip">
+        <?php _e('Enable when you want the form to automatically answer with an autoresponder E-mail message.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label name="si_contact_auto_respond_subject" for="si_contact_auto_respond_subject"><?php _e('Autoresponder E-mail subject', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_subject" id="si_contact_auto_respond_subject" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_subject']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_subject_tip">
+        <?php _e('Type your autoresponder E-mail subject here, then enable it with the setting above.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label name="si_contact_auto_respond_message" for="si_contact_auto_respond_message"><?php _e('Autoresponder E-mail message', 'si-contact-form'); ?>:</label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_message_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_message_tip">
+        <?php _e('Type your autoresponder E-mail message here, then enable it with the setting above.', 'si-contact-form'); ?>
+        </div><br />
+        <textarea rows="3" cols="50" name="si_contact_auto_respond_message" id="si_contact_auto_respond_message"><?php echo $this->ctf_output_string($si_contact_opt['auto_respond_message']);  ?></textarea>
+        <br />
+
 
        </td>
       </tr>

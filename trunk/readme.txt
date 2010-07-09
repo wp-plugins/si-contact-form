@@ -298,6 +298,9 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added "Name field format:" so you can select how the name field is formatted on the form. Name, First Name, Last Name, etc. 
+- Added autoresponder E-mail message feature. Enable when you want the form to automatically answer with an autoresponder E-mail message.
+- Added Optional notes/help for extra form fields. Use the optional notes/help to print some notes or instructions before a form field. This is for the form display only, not E-mail. HTML is allowed. 
 - Fixed "Attachment upload failed" message when attachment is not set to required.
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 - Updated German (de_DE) - Translated by [Rico]

@@ -135,6 +135,35 @@ if ($email == '') {
 }
 
 if($si_contact_opt['name_type'] != 'not_available' ) {
+
+     $f_name_string = '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_f_name'.$form_id_num.'">';
+     $f_name_string .= __('First Name', 'si-contact-form').':';
+     if($si_contact_opt['name_type'] == 'required' )
+           $f_name_string .= $req_field_ind;
+     $f_name_string .= '</label>
+        </div> '.$this->ctf_echo_if_error($si_contact_error_f_name).'
+        <div '.$this->ctf_field_div_style.'>
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_f_name'.$form_id_num.'" name="si_contact_f_name" value="' . $this->ctf_output_string($f_name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        </div>';
+
+     $l_name_string = '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_l_name'.$form_id_num.'">';
+     $l_name_string .= __('Last Name', 'si-contact-form').':';
+     if($si_contact_opt['name_type'] == 'required' )
+           $l_name_string .= $req_field_ind;
+     $l_name_string .= '</label>
+        </div> '.$this->ctf_echo_if_error($si_contact_error_l_name).'
+        <div '.$this->ctf_field_div_style.'>
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_l_name'.$form_id_num.'" name="si_contact_l_name" value="' . $this->ctf_output_string($l_name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        </div>';
+
+
+    switch ($si_contact_opt['name_format']) {
+       case 'name':
+
 $string .= '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_name'.$form_id_num.'">';
@@ -146,6 +175,53 @@ $string .= '
         <div '.$this->ctf_field_div_style.'>
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_name'.$form_id_num.'" name="si_contact_name" value="' . $this->ctf_output_string($name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
+
+      break;
+      case 'first_last':
+
+     $string .= $f_name_string;
+     $string .= $l_name_string;
+
+      break;
+      case 'first_middle_i_last':
+
+     $string .= $f_name_string;
+
+$string .= '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_mi_name'.$form_id_num.'">';
+     $string .= __('Middle Initial', 'si-contact-form').':';
+     //if($si_contact_opt['name_type'] == 'required' )
+     //      $string .= $req_field_ind;
+     $string .= '</label>
+        </div> '.$this->ctf_echo_if_error($si_contact_error_mi_name).'
+        <div '.$this->ctf_field_div_style.'>
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_mi_name'.$form_id_num.'" name="si_contact_mi_name" value="' . $this->ctf_output_string($mi_name) .'" '.$this->ctf_aria_required.' size="2" />
+        </div>';
+
+     $string .= $l_name_string;
+
+      break;
+      case 'first_middle_last':
+
+     $string .= $f_name_string;
+
+$string .= '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_m_name'.$form_id_num.'">';
+     $string .= __('Middle Name', 'si-contact-form').':';
+     //if($si_contact_opt['name_type'] == 'required' )
+     //      $string .= $req_field_ind;
+     $string .= '</label>
+        </div> '.$this->ctf_echo_if_error($si_contact_error_m_name).'
+        <div '.$this->ctf_field_div_style.'>
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_m_name'.$form_id_num.'" name="si_contact_m_name" value="' . $this->ctf_output_string($m_name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+        </div>';
+
+     $string .= $l_name_string;
+
+      break;
+    }
 }
 if($si_contact_opt['email_type'] != 'not_available' ) {
  if ($ctf_enable_double_email == 'true') {
