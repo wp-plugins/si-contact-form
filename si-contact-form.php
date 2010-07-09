@@ -346,14 +346,11 @@ if($message_sent) {
       // thank you message is printed here
       $string .= $ctf_thank_you;
 }else{
-   //   if (!$this->si_contact_error) {
-        // welcome intro is printed here unless message is sent
-        $string .= $ctf_welcome_intro;
-  //    }
+      // welcome intro is printed here
+      $string .= $ctf_welcome_intro;
 
-  // include the code to display the form
-  include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-display.php');
-
+      // include the code to display the form
+      include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-display.php');
 }
 
  return $string;
