@@ -302,6 +302,10 @@ $message_sent = 0;
 $mail_to    = '';
 $to_contact = '';
 $name       = '';
+$f_name     = '';
+$m_name     = '';
+$mi_name    = '';
+$l_name     = '';
 $email      = '';
 $email2     = '';
 $subject    = '';
@@ -322,6 +326,10 @@ $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '
 $si_contact_error_captcha = '';
 $si_contact_error_contact = '';
 $si_contact_error_name    = '';
+$si_contact_error_f_name  = '';
+$si_contact_error_m_name  = '';
+$si_contact_error_mi_name = ''; 
+$si_contact_error_l_name  = '';
 $si_contact_error_email   = '';
 $si_contact_error_email2  = '';
 $si_contact_error_double_email = '';
@@ -846,6 +854,7 @@ function si_contact_get_options($form_num) {
          'email_bcc' => '',
          'email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
          'email_subject_list' => '',
+         'name_format' => 'name',
          'name_type' => 'required',
          'email_type' => 'required',
          'subject_type' => 'required',
@@ -872,6 +881,9 @@ function si_contact_get_options($form_num) {
          'attach_types' =>  'doc,pdf,txt,gif,jpg,jpeg,png',
          'attach_size' =>   '1mb',
          'textarea_html_allow' => 'false',
+         'auto_respond_enable' => 'false',
+         'auto_respond_subject' => '',
+         'auto_respond_message' => '',
          'req_field_indicator_enable' => 'true',
          'req_field_label_enable' => 'true',
          'req_field_indicator' => '*',
@@ -927,13 +939,17 @@ function si_contact_get_options($form_num) {
 
    // optional extra fields
   $si_contact_max_fields = ( isset($_POST['si_contact_max_fields']) && is_numeric($_POST['si_contact_max_fields']) ) ? $_POST['si_contact_max_fields'] : $si_contact_gb_defaults['max_fields'];
-  for ($i = 1; $i <= $si_contact_max_fields; $i++) {
+  if ($si_contact_gb = get_option("si_contact_form_gb")) { // initialize new
+   $si_contact_max_fields = $si_contact_gb['max_fields'];
+   unset($si_contact_gb);
+  }
+  for ($i = 1; $i <= $si_contact_max_fields; $i++) { // initialize new
         $si_contact_option_defaults['ex_field'.$i.'_default'] = '0';
         $si_contact_option_defaults['ex_field'.$i.'_req'] = 'false';
         $si_contact_option_defaults['ex_field'.$i.'_label'] = '';
         $si_contact_option_defaults['ex_field'.$i.'_type'] = 'text';
+        $si_contact_option_defaults['ex_field'.$i.'_notes'] = '';
   }
-
 
   // upgrade path from old version
   if (!get_option('si_contact_form') && get_option('si_contact_email_to')) {

@@ -19,8 +19,34 @@
     $to_contact = ( isset($contacts[$cid]['CONTACT']) ) ? $this->ctf_clean_input($contacts[$cid]['CONTACT']): '';
 
     if ($si_contact_opt['name_type'] != 'not_available') {
-       if (isset($_POST['si_contact_name']))
-         $name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_name']));
+        switch ($si_contact_opt['name_format']) {
+          case 'name':
+             if (isset($_POST['si_contact_name']))
+               $name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_name']));
+          break;
+          case 'first_last':
+             if (isset($_POST['si_contact_f_name']))
+               $f_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_f_name']));
+             if (isset($_POST['si_contact_l_name']))
+               $l_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_l_name']));
+          break;
+          case 'first_middle_i_last':
+             if (isset($_POST['si_contact_f_name']))
+               $f_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_f_name']));
+             if (isset($_POST['si_contact_mi_name']))
+               $mi_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_mi_name']));
+             if (isset($_POST['si_contact_l_name']))
+               $l_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_l_name']));
+          break;
+          case 'first_middle_last':
+             if (isset($_POST['si_contact_f_name']))
+               $f_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_f_name']));
+             if (isset($_POST['si_contact_m_name']))
+               $m_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_m_name']));
+             if (isset($_POST['si_contact_l_name']))
+               $l_name = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_l_name']));
+         break;
+      }
     }
     if ($si_contact_opt['email_type'] != 'not_available') {
        if (isset($_POST['si_contact_email']))
@@ -86,10 +112,33 @@
       $message = $this->ctf_name_case($message);
    }
 
-   if(empty($name) && $si_contact_opt['name_type'] == 'required') {
-       $this->si_contact_error = 1;
-       $si_contact_error_name =  ($si_contact_opt['error_name'] != '') ? $si_contact_opt['error_name'] : __('Your name is required.', 'si-contact-form');
-   }
+    switch ($si_contact_opt['name_format']) {
+       case 'name':
+        if(empty($name) && $si_contact_opt['name_type'] == 'required') {
+          $this->si_contact_error = 1;
+          $si_contact_error_name =  ($si_contact_opt['error_name'] != '') ? $si_contact_opt['error_name'] : __('Your name is required.', 'si-contact-form');
+        }
+      break;
+      default:
+        if(empty($f_name) && $si_contact_opt['name_type'] == 'required') {
+          $this->si_contact_error = 1;
+          $si_contact_error_f_name =  ($si_contact_opt['error_name'] != '') ? $si_contact_opt['error_name'] : __('Your name is required.', 'si-contact-form');
+        }
+        if(empty($l_name) && $si_contact_opt['name_type'] == 'required') {
+          $this->si_contact_error = 1;
+          $si_contact_error_l_name =  ($si_contact_opt['error_name'] != '') ? $si_contact_opt['error_name'] : __('Your name is required.', 'si-contact-form');
+        }
+    }
+
+   if(!empty($f_name))
+     $name .= $f_name;
+   if(!empty($mi_name))
+     $name .= ' '.$mi_name;
+   if(!empty($m_name))
+     $name .= ' '.$m_name;
+   if(!empty($l_name))
+     $name .= ' '.$l_name;
+
    if($si_contact_opt['email_type'] == 'required') {
      if (!$this->ctf_validate_email($email)) {
          $this->si_contact_error = 1;
@@ -285,8 +334,31 @@ echo "</pre>\n";*/
      }
 
      $msg =  __('To', 'si-contact-form').": $to_contact$php_eol$php_eol";
-     if ($name != '' || $email != '')
-         $msg .= __('From', 'si-contact-form').":$php_eol$name$php_eol$email$php_eol$php_eol";
+     if ($name != '' || $email != '')  {
+        $msg .= __('From', 'si-contact-form').":$php_eol";
+        switch ($si_contact_opt['name_format']) {
+          case 'name':
+              $msg .= "$name$php_eol";
+          break;
+          case 'first_last':
+              $msg .= __('First Name', 'si-contact-form').": $f_name$php_eol";
+              $msg .= __('Last Name', 'si-contact-form').": $l_name$php_eol";
+          break;
+          case 'first_middle_i_last':
+              $msg .= __('First Name', 'si-contact-form').": $f_name$php_eol";
+              if($mi_name != '')
+                 $msg .= __('Middle Initial', 'si-contact-form').": $mi_name$php_eol";
+              $msg .= __('Last Name', 'si-contact-form').": $l_name$php_eol";
+          break;
+          case 'first_middle_last':
+              $msg .= __('First Name', 'si-contact-form').": $f_name$php_eol";
+              if($m_name != '')
+                 $msg .= __('Middle Name', 'si-contact-form').": $m_name$php_eol";
+              $msg .= __('Last Name', 'si-contact-form').": $l_name$php_eol";
+         break;
+      }
+      $msg .= "$email$php_eol$php_eol";
+   }
 
     if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
@@ -363,9 +435,8 @@ echo "</pre>\n";*/
        $msg .= $user_info_string;
 
     // wordwrap email message
-    if ($ctf_wrap_message) {
-             $msg = wordwrap($msg, 70,$php_eol);
-    }
+    if ($ctf_wrap_message)
+       $msg = wordwrap($msg, 70,$php_eol);
 
     $header = '';
     $header_php = '';
@@ -399,12 +470,11 @@ echo "</pre>\n";*/
          add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
     }
 
-    if ($ctf_email_address_bcc !='')
+    if ($ctf_email_address_bcc != '')
             $header .= "Bcc: $ctf_email_address_bcc\n";
-    if($email != '') {
-       $header .= "Reply-To: $email\n";
-       $header .= "Return-Path: $email\n";
-    }
+
+    $header .= "Reply-To: $this->si_contact_mail_from\n";
+    $header .= "Return-Path: $this->si_contact_mail_from\n";
 
     /* almost made X-Priority: 1 an option but class-phpmailer.php already sets X-Priority: 3.
        It is hard coded to do that. So you would have both 1 and 3 in the mail header and I cannot do that. */
@@ -430,6 +500,53 @@ echo "</pre>\n";*/
 		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
 		}
     }
+
+   // autoresponder feature
+   if ($si_contact_opt['auto_respond_enable'] == 'true' && $email != '' && $si_contact_opt['auto_respond_subject'] != '' && $si_contact_opt['auto_respond_message'] != ''){
+       $subj = $si_contact_opt['auto_respond_subject'];
+       $msg =  $si_contact_opt['auto_respond_message'];
+       // wordwrap email message
+       if ($ctf_wrap_message)
+             $msg = wordwrap($msg, 70,$php_eol);
+
+    $header = '';
+    $header_php = '';
+    // prepare the email header
+    if ($ctf_email_on_this_domain != '' ) {
+         if(!preg_match("/,/", $ctf_email_on_this_domain)) {
+           // just an email: user1@example.com
+           $header_php =  "From: $ctf_email_on_this_domain\n";
+           $this->si_contact_mail_from = $ctf_email_on_this_domain;
+           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+         } else {
+           // name and email: webmaster,user1@example.com
+           list($key, $value) = explode(",",$ctf_email_on_this_domain);
+           $key   = trim($key);
+           $value = trim($value);
+           $header_php =  "From: $key <$value>\n";
+           $this->si_contact_from_name = $key;
+           add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+           $this->si_contact_mail_from = $value;
+           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+         }
+    } else {
+         $header_php =  "From: ". get_option('admin_email') . "\n";
+         $this->si_contact_mail_from = get_option('admin_email');
+         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+    }
+    $header .= "Reply-To: $this->si_contact_mail_from\n";
+    $header .= "Return-Path: $this->si_contact_mail_from\n";
+    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+
+       if ($si_contact_opt['php_mailer_enable'] == 'php') {
+         $header_php .= $header;
+         if (!mail($email,$subj,$msg,$header_php))
+		    die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+       } else {
+	     if (!wp_mail($email,$subj,$msg,$header))
+		    die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+       }
+   }
 
     $message_sent = 1;
 

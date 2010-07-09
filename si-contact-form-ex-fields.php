@@ -6,6 +6,9 @@
            $ex_req_field_aria = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $this->ctf_aria_required : '';
            if(!$si_contact_opt['ex_field'.$i.'_type'] ) $si_contact_opt['ex_field'.$i.'_type'] = 'text';
            if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '0';
+           if(!$si_contact_opt['ex_field'.$i.'_notes'] ) $si_contact_opt['ex_field'.$i.'_notes'] = '';
+           if ($si_contact_opt['ex_field'.$i.'_notes'] != '')
+               $si_contact_opt['ex_field'.$i.'_notes'] =  '<p>'.$si_contact_opt['ex_field'.$i.'_notes'].'</p>';
 
           switch ($si_contact_opt['ex_field'.$i.'_type']) {
            case 'fieldset':
@@ -19,7 +22,7 @@
            case 'text':
 
                  $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
@@ -29,7 +32,7 @@
            case 'textarea':
 
                 $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
@@ -62,7 +65,7 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
   // checkbox children
 
            $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
           <label>' . $exf_opts_label .'</label>'."\n";
 
      $ex_cnt = 1;
@@ -83,7 +86,7 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
 
   // single
                $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
             <input type="checkbox" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
     if (${'ex_field'.$i} != '') {
       if (${'ex_field'.$i} == 'selected') {
@@ -131,7 +134,7 @@ if(!preg_match("/,/", $exf_array_test) ) {
 } // end else
 
            $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $exf_opts_label .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
@@ -187,7 +190,7 @@ if(!preg_match('/,/', $exf_array_test) ) {
 } // end else
 
            $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
           <label>' . $exf_opts_label .$ex_req_field_ind.'</label>'."\n";
 
 $selected = '';
@@ -213,7 +216,7 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 
            case 'attachment':
          if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
-            $string .= '        <div '.$this->ctf_title_style.'>
+            $string .= '        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
                 <br /><small>'.sprintf(__('(Acceptable file types: %1$s. Maximum file size: %2$s)', 'si-contact-form'),$si_contact_opt['attach_types'],$si_contact_opt['attach_size']).'</small>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
@@ -230,7 +233,7 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
 );
                  $string .=   '
-        <div '.$this->ctf_title_style.'>
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' .$si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
