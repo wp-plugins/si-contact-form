@@ -138,10 +138,6 @@
          'field_style' =>         ( trim($_POST['si_contact_field_style']) != '' ) ? trim($_POST['si_contact_field_style']) : $si_contact_option_defaults['field_style'],
          'field_div_style' =>     ( trim($_POST['si_contact_field_div_style']) != '' ) ? trim($_POST['si_contact_field_div_style']) : $si_contact_option_defaults['field_div_style'],
          'error_style' =>         ( trim($_POST['si_contact_error_style']) != '' ) ? trim($_POST['si_contact_error_style']) : $si_contact_option_defaults['error_style'],
-         //'captcha_div_style' =>   ( trim($_POST['si_contact_captcha_div_style']) != '' ) ? trim($_POST['si_contact_captcha_div_style']) : $si_contact_option_defaults['captcha_div_style'],
-         //'captcha_image_style' => ( trim($_POST['si_contact_captcha_image_style']) != '' ) ? trim($_POST['si_contact_captcha_image_style']) : $si_contact_option_defaults['captcha_image_style'],
-         //'audio_image_style' =>   ( trim($_POST['si_contact_audio_image_style']) != '' ) ? trim($_POST['si_contact_audio_image_style']) : $si_contact_option_defaults['audio_image_style'],
-         //'reload_image_style' =>  ( trim($_POST['si_contact_reload_image_style']) != '' ) ? trim($_POST['si_contact_reload_image_style']) : $si_contact_option_defaults['reload_image_style'],
          'button_style' =>        ( trim($_POST['si_contact_button_style']) != '' ) ? trim($_POST['si_contact_button_style']) : $si_contact_option_defaults['button_style'],
          'field_size' => ( is_numeric(trim($_POST['si_contact_field_size'])) && trim($_POST['si_contact_field_size']) > 14 ) ? absint(trim($_POST['si_contact_field_size'])) : $si_contact_option_defaults['field_size'], // use default if empty
          'captcha_field_size' => ( is_numeric(trim($_POST['si_contact_captcha_field_size'])) && trim($_POST['si_contact_captcha_field_size']) > 4 ) ? absint(trim($_POST['si_contact_captcha_field_size'])) : $si_contact_option_defaults['captcha_field_size'],
