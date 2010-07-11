@@ -328,7 +328,7 @@ $si_contact_error_contact = '';
 $si_contact_error_name    = '';
 $si_contact_error_f_name  = '';
 $si_contact_error_m_name  = '';
-$si_contact_error_mi_name = ''; 
+$si_contact_error_mi_name = '';
 $si_contact_error_l_name  = '';
 $si_contact_error_email   = '';
 $si_contact_error_email2  = '';
@@ -554,6 +554,13 @@ if ($this->captchaCheckRequires()) {
   if ($si_contact_opt['captcha_no_trans'] == 'true')
      $captcha_level_file = 'securimage_show_no_trans.php';
 
+  $si_contact_opt['captcha_div_style'] = 'width: 250px; height: 65px; padding-top:5px;';
+  if($si_contact_opt['captcha_small'] == 'true')
+       $si_contact_opt['captcha_div_style'] = 'width: 175px; height: 50px; padding-top:5px;';
+  $si_contact_opt['captcha_image_style'] = 'border-style:none; margin:0; padding-right:5px; float:left;';
+  $si_contact_opt['audio_image_style'] = 'border-style:none; margin:0; vertical-align:top;';
+  $si_contact_opt['reload_image_style'] = 'border-style:none; margin:0; vertical-align:bottom;';
+
 // the captch html
 $string = '
         <div '.$this->ctf_title_style.'>
@@ -565,6 +572,7 @@ $string = '
                 <input '.$this->ctf_field_style.' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
         </div>
 
+<div '.$this->ctf_title_style.'>
 <div style="'.$si_contact_opt['captcha_div_style'].'">
          <img class="ctf-captcha" id="si_image_ctf'.$form_id_num.'" ';
          $string .= ($si_contact_opt['captcha_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['captcha_image_style'] ).'"' : '';
@@ -616,6 +624,7 @@ $string = '
          $string .= ($si_contact_opt['reload_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['reload_image_style'] ).'"' : '';
          $string .=  ' onclick="this.blur()" /></a>
    </div>
+</div>
 ';
 } else {
       $string .= $this->captchaRequiresError;
@@ -896,10 +905,10 @@ function si_contact_get_options($form_num) {
          'field_style' => 'text-align:left; margin:0;',
          'field_div_style' => 'text-align:left;',
          'error_style' => 'color:red; text-align:left;',
-         'captcha_div_style' => 'width: 250px; height: 55px; padding-top:10px;',
-         'captcha_image_style' => 'border-style:none; margin:0; padding-right:5px; float:left;',
-         'audio_image_style' => 'border-style:none; margin:0; vertical-align:top;',
-         'reload_image_style' => 'border-style:none; margin:0; vertical-align:bottom;',
+         //'captcha_div_style' => 'width: 250px; height: 65px; padding-top:10px;',
+         //'captcha_image_style' => 'border-style:none; margin:0; padding-right:5px; float:left;',
+         //'audio_image_style' => 'border-style:none; margin:0; vertical-align:top;',
+         //'reload_image_style' => 'border-style:none; margin:0; vertical-align:bottom;',
          'button_style' => 'margin:0; cursor:pointer;',
          'field_size' => '40',
          'captcha_field_size' => '6',

@@ -361,11 +361,13 @@ if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
 $string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha,$form_id_num)."\n"  : '';
 $string .= '
 <div '.$this->ctf_title_style.'>
+<div style="clear: both;">
   <input type="hidden" name="si_contact_action" value="send" />
   <input type="hidden" name="si_contact_form_id" value="'.$form_id_num.'" />
   <input type="submit" '.$this->ctf_submit_style.' value="';
      $string .= ($si_contact_opt['title_submit'] != '') ? esc_attr( $si_contact_opt['title_submit'] ) : esc_attr( __('Submit', 'si-contact-form'));
      $string .= '" />
+</div>    
 </div>
 ';
 if ($si_contact_opt['border_enable'] == 'true') {
@@ -379,7 +381,7 @@ $string .= '
 ';
 if ($si_contact_opt['enable_credit_link'] == 'true') {
 $string .= '
-<p><br /><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
+<p style="clear:both; padding-top: 5px;"><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
 ';
 }
 $string .= '<!-- Fast and Secure Contact Form plugin end -->

@@ -17,22 +17,24 @@ Fast and Secure Contact Form for WordPress. This contact form lets your visitors
 
 Features:
 --------
- * Super customizable Options from Admin panel.
- * Multi-Form feature that allows you to have many different forms on your site.
+ * Super easy customizable Options from Admin settings page.
+ * Multi-Form feature that allows you to have as many different forms as you need.
+ * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, fieldset(group).
+ * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
+ * Can hide subject and message fields for use as a newsletter signup.
+ * Supports sending mail to multiple departments.
+ * Optional redirect to any URL after message sent.
+ * Optional autoresponder E-mail message.
+ * Valid coding for HTML, XHTML, HTML STRICT, Section 508, and WAI Accessibility.
+ * JavaScript is not required.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
  * Validates syntax of E-mail address.
- * Can hide subject and message fields for use as a newsletter signup.
- * Optional redirect to any URL after message sent.
- * Valid coding for HTML, XHTML, Section 508, and WAI Accessibility.
- * JavaScript is not required.
- * Setting to hide the CAPTCHA from logged in users and or admins.
+ * CAPTCHA can be turned off or hidden from logged in users and or admins.
  * Multi "E-mail to" contact support.
  * Auto form fill for logged in users.
  * Customizable form field titles.
  * Customizable CSS style.
- * Optional extra fields of any type: text, textarea, checkbox, radio, select, date.
- * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
  * Sends E-mail with UTF-8 character encoding for US and International character support.
  * I18n language translation support (see FAQ)
 
@@ -244,7 +246,7 @@ The following translations are included in the download zip file:
 * Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
 * Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net)
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
-* Danish (da_DK) - Translated by [Thomas J. Langer](http://www.ohyeah-webdesign.dk)
+* Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
 * Finnish (fi) - Translated by [Mikko Vahatalo](http://www.guimikko.com/) 
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
@@ -272,7 +274,8 @@ Of course! It will be very gratefully received. Use PoEdit, it makes translation
 
 = Is it possible to merge the translation files I sent to you with the ones of the newest version? =
 
-If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Now all you have to change are the new language strings.
+If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Enter this URL: http://svn.wp-plugins.org/si-contact-form/trunk/languages/si-contact-form.pot 
+Now all you have to change are the new language strings.
 
 = This contact form sends E-mail with UTF-8 character encoding for US and International character support. =
 
@@ -303,6 +306,8 @@ No setting necessary, it just works.
 - Added Optional notes/help for extra form fields. Use the optional notes/help to print some notes or instructions before a form field. This is for the form display only, not E-mail. HTML is allowed. 
 - Fixed "Attachment upload failed" message when attachment is not set to required.
 - Improved email newline handling(some windows servers are really picky).
+- Improved CAPTCHA image alignment.
+- Updated Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 - Updated German (de_DE) - Translated by [Rico]
 
