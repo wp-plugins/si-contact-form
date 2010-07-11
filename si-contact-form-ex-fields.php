@@ -218,8 +218,8 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
          if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
             $string .= '        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
-                <br /><small>'.sprintf(__('Acceptable file types: %1s.', 'si-contact-form'),$si_contact_opt['attach_types']).'<br />
-                '.sprintf(__('Maximum file size: %s', 'si-contact-form'),$si_contact_opt['attach_size']).'</small>
+                <br /><small>'.sprintf(__('Acceptable file types: %s.', 'si-contact-form'),$si_contact_opt['attach_types']).'<br />
+                '.sprintf(__('Maximum file size: %s.', 'si-contact-form'),$si_contact_opt['attach_size']).'</small>
         </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         <div '.$this->ctf_field_div_style.'>
                 <input '.$this->ctf_field_style.' type="file" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="20" />
