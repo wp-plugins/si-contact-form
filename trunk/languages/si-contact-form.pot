@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fast and Secure Contact Form 2.7.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-07-11 06:50+0000\n"
+"POT-Creation-Date: 2010-07-11 06:56+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1117,12 +1117,12 @@ msgstr ""
 
 #: si-contact-form-ex-fields.php:221
 #, php-format
-msgid "Acceptable file types: %1s."
+msgid "Acceptable file types: %s."
 msgstr ""
 
 #: si-contact-form-ex-fields.php:222
 #, php-format
-msgid "Maximum file size: %s"
+msgid "Maximum file size: %s."
 msgstr ""
 
 #: si-contact-form-ex-fields.php:263
