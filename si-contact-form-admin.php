@@ -85,8 +85,6 @@
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb_defaults['max_forms'],
          'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 100 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb_defaults['max_fields'],
          );
-   if(isset($si_contact_gb['2.5.7'] ))
-                 $optionarray_gb_update['2.5.7'] = $si_contact_gb['2.5.7'];
    if(isset($si_contact_gb['2.6.3'] ))
                  $optionarray_gb_update['2.6.3'] = $si_contact_gb['2.6.3'];
 
