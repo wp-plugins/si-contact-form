@@ -1000,47 +1000,12 @@ function si_contact_get_options($form_num) {
   foreach($si_contact_opt as $key => $val) {
            $si_contact_opt[$key] = $this->ctf_stripslashes($val);
   }
-  if ($si_contact_opt['captcha_image_style'] == '' && $si_contact_opt['audio_image_style'] == '') {
+  if ($si_contact_opt['title_style'] == '' && $si_contact_opt['field_style'] == '') {
      // if styles seem to be blank, reset styles
-     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','captcha_div_style','captcha_image_style','audio_image_style','reload_image_style','button_style','field_size','text_cols','text_rows');
+     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','button_style','field_size','text_cols','text_rows');
      foreach($style_resets_arr as $style_reset) {
            $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
      }
-  }
-
-  // reset captcha styles on version 2.5.7
-  if ( !isset($si_contact_gb['2.5.7']) ) {
-     $style_resets_arr = array('captcha_div_style','captcha_image_style','audio_image_style','reload_image_style');
-       foreach($style_resets_arr as $style_reset) {
-           $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
-       }
-       if(isset($si_contact_opt{$i}['hidden_subject_enable']) && $si_contact_opt{$i}['hidden_subject_enable'] == 'true')
-            $si_contact_opt{$i}['subject_type'] = 'not_available';
-       if(isset($si_contact_opt{$i}['hidden_message_enable']) && $si_contact_opt{$i}['hidden_message_enable'] == 'true')
-            $si_contact_opt{$i}['message_type'] = 'not_available';
-       update_option("si_contact_form", $si_contact_opt);
-     for ($i = 2; $i <= $si_contact_gb['max_forms']; $i++) {
-       // get the options from the database
-       $si_contact_opt{$i} = get_option("si_contact_form$i");
-       foreach($style_resets_arr as $style_reset) {
-           $si_contact_opt{$i}[$style_reset] = $si_contact_option_defaults[$style_reset];
-       }
-       if(isset($si_contact_opt{$i}['hidden_subject_enable']) && $si_contact_opt{$i}['hidden_subject_enable'] == 'true')
-            $si_contact_opt{$i}['subject_type'] = 'not_available';
-       if(isset($si_contact_opt{$i}['hidden_message_enable']) && $si_contact_opt{$i}['hidden_message_enable'] == 'true')
-            $si_contact_opt{$i}['message_type'] = 'not_available';
-       update_option("si_contact_form$i", $si_contact_opt{$i});
-       unset($si_contact_opt{$i});
-     }
-       $si_contact_opt = get_option("si_contact_form$form_num");
-       $si_contact_opt = array_merge($si_contact_option_defaults, $si_contact_opt);
-       foreach($si_contact_opt as $key => $val) {
-           $si_contact_opt[$key] = $this->ctf_stripslashes($val);
-       }
-      $si_contact_gb['2.5.7'] = 1;
-      update_option("si_contact_form_gb", $si_contact_gb);
-      $si_contact_gb = get_option("si_contact_form_gb");
-      $si_contact_gb = array_merge($si_contact_gb_defaults, $si_contact_gb);
   }
 
   // new field type defaults on version 2.6.3
