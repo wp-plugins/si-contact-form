@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fast and Secure Contact Form 2.7.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-07-11 06:50+0000\n"
-"PO-Revision-Date: 2010-07-10 23:54-0800\n"
+"POT-Creation-Date: 2010-07-11 06:56+0000\n"
+"PO-Revision-Date: 2010-07-10 23:58-0800\n"
 "Last-Translator: \n"
 "Language-Team: Team Blogos <wordpress@blogos.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1105,13 +1105,13 @@ msgstr "Fejl: Et radioknap-felt er ikke defineret korrekt i Indstillinger."
 
 #: si-contact-form-ex-fields.php:221
 #, php-format
-msgid "Acceptable file types: %1s."
+msgid "Acceptable file types: %s."
 msgstr "Tilladte filtyper: %s."
 
 #: si-contact-form-ex-fields.php:222
 #, php-format
-msgid "Maximum file size: %s"
-msgstr "Max filstørrelse: %s"
+msgid "Maximum file size: %s."
+msgstr "Max filstørrelse: %s."
 
 #: si-contact-form-ex-fields.php:263
 msgid "Su"
