@@ -71,7 +71,7 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
      $ex_cnt = 1;
   foreach ($exf_opts_array as $k) {
 
-     $string .=   '<br /><input type="checkbox" style="width:0%;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
+     $string .=   '<br /><input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
                  if ( isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' )
                     $string .= ' checked="checked" ';
                  $string .= '/>
@@ -87,7 +87,7 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
   // single
                $string .=   '
         <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
-            <input type="checkbox" style="width:0%;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
+            <input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
     if (${'ex_field'.$i} != '') {
       if (${'ex_field'.$i} == 'selected') {
          $string .= 'checked="checked" ';
