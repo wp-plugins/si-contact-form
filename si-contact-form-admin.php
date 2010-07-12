@@ -832,6 +832,10 @@ $selected = '';
 $cal_date_array = array(
 'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
 'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
+'mm-dd-yyyy' => esc_attr(__('mm-dd-yyyy', 'si-contact-form')),
+'dd-mm-yyyy' => esc_attr(__('dd-mm-yyyy', 'si-contact-form')),
+'mm.dd.yyyy' => esc_attr(__('mm.dd.yyyy', 'si-contact-form')),
+'dd.mm.yyyy' => esc_attr(__('dd.mm.yyyy', 'si-contact-form')),
 );
 foreach ($cal_date_array as $k => $v) {
  if ($si_contact_opt['date_format'] == "$k")  $selected = ' selected="selected"';
