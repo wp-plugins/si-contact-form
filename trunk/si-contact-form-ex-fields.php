@@ -71,7 +71,7 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
      $ex_cnt = 1;
   foreach ($exf_opts_array as $k) {
 
-     $string .=   '<br /><input type="checkbox" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
+     $string .=   '<br /><input type="checkbox" style="width:0%;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
                  if ( isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' )
                     $string .= ' checked="checked" ';
                  $string .= '/>
@@ -87,7 +87,7 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
   // single
                $string .=   '
         <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
-            <input type="checkbox" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
+            <input type="checkbox" style="width:0%;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
     if (${'ex_field'.$i} != '') {
       if (${'ex_field'.$i} == 'selected') {
          $string .= 'checked="checked" ';
@@ -232,6 +232,10 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
             $cal_date_array = array(
 'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
 'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
+'mm-dd-yyyy' => esc_attr(__('mm-dd-yyyy', 'si-contact-form')),
+'dd-mm-yyyy' => esc_attr(__('dd-mm-yyyy', 'si-contact-form')),
+'mm.dd.yyyy' => esc_attr(__('mm.dd.yyyy', 'si-contact-form')),
+'dd.mm.yyyy' => esc_attr(__('dd.mm.yyyy', 'si-contact-form')),
 );
                  $string .=   '
         <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
@@ -271,8 +275,16 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
     var ctf_date_format = \'';
  if($si_contact_opt['date_format'] == 'mm/dd/yyyy')
       $string .=   'm/d/Y';
-  if($si_contact_opt['date_format'] == 'dd/mm/yyyy')
+ if($si_contact_opt['date_format'] == 'dd/mm/yyyy')
       $string .=   'd/m/Y';
+ if($si_contact_opt['date_format'] == 'mm-dd-yyyy')
+      $string .=   'm-d-Y';
+ if($si_contact_opt['date_format'] == 'dd-mm-yyyy')
+      $string .=   'd-m-Y';
+ if($si_contact_opt['date_format'] == 'mm.dd.yyyy')
+      $string .=   'm.d.Y';
+ if($si_contact_opt['date_format'] == 'dd.mm.yyyy')
+      $string .=   'd.m.Y';
  $string .= '\';
 </script>
 <script type="text/javascript" src="'.WP_PLUGIN_URL.'/si-contact-form/date/ctf_epoch_classes.js?'.time().'"></script>
