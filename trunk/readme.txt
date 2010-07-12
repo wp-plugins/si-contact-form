@@ -301,6 +301,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.7.3 =
+- (12 Jul 2010) - Critical fix for broken checkbox feature in IE8 caused by version 2.7.2
 - Added more date format types for the date extra field.
 
 = 2.7.2 =
