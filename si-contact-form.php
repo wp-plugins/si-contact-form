@@ -557,9 +557,9 @@ if ($this->captchaCheckRequires()) {
   $si_contact_opt['captcha_div_style'] = 'width: 250px; height: 65px; padding-top:5px;';
   if($si_contact_opt['captcha_small'] == 'true')
        $si_contact_opt['captcha_div_style'] = 'width: 175px; height: 50px; padding-top:5px;';
-  $si_contact_opt['captcha_image_style'] = 'border-style:none; margin:0; padding-right:5px; float:left;';
-  $si_contact_opt['audio_image_style'] = 'border-style:none; margin:0; vertical-align:top;';
-  $si_contact_opt['reload_image_style'] = 'border-style:none; margin:0; vertical-align:bottom;';
+  $si_contact_opt['captcha_image_style'] = 'border-style:none; margin:0; padding:0px; padding-right:5px; float:left;';
+  $si_contact_opt['audio_image_style'] = 'border-style:none; margin:0; padding:0px; vertical-align:top;';
+  $si_contact_opt['reload_image_style'] = 'border-style:none; margin:0; padding:0px; vertical-align:bottom;';
 
 // the captch html
 $string = '
