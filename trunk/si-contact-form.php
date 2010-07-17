@@ -554,9 +554,6 @@ if ($this->captchaCheckRequires()) {
   if ($si_contact_opt['captcha_no_trans'] == 'true')
      $captcha_level_file = 'securimage_show_no_trans.php';
 
-  $si_contact_opt['captcha_div_style'] = 'width: 250px; height: 65px; padding-top:5px;';
-  if($si_contact_opt['captcha_small'] == 'true')
-       $si_contact_opt['captcha_div_style'] = 'width: 175px; height: 50px; padding-top:5px;';
   $si_contact_opt['captcha_image_style'] = 'border-style:none; margin:0; padding:0px; padding-right:5px; float:left;';
   $si_contact_opt['audio_image_style'] = 'border-style:none; margin:0; padding:0px; vertical-align:top;';
   $si_contact_opt['reload_image_style'] = 'border-style:none; margin:0; padding:0px; vertical-align:bottom;';
@@ -573,7 +570,12 @@ $string = '
         </div>
 
 <div '.$this->ctf_title_style.'>
-<div style="'.$si_contact_opt['captcha_div_style'].'">
+<div ';
+$this->ctf_captcha_div_style_sm = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_sm']);
+$this->ctf_captcha_div_style_m = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_m']);
+
+$string .= ($si_contact_opt['captcha_small'] == 'true') ? $this->ctf_captcha_div_style_sm : $this->ctf_captcha_div_style_m;
+$string .= '>
          <img class="ctf-captcha" id="si_image_ctf'.$form_id_num.'" ';
          $string .= ($si_contact_opt['captcha_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['captcha_image_style'] ).'"' : '';
          $string .= ' src="'.$captcha_url_cf.'/'.$captcha_level_file.'?';
@@ -905,6 +907,9 @@ function si_contact_get_options($form_num) {
          'field_style' => 'text-align:left; margin:0;',
          'field_div_style' => 'text-align:left;',
          'error_style' => 'text-align:left; color:red;',
+         'captcha_div_style_sm' => 'width: 175px; height: 50px; padding-top:5px;',
+         'captcha_div_style_m' => 'width: 250px; height: 65px; padding-top:5px;',
+         'submit_div_style' => 'text-align:left; padding-top:5px; clear:both;',
          'button_style' => 'cursor:pointer; margin:0;',
          'field_size' => '40',
          'captcha_field_size' => '6',
@@ -998,7 +1003,7 @@ function si_contact_get_options($form_num) {
   }
   if ($si_contact_opt['title_style'] == '' && $si_contact_opt['field_style'] == '') {
      // if styles seem to be blank, reset styles
-     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','button_style','field_size','text_cols','text_rows');
+     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','field_size','text_cols','text_rows');
      foreach($style_resets_arr as $style_reset) {
            $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
      }
