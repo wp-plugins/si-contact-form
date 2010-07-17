@@ -301,6 +301,11 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Fixed email delivery for some servers that require 5th parameter -f to PHP mail function.
+- Fixed blank subject when using optional email subject list.
+- Fixed AutoResponder is from person filling the form.
+- Added style setting: "CSS style for CAPTCHA DIV on the contact form:"
+
 = 2.7.3 =
 - (12 Jul 2010) - Critical fix for broken checkbox feature in IE8 caused by version 2.7.2
 - Added more date format types for the date extra field.

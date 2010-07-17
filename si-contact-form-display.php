@@ -10,6 +10,7 @@
  $this->ctf_error_style = $this->si_contact_convert_css($si_contact_opt['error_style']);
  $this->ctf_required_style = $this->si_contact_convert_css($si_contact_opt['required_style']);
 
+
  $ctf_field_size = absint($si_contact_opt['field_size']);
 
  $this->ctf_aria_required = ($si_contact_opt['aria_required'] == 'true') ? ' aria-required="true" ' : '';
@@ -356,18 +357,17 @@ if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
       }
 }
 
+ $this->ctf_submit_div_style = $this->si_contact_convert_css($si_contact_opt['submit_div_style']);
  $this->ctf_submit_style = $this->si_contact_convert_css($si_contact_opt['button_style']);
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
 $string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha,$form_id_num)."\n"  : '';
 $string .= '
-<div '.$this->ctf_title_style.'>
-<div style="clear: both;">
+<div '.$this->ctf_submit_div_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
   <input type="hidden" name="si_contact_form_id" value="'.$form_id_num.'" />
   <input type="submit" '.$this->ctf_submit_style.' value="';
      $string .= ($si_contact_opt['title_submit'] != '') ? esc_attr( $si_contact_opt['title_submit'] ) : esc_attr( __('Submit', 'si-contact-form'));
      $string .= '" />
-</div>    
 </div>
 ';
 if ($si_contact_opt['border_enable'] == 'true') {

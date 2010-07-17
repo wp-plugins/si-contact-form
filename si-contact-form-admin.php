@@ -138,6 +138,9 @@
          'field_style' =>         ( trim($_POST['si_contact_field_style']) != '' ) ? trim($_POST['si_contact_field_style']) : $si_contact_option_defaults['field_style'],
          'field_div_style' =>     ( trim($_POST['si_contact_field_div_style']) != '' ) ? trim($_POST['si_contact_field_div_style']) : $si_contact_option_defaults['field_div_style'],
          'error_style' =>         ( trim($_POST['si_contact_error_style']) != '' ) ? trim($_POST['si_contact_error_style']) : $si_contact_option_defaults['error_style'],
+         'captcha_div_style_sm' =>   ( trim($_POST['si_contact_captcha_div_style_sm']) != '' ) ? trim($_POST['si_contact_captcha_div_style_sm']) : $si_contact_option_defaults['captcha_div_style_sm'],
+         'captcha_div_style_m' =>   ( trim($_POST['si_contact_captcha_div_style_m']) != '' ) ? trim($_POST['si_contact_captcha_div_style_m']) : $si_contact_option_defaults['captcha_div_style_m'],
+         'submit_div_style' =>        ( trim($_POST['si_contact_submit_div_style']) != '' ) ? trim($_POST['si_contact_submit_div_style']) : $si_contact_option_defaults['submit_div_style'],
          'button_style' =>        ( trim($_POST['si_contact_button_style']) != '' ) ? trim($_POST['si_contact_button_style']) : $si_contact_option_defaults['button_style'],
          'field_size' => ( is_numeric(trim($_POST['si_contact_field_size'])) && trim($_POST['si_contact_field_size']) > 14 ) ? absint(trim($_POST['si_contact_field_size'])) : $si_contact_option_defaults['field_size'], // use default if empty
          'captcha_field_size' => ( is_numeric(trim($_POST['si_contact_captcha_field_size'])) && trim($_POST['si_contact_captcha_field_size']) > 4 ) ? absint(trim($_POST['si_contact_captcha_field_size'])) : $si_contact_option_defaults['captcha_field_size'],
@@ -200,7 +203,7 @@
 
     if (isset($_POST['si_contact_reset_styles'])) {
          // reset styles feature
-         $style_resets_arr = array('border_enable','form_style','border_style','required_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style','captcha_image_style','audio_image_style','reload_image_style','button_style','field_size','captcha_field_size','text_cols','text_rows');
+         $style_resets_arr = array('border_enable','form_style','border_style','required_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','field_size','captcha_field_size','text_cols','text_rows');
          foreach($style_resets_arr as $style_reset) {
            $optionarray_update[$style_reset] = $si_contact_option_defaults[$style_reset];
          }
@@ -438,6 +441,26 @@ if ( !function_exists('mail') ) {
         </div>
         <br />
 
+       <label for="si_contact_php_mailer_enable"><?php _e('Send E-mail function:', 'si-contact-form'); ?></label>
+      <select id="si_contact_php_mailer_enable" name="si_contact_php_mailer_enable">
+<?php
+
+$selected = '';
+foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'php' => esc_attr(__('PHP', 'si-contact-form'))) as $k => $v) {
+ if ($si_contact_opt['php_mailer_enable'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_php_mailer_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_php_mailer_enable_tip">
+        <?php _e('Emails are normally sent by the wordpress mail function. If you are not receiving email from your contact form. Try setting this to "PHP", then test the form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
+        <?php _e('If your form still does not send any E-mail, be sure to also try setting the "E-mail From" setting below. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain.', 'si-contact-form'); ?>
+        <?php _e('Note: attachments are only supported when using the wordpress mail function.', 'si-contact-form'); ?>
+       </div>
+       <br />
+
         <label name="si_contact_email_from" for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact-form'); ?>:</label>
 <?php
 if ( $si_contact_opt['email_from'] != '' ) {
@@ -466,7 +489,9 @@ if ( $si_contact_opt['email_from'] != '' ) {
         <input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $si_contact_opt['email_from'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
-        <?php _e('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?><br />
+        <?php _e('E-mail address the messages are sent from. Normally you should leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain. If your contact form does not send any E-mail, then set this to an E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?>
+        <?php _e('If your form still does not send any E-mail, look above, you will find this setting: "Send E-mail function:", try setting it to "PHP", then test the form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
+        <br />
         <?php _e('Enter just an email: user1@example.com', 'si-contact-form'); ?><br />
         <?php _e('Or enter name and email: webmaster,user1@example.com ', 'si-contact-form'); ?>
         </div>
@@ -559,24 +584,6 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <br />
         <input name="si_contact_email_check_dns" id="si_contact_email_check_dns" type="checkbox" <?php if( $si_contact_opt['email_check_dns'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_email_check_dns" for="si_contact_email_check_dns"><?php _e('Enable checking DNS records for the domain name when checking for a valid E-mail address.', 'si-contact-form'); ?></label>
-        <br />
-
-       <label for="si_contact_php_mailer_enable"><?php _e('Send E-mail function:', 'si-contact-form'); ?></label>
-      <select id="si_contact_php_mailer_enable" name="si_contact_php_mailer_enable">
-<?php
-
-$selected = '';
-foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'php' => esc_attr(__('PHP', 'si-contact-form'))) as $k => $v) {
- if ($si_contact_opt['php_mailer_enable'] == "$k")  $selected = ' selected="selected"';
- echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
- $selected = '';
-}
-?>
-</select>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_php_mailer_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_php_mailer_enable_tip">
-        <?php _e('Emails are normally sent by the wordpress mail function. If you are not receiving email from your contact form. Try setting this to "PHP", then test the form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
-        </div>
 
       </td>
     </tr>
@@ -967,6 +974,9 @@ foreach ($cal_date_array as $k => $v) {
         <label for="si_contact_field_div_style"><?php _e('CSS style for form input fields DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_field_div_style" id="si_contact_field_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['field_div_style']);  ?>" size="60" /><br />
         <label for="si_contact_error_style"><?php _e('CSS style for form input errors on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_error_style" id="si_contact_error_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['error_style']);  ?>" size="60" /><br />
         <label for="si_contact_select_style"><?php _e('CSS style for contact drop down select on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_select_style" id="si_contact_select_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['select_style']);  ?>" size="60" /><br />
+        <label for="si_contact_captcha_div_style_sm"><?php _e('CSS style for Small CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_sm" id="si_contact_captcha_div_style_sm" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_div_style_sm']);  ?>" size="60" /><br />
+        <label for="si_contact_captcha_div_style_m"><?php _e('CSS style for CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_m" id="si_contact_captcha_div_style_m" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_div_style_m']);  ?>" size="60" /><br />
+        <label for="si_contact_submit_div_style"><?php _e('CSS style for Submit DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_submit_div_style" id="si_contact_submit_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['submit_div_style']);  ?>" size="60" /><br />
         <label for="si_contact_button_style"><?php _e('CSS style for Submit button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['button_style']);  ?>" size="60" /><br />
 
 

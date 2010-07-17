@@ -59,11 +59,12 @@
 
     if ($si_contact_opt['subject_type'] != 'not_available') {
         if(isset($_POST['si_contact_subject'])) {
+            // posted subject text input
             $subject = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_subject']));
         }else{
-          if ($si_contact_opt['subject_type'] == 'required') {
+            // posted subject select input
             $sid = $this->ctf_clean_input($_POST['si_contact_subject_ID']);
-            if(empty($sid)) {
+            if(empty($sid) && $si_contact_opt['subject_type'] == 'required') {
                $this->si_contact_error = 1;
                $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? $si_contact_opt['error_subject'] : __('Selecting a subject is required.', 'si-contact-form');
             }
@@ -72,8 +73,7 @@
                $si_contact_error_subject = __('Requested subject not found.', 'si-contact-form');
             } else {
                $subject = $this->ctf_clean_input($subjects[$sid]);
-           }
-          }
+            }
        }
     }
 
@@ -480,12 +480,22 @@ echo "</pre>\n";*/
        It is hard coded to do that. So you would have both 1 and 3 in the mail header and I cannot do that. */
     // $header .= "X-Priority: 1 (High)" . $php_eol;
 
-    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+    // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
 
+    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+    @ini_set('sendmail_from', $this->si_contact_mail_from);
     if ($si_contact_opt['php_mailer_enable'] == 'php') {
        $header_php .= $header;
-      if (!mail($mail_to,$subj,$msg,$header_php)) {
-		  die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+      if ($ctf_email_on_this_domain != '' && strlen(@ini_get('safe_mode')) < 1) {
+          // the fifth parameter is not allowed in safe mode
+          // Pass the Return-Path via sendmail's -f command.
+        if (!mail($mail_to,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_from)) {
+		    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+        }
+      }else{
+        if (!mail($mail_to,$subj,$msg,$header_php)) {
+		    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+        }
       }
     } else {
         if ( $this->uploaded_files ) {
@@ -525,8 +535,8 @@ echo "</pre>\n";*/
            $value = trim($value);
            $header_php =  "From: $key <$value>\n";
            $this->si_contact_from_name = $key;
-           add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
            $this->si_contact_mail_from = $value;
+           add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
            add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
          }
     } else {
@@ -534,14 +544,24 @@ echo "</pre>\n";*/
          $this->si_contact_mail_from = get_option('admin_email');
          add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
     }
+    remove_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+
     $header .= "Reply-To: $this->si_contact_mail_from\n";
     $header .= "Return-Path: $this->si_contact_mail_from\n";
     $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+    @ini_set('sendmail_from' , $this->si_contact_mail_from);
 
        if ($si_contact_opt['php_mailer_enable'] == 'php') {
          $header_php .= $header;
-         if (!mail($email,$subj,$msg,$header_php))
-		    die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+         if ($ctf_email_on_this_domain != '' && strlen(@ini_get('safe_mode')) < 1) {
+                // the fifth parameter is not allowed in safe mode
+                // Pass the Return-Path via sendmail's -f command.
+           if (!mail($email,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_from))
+		      die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+         } else {
+           if (!mail($email,$subj,$msg,$header_php))
+		      die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+         }
        } else {
 	     if (!wp_mail($email,$subj,$msg,$header))
 		    die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
