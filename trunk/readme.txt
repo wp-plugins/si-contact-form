@@ -314,9 +314,11 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Fixed blank subject when using optional email subject list.
+= 2.7.4 =
+- (19 Jul 2010) - Fixed blank subject when using optional email subject list.
 - Fixed AutoResponder is from person filling the form instead of from WordPress admin.
 - Fixed email delivery for some servers that require 5th parameter -f to PHP mail function.
+- Updated FAQ page for better help when mail is not sending: http://wordpress.org/extend/plugins/si-contact-form/faq/
 - Improved the E-mail test feature at the bottom of the settings page, use to troubleshooting mail delivery problems.
 - Added option to use geekMail library for sending mail, try when having mail delivery problems.
 - Added more style settings.
