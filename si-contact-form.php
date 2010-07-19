@@ -406,7 +406,7 @@ function si_contact_validate_attach( $file ) {
 
     $result['valid'] = true;
 
-    if ($si_contact_opt['php_mailer_enable'] != 'wordpress') {
+    if ($si_contact_opt['php_mailer_enable'] == 'php') {
         $result['valid'] = false;
 		$result['error'] = __('Attachments not supported.', 'si-contact-form');
 		return $result;
@@ -911,6 +911,7 @@ function si_contact_get_options($form_num) {
          'captcha_div_style_m' => 'width: 250px; height: 65px; padding-top:5px;',
          'submit_div_style' => 'text-align:left; padding-top:5px; clear:both;',
          'button_style' => 'cursor:pointer; margin:0;',
+         'powered_by_style' => 'clear:both; font-size:x-small; padding-top: 5px;',
          'field_size' => '40',
          'captcha_field_size' => '6',
          'text_cols' => '30',
@@ -1003,7 +1004,7 @@ function si_contact_get_options($form_num) {
   }
   if ($si_contact_opt['title_style'] == '' && $si_contact_opt['field_style'] == '') {
      // if styles seem to be blank, reset styles
-     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','field_size','text_cols','text_rows');
+     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','text_cols','text_rows');
      foreach($style_resets_arr as $style_reset) {
            $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
      }

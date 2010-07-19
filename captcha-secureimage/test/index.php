@@ -97,6 +97,22 @@ Note: If you see any errors or warnings at the top of the page,
 especially "Warning: session_start...", they could be indicating a problem with your PHP server that will prevent the CAPTCHA from working.
 </p>
 
+ <?php
+   // Check for safe mode
+    $safe_mode_is_on = ((boolean)@ini_get('safe_mode') === false) ? 0 : 1;
+    if($safe_mode_is_on){
+      echo '<p><span style="color:red;">Warning: Your web host has PHP safe_mode turned on.</span> PHP safe_mode can cause problems like sending mail failures and file permission errors.'."\n";
+      echo 'PHP safe_mode is better turned off, relying on this feature might work, but is highly discouraged. Contact your web host for support.</p>'."\n";
+    }
+
+    // Check for older than PHP5
+   if (phpversion() < 5) {
+      echo '<p><span style="color:red;">Warning: Your web host has not upgraded from PHP4 to PHP5.</span> PHP4 was officially discontinued August 8, 2008 and is no longer considered safe.'."\n";
+      echo 'PHP5 is faster, has more features, and is and safer. Using PHP4 might still work, but is highly discouraged. Contact your web host for support.</p>'."\n";
+    }
+  ?>
+
+
 <ul>
   <li>
     <strong>PHP Version:</strong>

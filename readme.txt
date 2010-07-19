@@ -58,9 +58,9 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.6+, WPMU, and BuddyPress
- * PHP 4.3.9 or above with GD2 library support. PHP5 is recommended.
- * PHP register_globals must be set to OFF
+ * Works with Wordpress 2.6+, WPMU, and BuddyPress (Wordpress 3.0+ is highly recommended)
+ * PHP 4.3.9 or above with GD2 library support. (PHP5 is highly recommended)
+ * PHP register_globals and safe_mode should be set to "Off"
 
 == Installation ==
 
@@ -77,15 +77,26 @@ Requirements/Restrictions:
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-1. Use the E-mail test feature in options, if you are not receiving mail, try it. It will display troubleshooting information.
- 
-2. Look for a warning message on the Options page for when the web host has mail() function disabled.
+1. Make sure you have the correct "E-mail To:" set in options. 
 
-3. Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
-"E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
+2. Check your spam folder, maybe the email went there. 
 
-4. Here is another option for you:
+3. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
+
+4. This setting on the contact form options might help you....
+Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
+
+5. Maybe another plugin is conflicting. Do this as a test:
+Temporarily disable all your other plugins. Does it work now? If yes, enable the plugins one by one to determine which one conflicts. 
+
+6. Sometimes your mail server IP address ends up on a SORBS or RBL spam list and gets blocked by various mail systems. This may not be your fault because
+many sites on a web hosting server share the same IP. Check if your mail server IP is blacklisted by SORBS
+http://www.au.sorbs.net/
+You can find your email server IP in the header of a received email (if you have one) sent from your site. Contact your web host for support.
+
+7. Here is another option for you:
 Get a free gmail account.
+On the contact form settings page, find this setting: "Send E-mail function:", set it back to "WordPress".
 Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
 Set these settings for "WP Mail SMTP":
 Mailer: SMTP, 
@@ -95,8 +106,9 @@ Encryption: SSL,
 Authentication: Yes, 
 Username: your full gmail address, 
 Password: your mail password.
-
 Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
+
+8. Maybe your web server has a broken mail function, contact your web host for support.
 
 
 == Screenshots ==
@@ -114,15 +126,26 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-1. Use the E-mail test feature in options, if you are not receiving mail, try it. It will display troubleshooting information.
- 
-2. Look for a warning message on the Options page for when the web host has mail() function disabled.
+1. Make sure you have the correct "E-mail To:" set in options. 
 
-3. Make sure you have the correct "E-mail To:" set in options. If that is correct, then this setting in the contact form options might help you....
-"E-mail From:" ... Normally you should leave this blank because the email will be from the sender. If your contact form does not send any email, then set "E-mail To:" and "E-mail From:" to an email address on the SAME domain as your web site. This fix works for web hosts that do not allow PHP to send email unless the email address is on the same web domain. They do this to help prevent spam.
+2. Check your spam folder, maybe the email went there. 
 
-4. Here is another option for you:
+3. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
+
+4. This setting on the contact form options page might help you....
+Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
+
+5. Maybe another plugin is conflicting. Do this as a test:
+Temporarily disable all your other plugins. Does it work now? If yes, enable the plugins one by one to determine which one conflicts. 
+
+6. Sometimes your mail server IP address ends up on a SORBS or RBL spam list and gets blocked by various mail systems. This may not be your fault because
+many sites on a web hosting server share the same IP. Check if your mail server IP is blacklisted by SORBS
+http://www.au.sorbs.net/
+You can find your email server IP in the header of a received email (if you have one) sent from your site. Contact your web host for support.
+
+7. Here is another option for you:
 Get a free gmail account.
+On the contact form settings page, find this setting: "Send E-mail function:", set it back to "WordPress".
 Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
 Set these settings for "WP Mail SMTP":
 Mailer: SMTP, 
@@ -132,8 +155,18 @@ Encryption: SSL,
 Authentication: Yes, 
 Username: your full gmail address, 
 Password: your mail password.
-
 Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
+
+8. Maybe your web server has a broken mail function, contact your web host for support.
+
+= I am not receiving mail, my host says a fifth parameter -f must be added to the PHP mail function. This will set the name of the from email address. =
+
+Do this:
+
+1. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
+
+2. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
+
 
 = I need more than 4 contact forms, how do I increase the number of forms available? =
 
@@ -165,26 +198,6 @@ Yes, it checks the form input with Akismet, but only if Akismet plugin is also i
 = Can it send mail using SMTP? =
 Yes, when you also have this plugin installed: 
 [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/)
-
-= My host says a fifth parameter -f should be added to the mail function. This will set the name of the from email address. =
-
-Your web host is being unusually restrictive. 
-I am using the built in mail function of wordpress, it cannot use the 5th parameter. I will not be able to add that.
-I bet you do not even get any mail from wordpress itself?  ... and most PHP programs you might install would not send any mail. 
-
-Here is another option for you:
-Get a free gmail account.
-Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
-Set these settings for "WP Mail SMTP":
-Mailer: SMTP, 
-SMTP Host: smtp.gmail.com, 
-SMTP Port: 465, 
-Encryption: SSL, 
-Authentication: Yes, 
-Username: your full gmail address, 
-Password: your mail password.
-
-Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
 
 
 = Do I have to also install the plugin "SI CAPTCHA Anti-Spam" for the CAPTCHA to work? =
@@ -301,10 +314,13 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- Fixed email delivery for some servers that require 5th parameter -f to PHP mail function.
 - Fixed blank subject when using optional email subject list.
-- Fixed AutoResponder is from person filling the form.
-- Added style setting: "CSS style for CAPTCHA DIV on the contact form:"
+- Fixed AutoResponder is from person filling the form instead of from WordPress admin.
+- Fixed email delivery for some servers that require 5th parameter -f to PHP mail function.
+- Improved the E-mail test feature at the bottom of the settings page, use to troubleshooting mail delivery problems.
+- Added option to use geekMail library for sending mail, try when having mail delivery problems.
+- Added more style settings.
+- Other small improvements.
 
 = 2.7.3 =
 - (12 Jul 2010) - Critical fix for broken checkbox feature in IE8 caused by version 2.7.2
