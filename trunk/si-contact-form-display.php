@@ -46,7 +46,7 @@ if ($have_attach){
     $this->si_contact_init_attach_dir($attach_dir);
     if ($si_contact_opt['php_mailer_enable'] == 'php'){
        $this->si_contact_error = 1;
-	   $attach_dir_error = __( 'This contact form has file attachment fields. Attachments are only supported when the Send E-Mail function is set to WordPress. You can find this setting on the contact form settings page.', 'si-contact-form' );
+	   $attach_dir_error = __( 'This contact form has file attachment fields. Attachments are only supported when the Send E-Mail function is set to WordPress or geekMail. You can find this setting on the contact form settings page.', 'si-contact-form' );
     }
 	if ( !is_dir($attach_dir) ) {
         $this->si_contact_error = 1;
@@ -380,8 +380,9 @@ $string .= '
 </div>
 ';
 if ($si_contact_opt['enable_credit_link'] == 'true') {
+  $this->ctf_powered_by_style = $this->si_contact_convert_css($si_contact_opt['powered_by_style']);
 $string .= '
-<p style="clear:both; padding-top: 5px;"><small>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></small></p>
+<p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></p>
 ';
 }
 $string .= '<!-- Fast and Secure Contact Form plugin end -->

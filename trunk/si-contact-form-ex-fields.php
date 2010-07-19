@@ -215,7 +215,7 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
              break;
 
            case 'attachment':
-         if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
+         if ($si_contact_opt['php_mailer_enable'] != 'php') {
             $string .= '        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
                 <br /><small>'.sprintf(__('Acceptable file types: %s.', 'si-contact-form'),$si_contact_opt['attach_types']).'<br />

@@ -369,7 +369,7 @@ echo "</pre>\n";*/
         if ( $si_contact_opt['ex_field'.$i.'_label'] != '' ) {
            if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
                   $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
-           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] == 'wordpress' && ${'ex_field'.$i} != '') {
+           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
                $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
            } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
               list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
@@ -444,9 +444,9 @@ echo "</pre>\n";*/
     if ($ctf_email_on_this_domain != '' ) {
          if(!preg_match("/,/", $ctf_email_on_this_domain)) {
            // just an email: user1@example.com
-           $header_php =  "From: $ctf_email_on_this_domain\n";
+           $header_php =  "From: WordPress <$ctf_email_on_this_domain>\n";
+           $this->si_contact_from_name = 'WordPress';
            $this->si_contact_mail_from = $ctf_email_on_this_domain;
-           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
          } else {
            // name and email: webmaster,user1@example.com
            list($key, $value) = explode(",",$ctf_email_on_this_domain);
@@ -454,39 +454,36 @@ echo "</pre>\n";*/
            $value = trim($value);
            $header_php =  "From: $key <$value>\n";
            $this->si_contact_from_name = $key;
-           add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
            $this->si_contact_mail_from = $value;
-           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
          }
     } else if($email == '' || $name == '') {
-         $header_php =  "From: ". get_option('admin_email') . "\n";
+         $header_php =  "From: WordPress <". get_option('admin_email') . ">\n";
+         $this->si_contact_from_name = 'WordPress';
          $this->si_contact_mail_from = get_option('admin_email');
-         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
     } else {
          $header_php = "From: $name <$email>\n";;
          $this->si_contact_mail_from = $email;
          $this->si_contact_from_name = $name;
-         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
-         add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
     }
+    add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+    add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
 
     if ($ctf_email_address_bcc != '')
             $header .= "Bcc: $ctf_email_address_bcc\n";
-
     $header .= "Reply-To: $this->si_contact_mail_from\n";
     $header .= "Return-Path: $this->si_contact_mail_from\n";
-
-    /* almost made X-Priority: 1 an option but class-phpmailer.php already sets X-Priority: 3.
-       It is hard coded to do that. So you would have both 1 and 3 in the mail header and I cannot do that. */
-    // $header .= "X-Priority: 1 (High)" . $php_eol;
+    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
 
     // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
 
-    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
     @ini_set('sendmail_from', $this->si_contact_mail_from);
+
+    // Check for safe mode
+    $this->safe_mode = ((boolean)@ini_get('safe_mode') === false) ? 0 : 1;
+
     if ($si_contact_opt['php_mailer_enable'] == 'php') {
        $header_php .= $header;
-      if ($ctf_email_on_this_domain != '' && strlen(@ini_get('safe_mode')) < 1) {
+      if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
           // the fifth parameter is not allowed in safe mode
           // Pass the Return-Path via sendmail's -f command.
         if (!mail($mail_to,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_from)) {
@@ -494,9 +491,32 @@ echo "</pre>\n";*/
         }
       }else{
         if (!mail($mail_to,$subj,$msg,$header_php)) {
-		    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+	   	    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
         }
       }
+    }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
+         require_once WP_PLUGIN_DIR . '/si-contact-form/ctf_geekMail-1.0.php';
+         $ctf_geekMail = new ctf_geekMail();
+         $ctf_geekMail->setMailType('text');
+         $ctf_geekMail->_setcharSet(get_option('blog_charset'));
+         $ctf_geekMail->_setnewLine($php_eol);
+         $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
+         $ctf_geekMail->to($mail_to);
+         if ($ctf_email_address_bcc != '')
+           $ctf_geekMail->bcc($ctf_email_address_bcc);
+         $ctf_geekMail->subject($subj);
+         $ctf_geekMail->message($msg);
+         if ( $this->uploaded_files ) {
+			    foreach ( $this->uploaded_files as $path ) {
+				    $ctf_geekMail->attach($path);
+			    }
+         }
+         if (!$ctf_geekMail->send()) {
+              die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+             //$errors = $geekMail->getDebugger();
+             //print_r($errors);
+         }
+
     } else {
         if ( $this->uploaded_files ) {
 			    $attach_this_mail = array();
@@ -519,54 +539,67 @@ echo "</pre>\n";*/
        if ($ctf_wrap_message)
              $msg = wordwrap($msg, 70,$php_eol);
 
-    $header = '';
-    $header_php = '';
-    // prepare the email header
-    if ($ctf_email_on_this_domain != '' ) {
-         if(!preg_match("/,/", $ctf_email_on_this_domain)) {
-           // just an email: user1@example.com
-           $header_php =  "From: $ctf_email_on_this_domain\n";
-           $this->si_contact_mail_from = $ctf_email_on_this_domain;
-           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
-         } else {
-           // name and email: webmaster,user1@example.com
-           list($key, $value) = explode(",",$ctf_email_on_this_domain);
-           $key   = trim($key);
-           $value = trim($value);
-           $header_php =  "From: $key <$value>\n";
-           $this->si_contact_from_name = $key;
-           $this->si_contact_mail_from = $value;
-           add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
-           add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
-         }
-    } else {
-         $header_php =  "From: ". get_option('admin_email') . "\n";
-         $this->si_contact_mail_from = get_option('admin_email');
-         add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
-    }
-    remove_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
-
-    $header .= "Reply-To: $this->si_contact_mail_from\n";
-    $header .= "Return-Path: $this->si_contact_mail_from\n";
-    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
-    @ini_set('sendmail_from' , $this->si_contact_mail_from);
-
-       if ($si_contact_opt['php_mailer_enable'] == 'php') {
-         $header_php .= $header;
-         if ($ctf_email_on_this_domain != '' && strlen(@ini_get('safe_mode')) < 1) {
-                // the fifth parameter is not allowed in safe mode
-                // Pass the Return-Path via sendmail's -f command.
-           if (!mail($email,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_from))
-		      die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
-         } else {
-           if (!mail($email,$subj,$msg,$header_php))
-		      die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
-         }
-       } else {
-	     if (!wp_mail($email,$subj,$msg,$header))
-		    die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+       $header = '';
+       $header_php = '';
+       // prepare the email header
+       if ($ctf_email_on_this_domain != '' ) {
+            if(!preg_match("/,/", $ctf_email_on_this_domain)) {
+              // just an email: user1@example.com
+              $header_php =  "From: WordPress <$ctf_email_on_this_domain>\n";
+              $this->si_contact_from_name = 'WordPress';
+              $this->si_contact_mail_from = $ctf_email_on_this_domain;
+            } else {
+              // name and email: webmaster,user1@example.com
+              list($key, $value) = explode(",",$ctf_email_on_this_domain);
+              $key   = trim($key);
+              $value = trim($value);
+              $header_php =  "From: $key <$value>\n";
+              $this->si_contact_from_name = $key;
+              $this->si_contact_mail_from = $value;
+            }
+      } else {
+            $header_php =  "From: WordPress <". get_option('admin_email') . ">\n";
+            $this->si_contact_from_name = 'WordPress';
+            $this->si_contact_mail_from = get_option('admin_email');
        }
-   }
+       add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+       add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
+
+       $header .= "Reply-To: $this->si_contact_mail_from\n";
+       $header .= "Return-Path: $this->si_contact_mail_from\n";
+       $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+       @ini_set('sendmail_from' , $this->si_contact_mail_from);
+       if ($si_contact_opt['php_mailer_enable'] == 'php') {
+             $header_php .= $header;
+            if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
+                   // the fifth parameter is not allowed in safe mode
+                   // Pass the Return-Path via sendmail's -f command.
+              if (!mail($email,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_from))
+		         die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+            } else {
+              if (!mail($email,$subj,$msg,$header_php))
+		         die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+            }
+       }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
+            require_once WP_PLUGIN_DIR . '/si-contact-form/ctf_geekMail-1.0.php';
+            $ctf_geekMail = new ctf_geekMail();
+            $ctf_geekMail->setMailType('text');
+            $ctf_geekMail->_setcharSet(get_option('blog_charset'));
+            $ctf_geekMail->_setnewLine($php_eol);
+            $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
+            $ctf_geekMail->to($email);
+            $ctf_geekMail->subject($subj);
+            $ctf_geekMail->message($msg);
+            if (!$ctf_geekMail->send()) {
+                 die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+                //$errors = $geekMail->getDebugger();
+                //print_r($errors);
+           }
+       } else {
+	        if (!wp_mail($email,$subj,$msg,$header))
+		       die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+       }
+  }
 
     $message_sent = 1;
 
