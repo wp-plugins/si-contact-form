@@ -3,7 +3,7 @@
 Plugin Name: Fast and Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
 Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
-Version: 2.7.4
+Version: 2.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -833,7 +833,7 @@ function si_contact_form_num() {
     $si_contact_gb_mf = get_option("si_contact_form_gb");
 
     $form_num = '';
-    if ( isset($_GET['ctf_form_num']) && is_numeric($_GET['ctf_form_num']) && $_GET['ctf_form_num'] <= $si_contact_gb_mf['max_forms'] ) {
+    if ( isset($_GET['ctf_form_num']) && is_numeric($_GET['ctf_form_num']) && $_GET['ctf_form_num'] > 1 && $_GET['ctf_form_num'] <= $si_contact_gb_mf['max_forms'] ) {
        $form_num = (int)$_GET['ctf_form_num'];
     }
     return $form_num;
@@ -893,6 +893,8 @@ function si_contact_get_options($form_num) {
          'attach_size' =>   '1mb',
          'textarea_html_allow' => 'false',
          'auto_respond_enable' => 'false',
+         'auto_respond_from_name' => 'WordPress',
+         'auto_respond_reply_to' => get_option('admin_email'),
          'auto_respond_subject' => '',
          'auto_respond_message' => '',
          'req_field_indicator_enable' => 'true',
@@ -911,7 +913,7 @@ function si_contact_get_options($form_num) {
          'captcha_div_style_m' => 'width: 250px; height: 65px; padding-top:5px;',
          'submit_div_style' => 'text-align:left; padding-top:5px; clear:both;',
          'button_style' => 'cursor:pointer; margin:0;',
-         'powered_by_style' => 'clear:both; font-size:x-small; padding-top: 5px;',
+         'powered_by_style' => 'clear:both; font-size:x-small; font-weight:normal; padding-top: 5px;',
          'field_size' => '40',
          'captcha_field_size' => '6',
          'text_cols' => '30',
@@ -1099,6 +1101,144 @@ function si_contact_migrate2($si_contact_gb_defaults) {
 } //  end function si_contact_migrate2
 
 
+// restores settings from a contact form settings backup file
+function si_contact_form_backup_restore($bk_form_num) {
+  global $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults;
+
+    // form file upload
+     if(isset($_FILES['si_contact_backup_file']) && !empty( $_FILES['si_contact_backup_file'] ))
+       $file = $_FILES['si_contact_backup_file'];
+     else
+       return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file is required.', 'si-contact-form').'</p></div>';
+
+	 if ( ($file['error'] && UPLOAD_ERR_NO_FILE != $file['error']) || !is_uploaded_file( $file['tmp_name'] ) )
+        return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file upload failed.', 'si-contact-form').'</p></div>';
+
+	 if ( empty( $file['tmp_name'] ) )
+        return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file is required.', 'si-contact-form').'</p></div>';
+
+    // check file type
+	$file_type_pattern = '/\.txt$/i';
+	if ( ! preg_match( $file_type_pattern, $file['name'] ) )
+        return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file type not allowed.', 'si-contact-form').'</p></div>';
+
+    // check size
+    $allowed_size = 1048576; // 1mb default
+	if ( $file['size'] > $allowed_size )
+        return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file size is too large.', 'si-contact-form').'</p></div>';
+
+    // get the uploaded file that contains all the data
+    $ctf_backup_data = file_get_contents($file['tmp_name']);
+    $ctf_backup_data_split = explode("@@@@SPLIT@@@@\r\n", $ctf_backup_data);
+    $ctf_backup_array = unserialize($ctf_backup_data_split[1]);
+
+    if ( !isset($ctf_backup_array) || !is_array($ctf_backup_array) || !isset($ctf_backup_array[0]['backup_type']) )
+         return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file contains invalid data.', 'si-contact-form').'</p></div>';
+
+   // print_r($ctf_backup_array);
+   // exit;
+
+         $ctf_backup_type = $ctf_backup_array[0]['backup_type'];
+         unset($ctf_backup_array[0]['backup_type']);
+
+         // is the uploaded file of the "all" type?
+         if ( $ctf_backup_type != 'all' && $bk_form_num == 'all'  )
+              return '<div id="message" class="updated fade"><p>'.__('Restore failed: Selected All to restore, but backup file is a single form.', 'si-contact-form').'</p></div>';
+
+         // restore all ?
+         if($ctf_backup_type == 'all' && $bk_form_num == 'all' ) {
+            // all
+
+            // is the uploaded file of the "all" type?
+            if ( !isset($ctf_backup_array[2]) || !is_array($ctf_backup_array[2])  )
+              return '<div id="message" class="updated fade"><p>'.__('Restore failed: Selected All to restore, but backup file is a single form.', 'si-contact-form').'</p></div>';
+
+            // if current max_forms or max_fields are more, go with higher value
+            if($si_contact_gb['max_forms'] > $ctf_backup_array[0]['max_forms'])
+                $ctf_backup_array[0]['max_forms'] = $si_contact_gb['max_forms'];
+            if($si_contact_gb['max_fields'] > $ctf_backup_array[0]['max_fields'])
+                $ctf_backup_array[0]['max_fields'] = $si_contact_gb['max_fields'];
+            update_option("si_contact_form_gb", $ctf_backup_array[0]);
+
+            // deal with quotes
+            foreach($ctf_backup_array[1] as $key => $val) {
+                $ctf_backup_array[1][$key] = str_replace('&quot;','"',trim($val));
+            }
+            update_option("si_contact_form", $ctf_backup_array[1]);
+            // multi-forms > 1
+            for ($i = 2; $i <= $ctf_backup_array[0]['max_forms']; $i++) {
+              // deal with quotes
+              foreach($ctf_backup_array[$i] as $key => $val) {
+                  $ctf_backup_array[$i][$key] = str_replace('&quot;','"',trim($val));
+              }
+              if(!get_option("si_contact_form$i")) {
+                    add_option("si_contact_form$i", $ctf_backup_array[$i], '', 'yes');
+              }else{
+                   update_option("si_contact_form$i", $ctf_backup_array[$i]);
+              }
+            }
+
+           // success
+           return '<div id="message" class="updated fade"><p>'.__('All form settings have been restored from the backup file.', 'si-contact-form').'</p></div>';
+
+         } // end restoring all
+
+         // restore single?
+         if(is_numeric($bk_form_num)){
+            // single
+            if( ($bk_form_num == 1 && !get_option("si_contact_form")) || ($bk_form_num > 1 && !get_option("si_contact_form$bk_form_num")))
+               return '<div id="message" class="updated fade"><p>'.__('Restore failed: Form to restore to does not exist.', 'si-contact-form').'</p></div>';
+
+            // update the globals
+            if($si_contact_gb['max_fields'] > $ctf_backup_array[0]['max_fields']) {
+                $ctf_backup_array[0]['max_fields'] = $si_contact_gb['max_fields'];
+                update_option("si_contact_form_gb", $ctf_backup_array[0]);
+            }
+
+            // is the uploaded file of the "single" type?
+            if ( !isset($ctf_backup_array[2]) || !is_array($ctf_backup_array[2])  ) {
+               //single
+
+               // deal with quotes
+               foreach($ctf_backup_array[1] as $key => $val) {
+                   $ctf_backup_array[1][$key] = str_replace('&quot;','"',trim($val));
+               }
+               if ($bk_form_num == 1)
+                  update_option("si_contact_form", $ctf_backup_array[1]);
+
+               if ($bk_form_num > 1)
+                   update_option("si_contact_form$bk_form_num", $ctf_backup_array[1]);
+
+               // is the uploaded file of the "all" type?
+            } else {
+               // "all" backup file, but wants to restore only one form, match the form #
+               // deal with quotes
+               foreach($ctf_backup_array[$bk_form_num] as $key => $val) {
+                   $ctf_backup_array[$bk_form_num][$key] = str_replace('&quot;','"',trim($val));
+               }
+               if ($bk_form_num == 1)
+                  update_option("si_contact_form", $ctf_backup_array[1]);
+
+               if ($bk_form_num > 1)
+                  update_option("si_contact_form$bk_form_num", $ctf_backup_array[$bk_form_num]);
+             }
+
+              // success
+              return '<div id="message" class="updated fade"><p>'.sprintf(__('Form %d settings have been restored from the backup file.', 'si-contact-form'),$bk_form_num).'</p></div>';
+
+         } // end restoring single
+
+} // end function si_contact_form_backup_restore
+
+// outputs a contact form settings backup file
+function si_contact_backup_download() {
+  global $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults;
+
+  require_once WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-backup.php';
+
+} // end function si_contact_backup_download
+
+
 function get_captcha_url_cf() {
 
   // The captcha URL cannot be on a different domain as the site rewrites to or the cookie won't work
@@ -1184,6 +1324,9 @@ if (isset($si_contact_form)) {
 
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
+
+  // this is for downloading settings backup txt file.
+  add_action('admin_init', array(&$si_contact_form,'si_contact_backup_download'),1);
 
   // adds "Settings" link to the plugin action page
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);

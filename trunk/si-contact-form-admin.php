@@ -1,5 +1,11 @@
 <?php
 
+/*
+Fast and Secure Contact Form
+Mike Challis
+http://www.642weather.com/weather/scripts.php
+*/
+
   // the admin settings page
 
    if ( function_exists('current_user_can') && !current_user_can('manage_options') )
@@ -7,6 +13,7 @@
 
  // multi-form ctf_form_num
   $form_num = $this->si_contact_form_num();
+
   if($form_num == '') {
         $form_id = 1;
   }else{
@@ -18,6 +25,19 @@
 
   // a couple language options need to be translated now.
   $this->si_contact_update_lang();
+
+    // action backup restore
+	if (isset($_POST['ctf_action'])
+    && $_POST['ctf_action'] == __('Restore Settings', 'si-contact-form')
+    && isset($_POST['si_contact_backup_type'])) {
+        check_admin_referer( 'si-contact-form-restore_settings'); // nonce
+
+     echo $this->si_contact_form_backup_restore($_POST['si_contact_backup_type']);
+
+     // refresh settings to initialize the restored backup
+     $this->si_contact_get_options($form_num);
+
+  } // end action backup restore
 
 	// Send a test mail if necessary
 	if (isset($_POST['ctf_action']) && $_POST['ctf_action'] == __('Send Test', 'si-contact-form') && isset($_POST['si_contact_to'])) {
@@ -130,7 +150,7 @@
 		ob_start();
 
 		// Send the test mail
-		$result = wp_mail($email,$subject,$message);
+		$result = wp_mail($email,$subject,$message,$header);
 
 		// Grab the smtp debugging output
 		$smtp_debug = ob_get_clean();
@@ -215,6 +235,8 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'attach_size' =>       ( preg_match('/^([[0-9.]+)([kKmM]?[bB])?$/',$_POST['si_contact_attach_size']) ) ? trim($_POST['si_contact_attach_size']) : $si_contact_option_defaults['attach_size'],
          'textarea_html_allow' =>    (isset( $_POST['si_contact_textarea_html_allow'] ) ) ? 'true' : 'false',
          'auto_respond_enable' =>    (isset( $_POST['si_contact_auto_respond_enable'] ) ) ? 'true' : 'false',
+         'auto_respond_from_name' => ( trim($_POST['si_contact_auto_respond_from_name']) != '' ) ? trim($_POST['si_contact_auto_respond_from_name']) : $si_contact_option_defaults['auto_respond_from_name'], // use default if empty
+         'auto_respond_reply_to' =>  ( trim($_POST['si_contact_auto_respond_reply_to']) != '' && $this->ctf_validate_email($_POST['si_contact_auto_respond_reply_to'])) ? trim($_POST['si_contact_auto_respond_reply_to']) : $si_contact_option_defaults['auto_respond_reply_to'], // use default if empty
          'auto_respond_message' => trim($_POST['si_contact_auto_respond_message']),  // can be empty
          'auto_respond_subject' => trim($_POST['si_contact_auto_respond_subject']),  // can be empty
          'req_field_indicator' =>       $_POST['si_contact_req_field_indicator'],
@@ -279,7 +301,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
         if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
                 $optionarray_update['ex_field'.$i.'_default'] = '0';
         }
-        if ($optionarray_update['ex_field'.$i.'_label'] == '') {
+        if ($optionarray_update['ex_field'.$i.'_label'] == '' && $optionarray_update['ex_field'.$i.'_type'] != 'fieldset-close') {
           $optionarray_update['ex_field'.$i.'_type'] = 'text';
           $optionarray_update['ex_field'.$i.'_default'] = '0';
           $optionarray_update['ex_field'.$i.'_req'] = 'false';
@@ -761,7 +783,8 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <label name="si_contact_redirect_url" for="si_contact_redirect_url"><?php _e('Redirect URL', 'si-contact-form'); ?>:</label><input name="si_contact_redirect_url" id="si_contact_redirect_url" type="text" value="<?php echo $si_contact_opt['redirect_url'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_url_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_redirect_url_tip">
-        <?php _e('After a user sends a message, the web browser will display "message sent" for 5 seconds, then redirect to this URL.', 'si-contact-form'); ?>
+        <?php _e('After a user sends a message, the web browser will display "message sent" for x seconds, then redirect to this URL.', 'si-contact-form'); ?>
+        <?php _e('Use FULL URL including http:// for best results.', 'si-contact-form'); ?>
         </div>
         <br />
       </td>
@@ -873,21 +896,36 @@ foreach ($name_type_array as $k => $v) {
 </select>
 <br />
 
-       <strong><?php _e('Extra fields:', 'si-contact-form'); ?></strong>
-
-      <label for="si_contact_max_fields"><?php _e('Number of available extra fields', 'si-contact-form'); ?>:</label><input name="si_contact_max_fields" id="si_contact_max_fields" type="text" value="<?php echo absint($si_contact_gb['max_fields']);  ?>" size="3" />
-
+<strong><?php _e('Extra Fields:', 'si-contact-form'); ?></strong><br />
+       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_extra_fields_tip');"><?php _e('Click here to see instructions for extra fields.', 'si-contact-form'); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_extra_fields_tip">
        <br />
-       <?php _e('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form'); ?>
-       <br />
-       <?php _e('When using select or radio field types, first enter the label and a comma. Next include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
+<strong><?php _e('Instructions for how to use Extra Fields:', 'si-contact-form'); ?></strong>
+       <blockquote>
+      <?php _e('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Text and Textarea fields:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The text field is for single line text entry. The textarea field is for multiple line text entry.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Select, Radio, and Checkbox extra fields:', 'si-contact-form'); ?></strong><br />
+       <?php _e('When using select, checkbox, or radio field types; first enter the label and a comma. Include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
        <?php _e('To make "Green" the defult selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form'); ?>
        <?php _e('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?>
+       <?php _e('By default radio and checkboxes are displayed vertical. Here is how to make them display horizontal: add the tag {inline} before the label, like this: {inline}Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Attachment:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The attachment is used to allow users to attach a file upload from the form. You can add multiple attachments. The attachment is sent with your email. Attachments are deleted from the server afther the email is sent.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Date field:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The date is used to allow a date field with a calendar pop-up. The date field ensures that a date entry is in a standard format every time.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Fieldset:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The fieldset(box-open) is used to draw a box around related form elements. The fieldset label is used for a (legend) title of the group.', 'si-contact-form'); ?>
        <br />
-       <?php _e('The fieldset(group) is used to draw a box around related form elements. The fieldset label is used to identify the group.', 'si-contact-form'); ?>
-       <br />
+       <?php _e('The fieldset(box-close) is used to close a box around related form elements. A label is not required for this type. If you do not close a fieldset box, it will close automatically when you add another fieldset box.', 'si-contact-form'); ?>
+ <br /><strong><?php _e('Notes:', 'si-contact-form'); ?></strong><br />
        <?php _e('Use the optional notes/help to print some notes or instructions before a form field. This is for the form display only, not E-mail. HTML is allowed.', 'si-contact-form'); ?>
-       <br /><br />
+       </blockquote>
+</div>
+
+ <br />
+ <label for="si_contact_max_fields"><?php _e('Number of available extra fields', 'si-contact-form'); ?>:</label><input name="si_contact_max_fields" id="si_contact_max_fields" type="text" value="<?php echo absint($si_contact_gb['max_fields']);  ?>" size="3" />
+ <br />
 
       <?php
 $field_type_array = array(
@@ -898,7 +936,8 @@ $field_type_array = array(
 'select' => esc_attr(__('select', 'si-contact-form')),
 'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
-'fieldset' => esc_attr(__('fieldset(group)', 'si-contact-form')),
+'fieldset' => esc_attr(__('fieldset(box-open)', 'si-contact-form')),
+'fieldset-close' => esc_attr(__('fieldset(box-close)', 'si-contact-form')),
 );
       // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
@@ -1017,6 +1056,20 @@ foreach ($cal_date_array as $k => $v) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_enable_tip">
         <?php _e('Enable when you want the form to automatically answer with an autoresponder E-mail message.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label name="si_contact_auto_respond_from_name" for="si_contact_auto_respond_from_name"><?php _e('Autoresponder E-mail From name', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_name" id="si_contact_auto_respond_from_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_name']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_name_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_from_name_tip">
+        <?php _e('This sets the name in the from field when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label name="si_contact_auto_respond_reply_to" for="si_contact_auto_respond_reply_to"><?php _e('Autoresponder E-mail "Reply To" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_reply_to" id="si_contact_auto_respond_reply_to" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_reply_to']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_reply_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_reply_to_tip">
+        <?php _e('This sets the "reply to" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
         </div>
         <br />
 
@@ -1208,12 +1261,8 @@ foreach ($cal_date_array as $k => $v) {
 
 <form action="<?php echo admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php" ); ?>" method="post">
 <?php wp_nonce_field('si-contact-form-email_test'); ?>
-<fieldset class="options">
+<fieldset class="options" style="border:1px solid black; padding:10px;">
 <legend><?php _e('Send a Test E-mail', 'si-contact-form'); ?></legend>
-<table class="optiontable">
-<tr valign="top">
-<th scope="row"><label for="si_contact_tor"><?php _e('To:', 'si-contact-form'); ?></label> </th>
-<td><p><input type="text" name="si_contact_to" id="si_contact_to" value="" size="40" class="code" /><br />
 <?php _e('If you are not receiving email form your form, try this test because it can display troubleshooting information.', 'si-contact-form'); ?><br />
 <?php _e('There are settings you can use to try to fix email delivery problems, see this FAQ for help:', 'si-contact-form'); ?>
  <a href="http://wordpress.org/extend/plugins/si-contact-form/faq/" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a><br />
@@ -1224,16 +1273,93 @@ if ( !function_exists('mail') ) {
   echo '<span style="color:red;">'. __('Have them fix it. Or you can install the "WP Mail SMTP" plugin and configure it to use SMTP.', 'si-contact-form').'</span>'."\n";
 }
 ?>
-</p></td>
-</tr>
-</table>
-<p class="submit">
+<br />
+<label for="si_contact_to"><?php _e('To:', 'si-contact-form'); ?></label>
+<input type="text" name="si_contact_to" id="si_contact_to" value="" size="40" class="code" />
+<p style="padding:0px;" class="submit">
 <input type="submit" name="ctf_action" value="<?php _e('Send Test', 'si-contact-form'); ?>" />
 </p>
 </fieldset>
 </form>
 
-<p><?php _e('More WordPress plugins by Mike Challis:', 'si-contact-form') ?></p>
+<br />
+
+<form id="ctf_backup_settings" action="<?php echo admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php" ); ?>" method="post">
+<?php wp_nonce_field('si-contact-form-backup_settings'); ?>
+<fieldset class="options" style="border:1px solid black; padding:10px;">
+
+<legend><?php _e('Backup Settings', 'si-contact-form'); ?></legend>
+<?php _e('This tool can save a backup of your contact form settings.', 'si-contact-form'); ?><br />
+<?php _e('Use to transfer one, or all, of your forms from one site to another. Or just make a backup to save.', 'si-contact-form'); ?><br />
+<label for="si_contact_backup_type"><?php _e('Select a form to backup:', 'si-contact-form'); ?></label>
+
+<select id="si_contact_backup_type" name="si_contact_backup_type">
+<?php
+$backup_type_array = array(
+'all' => esc_attr(__('All Forms', 'si-contact-form')),
+);
+$backup_type_array["1"] = esc_attr(sprintf(__('Form: %d', 'si-contact-form'),1));
+// multi-forms > 1
+for ($i = 2; $i <= $si_contact_gb['max_forms']; $i++) {
+$backup_type_array[$i] = esc_attr(sprintf(__('Form: %d', 'si-contact-form'),$i));
+}
+$selected = '';
+foreach ($backup_type_array as $k => $v) {
+ if (isset($_POST['si_contact_backup_type']) && $_POST['si_contact_backup_type'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+
+<p style="padding:0px;" class="submit">
+<input type="submit" name="ctf_action" value="<?php _e('Backup Settings', 'si-contact-form'); ?>" />
+</p>
+
+</fieldset>
+</form>
+
+<br />
+
+<form enctype="multipart/form-data" id="ctf_restore_settings" action="<?php echo admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php" ); ?>" method="post">
+<?php wp_nonce_field('si-contact-form-restore_settings'); ?>
+<fieldset class="options" style="border:1px solid black; padding:10px;">
+
+<legend><?php _e('Restore Settings', 'si-contact-form'); ?></legend>
+<?php _e('This tool can restore a backup of your contact form settings. If you have previously made a backup, you can restore one or all your forms. It is a good idea to backup all forms before you restore any. Changes are permanent!', 'si-contact-form'); ?><br />
+<label for="si_contact_backup_type"><?php _e('Select a form to restore:', 'si-contact-form'); ?></label>
+
+<select id="si_contact_backup_type" name="si_contact_backup_type">
+<?php
+$backup_type_array = array(
+'all' => esc_attr(__('All Forms', 'si-contact-form')),
+);
+$backup_type_array["1"] = esc_attr(sprintf(__('Form: %d', 'si-contact-form'),1));
+// multi-forms > 1
+for ($i = 2; $i <= $si_contact_gb['max_forms']; $i++) {
+$backup_type_array[$i] = esc_attr(sprintf(__('Form: %d', 'si-contact-form'),$i));
+}
+$selected = '';
+foreach ($backup_type_array as $k => $v) {
+ if (isset($_POST['si_contact_backup_type']) && $_POST['si_contact_backup_type'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<br />
+
+<label for="si_contact_backup_file"><?php _e('Upload Backup File:', 'si-contact-form'); ?></label>
+<input style="text-align:left; margin:0;" type="file" id="si_contact_backup_file" name="si_contact_backup_file" value=""  size="20" />
+
+<p style="padding:0px;" class="submit">
+<input type="submit" name="ctf_action" onclick="alert('<?php _e('Are you sure you want to permanently make this change?', 'si-contact-form'); ?>')" value="<?php _e('Restore Settings', 'si-contact-form'); ?>" />
+</p>
+
+</fieldset>
+</form>
+
+<p><strong><?php _e('More WordPress plugins by Mike Challis:', 'si-contact-form') ?></strong></p>
 <ul>
 <li><a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Fast and Secure Contact Form', 'si-contact-form'); ?></a></li>
 <li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php _e('SI CAPTCHA Anti-Spam', 'si-contact-form'); ?></a></li>

@@ -1,4 +1,9 @@
 <?php
+/*
+Fast and Secure Contact Form
+Mike Challis
+http://www.642weather.com/weather/scripts.php
+*/
 
 // the form is being processed to send the mail now
 
@@ -170,8 +175,11 @@ if ($have_attach){
 
    // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
-        if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
-
+        if ($si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
+          if(preg_match('/^{inline}/',$si_contact_opt['ex_field'.$i.'_label'])) {
+            // remove the {inline} modifier tag from the label
+              $si_contact_opt['ex_field'.$i.'_label'] = str_replace('{inline}','',$si_contact_opt['ex_field'.$i.'_label']);
+          }
           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
 
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
@@ -366,7 +374,7 @@ echo "</pre>\n";*/
 
      // optional extra fields
      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
-        if ( $si_contact_opt['ex_field'.$i.'_label'] != '' ) {
+        if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
            if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
                   $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
            } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
@@ -470,7 +478,13 @@ echo "</pre>\n";*/
 
     if ($ctf_email_address_bcc != '')
             $header .= "Bcc: $ctf_email_address_bcc\n";
-    $header .= "Reply-To: $this->si_contact_mail_from\n";
+
+    if($email == ''){
+      $header .= "Reply-To: $this->si_contact_mail_from\n";
+    } else {
+      $header .= "Reply-To: $email\n";
+    }
+
     $header .= "Return-Path: $this->si_contact_mail_from\n";
     $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
 
@@ -482,7 +496,7 @@ echo "</pre>\n";*/
     $this->safe_mode = ((boolean)@ini_get('safe_mode') === false) ? 0 : 1;
 
     if ($si_contact_opt['php_mailer_enable'] == 'php') {
-       $header_php .= $header;
+       $header_php .= $header; 
       if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
           // the fifth parameter is not allowed in safe mode
           // Pass the Return-Path via sendmail's -f command.
@@ -502,6 +516,11 @@ echo "</pre>\n";*/
          $ctf_geekMail->_setnewLine($php_eol);
          $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
          $ctf_geekMail->to($mail_to);
+         if($email == ''){
+            $ctf_geekMail->_replyTo($this->si_contact_mail_from);
+         } else {
+            $ctf_geekMail->_replyTo($email);
+         }
          if ($ctf_email_address_bcc != '')
            $ctf_geekMail->bcc($ctf_email_address_bcc);
          $ctf_geekMail->subject($subj);
@@ -541,12 +560,14 @@ echo "</pre>\n";*/
 
        $header = '';
        $header_php = '';
+       $auto_respond_from_name = $si_contact_opt['auto_respond_from_name'];
+       $auto_respond_reply_to = $si_contact_opt['auto_respond_reply_to'];
        // prepare the email header
        if ($ctf_email_on_this_domain != '' ) {
             if(!preg_match("/,/", $ctf_email_on_this_domain)) {
               // just an email: user1@example.com
-              $header_php =  "From: WordPress <$ctf_email_on_this_domain>\n";
-              $this->si_contact_from_name = 'WordPress';
+              $header_php =  "From: $auto_respond_from_name <$ctf_email_on_this_domain>\n";
+              $this->si_contact_from_name = $auto_respond_from_name;
               $this->si_contact_mail_from = $ctf_email_on_this_domain;
             } else {
               // name and email: webmaster,user1@example.com
@@ -558,14 +579,14 @@ echo "</pre>\n";*/
               $this->si_contact_mail_from = $value;
             }
       } else {
-            $header_php =  "From: WordPress <". get_option('admin_email') . ">\n";
-            $this->si_contact_from_name = 'WordPress';
+            $header_php =  "From: $auto_respond_from_name <". get_option('admin_email') . ">\n";
+            $this->si_contact_from_name = $auto_respond_from_name;
             $this->si_contact_mail_from = get_option('admin_email');
        }
        add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
        add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
 
-       $header .= "Reply-To: $this->si_contact_mail_from\n";
+       $header .= "Reply-To: $auto_respond_reply_to\n";
        $header .= "Return-Path: $this->si_contact_mail_from\n";
        $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
        @ini_set('sendmail_from' , $this->si_contact_mail_from);
@@ -587,6 +608,7 @@ echo "</pre>\n";*/
             $ctf_geekMail->_setcharSet(get_option('blog_charset'));
             $ctf_geekMail->_setnewLine($php_eol);
             $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
+            $ctf_geekMail->_replyTo($auto_respond_reply_to);
             $ctf_geekMail->to($email);
             $ctf_geekMail->subject($subj);
             $ctf_geekMail->message($msg);

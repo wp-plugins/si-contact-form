@@ -7,7 +7,7 @@ Requires at least: 2.6
 Tested up to: 3.0
 Stable tag: trunk
 
-A super customizable contact form that lets your visitors send you email. Blocks all common spammer tactics. Spam is no longer a problem.
+A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. Packed with settings and features.
 
 == Description ==
 
@@ -19,9 +19,10 @@ Features:
 --------
  * Super easy customizable Options from Admin settings page.
  * Multi-Form feature that allows you to have as many different forms as you need.
- * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, fieldset(group).
+ * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, fieldset(box).
  * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
- * Can hide subject and message fields for use as a newsletter signup.
+ * Backup/restore tool. You can backup/restore all your forms or single forms and settings.
+ * Easy to hide subject and message fields for use as a newsletter signup.
  * Supports sending mail to multiple departments.
  * Optional redirect to any URL after message sent.
  * Optional autoresponder E-mail message.
@@ -40,7 +41,7 @@ Features:
 
 Security:
 --------
- * It has very tight security, stops spammer tricks.
+ * It has very tight security, stops all automated spammers.
  * Akismet spam protection support.
  * Spam checks E-mail address input from common spammer tactics...
 prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection attempts to spam the world.
@@ -84,7 +85,7 @@ Requirements/Restrictions:
 3. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
 
 4. This setting on the contact form options might help you....
-Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
+Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail", then test from the contact form again. If it still does not work, try setting it to try setting it to "PHP". In most cases, this will resolve the problem. Remember to also change the settings on all your other forms.
 
 5. Maybe another plugin is conflicting. Do this as a test:
 Temporarily disable all your other plugins. Does it work now? If yes, enable the plugins one by one to determine which one conflicts. 
@@ -166,6 +167,11 @@ Do this:
 1. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
 
 2. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
+
+= I am not receiving attachments with the mail even though the message says it is attached. =
+
+Do you use MailPress plugin?
+Do this: On the contact form settings page find this setting: "Send E-mail function:", try setting it to "geekMail". Then test the attachment again.
 
 
 = I need more than 4 contact forms, how do I increase the number of forms available? =
@@ -313,6 +319,16 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.8 =
+- (19 Jul 2010) - Added much requested Backup/restore tool. You can backup/restore all your forms or single forms and settings using a tool at the bottom of the settings page.
+- Added new settings: 'Autoresponder E-mail From name', and 'Autoresponder E-mail "Reply To" address'.
+- Added ability to set subject by URL GET method: ?si_contact_subject=I would like to adopt Freddy.
+- Fixed email "Reply to" header to be from sender when appropriate so that replying to the email goes back to sender.
+- More improvements to email sending and testing functions.
+- Improved fieldset feature. Renamed fieldset(group) to fieldset(box-open) and added fieldset(box-close).  
+- Minor improvements to display.
+- Updated German
 
 = 2.7.4 =
 - (19 Jul 2010) - Fixed blank subject when using optional email subject list.
