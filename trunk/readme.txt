@@ -321,7 +321,7 @@ No setting necessary, it just works.
 == Changelog ==
 
 = 2.8 =
-- (19 Jul 2010) - Added much requested Backup/restore tool. You can backup/restore all your forms or single forms and settings using a tool at the bottom of the settings page.
+- (25 Jul 2010) - Added much requested Backup/restore tool. You can backup/restore all your forms or single forms and settings using a tool at the bottom of the settings page.
 - Added new settings: 'Autoresponder E-mail From name', and 'Autoresponder E-mail "Reply To" address'.
 - Added ability to set subject by URL GET method: ?si_contact_subject=I would like to adopt Freddy.
 - Fixed email "Reply to" header to be from sender when appropriate so that replying to the email goes back to sender.
