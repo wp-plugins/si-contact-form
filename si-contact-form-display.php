@@ -244,10 +244,10 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
      $string .= $req_field_ind.'</label>
         </div> '.$this->ctf_echo_if_error($si_contact_error_email2).'
         <div '.$this->ctf_field_div_style.'>
-                <input '.$this->ctf_field_style.' type="text" id="si_contact_email2_'.$form_id_num.'" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
-                <br /><span class="small">';
+             <span style="font-size:x-small; font-weight:normal;">';
      $string .= ($si_contact_opt['title_email2_help'] != '') ? $si_contact_opt['title_email2_help'] : __('Please enter your E-mail Address a second time.', 'si-contact-form');
-     $string .= '</span>
+     $string .= '</span><br />
+        <input '.$this->ctf_field_style.' type="text" id="si_contact_email2_'.$form_id_num.'" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
         ';
 
@@ -315,6 +315,13 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
       $string .= '            </select>';
 
        } else {
+              if ($subject == '' && isset($_GET['si_contact_subject']) ) {
+                $subject = $_GET['si_contact_subject'];
+                $subject = substr($subject,0,75); // shorten to 75 chars or less
+                $subject = preg_replace("/ +/",' ', trim($subject));// remove extra spaces
+                $subject = strip_tags($subject); // no html
+                $subject = $this->ctf_clean_input($subject);
+              }
             $string .=   '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_subject'.$form_id_num.'">';
