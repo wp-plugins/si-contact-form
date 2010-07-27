@@ -911,9 +911,9 @@ function si_contact_get_options($form_num) {
          'error_style' => 'text-align:left; color:red;',
          'captcha_div_style_sm' => 'width: 175px; height: 50px; padding-top:5px;',
          'captcha_div_style_m' => 'width: 250px; height: 65px; padding-top:5px;',
-         'submit_div_style' => 'text-align:left; padding-top:5px; clear:both;',
+         'submit_div_style' => 'text-align:left; padding-top:5px;',
          'button_style' => 'cursor:pointer; margin:0;',
-         'powered_by_style' => 'clear:both; font-size:x-small; font-weight:normal; padding-top: 5px;',
+         'powered_by_style' => 'font-size:x-small; font-weight:normal; padding-top:5px;',
          'field_size' => '40',
          'captcha_field_size' => '6',
          'text_cols' => '30',
@@ -1054,7 +1054,7 @@ function si_contact_get_options($form_num) {
 function si_contact_start_session() {
   // a PHP session cookie is set so that the captcha can be remembered and function
   // this has to be set before any header output
-  // echo "starting session ctf";
+  //echo "starting session ctf";
   // start cookie session, but do not start session if captcha is disabled in options
   if( !isset( $_SESSION ) ) { // play nice with other plugins
     session_cache_limiter ('private, must-revalidate');

@@ -468,7 +468,7 @@ if ($si_contact_gb['donated'] != 'true') {
         <textarea rows="2" cols="40" name="si_contact_welcome" id="si_contact_welcome"><?php echo $this->ctf_output_string($si_contact_opt['welcome']); ?></textarea>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_welcome_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_welcome_tip">
-        <?php _e('This gets printed when the contact form is first presented. It is not printed when there is an input error and not printed after the form is completed.', 'si-contact-form') ?>
+        <?php _e('This is printed before the contact form. HTML is allowed.', 'si-contact-form') ?>
         </div>
       </td>
     </tr>
