@@ -440,20 +440,16 @@ if ($si_contact_gb['donated'] != 'true') {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form'); ?> - <a style="cursor:pointer;" title="More about Mike Challis" onclick="toggleVisibility('si_contact_mike_challis_tip');">More from Mike Challis</a> </td>
+<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form'); ?> - <a style="cursor:pointer;" title="<?php _e('More from Mike Challis', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('More from Mike Challis', 'si-contact-form'); ?></a></td>
 </tr></table>
 </form>
 <br />
 
 <div style="text-align:left; display:none" id="si_contact_mike_challis_tip">
 <img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/si-contact-form.jpg" width="250" height="185" alt="Mike Challis" /><br />
-<?php _e('Mike Challis says: "Hello, I have spend hundreds of hours coding this plugin just for you.
-If you are satisfied with my programs and support please consider making
-a small donation. If you are not able to, that is OK.
-Most people donate $5, $10, $20, or more. Though no amount is too small.
-Donations can also be made with your PayPal account, or securely using any of the major credit cards.
-Please also rate my plugin.', 'si-contact-form'); ?>
- <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>".
+<?php _e('Mike Challis says: "Hello, I have spend hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
+<?php echo ' '; _e('Most people donate $5, $10, $20, or more. Though no amount is too small. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
+ <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>.
 <br />
 <a style="cursor:pointer;" title="Close" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('Close this message', 'si-contact-form'); ?></a>
 </div>
