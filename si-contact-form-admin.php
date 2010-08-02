@@ -1,5 +1,4 @@
 <?php
-
 /*
 Fast and Secure Contact Form
 Mike Challis
@@ -21,7 +20,7 @@ http://www.642weather.com/weather/scripts.php
   }
 
   // get options
-  $this->si_contact_get_options($form_num);
+  $si_contact_gb = $this->si_contact_get_options($form_num);
 
   // a couple language options need to be translated now.
   $this->si_contact_update_lang();
@@ -35,7 +34,7 @@ http://www.642weather.com/weather/scripts.php
      echo $this->si_contact_form_backup_restore($_POST['si_contact_backup_type']);
 
      // refresh settings to initialize the restored backup
-     $this->si_contact_get_options($form_num);
+     $si_contact_gb = $this->si_contact_get_options($form_num);
 
   } // end action backup restore
 
@@ -194,7 +193,9 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'donated' =>          (isset( $_POST['si_contact_donated'] ) ) ? 'true' : 'false',
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb_defaults['max_forms'],
          'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 100 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb_defaults['max_fields'],
+         'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
          );
+
    if(isset($si_contact_gb['2.6.3'] ))
                  $optionarray_gb_update['2.6.3'] = $si_contact_gb['2.6.3'];
 
@@ -331,6 +332,18 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
     // save updated global options to the database
     update_option("si_contact_form_gb", $optionarray_gb_update);
 
+    $redirect_to_form_1 = 0;
+    if ( $optionarray_gb_update['max_forms'] != $si_contact_gb['max_forms'] ) {
+       if ($optionarray_gb_update['max_forms'] < $si_contact_gb['max_forms']) {
+         // delete all multi-forms higher than set number
+         for ($i = $optionarray_gb_update['max_forms'] + 1; $i <= 100; $i++) {
+            delete_option("si_contact_form$i");
+         }
+       }
+      // max_forms settings has changed, need to redirect to form 1 later on
+      $redirect_to_form_1 = 1;
+    }
+
     // get the global options from the database
     $si_contact_gb = get_option("si_contact_form_gb");
 
@@ -342,6 +355,41 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
     if (function_exists('wp_cache_flush')) {
 	     wp_cache_flush();
 	}
+
+    if ($redirect_to_form_1) {
+       // max_forms settings has changed, need to redirect to form 1
+       $ctf_redirect_url = admin_url(  "plugins.php?page=si-contact-form/si-contact-form.php" );
+       $ctf_redirect_timeout = 1;
+ echo <<<EOT
+
+<script type="text/javascript" language="javascript">
+<!--
+var count=$ctf_redirect_timeout;
+var time;
+function timedCount() {
+  document.title='Redirecting in ' + count + ' seconds';
+  count=count-1;
+  time=setTimeout("timedCount()",1000);
+  if (count==-1) {
+    clearTimeout(time);
+    document.title='Redirecting ...';
+    self.location='$ctf_redirect_url';
+  }
+}
+window.onload=timedCount;
+//-->
+</script>
+EOT;
+
+echo '
+<div id="message" class="updated fade"><p><strong>
+<img src="'.WP_PLUGIN_URL .'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting to Form 1', 'si-contact-form')).'" />&nbsp;&nbsp;
+'.__('Redirecting to Form 1', 'si-contact-form').' ...
+</strong></p></div>
+';
+
+    }
+
 
   } // end if (isset($_POST['submit']))
 
@@ -392,10 +440,23 @@ if ($si_contact_gb['donated'] != 'true') {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form'); ?> - Mike Challis</td>
+<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form'); ?> - <a style="cursor:pointer;" title="More about Mike Challis" onclick="toggleVisibility('si_contact_mike_challis_tip');">More from Mike Challis</a> </td>
 </tr></table>
 </form>
 <br />
+
+<div style="text-align:left; display:none" id="si_contact_mike_challis_tip">
+<img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/si-contact-form.jpg" width="250" height="185" alt="Mike Challis" /><br />
+<?php _e('Mike Challis says: "Hello, I have spend hundreds of hours coding this plugin just for you.
+If you are satisfied with my programs and support please consider making
+a small donation. If you are not able to, that is OK.
+Most people donate $5, $10, $20, or more. Though no amount is too small.
+Donations can also be made with your PayPal account, or securely using any of the major credit cards.
+Please also rate my plugin.', 'si-contact-form'); ?>
+ <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>".
+<br />
+<a style="cursor:pointer;" title="Close" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('Close this message', 'si-contact-form'); ?></a>
+</div>
 
 <?php
 }
@@ -415,7 +476,7 @@ if ($si_contact_gb['donated'] != 'true') {
 <p>
 <?php _e('You must add the shortcode in a Page(not a post). That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
 <br />
-<?php _e('Shortcode for this form:', 'si-contact-form'); echo " <b>[si-contact-form form='$form_id']</b>"; ?>
+<?php _e('Shortcode for this form:', 'si-contact-form'); echo " [si-contact-form form='$form_id']"; ?>
 </p>
 
 
@@ -443,11 +504,16 @@ if ($si_contact_gb['donated'] != 'true') {
   </h3>
   <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_multi_tip');"><?php _e('Multi-forms help', 'si-contact-form'); ?></a>
   <div style="text-align:left; display:none" id="si_contact_multi_tip">
-  <?php _e('This multi-form feature allows you to have up to four different forms on your site. Each form has unique settings and shortcode. Select the form you want to edit using the links above, then edit the settings below for the form you selected. Be sure to use the correct shortcode to call the form.', 'si-contact-form') ?>
+  <?php _e('This multi-form feature allows you to have many different forms on your site. Each form has unique settings and shortcode. Select the form you want to edit using the links above, then edit the settings below for the form you selected. Be sure to use the correct shortcode to call the form.', 'si-contact-form') ?>
   </div>
 
 <br />
-<label for="si_contact_max_forms"><?php _e('Number of available Multi-forms', 'si-contact-form'); ?>:</label><input name="si_contact_max_forms" id="si_contact_max_forms" type="text" value="<?php echo absint($si_contact_gb['max_forms']);  ?>" size="3" />
+<label for="si_contact_max_forms"><?php _e('Number of available Multi-forms', 'si-contact-form'); ?>:</label>
+<input name="si_contact_max_forms" id="si_contact_max_forms" type="text" value="<?php echo absint($si_contact_gb['max_forms']);  ?>" size="3" />
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_multi_num_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+<div style="text-align:left; display:none" id="si_contact_multi_num_tip">
+<?php _e('Use this setting to increase or decrease the number of available forms. The most forms you can add is 99. Caution: lowering this number will delete forms of a higher number than the number you set.', 'si-contact-form') ?>
+</div>
 
     <p class="submit">
       <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
@@ -685,6 +751,10 @@ if ( $si_contact_opt['email_bcc'] != ''){
 
         <input name="si_contact_double_email" id="si_contact_double_email" type="checkbox" <?php if( $si_contact_opt['double_email'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_double_email" for="si_contact_double_email"><?php _e('Enable double E-mail entry required on contact form.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_double_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_double_email_tip">
+        <?php _e('Requires users to enter email address in two fields to help reduce mistakes.', 'si-contact-form') ?>
+        </div>
         <br />
 
         <input name="si_contact_name_case_enable" id="si_contact_name_case_enable" type="checkbox" <?php if( $si_contact_opt['name_case_enable'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -712,13 +782,76 @@ if ( $si_contact_opt['email_bcc'] != ''){
         echo " $blogdomain ";
         ?><?php _e('(recommended).', 'si-contact-form'); ?>
         </label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_domain_protect_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_domain_protect_tip">
+        <?php _e('Prevents automated spam bots posting from off-site forms.', 'si-contact-form') ?>
+        </div>
         <br />
+
         <input name="si_contact_email_check_dns" id="si_contact_email_check_dns" type="checkbox" <?php if( $si_contact_opt['email_check_dns'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_email_check_dns" for="si_contact_email_check_dns"><?php _e('Enable checking DNS records for the domain name when checking for a valid E-mail address.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_check_dns_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_email_check_dns_tip">
+        <?php _e('Improves email address validation by checking that the domain of the email address actually has a valid DNS record.', 'si-contact-form') ?>
+        </div>
+        <br />
 
       </td>
     </tr>
 
+    <tr>
+       <th scope="row" style="width: 75px;"><?php
+       _e('Akismet:', 'si-contact-form');
+       echo '<br />'. sprintf(__('(form %d)', 'si-contact-form'),$form_id);
+       ?></th>
+      <td>
+     <strong><?php _e('Akismet spam prevention status:', 'si-contact-form'); ?></strong>
+
+    <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_akismet_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+    <div style="text-align:left; display:none" id="si_contact_akismet_tip">
+    <?php _e('Akismet is a WordPress plugin. Akismet will greatly reduce or even completely eliminate the comment and trackback spam you get on your site. If one does happen to get through, simply mark it as "spam" on the moderation screen and Akismet will learn from the mistakes. When Akismet is installed and active, all Fast and Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form') ?>
+    </div>
+    <br />
+
+  <?php
+   if (function_exists('akismet_verify_key')) {
+     if (!isset($_POST['si_contact_akismet_check'])){
+       echo '<span style="background-color:#99CC99; padding:4px;">'.
+             __('Akismet is installed.', 'si-contact-form'). '</strong></span>';
+     }
+  ?>
+  <input name="si_contact_akismet_check" id="si_contact_akismet_check" type="checkbox" value="1" />
+  <label for="si_contact_akismet_check"><?php _e('Check this and click "Update Options" to determine if Akismet key is active.', 'si-contact-form'); ?></label>
+   <?php
+    if (isset($_POST['si_contact_akismet_check'])){
+      echo '<br/>';
+      $key_status = 'failed';
+	  $key = get_option('wordpress_api_key');
+		if ( empty( $key ) ) {
+			$key_status = 'empty';
+		} else {
+			$key_status = akismet_verify_key( $key );
+		}
+		if ( $key_status == 'valid' ) {
+			echo '<span style="background-color:#99CC99; padding:4px;">'.
+             __('Akismet is installed and the key is valid. All Fast and Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></span>';
+		} else if ( $key_status == 'invalid' ) {
+			echo '<span style="background-color:#FFE991; padding:4px;">'.
+            __('Akismet plugin is installed but key needs to be activated.', 'si-contact-form'). '</span>';
+		} else if ( !empty($key) && $key_status == 'failed' ) {
+			echo '<span style="background-color:#FFE991; padding:4px;">'.
+             __('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</span>';
+		}
+    }
+         echo '<br/><a href="'.admin_url(  "plugins.php?page=akismet-key-config" ).'">Configure Akismet</a>';
+   }else{
+     echo '<span style="background-color:#FFE991; padding:4px;">'.
+            __('Akismet plugin is not installed or is deactivated.', 'si-contact-form'). '</span>';
+   }
+    ?>
+
+      </td>
+    </tr>
     <tr>
        <th scope="row" style="width: 75px;"><?php
        _e('CAPTCHA:', 'si-contact-form');
@@ -726,7 +859,20 @@ if ( $si_contact_opt['email_bcc'] != ''){
        ?></th>
       <td>
         <input name="si_contact_captcha_enable" id="si_contact_captcha_enable" type="checkbox" <?php if ( $si_contact_opt['captcha_enable'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_captcha_enable"><?php _e('Enable CAPTCHA (recommended).', 'si-contact-form'); ?></label><br />
+        <label for="si_contact_captcha_enable"><?php _e('Enable CAPTCHA (recommended).', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_enable_tip">
+        <?php _e('Prevents automated spam bots by requiring that the user pass a CAPTCHA test before posting. You can disable CAPTCHA if you prefer, because the form also uses Akismet to prevent spam when Akismet plugin is installed with the key activated.', 'si-contact-form') ?>
+        </div>
+        <br />
+
+        <input name="si_contact_captcha_disable_session" id="si_contact_captcha_disable_session" type="checkbox" <?php if ( $si_contact_gb['captcha_disable_session'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_captcha_disable_session"><?php _e('Use CAPTCHA without PHP session.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_disable_session_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_disable_session_tip">
+        <?php _e('Sometimes the CAPTCHA code never validates because of a server problem with PHP session handling. If the CAPTCHA code never validates and does not work, you can enable this setting to use files for session.', 'si-contact-form'); ?>
+        </div>
+        <br />
 
         <label for="si_contact_captcha_difficulty"><?php _e('CAPTCHA difficulty level:', 'si-contact-form'); ?></label>
       <select id="si_contact_captcha_difficulty" name="si_contact_captcha_difficulty">
@@ -744,19 +890,43 @@ foreach ($captcha_difficulty_array as $k => $v) {
 }
 ?>
 </select>
-<br />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_difficulty_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_difficulty_tip">
+        <?php _e('Changes level of distorion of the CAPTCHA image text.', 'si-contact-form') ?>
+        </div>
+        <br />
 
         <input name="si_contact_captcha_small" id="si_contact_captcha_small" type="checkbox" <?php if ( $si_contact_opt['captcha_small'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_captcha_small"><?php _e('Enable smaller size CAPTCHA image.', 'si-contact-form'); ?></label><br />
+        <label for="si_contact_captcha_small"><?php _e('Enable smaller size CAPTCHA image.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_small_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_small_tip">
+        <?php _e('Makes the CAPTCHA image smaller.', 'si-contact-form') ?>
+        </div>
+        <br />
 
         <input name="si_contact_captcha_no_trans" id="si_contact_captcha_no_trans" type="checkbox" <?php if ( $si_contact_opt['captcha_no_trans'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_captcha_no_trans"><?php _e('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-contact-form'); ?></label><br />
+        <label for="si_contact_captcha_no_trans"><?php _e('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_no_trans_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_no_trans_tip">
+        <?php _e('Sometimes fixes missing test on the CAPTCHA image. If this does not fix missing text, your PHP server is not compatible with the CAPTCHA functions. You can disable CAPTCHA or have your web server fixed.', 'si-contact-form') ?>
+        </div>
+        <br />
 
         <input name="si_contact_enable_audio" id="si_contact_enable_audio" type="checkbox" <?php if ( $si_contact_opt['enable_audio'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_enable_audio"><?php _e('Enable Audio for the CAPTCHA.', 'si-contact-form'); ?></label><br />
+        <label for="si_contact_enable_audio"><?php _e('Enable Audio for the CAPTCHA.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_audio_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_enable_audio_tip">
+        <?php _e('Enables an icon so the user can listen to an audio sound of the CAPTCHA.', 'si-contact-form') ?>
+        </div>
+        <br />
 
-        <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-contact-form'); ?></label><br />
+        <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true') echo ' checked="checked" '; ?> />
+        <label for="si_contact_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_audio_flash_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_enable_audio_flash_tip">
+        <?php _e('Enables a flash object so the user can listen to an audio sound of the CAPTCHA without having to downoad the sound file.', 'si-contact-form') ?>
+        </div>
+        <br />
 
         <input name="si_contact_captcha_perm" id="si_contact_captcha_perm" type="checkbox" <?php if( $si_contact_opt['captcha_perm'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_captcha_perm" for="si_contact_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-contact-form'); ?>
@@ -775,15 +945,24 @@ foreach ($captcha_difficulty_array as $k => $v) {
       <td>
         <input name="si_contact_redirect_enable" id="si_contact_redirect_enable" type="checkbox" <?php if( $si_contact_opt['redirect_enable'] == 'true' ) echo 'checked="checked"'; ?> />
         <label name="si_contact_redirect_enable" for="si_contact_redirect_enable"><?php _e('Enable redirect after the message sends', 'si-contact-form'); ?>.</label>
-        <br  />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_enable_tip">
+        <?php _e('If enabled: After a user sends a message, the web browser will display "message sent" for x seconds, then redirect to the redirect URL. This can be used to redirect to the blog home page, or a custom "Thank You" page.', 'si-contact-form'); ?>
+        </div>
+        <br />
 
-        <label for="si_contact_redirect_seconds"><?php _e('Redirect delay in seconds', 'si-contact-form'); ?>:</label><input name="si_contact_redirect_seconds" id="si_contact_redirect_seconds" type="text" value="<?php echo absint($si_contact_opt['redirect_seconds']);  ?>" size="3" />
-        <br  />
+        <label for="si_contact_redirect_seconds"><?php _e('Redirect delay in seconds', 'si-contact-form'); ?>:</label>
+        <input name="si_contact_redirect_seconds" id="si_contact_redirect_seconds" type="text" value="<?php echo absint($si_contact_opt['redirect_seconds']);  ?>" size="3" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_seconds_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_seconds_tip">
+        <?php _e('How many seconds the web browser will display "message sent" before redirecting to the redirect URL. Values of 0-60 are allowed.', 'si-contact-form'); ?>
+        </div>
+        <br />
 
         <label name="si_contact_redirect_url" for="si_contact_redirect_url"><?php _e('Redirect URL', 'si-contact-form'); ?>:</label><input name="si_contact_redirect_url" id="si_contact_redirect_url" type="text" value="<?php echo $si_contact_opt['redirect_url'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_url_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_redirect_url_tip">
-        <?php _e('After a user sends a message, the web browser will display "message sent" for x seconds, then redirect to this URL.', 'si-contact-form'); ?>
+        <?php _e('The form will redirect to this URL after success. This can be used to redirect to the blog home page, or a custom "Thank You" page.', 'si-contact-form'); ?>
         <?php _e('Use FULL URL including http:// for best results.', 'si-contact-form'); ?>
         </div>
         <br />

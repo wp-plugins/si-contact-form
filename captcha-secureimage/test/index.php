@@ -62,7 +62,18 @@ function print_status($supported)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Secureimage PHP Requirements Test</title>
+<title>CAPTCHA PHP Requirements Test</title>
+<script type="text/javascript" language="javascript">
+<!--
+function toggleVisibility(id) {
+   var e = document.getElementById(id);
+   if(e.style.display == 'block')
+       e.style.display = 'none';
+   else
+       e.style.display = 'block';
+}
+//-->
+</script>
 <style type="text/css" media="all">
 body
 {
@@ -89,13 +100,28 @@ body
 <body>
 
 <div class="group" style="margin-left:20%; margin-right:20%; padding:20px;">
-<h2>Secureimage PHP Requirements Test</h2>
+<h2>CAPTCHA PHP Requirements Test</h2>
 <p>
   This script will test your PHP installation to see if (Secureimage) CAPTCHA will run on your server.
-  <br /><br />
-Note: If you see any errors or warnings at the top of the page,
-especially "Warning: session_start...", they could be indicating a problem with your PHP server that will prevent the CAPTCHA from working.
+  Make sure to perform all 3 tests using the links below.
 </p>
+
+Note: If you see any errors or warnings at the top of the page<br />
+<a href="#" style="cursor:pointer;" title="Click for Help!" onclick="toggleVisibility('session_tip');">Click for Help!</a>
+
+<div style="text-align:left; display:none" id="session_tip">
+<br />
+<b>If you see an error "Warning: session_start..."</b><br />
+There is a problem with
+your PHP server that will prevent the CAPTCHA from working with PHP sessions.
+Sometimes PHP session do not work because of a file permissions problem.
+The solution is to make a trouble ticket with your web host,
+send them a URL link to this page so they can see the error and fix it.
+Alternatively, you can enable the setting "Use CAPTCHA without PHP Session",
+then temporary files will be used for storing the CAPTCHA phrase.
+This allows the CAPTCHA to function without using PHP Sessions.
+You can find this setting on the contact form admin settings page.
+</div>
 
  <?php
    // Check for safe mode
@@ -206,17 +232,10 @@ Based on the requirements, you do not have what it takes to run (Secureimage) CA
 <a href="captcha_test.php">Try the CAPTCHA Test</a><br />
 </p>
 
-<p>PHP Scripts by Mike Challis<br />
+<p>PHP Scripts and WordPress plugins by Mike Challis<br />
 <a href="http://www.642weather.com/weather/scripts.php">Free PHP Scripts</a><br />
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8086141">Donate</a>, even small amounts are appreciated
-<br />
-<br />
-Contact me: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a><br />
-I will need to know this information: (fill in this information on my support form)<br />
-Plugin: Fast and Secure Contact Form<br />
-Plugin Version:<br />
-Your web site URL:<br />
-Problem you are having:
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8086141">Donate</a>, even small amounts are appreciated<br />
+Contact Mike Challis for support: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a>
 </p>
 </div>
 

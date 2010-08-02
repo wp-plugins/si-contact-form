@@ -1,4 +1,9 @@
 <?php
+/*
+Fast and Secure Contact Form
+Mike Challis
+http://www.642weather.com/weather/scripts.php
+*/
 
 // the form is being displayed now
  $this->ctf_form_style = $this->si_contact_convert_css($si_contact_opt['form_style']);
@@ -9,7 +14,6 @@
  $this->ctf_field_div_style = $this->si_contact_convert_css($si_contact_opt['field_div_style']);
  $this->ctf_error_style = $this->si_contact_convert_css($si_contact_opt['error_style']);
  $this->ctf_required_style = $this->si_contact_convert_css($si_contact_opt['required_style']);
-
 
  $ctf_field_size = absint($si_contact_opt['field_size']);
 
@@ -43,7 +47,7 @@ if ($si_contact_opt['border_enable'] == 'true') {
 $attach_dir_error = 0;
 if ($have_attach){
 	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
-    $this->si_contact_init_attach_dir($attach_dir);
+    $this->si_contact_init_temp_dir($attach_dir);
     if ($si_contact_opt['php_mailer_enable'] == 'php'){
        $this->si_contact_error = 1;
 	   $attach_dir_error = __( 'This contact form has file attachment fields. Attachments are only supported when the Send E-Mail function is set to WordPress or geekMail. You can find this setting on the contact form settings page.', 'si-contact-form' );
@@ -52,8 +56,8 @@ if ($have_attach){
         $this->si_contact_error = 1;
 		$attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) does not exist or is not writable. Create the folder or change its permission manually.', 'si-contact-form' ), $attach_dir );
 	} else {
-       // delete files over 5 minutes old in the attachment directory
-       $this->si_contact_clean_attach_dir($attach_dir);
+       // delete files over 3 minutes old in the attachment directory
+       $this->si_contact_clean_temp_dir($attach_dir, 3);
 	}
 }
 
@@ -263,7 +267,6 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
         <div '.$this->ctf_field_div_style.'>
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>';
-
   }
 }
 
@@ -367,7 +370,11 @@ if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
  $this->ctf_submit_div_style = $this->si_contact_convert_css($si_contact_opt['submit_div_style']);
  $this->ctf_submit_style = $this->si_contact_convert_css($si_contact_opt['button_style']);
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
-$string .= ( $this->isCaptchaEnabled() ) ? $this->addCaptchaToContactForm($si_contact_error_captcha,$form_id_num)."\n"  : '';
+
+if ( $this->isCaptchaEnabled() ) {
+  $string .= $this->si_contact_get_captcha_html($si_contact_error_captcha,$form_id_num)."\n";
+}
+
 $string .= '
 <div '.$this->ctf_submit_div_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
@@ -394,5 +401,4 @@ $string .= '
 }
 $string .= '<!-- Fast and Secure Contact Form plugin end -->
 ';
-
 ?>

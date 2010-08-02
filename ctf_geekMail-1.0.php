@@ -1,4 +1,9 @@
 <?php
+/*
+Fast and Secure Contact Form
+Mike Challis
+http://www.642weather.com/weather/scripts.php
+*/
 
   /**
   * geekMail-1.0.php - A standalone version of the CodeIgniter PHP Framework's Email library

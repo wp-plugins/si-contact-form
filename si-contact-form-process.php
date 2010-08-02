@@ -135,14 +135,10 @@ http://www.642weather.com/weather/scripts.php
         }
     }
 
-   if(!empty($f_name))
-     $name .= $f_name;
-   if(!empty($mi_name))
-     $name .= ' '.$mi_name;
-   if(!empty($m_name))
-     $name .= ' '.$m_name;
-   if(!empty($l_name))
-     $name .= ' '.$l_name;
+   if(!empty($f_name)) $name .= $f_name;
+   if(!empty($mi_name))$name .= ' '.$mi_name;
+   if(!empty($m_name)) $name .= ' '.$m_name;
+   if(!empty($l_name)) $name .= ' '.$l_name;
 
    if($si_contact_opt['email_type'] == 'required') {
      if (!$this->ctf_validate_email($email)) {
@@ -167,11 +163,10 @@ if ($have_attach){
         $this->si_contact_error = 1;
 		$attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) does not exist or is not writable. Create the folder or change its permission manually.', 'si-contact-form' ), $attach_dir );
 	} else {
-       // delete files over 3 minutes old in the attachment directory
-       $this->si_contact_clean_attach_dir($attach_dir);
+       // delete files over 3 minutes old in the temp attachment directory
+       $this->si_contact_clean_temp_dir($attach_dir, 3);
 	}
 }
-
 
    // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
@@ -259,73 +254,99 @@ if ($have_attach){
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
    if($si_contact_opt['message_type'] != 'not_available' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
-			global $akismet_api_host, $akismet_api_port;
-			$c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
-			$c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
-			$c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
-			$c['blog']       		= get_option('home');
-			$c['permalink']       	= get_permalink();
-			$c['comment_type']      = 'sicontactform';
-			$c['comment_author']    = $name;
-			$c['comment_content']   = $message;
-            //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
-
-			$ignore = array( 'HTTP_COOKIE' );
-
-			foreach ( $_SERVER as $key => $value )
-				if ( !in_array( $key, $ignore ) )
-					$c["$key"] = $value;
-
-			$query_string = '';
-			foreach ( $c as $key => $data ) {
-			  if( is_string($data) ) {
-				$query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
-              }
-            }
-			$response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
-			if ( 'true' == $response[1] ) {
-                $this->si_contact_error = 1; // Akismet says it is spam.
-                $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Contact Form has Invalid Input', 'si-contact-form');
-			}
+      global $akismet_api_host, $akismet_api_port;
+	  $c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
+	  $c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	  $c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
+	  $c['blog']       		= get_option('home');
+	  $c['permalink']       = get_permalink();
+	  $c['comment_type']    = 'sicontactform';
+	  $c['comment_author']  = $name;
+	  $c['comment_content'] = $message;
+      //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
+	  $ignore = array( 'HTTP_COOKIE' );
+	  foreach ( $_SERVER as $key => $value ) {
+	     if ( !in_array( $key, $ignore ) )
+		     $c["$key"] = $value;
+      }
+      $query_string = '';
+	  foreach ( $c as $key => $data ) {
+	     if( is_string($data) )
+		    $query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
+      }
+	  $response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
+	  if ( 'true' == $response[1] ) {
+         $this->si_contact_error = 1; // Akismet says it is spam.
+         $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Contact Form has Invalid Input', 'si-contact-form');
+	  }
     } // end if(function_exists('akismet_http_post')){
 
   // begin captcha check if enabled
   // captcha is optional but recommended to prevent spam bots from spamming your contact form
   if ( $this->isCaptchaEnabled() ) {
-
-// uncomment for temporary advanced debugging only
-/*echo "<pre>";
-   echo "COOKIE ";
-   var_dump($_COOKIE);
-   echo "\n\n";
-   echo "SESSION ";
-   var_dump($_SESSION);
-echo "</pre>\n";*/
-
-
-    if (!isset($_SESSION['securimage_code_ctf_'.$form_id_num]) || empty($_SESSION['securimage_code_ctf_'.$form_id_num])) {
-          $this->si_contact_error = 1;
-          $si_contact_error_captcha = __('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-contact-form');
-    }else{
-       if (empty($captcha_code) || $captcha_code == '') {
+    if($si_contact_gb['captcha_disable_session'] == 'true') {
+      //captcha without sessions
+      if (empty($captcha_code) || $captcha_code == '') {
          $this->si_contact_error = 1;
          $si_contact_error_captcha = ($si_contact_opt['error_captcha_blank'] != '') ? $si_contact_opt['error_captcha_blank'] : __('Please complete the CAPTCHA.', 'si-contact-form');
-       } else {
-         require_once "$captcha_path_cf/securimage.php";
-         $img = new Securimage();
-         $img->form_num = $form_id_num; // makes compatible with multi-forms on same page
-         $valid = $img->check("$captcha_code");
-         // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
-         if($valid == true) {
-             // ok can continue
-         } else {
+      }else if (!isset($_POST['si_code_ctf_'.$form_id_num]) || empty($_POST['si_code_ctf_'.$form_id_num])) {
+         $this->si_contact_error = 1;
+         $si_contact_error_captcha = __('Could not find CAPTCHA token.', 'si-contact-form');
+      }else{
+         $prefix = 'xxxxxx';
+         if ( isset($_POST['si_code_ctf_'.$form_id_num]) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_POST['si_code_ctf_'.$form_id_num]) ){
+           $prefix = $_POST['si_code_ctf_'.$form_id_num];
+         }
+         if ( is_readable( $ctf_captcha_dir . $prefix . '.php' ) ) {
+			include( $ctf_captcha_dir . $prefix . '.php' );
+			if ( 0 == strcasecmp( $captcha_code, $captcha_word ) ) {
+              // captcha was matched
+              @unlink ($ctf_captcha_dir . $prefix . '.php');
+			} else {
               $this->si_contact_error = 1;
               $si_contact_error_captcha = ($si_contact_opt['error_captcha_wrong'] != '') ? $si_contact_opt['error_captcha_wrong'] : __('That CAPTCHA was incorrect.', 'si-contact-form');
-         }
-    }
-   }
-  } // end if enable captcha
-  // end captcha check
+            }
+	     } else {
+           $this->si_contact_error = 1;
+           $si_contact_error_captcha = __('Could not read CAPTCHA token file.', 'si-contact-form');
+	    }
+	  }
+    } else {
+      //captcha with PHP sessions
+
+      // uncomment for temporary advanced debugging only
+      /*echo "<pre>";
+      echo "COOKIE ";
+      var_dump($_COOKIE);
+      echo "\n\n";
+      echo "SESSION ";
+      var_dump($_SESSION);
+      echo "</pre>\n";*/
+
+      if (!isset($_SESSION['securimage_code_ctf_'.$form_id_num]) || empty($_SESSION['securimage_code_ctf_'.$form_id_num])) {
+          $this->si_contact_error = 1;
+          $si_contact_error_captcha = __('Could not read CAPTCHA cookie. Make sure you have cookies enabled and not blocking in your web browser settings. Or another plugin is conflicting. See plugin FAQ.', 'si-contact-form');
+          $si_contact_error_captcha .= ' '. __('Alternatively, the admin can enable the setting "Use CAPTCHA without PHP Session", then temporary files will be used for storing the CAPTCHA phrase. This allows the CAPTCHA to function without using PHP Sessions. This setting is on the contact form admin settings page.', 'si-contact-form');
+      }else{
+         if (empty($captcha_code) || $captcha_code == '') {
+           $this->si_contact_error = 1;
+           $si_contact_error_captcha = ($si_contact_opt['error_captcha_blank'] != '') ? $si_contact_opt['error_captcha_blank'] : __('Please complete the CAPTCHA.', 'si-contact-form');
+         } else {
+           require_once "$captcha_path_cf/securimage.php";
+           $img = new Securimage();
+           $img->form_num = $form_id_num; // makes compatible with multi-forms on same page
+           $valid = $img->check("$captcha_code");
+           // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
+           if($valid == true) {
+             // ok can continue
+           } else {
+              $this->si_contact_error = 1;
+              $si_contact_error_captcha = ($si_contact_opt['error_captcha_wrong'] != '') ? $si_contact_opt['error_captcha_wrong'] : __('That CAPTCHA was incorrect.', 'si-contact-form');
+           }
+        }
+     }
+   } // end if captcha use session
+ } // end if enable captcha
 
   if (!$this->si_contact_error) {
      // ok to send the email, so prepare the email message
@@ -340,7 +361,6 @@ echo "</pre>\n";*/
      }else{
           $subj = $si_contact_opt['email_subject'];
      }
-
      $msg =  __('To', 'si-contact-form').": $to_contact$php_eol$php_eol";
      if ($name != '' || $email != '')  {
         $msg .= __('From', 'si-contact-form').":$php_eol";
@@ -367,38 +387,37 @@ echo "</pre>\n";*/
       }
       $msg .= "$email$php_eol$php_eol";
    }
-
-    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
+   if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
-    }
+   }
 
-     // optional extra fields
-     for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
-        if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
-           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
-                  $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
-           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
-               $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
-           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
-              list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
-              $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
-           } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
-              $exf_opts_array = array();
-              $exf_opts_label = '';
-              $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+   // optional extra fields
+   for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+      if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
+         if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
+             $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
+             $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
+             list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
+             $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+             $exf_opts_array = array();
+             $exf_opts_label = '';
+             $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
              if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test) ) {
-                  list($exf_opts_label, $value) = explode(",",$exf_array_test);
-                  $exf_opts_label   = trim($exf_opts_label);
-                 $value = trim($value);
-                 if ($exf_opts_label != '' && $value != '') {
-                     if(!preg_match("/;/", $value)) {
-                        // error
-                        //A checkbox field is not configured properly in settings.
-                     } else {
+                list($exf_opts_label, $value) = explode(",",$exf_array_test);
+                $exf_opts_label   = trim($exf_opts_label);
+                $value = trim($value);
+                if ($exf_opts_label != '' && $value != '') {
+                    if(!preg_match("/;/", $value)) {
+                       // error
+                       //A checkbox field is not configured properly in settings.
+                    } else {
                          // multiple options
                          $exf_opts_array = explode(";",$value);
-                     }
-                     $msg .= $exf_opts_label.$php_eol;
+                    }
+                    $msg .= $exf_opts_label.$php_eol;
                     // loop
                     $ex_cnt = 1;
                     foreach ($exf_opts_array as $k) {  // checkbox multi
@@ -406,13 +425,13 @@ echo "</pre>\n";*/
                        $msg .= ' * '.$k.$php_eol;
                      $ex_cnt++;
                     }
-                   $msg .= $php_eol;
+                    $msg .= $php_eol;
                 }
              } else {  // checkbox single
                  if(${'ex_field'.$i} == 'selected')
                    $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('selected', 'si-contact-form').$php_eol.$php_eol;
              }
-           } else {  // text, textarea, date
+         } else {  // text, textarea, date
                if(${'ex_field'.$i} != ''){
                    if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                         $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.$this->ctf_stripslashes(${'ex_field'.$i}).$php_eol.$php_eol;
@@ -420,9 +439,9 @@ echo "</pre>\n";*/
                         $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.${'ex_field'.$i}.$php_eol.$php_eol;
                    }
                }
-           }
+         }
        }
-    }
+    } // end for
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
     }
