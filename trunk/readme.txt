@@ -320,6 +320,14 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.8.1 =
+- (01 Aug 2010) - PHP Sessions are no longer required for the CAPTCHA. The new method uses temporary files to store the CAPTCHA codes until validation. PHP sessions can still be reactivated by unchecking the setting: "Use CAPTCHA without PHP session".
+- Added Akismet spam prevention status to the contact form settings page, so you can know if Akismet is protecting or not.
+- Added more help notes to the admin settings page.
+- Fixed extra forms were not deleted when when decreasing the number of available forms.
+- Fixed to redirect to Form 1 when changing the number of available forms.
+- Improved the CAPTCHA Test Page.
+
 = 2.8 =
 - (25 Jul 2010) - Added much requested Backup/restore tool. You can backup/restore all your forms or single forms and settings using a tool at the bottom of the settings page.
 - Added new settings: 'Autoresponder E-mail From name', and 'Autoresponder E-mail "Reply To" address'.

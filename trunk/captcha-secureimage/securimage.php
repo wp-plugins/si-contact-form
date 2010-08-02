@@ -408,6 +408,12 @@ class Securimage {
 	 */
 	var $correct_code;
 
+    var $captcha_word;
+    var $captcha_path;
+    var $ctf_sm_captcha;
+    var $prefix;
+    var $nosession;
+
 	/**
 	 * Class constructor.<br />
 	 * Because the class uses sessions, this will attempt to start a session if there is no previous one.<br />
@@ -421,26 +427,13 @@ class Securimage {
 	 */
 	function Securimage()
 	{
-		// Initialize session or attach to existing
-		if ( session_id() == '' ) { // no session has been started yet, which is needed for validation
-			if (trim($this->session_name) != '') {
-				session_name($this->session_name);
-			}
-			session_start();
-		}
 
 		// Set Default Values
         $this->form_num = 1;
-        if( isset($_GET['ctf_form_num']) && is_numeric($_GET['ctf_form_num']) ) {
-            $this->form_num = (int)$_GET['ctf_form_num'];
-        }
-
+        $this->nosession = false;
+        $this->prefix = '000000';
         $this->image_width   = 175;
 		$this->image_height  = 60;
-        if( isset($_GET['ctf_sm_captcha']) ) {
-            $this->image_width   = 132;
-		    $this->image_height  = 45;
-        }
 
 		$this->image_type    = 'png'; // png, jpg or gif
 
@@ -480,6 +473,14 @@ class Securimage {
 		$this->audio_path   = getcwd() . '/audio/';
 		$this->audio_format = 'mp3';
 		$this->session_name = '';
+
+        		// Initialize session or attach to existing
+		if ( $this->nosession == false && session_id() == '' ) { // no session has been started yet, which is needed for validation
+			if (trim($this->session_name) != '') {
+				session_name($this->session_name);
+			}
+			session_start();
+		}
 	}
 
 	/**
@@ -937,7 +938,11 @@ class Securimage {
 		for($i = 1, $cslen = strlen($this->charset); $i <= $len; ++$i) {
 			$code .= $this->charset{rand(0, $cslen - 1)};
 		}
-		return $code;
+        if ( $this->nosession == true )
+           return $this->captcha_word;
+
+        if ( $this->nosession == false )
+		  return $code;
 	}
 
 	/**
@@ -980,7 +985,7 @@ class Securimage {
 	 */
 	function output()
 	{
-		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
@@ -991,25 +996,21 @@ class Securimage {
 
 		switch($this->image_type)
 		{
-
 			case '1':
-				header("Content-Type: image/gif");
-				imagegif($this->im);
+			       header("Content-Type: image/gif");
+                   imagegif($this->im);
 				break;
-
 			case '2':
-				header("Content-Type: image/jpeg");
-				imagejpeg($this->im, null, 90);
+			      header("Content-Type: image/jpeg");
+                  imagejpeg($this->im, null, 90);
 				break;
-
 			default:
-				header("Content-Type: image/png");
-				imagepng($this->im);
+                  header("Content-Type: image/png");
+                  imagepng($this->im);
 				break;
 		}
-
 		imagedestroy($this->im);
-		exit;
+		//exit;
 	}
 
 	/**
@@ -1023,13 +1024,22 @@ class Securimage {
 	function getAudibleCode($format = 'wav')
 	{
 		$letters = array();
-		$code    = $this->getCode();
+        if ( $this->nosession == false ) {
+	        $code = $this->getCode();
+            if ($code == '') {
+			  $this->createCode();
+			  $code = $this->getCode();
+		    }
+        }
 
-		if ($code == '') {
-			$this->createCode();
-			$code = $this->getCode();
-		}
-
+        if ( $this->nosession == true ) {
+          if ( is_readable( $this->captcha_path . $this->prefix . '.php' ) ) {
+			    include( $this->captcha_path . $this->prefix . '.php' );
+				$code = $captcha_word;
+		  } else {
+                $code = 'nono';
+		  }
+        }
 		for($i = 0; $i < strlen($code); ++$i) {
 			$letters[] = $code{$i};
 		}
@@ -1414,3 +1424,4 @@ class Securimage_Color {
 		$this->b = $blue;
 	}
 }
+?>

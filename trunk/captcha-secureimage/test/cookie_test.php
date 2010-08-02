@@ -22,24 +22,29 @@ if( !isset( $_SESSION ) ) {
 $disabled_help = '
 <b><a href="cookie_test.php">Try the Cookie Test again</a> just to be sure</b><br />
 If the CAPTCHA is giving you a cookie error, this can be the cause.
-The Captcha will not be able work. The contact form will display an error:
+The Captcha will not validate the phrase. The contact form will display an error:
 "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled."
 <br /><br />
 Solution: Please configure your browser to allow cookies.
+<br /><br />
+Web browsers have a setting to enable/disable cookies.
+They also have a setting to block/unblock cookies per each web site.
+For instructions on how to enable cookies or unblock cookies in your browser, use a search engine.
+Different internet browsers have different sets of instructions on how to change this setting.
+
 ';
 
 $enabled_help = '
-If the CAPTCHA is giving you a cookie error, this rules out your web browser as the cause.
+If the CAPTCHA is giving you a session error, this rules out your web browser as the cause.
 
 <br /><br />
 Solution: Try all 3 tests below.
-If all 3 pass,
-the problem could be another WordPress plugin is conflicting with the PHP session.
-What other plugins do you have installed?
-Can you temporarily deactivate them all.
-Test, then if it works, activate them one at a time (then test) until the conflicting plugin is pinpointed?
-If a conflicting plugin is found I might be able to fix it (or not), then we can notify the plugin author.
-Contact me below.
+If all 3 pass and the WordPress forms do not work properly,
+the problem could be another WordPress plugin is conflicting.
+Look on the Admin - Plugins - menu.
+Temporarily Disable (not uninstall) all your other plugins.
+Do your WordPress forms work now? If yes, Activate the plugins one by one to determine
+which one conflicts. Notify that plugin author of the conflict.
 ';
 
 // Define a cookie and reload the page
@@ -55,6 +60,17 @@ if(!isset($_GET['redirected']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Cookies Test</title>
+<script type="text/javascript" language="javascript">
+<!--
+function toggleVisibility(id) {
+   var e = document.getElementById(id);
+   if(e.style.display == 'block')
+       e.style.display = 'none';
+   else
+       e.style.display = 'block';
+}
+//-->
+</script>
 <style>
 body
 {
@@ -80,40 +96,47 @@ body
 <h2>Cookies Test</h2>
 
 <p>
-This script will test your web browser to see if it can read a cookie required by the (Secureimage) CAPTCHA.
+This script will test your web browser to see if it can read a cookie needed by the CAPTCHA.
 You should see a message below letting you know if cookies are properly enabled in your browser.
-  <br /><br />
-Note: If you see any errors or warnings at the top of the page, THEN THE TEST PROBABLY FAILED.
-If you see an error: "Warning: session_start...", it is indicating a problem with your PHP server that will prevent the CAPTCHA from working.
 </p>
 
-<p>
-<strong>Web browsers have a setting to enable/disable cookies.
-They also have a setting to block/unblock cookies per each web site.
+Note: If you see any errors or warnings at the top of the page<br />
+<a href="#" style="cursor:pointer;" title="Click for Help!" onclick="toggleVisibility('session_tip');">Click for Help!</a>
 
-For instructions on how to enable cookies or unblock cookies in your browser, use a search engine</strong>.
-Different internet browsers have different sets of instructions on how to change this setting.
-</p>
+<div style="text-align:left; display:none" id="session_tip">
+<br />
+<b>If you see an error "Warning: session_start..."</b><br />
+There is a problem with
+your PHP server that will prevent the CAPTCHA from working with PHP sessions.
+Sometimes PHP session do not work because of a file permissions problem.
+The solution is to make a trouble ticket with your web host,
+send them a URL link to this page so they can see the error and fix it.
+Alternatively, you can enable the setting "Use CAPTCHA without PHP Session",
+then temporary files will be used for storing the CAPTCHA phrase.
+This allows the CAPTCHA to function without using PHP Sessions.
+You can find this setting on the contact form admin settings page.
+</div>
+
 
 <?php
 // Check if the cookie just defined is there
 $cookie_message = '';
 if(isset($_GET['redirected']) and $_GET['redirected']==1) {
     if(!isset($_COOKIE['mycookie'])) {
-        $cookie_message = '<p style="background-color:#CC6666; color:white; padding:10px;">
+        $cookie_message = '<p style="background-color:#FFCCCC; color:black; padding:10px;">
         Test Failed: Problem found: Cookies are NOT enabled on your browser.<br />
         '.$disabled_help.'
         </p>';
     }
     else{
-        $cookie_message = '<p style="background-color:#99CC66; padding:10px;">
+        $cookie_message = '<p style="background-color:#99CC99; padding:10px;">
         Test Passed: Cookies are enabled on your browser.
         <br /><br />
         '.$enabled_help.'
         </p>';
     }
 } else {
-      $cookie_message = '<p style="background-color:#CC6666; padding:10px;">
+      $cookie_message = '<p style="background-color:#FFCCCC; padding:10px;">
         The test failed to check for cookies because of a PHP server error.
         <br /><br />
         The error message will indicate the cause of the problem.
@@ -131,19 +154,11 @@ echo $cookie_message;
 <a href="captcha_test.php">Try the CAPTCHA Test</a><br />
 </p>
 
-<p>PHP Scripts by Mike Challis<br />
+<p>PHP Scripts and WordPress plugins by Mike Challis<br />
 <a href="http://www.642weather.com/weather/scripts.php">Free PHP Scripts</a><br />
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8086141">Donate</a>, even small amounts are appreciated
-<br />
-<br />
-Contact me: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a><br />
-I will need to know this information: (fill in this information on my support form)<br />
-Plugin: Fast and Secure Contact Form<br />
-Plugin Version:<br />
-Your web site URL:<br />
-Problem you are having:
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8086141">Donate</a>, even small amounts are appreciated<br />
+Contact Mike Challis for support: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a>
 </p>
-
 </div>
 
 </body>
