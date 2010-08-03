@@ -920,7 +920,7 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <label for="si_contact_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-contact-form'); ?></label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_audio_flash_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_enable_audio_flash_tip">
-        <?php _e('Enables a flash object so the user can listen to an audio sound of the CAPTCHA without having to downoad the sound file.', 'si-contact-form') ?>
+        <?php _e('Enables a flash object so the user can listen to an audio sound of the CAPTCHA without having to download the sound file.', 'si-contact-form') ?>
         </div>
         <br />
 
