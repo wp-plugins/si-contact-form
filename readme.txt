@@ -226,9 +226,11 @@ By default, the admin will not see the CAPTCHA. If you click "log out", go look 
 
 If the image is broken and you have the CAPTCHA entry box:
 This can happen if a server has too low a default permission level on new folders.
-Check that the permission on all the captcha-secureimage folders are set to permission: 755
+Check that the permission on all the captcha-secureimage folders are set to permission: 755(on most servers)
+http://codex.wordpress.org/Changing_File_Permissions
 
-all these folders need to be 755:
+all these folders need to be 755(on most servers):
+
 - si-contact-form
   - attachments
   - languages
@@ -319,6 +321,10 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+= 2.8.2 =
+- (07 Aug 2010) - More improvements to the CAPTCHA test page. 
+- Added captcha-temp directory permission check to alert the admin if there is a problem. This check is on the admin settings page, the captcha test page, and when posting the captcha.
 
 = 2.8.1 =
 - (01 Aug 2010) - PHP Sessions are no longer required for the CAPTCHA. The new method uses temporary files to store the CAPTCHA codes until validation. PHP sessions can still be reactivated by unchecking the setting: "Use CAPTCHA without PHP session".

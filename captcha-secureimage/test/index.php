@@ -35,7 +35,7 @@ if (isset($_GET['testimage']) && $_GET['testimage'] == '1') {
   imagearc($im,  60,  95,  50,  50,  0, 360, $green);
   imagearc($im, 140,  95,  50,  50,  0, 360, $blue);
 
-  imagestring($im, 5, 15, 1, 'Securimage Will Work!!', $blue);
+  imagestring($im, 5, 15, 1, 'PHP can make images!', $blue);
   imagestring($im, 2, 5, 20, ':) :) :)', $black);
   imagestring($im, 2, 5, 30, ':) :)', $black);
   imagestring($im, 2, 5, 40, ':)', $black);
@@ -51,9 +51,9 @@ if (isset($_GET['testimage']) && $_GET['testimage'] == '1') {
 function print_status($supported)
 {
   if ($supported) {
-    echo "<span style=\"color: #00f\">Yes!</span>";
+    echo "<span style=\"color:green;\">Yes!</span>";
   } else {
-    echo "<span style=\"color: #f00; font-weight: bold\">No</span>";
+    echo "<span style=\"color:red; font-weight: bold;\">No</span>";
   }
 }
 
@@ -216,7 +216,24 @@ You can find this setting on the contact form admin settings page.
     <strong>GIF Create Support:</strong>
     <?php print_status($gd_support && $gd_info['GIF Create Support']); ?>
   </li>
-
+   <li>
+    <strong>Directory /captcha-temp/</strong>
+			<?php
+            $check_this_dir = '../captcha-temp';
+            if(is_writable($check_this_dir)) {
+				echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
+			} else if(!file_exists($check_this_dir)) {
+				echo '<span style="color: red; font-weight: bold;">Directory not found, a <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">permissions</a> problem may have prevented this directory from being created.</span>';
+                echo ' ' .'Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).';
+			} else {
+                echo '<span style="color: red; font-weight: bold;">Directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)</span>.';
+                echo ' ' .'Permissions are:' . ' ' .substr(sprintf('%o', fileperms($check_this_dir)), -4);
+                echo ' ' .'Fixing this may require assigning 0755 permissions or higher (e.g. 0777 on some hosts. Try 0755 first, because 0777 is sometimes too much and will not work.)';
+                echo ' ' .'Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).';
+            }
+            ?>
+            <br />
+    </li>
 </ul>
 
 <?php if ($gd_support): ?>
@@ -238,6 +255,10 @@ Based on the requirements, you do not have what it takes to run (Secureimage) CA
 Contact Mike Challis for support: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a>
 </p>
 </div>
-
+ <?php
+if( isset($_GET['phpinfo']) ) {
+    phpinfo();
+}
+?>
 </body>
 </html>
