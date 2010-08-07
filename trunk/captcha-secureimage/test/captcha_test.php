@@ -337,6 +337,46 @@ echo '</p>
  style="border-style:none; vertical-align:bottom;" onclick="this.blur()" /></a>
  </div>
  ';
+echo '<!-- ?chmod=1&token='.$prefix.' -->';
+if( isset($_GET['chmod']) ) {
+    echo '<br />';
+    if (is_dir('../captcha-temp')) {
+        echo 'Directory /captcha-temp/ exists.';
+    } else {
+       echo 'Directory /captcha-temp/ does not exist.';
+    }
+    echo '<br />';
+    echo 'Permissions for directory /captcha-temp/ ';
+    echo substr(sprintf('%o', fileperms('../captcha-temp')), -4);
+    echo '<br />';
+  if( isset($_GET['token']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['token']) ){
+    clearstatcache();
+    echo 'Permissions for captcha token file: ';
+    $token = $_GET['token'];
+    echo substr(sprintf('%o', fileperms('../captcha-temp/'.$token.'.php')), -4);
+    echo '<br />';
+  }
+}
+
+
+$check_this_dir = '../captcha-temp';
+if(is_writable($check_this_dir)) {
+				//echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
+} else if(!file_exists($check_this_dir)) {
+    echo '<br />';
+    echo '<span style="color: red; font-weight: bold;"><strong>There is a problem with the directory /captcha-temp/.</strong><br />';
+	echo 'The directory is not found, a <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">permissions</a> problem may have prevented this directory from being created.</span>';
+    echo ' '. 'Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way (as long as PHP sessions are working).';
+} else {
+   echo '<br />';
+   echo '<span style="color: red; font-weight: bold;"><strong>There is a problem with the directory /captcha-temp/</strong>.<br />';
+   echo 'The directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)</span>.';
+   echo ' ' .'Permissions are:' . ' ' .substr(sprintf('%o', fileperms($check_this_dir)), -4);
+   echo ' ' .'Fixing this may require assigning 0755 permissions or higher (e.g. 0777 on some hosts. Try 0755 first, because 0777 is sometimes too much and will not work.)';
+   echo ' '. 'Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way (as long as PHP sessions are working).';
+}
+
+
  }else{
 
  echo '<div style="width:430px; height:55px">
@@ -387,6 +427,5 @@ function echo_if_error($this_error){
 Contact Mike Challis for support: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a>
 </p>
 </div>
-
 </body>
 </html>

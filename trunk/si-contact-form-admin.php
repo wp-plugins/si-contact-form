@@ -869,6 +869,35 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <?php _e('Sometimes the CAPTCHA code never validates because of a server problem with PHP session handling. If the CAPTCHA code never validates and does not work, you can enable this setting to use files for session.', 'si-contact-form'); ?>
         </div>
         <br />
+        <?php
+         if ( $si_contact_gb['captcha_disable_session'] == 'true' ){
+            $check_this_dir = WP_PLUGIN_DIR . '/si-contact-form/captcha-secureimage/captcha-temp';
+           if(is_writable($check_this_dir)) {
+				//echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
+           } else if(!file_exists($check_this_dir)) {
+              echo '<span style="color: red;">';
+              echo __('There is a problem with the directory', 'si-contact-form');
+              echo ' /captcha-secureimage/captcha-temp/. ';
+	          echo __('The directory is not found, a <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">permissions</a> problem may have prevented this directory from being created.', 'si-contact-form');
+              echo ' ';
+              echo __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
+              echo '</span><br />';
+           } else {
+             echo '<span style="color: red;">';
+             echo __('There is a problem with the directory', 'si-contact-form') .' /captcha-secureimage/captcha-temp/. ';
+             echo __('The directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form').'. ';
+             echo __('Permissions are: ', 'si-contact-form');
+             echo ' ';
+             echo substr(sprintf('%o', fileperms($check_this_dir)), -4);
+             echo ' ';
+             echo __('Fixing this may require assigning 0755 permissions or higher (e.g. 0777 on some hosts. Try 0755 first, because 0777 is sometimes too much and will not work.)', 'si-contact-form');
+             echo ' ';
+             echo __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
+             echo '</span><br />';
+          }
+         }
+
+        ?>
 
         <label for="si_contact_captcha_difficulty"><?php _e('CAPTCHA difficulty level:', 'si-contact-form'); ?></label>
       <select id="si_contact_captcha_difficulty" name="si_contact_captcha_difficulty">
