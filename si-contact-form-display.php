@@ -1,6 +1,6 @@
 <?php
 /*
-Fast and Secure Contact Form
+Fast Secure Contact Form
 Mike Challis
 http://www.642weather.com/weather/scripts.php
 */
@@ -23,7 +23,7 @@ if ($this->si_contact_error)
   $this->ctf_form_style = str_replace('display: none;','',$this->ctf_form_style);
 
 $string .= '
-<!-- Fast and Secure Contact Form plugin begin -->
+<!-- Fast Secure Contact Form plugin begin -->
 <a name="FSContact'.$form_id_num.'" id="FSContact'.$form_id_num.'"></a>
 <div '.$this->ctf_form_style.'>
 ';
@@ -396,9 +396,9 @@ $string .= '
 if ($si_contact_opt['enable_credit_link'] == 'true') {
   $this->ctf_powered_by_style = $this->si_contact_convert_css($si_contact_opt['powered_by_style']);
 $string .= '
-<p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast and Secure Contact Form', 'si-contact-form'). '</a></p>
+<p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast Secure Contact Form', 'si-contact-form'). '</a></p>
 ';
 }
-$string .= '<!-- Fast and Secure Contact Form plugin end -->
+$string .= '<!-- Fast Secure Contact Form plugin end -->
 ';
 ?>

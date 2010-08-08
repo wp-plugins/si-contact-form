@@ -1,4 +1,4 @@
-=== Fast and Secure Contact Form ===
+=== Fast Secure Contact Form ===
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
@@ -11,7 +11,7 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 == Description ==
 
-Fast and Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Super customizable.
+Fast Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Super customizable.
 
 [Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
 
@@ -321,6 +321,11 @@ Gmail:
 No setting necessary, it just works.
 
 == Changelog ==
+
+- Renamed plugin to "Fast Secure Contact Form"
+- Added rel="nofollow" tag to CAPTCHA Audio and Refresh links.
+- Updated Dutch
+- Updated Italian
 
 = 2.8.2 =
 - (07 Aug 2010) - More improvements to the CAPTCHA test page. 
