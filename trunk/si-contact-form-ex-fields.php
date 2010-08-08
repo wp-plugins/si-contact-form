@@ -1,6 +1,6 @@
 <?php
 /*
-Fast and Secure Contact Form
+Fast Secure Contact Form
 Mike Challis
 http://www.642weather.com/weather/scripts.php
 */

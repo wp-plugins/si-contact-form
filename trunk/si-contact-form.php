@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Fast and Secure Contact Form
+Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
-Description: Fast and Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
+Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
 Version: 2.8.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
@@ -641,7 +641,7 @@ $string .= '>
          if($capt_disable_sess)
                 $securimage_play_url .= '&amp;prefix='.$prefix;
          $string .= '    <div id="si_audio_ctf'.$form_id_num.'">'."\n";
-         $string .= '      <a id="si_aud_ctf'.$form_id_num.'" href="'.$securimage_play_url.'" title="';
+         $string .= '      <a id="si_aud_ctf'.$form_id_num.'" href="'.$securimage_play_url.'" rel="nofollow" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '">
       <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="';
@@ -653,7 +653,7 @@ $string .= '>
      }
    }
          $string .= '    <div id="si_refresh_ctf'.$form_id_num.'">'."\n";
-         $string .= '      <a href="#" title="';
+         $string .= '      <a href="#" rel="nofollow" title="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
          if($capt_disable_sess) {
            $string .= '" onclick="si_contact_captcha_refresh(\''.$form_id_num.'\',\''.$ctf_audio_type.'\',\''.$securimage_url.'\',\''.$securimage_show_rf_url.'\'); return false;">'."\n";
