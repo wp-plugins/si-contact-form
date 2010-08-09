@@ -29,8 +29,14 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
    //set some settings
    $img->nosession = true;
    $img->prefix = $prefix;
-   $img->captcha_word = $captcha_word;
    $img->captcha_path = getcwd() . '/captcha-temp/';
+   if(file_exists($img->captcha_path . $prefix . '.php') && is_readable( $img->captcha_path . $prefix . '.php' ) ) {
+       include( $img->captcha_path . $prefix . '.php' );
+       $img->captcha_word = $captcha_word;
+   } else {
+       $img->captcha_word = $captcha_word;
+   }
+
    $img->use_multi_text = true;
    $img->use_transparent_text = true;
    $img->text_transparency_percentage = 20;
@@ -59,12 +65,13 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
    $img->background_directory = getcwd() . '/backgrounds';
    $img->ttf_font_directory  = getcwd() . '/ttffonts';
    $img->show('');
-   if ( $fh = fopen( $img->captcha_path . $prefix . '.php', 'w' ) ) {
+   if(!file_exists($img->captcha_path . $prefix . '.php')) {
+      if ( $fh = fopen( $img->captcha_path . $prefix . '.php', 'w' ) ) {
 			fwrite( $fh, '<?php $captcha_word = \'' . $captcha_word . '\'; ?>' );
 			fclose( $fh );
             @chmod( $img->captcha_path . $prefix . '.php', 0755 );
+      }
    }
-
    unset($img);
    exit;
 } else {

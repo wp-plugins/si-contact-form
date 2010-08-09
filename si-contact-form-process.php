@@ -309,20 +309,20 @@ if ($have_attach){
 	     } else {
            $this->si_contact_error = 1;
            $si_contact_error_captcha = __('Could not read CAPTCHA token file.', 'si-contact-form');
-           $check_this_dir = './captcha-secureimage/captcha-temp';
+           $check_this_dir = untrailingslashit( $ctf_captcha_dir );
            if(is_writable($check_this_dir)) {
 				//echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
            } else if(!file_exists($check_this_dir)) {
               $si_cec .= '<br />';
               $si_cec .= __('There is a problem with the directory', 'si-contact-form');
-              $si_cec .= ' /captcha-secureimage/captcha-temp/.<br />';
+              $si_cec .= ' /si-contact-form/captcha-secureimage/captcha-temp/.<br />';
 	          $si_cec .= __('The directory is not found, a <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">permissions</a> problem may have prevented this directory from being created.', 'si-contact-form');
               $si_cec .= ' ';
               $si_cec .= __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
               $si_contact_error_captcha .= $si_cec;
            } else {
              $si_cec .= '<br />';
-             $si_cec .= __('There is a problem with the directory', 'si-contact-form') .' /captcha-secureimage/captcha-temp/.<br />';
+             $si_cec .= __('There is a problem with the directory', 'si-contact-form') .' /si-contact-form/captcha-secureimage/captcha-temp/.<br />';
              $si_cec .= __('The directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form').'. ';
              $si_cec .= __('Permissions are: ', 'si-contact-form');
              $si_cec .= ' ';
@@ -332,6 +332,10 @@ if ($have_attach){
              $si_cec .= ' ';
              $si_cec .= __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
              $si_contact_error_captcha .= $si_cec;
+          }
+          if(!file_exists($ctf_captcha_dir . $prefix . '.php')){
+                $si_contact_error_captcha .= '<br />';
+                $si_contact_error_captcha .= __('CAPTCHA token file is missing.', 'si-contact-form');  ;
           }
 	    }
 	  }
