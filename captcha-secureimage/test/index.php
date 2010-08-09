@@ -102,7 +102,7 @@ body
 <div class="group" style="margin-left:20%; margin-right:20%; padding:20px;">
 <h2>CAPTCHA PHP Requirements Test</h2>
 <p>
-  This script will test your PHP installation to see if (Secureimage) CAPTCHA will run on your server.
+  This script will test your PHP installation to see if (Securimage) CAPTCHA will run on your server.
   Make sure to perform all 3 tests using the links below.
 </p>
 

@@ -181,7 +181,7 @@ if (isset($_POST['action']) && ($_POST['action'] == 'check')) {
           $error_captcha = 'Could not read CAPTCHA cookie.<br />
           Make sure you have cookies enabled and not blocking in your web browser settings.<br />
           Sometimes PHP session do not work, have your web host fix the broken PHP sessions.
-          Alternativly, you can enable the setting "Use CAPTCHA without PHP Session".
+          Alternatively, you can enable the setting "Use CAPTCHA without PHP Session".
           You can find this setting on the contact form admin settings page.
           ';
    }else{
@@ -223,7 +223,7 @@ echo '</p>
 if(!isset($_GET['session']) ) {
   echo 'Did this test pass but when testing with "Test CAPTCHA with PHP Session" fail?
     Solution: Sometimes PHP session do not work, have your web host fix the broken PHP sessions.
-    Alternativly, you can enable the setting "Use CAPTCHA without PHP Session".
+    Alternatively, you can enable the setting "Use CAPTCHA without PHP Session".
     You can find this setting on the contact form admin settings page.
      <br /><br />';
 
