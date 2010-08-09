@@ -29,7 +29,7 @@
  * @link http://www.phpcaptcha.org/Securimage_Docs/ Online Documentation
  * @copyright 2009 Drew Phillips
  * @author drew010 <drew@drew-phillips.com>
- * @version 2.0 BETA (November 15, 2009)
+ * @version mchallis custom
  * @package Securimage
  *
  */
@@ -44,8 +44,8 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
   $img->nosession = true;
   $img->prefix = $prefix;
   $img->captcha_path = getcwd() . '/captcha-temp/';
-  $img->audio_format = (isset($_GET['format']) && in_array(strtolower($_GET['format']), array('mp3', 'wav')) ? strtolower($_GET['format']) : 'mp3');
-
+  //$img->audio_format = (isset($_GET['format']) && in_array(strtolower($_GET['format']), array('mp3', 'wav')) ? strtolower($_GET['format']) : 'mp3');
+  $img->audio_format = 'mp3';
 }else {
   // session
  include 'securimage.php';
@@ -55,8 +55,8 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
  if (isset($_GET['ctf_form_num']) && is_numeric($_GET['ctf_form_num']) && $_GET['ctf_form_num'] < 100){
     $img->form_num = $_GET['ctf_form_num'];
  }
- $img->audio_format = (isset($_GET['format']) && in_array(strtolower($_GET['format']), array('mp3', 'wav')) ? strtolower($_GET['format']) : 'mp3');
-
+ //$img->audio_format = (isset($_GET['format']) && in_array(strtolower($_GET['format']), array('mp3', 'wav')) ? strtolower($_GET['format']) : 'mp3');
+  $img->audio_format = 'mp3';
 }
 
 $img->outputAudioFile();
