@@ -322,6 +322,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added attachment directory permissions check.
+- Fixed error when increasing number of fields.
 - Renamed plugin to "Fast Secure Contact Form"
 - Added rel="nofollow" tag to CAPTCHA Audio and Refresh links.
 - Removed CAPTCHA WAV sound files, mp3 ones are sufficient.

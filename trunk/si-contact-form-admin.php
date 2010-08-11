@@ -294,11 +294,11 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
 
     // optional extra fields
     for ($i = 1; $i <= $optionarray_gb_update['max_fields']; $i++) {
-        $optionarray_update['ex_field'.$i.'_label'] = trim($_POST['si_contact_ex_field'.$i.'_label']);
-        $optionarray_update['ex_field'.$i.'_type'] = trim($_POST['si_contact_ex_field'.$i.'_type']);
-        $optionarray_update['ex_field'.$i.'_default'] = ( is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
+        $optionarray_update['ex_field'.$i.'_label'] = (isset($_POST['si_contact_ex_field'.$i.'_label'])) ? trim($_POST['si_contact_ex_field'.$i.'_label']) : '';
+        $optionarray_update['ex_field'.$i.'_type'] = (isset($_POST['si_contact_ex_field'.$i.'_type'])) ? trim($_POST['si_contact_ex_field'.$i.'_type']) : 'text';
+        $optionarray_update['ex_field'.$i.'_default'] = ( isset($_POST['si_contact_ex_field'.$i.'_default']) && is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default']) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 )) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
-        $optionarray_update['ex_field'.$i.'_notes'] = trim($_POST['si_contact_ex_field'.$i.'_notes']);
+        $optionarray_update['ex_field'.$i.'_notes'] = (isset($_POST['si_contact_ex_field'.$i.'_notes'])) ? trim($_POST['si_contact_ex_field'.$i.'_notes']) : '';
         if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
                 $optionarray_update['ex_field'.$i.'_default'] = '0';
         }
@@ -917,7 +917,7 @@ foreach ($captcha_difficulty_array as $k => $v) {
 </select>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_difficulty_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_captcha_difficulty_tip">
-        <?php _e('Changes level of distorion of the CAPTCHA image text.', 'si-contact-form') ?>
+        <?php _e('Changes level of distortion of the CAPTCHA image text.', 'si-contact-form') ?>
         </div>
         <br />
 
