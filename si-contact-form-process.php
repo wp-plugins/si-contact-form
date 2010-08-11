@@ -161,9 +161,12 @@ if ($have_attach){
 	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
 	if ( !is_dir($attach_dir) ) {
         $this->si_contact_error = 1;
-		$attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) does not exist or is not writable. Create the folder or change its permission manually.', 'si-contact-form' ), $attach_dir );
-	} else {
-       // delete files over 3 minutes old in the temp attachment directory
+		$attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) does not exist. Create the folder manually and (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form' ), $attach_dir );
+    } else if(!is_writable($attach_dir)) {
+          $this->si_contact_error = 1;
+		 $attach_dir_error = sprintf( __( 'This contact form has file attachment fields, but the temporary folder for the files (%s) is not writable. (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form' ), $attach_dir );
+    } else {
+       // delete files over 3 minutes old in the attachment directory
        $this->si_contact_clean_temp_dir($attach_dir, 3);
 	}
 }
