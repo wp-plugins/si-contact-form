@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Fast Secure Contact Form
-Plugin URI: http://www.642weather.com/weather/scripts-wordpress-si-contact.php
-Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141">Donate</a>
+Plugin URI: http://www.fastsecurecontactform.com/
+Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.fastsecurecontactform.com/donate">Donate</a>
 Version: 2.8.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
