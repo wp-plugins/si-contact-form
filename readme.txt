@@ -1,7 +1,7 @@
 === Fast Secure Contact Form ===
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141
+Donate link: http://www.fastsecurecontactform.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.6
 Tested up to: 3.0.1
@@ -13,7 +13,7 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 Fast Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Super customizable.
 
-[Plugin URI]: (http://www.642weather.com/weather/scripts-wordpress-si-contact.php)
+[Plugin URI]: (http://www.fastsecurecontactform.com/)
 
 Features:
 --------

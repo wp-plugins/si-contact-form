@@ -419,10 +419,10 @@ echo '
 <a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |
 <a href="http://wordpress.org/extend/plugins/si-contact-form/faq/" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a> |
 <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
-<a href="http://wordpress.org/tags/si-contact-form?forum_id=10" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8086141" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
+<a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
+<a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
 <a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php _e('Free PHP Scripts', 'si-contact-form'); ?></a> |
-<a href="http://www.642weather.com/weather/wxblog/support/" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
+<a href="http://www.fastsecurecontactform.com/contact" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
 </p>
 
 <?php
@@ -1565,7 +1565,7 @@ foreach ($backup_type_array as $k => $v) {
 
 <p><strong><?php _e('More WordPress plugins by Mike Challis:', 'si-contact-form') ?></strong></p>
 <ul>
-<li><a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Fast Secure Contact Form', 'si-contact-form'); ?></a></li>
+<li><a href="http://www.fastsecurecontactform.com/" target="_blank"><?php _e('Fast Secure Contact Form', 'si-contact-form'); ?></a></li>
 <li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php _e('SI CAPTCHA Anti-Spam', 'si-contact-form'); ?></a></li>
 <li><a href="http://wordpress.org/extend/plugins/visitor-maps/" target="_blank"><?php _e('Visitor Maps and Who\'s Online', 'si-contact-form'); ?></a></li>
 
