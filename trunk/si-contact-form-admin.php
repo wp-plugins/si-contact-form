@@ -447,7 +447,7 @@ if ($si_contact_gb['donated'] != 'true') {
 
 <div style="text-align:left; display:none" id="si_contact_mike_challis_tip">
 <img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/si-contact-form.jpg" width="250" height="185" alt="Mike Challis" /><br />
-<?php _e('Mike Challis says: "Hello, I have spend hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
+<?php _e('Mike Challis says: "Hello, I have spent hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
 <?php echo ' '; _e('Most people donate $5, $10, $20, or more. Though no amount is too small. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
  <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>.
 <br />
