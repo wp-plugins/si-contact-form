@@ -322,6 +322,7 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- New homepage: http://www.FastSecureContactForm.com/
 - Added attachment directory permissions check.
 - Fixed error when increasing number of fields.
 - Renamed plugin to "Fast Secure Contact Form"
