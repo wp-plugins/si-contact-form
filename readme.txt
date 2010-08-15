@@ -1,7 +1,7 @@
 === Fast Secure Contact Form ===
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
-Donate link: http://www.fastsecurecontactform.com/donate
+Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.6
 Tested up to: 3.0.1
@@ -13,7 +13,7 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 Fast Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Super customizable.
 
-[Plugin URI]: (http://www.fastsecurecontactform.com/)
+[Plugin URI]: (http://www.FastSecureContactForm.com/)
 
 Features:
 --------
@@ -136,8 +136,8 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 4. This setting on the contact form options page might help you....
 Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
 
-5. Maybe another plugin is conflicting. Do this as a test:
-Temporarily disable all your other plugins. Does it work now? If yes, enable the plugins one by one to determine which one conflicts. 
+5. Maybe another plugin is conflicting. Do this as a test: Look on the Admin - Plugins - menu.
+Temporarily Disable (not uninstall) all your other plugins. Does it work now? If yes, Activate the plugins one by one to determine which one conflicts.  
 
 6. Sometimes your mail server IP address ends up on a SORBS or RBL spam list and gets blocked by various mail systems. This may not be your fault because
 many sites on a web hosting server share the same IP. Check if your mail server IP is blacklisted by SORBS
@@ -189,14 +189,15 @@ First, make sure you have a valid "E-mail To:" set in options. This plugin uses 
 
 = Why do I get "ERROR: Could not read CAPTCHA cookie."? =
 
-Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
+Usually it is a problem with your web server and PHP sessions. Sometimes the CAPTCHA code never validates because of a server problem with PHP session handling. If the CAPTCHA code never validates and does not work, you can enable this conact form advanced option "Use CAPTCHA without PHP session" to use files for session. 
 
-If you get this error, your browser is blocking cookies or you have another plugin that is conflicting (in that case I would like to help you further to determine which one). I can tell you that the plugin called "Shopp" is not compatible because it handles sessions differently causing the "ERROR: Could not read CAPTCHA cookie. Make sure you have cookies enabled".
+Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
 
 There is a Cookie Test that can be used to test if your browser is accepting cookies from your site:
 Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
 or open this URL in your web browser to run the test:
 `/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
+
 
 = Does this contact form use Akismet spam protection? =
 Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated. (Akismet is not required, it will just skip the check)
@@ -322,12 +323,13 @@ No setting necessary, it just works.
 
 == Changelog ==
 
-- New homepage: http://www.FastSecureContactForm.com/
+= 2.8.3 =
+- (15 Aug 2010) - New homepage: http://www.FastSecureContactForm.com/
 - Added attachment directory permissions check.
 - Fixed error when increasing number of fields.
 - Renamed plugin to "Fast Secure Contact Form"
-- Added rel="nofollow" tag to CAPTCHA Audio and Refresh links.
-- Removed CAPTCHA WAV sound files, mp3 ones are sufficient.
+- Added rel="nofollow" tag to CAPTCHA Audio and Refresh links for better SEO.
+- Removed CAPTCHA WAV sound files, mp3 ones smaller size.
 - Updated Dutch
 - Updated Italian
 
