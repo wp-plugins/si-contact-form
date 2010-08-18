@@ -1312,6 +1312,25 @@ function get_captcha_url_cf() {
   return $captcha_url_cf;
 }
 
+function si_contact_admin_head() {
+ // only load this header stuff on the admin settings page
+if(isset($_GET['page']) && $_GET['page'] == 'si-contact-form/si-contact-form.php' ) {
+?>
+<!-- begin Fast Secure Contact Form - admin settings page header code -->
+<style type="text/css">
+div.star-holder { position: relative; height:19px; width:100px; font-size:19px;}
+div.star {height: 100%; position:absolute; top:0px; left:0px; background-color: transparent; letter-spacing:1ex; border:none;}
+.star1 {width:20%;} .star2 {width:40%;} .star3 {width:60%;} .star4 {width:80%;} .star5 {width:100%;}
+.star.star-rating {background-color: #fc0;}
+.star img{display:block; position:absolute; right:0px; border:none; text-decoration:none;}
+div.star img {width:19px; height:19px; border-left:1px solid #fff; border-right:1px solid #fff;}
+</style>
+<!-- end Fast Secure Contact Form - admin settings page header code -->
+<?php
+  } // end if(isset($_GET['page'])
+
+}
+
 function si_contact_form_mail_from() {
  return $this->si_contact_mail_from;
 }
@@ -1384,6 +1403,7 @@ if (isset($si_contact_form)) {
 
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
+  add_action('admin_head', array(&$si_contact_form,'si_contact_admin_head'),1);
 
   // this is for downloading settings backup txt file.
   add_action('admin_init', array(&$si_contact_form,'si_contact_backup_download'),1);
