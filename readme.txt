@@ -323,6 +323,8 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added download count and star rating on admin options page. 
+
 = 2.8.3 =
 - (15 Aug 2010) - New homepage: http://www.FastSecureContactForm.com/
 - Added attachment directory permissions check.

@@ -426,6 +426,49 @@ echo '
 </p>
 
 <?php
+
+  require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+
+  // First, try to access the data, check the cache.
+  if (false === ($api = get_transient('si_contact_form_info'))) {
+    // The cache data doesn't exist or it's expired.
+
+    $api = plugins_api('plugin_information', array('slug' => stripslashes( 'si-contact-form' ) ));
+
+    // cache isn't up to date, write this fresh information to it now to avoid the query for xx time.
+    $myexpire = 60 * 15; // Cache data for 15 minutes
+    set_transient('si_contact_form_info', $api, $myexpire);
+  }
+
+	$plugins_allowedtags = array('a' => array('href' => array(), 'title' => array(), 'target' => array()),
+								'abbr' => array('title' => array()), 'acronym' => array('title' => array()),
+								'code' => array(), 'pre' => array(), 'em' => array(), 'strong' => array(),
+								'div' => array(), 'p' => array(), 'ul' => array(), 'ol' => array(), 'li' => array(),
+								'h1' => array(), 'h2' => array(), 'h3' => array(), 'h4' => array(), 'h5' => array(), 'h6' => array(),
+								'img' => array('src' => array(), 'class' => array(), 'alt' => array()));
+	//Sanitize HTML
+	foreach ( (array)$api->sections as $section_name => $content )
+		$api->sections[$section_name] = wp_kses($content, $plugins_allowedtags);
+	foreach ( array('version', 'author', 'requires', 'tested', 'homepage', 'downloaded', 'slug') as $key )
+		$api->$key = wp_kses($api->$key, $plugins_allowedtags);
+
+if ( ! empty($api->downloaded) ) {
+  _e('Downloaded:', 'si-contact-form'); printf(_n('%s time', '%s times', $api->downloaded), number_format_i18n($api->downloaded), 'si-contact-form'); echo '.';
+}
+?>
+		<?php if ( ! empty($api->rating) ) : ?>
+		<div class="star-holder" title="<?php printf(_n('Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?>">
+			<div class="star star-rating" style="width: <?php echo esc_attr($api->rating) ?>px"></div>
+			<div class="star star5"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
+			<div class="star star4"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
+			<div class="star star3"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
+			<div class="star star2"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
+			<div class="star star1"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
+		</div>
+		<small><?php printf(_n('(Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
+		<?php endif; ?>
+
+<?php
 if ($si_contact_gb['donated'] != 'true') {
 ?>
 <h3><?php _e('Donate', 'si-contact-form'); ?></h3>
@@ -649,6 +692,7 @@ foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'gee
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_php_mailer_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_php_mailer_enable_tip">
         <?php _e('Emails are normally sent by the wordpress mail function. If you are not receiving email from your contact form. Try setting this to "geekMail" or "PHP", then test the form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
+        <?php _e('"geekMail" is a mail function that is included with this plugin.', 'si-contact-form'); ?>
         <?php _e('If your form still does not send any E-mail, be sure to also try setting the "E-mail From" setting below. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain.', 'si-contact-form'); ?>
         <?php _e('Note: attachments are only supported when using the "WordPress" or "geekMail" mail function.', 'si-contact-form'); ?>
        </div>
@@ -1565,7 +1609,7 @@ foreach ($backup_type_array as $k => $v) {
 
 <p><strong><?php _e('More WordPress plugins by Mike Challis:', 'si-contact-form') ?></strong></p>
 <ul>
-<li><a href="http://www.fastsecurecontactform.com/" target="_blank"><?php _e('Fast Secure Contact Form', 'si-contact-form'); ?></a></li>
+<li><a href="http://www.FastSecureContactForm.com/" target="_blank"><?php _e('Fast Secure Contact Form', 'si-contact-form'); ?></a></li>
 <li><a href="http://wordpress.org/extend/plugins/si-captcha-for-wordpress/" target="_blank"><?php _e('SI CAPTCHA Anti-Spam', 'si-contact-form'); ?></a></li>
 <li><a href="http://wordpress.org/extend/plugins/visitor-maps/" target="_blank"><?php _e('Visitor Maps and Who\'s Online', 'si-contact-form'); ?></a></li>
 
