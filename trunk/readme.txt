@@ -323,6 +323,7 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+- Added automatic SSL support for the CAPTCHA URL.
 - Added download count and star rating on admin options page. 
 
 = 2.8.3 =

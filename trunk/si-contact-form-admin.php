@@ -435,40 +435,43 @@ echo '
 
     $api = plugins_api('plugin_information', array('slug' => stripslashes( 'si-contact-form' ) ));
 
-    // cache isn't up to date, write this fresh information to it now to avoid the query for xx time.
-    $myexpire = 60 * 15; // Cache data for 15 minutes
-    set_transient('si_contact_form_info', $api, $myexpire);
+    if ( !is_wp_error($api) ) {
+      // cache isn't up to date, write this fresh information to it now to avoid the query for xx time.
+      $myexpire = 60 * 15; // Cache data for 15 minutes
+      set_transient('si_contact_form_info', $api, $myexpire);
+    }
   }
-
-	$plugins_allowedtags = array('a' => array('href' => array(), 'title' => array(), 'target' => array()),
+  if ( !is_wp_error($api) ) {
+	  $plugins_allowedtags = array('a' => array('href' => array(), 'title' => array(), 'target' => array()),
 								'abbr' => array('title' => array()), 'acronym' => array('title' => array()),
 								'code' => array(), 'pre' => array(), 'em' => array(), 'strong' => array(),
 								'div' => array(), 'p' => array(), 'ul' => array(), 'ol' => array(), 'li' => array(),
 								'h1' => array(), 'h2' => array(), 'h3' => array(), 'h4' => array(), 'h5' => array(), 'h6' => array(),
 								'img' => array('src' => array(), 'class' => array(), 'alt' => array()));
-	//Sanitize HTML
-	foreach ( (array)$api->sections as $section_name => $content )
+	  //Sanitize HTML
+	  foreach ( (array)$api->sections as $section_name => $content )
 		$api->sections[$section_name] = wp_kses($content, $plugins_allowedtags);
-	foreach ( array('version', 'author', 'requires', 'tested', 'homepage', 'downloaded', 'slug') as $key )
+	  foreach ( array('version', 'author', 'requires', 'tested', 'homepage', 'downloaded', 'slug') as $key )
 		$api->$key = wp_kses($api->$key, $plugins_allowedtags);
 
-if ( ! empty($api->downloaded) ) {
-  _e('Downloaded:', 'si-contact-form'); printf(_n('%s time', '%s times', $api->downloaded), number_format_i18n($api->downloaded), 'si-contact-form'); echo '.';
-}
+      if ( ! empty($api->downloaded) ) {
+         _e('Downloaded:', 'si-contact-form'); printf(_n('%s time', '%s times', $api->downloaded), number_format_i18n($api->downloaded), 'si-contact-form'); echo '.';
+      }
 ?>
-		<?php if ( ! empty($api->rating) ) : ?>
-		<div class="star-holder" title="<?php printf(_n('Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?>">
-			<div class="star star-rating" style="width: <?php echo esc_attr($api->rating) ?>px"></div>
-			<div class="star star5"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
-			<div class="star star4"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
-			<div class="star star3"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
-			<div class="star star2"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
-			<div class="star star1"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
-		</div>
-		<small><?php printf(_n('(Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
-		<?php endif; ?>
-
+      <?php if ( ! empty($api->rating) ) : ?>
+	  <div class="star-holder" title="<?php printf(_n('Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?>">
+	  <div class="star star-rating" style="width: <?php echo esc_attr($api->rating) ?>px"></div>
+	  <div class="star star5"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star4"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star3"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star2"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star1"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
+	  </div>
+	  <small><?php printf(_n('(Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
+	  <?php endif; ?>
 <?php
+  } // if ( !is_wp_error($api)
+
 if ($si_contact_gb['donated'] != 'true') {
 ?>
 <h3><?php _e('Donate', 'si-contact-form'); ?></h3>

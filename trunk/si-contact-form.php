@@ -1308,6 +1308,10 @@ function get_captcha_url_cf() {
   } else {
       $captcha_url_cf  = get_option( 'home' ) . '/'.PLUGINDIR.'/si-contact-form/captcha-secureimage';
   }
+  // set the type of request (SSL or not)
+  if ( getenv('HTTPS') == 'on' ) {
+		$captcha_url_cf = preg_replace('|http://|', 'https://', $captcha_url_cf);
+  }
 
   return $captcha_url_cf;
 }
