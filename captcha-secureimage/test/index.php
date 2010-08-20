@@ -255,10 +255,8 @@ Based on the requirements, you do not have what it takes to run (Secureimage) CA
 Contact Mike Challis for support: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a>
 </p>
 </div>
- <?php
-if( isset($_GET['phpinfo']) ) {
-    phpinfo();
-}
+<?php
+//if( isset($_GET['phpinfo']) ) { phpinfo();}
 ?>
 </body>
 </html>
