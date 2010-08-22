@@ -51,11 +51,12 @@ prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection at
 
 Captcha Image Support:
 ---------------------
- * Open-source free PHP CAPTCHA library by www.phpcaptcha.org is included (can be disabled in Options)
+ * Uses Open-source free PHP CAPTCHA library by www.phpcaptcha.org (customized version included)
  * Abstract background with multi colored, angled, and transparent text
  * Arched lines through text
- * Generates audible CAPTCHA files in WAV format
+ * Visual and Audible CAPTCHA
  * Refresh button to reload captcha if you cannot read it
+ * CAPTCHA can be disabled in Options
 
 Requirements/Restrictions:
 -------------------------
