@@ -125,6 +125,8 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 
 == Frequently Asked Questions ==
 
+[See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
+
 = I just installed this and do not get any email from it, what could be wrong? =
 
 1. Make sure you have the correct "E-mail To:" set in options. 
@@ -167,96 +169,7 @@ Do this:
 1. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
 
 2. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
-
-= I am not receiving attachments with the mail even though the message says it is attached. =
-
-Do you use MailPress plugin?
-Do this: On the contact form settings page find this setting: "Send E-mail function:", try setting it to "geekMail". Then test the attachment again.
-
-
-= I need more than 4 contact forms, how do I increase the number of forms available? =
-
-On the plugin settings page, change "Number of available Multi-forms", then click Update Options.
-For best performance, only change the number to the amount you actually need.
-
-= I need more than 8 extra form fields, how do I increase the number available? =
-
-On the plugin settings page, click Advanced Options, change "Number of available extra fields", then click Update Options.
-For best performance, only change the number to the amount you actually need.
-
-= What is "ERROR: Misconfigured E-mail address in options.", what could be wrong? =
-First, make sure you have a valid "E-mail To:" set in options. This plugin uses an email validation check to make sure the email address has proper syntax and that a valid DNS record exists for the email domain name. If you have this error and you are sure your email address is correct, maybe your server is having trouble with the DNS check. I added a feature to the options panel to disable the DNS check during email validation. You may have to uncheck this option: "Enable checking DNS records for the domain name when checking for a valid E-mail address." Maybe the error will go away now.
-
-= Why do I get "ERROR: Could not read CAPTCHA cookie."? =
-
-Usually it is a problem with your web server and PHP sessions. Sometimes the CAPTCHA code never validates because of a server problem with PHP session handling. If the CAPTCHA code never validates and does not work, you can enable this conact form advanced option "Use CAPTCHA without PHP session" to use files for session. 
-
-Check your web browser settings and make sure you are not blocking cookies for your blog domain. Cookies have to be enabled in your web browser and not blocked for the blog web domain.
-
-There is a Cookie Test that can be used to test if your browser is accepting cookies from your site:
-Click on the "Test if your PHP installation will support the CAPTCHA" link on the Options page.
-or open this URL in your web browser to run the test:
-`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
-
-
-= Does this contact form use Akismet spam protection? =
-Yes, it checks the form input with Akismet, but only if Akismet plugin is also installed and activated. (Akismet is not required, it will just skip the check)
-
-= Can it send mail using SMTP? =
-Yes, when you also have this plugin installed: 
-[WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/)
-
-
-= Do I have to also install the plugin "SI CAPTCHA Anti-Spam" for the CAPTCHA to work? =
-
-No, this plugin includes the CAPTCHA feature code for this contact form.
-The "SI CAPTCHA Anti-Spam" plugin is a separate plugin for comment and registration forms spam protection.
-
-= I use the plugin "SI CAPTCHA Anti-Spam" for my comment and registration forms, is it still needed? =
-
-Yes, if you want protection for the comment and registration forms, the plugin "SI CAPTCHA Anti-Spam" should be installed. 
-The two plugins have the same CAPTCHA library but are totally separate.
-
-= Does this work on WPMU or BuddyPress? =
-Yes, If you use WPMU or BuddyPress you can have multiple blogs with individual contact forms on each one. On WPMU you would install it in `plugins`, not `mu-plugins`. Then each blog owner can have his own settings.
-
-
-= Troubleshooting if the CAPTCHA image itself is not being shown: =
-
-By default, the admin will not see the CAPTCHA. If you click "log out", go look and it will be there.
-
-If the image is broken and you have the CAPTCHA entry box:
-This can happen if a server has too low a default permission level on new folders.
-Check that the permission on all the captcha-secureimage folders are set to permission: 755(on most servers)
-http://codex.wordpress.org/Changing_File_Permissions
-
-all these folders need to be 755(on most servers):
-
-- si-contact-form
-  - attachments
-  - languages
-  - date
-  - captcha-secureimage
-     - audio
-     - backgrounds
-     - gdfonts
-     - images
-     - list
-     - test
-     - ttffonts
-     - words
-
-Here is a [tutorial about file permissions](http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php)
-
-This script can be used to test if your PHP installation will support the CAPTCHA:
-Open this URL in your web browser to run the test:
-`/wp-content/plugins/si-contact-form/captcha-secureimage/test/index.php`
-This link can be found on the `Contact Form Options` page.
-
-= How can I add the contact form to a template manually rather than use shortcode in a page? =
-
-Use this code: `<?php if ( isset($si_contact_form) ) echo $si_contact_form->si_contact_form_short_code( array( 'form' => '1' ) ); ?>`
-                         
+                        
 
 = Is this plugin available in other languages? =
 
@@ -289,15 +202,15 @@ The following translations are included in the download zip file:
 
 = Can I provide a translation? =
 
-Of course! It will be very gratefully received. Use PoEdit, it makes translation easy. Please read [Translating WordPress](http://codex.wordpress.org/Translating_WordPress "Translating WordPress") first for background information on translating. Then obtain the latest [.pot file](http://svn.wp-plugins.org/si-contact-form/trunk/languages/si-contact-form.pot ".pot file") and translate it.
-* There are some strings with a space in front or end -- please make sure you remember the space!
-* When you have a translation ready, please send the .po and .mo files to wp-translation at 642weather dot com.
-* If you have any questions, feel free to email me also. Thanks!
+Of course! 
+How to translate Fast Secure Contact Form for WordPress
+http://www.fastsecurecontactform.com/how-to-translate
 
-= Is it possible to merge the translation files I sent to you with the ones of the newest version? =
+= Is it possible to update the translation files for newest version? =
 
-If you use PoEdit to translate, it is easy to translate for a new version. You can open your current .po file, then select from the PoEdit menu: "Catalog" > "Update from POT file". Enter this URL: http://svn.wp-plugins.org/si-contact-form/trunk/languages/si-contact-form.pot 
-Now all you have to change are the new language strings.
+How to update a translation of Fast Secure Contact Form for WordPress
+http://www.fastsecurecontactform.com/how-to-update-translation
+
 
 = This contact form sends E-mail with UTF-8 character encoding for US and International character support. =
 
@@ -325,6 +238,7 @@ No setting necessary, it just works.
 
 - Added automatic SSL support for the CAPTCHA URL.
 - Added download count and star rating on admin options page. 
+- Improved error messages when detecting possible email injection attempts.
 
 = 2.8.3 =
 - (15 Aug 2010) - New homepage: http://www.FastSecureContactForm.com/
