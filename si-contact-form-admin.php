@@ -534,11 +534,12 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 		$api->$key = wp_kses($api->$key, $plugins_allowedtags);
 
       if ( ! empty($api->downloaded) ) {
-         _e('Downloaded:', 'si-contact-form'); printf(_n('%s time', '%s times', $api->downloaded), number_format_i18n($api->downloaded), 'si-contact-form'); echo '.';
+        echo sprintf(__('Downloaded %s times', 'si-contact-form'),number_format_i18n($api->downloaded));
+        echo '.';
       }
 ?>
       <?php if ( ! empty($api->rating) ) : ?>
-	  <div class="star-holder" title="<?php printf(_n('Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?>">
+	  <div class="star-holder" title="<?php echo esc_attr(sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings))); ?>">
 	  <div class="star star-rating" style="width: <?php echo esc_attr($api->rating) ?>px"></div>
 	  <div class="star star5"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
 	  <div class="star star4"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
@@ -546,7 +547,7 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 	  <div class="star star2"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
 	  <div class="star star1"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
-	  <small><?php printf(_n('(Average rating based on %s rating)', '(Average rating based on %s ratings)', $api->num_ratings), number_format_i18n($api->num_ratings), 'si-contact-form'); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
+	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
 	  <?php endif; ?>
 <?php
   } // if ( !is_wp_error($api)
