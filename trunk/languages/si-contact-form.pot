@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fast Secure Contact Form 2.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-08-23 19:15+0000\n"
+"POT-Creation-Date: 2010-08-23 23:09+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -630,6 +630,10 @@ msgstr ""
 
 #: si-contact-form-admin.php:970
 msgid "Akismet plugin is installed but key failed to verify."
+msgstr ""
+
+#: si-contact-form-admin.php:973
+msgid "Configure Akismet"
 msgstr ""
 
 #: si-contact-form-admin.php:976
