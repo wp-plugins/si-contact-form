@@ -663,7 +663,7 @@ if ($si_contact_gb['donated'] != 'true') {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('E-mail:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -925,7 +925,7 @@ if ( $si_contact_opt['email_bcc'] != ''){
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('Akismet:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -970,7 +970,7 @@ if ( $si_contact_opt['email_bcc'] != ''){
              __('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</span>';
 		}
     }
-         echo '<br/><a href="'.admin_url(  "plugins.php?page=akismet-key-config" ).'">Configure Akismet</a>';
+         echo '<br/><a href="'.admin_url(  "plugins.php?page=akismet-key-config" ).'">' . __('Configure Akismet', 'si-contact-form').'</a>';
    }else{
      echo '<span style="background-color:#FFE991;">'.
             __('Akismet plugin is not installed or is deactivated.', 'si-contact-form'). '</span>';
@@ -980,7 +980,7 @@ if ( $si_contact_opt['email_bcc'] != ''){
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('CAPTCHA:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1096,7 +1096,7 @@ foreach ($captcha_difficulty_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('Redirect:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1128,7 +1128,7 @@ foreach ($captcha_difficulty_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <h3><a style="cursor:pointer;" title="<?php _e('Click for Advanced Options', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_advanced');"><?php _e('Click for Advanced Options', 'si-contact-form'); ?></a> <?php echo sprintf(__('(form %d)', 'si-contact-form'),$form_id); ?></h3>
@@ -1430,7 +1430,7 @@ foreach ($cal_date_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('Style:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1513,7 +1513,7 @@ foreach ($cal_date_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('Fields:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1552,7 +1552,7 @@ foreach ($cal_date_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('Tooltips:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1573,7 +1573,7 @@ foreach ($cal_date_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <div class="form-tab"><?php echo __('Errors:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1599,7 +1599,7 @@ foreach ($cal_date_array as $k => $v) {
 </fieldset>
 
     <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( _('Update Options')); ?> &raquo;" />
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
    </div> <!-- end Click for Advanced  -->
