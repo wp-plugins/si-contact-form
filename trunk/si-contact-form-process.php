@@ -86,36 +86,32 @@ http://www.642weather.com/weather/scripts.php
        if (isset($_POST['si_contact_message']))
          $message = $this->ctf_clean_input($_POST['si_contact_message']);
     }
-    if ( $this->isCaptchaEnabled() ) {
-     $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
-    }
+    if ( $this->isCaptchaEnabled() )
+         $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
 
     // check posted input for email injection attempts
     // fights common spammer tactics
     // look for newline injections
     $this->ctf_forbidifnewlines($name);
     $this->ctf_forbidifnewlines($email);
-    if ($ctf_enable_double_email == 'true') {
-       $this->ctf_forbidifnewlines($email2);
-    }
+    if ($ctf_enable_double_email == 'true')
+         $this->ctf_forbidifnewlines($email2);
+
     $this->ctf_forbidifnewlines($subject);
 
     // look for lots of other injections
     $forbidden = 0;
     $forbidden = $this->ctf_spamcheckpost();
-    if ($forbidden) {
-       wp_die(__('Contact Form has Invalid Input', 'si-contact-form'));
-    }
+    if ($forbidden)
+       wp_die("$forbidden");
 
    // check for banned ip
-   if( $ctf_enable_ip_bans && in_array($_SERVER['REMOTE_ADDR'], $ctf_banned_ips) ) {
+   if( $ctf_enable_ip_bans && in_array($_SERVER['REMOTE_ADDR'], $ctf_banned_ips) )
       wp_die(__('Your IP is Banned', 'si-contact-form'));
-   }
 
    // CAPS Decapitator
-   if ($si_contact_opt['name_case_enable'] == 'true' && !preg_match("/[a-z]/", $message)) {
+   if ($si_contact_opt['name_case_enable'] == 'true' && !preg_match("/[a-z]/", $message))
       $message = $this->ctf_name_case($message);
-   }
 
     switch ($si_contact_opt['name_format']) {
        case 'name':

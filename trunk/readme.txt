@@ -237,9 +237,13 @@ No setting necessary, it just works.
 
 == Changelog ==
 
+= 2.9 =
+- (23 Aug 2010) - New style for admin settings page.
+- New preview form feature for admin settings page. [more about preview mode](http://www.fastsecurecontactform.com/tip-form-preview)
 - Added automatic SSL support for the CAPTCHA URL.
 - Added download count and star rating on admin options page. 
 - Improved error messages when detecting possible email injection attempts.
+- [New official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
 
 = 2.8.3 =
 - (15 Aug 2010) - New homepage: http://www.FastSecureContactForm.com/
