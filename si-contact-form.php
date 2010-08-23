@@ -3,7 +3,7 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 2.8.3
+Version: 2.9
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -808,24 +808,29 @@ function ctf_forbidifnewlines($input) {
 function ctf_spamcheckpost() {
 
  if(!isset($_SERVER['HTTP_USER_AGENT'])){
-     return 1;
+     return __('Invalid User Agent', 'si-contact-form');
  }
 
  // Make sure the form was indeed POST'ed:
  //  (requires your html form to use: si_contact_action="post")
  if(!$_SERVER['REQUEST_METHOD'] == "POST"){
-    return 2;
+    return __('Invalid POST', 'si-contact-form');
  }
 
   // Make sure the form was posted from an approved host name.
  if ($this->ctf_domain_protect == 'true') {
+     $print_authHosts = '';
    // Host names from where the form is authorized to be posted from:
    if (is_array($this->ctf_domain)) {
       $this->ctf_domain = array_map(strtolower, $this->ctf_domain);
       $authHosts = $this->ctf_domain;
+      foreach ($this->ctf_domain as $each_domain) {
+         $print_authHosts .= ' '.$each_domain;
+      }
    } else {
       $this->ctf_domain =  strtolower($this->ctf_domain);
       $authHosts = array("$this->ctf_domain");
+      $print_authHosts = $this->ctf_domain;
    }
 
    // Where have we been posted from?
@@ -834,7 +839,7 @@ function ctf_spamcheckpost() {
       // Test to see if the $fromArray used www to get here.
       $wwwUsed = preg_match("/^www\./i",$fromArray['host']);
       if(!in_array((!$wwwUsed ? $fromArray['host'] : preg_replace("/^www\./i",'',$fromArray['host'])), $authHosts ) ){
-         return 3;
+         return sprintf( __('Invalid HTTP_REFERER domain. See FAQ. The domain name posted from does not match the allowed domain names of this form: %s', 'si-contact-form'), $print_authHosts );
       }
    }
  } // end if domain protect
@@ -849,7 +854,7 @@ function ctf_spamcheckpost() {
    $v = str_replace('donkey','',$v); // fixes invalid input with "donkey" in string
    $v = str_replace('monkey','',$v); // fixes invalid input with "monkey" in string
    if( preg_match($input_expl, $v) ){
-     return 4;
+     return __('Illegal characters in POST. Possible email injection attempt', 'si-contact-form');
    }
  }
 
@@ -1328,6 +1333,9 @@ div.star {height: 100%; position:absolute; top:0px; left:0px; background-color: 
 .star.star-rating {background-color: #fc0;}
 .star img{display:block; position:absolute; right:0px; border:none; text-decoration:none;}
 div.star img {width:19px; height:19px; border-left:1px solid #fff; border-right:1px solid #fff;}
+#main fieldset {border: 1px solid #B8B8B8; padding:19px; margin: 0 0 20px 0;background: #F1F1F1; font:13px Arial, Helvetica, sans-serif;}
+.form-tab {background:#F1F1F1; display:block; font-weight:bold; padding:7px 20px; float:left; font-size:13px; margin-bottom:-1px; border:1px solid #B8B8B8; border-bottom:none;}
+.submit {padding:7px; margin-bottom:15px;}
 </style>
 <!-- end Fast Secure Contact Form - admin settings page header code -->
 <?php
