@@ -235,7 +235,15 @@ Select "View->Character Encoding", select "Unicode(UTF-8)"
 Gmail:
 No setting necessary, it just works.
 
+For more help... [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
+
 == Changelog ==
+
+= 2.9.1 =
+- (28 Aug 2010) - Fixed critical HTML errors on admin settings page.
+- Improved autoresponder settings (now in new fieldset) on admin settings page.
+- Added new setting: "Enable using HTML in autoresponder E-mail message".
+- Added new setting: "Advanced Options - Stay Open" to make the Advance Options always stay open.
 
 = 2.9 =
 - (23 Aug 2010) - New style for admin settings page.

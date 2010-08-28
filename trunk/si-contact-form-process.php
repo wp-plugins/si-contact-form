@@ -276,7 +276,7 @@ if ($have_attach){
 	  $response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
 	  if ( 'true' == $response[1] ) {
          $this->si_contact_error = 1; // Akismet says it is spam.
-         $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Contact Form has Invalid Input', 'si-contact-form');
+         $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Invalid Input - Spam?', 'si-contact-form');
 	  }
     } // end if(function_exists('akismet_http_post')){
 
@@ -634,7 +634,12 @@ if ($have_attach){
 
        $header .= "Reply-To: $auto_respond_reply_to\n";
        $header .= "Return-Path: $this->si_contact_mail_from\n";
-       $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+       if ($si_contact_opt['auto_respond_html'] == 'true') {
+               $header .= 'Content-type: text/html; charset='. get_option('blog_charset') . $php_eol;
+       } else {
+               $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+       }
+
        @ini_set('sendmail_from' , $this->si_contact_mail_from);
        if ($si_contact_opt['php_mailer_enable'] == 'php') {
              $header_php .= $header;
@@ -650,7 +655,11 @@ if ($have_attach){
        }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
             require_once WP_PLUGIN_DIR . '/si-contact-form/ctf_geekMail-1.0.php';
             $ctf_geekMail = new ctf_geekMail();
-            $ctf_geekMail->setMailType('text');
+            if ($si_contact_opt['auto_respond_html'] == 'true') {
+                    $ctf_geekMail->setMailType('html');
+            } else {
+                    $ctf_geekMail->setMailType('text');
+            }
             $ctf_geekMail->_setcharSet(get_option('blog_charset'));
             $ctf_geekMail->_setnewLine($php_eol);
             $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
