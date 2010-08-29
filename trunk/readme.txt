@@ -62,7 +62,7 @@ Requirements/Restrictions:
 -------------------------
  * Works with Wordpress 2.6+, WPMU, and BuddyPress (Wordpress 3.0+ is highly recommended)
  * PHP 4.3.9 or above with GD2 library support. (PHP5 is highly recommended)
- * PHP register_globals and safe_mode should be set to "Off"
+ * PHP register_globals and safe_mode should be set to "Off".
 
 == Installation ==
 
