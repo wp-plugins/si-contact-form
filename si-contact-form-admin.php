@@ -369,7 +369,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
     for ($i = 1; $i <= $optionarray_gb_update['max_fields']; $i++) {
         $optionarray_update['ex_field'.$i.'_label'] = (isset($_POST['si_contact_ex_field'.$i.'_label'])) ? trim($_POST['si_contact_ex_field'.$i.'_label']) : '';
         $optionarray_update['ex_field'.$i.'_type'] = (isset($_POST['si_contact_ex_field'.$i.'_type'])) ? trim($_POST['si_contact_ex_field'.$i.'_type']) : 'text';
-        $optionarray_update['ex_field'.$i.'_default'] = ( isset($_POST['si_contact_ex_field'.$i.'_default']) && is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default']) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 )) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
+        $optionarray_update['ex_field'.$i.'_default'] = ( isset($_POST['si_contact_ex_field'.$i.'_default']) && is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
         $optionarray_update['ex_field'.$i.'_notes'] = (isset($_POST['si_contact_ex_field'.$i.'_notes'])) ? trim($_POST['si_contact_ex_field'.$i.'_notes']) : '';
         if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
