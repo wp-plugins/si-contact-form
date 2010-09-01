@@ -322,7 +322,7 @@ if ($have_attach){
            } else {
              $si_cec .= '<br />';
              $si_cec .= __('There is a problem with the directory', 'si-contact-form') .' /si-contact-form/captcha-secureimage/captcha-temp/.<br />';
-             $si_cec .= __('The directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form').'. ';
+             $si_cec .= __('Directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form').'. ';
              $si_cec .= __('Permissions are: ', 'si-contact-form');
              $si_cec .= ' ';
              $si_cec .= substr(sprintf('%o', fileperms($check_this_dir)), -4);
