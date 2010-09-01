@@ -28,10 +28,9 @@ $string .= '
 <div '.$this->ctf_form_style.'>
 ';
 
-
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
-    <form '.$have_attach.'action="'.esc_url( $_SERVER['REQUEST_URI'] ).'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
+    <form '.$have_attach.'action="'.esc_url( $form_action_url ).'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
     <fieldset '.$this->ctf_border_style.'>
         <legend>';
      $string .= ($si_contact_opt['title_border'] != '') ? $si_contact_opt['title_border'] : __('Contact Form', 'si-contact-form');
@@ -39,7 +38,7 @@ if ($si_contact_opt['border_enable'] == 'true') {
 } else {
 
  $string .= '
-<form '.$have_attach.'action="'.esc_url( $_SERVER['REQUEST_URI'] ).'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
+<form '.$have_attach.'action="'.esc_url( $form_action_url ).'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
 ';
 }
 

@@ -202,6 +202,13 @@ $ctf_sitename = get_option('blogname');
 
 $this->ctf_domain = $blogdomain;
 
+// set the type of request (SSL or not)
+if ( getenv('HTTPS') == 'on' ) {
+    $form_action_url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+} else {
+    $form_action_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+}
+
 // Make sure the form was posted from your host name only.
 // This is a security feature to prevent spammers from posting from files hosted on other domain names
 // "Input Forbidden" message will result if host does not match
@@ -644,7 +651,7 @@ $string .= '>
          $string .= '      <a id="si_aud_ctf'.$form_id_num.'" href="'.$securimage_play_url.'" rel="nofollow" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '">
-      <img src="'.$captcha_url_cf.'/images/audio_icon.gif" alt="';
+      <img src="'.$captcha_url_cf.'/images/audio_icon.png" alt="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '" ';
          $string .= ($si_contact_opt['audio_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['audio_image_style'] ).'"' : '';
@@ -660,7 +667,7 @@ $string .= '>
          }else{
            $string .= '" onclick="document.getElementById(\'si_image_ctf'.$form_id_num.'\').src = \''.$securimage_show_url.'&amp;sid=\''.' + Math.random(); return false;">'."\n";
          }
-         $string .= '      <img src="'.$captcha_url_cf.'/images/refresh.gif" alt="';
+         $string .= '      <img src="'.$captcha_url_cf.'/images/refresh.png" alt="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
          $string .=  '" ';
          $string .= ($si_contact_opt['reload_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['reload_image_style'] ).'"' : '';
