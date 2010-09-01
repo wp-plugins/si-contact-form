@@ -241,6 +241,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 - Fixed bug that caused form radio or select default to always be 0
 - Fixed form action URL when form is in a sidebar widget.
+- Improved transparent audio and refresh images for the CAPTCHA
 
 = 2.9.1 =
 - (28 Aug 2010) - Fixed critical HTML errors on admin settings page.
