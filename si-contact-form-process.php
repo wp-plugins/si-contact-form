@@ -483,7 +483,7 @@ if ($have_attach){
     }
     $user_info_string .= __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)".$php_eol;
     $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . $php_eol;
-    $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.get_permalink() . $php_eol;
+    $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.$_SERVER['REQUEST_URI']. $php_eol;
     $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . $php_eol.$php_eol;
     if ($si_contact_opt['sender_info_enable'] == 'true')
        $msg .= $user_info_string;
