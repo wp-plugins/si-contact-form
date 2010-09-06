@@ -157,7 +157,7 @@ echo $cookie_message;
 <p>PHP Scripts and WordPress plugins by Mike Challis<br />
 <a href="http://www.642weather.com/weather/scripts.php">Free PHP Scripts</a><br />
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8086141">Donate</a>, even small amounts are appreciated<br />
-Contact Mike Challis for support: <a href="http://www.642weather.com/weather/wxblog/support/">(Mike Challis)</a>
+Contact Mike Challis for support: <a href="http://www.fastsecurecontactform.com/support">(Mike Challis)</a>
 </p>
 </div>
 
