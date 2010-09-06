@@ -1,4 +1,4 @@
-# Translation of the WordPress plugin Fast Secure Contact Form 2.9.1 by Mike Challis.
+# Translation of the WordPress plugin Fast Secure Contact Form 2.9.2 by Mike Challis.
 # Copyright (C) 2010 Mike Challis
 # This file is distributed under the same license as the Fast Secure Contact Form package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Fast Secure Contact Form 2.9.1\n"
+"Project-Id-Version: Fast Secure Contact Form 2.9.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2010-08-28 23:01+0000\n"
+"POT-Creation-Date: 2010-09-06 04:20+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,10 +67,10 @@ msgstr ""
 msgid "Test failed: Invalid E-mail address"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (Fast Secure Contact Form 2.9.1)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Fast Secure Contact Form 2.9.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: si-contact-form-admin.php:208 si-contact-form-admin.php:1406
-#: si-contact-form-admin.php:1751 si-contact-form-display.php:402
+#: si-contact-form-admin.php:1751 si-contact-form-display.php:401
 msgid "Fast Secure Contact Form"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgid "Redirecting to Form 1"
 msgstr ""
 
 #: si-contact-form-admin.php:474 si-contact-form.php:59
-#: si-contact-form.php:908
+#: si-contact-form.php:915
 msgid "<p>Comments or questions are welcome.</p>"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgid "E-mail:"
 msgstr ""
 
 #: si-contact-form-admin.php:681 si-contact-form.php:64
-#: si-contact-form.php:151 si-contact-form.php:909
+#: si-contact-form.php:151 si-contact-form.php:916
 msgid "Webmaster"
 msgstr ""
 
@@ -362,7 +362,7 @@ msgid "E-mail To"
 msgstr ""
 
 #: si-contact-form-admin.php:727 si-contact-form-admin.php:809
-#: si-contact-form-admin.php:846 si-contact-form-display.php:79
+#: si-contact-form-admin.php:846 si-contact-form-display.php:78
 msgid "ERROR: Misconfigured E-mail address in options."
 msgstr ""
 
@@ -690,7 +690,7 @@ msgid ""
 "working)."
 msgstr ""
 
-#: si-contact-form-admin.php:1021 si-contact-form-process.php:325
+#: si-contact-form-admin.php:1021
 msgid ""
 "The directory Unwritable (<a href=\"http://codex.wordpress.org/"
 "Changing_File_Permissions\" target=\"_blank\">fix permissions</a>)"
@@ -874,7 +874,7 @@ msgid "Name field format:"
 msgstr ""
 
 #: si-contact-form-admin.php:1192 si-contact-form-admin.php:1580
-#: si-contact-form-display.php:178
+#: si-contact-form-display.php:177
 msgid "Name"
 msgstr ""
 
@@ -974,7 +974,7 @@ msgstr ""
 msgid ""
 "The attachment is used to allow users to attach a file upload from the form. "
 "You can add multiple attachments. The attachment is sent with your email. "
-"Attachments are deleted from the server afther the email is sent."
+"Attachments are deleted from the server after the email is sent."
 msgstr ""
 
 #: si-contact-form-admin.php:1268
@@ -1188,7 +1188,7 @@ msgstr ""
 msgid "Enable plugin credit link:"
 msgstr ""
 
-#: si-contact-form-admin.php:1406 si-contact-form-display.php:402
+#: si-contact-form-admin.php:1406 si-contact-form-display.php:401
 msgid "Powered by"
 msgstr ""
 
@@ -1424,55 +1424,55 @@ msgid "Enable required field label on contact form:"
 msgstr ""
 
 #: si-contact-form-admin.php:1574 si-contact-form-admin.php:1606
-#: si-contact-form-display.php:84
+#: si-contact-form-display.php:83
 msgid "(denotes required field)"
 msgstr ""
 
-#: si-contact-form-admin.php:1577 si-contact-form-display.php:37
+#: si-contact-form-admin.php:1577 si-contact-form-display.php:36
 msgid "Contact Form"
 msgstr ""
 
-#: si-contact-form-admin.php:1578 si-contact-form-display.php:93
+#: si-contact-form-admin.php:1578 si-contact-form-display.php:92
 msgid "Department to Contact"
 msgstr ""
 
-#: si-contact-form-admin.php:1579 si-contact-form-display.php:101
-#: si-contact-form-display.php:304
+#: si-contact-form-admin.php:1579 si-contact-form-display.php:100
+#: si-contact-form-display.php:303
 msgid "Select"
 msgstr ""
 
-#: si-contact-form-admin.php:1581 si-contact-form-display.php:239
-#: si-contact-form-display.php:265
+#: si-contact-form-admin.php:1581 si-contact-form-display.php:238
+#: si-contact-form-display.php:264
 msgid "E-Mail Address"
 msgstr ""
 
-#: si-contact-form-admin.php:1582 si-contact-form-display.php:250
+#: si-contact-form-admin.php:1582 si-contact-form-display.php:249
 msgid "E-Mail Address again"
 msgstr ""
 
-#: si-contact-form-admin.php:1583 si-contact-form-display.php:255
+#: si-contact-form-admin.php:1583 si-contact-form-display.php:254
 msgid "Please enter your E-mail Address a second time."
 msgstr ""
 
-#: si-contact-form-admin.php:1584 si-contact-form-display.php:293
-#: si-contact-form-display.php:334
+#: si-contact-form-admin.php:1584 si-contact-form-display.php:292
+#: si-contact-form-display.php:333
 msgid "Subject"
 msgstr ""
 
-#: si-contact-form-admin.php:1585 si-contact-form-display.php:351
+#: si-contact-form-admin.php:1585 si-contact-form-display.php:350
 #: si-contact-form-process.php:418 si-contact-form-process.php:473
 msgid "Message"
 msgstr ""
 
-#: si-contact-form-admin.php:1586 si-contact-form.php:569
+#: si-contact-form-admin.php:1586 si-contact-form.php:576
 msgid "CAPTCHA Code"
 msgstr ""
 
-#: si-contact-form-admin.php:1587 si-contact-form-display.php:386
+#: si-contact-form-admin.php:1587 si-contact-form-display.php:385
 msgid "Submit"
 msgstr ""
 
-#: si-contact-form-admin.php:1588 si-contact-form.php:248
+#: si-contact-form-admin.php:1588 si-contact-form.php:255
 msgid "Your message has been sent, thank you."
 msgstr ""
 
@@ -1484,18 +1484,18 @@ msgstr ""
 msgid "Change tooltips labels:"
 msgstr ""
 
-#: si-contact-form-admin.php:1607 si-contact-form.php:609
-#: si-contact-form.php:611
+#: si-contact-form-admin.php:1607 si-contact-form.php:616
+#: si-contact-form.php:618
 msgid "CAPTCHA Image"
 msgstr ""
 
-#: si-contact-form-admin.php:1608 si-contact-form.php:645
-#: si-contact-form.php:648
+#: si-contact-form-admin.php:1608 si-contact-form.php:652
+#: si-contact-form.php:655
 msgid "CAPTCHA Audio"
 msgstr ""
 
-#: si-contact-form-admin.php:1609 si-contact-form.php:657
-#: si-contact-form.php:664
+#: si-contact-form-admin.php:1609 si-contact-form.php:664
+#: si-contact-form.php:671
 msgid "Refresh Image"
 msgstr ""
 
@@ -1533,7 +1533,7 @@ msgstr ""
 
 #: si-contact-form-admin.php:1630 si-contact-form-process.php:186
 #: si-contact-form-process.php:226 si-contact-form-process.php:237
-#: si-contact-form.php:431
+#: si-contact-form.php:438
 msgid "This field is required."
 msgstr ""
 
@@ -1559,7 +1559,7 @@ msgstr ""
 msgid "That CAPTCHA was incorrect."
 msgstr ""
 
-#: si-contact-form-admin.php:1636 si-contact-form-display.php:70
+#: si-contact-form-admin.php:1636 si-contact-form-display.php:69
 msgid "Please make corrections below and try again."
 msgstr ""
 
@@ -1646,14 +1646,14 @@ msgstr ""
 msgid "Requested form to backup is not found."
 msgstr ""
 
-#: si-contact-form-display.php:53
+#: si-contact-form-display.php:52
 msgid ""
 "This contact form has file attachment fields. Attachments are only supported "
 "when the Send E-Mail function is set to WordPress or geekMail. You can find "
 "this setting on the contact form settings page."
 msgstr ""
 
-#: si-contact-form-display.php:57 si-contact-form-process.php:160
+#: si-contact-form-display.php:56 si-contact-form-process.php:160
 #, php-format
 msgid ""
 "This contact form has file attachment fields, but the temporary folder for "
@@ -1662,7 +1662,7 @@ msgid ""
 "\">fix permissions</a>)"
 msgstr ""
 
-#: si-contact-form-display.php:60 si-contact-form-process.php:163
+#: si-contact-form-display.php:59 si-contact-form-process.php:163
 #, php-format
 msgid ""
 "This contact form has file attachment fields, but the temporary folder for "
@@ -1670,21 +1670,21 @@ msgid ""
 "Changing_File_Permissions\" target=\"_blank\">fix permissions</a>)"
 msgstr ""
 
-#: si-contact-form-display.php:150 si-contact-form-process.php:399
+#: si-contact-form-display.php:149 si-contact-form-process.php:399
 #: si-contact-form-process.php:403 si-contact-form-process.php:409
 msgid "First Name"
 msgstr ""
 
-#: si-contact-form-display.php:162 si-contact-form-process.php:400
+#: si-contact-form-display.php:161 si-contact-form-process.php:400
 #: si-contact-form-process.php:406 si-contact-form-process.php:412
 msgid "Last Name"
 msgstr ""
 
-#: si-contact-form-display.php:201 si-contact-form-process.php:405
+#: si-contact-form-display.php:200 si-contact-form-process.php:405
 msgid "Middle Initial"
 msgstr ""
 
-#: si-contact-form-display.php:220 si-contact-form-process.php:411
+#: si-contact-form-display.php:219 si-contact-form-process.php:411
 msgid "Middle Name"
 msgstr ""
 
@@ -1834,6 +1834,12 @@ msgstr ""
 msgid "Could not read CAPTCHA token file."
 msgstr ""
 
+#: si-contact-form-process.php:325
+msgid ""
+"Directory Unwritable (<a href=\"http://codex.wordpress.org/"
+"Changing_File_Permissions\" target=\"_blank\">fix permissions</a>)"
+msgstr ""
+
 #: si-contact-form-process.php:337
 msgid "CAPTCHA token file is missing."
 msgstr ""
@@ -1904,7 +1910,7 @@ msgstr ""
 msgid "SI Contact Form Options"
 msgstr ""
 
-#: si-contact-form.php:69 si-contact-form.php:913
+#: si-contact-form.php:69 si-contact-form.php:920
 msgid "Contact:"
 msgstr ""
 
@@ -1928,113 +1934,113 @@ msgstr ""
 msgid "Administer site"
 msgstr ""
 
-#: si-contact-form.php:279 si-contact-form.php:280
+#: si-contact-form.php:286 si-contact-form.php:287
 msgid "Redirecting"
 msgstr ""
 
-#: si-contact-form.php:419
+#: si-contact-form.php:426
 msgid "Attachments not supported."
 msgstr ""
 
-#: si-contact-form.php:425
+#: si-contact-form.php:432
 msgid "Attachment upload failed."
 msgstr ""
 
-#: si-contact-form.php:446
+#: si-contact-form.php:453
 msgid "Attachment file type not allowed."
 msgstr ""
 
-#: si-contact-form.php:463
+#: si-contact-form.php:470
 msgid "Attachment file size is too large."
 msgstr ""
 
-#: si-contact-form.php:481
+#: si-contact-form.php:488
 msgid "Attachment upload failed while moving file."
 msgstr ""
 
-#: si-contact-form.php:519
+#: si-contact-form.php:526
 msgid ""
 "ERROR: si-contact-form.php plugin says GD image support not detected in PHP!"
 msgstr ""
 
-#: si-contact-form.php:520
+#: si-contact-form.php:527
 msgid ""
 "Contact your web host and ask them why GD image support is not enabled for "
 "PHP."
 msgstr ""
 
-#: si-contact-form.php:524
+#: si-contact-form.php:531
 msgid ""
 "ERROR: si-contact-form.php plugin says imagepng function not detected in PHP!"
 msgstr ""
 
-#: si-contact-form.php:525
+#: si-contact-form.php:532
 msgid ""
 "Contact your web host and ask them why imagepng function is not enabled for "
 "PHP."
 msgstr ""
 
-#: si-contact-form.php:529
+#: si-contact-form.php:536
 msgid "ERROR: si-contact-form.php plugin says captcha_library not found."
 msgstr ""
 
-#: si-contact-form.php:811
+#: si-contact-form.php:818
 msgid "Invalid User Agent"
 msgstr ""
 
-#: si-contact-form.php:817
+#: si-contact-form.php:824
 msgid "Invalid POST"
 msgstr ""
 
-#: si-contact-form.php:842
+#: si-contact-form.php:849
 #, php-format
 msgid ""
 "Invalid HTTP_REFERER domain. See FAQ. The domain name posted from does not "
 "match the allowed domain names of this form: %s"
 msgstr ""
 
-#: si-contact-form.php:857
+#: si-contact-form.php:864
 msgid "Illegal characters in POST. Possible email injection attempt"
 msgstr ""
 
-#: si-contact-form.php:870
+#: si-contact-form.php:877
 msgid "Settings"
 msgstr ""
 
-#: si-contact-form.php:1166 si-contact-form.php:1172
+#: si-contact-form.php:1173 si-contact-form.php:1179
 msgid "Restore failed: Backup file is required."
 msgstr ""
 
-#: si-contact-form.php:1169
+#: si-contact-form.php:1176
 msgid "Restore failed: Backup file upload failed."
 msgstr ""
 
-#: si-contact-form.php:1177
+#: si-contact-form.php:1184
 msgid "Restore failed: Backup file type not allowed."
 msgstr ""
 
-#: si-contact-form.php:1182
+#: si-contact-form.php:1189
 msgid "Restore failed: Backup file size is too large."
 msgstr ""
 
-#: si-contact-form.php:1190
+#: si-contact-form.php:1197
 msgid "Restore failed: Backup file contains invalid data."
 msgstr ""
 
-#: si-contact-form.php:1200 si-contact-form.php:1208
+#: si-contact-form.php:1207 si-contact-form.php:1215
 msgid ""
 "Restore failed: Selected All to restore, but backup file is a single form."
 msgstr ""
 
-#: si-contact-form.php:1236
+#: si-contact-form.php:1243
 msgid "All form settings have been restored from the backup file."
 msgstr ""
 
-#: si-contact-form.php:1244
+#: si-contact-form.php:1251
 msgid "Restore failed: Form to restore to does not exist."
 msgstr ""
 
-#: si-contact-form.php:1281
+#: si-contact-form.php:1288
 #, php-format
 msgid "Form %d settings have been restored from the backup file."
 msgstr ""
