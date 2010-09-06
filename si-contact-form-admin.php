@@ -1264,7 +1264,7 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?>
        <?php _e('By default radio and checkboxes are displayed vertical. Here is how to make them display horizontal: add the tag {inline} before the label, like this: {inline}Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Attachment:', 'si-contact-form'); ?></strong><br />
-       <?php _e('The attachment is used to allow users to attach a file upload from the form. You can add multiple attachments. The attachment is sent with your email. Attachments are deleted from the server afther the email is sent.', 'si-contact-form'); ?>
+       <?php _e('The attachment is used to allow users to attach a file upload from the form. You can add multiple attachments. The attachment is sent with your email. Attachments are deleted from the server after the email is sent.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Date field:', 'si-contact-form'); ?></strong><br />
        <?php _e('The date is used to allow a date field with a calendar pop-up. The date field ensures that a date entry is in a standard format every time.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Fieldset:', 'si-contact-form'); ?></strong><br />

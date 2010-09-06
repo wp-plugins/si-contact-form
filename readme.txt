@@ -239,9 +239,13 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Fixed bug that caused form radio or select default to always be 0
-- Fixed form action URL when form is in a sidebar widget.
-- Improved transparent audio and refresh images for the CAPTCHA
+= 2.9.2 =
+- (05 Sep 2010) - Fixed bug that caused form radio or select default to always be 0.
+- Fixed form action URL posted to wrong page when form is in a sidebar widget.
+- New transparent audio and refresh images for the CAPTCHA, will look better on dark themes.
+- Updated Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
+- Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+- Updated French (fr_FR) - Translated by [Daniel](http://Rhialto.com/)
 
 = 2.9.1 =
 - (28 Aug 2010) - Fixed critical HTML errors on admin settings page.
