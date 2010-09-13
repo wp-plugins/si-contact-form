@@ -16,7 +16,7 @@ Fast Secure Contact Form for WordPress. This contact form lets your visitors sen
 * [Download WordPress Plugin Version](http://downloads.wordpress.org/plugin/si-contact-form.zip)
 * [Download PHP Script Version](http://www.fastsecurecontactform.com/download-php-script)
 
-= Help Keep THis Plugin Free =
+= Help Keep This Plugin Free =
 
 If you find this plugin useful to you, please consider [__making a small donation__](http://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - Mike Challis
 
