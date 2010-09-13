@@ -13,7 +13,12 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 Fast Secure Contact Form for WordPress. This contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Additionally, the plugin has a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Super customizable.
 
-[Plugin URI]: (http://www.FastSecureContactForm.com/)
+* [Download WordPress Plugin Version](http://downloads.wordpress.org/plugin/si-contact-form.zip)
+* [Download PHP Script Version](http://www.fastsecurecontactform.com/download-php-script)
+
+= Help Keep THis Plugin Free =
+
+If you find this plugin useful to you, please consider [__making a small donation__](http://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - Mike Challis
 
 Features:
 --------
