@@ -289,6 +289,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'sender_info_enable' =>   (isset( $_POST['si_contact_sender_info_enable'] ) ) ? 'true' : 'false',
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
+         'akismet_disable' =>  (isset( $_POST['si_contact_akismet_disable'] ) ) ? 'true' : 'false',
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
          'captcha_difficulty' =>  $_POST['si_contact_captcha_difficulty'],
          'captcha_small' =>     (isset( $_POST['si_contact_captcha_small'] ) ) ? 'true' : 'false',
@@ -505,7 +506,7 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 </p>
 
 <?php
-
+if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
   // First, try to access the data, check the cache.
@@ -548,8 +549,8 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 	  <div class="star star1"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
 	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
-	  <?php endif; ?>
-<?php
+	  <?php endif;
+}// end if (function_exists('get_transient'
   } // if ( !is_wp_error($api)
 
 if ($si_contact_gb['donated'] != 'true') {
@@ -566,7 +567,11 @@ if ($si_contact_gb['donated'] != 'true') {
 <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
 <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </td>
-<td><?php _e('If you find this plugin useful to you, please consider making a small donation to help contribute to further development. Thanks for your kind support!', 'si-contact-form'); ?> - <a style="cursor:pointer;" title="<?php _e('More from Mike Challis', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('More from Mike Challis', 'si-contact-form'); ?></a></td>
+<td>
+<?php
+_e('Please donate to keep this plugin FREE', 'si-contact-form'); echo '<br />';
+_e('If you find this plugin useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!', 'si-contact-form'); ?><br />
+- <a style="cursor:pointer;" title="<?php _e('More from Mike Challis', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('More from Mike Challis', 'si-contact-form'); ?></a></td>
 </tr></table>
 </form>
 <br />
@@ -574,7 +579,7 @@ if ($si_contact_gb['donated'] != 'true') {
 <div style="text-align:left; display:none" id="si_contact_mike_challis_tip">
 <img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/si-contact-form.jpg" width="250" height="185" alt="Mike Challis" /><br />
 <?php _e('Mike Challis says: "Hello, I have spent hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
-<?php echo ' '; _e('Most people donate $5, $10, $20, or more. Though no amount is too small. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
+<?php echo ' '; _e('Most people donate $3, $5, $10, $20, or more. Though no amount is too small. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
  <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>.
 <br />
 <a style="cursor:pointer;" title="Close" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('Close this message', 'si-contact-form'); ?></a>
@@ -932,26 +937,21 @@ if ( $si_contact_opt['email_bcc'] != ''){
 <div class="clear"></div>
 <fieldset>
 
-     <strong><?php _e('Akismet spam prevention status:', 'si-contact-form'); ?></strong>
+     <strong><?php _e('Akismet Spam Prevention:', 'si-contact-form'); ?></strong>
 
     <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_akismet_tip');"><?php _e('help', 'si-contact-form'); ?></a>
     <div style="text-align:left; display:none" id="si_contact_akismet_tip">
-    <?php _e('Akismet is a WordPress plugin. Akismet will greatly reduce or even completely eliminate the comment and trackback spam you get on your site. If one does happen to get through, simply mark it as "spam" on the moderation screen and Akismet will learn from the mistakes. When Akismet is installed and active, all Fast Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form') ?>
+    <?php _e('Akismet is a WordPress spam prevention plugin. When Akismet is installed and active, all Fast Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form') ?>
     </div>
     <br />
 
-  <?php
-   if (function_exists('akismet_verify_key')) {
-     if (!isset($_POST['si_contact_akismet_check'])){
-       echo '<span style="background-color:#99CC99;">'.
-             __('Akismet is installed.', 'si-contact-form'). '</span>';
-     }
-  ?>
-  <input name="si_contact_akismet_check" id="si_contact_akismet_check" type="checkbox" value="1" />
-  <label for="si_contact_akismet_check"><?php _e('Check this and click "Update Options" to determine if Akismet key is active.', 'si-contact-form'); ?></label>
-   <?php
-    if (isset($_POST['si_contact_akismet_check'])){
-      echo '<br/>';
+<?php
+if( $si_contact_opt['akismet_disable'] == 'false' ) {
+ if (function_exists('akismet_verify_key')) {
+    if (!isset($_POST['si_contact_akismet_check'])){
+       echo '<span style="background-color:#99CC99;">'. __('Akismet is installed.', 'si-contact-form'). '</span>';
+    }
+    if (isset($_POST['si_contact_akismet_check'])){;
       $key_status = 'failed';
 	  $key = get_option('wordpress_api_key');
 		if ( empty( $key ) ) {
@@ -960,22 +960,34 @@ if ( $si_contact_opt['email_bcc'] != ''){
 			$key_status = akismet_verify_key( $key );
 		}
 		if ( $key_status == 'valid' ) {
-			echo '<span style="background-color:#99CC99;">'.
-             __('Akismet is installed and the key is valid. All Fast Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></span>';
+            ?><div id="message" class="updated"><strong><?php echo __('Akismet is enabled and the key is valid. All Fast Secure Contact Form posts will be checked with Akismet to help prevent spam', 'si-contact-form'); ?></strong></div><?php
+            echo '<span class="updated">' . __('Akismet is installed and the key is valid. All Fast Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></span>';
 		} else if ( $key_status == 'invalid' ) {
-			echo '<span style="background-color:#FFE991;">'.
-            __('Akismet plugin is installed but key needs to be activated.', 'si-contact-form'). '</span>';
+			?><div id="message" class="error"><strong><?php echo __('Akismet plugin is enabled but key needs to be activated', 'si-contact-form'); ?></strong></div><?php
+             echo '<span class="error">'. __('Akismet plugin is installed but key needs to be activated.', 'si-contact-form'). '</span>';
 		} else if ( !empty($key) && $key_status == 'failed' ) {
-			echo '<span style="background-color:#FFE991;">'.
-             __('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</span>';
+			?><div id="message" class="error"><strong><?php echo __('Akismet plugin is enabled but key failed to verify', 'si-contact-form'); ?></strong></div><?php
+             echo '<span class="error">'.__('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</span>';
 		}
     }
-         echo '<br/><a href="'.admin_url(  "plugins.php?page=akismet-key-config" ).'">' . __('Configure Akismet', 'si-contact-form').'</a>';
-   }else{
-     echo '<span style="background-color:#FFE991;">'.
-            __('Akismet plugin is not installed or is deactivated.', 'si-contact-form'). '</span>';
-   }
-    ?>
+?>
+<br />
+  <input name="si_contact_akismet_check" id="si_contact_akismet_check" type="checkbox" value="1" />
+  <label for="si_contact_akismet_check"><?php _e('Check this and click "Update Options" to determine if Akismet key is active.', 'si-contact-form'); ?></label>
+<br />
+<?php echo '<a href="'.admin_url(  "plugins.php?page=akismet-key-config" ).'">' . __('Configure Akismet', 'si-contact-form').'</a>'; ?>
+<?php
+  }else{
+     echo '<span class="error">'.__('Akismet plugin is not installed or is deactivated.', 'si-contact-form'). '</span>';
+  }
+} else {
+    echo '<span class="error">'.__('Akismet is turned off for this form.', 'si-contact-form'). '</span>';
+}
+?>
+
+<br />
+  <input name="si_contact_akismet_disable" id="si_contact_akismet_disable" type="checkbox" <?php if( $si_contact_opt['akismet_disable'] == 'true' ) echo 'checked="checked"'; ?> />
+  <label for="si_contact_akismet_disable"><?php _e('Turn off Akismet for this form.', 'si-contact-form'); ?></label>
 
 </fieldset>
 
@@ -1260,7 +1272,7 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('The text field is for single line text entry. The textarea field is for multiple line text entry.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Select, Radio, and Checkbox extra fields:', 'si-contact-form'); ?></strong><br />
        <?php _e('When using select, checkbox, or radio field types; first enter the label and a comma. Include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
-       <?php _e('To make "Green" the defult selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form'); ?>
+       <?php _e('To make "Green" the default selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form'); ?>
        <?php _e('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?>
        <?php _e('By default radio and checkboxes are displayed vertical. Here is how to make them display horizontal: add the tag {inline} before the label, like this: {inline}Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Attachment:', 'si-contact-form'); ?></strong><br />
@@ -1347,6 +1359,9 @@ $cal_date_array = array(
 'dd-mm-yyyy' => esc_attr(__('dd-mm-yyyy', 'si-contact-form')),
 'mm.dd.yyyy' => esc_attr(__('mm.dd.yyyy', 'si-contact-form')),
 'dd.mm.yyyy' => esc_attr(__('dd.mm.yyyy', 'si-contact-form')),
+'yyyy/mm/dd' => esc_attr(__('yyyy/mm/dd', 'si-contact-form')),
+'yyyy-mm-dd' => esc_attr(__('yyyy-mm-dd', 'si-contact-form')),
+'yyyy.mm.dd' => esc_attr(__('yyyy.mm.dd', 'si-contact-form')),
 );
 foreach ($cal_date_array as $k => $v) {
  if ($si_contact_opt['date_format'] == "$k")  $selected = ' selected="selected"';

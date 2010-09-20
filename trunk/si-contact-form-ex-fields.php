@@ -262,6 +262,9 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
 'dd-mm-yyyy' => esc_attr(__('dd-mm-yyyy', 'si-contact-form')),
 'mm.dd.yyyy' => esc_attr(__('mm.dd.yyyy', 'si-contact-form')),
 'dd.mm.yyyy' => esc_attr(__('dd.mm.yyyy', 'si-contact-form')),
+'yyyy/mm/dd' => esc_attr(__('yyyy/mm/dd', 'si-contact-form')),
+'yyyy-mm-dd' => esc_attr(__('yyyy-mm-dd', 'si-contact-form')),
+'yyyy.mm.dd' => esc_attr(__('yyyy.mm.dd', 'si-contact-form')),
 );
                  $string .=   '
         <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
@@ -311,6 +314,13 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
       $string .=   'm.d.Y';
  if($si_contact_opt['date_format'] == 'dd.mm.yyyy')
       $string .=   'd.m.Y';
+ if($si_contact_opt['date_format'] == 'yyyy/mm/dd')
+      $string .=   'Y/m/d';
+ if($si_contact_opt['date_format'] == 'yyyy-mm-dd')
+      $string .=   'Y-m-d';
+ if($si_contact_opt['date_format'] == 'yyyy.mm.dd')
+      $string .=   'Y.m.d';
+
  $string .= '\';
 </script>
 <script type="text/javascript" src="'.WP_PLUGIN_URL.'/si-contact-form/date/ctf_epoch_classes.js?'.time().'"></script>

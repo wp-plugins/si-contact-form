@@ -251,35 +251,6 @@ if ($have_attach){
        $si_contact_error_message = ($si_contact_opt['error_message'] != '') ? $si_contact_opt['error_message'] : __('Message text is required.', 'si-contact-form');
    }
 
-   // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
-   if($si_contact_opt['message_type'] != 'not_available' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
-      global $akismet_api_host, $akismet_api_port;
-	  $c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
-	  $c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
-	  $c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
-	  $c['blog']       		= get_option('home');
-	  $c['permalink']       = get_permalink();
-	  $c['comment_type']    = 'sicontactform';
-	  $c['comment_author']  = $name;
-	  $c['comment_content'] = $message;
-      //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
-	  $ignore = array( 'HTTP_COOKIE' );
-	  foreach ( $_SERVER as $key => $value ) {
-	     if ( !in_array( $key, $ignore ) )
-		     $c["$key"] = $value;
-      }
-      $query_string = '';
-	  foreach ( $c as $key => $data ) {
-	     if( is_string($data) )
-		    $query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
-      }
-	  $response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
-	  if ( 'true' == $response[1] ) {
-         $this->si_contact_error = 1; // Akismet says it is spam.
-         $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Invalid Input - Spam?', 'si-contact-form');
-	  }
-    } // end if(function_exists('akismet_http_post')){
-
   // begin captcha check if enabled
   // captcha is optional but recommended to prevent spam bots from spamming your contact form
   if ( $this->isCaptchaEnabled() ) {
@@ -492,6 +463,41 @@ if ($have_attach){
     if ($ctf_wrap_message)
        $msg = wordwrap($msg, 70,$php_eol);
 
+       // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
+   if( $si_contact_opt['akismet_disable'] == 'false' ) {
+     if($si_contact_opt['message_type'] != 'not_available' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
+      global $akismet_api_host, $akismet_api_port;
+	  $c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
+	  $c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	  $c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
+	  $c['blog']       		= get_option('home');
+	  $c['permalink']       = get_permalink();
+	  $c['comment_type']    = 'sicontactform';
+	  $c['comment_author']  = $name;
+	  $c['comment_content'] = $msg;
+      //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
+	  $ignore = array( 'HTTP_COOKIE' );
+	  foreach ( $_SERVER as $key => $value ) {
+	     if ( !in_array( $key, $ignore ) )
+		     $c["$key"] = $value;
+      }
+      $query_string = '';
+	  foreach ( $c as $key => $data ) {
+	     if( is_string($data) )
+		    $query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
+      }
+	  $response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
+	  if ( 'true' == $response[1] ) {
+            $this->si_contact_error = 1; // Akismet says it is spam.
+            $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Invalid Input - Spam?', 'si-contact-form');
+	  }else {
+            $msg = str_replace(__('Sent from (ip address)', 'si-contact-form'),__('Akismet Spam Prevention: passed', 'si-contact-form').$php_eol.__('Sent from (ip address)', 'si-contact-form'),$msg);
+      }
+    } // end if(function_exists('akismet_http_post')){
+   }
+
+  if (!$this->si_contact_error) {
+
     $header = '';
     $header_php = '';
     // prepare the email header
@@ -681,6 +687,7 @@ if ($have_attach){
     $message_sent = 1;
 
   } // end if ! error
+ } // end if ! error
 
 if ($have_attach){
   // unlink attachment temp files
