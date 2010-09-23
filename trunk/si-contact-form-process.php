@@ -471,7 +471,7 @@ if ($have_attach){
 	  $c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
 	  $c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
 	  $c['blog']       		= get_option('home');
-	  $c['permalink']       = get_permalink();
+	  $c['permalink']       = $form_action_url;
 	  $c['comment_type']    = 'sicontactform';
 	  $c['comment_author']  = $name;
 	  $c['comment_content'] = $msg;
