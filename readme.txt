@@ -245,13 +245,14 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fixed order of extra field options on admin settings page.
+- Added Arabic (ar) - Translated by [Mouad] translated only the public side of the form
+
 = 2.9.3 =
 - (20 Sep 2010) - Added new setting so Akismet can now be set to off for the forms. The new setting is individual to each form.
 - Improved Akismet spam check feature, the whole message is checked including all extra fields instead of just message field.
 - Added new email footer message for "Akismet Spam Check: passed".
 - Added more date format types for the calendar date setting.
-
-
 
 = 2.9.2 =
 - (05 Sep 2010) - Fixed bug that caused form radio or select default to always be 0.
