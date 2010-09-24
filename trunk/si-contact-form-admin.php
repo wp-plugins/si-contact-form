@@ -1310,6 +1310,10 @@ $field_type_array = array(
       // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
       ?>
+       <label for="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>"><?php printf(__('Optional notes/help for form field %d:', 'si-contact-form'),$i); ?></label>
+       <input name="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>" id="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$i.'_notes']);  ?>" size="100" />
+       <br />
+
        <label for="<?php echo 'si_contact_ex_field'.$i.'_label' ?>"><?php printf(__('Label for extra form field %d:', 'si-contact-form'),$i); ?></label>
        <input name="<?php echo 'si_contact_ex_field'.$i.'_label' ?>" id="<?php echo 'si_contact_ex_field'.$i.'_label' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$i.'_label']);  ?>" size="50" />
 
@@ -1330,10 +1334,6 @@ foreach ($field_type_array as $k => $v) {
 
        <input name="<?php echo 'si_contact_ex_field'.$i.'_req' ?>" id="<?php echo 'si_contact_ex_field'.$i.'_req' ?>" type="checkbox" <?php if( $si_contact_opt['ex_field'.$i.'_req'] == 'true' ) echo 'checked="checked"'; ?> />
        <label for="<?php echo 'si_contact_ex_field'.$i.'_req' ?>"><?php _e('Required field', 'si-contact-form'); ?></label>
-       <br />
-
-       <label for="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>"><?php printf(__('Optional notes/help for form field %d:', 'si-contact-form'),$i); ?></label>
-       <input name="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>" id="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$i.'_notes']);  ?>" size="100" />
        <br />
 
       <?php
