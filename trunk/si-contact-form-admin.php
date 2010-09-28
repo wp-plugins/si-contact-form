@@ -559,7 +559,7 @@ if ($si_contact_gb['donated'] != 'true') {
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 
-<table style="background-color:#FFE991; border:none; margin: -5px 0;" width="500">
+<table style="background-color:#FFE991; border:none; margin: -5px 0;" width="600">
         <tr>
         <td>
 <input type="hidden" name="cmd" value="_s-xclick" />
@@ -570,7 +570,7 @@ if ($si_contact_gb['donated'] != 'true') {
 <td>
 <?php
 _e('Please donate to keep this plugin FREE', 'si-contact-form'); echo '<br />';
-_e('If you find this plugin useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!', 'si-contact-form'); ?><br />
+_e('If you find this plugin useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!', 'si-contact-form'); echo ' '; ?>
 - <a style="cursor:pointer;" title="<?php _e('More from Mike Challis', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('More from Mike Challis', 'si-contact-form'); ?></a></td>
 </tr></table>
 </form>
