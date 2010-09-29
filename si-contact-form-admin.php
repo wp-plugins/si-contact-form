@@ -290,6 +290,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
          'akismet_disable' =>  (isset( $_POST['si_contact_akismet_disable'] ) ) ? 'true' : 'false',
+         'akismet_send_anyway' =>  $_POST['si_contact_akismet_send_anyway'],
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
          'captcha_difficulty' =>  $_POST['si_contact_captcha_difficulty'],
          'captcha_small' =>     (isset( $_POST['si_contact_captcha_small'] ) ) ? 'true' : 'false',
@@ -983,8 +984,34 @@ if( $si_contact_opt['akismet_disable'] == 'false' ) {
 } else {
     echo '<span class="error">'.__('Akismet is turned off for this form.', 'si-contact-form'). '</span>';
 }
+ if( $si_contact_opt['akismet_disable'] == 'false' ) {
 ?>
-
+<br />
+  <label for="si_contact_akismet_send_anyway"><?php _e('What should happen if Akismet determines the message is spam?', 'si-contact-form'); ?></label>
+   <select id="si_contact_akismet_send_anyway" name="si_contact_akismet_send_anyway">
+<?php
+$akismet_send_anyway_array = array(
+'false' => esc_attr(__('Block spam messages', 'si-contact-form')),
+'true' => esc_attr(__('Tag as spam and send anyway', 'si-contact-form')),
+);
+$selected = '';
+foreach ($akismet_send_anyway_array as $k => $v) {
+ if ($si_contact_opt['akismet_send_anyway'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_akismet_send_anyway_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+    <div style="text-align:left; display:none" id="si_contact_akismet_send_anyway_tip">
+    <?php _e('If you select "block spam messages". If Akismet determines the message is spam: An error will display "Invalid Input - Spam?" and the form will not send.', 'si-contact-form'); ?>
+    <?php _e('If you select "tag as spam and send anyway". If Akismet determines the message is spam: The message will send and the subject wil begin with "Akismet: Spam". This way you can have Akismet on and be sure not to miss a message.', 'si-contact-form'); ?>
+    </div>
+<?php
+} else {
+    echo '<input name="si_contact_akismet_send_anyway" type="hidden" value="'. $si_contact_opt['akismet_send_anyway'].'" />';
+}
+?>
 <br />
   <input name="si_contact_akismet_disable" id="si_contact_akismet_disable" type="checkbox" <?php if( $si_contact_opt['akismet_disable'] == 'true' ) echo 'checked="checked"'; ?> />
   <label for="si_contact_akismet_disable"><?php _e('Turn off Akismet for this form.', 'si-contact-form'); ?></label>
