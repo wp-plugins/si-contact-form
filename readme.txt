@@ -245,7 +245,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Added new option for what should happen if Akismet determines the message is spam. If you select "block spam messages". If Akismet determines the message is spam: An error will display "Invalid Input - Spam?" and the form will not send. If you select "tag as spam and send anyway". If Akismet determines the message is spam: The message will send and the subject wil begin with "Akismet: Spam". This way you can have Akismet on and be sure not to miss a message.
+- Added new option for what should happen if Akismet determines the message is spam. If you select "block spam messages". If Akismet determines the message is spam: An error will display "Invalid Input - Spam?" and the form will not send. If you select "tag as spam and send anyway". If Akismet determines the message is spam: The message will send and the subject will begin with "Akismet: Spam". This way you can have Akismet on and be sure not to miss a message.
 - Added more years to the extra date field date selector (1930-2037).
 - Fixed order of extra field options on admin settings page.
 - Added Arabic (ar) - Translated by [Mouad] translated only the public side of the form
@@ -254,7 +254,6 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 = 2.9.3 =
 - (20 Sep 2010) - Added new setting so Akismet can now be set to off for the forms. The new setting is individual to each form.
-- Improved Akismet spam check feature, the whole message is checked including all extra fields instead of just message field.
 - Added new email footer message for "Akismet Spam Check: passed".
 - Added more date format types for the calendar date setting.
 
