@@ -464,7 +464,7 @@ if ($have_attach){
        $msg = wordwrap($msg, 70,$php_eol);
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
-   if( $si_contact_opt['akismet_disable'] == 'false' ) {
+   if( $si_contact_opt['akismet_disable'] == 'false' ) { // per form disable feature
      if($si_contact_opt['message_type'] != 'not_available' && $message != '' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
       global $akismet_api_host, $akismet_api_port;
 	  $c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
