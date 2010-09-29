@@ -245,8 +245,11 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added more years to the extra date field date selector (1930-2037).
 - Fixed order of extra field options on admin settings page.
 - Added Arabic (ar) - Translated by [Mouad] translated only the public side of the form
+- Updated Russian (ru_RU) - Translated by [Petr Perstnev]
+- Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 2.9.3 =
 - (20 Sep 2010) - Added new setting so Akismet can now be set to off for the forms. The new setting is individual to each form.
