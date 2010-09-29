@@ -1005,7 +1005,7 @@ foreach ($akismet_send_anyway_array as $k => $v) {
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_akismet_send_anyway_tip');"><?php _e('help', 'si-contact-form'); ?></a>
     <div style="text-align:left; display:none" id="si_contact_akismet_send_anyway_tip">
     <?php _e('If you select "block spam messages". If Akismet determines the message is spam: An error will display "Invalid Input - Spam?" and the form will not send.', 'si-contact-form'); ?>
-    <?php _e('If you select "tag as spam and send anyway". If Akismet determines the message is spam: The message will send and the subject wil begin with "Akismet: Spam". This way you can have Akismet on and be sure not to miss a message.', 'si-contact-form'); ?>
+    <?php echo ' '; _e('If you select "tag as spam and send anyway". If Akismet determines the message is spam: The message will send and the subject wil begin with "Akismet: Spam". This way you can have Akismet on and be sure not to miss a message.', 'si-contact-form'); ?>
     </div>
 <?php
 } else {
