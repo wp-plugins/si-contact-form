@@ -463,9 +463,9 @@ if ($have_attach){
     if ($ctf_wrap_message)
        $msg = wordwrap($msg, 70,$php_eol);
 
-       // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
+   // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
    if( $si_contact_opt['akismet_disable'] == 'false' ) {
-     if($si_contact_opt['message_type'] != 'not_available' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
+     if($si_contact_opt['message_type'] != 'not_available' && $message != '' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
       global $akismet_api_host, $akismet_api_port;
 	  $c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 	  $c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
@@ -474,7 +474,7 @@ if ($have_attach){
 	  $c['permalink']       = $form_action_url;
 	  $c['comment_type']    = 'sicontactform';
 	  $c['comment_author']  = $name;
-	  $c['comment_content'] = $msg;
+	  $c['comment_content'] = $message;
       //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
 	  $ignore = array( 'HTTP_COOKIE' );
 	  foreach ( $_SERVER as $key => $value ) {
@@ -488,10 +488,20 @@ if ($have_attach){
       }
 	  $response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
 	  if ( 'true' == $response[1] ) {
+	    if( $si_contact_opt['akismet_send_anyway'] == 'false' ) {
             $this->si_contact_error = 1; // Akismet says it is spam.
             $si_contact_error_message = ($si_contact_opt['error_input'] != '') ? $si_contact_opt['error_input'] : __('Invalid Input - Spam?', 'si-contact-form');
+            if ($user_ID != '' && current_user_can('level_10') ) {
+              // show administrator a helpful message
+              $si_contact_error_message .= '<br />'. __('Akismet determined your message is spam. This can be caused by the message content, your email address, or your IP address being on the Akismet spam system. The administrator can turn off Akismet for the form in the form Advanced Options.', 'si-contact-form');
+            }
+        } else {
+              // Akismet says it is spam. flag the subject as spam and send anyway.
+              $subj = __('Akismet: Spam', 'si-contact-form'). ' - ' . $subj;
+              $msg = str_replace(__('Sent from (ip address)', 'si-contact-form'),__('Akismet Spam Check: probably spam', 'si-contact-form').$php_eol.__('Sent from (ip address)', 'si-contact-form'),$msg);
+        }
 	  }else {
-            $msg = str_replace(__('Sent from (ip address)', 'si-contact-form'),__('Akismet Spam Prevention: passed', 'si-contact-form').$php_eol.__('Sent from (ip address)', 'si-contact-form'),$msg);
+            $msg = str_replace(__('Sent from (ip address)', 'si-contact-form'),__('Akismet Spam Check: passed', 'si-contact-form').$php_eol.__('Sent from (ip address)', 'si-contact-form'),$msg);
       }
     } // end if(function_exists('akismet_http_post')){
    }

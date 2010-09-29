@@ -267,17 +267,17 @@ if ($ctf_redirect_enable == 'true') {
 <!--
 var count=$ctf_redirect_timeout;
 var time;
-function timedCount() {
+function si_timedCount() {
   document.title='Redirecting in ' + count + ' seconds';
   count=count-1;
-  time=setTimeout("timedCount()",1000);
+  time=setTimeout("si_timedCount()",1000);
   if (count==-1) {
     clearTimeout(time);
     document.title='Redirecting ...';
     self.location='$ctf_redirect_url';
   }
 }
-window.onload=timedCount;
+window.onload=si_timedCount;
 //-->
 </script>
 EOT;
@@ -930,6 +930,7 @@ function si_contact_get_options($form_num) {
          'domain_protect' => 'true',
          'email_check_dns' => 'true',
          'akismet_disable' => 'false',
+         'akismet_send_anyway' => 'true',
          'captcha_enable' => 'true',
          'captcha_small' => 'false',
          'captcha_difficulty' => 'medium',
