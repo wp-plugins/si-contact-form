@@ -196,6 +196,7 @@ The following translations are included in the download zip file:
 * Hebrew, Israel (he_IL) - Translated by [Asaf Chertkoff FreeAllWeb GUILD](http://web.freeall.org) 
 * Hungarian (hu_HU) - Translated by [Jozsef Burgyan](http://dmgmedia.hu)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Japanese (ja) - Translated by [Ichiro Kozuka]
 * Polish (pl_PL) - Translated by [Pawel Mezyk]
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
@@ -244,6 +245,8 @@ No setting necessary, it just works.
 For more help... [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
 
 == Changelog ==
+
+- Added Japanese (ja) - Translated by [Ichiro Kozuka]
 
 = 2.9.4 =
 - (11 Oct 2010) - Added new option for what should happen if Akismet determines the message is spam. If you select "block spam messages". If Akismet determines the message is spam: An error will display "Invalid Input - Spam?" and the form will not send. If you select "tag as spam and send anyway". If Akismet determines the message is spam: The message will send and the subject will begin with "Akismet: Spam". This way you can have Akismet on and be sure not to miss a message.
