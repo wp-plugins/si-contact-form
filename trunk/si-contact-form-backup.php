@@ -79,15 +79,15 @@ if ( isset($_POST['ctf_action'] )
 
         // force download dialog to web browser
         ob_end_clean();
-		header('Pragma: public;');
-		header('Expires: 0;');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0;');
-		header('Content-Type: application/force-download;');
-		header('Content-Type: application/octet-stream;');
-		header('Content-Type: application/download;');
-		header('Content-Disposition: attachment; filename="'.$filename.'";');
-		header('Content-Transfer-Encoding: binary;');
-		header('Content-Length: ' .(string)(strlen($string)) . ';' );
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-Type: application/octet-stream');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: ' .(string)(strlen($string)) );
         flush();
         echo $string;
         exit;
