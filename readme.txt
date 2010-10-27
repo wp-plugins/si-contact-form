@@ -246,7 +246,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Fix Backup Settings tool download hang on Firefox.
+= 2.9.4.1 =
+- (27 Oct 2010) - Fix Backup Settings tool download hang on Firefox.
 - Added Japanese (ja) - Translated by [Ichiro Kozuka]
 
 = 2.9.4 =
