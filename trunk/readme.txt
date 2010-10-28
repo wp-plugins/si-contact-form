@@ -189,6 +189,7 @@ The following translations are included in the download zip file:
 * Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net)
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
+* Farsi(Persian)(fa) partial translation - Translated by Ramin Firooz
 * Finnish (fi) - Translated by [Mikko Vahatalo](http://www.guimikko.com/) 
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
@@ -245,6 +246,8 @@ No setting necessary, it just works.
 For more help... [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
 
 == Changelog ==
+
+- Added Farsi(Persian)(fa) partial translation - Translated by Ramin Firooz
 
 = 2.9.4.1 =
 - (27 Oct 2010) - Fix Backup Settings tool download hang on Firefox.
