@@ -25,7 +25,7 @@ Features:
 --------
  * Super easy customizable Options from Admin settings page.
  * Multi-Form feature that allows you to have as many different forms as you need.
- * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, fieldset(box).
+ * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, time, fieldset(box).
  * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
  * Backup/restore tool. You can backup/restore all your forms or single forms and settings.
  * Easy to hide subject and message fields for use as a newsletter signup.
@@ -247,6 +247,9 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.5 =
+- (05 Nov 2010) - Added extra field type for ‘time’ entry.
+- Small code improvements for CAPTCHA function.
 - Added Farsi(Persian)(fa) partial translation - Translated by Ramin Firooz
 
 = 2.9.4.1 =

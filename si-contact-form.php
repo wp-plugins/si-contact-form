@@ -3,7 +3,7 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 2.9.4.1
+Version: 2.9.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -325,6 +325,11 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
    if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
       ${'ex_field'.$i} = '';
       ${'si_contact_error_ex_field'.$i} = '';
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
+         ${'ex_field'.$i.'h'} = '';
+         ${'ex_field'.$i.'m'} = '';
+         ${'ex_field'.$i.'ap'} = '';
+      }
       if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment')
          $have_attach = 'enctype="multipart/form-data" '; // for <form post
    }
@@ -587,11 +592,12 @@ $this->ctf_captcha_div_style_m = $this->si_contact_convert_css($si_contact_opt['
 
 // url for no session captcha image
 $securimage_show_url = $captcha_url_cf .'/securimage_show.php?';
+
 if($si_contact_opt['captcha_small'] == 'true') $securimage_show_url .= 'ctf_sm_captcha=1&amp;';
 if($si_contact_opt['captcha_difficulty'] == 'low') $securimage_show_url .= 'difficulty=1&amp;';
 if($si_contact_opt['captcha_difficulty'] == 'high') $securimage_show_url .= 'difficulty=2&amp;';
 if($si_contact_opt['captcha_no_trans'] == 'true') $securimage_show_url .= 'no_trans=1&amp;';
-$securimage_show_url .= 'ctf_form_num=' .$form_id_num;
+
 
 if($capt_disable_sess) {
      // clean out old captcha no session temp files
@@ -604,8 +610,11 @@ if($capt_disable_sess) {
     while ($prefix_length--) {
         $prefix .= $prefix_characters[mt_rand(0, $prefix_count-1)];
     }
-    $securimage_show_rf_url = $securimage_show_url . '&amp;prefix=';
-    $securimage_show_url .= '&amp;prefix='.$prefix;
+    $securimage_show_rf_url = $securimage_show_url . 'prefix=';
+    $securimage_show_url .= 'prefix='.$prefix;
+} else {  // no session
+   $securimage_show_rf_url = $securimage_show_url . 'ctf_form_num=' .$form_id_num;
+   $securimage_show_url .= 'ctf_form_num=' .$form_id_num;
 }
 
 $string .= ($si_contact_opt['captcha_small'] == 'true') ? $this->ctf_captcha_div_style_sm : $this->ctf_captcha_div_style_m;
@@ -646,7 +655,7 @@ $string .= '>
       }else{
          $securimage_play_url = $captcha_url_cf.'/securimage_play.php?ctf_form_num='.$form_id_num;
          if($capt_disable_sess)
-                $securimage_play_url .= '&amp;prefix='.$prefix;
+                $securimage_play_url = $captcha_url_cf.'/securimage_play.php?prefix='.$prefix;
          $string .= '    <div id="si_audio_ctf'.$form_id_num.'">'."\n";
          $string .= '      <a id="si_aud_ctf'.$form_id_num.'" href="'.$securimage_play_url.'" rel="nofollow" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));

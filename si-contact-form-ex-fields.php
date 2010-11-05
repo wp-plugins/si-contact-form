@@ -277,6 +277,66 @@ $string .= $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
         </div>';
 
              break;
+
+
+             case 'time':
+           // the time drop down list array will be made automatically by this code
+$exf_opts_array = array();
+
+           $string .=   '
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
+        <div '.$this->ctf_field_div_style.'>
+               <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'h">
+        ';
+
+$selected = '';
+// hours
+for ($ii = 1; $ii <= 12; $ii++) {
+ $ii = sprintf("%02d",$ii);
+ if (${'ex_field'.$i.'h'} != '') {
+    if (${'ex_field'.$i.'h'} == "$ii") {
+      $selected = ' selected="selected"';
+    }
+ }
+ $string .= '<option value="'.$this->ctf_output_string($ii).'"'.$selected.'>'.$this->ctf_output_string($ii).'</option>'."\n";
+ $selected = '';
+
+}
+$string .= '</select>:<select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'m" name="si_contact_ex_field'.$i.'m">
+        ';
+$selected = '';
+// minutes
+for ($ii = 00; $ii <= 59; $ii++) {
+      $ii = sprintf("%02d",$ii);
+ if (${'ex_field'.$i.'m'} != '') {
+    if (${'ex_field'.$i.'m'} == "$ii") {
+      $selected = ' selected="selected"';
+    }
+ }
+ $string .= '<option value="'.$this->ctf_output_string($ii).'"'.$selected.'>'.$this->ctf_output_string($ii).'</option>'."\n";
+ $selected = '';
+
+}
+$string .= '</select><select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'ap" name="si_contact_ex_field'.$i.'ap">
+        ';
+$selected = '';
+// am/pm
+foreach (array(esc_attr(__('AM', 'si-contact-form')), esc_attr(__('PM', 'si-contact-form')) ) as $k) {
+ if (${'ex_field'.$i.'ap'} != '') {
+    if (${'ex_field'.$i.'ap'} == "$k") {
+      $selected = ' selected="selected"';
+    }
+ }
+ $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
+ $selected = '';
+
+}
+$string .= '</select>
+ </div>';
+             break;
+
           }
 
         } // end if label
