@@ -248,7 +248,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 = 2.9.5 =
-- (05 Nov 2010) - Added extra field type for ‘time’ entry.
+- (05 Nov 2010) - Added extra field type for 'time' entry.
 - Small code improvements for CAPTCHA function.
 - Added Farsi(Persian)(fa) partial translation - Translated by Ramin Firooz
 
