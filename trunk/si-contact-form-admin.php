@@ -1332,7 +1332,7 @@ $field_type_array = array(
 'select' => esc_attr(__('select', 'si-contact-form')),
 'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
-'time' => esc_attr(__('date', 'si-contact-form')),
+'time' => esc_attr(__('time', 'si-contact-form')),
 'fieldset' => esc_attr(__('fieldset(box-open)', 'si-contact-form')),
 'fieldset-close' => esc_attr(__('fieldset(box-close)', 'si-contact-form')),
 );
