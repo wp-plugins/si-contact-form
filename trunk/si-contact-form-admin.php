@@ -551,8 +551,8 @@ if (function_exists('get_transient')) {
 	  </div>
 	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
 	  <?php endif;
-}// end if (function_exists('get_transient'
   } // if ( !is_wp_error($api)
+ }// end if (function_exists('get_transient'
 
 if ($si_contact_gb['donated'] != 'true') {
 ?>
@@ -856,7 +856,6 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $si_contact_opt['email_bcc'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
-        <?php _e('This Bcc address is global, which means that if you have multi "E-mail To" contacts, any contact selected will send to this also.', 'si-contact-form'); ?>
         <?php _e('E-mail address(s) to receive Bcc (Blind Carbon Copy) messages. You can send to multiple or single, both methods are acceptable:', 'si-contact-form'); ?>
         <br />
         user1@example.com<br />
@@ -1306,6 +1305,8 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('The attachment is used to allow users to attach a file upload from the form. You can add multiple attachments. The attachment is sent with your email. Attachments are deleted from the server after the email is sent.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Date field:', 'si-contact-form'); ?></strong><br />
        <?php _e('The date is used to allow a date field with a calendar pop-up. The date field ensures that a date entry is in a standard format every time.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Time field:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The time is used to allow a time entry field with hours, minutes, and AM/PM. The time field ensures that a time entry is in a standard format.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Fieldset:', 'si-contact-form'); ?></strong><br />
        <?php _e('The fieldset(box-open) is used to draw a box around related form elements. The fieldset label is used for a (legend) title of the group.', 'si-contact-form'); ?>
        <br />
@@ -1331,6 +1332,7 @@ $field_type_array = array(
 'select' => esc_attr(__('select', 'si-contact-form')),
 'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
+'time' => esc_attr(__('date', 'si-contact-form')),
 'fieldset' => esc_attr(__('fieldset(box-open)', 'si-contact-form')),
 'fieldset-close' => esc_attr(__('fieldset(box-close)', 'si-contact-form')),
 );
