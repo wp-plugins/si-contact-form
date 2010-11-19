@@ -314,6 +314,7 @@ echo '</p>
  ';
 
  if(!isset($_GET['session'])) {
+    clean_temp_dir('../captcha-temp/', 60);
     // pick new prefix token
     $prefix_length = 16;
     $prefix_characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
@@ -411,6 +412,29 @@ function echo_if_error($this_error){
          return '<span class="errors">ERROR: ' . $this_error . '</span>'."\n";
     }
   }
+}
+
+// needed for emptying temp directories for captcha session files
+function clean_temp_dir($dir, $minutes = 60) {
+    // deletes all files over xx minutes old in a temp directory
+  	if ( ! is_dir( $dir ) || ! is_readable( $dir ) || ! is_writable( $dir ) )
+		return false;
+
+	$count = 0;
+	if ( $handle = @opendir( $dir ) ) {
+		while ( false !== ( $file = readdir( $handle ) ) ) {
+			if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == 'index.php')
+				continue;
+
+			$stat = @stat( $dir . $file );
+			if ( ( $stat['mtime'] + $minutes * 60 ) < time() ) {
+			    @unlink( $dir . $file );
+				$count += 1;
+			}
+		}
+		closedir( $handle );
+	}
+	return $count;
 }
 
 ?>

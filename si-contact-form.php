@@ -3,7 +3,7 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 2.9.5
+Version: 2.9.5.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -702,13 +702,15 @@ function ctf_echo_if_error($this_error){
 } // end function ctf_echo_if_error
 
 // functions for protecting and validating form input vars
-function ctf_clean_input($string) {
+function ctf_clean_input($string, $preserve_space = 0) {
     if (is_string($string)) {
-      return trim($this->ctf_sanitize_string(strip_tags($this->ctf_stripslashes($string))));
+       if($preserve_space)
+          return $this->ctf_sanitize_string(strip_tags($this->ctf_stripslashes($string)),$preserve_space);
+       return trim($this->ctf_sanitize_string(strip_tags($this->ctf_stripslashes($string))));
     } elseif (is_array($string)) {
       reset($string);
       while (list($key, $value) = each($string)) {
-        $string[$key] = $this->ctf_clean_input($value);
+        $string[$key] = $this->ctf_clean_input($value,$preserve_space);
       }
       return $string;
     } else {
@@ -717,8 +719,10 @@ function ctf_clean_input($string) {
 } // end function ctf_clean_input
 
 // functions for protecting and validating form vars
-function ctf_sanitize_string($string) {
-    $string = preg_replace("/ +/", ' ', trim($string));
+function ctf_sanitize_string($string, $preserve_space = 0) {
+    if(!$preserve_space)
+      $string = preg_replace("/ +/", ' ', trim($string));
+
     return preg_replace("/[<>]/", '_', $string);
 } // end function ctf_sanitize_string
 
@@ -933,6 +937,7 @@ function si_contact_get_options($form_num) {
          'email_type' => 'required',
          'subject_type' => 'required',
          'message_type' => 'required',
+         'preserve_space_enable' => 'false',
          'double_email' => 'false',
          'name_case_enable' => 'false',
          'sender_info_enable' => 'true',

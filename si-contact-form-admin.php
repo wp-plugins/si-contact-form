@@ -284,6 +284,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'email_type' =>            $_POST['si_contact_email_type'],
          'subject_type' =>          $_POST['si_contact_subject_type'],
          'message_type' =>          $_POST['si_contact_message_type'],
+         'preserve_space_enable' => (isset( $_POST['si_contact_preserve_space_enable'] ) ) ? 'true' : 'false',
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'name_case_enable' => (isset( $_POST['si_contact_name_case_enable'] ) ) ? 'true' : 'false',
          'sender_info_enable' =>   (isset( $_POST['si_contact_sender_info_enable'] ) ) ? 'true' : 'false',
@@ -1284,6 +1285,14 @@ foreach ($name_type_array as $k => $v) {
 }
 ?>
 </select>
+
+      <input name="si_contact_preserve_space_enable" id="si_contact_preserve_space_enable" type="checkbox" <?php if( $si_contact_opt['preserve_space_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+      <label for="si_contact_preserve_space_enable"><?php _e('Preserve Message field spaces.', 'si-contact-form'); ?></label>
+      <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_preserve_space_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+      <div style="text-align:left; display:none" id="si_contact_preserve_space_enable_tip">
+      <?php _e('Normally the Message field will have all extra white space removed. Enabling this setting will allow all the Message field white space to be preserved.', 'si-contact-form'); ?>
+      </div>
+
 <br />
 <br />
 
@@ -1307,6 +1316,10 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('The date is used to allow a date field with a calendar pop-up. The date field ensures that a date entry is in a standard format every time.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Time field:', 'si-contact-form'); ?></strong><br />
        <?php _e('The time is used to allow a time entry field with hours, minutes, and AM/PM. The time field ensures that a time entry is in a standard format.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Hidden field:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The hidden field is used if you need to pass a hidden value from the form to the email message. The hidden field does not show on the page. You must set the label and the value. First enter the label, a comma, then the value. Like in this example: Language,English', 'si-contact-form'); ?>
+<br /><strong><?php _e('Password field:', 'si-contact-form'); ?></strong><br />
+       <?php _e('The password field is used for a text field where what is entered shows up as dots on the screen. The email you receive will have the entered value fully visible.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Fieldset:', 'si-contact-form'); ?></strong><br />
        <?php _e('The fieldset(box-open) is used to draw a box around related form elements. The fieldset label is used for a (legend) title of the group.', 'si-contact-form'); ?>
        <br />
@@ -1333,6 +1346,8 @@ $field_type_array = array(
 'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
 'time' => esc_attr(__('time', 'si-contact-form')),
+'hidden' => esc_attr(__('hidden', 'si-contact-form')),
+'password' => esc_attr(__('password', 'si-contact-form')),
 'fieldset' => esc_attr(__('fieldset(box-open)', 'si-contact-form')),
 'fieldset-close' => esc_attr(__('fieldset(box-close)', 'si-contact-form')),
 );
