@@ -25,7 +25,7 @@ Features:
 --------
  * Super easy customizable Options from Admin settings page.
  * Multi-Form feature that allows you to have as many different forms as you need.
- * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, time, fieldset(box).
+ * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, time, hidden, password, fieldset(box).
  * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
  * Backup/restore tool. You can backup/restore all your forms or single forms and settings.
  * Easy to hide subject and message fields for use as a newsletter signup.
@@ -189,7 +189,7 @@ The following translations are included in the download zip file:
 * Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net)
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
-* Farsi(Persian)(fa) partial translation - Translated by Ramin Firooz
+* Farsi(Persian)(fa_IR) partial translation - Translated by Ramin Firooz
 * Finnish (fi) - Translated by [Mikko Vahatalo](http://www.guimikko.com/) 
 * French (fr_FR) - Translated by [Pierre Sudarovich](http://pierre.sudarovich.free.fr/)
 * German (de_DE) - Translated by [Sebastian Kreideweiss](http://sebastian.kreideweiss.info/)
@@ -246,6 +246,11 @@ No setting necessary, it just works.
 For more help... [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
 
 == Changelog ==
+
+= 2.9.5.1 =
+- (19 Nov 2010) - Added extra field types for 'hidden' and 'password' entry.
+- Added option to preserve white space on Message field. Normally the Message field will have all extra white space removed. Enabling this setting will allow all the Message field white space to be preserved.
+- Updated Farsi(Persian)(fa_IR) partial translation - Translated by Ramin Firooz
 
 = 2.9.5 =
 - (05 Nov 2010) - Added extra field type for 'time' entry.

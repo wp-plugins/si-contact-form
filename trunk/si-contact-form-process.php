@@ -83,8 +83,12 @@ http://www.642weather.com/weather/scripts.php
     }
 
     if ($si_contact_opt['message_type'] != 'not_available') {
-       if (isset($_POST['si_contact_message']))
-         $message = $this->ctf_clean_input($_POST['si_contact_message']);
+       if (isset($_POST['si_contact_message'])) {
+         if ($si_contact_opt['preserve_space_enable'] == 'true')
+           $message = $this->ctf_clean_input($_POST['si_contact_message'],1);
+         else
+           $message = $this->ctf_clean_input($_POST['si_contact_message']);
+       }
     }
     if ( $this->isCaptchaEnabled() )
          $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
@@ -176,6 +180,8 @@ if ($have_attach){
           }
           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
 
+          }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
+               ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
                ${'ex_field'.$i.'h'}  = $this->ctf_clean_input($_POST["si_contact_ex_field".$i."h"]);
                ${'ex_field'.$i.'m'}  = $this->ctf_clean_input($_POST["si_contact_ex_field".$i."m"]);
@@ -231,6 +237,7 @@ if ($have_attach){
                 }
              }
            }else{  // end label'] == 'checkbox'
+                // text, textarea, date, password
                 if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                       ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
                 }else{
@@ -398,6 +405,9 @@ if ($have_attach){
       if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
          if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
              $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
+             list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
+             $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
              $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.${'ex_field'.$i.'h'}.':'.${'ex_field'.$i.'m'}.' '.${'ex_field'.$i.'ap'}.$php_eol.$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
@@ -435,7 +445,7 @@ if ($have_attach){
                  if(${'ex_field'.$i} == 'selected')
                    $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('selected', 'si-contact-form').$php_eol.$php_eol;
              }
-         } else {  // text, textarea, date
+         } else {  // text, textarea, date, password
                if(${'ex_field'.$i} != ''){
                    if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                         $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.$this->ctf_stripslashes(${'ex_field'.$i}).$php_eol.$php_eol;
