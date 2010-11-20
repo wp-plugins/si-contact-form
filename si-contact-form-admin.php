@@ -1709,7 +1709,7 @@ foreach ($cal_date_array as $k => $v) {
 <?php wp_nonce_field('si-contact-form-email_test'); ?>
 <fieldset class="options" style="border:1px solid black; padding:10px;">
 <legend><?php _e('Send a Test E-mail', 'si-contact-form'); ?></legend>
-<?php _e('If you are not receiving email form your form, try this test because it can display troubleshooting information.', 'si-contact-form'); ?><br />
+<?php _e('If you are not receiving email from your form, try this test because it can display troubleshooting information.', 'si-contact-form'); ?><br />
 <?php _e('There are settings you can use to try to fix email delivery problems, see this FAQ for help:', 'si-contact-form'); ?>
  <a href="http://wordpress.org/extend/plugins/si-contact-form/faq/" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a><br />
 <?php _e('Type an email address here and then click Send Test to generate a test email.', 'si-contact-form'); ?>
