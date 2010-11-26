@@ -1348,7 +1348,7 @@ function get_captcha_url_cf() {
 
 function si_contact_admin_head() {
  // only load this header stuff on the admin settings page
-if(isset($_GET['page']) && $_GET['page'] == 'si-contact-form/si-contact-form.php' ) {
+if(isset($_GET['page']) && preg_match('/si-contact-form.php$/',$_GET['page']) ) {
 ?>
 <!-- begin Fast Secure Contact Form - admin settings page header code -->
 <style type="text/css">
