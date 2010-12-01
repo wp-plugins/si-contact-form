@@ -26,13 +26,35 @@ http://www.642weather.com/weather/scripts.php
         <legend>' . $si_contact_opt['ex_field'.$i.'_label'] ."</legend>\n";
                 $ex_fieldset = 1;
            break;
-
            case 'fieldset-close':
                 if($ex_fieldset)
                    $string .=   "</fieldset>\n";
                 $ex_fieldset = 0;
            break;
+           case 'hidden':
+           $exf_opts_label = ''; $value = '';
+           if(preg_match("/,/", $si_contact_opt['ex_field'.$i.'_label']) )
+             list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
+           $exf_opts_label = trim($exf_opts_label); $value = trim($value);
+           if ($exf_opts_label == '' || $value == '') {
+               // error
+               $this->si_contact_error = 1;
+               $string .= $this->ctf_echo_if_error(__('Error: A hidden field is not configured properly in settings.', 'si-contact-form'));
+            }
+            $string .=   '
+                <input type="hidden" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string($value) . '" />
+';
+           break;
+           case 'password':
 
+                 $string .=   '
+        <div '.$this->ctf_title_style.'>'.$si_contact_opt['ex_field'.$i.'_notes'].'
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
+        <div '.$this->ctf_field_div_style.'>
+                <input '.$this->ctf_field_style.' type="password" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="'.$ctf_field_size.'" />
+        </div>';
+              break;
            case 'text':
 
                  $string .=   '
