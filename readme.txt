@@ -247,6 +247,9 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.5.2 =
+- (30 Nov 2010) - Fix - last update included an old file causing the new 'hidden' and 'password' fields not to show up on form.
+
 = 2.9.5.1 =
 - (19 Nov 2010) - Added extra field types for 'hidden' and 'password' entry.
 - Added option to preserve white space on Message field. Normally the Message field will have all extra white space removed. Enabling this setting will allow all the Message field white space to be preserved.
