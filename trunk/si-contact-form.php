@@ -45,7 +45,7 @@ if (!class_exists('siContactForm')) {
      var $uploaded_files;
 
 function si_contact_add_tabs() {
-    add_submenu_page('plugins.php', __('SI Contact Form Options', 'si-contact-form'), __('SI Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
+    add_submenu_page('plugins.php', __('FS Contact Form Options', 'si-contact-form'), __('FS Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
 }
 
 function si_contact_update_lang() {
