@@ -447,7 +447,7 @@ class Securimage {
 		$this->gd_font_size  = 24;
 		$this->text_x_start  = 15;
 
-		$this->ttf_file      = getcwd() . '/AHGBold.ttf';
+		$this->ttf_file      = getcwd() . '/ahg-bold.ttf';
 
 		$this->perturbation       = 0.75;
 		$this->iscale             = 5;
@@ -468,7 +468,7 @@ class Securimage {
 
 		$this->image_signature = '';
 		$this->signature_color = '#2050CC';
-		$this->signature_font  = getcwd() . '/AHGBold.ttf';
+		$this->signature_font  = getcwd() . '/ahg-bold.ttf';
 
 		$this->audio_path   = getcwd() . '/audio/';
 		$this->audio_format = 'mp3';

@@ -247,6 +247,10 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.5.3 =
+- (14 Dec 2010) - Added Geolocation for the email footer. Install my Visitor Maps plugin and the sender's city, state, country will automatically be included in the email footer. 
+- Rename CAPTCHA font files all lower case to avoid a rare FTP problem.
+
 = 2.9.5.2 =
 - (30 Nov 2010) - Fix - last update included an old file causing the new 'hidden' and 'password' fields not to show up on form.
 

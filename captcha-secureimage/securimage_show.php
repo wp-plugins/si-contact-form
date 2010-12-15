@@ -59,7 +59,7 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
      $img->use_transparent_text = false;
   }
    $img->charset = 'ABCDEFHKLMNPRSTUVWYZ234578';
-   $img->ttf_file = getcwd() . '/ttffonts/AHGBold.ttf';   // single font
+   $img->ttf_file = getcwd() . '/ttffonts/ahg-bold.ttf';   // single font
    $img->line_color = new Securimage_Color(rand(0, 64), rand(64, 128), rand(128, 255));
    $img->image_type = 'png';
    $img->background_directory = getcwd() . '/backgrounds';
@@ -116,7 +116,7 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
      $img->use_transparent_text = false;
   }
    $img->charset = 'ABCDEFHKLMNPRSTUVWYZ234578';
-   $img->ttf_file = getcwd() . '/ttffonts/AHGBold.ttf';   // single font
+   $img->ttf_file = getcwd() . '/ttffonts/ahg-bold.ttf';   // single font
    $img->line_color = new Securimage_Color(rand(0, 64), rand(64, 128), rand(128, 255));
    $img->image_type = 'png';
    $img->background_directory = getcwd() . '/backgrounds';
