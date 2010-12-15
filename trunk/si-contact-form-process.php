@@ -460,6 +460,37 @@ if ($have_attach){
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
     }
 
+
+  // lookup country info for this ip
+  // geoip lookup using Visitor Maps and Who's Online plugin
+  $geo_loc = '';
+  if( $si_contact_opt['sender_info_enable'] == 'true' &&
+    file_exists( WP_PLUGIN_DIR . '/visitor-maps/include-whos-online-geoip.php') &&
+    file_exists( WP_PLUGIN_DIR . '/visitor-maps/GeoLiteCity.dat') ) {
+   require_once(WP_PLUGIN_DIR . '/visitor-maps/include-whos-online-geoip.php');
+   $gi = geoip_open_VMWO( WP_PLUGIN_DIR . '/visitor-maps/GeoLiteCity.dat', VMWO_GEOIP_STANDARD);
+    $record = geoip_record_by_addr_VMWO($gi, $_SERVER['REMOTE_ADDR']);
+   geoip_close_VMWO($gi);
+   $li = array();
+   $li['city_name']    = (isset($record->city)) ? $record->city : '';
+   $li['state_name']   = (isset($record->country_code) && isset($record->region)) ? $GEOIP_REGION_NAME[$record->country_code][$record->region] : '';
+   $li['state_code']   = (isset($record->region)) ? strtoupper($record->region) : '';
+   $li['country_name'] = (isset($record->country_name)) ? $record->country_name : '--';
+   $li['country_code'] = (isset($record->country_code)) ? strtoupper($record->country_code) : '--';
+   $li['latitude']     = (isset($record->latitude)) ? $record->latitude : '0';
+   $li['longitude']    = (isset($record->longitude)) ? $record->longitude : '0';
+   if ($li['city_name'] != '') {
+     if ($li['country_code'] == 'US') {
+         $geo_loc = $li['city_name'];
+         if ($li['state_code'] != '')
+            $geo_loc = $li['city_name'] . ', ' . strtoupper($li['state_code']);
+     } else {      // all non us countries
+             $geo_loc = $li['city_name'] . ', ' . strtoupper($li['country_code']);
+     }
+   } else {
+     $geo_loc = '~ ' . $li['country_name'];
+   }
+ }
     // add some info about sender to the email message
     $userdomain = '';
     $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
@@ -469,6 +500,8 @@ if ($have_attach){
         $user_info_string .= __('From a WordPress user', 'si-contact-form').': '.$current_user->user_login . $php_eol;
     }
     $user_info_string .= __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)".$php_eol;
+    if ( $geo_loc != '' )
+      $user_info_string .= __('Location', 'si-contact-form').': '.$geo_loc. $php_eol;
     $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . $php_eol;
     $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.$form_action_url. $php_eol;
     $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . $php_eol.$php_eol;

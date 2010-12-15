@@ -904,6 +904,7 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_sender_info_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_sender_info_enable_tip">
         <?php _e('You will receive in the E-mail, detailed information about the sender. Such as IP Address, date, time, and which web browser they used.', 'si-contact-form'); ?>
+        <?php echo ' '; _e('Install the <a href="http://wordpress.org/extend/plugins/visitor-maps/">Visitor Maps plugin</a> to enable geolocation and then city, state, country will automatically be included.', 'si-contact-form'); ?>
         </div>
         <br />
 
