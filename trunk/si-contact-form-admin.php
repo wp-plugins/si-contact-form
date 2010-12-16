@@ -507,6 +507,10 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 <a href="http://www.fastsecurecontactform.com/contact" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
 </p>
 
+<table style="border:none;" width="625">
+  <tr>
+  <td>
+
 <?php
 if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -541,6 +545,7 @@ if (function_exists('get_transient')) {
         echo '.';
       }
 ?>
+
       <?php if ( ! empty($api->rating) ) : ?>
 	  <div class="star-holder" title="<?php echo esc_attr(sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings))); ?>">
 	  <div class="star star-rating" style="width: <?php echo esc_attr($api->rating) ?>px"></div>
@@ -552,9 +557,19 @@ if (function_exists('get_transient')) {
 	  </div>
 	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
 	  <?php endif;
+
   } // if ( !is_wp_error($api)
  }// end if (function_exists('get_transient'
-
+  echo '</td><td>';
+  if ($si_contact_gb['donated'] != 'true') { ?>
+        <a href="http://secure.hostgator.com/cgi-bin/affiliates/clickthru.cgi?id=mchallis" target="_blank"><img title="Web Site Hosting" alt="Web Site Hosting" src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/hostgator-blog.gif" width="100" height="100" /></a>
+<?php
+  }
+ ?>
+  </td>
+ </tr>
+ </table>
+    <?php
 if ($si_contact_gb['donated'] != 'true') {
 ?>
 <h3><?php _e('Donate', 'si-contact-form'); ?></h3>
