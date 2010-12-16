@@ -562,7 +562,7 @@ if (function_exists('get_transient')) {
  }// end if (function_exists('get_transient'
   echo '</td><td>';
   if ($si_contact_gb['donated'] != 'true') { ?>
-        <a href="http://secure.hostgator.com/cgi-bin/affiliates/clickthru.cgi?id=mchallis" target="_blank"><img title="Web Site Hosting" alt="Web Site Hosting" src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/hostgator-blog.gif" width="100" height="100" /></a>
+        <a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=fscwp" target="_blank"><img title="Web Site Hosting" alt="Web Site Hosting" src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/hostgator-blog.gif" width="100" height="100" /></a>
 <?php
   }
  ?>
