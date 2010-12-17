@@ -921,7 +921,7 @@ function si_contact_get_options($form_num) {
          'max_forms' => '4',
          'max_fields' => '8',
          'captcha_disable_session' => 'true',
-         'adv_opt_enable' => 'false',
+         'adv_opt_enable' => 'true',
       );
 
      $si_contact_option_defaults = array(
