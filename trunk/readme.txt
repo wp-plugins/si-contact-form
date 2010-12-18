@@ -247,6 +247,10 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.5.4 =
+- (17 Dec 2010) - Advanced Options are now open by default.
+- Small changes to admin page.
+
 = 2.9.5.3 =
 - (14 Dec 2010) - Added Geolocation for the email footer. Install my Visitor Maps plugin and the sender's city, state, country will automatically be included in the email footer. 
 - Rename CAPTCHA font files all lower case to avoid a rare FTP problem.
