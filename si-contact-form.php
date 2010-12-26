@@ -965,6 +965,7 @@ function si_contact_get_options($form_num) {
          'auto_respond_enable' => 'false',
          'auto_respond_html' => 'false',
          'auto_respond_from_name' => 'WordPress',
+         'auto_respond_from_email' => get_option('admin_email'),
          'auto_respond_reply_to' => get_option('admin_email'),
          'auto_respond_subject' => '',
          'auto_respond_message' => '',

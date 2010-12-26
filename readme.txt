@@ -247,6 +247,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added new setting for "Autoresponder E-mail "From" address:" 
+
 = 2.9.5.4 =
 - (17 Dec 2010) - Advanced Options are now open by default for new installs.
 - Some changes to admin settings page.
