@@ -671,29 +671,15 @@ if ($have_attach){
 
        $header = '';
        $header_php = '';
-       $auto_respond_from_name = $si_contact_opt['auto_respond_from_name'];
-       $auto_respond_reply_to = $si_contact_opt['auto_respond_reply_to'];
+       $auto_respond_from_name  = $si_contact_opt['auto_respond_from_name'];
+       $auto_respond_from_email = $si_contact_opt['auto_respond_from_email'];
+       $auto_respond_reply_to   = $si_contact_opt['auto_respond_reply_to'];
        // prepare the email header
-       if ($ctf_email_on_this_domain != '' ) {
-            if(!preg_match("/,/", $ctf_email_on_this_domain)) {
-              // just an email: user1@example.com
-              $header_php =  "From: $auto_respond_from_name <$ctf_email_on_this_domain>\n";
-              $this->si_contact_from_name = $auto_respond_from_name;
-              $this->si_contact_mail_from = $ctf_email_on_this_domain;
-            } else {
-              // name and email: webmaster,user1@example.com
-              list($key, $value) = explode(",",$ctf_email_on_this_domain);
-              $key   = trim($key);
-              $value = trim($value);
-              $header_php =  "From: $key <$value>\n";
-              $this->si_contact_from_name = $key;
-              $this->si_contact_mail_from = $value;
-            }
-      } else {
-            $header_php =  "From: $auto_respond_from_name <". get_option('admin_email') . ">\n";
-            $this->si_contact_from_name = $auto_respond_from_name;
-            $this->si_contact_mail_from = get_option('admin_email');
-       }
+
+       $header_php =  "From: $auto_respond_from_name <". $auto_respond_from_email . ">\n";
+       $this->si_contact_from_name = $auto_respond_from_name;
+       $this->si_contact_mail_from = $auto_respond_from_email;
+
        add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
        add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
 
@@ -708,7 +694,7 @@ if ($have_attach){
        @ini_set('sendmail_from' , $this->si_contact_mail_from);
        if ($si_contact_opt['php_mailer_enable'] == 'php') {
              $header_php .= $header;
-            if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
+            if (!$this->safe_mode) {
                    // the fifth parameter is not allowed in safe mode
                    // Pass the Return-Path via sendmail's -f command.
               if (!mail($email,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_from))

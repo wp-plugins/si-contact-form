@@ -313,6 +313,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'auto_respond_enable' =>    (isset( $_POST['si_contact_auto_respond_enable'] ) ) ? 'true' : 'false',
          'auto_respond_html' =>      (isset( $_POST['si_contact_auto_respond_html'] ) ) ? 'true' : 'false',
          'auto_respond_from_name' => ( trim($_POST['si_contact_auto_respond_from_name']) != '' ) ? trim($_POST['si_contact_auto_respond_from_name']) : $si_contact_option_defaults['auto_respond_from_name'], // use default if empty
+         'auto_respond_from_email' =>  ( trim($_POST['si_contact_auto_respond_from_email']) != '' && $this->ctf_validate_email($_POST['si_contact_auto_respond_from_email'])) ? trim($_POST['si_contact_auto_respond_from_email']) : $si_contact_option_defaults['auto_respond_from_email'], // use default if empty
          'auto_respond_reply_to' =>  ( trim($_POST['si_contact_auto_respond_reply_to']) != '' && $this->ctf_validate_email($_POST['si_contact_auto_respond_reply_to'])) ? trim($_POST['si_contact_auto_respond_reply_to']) : $si_contact_option_defaults['auto_respond_reply_to'], // use default if empty
          'auto_respond_message' => trim($_POST['si_contact_auto_respond_message']),  // can be empty
          'auto_respond_subject' => trim($_POST['si_contact_auto_respond_subject']),  // can be empty
@@ -1507,6 +1508,13 @@ foreach ($cal_date_array as $k => $v) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_name_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_from_name_tip">
         <?php _e('This sets the name in the from field when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_auto_respond_from_email"><?php _e('Autoresponder E-mail "From" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_email" id="si_contact_auto_respond_from_email" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_email']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_from_email_tip">
+        <?php _e('This sets the "from" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
         </div>
 <br />
 
