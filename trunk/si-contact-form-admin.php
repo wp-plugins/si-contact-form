@@ -265,7 +265,6 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb_defaults['max_forms'],
          'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 100 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb_defaults['max_fields'],
          'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
-         'adv_opt_enable'         =>    (isset( $_POST['si_contact_adv_opt_enable'] ) ) ? 'true' : 'false',
          );
 
    if(isset($si_contact_gb['2.6.3'] ))
@@ -1190,27 +1189,13 @@ foreach ($captcha_difficulty_array as $k => $v) {
     <p class="submit">
       <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
-
-<?php if( $si_contact_gb['adv_opt_enable'] == 'false' ) {
-    // advanced options not always on
-?>
-<h3><a style="cursor:pointer;" title="<?php _e('Click for Advanced Options', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_advanced');"><?php _e('Click for Advanced Options', 'si-contact-form'); ?></a> <?php echo sprintf(__('(form %d)', 'si-contact-form'),$form_id); ?></h3>
-<div style="text-align:left; display:none" id="si_contact_advanced">
-<?php } ?>
+ <!-- begin Click for Advanced was here -->
 
 <div class="form-tab"><?php echo __('Form:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
 <div class="clear"></div>
 <fieldset>
 
-   <input name="si_contact_adv_opt_enable" id="si_contact_adv_opt_enable" type="checkbox" <?php if( $si_contact_gb['adv_opt_enable'] == 'true' ) echo 'checked="checked"'; ?> />
-   <label for="si_contact_adv_opt_enable"><?php _e('Advanced Options - Stay Open', 'si-contact-form'); ?></label>
-   <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('adv_opt_enable_tip');">
-   <?php echo __('help', 'si-contact-form'); ?></a>
-   <div style="text-align:left; display:none" id="adv_opt_enable_tip">
-   <?php echo __('Enable to make the Advance Options always stay open.', 'si-contact-form'); ?>
-   </div>
-<br />
-<br />
+ <!-- Click for Advanced stay on was here -->
 
 <strong><?php echo __('Standard Fields:', 'si-contact-form'); ?></strong><br />
        <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('stand_fields_tip');">
@@ -1726,11 +1711,8 @@ foreach ($cal_date_array as $k => $v) {
     <p class="submit">
       <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
-<?php if( $si_contact_gb['adv_opt_enable'] == 'false' ) {
-    // advanced options not always on
-?>
-   </div> <!-- end Click for Advanced  -->
-<?php } ?>
+ <!-- end Click for Advanced was here -->
+
 </form>
 
 <form action="<?php echo admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php" ); ?>" method="post">
