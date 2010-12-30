@@ -247,6 +247,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+
 = 2.9.6 =
 - (29 Dec 2010) - Removed advanced options link. Too many people could not find it. All options are now always available on the form edit page.
 - Added new setting for "Autoresponder E-mail "From" address:" 
