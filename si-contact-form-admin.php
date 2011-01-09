@@ -59,42 +59,36 @@ http://www.642weather.com/weather/scripts.php
         $message = wordwrap($message, 70,$php_eol);
 
     $smtp_debug = '';
-    $header = '';
-    $header_php = '';
+    $ctf_email_on_this_domain = $si_contact_opt['email_from']; // optional
     // prepare the email header
-    $ctf_email_on_this_domain =  $si_contact_opt['email_from']; // optional
+    $this->si_contact_from_name = $name;
+    $this->si_contact_from_email = $email;
     if ($ctf_email_on_this_domain != '' ) {
          if(!preg_match("/,/", $ctf_email_on_this_domain)) {
            // just an email: user1@example.com
-           $header_php =  "From: WordPress <$ctf_email_on_this_domain>\n";
-           $this->si_contact_from_name = 'WordPress';
-           $this->si_contact_mail_from = $ctf_email_on_this_domain;
+           $this->si_contact_mail_sender = $ctf_email_on_this_domain;
+           if($email == '')
+              $this->si_contact_from_email = $ctf_email_on_this_domain;
          } else {
            // name and email: webmaster,user1@example.com
            list($key, $value) = explode(",",$ctf_email_on_this_domain);
            $key   = trim($key);
            $value = trim($value);
-           $header_php =  "From: $key <$value>\n";
-           $this->si_contact_from_name = $key;
-           $this->si_contact_mail_from = $value;
+           $this->si_contact_mail_sender = $value;
+           if($name == '')
+             $this->si_contact_from_name = $key;
+           if($email == '')
+             $this->si_contact_from_email = $value;
          }
-    } else if($email == '' || $name == '') {
-         $header_php =  "From: WordPress <". get_option('admin_email') . ">\n";
-         $this->si_contact_from_name = 'WordPress';
-         $this->si_contact_mail_from = get_option('admin_email');
-    } else {
-         $header_php = "From: $name <$email>\n";;
-         $this->si_contact_mail_from = $email;
-         $this->si_contact_from_name = $name;
     }
-    add_filter( 'wp_mail_from', array(&$this,'si_contact_form_mail_from'),1);
-    add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+    $header_php =  "From: $this->si_contact_from_name <$this->si_contact_from_email>\n"; // header for php mail only
+    $header = "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
 
-    $header .= "Reply-To: $this->si_contact_mail_from\n";
-    $header .= "Return-Path: $this->si_contact_mail_from\n";
+    if ($ctf_email_on_this_domain != '') {
+      $header .= "X-Sender: $this->si_contact_mail_sender\n";  // for php mail
+      $header .= "Return-Path: $this->si_contact_mail_sender\n";   // for php mail
+    }
     $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
-
-    // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
 
     @ini_set('sendmail_from', $this->si_contact_mail_from);
 
@@ -102,25 +96,33 @@ http://www.642weather.com/weather/scripts.php
     $this->safe_mode = ((boolean)@ini_get('safe_mode') === false) ? 0 : 1;
 
     if ($si_contact_opt['php_mailer_enable'] == 'php') {
+       // sending with php mail
        $header_php .= $header;
        // Start output buffering to grab smtp debugging output
 	   ob_start();
       if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
-          // the fifth parameter is not allowed in safe mode
-          // Pass the Return-Path via sendmail's -f command.
-        $result = mail($email,$subject,$message,$header_php, '-f '.$this->si_contact_mail_from);
+        // Pass the Return-Path via sendmail's -f command.
+        // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
+        $result = mail($email,$subject,$message,$header_php, '-f '.$this->si_contact_mail_sender);
       }else{
+        // the fifth parameter is not allowed in safe mode
         $result = mail($email,$subject,$message,$header_php);
       }
       $smtp_debug = ob_get_clean();
     }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
+         // sending with geekmail
          require_once WP_PLUGIN_DIR . '/si-contact-form/ctf_geekMail-1.0.php';
          $ctf_geekMail = new ctf_geekMail();
          $ctf_geekMail->setMailType('text');
          $ctf_geekMail->_setcharSet(get_option('blog_charset'));
          $ctf_geekMail->_setnewLine($php_eol);
+         if ($ctf_email_on_this_domain != '') {
+           $ctf_geekMail->return_path($this->si_contact_mail_sender);
+           $ctf_geekMail->x_sender($this->si_contact_mail_sender);
+         }
          $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
          $ctf_geekMail->to($email);
+         $ctf_geekMail->_replyTo($this->si_contact_from_email);
          $ctf_geekMail->subject($subject);
          $ctf_geekMail->message($message);
          // Start output buffering to grab smtp debugging output
@@ -131,7 +133,14 @@ http://www.642weather.com/weather/scripts.php
          }
 
      }else if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
-
+        // sending with wp_mail
+        add_filter( 'wp_mail_from', array(&$this,'si_contact_form_from_email'),1);
+        add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+        if ($ctf_email_on_this_domain != '') {
+            // Add an action on phpmailer_init to add Sender $this->si_contact_mail_sender for Return-path in wp_mail
+            // this helps spf checking when the Sender email address matches the site domain name
+            add_action('phpmailer_init', array(&$this,'si_contact_form_mail_sender'),1);
+        }
         global $phpmailer;
        	// Make sure the PHPMailer class has been instantiated
 	    // (copied verbatim from wp-includes/pluggable.php)
@@ -271,10 +280,11 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
                  $optionarray_gb_update['2.6.3'] = $si_contact_gb['2.6.3'];
 
    $optionarray_update = array(
+         'form_name' =>           trim($_POST['si_contact_form_name']),  // can be empty
          'welcome' =>             trim($_POST['si_contact_welcome']),  // can be empty
          'email_to' =>          ( trim($_POST['si_contact_email_to']) != '' ) ? trim($_POST['si_contact_email_to']) : $si_contact_option_defaults['email_to'], // use default if empty
          'php_mailer_enable' =>        $_POST['si_contact_php_mailer_enable'],
-         'email_from' =>          trim($_POST['si_contact_email_from']),
+         'email_from' =>        trim($_POST['si_contact_email_from']), // optional
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : '',
          'email_subject_list' =>  trim($_POST['si_contact_email_subject_list']),
@@ -322,6 +332,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'form_style' =>          ( trim($_POST['si_contact_form_style']) != '' ) ? trim($_POST['si_contact_form_style']) : $si_contact_option_defaults['form_style'],
          'border_style' =>          ( trim($_POST['si_contact_border_style']) != '' ) ? trim($_POST['si_contact_border_style']) : $si_contact_option_defaults['border_style'],
          'required_style' =>      ( trim($_POST['si_contact_required_style']) != '' ) ? trim($_POST['si_contact_required_style']) : $si_contact_option_defaults['required_style'],
+         'notes_style' =>      ( trim($_POST['si_contact_notes_style']) != '' ) ? trim($_POST['si_contact_notes_style']) : $si_contact_option_defaults['notes_style'],
          'title_style' =>         ( trim($_POST['si_contact_title_style']) != '' ) ? trim($_POST['si_contact_title_style']) : $si_contact_option_defaults['title_style'],
          'select_style' =>        ( trim($_POST['si_contact_select_style']) != '' ) ? trim($_POST['si_contact_select_style']) : $si_contact_option_defaults['select_style'],
          'field_style' =>         ( trim($_POST['si_contact_field_style']) != '' ) ? trim($_POST['si_contact_field_style']) : $si_contact_option_defaults['field_style'],
@@ -393,11 +404,42 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
 
     if (isset($_POST['si_contact_reset_styles'])) {
          // reset styles feature
-         $style_resets_arr = array('border_enable','form_style','border_style','required_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
+         $style_resets_arr = array('border_enable','form_style','border_style','required_style','notes_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
          foreach($style_resets_arr as $style_reset) {
            $optionarray_update[$style_reset] = $si_contact_option_defaults[$style_reset];
          }
     }
+
+    if (isset($_POST['si_contact_reset_styles_left'])) {
+        $style_resets_arr = array(
+         'border_enable' => 'false',
+         'form_style' => 'width:550px;',
+         'border_style' => 'border:1px solid black; padding:10px;',
+         'required_style' => 'padding-left:146px; text-align:left; ',
+         'notes_style' => 'padding-left:146px; text-align:left; clear:left;',
+         'title_style' => 'width:138px; text-align:right; float:left; clear:left; padding-top:8px; padding-right:10px;',
+         'field_style' => 'text-align:left; float:left; padding:2px; margin:0;',
+         'field_div_style' => 'text-align:left; float:left; padding-top:10px;',
+         'error_style' => 'text-align:left; color:red;',
+         'select_style' => 'text-align:left;',
+         'captcha_div_style_sm' => 'padding-left:146px; width:162px; height:50px; padding-top:5px;',
+         'captcha_div_style_m' => 'padding-left:146px; width:210px; height:65px; padding-top:5px;',
+         'submit_div_style' => 'padding-left:146px; text-align:left; float:left; clear:left; padding-top:8px;',
+         'button_style' => 'cursor:pointer; margin:0;',
+         'powered_by_style' => 'padding-left:146px; float:left; clear:left; font-size:x-small; font-weight:normal; padding-top:5px;',
+         'field_size' => '39',
+         'captcha_field_size' => '6',
+         'text_cols' => '30',
+         'text_rows' => '10',
+         );
+
+         // reset left styles feature
+         foreach($style_resets_arr as $key => $val) {
+           $optionarray_update[$key] = $val;
+         }
+    }
+
+
 
     // save updated options to the database
     update_option("si_contact_form$form_num", $optionarray_update);
@@ -668,6 +710,14 @@ _e('If you find this plugin useful to you, please consider making a small donati
 <?php _e('Use this setting to increase or decrease the number of available forms. The most forms you can add is 99. Caution: lowering this number will delete forms of a higher number than the number you set.', 'si-contact-form') ?>
 </div>
 
+<br />
+
+<label for="si_contact_form_name"><?php echo sprintf(__('Form %d label', 'si-contact-form'),$form_id) ?>:</label><input name="si_contact_form_name" id="si_contact_form_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['form_name']);  ?>" size="55" />
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_form_name_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+<div style="text-align:left; display:none" id="si_contact_form_name_tip">
+<?php _e('Enter a label for your form. This is not used anywhere else, it just helps you keep track of what you are using it for.', 'si-contact-form'); ?>
+</div>
+
 </fieldset>
 
     <p class="submit">
@@ -810,8 +860,6 @@ foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'gee
         <?php _e('Note: attachments are only supported when using the "WordPress" or "geekMail" mail function.', 'si-contact-form'); ?>
        </div>
        <br />
-
-        <label for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact-form'); ?>:</label>
 <?php
 if ( $si_contact_opt['email_from'] != '' ) {
     $from_fail = 0;
@@ -831,15 +879,32 @@ if ( $si_contact_opt['email_from'] != '' ) {
            $from_fail = 1;
         }
    }
+
    if ($from_fail)  {
-     echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+       echo '<div id="message" class="error">';
+       echo __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form');
+       echo "</div>\n";
+       echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+   } else {
+       $uri = parse_url(get_option('home'));
+       $blogdomain = preg_replace("/^www\./i",'',$uri['host']);
+       list($email_from_user,$email_from_domain) = explode('@',$si_contact_opt['email_from']);
+       if ( $blogdomain != $email_from_domain) {
+       echo '<div id="message" class="updated">';
+       echo sprintf(__('Warning: "E-mail From" is not set to an address from the same domain name as your web site (%s). This can sometimes cause mail not to send, or send but be delivered to a Spam folder. Be sure to test that your form is sending email and that you are receiving it, if not, fix this setting.', 'si-contact-form'), $blogdomain);
+       echo "</div>\n";
+       echo '<br /><span class="updated">';
+       echo sprintf(__('Warning: "E-mail From" is not set to an address from the same domain name as your web site (%s). This can sometimes cause mail not to send, or send but be delivered to a Spam folder. Be sure to test that your form is sending email and that you are receiving it, if not, fix this setting.', 'si-contact-form'), $blogdomain);
+       echo "</span><br />\n";
+       }
    }
 }
 ?>
+        <label for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact-form'); ?>:</label>
         <input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $si_contact_opt['email_from'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
-        <?php _e('E-mail address the messages are sent from. Normally you can leave this blank. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?>
+        <?php _e('E-mail address the messages are sent from. Some web hosts do not allow PHP to send E-mail unless the envelope sender E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?>
         <?php _e('After setting the from address; if your form still does not send any E-mail, look above, and find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
         <br />
         <?php _e('Enter just an email: user1@example.com', 'si-contact-form'); ?><br />
@@ -869,6 +934,9 @@ if ( $si_contact_opt['email_bcc'] != ''){
          }
    }
    if ($bcc_fail)  {
+      echo '<div id="message" class="error">';
+      echo __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form');
+      echo "</div>\n";
       echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
    }
 }
@@ -946,6 +1014,72 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_check_dns_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_check_dns_tip">
         <?php _e('Improves email address validation by checking that the domain of the email address actually has a valid DNS record.', 'si-contact-form') ?>
+        </div>
+
+</fieldset>
+
+    <p class="submit">
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+    </p>
+
+<div class="form-tab"><?php echo __('Autoresponder:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
+<div class="clear"></div>
+
+<fieldset>
+
+        <input name="si_contact_auto_respond_enable" id="si_contact_auto_respond_enable" type="checkbox" <?php if( $si_contact_opt['auto_respond_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_auto_respond_enable"><?php _e('Enable autoresponder E-mail message.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_enable_tip">
+        <?php _e('Enable when you want the form to automatically answer with an autoresponder E-mail message.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_auto_respond_from_name"><?php _e('Autoresponder E-mail "From" name', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_name" id="si_contact_auto_respond_from_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_name']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_name_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_from_name_tip">
+        <?php _e('This sets the name in the "from" field when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_auto_respond_from_email"><?php _e('Autoresponder E-mail "From" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_email" id="si_contact_auto_respond_from_email" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_email']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_from_email_tip">
+        <?php _e('This sets the "from" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_auto_respond_reply_to"><?php _e('Autoresponder E-mail "Reply To" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_reply_to" id="si_contact_auto_respond_reply_to" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_reply_to']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_reply_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_reply_to_tip">
+        <?php _e('This sets the "reply to" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_auto_respond_subject"><?php _e('Autoresponder E-mail subject', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_subject" id="si_contact_auto_respond_subject" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_subject']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_subject_tip">
+        <?php _e('Type your autoresponder E-mail subject here, then enable it with the setting above.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_auto_respond_message"><?php _e('Autoresponder E-mail message', 'si-contact-form'); ?>:</label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_message_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_message_tip">
+        <?php _e('Type your autoresponder E-mail message here, then enable it with the setting above.', 'si-contact-form'); ?>
+        </div><br />
+        <textarea rows="3" cols="50" name="si_contact_auto_respond_message" id="si_contact_auto_respond_message"><?php echo $this->ctf_output_string($si_contact_opt['auto_respond_message']);  ?></textarea>
+<br />
+
+        <input name="si_contact_auto_respond_html" id="si_contact_auto_respond_html" type="checkbox" <?php if( $si_contact_opt['auto_respond_html'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_auto_respond_html"><?php _e('Enable using HTML in autoresponder E-mail message.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_html_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_auto_respond_html_tip">
+        <?php _e('Enable when you want to use HTML in the autoresponder E-mail message.', 'si-contact-form'); echo ' ';?>
+        <?php _e('Then you can use an HTML message. example:', 'si-contact-form'); ?><br />
+&lt;html&gt;&lt;body&gt;<br />
+&lt;h1&gt;<?php _e('Hello World!', 'si-contact-form'); ?>&lt;/h1&gt;<br />
+&lt;/body&gt;&lt;/html&gt;
         </div>
 
 </fieldset>
@@ -1330,8 +1464,8 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('The fieldset(box-open) is used to draw a box around related form elements. The fieldset label is used for a (legend) title of the group.', 'si-contact-form'); ?>
        <br />
        <?php _e('The fieldset(box-close) is used to close a box around related form elements. A label is not required for this type. If you do not close a fieldset box, it will close automatically when you add another fieldset box.', 'si-contact-form'); ?>
- <br /><strong><?php _e('Notes:', 'si-contact-form'); ?></strong><br />
-       <?php _e('Use the optional notes/help to print some notes or instructions before a form field. This is for the form display only, not E-mail. HTML is allowed.', 'si-contact-form'); ?>
+ <br /><strong><?php _e('Optional HTML before field:', 'si-contact-form'); ?></strong><br />
+       <?php _e('Use the Optional HTML before field to print some HTML before a form field. This is for the form display only, not E-mail. HTML is allowed.', 'si-contact-form'); ?>
        </blockquote>
 </div>
 
@@ -1339,6 +1473,10 @@ foreach ($name_type_array as $k => $v) {
 
  <label for="si_contact_max_fields"><?php _e('Number of available extra fields', 'si-contact-form'); ?>:</label>
  <input name="si_contact_max_fields" id="si_contact_max_fields" type="text" value="<?php echo absint($si_contact_gb['max_fields']);  ?>" size="3" />
+ <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_max_fields_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+ <div style="text-align:left; display:none" id="si_contact_max_fields_tip">
+   <?php _e('Caution: This setting changes all forms. Increase the number as needed, but make sure you do not change to a lower number than what is needed for any of your forms.', 'si-contact-form'); ?>
+ </div>
 
  <br />
 
@@ -1360,7 +1498,7 @@ $field_type_array = array(
       // optional extra fields
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
       ?>
-       <label for="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>"><?php printf(__('Optional notes/help for form field %d:', 'si-contact-form'),$i); ?></label>
+       <label for="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>"><?php printf(__('Optional HTML before form field %d:', 'si-contact-form'),$i); ?></label>
        <input name="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>" id="<?php echo 'si_contact_ex_field'.$i.'_notes' ?>" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['ex_field'.$i.'_notes']);  ?>" size="100" />
        <br />
 
@@ -1476,78 +1614,15 @@ foreach ($cal_date_array as $k => $v) {
       <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
-<div class="form-tab"><?php echo __('Autoresponder:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
-<div class="clear"></div>
-
-<fieldset>
-
-        <input name="si_contact_auto_respond_enable" id="si_contact_auto_respond_enable" type="checkbox" <?php if( $si_contact_opt['auto_respond_enable'] == 'true' ) echo 'checked="checked"'; ?> />
-        <label for="si_contact_auto_respond_enable"><?php _e('Enable autoresponder E-mail message.', 'si-contact-form'); ?></label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_enable_tip">
-        <?php _e('Enable when you want the form to automatically answer with an autoresponder E-mail message.', 'si-contact-form'); ?>
-        </div>
-<br />
-
-        <label for="si_contact_auto_respond_from_name"><?php _e('Autoresponder E-mail From name', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_name" id="si_contact_auto_respond_from_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_name']);  ?>" size="60" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_name_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_from_name_tip">
-        <?php _e('This sets the name in the from field when the autoresponder sends E-mail.', 'si-contact-form'); ?>
-        </div>
-<br />
-
-        <label for="si_contact_auto_respond_from_email"><?php _e('Autoresponder E-mail "From" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_email" id="si_contact_auto_respond_from_email" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_email']);  ?>" size="60" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_from_email_tip">
-        <?php _e('This sets the "from" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
-        </div>
-<br />
-
-        <label for="si_contact_auto_respond_reply_to"><?php _e('Autoresponder E-mail "Reply To" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_reply_to" id="si_contact_auto_respond_reply_to" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_reply_to']);  ?>" size="60" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_reply_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_reply_to_tip">
-        <?php _e('This sets the "reply to" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
-        </div>
-<br />
-
-        <label for="si_contact_auto_respond_subject"><?php _e('Autoresponder E-mail subject', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_subject" id="si_contact_auto_respond_subject" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_subject']);  ?>" size="60" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_subject_tip">
-        <?php _e('Type your autoresponder E-mail subject here, then enable it with the setting above.', 'si-contact-form'); ?>
-        </div>
-<br />
-
-        <label for="si_contact_auto_respond_message"><?php _e('Autoresponder E-mail message', 'si-contact-form'); ?>:</label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_message_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_message_tip">
-        <?php _e('Type your autoresponder E-mail message here, then enable it with the setting above.', 'si-contact-form'); ?>
-        </div><br />
-        <textarea rows="3" cols="50" name="si_contact_auto_respond_message" id="si_contact_auto_respond_message"><?php echo $this->ctf_output_string($si_contact_opt['auto_respond_message']);  ?></textarea>
-<br />
-
-        <input name="si_contact_auto_respond_html" id="si_contact_auto_respond_html" type="checkbox" <?php if( $si_contact_opt['auto_respond_html'] == 'true' ) echo 'checked="checked"'; ?> />
-        <label for="si_contact_auto_respond_html"><?php _e('Enable using HTML in autoresponder E-mail message.', 'si-contact-form'); ?></label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_html_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_auto_respond_html_tip">
-        <?php _e('Enable when you want to use HTML in the autoresponder E-mail message.', 'si-contact-form'); echo ' ';?>
-        <?php _e('Then you can use an HTML message. example:', 'si-contact-form'); ?><br />
-&lt;html&gt;&lt;body&gt;<br />
-&lt;h1&gt;<?php _e('Hello World!', 'si-contact-form'); ?>&lt;/h1&gt;<br />
-&lt;/body&gt;&lt;/html&gt;
-        </div>
-
-</fieldset>
-
-    <p class="submit">
-      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
-    </p>
-
 <div class="form-tab"><?php echo __('Style:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
 <div class="clear"></div>
 <fieldset>
 
         <input name="si_contact_reset_styles" id="si_contact_reset_styles" type="checkbox" />
-        <label for="si_contact_reset_styles"><strong><?php _e('Reset the styles to default.', 'si-contact-form') ?></strong></label><br />
+        <label for="si_contact_reset_styles"><strong><?php _e('Reset the styles to labels on top (default).', 'si-contact-form') ?></strong></label><br />
+
+        <input name="si_contact_reset_styles_left" id="si_contact_reset_styles_left" type="checkbox" />
+        <label for="si_contact_reset_styles_left"><strong><?php _e('Reset the styles to labels on left.', 'si-contact-form') ?></strong></label><br />
 
         <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
@@ -1579,6 +1654,7 @@ foreach ($cal_date_array as $k => $v) {
 
         <label for="si_contact_border_style"><?php _e('CSS style for border on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_border_style" id="si_contact_border_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['border_style']);  ?>" size="60" /><br />
         <label for="si_contact_required_style"><?php _e('CSS style for required field text on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_required_style" id="si_contact_required_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['required_style']);  ?>" size="60" /><br />
+        <label for="si_contact_notes_style"><?php _e('CSS style for extra field HTML on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_notes_style" id="si_contact_notes_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['notes_style']);  ?>" size="60" /><br />
         <label for="si_contact_title_style"><?php _e('CSS style for form input titles on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_style']);  ?>" size="60" /><br />
         <label for="si_contact_field_style"><?php _e('CSS style for form input fields on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_field_style" id="si_contact_field_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['field_style']);  ?>" size="60" /><br />
         <label for="si_contact_field_div_style"><?php _e('CSS style for form input fields DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_field_div_style" id="si_contact_field_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['field_div_style']);  ?>" size="60" /><br />

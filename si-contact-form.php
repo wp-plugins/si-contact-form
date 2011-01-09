@@ -187,9 +187,6 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
 
 //print_r($ctf_contacts);
 
-// Normally this setting will be left blank in options.
-$ctf_email_on_this_domain =  $si_contact_opt['email_from']; // optional
-
 // Site Name / Title
 $ctf_sitename = get_option('blogname');
 
@@ -575,16 +572,8 @@ if ($this->captchaCheckRequires()) {
   $si_contact_opt['reload_image_style'] = 'border-style:none; margin:0; padding:0px; vertical-align:bottom;';
 
 // the captch html
-$string = '
-        <div '.$this->ctf_title_style.'>
-                <label for="si_contact_captcha_code'.$form_id_num.'">';
-     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':';
-     $string .= $req_field_ind.'</label>
-        </div> '.$this->ctf_echo_if_error($si_contact_error_captcha).'
-        <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>
-                <input '.$this->ctf_field_style.' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
-        </div>
 
+ $string = '
 <div '.$this->ctf_title_style.'>
  <div ';
 $this->ctf_captcha_div_style_sm = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_sm']);
@@ -682,8 +671,16 @@ $string .= '>
          $string .= ($si_contact_opt['reload_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['reload_image_style'] ).'"' : '';
          $string .=  ' onclick="this.blur();" /></a>
    </div>
- </div>
+   </div>
 </div>
+      <div '.$this->ctf_title_style.'>
+                <label for="si_contact_captcha_code'.$form_id_num.'">';
+     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':';
+     $string .= $req_field_ind.'</label>
+        </div>
+        <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($si_contact_error_captcha).'
+                <input '.$this->ctf_field_style.' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
+       </div>
 ';
 } else {
       $string .= $this->captchaRequiresError;
@@ -924,6 +921,7 @@ function si_contact_get_options($form_num) {
       );
 
      $si_contact_option_defaults = array(
+         'form_name' => '',
          'welcome' => __('<p>Comments or questions are welcome.</p>', 'si-contact-form'),
          'email_to' => __('Webmaster', 'si-contact-form').','.get_option('admin_email'),
          'php_mailer_enable' => 'wordpress',
@@ -975,14 +973,15 @@ function si_contact_get_options($form_num) {
          'form_style' => 'width:375px;',
          'border_style' => 'border:1px solid black; padding:10px;',
          'required_style' => 'text-align:left;',
+         'notes_style' => 'text-align:left;',
          'title_style' => 'text-align:left; padding-top:5px;',
-         'select_style' => 'text-align:left;',
          'field_style' => 'text-align:left; margin:0;',
          'field_div_style' => 'text-align:left;',
          'error_style' => 'text-align:left; color:red;',
+         'select_style' => 'text-align:left;',
          'captcha_div_style_sm' => 'width: 175px; height: 50px; padding-top:5px;',
          'captcha_div_style_m' => 'width: 250px; height: 65px; padding-top:5px;',
-         'submit_div_style' => 'text-align:left; padding-top:5px;',
+         'submit_div_style' => 'text-align:left; padding-top:8px;',
          'button_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'font-size:x-small; font-weight:normal; padding-top:5px;',
          'field_size' => '40',
@@ -1082,7 +1081,7 @@ function si_contact_get_options($form_num) {
   }
   if ($si_contact_opt['title_style'] == '' && $si_contact_opt['field_style'] == '') {
      // if styles seem to be blank, reset styles
-     $style_resets_arr = array('border_enable','border_width','border_style','title_style','field_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','text_cols','text_rows');
+     $style_resets_arr = array('border_enable','form_style','border_style','required_style','notes_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
      foreach($style_resets_arr as $style_reset) {
            $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
      }
@@ -1368,12 +1367,25 @@ div.star img {width:19px; height:19px; border-left:1px solid #fff; border-right:
 
 }
 
-function si_contact_form_mail_from() {
- return $this->si_contact_mail_from;
+function si_contact_form_from_email() {
+ return $this->si_contact_from_email;
 }
 
 function si_contact_form_from_name() {
  return $this->si_contact_from_name;
+}
+
+function si_contact_form_mail_sender($phpmailer) {
+ // add Sender for Return-path to wp_mail
+ $phpmailer->Sender = $this->si_contact_mail_sender;
+}
+
+function ctf_notes($notes) {
+           return   '
+        <div '.$this->ctf_notes_style.'>
+         '.$notes.'
+        </div>
+        ';
 }
 
 function si_contact_convert_css($string) {

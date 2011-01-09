@@ -221,7 +221,9 @@ http://www.642weather.com/weather/scripts.php
       }
       
       $this->_setHeader("From", "{$name} <{$from}>");
-      $this->_setHeader("Return-Path", "<{$from}>");
+      if( !isset($this->_headers['Return-Path']) )  // mchallis added settable Return-Path
+        $this->_setHeader("Return-Path", "<{$from}>");
+
     }
     
     
@@ -353,7 +355,23 @@ http://www.642weather.com/weather/scripts.php
       $this->_setHeader('Subject', $subject);
     }
     
-    
+     /**
+    * Set the X-Sender. mchallis added
+    */
+    function x_sender($sender)
+    {
+      $this->_setHeader('X-Sender', $sender);
+    }
+
+
+     /**
+    * Set the Return-Path. mchallis added
+    */
+    function return_path($sender)
+    {
+      $this->_setHeader('Return-Path', $sender);
+    }
+
     /**
     * Set the Body.
     */
@@ -809,21 +827,26 @@ http://www.642weather.com/weather/scripts.php
       
       return $output;
     }
-    
-    
+
+
     /**
     * Build the final headers.
     */
     function _buildHeaders()
     {
-      $this->_setHeader('X-Sender', $this->_cleanEmail($this->_headers['From']));
+      // mchallis added sender
+      if( isset($this->_headers['X-Sender']) ) {
+          $this->_setHeader('X-Sender', $this->_cleanEmail($this->_headers['X-Sender']));
+      }else{
+          $this->_setHeader('X-Sender', $this->_cleanEmail($this->_headers['From']));
+      }
       $this->_setHeader('X-Mailer', $this->_userAgent);
       $this->_setHeader('X-Priority', $this->_priorities[$this->_priority - 1]);
       $this->_setHeader('Message-ID', $this->_getMessageId());
       $this->_setHeader('Mime-Version', '1.0');
     }
     
-    
+
     /**
     * Write the headers as a string.
     */
@@ -1362,8 +1385,9 @@ http://www.642weather.com/weather/scripts.php
       }
       else
       {
+      // mchallis added settable Return-Path
         if (!mail($this->_recipients, $this->_subject, $this->_finalBody, $this->_headerStr,
-                  '-f ' . $this->_cleanEmail($this->_headers['From'])))
+                  '-f ' . $this->_cleanEmail( (isset($this->_headers['Return-Path']))? $this->_headers['Return-Path'] : $this->_headers['From'])))
         {
           return false;
         }
