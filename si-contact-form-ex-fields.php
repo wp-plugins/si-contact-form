@@ -90,14 +90,14 @@ http://www.642weather.com/weather/scripts.php
 $exf_opts_array = array();
 $exf_opts_label = '';
 $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-if(!preg_match("/,/", $exf_array_test) ) {
+if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
        // error
        $this->si_contact_error = 1;
        $string .= $this->ctf_echo_if_error(__('Error: A select field is not configured properly in settings.', 'si-contact-form'));
 } else {
-       list($exf_opts_label, $value) = explode(",",$exf_array_test);
-       $exf_opts_label   = trim($exf_opts_label);
-       $value = trim($value);
+       list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+       $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+       $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
        if ($exf_opts_label != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // error
@@ -141,16 +141,73 @@ foreach ($exf_opts_array as $k) {
 $string .= '</select>
         </div>';
              break;
+           case 'select-multiple':
+
+           // find the label and the options inside $si_contact_opt['ex_field'.$i.'_label']
+           // the drop down list array will be made automatically by this code
+$exf_opts_array = array();
+$exf_opts_label = '';
+$exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
+       // error
+       $this->si_contact_error = 1;
+       $string .= $this->ctf_echo_if_error(__('Error: A select-multiple field is not configured properly in settings.', 'si-contact-form'));
+} else {
+       list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+       $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+       $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
+       if ($exf_opts_label != '' && $value != '') {
+          if(!preg_match("/;/", $value)) {
+               echo $value;
+               // error
+               $this->si_contact_error = 1;
+               $string .= $this->ctf_echo_if_error(__('Error: A select-multiple field is not configured properly in settings.', 'si-contact-form'));
+          } else {
+               // multiple options
+               $exf_opts_array = explode(";",$value);
+         }
+      }
+} // end else
+        if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
+           $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
+        }
+           $string .=   '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $exf_opts_label .$ex_req_field_ind.'</label>
+        </div>
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
+               <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'[]" multiple="multiple">
+        ';
+
+$exf_opts_ct = 1;
+$selected = '';
+foreach ($exf_opts_array as $k) {
+ if (is_array(${'ex_field'.$i}) && ${'ex_field'.$i} != '') {
+    if (in_array($k, ${'ex_field'.$i} ) ) {
+      $selected = ' selected="selected"';
+    }
+ }
+ if (!isset($_POST['si_contact_form_id']) && $exf_opts_ct == $si_contact_opt['ex_field'.$i.'_default']) {
+      $selected = ' selected="selected"';
+ }
+ $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
+ $exf_opts_ct++;
+ $selected = '';
+
+}
+$string .= '</select>
+        </div>';
+             break;
            case 'checkbox':
 
 $exf_opts_array = array();
 $exf_opts_label = '';
 $exf_opts_inline = 0;
 $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
-       list($exf_opts_label, $value) = explode(",",$exf_array_test);
-       $exf_opts_label   = trim($exf_opts_label);
-       $value = trim($value);
+if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_test) ) {
+       list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+       $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+       $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
        if ($exf_opts_label != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // error
@@ -172,25 +229,31 @@ if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test)  ) {
         }
            $string .=   '
         <div '.$this->ctf_title_style.'>
-        <label>' . $exf_opts_label .'</label>
+        <label>' . $exf_opts_label .$ex_req_field_ind.'</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'."\n";
-        // if($exf_opts_inline)
-        //       $string .= "<br />\n";
+        <div '.$this->ctf_field_div_style.'>'. $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i});
+
      $ex_cnt = 1;
   foreach ($exf_opts_array as $k) {
      if(!$exf_opts_inline && $ex_cnt > 1)
                $string .= "<br />\n";
      $string .=   '<span style="white-space:nowrap;"><input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
-                 if ( isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' )
-                    $string .= ' checked="checked" ';
+
+    if (!isset($_POST['si_contact_form_id']) && $ex_cnt == $si_contact_opt['ex_field'.$i.'_default']) {
+      $string .= ' checked="checked"';
+    }
+
+    if ( isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' )
+    $string .= ' checked="checked" ';
+
+
                  $string .= '/>
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
      $ex_cnt++;
   }
 
    $string .=   '
-        </div> '.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i})."\n";
+        </div> '."\n";
 
 } else {
 
@@ -229,14 +292,14 @@ $exf_opts_array = array();
 $exf_opts_label = '';
 $exf_opts_inline = 0;
 $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-if(!preg_match('/,/', $exf_array_test) ) {
+if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
        // error
        $this->si_contact_error = 1;
        $string .= $this->ctf_echo_if_error(__('Error: A radio field is not configured properly in settings.', 'si-contact-form'));
 } else {
-       list($exf_opts_label, $value) = explode(",",$exf_array_test);
-       $exf_opts_label   = trim($exf_opts_label);
-       $value = trim($value);
+       list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+       $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+       $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
        if ($exf_opts_label != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // error

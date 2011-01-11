@@ -386,7 +386,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
         $optionarray_update['ex_field'.$i.'_default'] = ( isset($_POST['si_contact_ex_field'.$i.'_default']) && is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
         $optionarray_update['ex_field'.$i.'_notes'] = (isset($_POST['si_contact_ex_field'.$i.'_notes'])) ? trim($_POST['si_contact_ex_field'.$i.'_notes']) : '';
-        if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select'))) {
+        if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select','select-multiple'))) {
                 $optionarray_update['ex_field'.$i.'_default'] = '0';
         }
         if ($optionarray_update['ex_field'.$i.'_label'] == '' && $optionarray_update['ex_field'.$i.'_type'] != 'fieldset-close') {
@@ -1445,10 +1445,12 @@ foreach ($name_type_array as $k => $v) {
       <?php _e('You can use extra contact form fields for phone number, company name, etc. To enable an extra field, just enter a label. Then check if you want the field to be required or not. To disable, empty the label.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Text and Textarea fields:', 'si-contact-form'); ?></strong><br />
        <?php _e('The text field is for single line text entry. The textarea field is for multiple line text entry.', 'si-contact-form'); ?>
-<br /><strong><?php _e('Select, Radio, and Checkbox extra fields:', 'si-contact-form'); ?></strong><br />
-       <?php _e('When using select, checkbox, or radio field types; first enter the label and a comma. Include the options separating with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
-       <?php _e('To make "Green" the default selection: set default to 2. (Default is for checkbox, radio, and select types).', 'si-contact-form'); ?>
-       <?php _e('You can also use a multiple checkbox like this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple items can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?>
+<br /><strong><?php _e('Checkbox, Radio, Select, and Select-multiple extra fields:', 'si-contact-form'); ?></strong><br />
+       <?php _e('To enable a checkbox field with a single option, just enter a label. Then check if you want the field to be required or not.', 'si-contact-form'); ?><br />
+       <?php _e('To enable fields with multiple options like checkbox, radio, select, or select-multiple field types; first enter the label and a comma, then include the options separating each one with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
+       <?php _e('To make "Green" the default selection: set "Default" to 2. The "Default" setting can be used for for checkbox, radio, select, or select-multiple field types.', 'si-contact-form'); ?><br />
+       <?php _e('If you need to use a comma besides the one needed to separate the label, escape it with a slash, like this: /,', 'si-contact-form'); ?><br />
+       <?php _e('You can also use fields that allow multiple options to be checked at once, such as checkbox and select-multiple like in this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple options can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?><br />
        <?php _e('By default radio and checkboxes are displayed vertical. Here is how to make them display horizontal: add the tag {inline} before the label, like this: {inline}Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Attachment:', 'si-contact-form'); ?></strong><br />
        <?php _e('The attachment is used to allow users to attach a file upload from the form. You can add multiple attachments. The attachment is sent with your email. Attachments are deleted from the server after the email is sent.', 'si-contact-form'); ?>
@@ -1465,7 +1467,7 @@ foreach ($name_type_array as $k => $v) {
        <br />
        <?php _e('The fieldset(box-close) is used to close a box around related form elements. A label is not required for this type. If you do not close a fieldset box, it will close automatically when you add another fieldset box.', 'si-contact-form'); ?>
  <br /><strong><?php _e('Optional HTML before field:', 'si-contact-form'); ?></strong><br />
-       <?php _e('Use the Optional HTML before field to print some HTML before a form field. This is for the form display only, not E-mail. HTML is allowed.', 'si-contact-form'); ?>
+       <?php _e('Use the Optional HTML before field to print some HTML before an extra field on the form. This is for the form display only, not E-mail. HTML is allowed.', 'si-contact-form'); ?>
        </blockquote>
 </div>
 
@@ -1487,6 +1489,7 @@ $field_type_array = array(
 'checkbox' => esc_attr(__('checkbox', 'si-contact-form')),
 'radio' => esc_attr(__('radio', 'si-contact-form')),
 'select' => esc_attr(__('select', 'si-contact-form')),
+'select-multiple' => esc_attr(__('select-multiple', 'si-contact-form')),
 'attachment' => esc_attr(__('attachment', 'si-contact-form')),
 'date' => esc_attr(__('date', 'si-contact-form')),
 'time' => esc_attr(__('time', 'si-contact-form')),

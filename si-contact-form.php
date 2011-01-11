@@ -867,11 +867,13 @@ function ctf_spamcheckpost() {
  $input_expl = "/(content-type|mime-version|content-transfer-encoding|to:|bcc:|cc:|document.cookie|document.write|onmouse|onkey|onclick|onload)/i";
  // Loop through each POST'ed value and test if it contains one of the exploits fromn $input_expl:
  foreach($_POST as $k => $v){
-   $v = strtolower($v);
-   $v = str_replace('donkey','',$v); // fixes invalid input with "donkey" in string
-   $v = str_replace('monkey','',$v); // fixes invalid input with "monkey" in string
-   if( preg_match($input_expl, $v) ){
-     return __('Illegal characters in POST. Possible email injection attempt', 'si-contact-form');
+   if (is_string($v)){
+     $v = strtolower($v);
+     $v = str_replace('donkey','',$v); // fixes invalid input with "donkey" in string
+     $v = str_replace('monkey','',$v); // fixes invalid input with "monkey" in string
+     if( preg_match($input_expl, $v) ){
+       return __('Illegal characters in POST. Possible email injection attempt', 'si-contact-form');
+     }
    }
  }
 

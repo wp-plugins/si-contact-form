@@ -211,10 +211,10 @@ if ($have_attach){
              $exf_opts_array = array();
              $exf_opts_label = '';
              $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-             if(preg_match("/,/", $exf_array_test) ) {
-                  list($exf_opts_label, $value) = explode(",",$exf_array_test);
-                  $exf_opts_label   = trim($exf_opts_label);
-                  $value = trim($value);
+             if(preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
+                  list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+                  $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+                  $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
                   if ($exf_opts_label != '' && $value != '') {
                      if(!preg_match("/;/", $value)) {
                         $this->si_contact_error = 1;
@@ -223,11 +223,20 @@ if ($have_attach){
                         // multiple options
                          $exf_opts_array = explode(";",$value);
                      }
-                     $ex_cnt = 1;
+                     // required check (only 1 has to be checked to meet required)
+                    $ex_cnt = 1;
+                    $ex_reqd = 0;
                     foreach ($exf_opts_array as $k) {
-                      ${'ex_field'.$i.'_'.$ex_cnt} = ( empty($_POST["si_contact_ex_field$i".'_'.$ex_cnt]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i".'_'.$ex_cnt]);
+                      if( ! empty($_POST["si_contact_ex_field$i".'_'.$ex_cnt]) ){
+                        ${'ex_field'.$i.'_'.$ex_cnt} = $this->ctf_clean_input($_POST["si_contact_ex_field$i".'_'.$ex_cnt]);
+                        $ex_reqd++;
+                      }
                       $ex_cnt++;
                     }
+                    if(!$ex_reqd && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                        $this->si_contact_error = 1;
+                        ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('At least one item in this field is required.', 'si-contact-form');
+                     }
                 }
              }else{
                 ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
@@ -236,8 +245,44 @@ if ($have_attach){
                     ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
                 }
              }
+           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
+             $exf_opts_array = array();
+             $exf_opts_label = '';
+             $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+             if(preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
+                  list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+                  $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+                  $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
+                  if ($exf_opts_label != '' && $value != '') {
+                     if(!preg_match("/;/", $value)) {
+                        $this->si_contact_error = 1;
+                        ${'si_contact_error_ex_field'.$i} = __('Error: A select-multiple field is not configured properly in settings.', 'si-contact-form');
+                     } else {
+                        // multiple options
+                         $exf_opts_array = explode(";",$value);
+                     }
+                     // required check (only 1 has to be checked to meet required)
+                     $ex_reqd = 0;
+                     ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                     if (is_array(${'ex_field'.$i}) && !empty(${'ex_field'.$i}) ) {
+                       // loop
+                       foreach ($exf_opts_array as $k) {  // checkbox multi
+                          if (in_array($k, ${'ex_field'.$i} ) ) {
+                             $ex_reqd++;
+                          }
+                       }
+                     }
+                     if((!$ex_reqd || empty(${'ex_field'.$i})) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                        $this->si_contact_error = 1;
+                        ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('At least one item in this field is required.', 'si-contact-form');
+                     }
+                }
+             } else {
+                  $this->si_contact_error = 1;
+                  ${'si_contact_error_ex_field'.$i} = __('Error: A checkbox-multiple field is not configured properly in settings.', 'si-contact-form');
+             }
            }else{  // end label'] == 'checkbox'
-                // text, textarea, date, password
+                // text, textarea, select, date, password
                 if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                       ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
                 }else{
@@ -406,23 +451,54 @@ if ($have_attach){
          if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
              $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
-             list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
+             list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$si_contact_opt['ex_field'.$i.'_label']); //string will be split by "," but "\," will be ignored
+             $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
              $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
              $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.${'ex_field'.$i.'h'}.':'.${'ex_field'.$i.'m'}.' '.${'ex_field'.$i.'ap'}.$php_eol.$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
              $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
-             list($exf_opts_label, $value) = explode(",",$si_contact_opt['ex_field'.$i.'_label']);
+             list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$si_contact_opt['ex_field'.$i.'_label']); //string will be split by "," but "\," will be ignored
+             $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
              $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
+             $exf_opts_array = array();
+             $exf_opts_label = '';
+             $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+             if(preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_test) ) {
+                list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+                $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+                $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
+                if ($exf_opts_label != '' && $value != '') {
+                    if(!preg_match("/;/", $value)) {
+                       // error - a select-multiple field is not configured properly in settings.
+                    } else {
+                         // multiple options
+                         $exf_opts_array = explode(";",$value);
+                    }
+                    $msg .= $exf_opts_label.$php_eol;
+                    if (is_array(${'ex_field'.$i}) && ${'ex_field'.$i} != '') {
+                       // loop
+                       $ex_cnt = 1;
+                       foreach ($exf_opts_array as $k) {  // select-multiple
+                          if (in_array($k, ${'ex_field'.$i} ) ) {
+                             $msg .= ' * '.$k.$php_eol;
+                             $ex_cnt++;
+                          }
+                       }
+                    }
+                    $msg .= $php_eol;
+                }
+             }
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
              $exf_opts_array = array();
              $exf_opts_label = '';
              $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
-             if(preg_match("/,/", $exf_array_test) && preg_match("/;/", $exf_array_test) ) {
-                list($exf_opts_label, $value) = explode(",",$exf_array_test);
-                $exf_opts_label   = trim($exf_opts_label);
-                $value = trim($value);
+             if(preg_match('#(?<!\\\)\,#', $exf_array_test)  && preg_match("/;/", $exf_array_test) ) {
+                list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+                $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+                $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
                 if ($exf_opts_label != '' && $value != '') {
                     if(!preg_match("/;/", $value)) {
                        // error
@@ -435,7 +511,7 @@ if ($have_attach){
                     // loop
                     $ex_cnt = 1;
                     foreach ($exf_opts_array as $k) {  // checkbox multi
-                     if(${'ex_field'.$i.'_'.$ex_cnt} == 'selected')
+                     if( isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected')
                        $msg .= ' * '.$k.$php_eol;
                      $ex_cnt++;
                     }
@@ -459,7 +535,6 @@ if ($have_attach){
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
     }
-
 
   // lookup country info for this ip
   // geoip lookup using Visitor Maps and Who's Online plugin
@@ -514,21 +589,29 @@ if ($have_attach){
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
    if( $si_contact_opt['akismet_disable'] == 'false' ) { // per form disable feature
-     if($si_contact_opt['message_type'] != 'not_available' && $message != '' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
+     //if($si_contact_opt['message_type'] != 'not_available' && $message != '' && function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
+     if(function_exists('akismet_http_post') && get_option('wordpress_api_key') ){
       global $akismet_api_host, $akismet_api_port;
 	  $c['user_ip']    		= preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 	  $c['user_agent'] 		= (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
 	  $c['referrer']   		= (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
 	  $c['blog']       		= get_option('home');
+      $c['blog_lang']       = get_locale(); // default 'en_US'
+      $c['blog_charset']    = get_option('blog_charset');
 	  $c['permalink']       = $form_action_url;
-	  $c['comment_type']    = 'sicontactform';
+	  $c['comment_type']    = 'fscontactform';
 	  $c['comment_author']  = $name;
-	  $c['comment_content'] = $message;
-      //$c['comment_content']  = "viagra-test-123";  // uncomment this to test spam detection
-	  $ignore = array( 'HTTP_COOKIE' );
-	  foreach ( $_SERVER as $key => $value ) {
-	     if ( !in_array( $key, $ignore ) )
-		     $c["$key"] = $value;
+      //$c['comment_author']  = "viagra-test-123";  // uncomment this to test spam detection
+      // or  You can just put viagra-test-123 as the name when testing the form (no need to edit this php file to test it)
+      if($email != '') $c['comment_author_email'] = $email;
+	  //$c['comment_content'] = $message;
+      $c['comment_content'] = $msg;
+	  $ignore = array( 'HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW' );
+      foreach ( $_SERVER as $key => $value ) {
+           if ( !in_array( $key, $ignore ) && is_string($value) )
+               $c["$key"] = $value;
+            else
+               $c["$key"] = '';
       }
       $query_string = '';
 	  foreach ( $c as $key => $data ) {
