@@ -255,6 +255,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 It is recommended to set the setting "E-mail From" to an email address on the same domain as your web site. This will improve mail delivery.
 [forum post](http://wordpress.org/support/topic/plugin-fast-secure-contact-form-preventing-submission-from-going-to-spam).
 - Added ability to use comma in extra field labels for Checkbox, Radio, Select, or Select-multiple. If you need to use a comma besides the one needed to separate the label, escape it with a slash, like this: /,
+- Improved Akismet spam check API code.
 - Fixed required option for checkbox multiple, now all field types can be required. 
 - Fixed all fields with multiple options can have a default option: checkbox, radio, select, or select-multiple.
 - Other small Fixes and improvements.    
