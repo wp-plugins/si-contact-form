@@ -655,7 +655,7 @@ if ($have_attach){
          if(!preg_match("/,/", $ctf_email_on_this_domain)) {
            // just an email: user1@example.com
            $this->si_contact_mail_sender = $ctf_email_on_this_domain;
-           if($email == '')
+           if($email == '' || $si_contact_opt['email_from_enforced'] == 'true')
               $this->si_contact_from_email = $ctf_email_on_this_domain;
          } else {
            // name and email: webmaster,user1@example.com
@@ -665,7 +665,7 @@ if ($have_attach){
            $this->si_contact_mail_sender = $value;
            if($name == '')
              $this->si_contact_from_name = $key;
-           if($email == '')
+           if($email == '' || $si_contact_opt['email_from_enforced'] == 'true')
              $this->si_contact_from_email = $value;
          }
     }

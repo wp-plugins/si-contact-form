@@ -63,11 +63,12 @@ http://www.642weather.com/weather/scripts.php
     // prepare the email header
     $this->si_contact_from_name = $name;
     $this->si_contact_from_email = $email;
+    //$this->si_contact_mail_sender = $ctf_email_on_this_domain;
     if ($ctf_email_on_this_domain != '' ) {
          if(!preg_match("/,/", $ctf_email_on_this_domain)) {
            // just an email: user1@example.com
            $this->si_contact_mail_sender = $ctf_email_on_this_domain;
-           if($email == '')
+           if($email == '' || $si_contact_opt['email_from_enforced'] == 'true')
               $this->si_contact_from_email = $ctf_email_on_this_domain;
          } else {
            // name and email: webmaster,user1@example.com
@@ -77,7 +78,7 @@ http://www.642weather.com/weather/scripts.php
            $this->si_contact_mail_sender = $value;
            if($name == '')
              $this->si_contact_from_name = $key;
-           if($email == '')
+           if($email == '' || $si_contact_opt['email_from_enforced'] == 'true')
              $this->si_contact_from_email = $value;
          }
     }
@@ -90,7 +91,7 @@ http://www.642weather.com/weather/scripts.php
     }
     $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
 
-    @ini_set('sendmail_from', $this->si_contact_mail_from);
+    @ini_set('sendmail_from', $this->si_contact_from_email);
 
     // Check for safe mode
     $this->safe_mode = ((boolean)@ini_get('safe_mode') === false) ? 0 : 1;
@@ -120,7 +121,7 @@ http://www.642weather.com/weather/scripts.php
            $ctf_geekMail->return_path($this->si_contact_mail_sender);
            $ctf_geekMail->x_sender($this->si_contact_mail_sender);
          }
-         $ctf_geekMail->from($this->si_contact_mail_from, $this->si_contact_from_name);
+         $ctf_geekMail->from($this->si_contact_from_email, $this->si_contact_from_name);
          $ctf_geekMail->to($email);
          $ctf_geekMail->_replyTo($this->si_contact_from_email);
          $ctf_geekMail->subject($subject);
@@ -285,6 +286,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'email_to' =>          ( trim($_POST['si_contact_email_to']) != '' ) ? trim($_POST['si_contact_email_to']) : $si_contact_option_defaults['email_to'], // use default if empty
          'php_mailer_enable' =>        $_POST['si_contact_php_mailer_enable'],
          'email_from' =>        trim($_POST['si_contact_email_from']), // optional
+         'email_from_enforced' => (isset( $_POST['si_contact_email_from_enforced'] ) ) ? 'true' : 'false',
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : '',
          'email_subject_list' =>  trim($_POST['si_contact_email_subject_list']),
@@ -838,29 +840,7 @@ if ( !function_exists('mail') ) {
       echo __('PHP4 was officially discontinued August 8, 2008 and is no longer considered safe.', 'si-contact-form')."<br />\n";
       echo __('PHP5 is faster, has more features, and is and safer. Using PHP4 might still work, but is highly discouraged. Contact your web host for support.', 'si-contact-form')."<br /><br />\n";
     }
-  ?>
 
-       <label for="si_contact_php_mailer_enable"><?php _e('Send E-mail function:', 'si-contact-form'); ?></label>
-      <select id="si_contact_php_mailer_enable" name="si_contact_php_mailer_enable">
-<?php
-
-$selected = '';
-foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'geekmail' => esc_attr(__('geekMail', 'si-contact-form')),'php' => esc_attr(__('PHP', 'si-contact-form'))) as $k => $v) {
- if ($si_contact_opt['php_mailer_enable'] == "$k")  $selected = ' selected="selected"';
- echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
- $selected = '';
-}
-?>
-</select>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_php_mailer_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_php_mailer_enable_tip">
-        <?php _e('Emails are normally sent by the wordpress mail function. If you are not receiving email from your contact form. Try setting this to "geekMail" or "PHP", then test the form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
-        <?php _e('"geekMail" is a mail function that is included with this plugin.', 'si-contact-form'); ?>
-        <?php _e('If your form still does not send any E-mail, be sure to also try setting the "E-mail From" setting below. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain.', 'si-contact-form'); ?>
-        <?php _e('Note: attachments are only supported when using the "WordPress" or "geekMail" mail function.', 'si-contact-form'); ?>
-       </div>
-       <br />
-<?php
 if ( $si_contact_opt['email_from'] != '' ) {
     $from_fail = 0;
     if(!preg_match("/,/", $si_contact_opt['email_from'])) {
@@ -904,13 +884,48 @@ if ( $si_contact_opt['email_from'] != '' ) {
         <input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $si_contact_opt['email_from'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
-        <?php _e('E-mail address the messages are sent from. Some web hosts do not allow PHP to send E-mail unless the envelope sender E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix.', 'si-contact-form'); ?>
-        <?php _e('After setting the from address; if your form still does not send any E-mail, look above, and find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem.', 'si-contact-form'); ?>
+        <?php _e('E-mail address the messages are sent from. Some web hosts do not allow PHP to send email unless the envelope sender email address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any email, then set this to a real email address on the SAME domain as your web site, then test the form.', 'si-contact-form'); ?>
+        <?php _e('If your form still does not send any email, also check the setting below: "Enable when web host requires "Mail From" strictly tied to domain email account". In some cases, this will resolve the problem. This setting is also recommended for gmail users to prevent email from going to spam folder.', 'si-contact-form'); ?>
         <br />
         <?php _e('Enter just an email: user1@example.com', 'si-contact-form'); ?><br />
         <?php _e('Or enter name and email: webmaster,user1@example.com ', 'si-contact-form'); ?>
         </div>
         <br />
+
+        <?php
+       if( $si_contact_opt['email_from_enforced'] == 'true' && $si_contact_opt['email_from'] == '') {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires the "E-mail From" setting above to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+        <input name="si_contact_email_from_enforced" id="si_contact_email_from_enforced" type="checkbox" <?php if( $si_contact_opt['email_from_enforced'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_email_from_enforced"><?php _e('Enable when web host requires "Mail From" strictly tied to domain email account.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_enforced_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_email_from_enforced_tip">
+        <?php _e('If your form does not send any email, then set the "E-mail From" setting above to an address on the same web domain as your web site. If email still does not send, also check this setting. (ie: some users report this is required by yahoo small business web hosting)', 'si-contact-form') ?>
+        </div>
+        <br />
+
+       <label for="si_contact_php_mailer_enable"><?php _e('Send E-mail function:', 'si-contact-form'); ?></label>
+      <select id="si_contact_php_mailer_enable" name="si_contact_php_mailer_enable">
+<?php
+
+$selected = '';
+foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'geekmail' => esc_attr(__('geekMail', 'si-contact-form')),'php' => esc_attr(__('PHP', 'si-contact-form'))) as $k => $v) {
+ if ($si_contact_opt['php_mailer_enable'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_php_mailer_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_php_mailer_enable_tip">
+        <?php _e('Emails are normally sent by the wordpress mail function. Other functions are provided for diagnostic uses.', 'si-contact-form'); ?>
+        <?php _e('If your form does not send any email, first try setting the "E-mail From" setting above because some web hosts do not allow PHP to send email unless the "From:" email address is on the same web domain.', 'si-contact-form'); ?>
+        <?php _e('Note: attachments are only supported when using the "WordPress" or "geekMail" mail function.', 'si-contact-form'); ?>
+       </div>
+       <br />
 
         <label for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form'); ?>:</label>
 <?php
@@ -1035,6 +1050,13 @@ if ( $si_contact_opt['email_bcc'] != ''){
         </div>
 <br />
 
+      <?php
+       if( $si_contact_opt['auto_respond_enable'] == 'true' && ($si_contact_opt['auto_respond_from_name'] == '' || $si_contact_opt['auto_respond_from_email'] == '' || $si_contact_opt['auto_respond_reply_to'] == '' || $si_contact_opt['auto_respond_subject'] == '' || $si_contact_opt['auto_respond_message'] == '') ) {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires all the autoresponder fields below to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
         <label for="si_contact_auto_respond_from_name"><?php _e('Autoresponder E-mail "From" name', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_name" id="si_contact_auto_respond_from_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_name']);  ?>" size="60" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_name_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_from_name_tip">
@@ -1045,14 +1067,14 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <label for="si_contact_auto_respond_from_email"><?php _e('Autoresponder E-mail "From" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_email" id="si_contact_auto_respond_from_email" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_email']);  ?>" size="60" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_from_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_from_email_tip">
-        <?php _e('This sets the "from" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        <?php _e('This sets the "from" E-mail address when the autoresponder sends email. If your autoresponder does not send any email, then set this setting to a real email address on the same web domain as your web site. (Same applies to the "Email-From" setting on this page)', 'si-contact-form'); ?>
         </div>
 <br />
 
         <label for="si_contact_auto_respond_reply_to"><?php _e('Autoresponder E-mail "Reply To" address', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_reply_to" id="si_contact_auto_respond_reply_to" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_reply_to']);  ?>" size="60" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_reply_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_reply_to_tip">
-        <?php _e('This sets the "reply to" E-mail address when the autoresponder sends E-mail.', 'si-contact-form'); ?>
+        <?php _e('This sets the "reply to" E-mail address when the autoresponder sends email.', 'si-contact-form'); ?>
         </div>
 <br />
 

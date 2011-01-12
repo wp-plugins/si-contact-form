@@ -928,6 +928,7 @@ function si_contact_get_options($form_num) {
          'email_to' => __('Webmaster', 'si-contact-form').','.get_option('admin_email'),
          'php_mailer_enable' => 'wordpress',
          'email_from' => '',
+         'email_from_enforced' => 'false',
          'email_bcc' => '',
          'email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
          'email_subject_list' => '',
