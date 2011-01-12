@@ -253,7 +253,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 - Added new Setting for "Form Label". You can enter a label for your form to keep track of what you are using it for.
 - Fixes and improvements for better mail delivery and to reduce the emails from going to the spam folder.
 If you are not getting email, set the setting "E-mail From" to an email address on the same domain as your web site. This will improve mail delivery.
-[forum post](http://wordpress.org/support/topic/plugin-fast-secure-contact-form-preventing-submission-from-going-to-spam).
+[mail problem faq](http://www.fastsecurecontactform.com/email-does-not-send).
 - Added new setting: "Enable when web host requires "Mail From" strictly tied to domain email account". If your form does not send any email, then set the "E-mail From" setting to an address on the same web domain as your web site. If email still does not send, also check this setting. (ie: some users report this is required by yahoo small business web hosting) .
 - Added ability to use comma in extra field labels for Checkbox, Radio, Select, or Select-multiple. If you need to use a comma besides the one needed to separate the label, escape it with a slash, like this: /,
 - Improved Akismet spam check API code.
