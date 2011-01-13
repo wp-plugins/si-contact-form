@@ -552,6 +552,10 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 </p>
 
 <?php
+
+// action hook for database extension menu
+do_action( 'fsctf_menu_links' );
+
 if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
