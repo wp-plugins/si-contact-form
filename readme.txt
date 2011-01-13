@@ -247,7 +247,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Soon this will be version 2.9.7, just letting it get downloaded it a bit as 2.9.6 first.
+= 2.9.7 =
+- (13 Jan 2011) - Added a new hook for other plugins to use (just after mail sent). This can be used to export the posted data and attachments to a database. A plugin for this is in the works, stay tuned.
 - Added new Select-multiple extra field type.
 - Added new feature to set the css style for Label and Field in the same row, or switch back to Label on Top [see FAQ](http://www.fastsecurecontactform.com/form-labels-left)
 - Added new Setting for "Form Label". You can enter a label for your form to keep track of what you are using it for.
@@ -257,7 +258,7 @@ If you are not getting email, set the setting "E-mail From" to an email address 
 - Added new setting: "Enable when web host requires "Mail From" strictly tied to domain email account". If your form does not send any email, then set the "E-mail From" setting to an address on the same web domain as your web site. If email still does not send, also check this setting. (ie: some users report this is required by yahoo small business web hosting) .
 - Added ability to use comma in extra field labels for Checkbox, Radio, Select, or Select-multiple. If you need to use a comma besides the one needed to separate the label, escape it with a back slash, like this: \,
 - Improved Akismet spam check API code.
-- Fixed required option for checkbox multiple, now all field types can be required. 
+- Fixed required option for checkbox multiple, now all field types can be required as needed. 
 - Fixed all fields with multiple options can have a default option: checkbox, radio, select, or select-multiple.
 - Other small Fixes and improvements.    
 - Updated Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")

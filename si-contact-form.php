@@ -3,7 +3,7 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 2.9.6
+Version: 2.9.7
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -43,6 +43,7 @@ if (!class_exists('siContactForm')) {
  class siContactForm {
      var $si_contact_error;
      var $uploaded_files;
+     var $ctf_notes_style;
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('FS Contact Form Options', 'si-contact-form'), __('FS Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
@@ -418,7 +419,7 @@ function si_contact_clean_temp_dir($dir, $minutes = 60) {
 }
 
 // used for file attachment feature
-function si_contact_validate_attach( $file ) {
+function si_contact_validate_attach( $file, $ex_field  ) {
     global $si_contact_opt;
 
     $result['valid'] = true;
@@ -494,7 +495,7 @@ function si_contact_validate_attach( $file ) {
 	// uploaded only readable for the owner process
 	@chmod( $new_file, 0400 );
 
-	$this->uploaded_files[] = $new_file;
+	$this->uploaded_files[$ex_field] = $new_file;
 
     $result['file_name'] = $filename; // needed for email message
 

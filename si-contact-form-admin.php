@@ -1471,7 +1471,7 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('To enable a checkbox field with a single option, just enter a label. Then check if you want the field to be required or not.', 'si-contact-form'); ?><br />
        <?php _e('To enable fields with multiple options like checkbox, radio, select, or select-multiple field types; first enter the label and a comma, then include the options separating each one with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
        <?php _e('To make "Green" the default selection: set "Default" to 2. The "Default" setting can be used for for checkbox, radio, select, or select-multiple field types.', 'si-contact-form'); ?><br />
-       <?php _e('If you need to use a comma besides the one needed to separate the label, escape it with a slash, like this: /,', 'si-contact-form'); ?><br />
+       <?php _e('If you need to use a comma besides the one needed to separate the label, escape it with a back slash, like this: \,', 'si-contact-form'); ?><br />
        <?php _e('You can also use fields that allow multiple options to be checked at once, such as checkbox and select-multiple like in this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple options can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?><br />
        <?php _e('By default radio and checkboxes are displayed vertical. Here is how to make them display horizontal: add the tag {inline} before the label, like this: {inline}Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Attachment:', 'si-contact-form'); ?></strong><br />
