@@ -564,6 +564,7 @@ if ($have_attach){
     } // end for
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
+        $posted_data['message'] = $message;
     }
 
   // lookup country info for this ip
