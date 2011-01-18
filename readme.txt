@@ -247,6 +247,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Select Single posted data fix.
+
 = 2.9.7 =
 - (13 Jan 2011) - Added a new hook for other plugins to use (just after mail sent). This can be used to export the posted data and attachments to a database. A plugin for this is in the works, stay tuned.
 - Added new Select-multiple extra field type.
