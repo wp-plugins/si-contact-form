@@ -6,7 +6,7 @@ http://www.642weather.com/weather/scripts.php
 */
 
 // the form is being displayed now
- $this->ctf_notes_style = $this->si_contact_convert_css($si_contact_opt['notes_style']); 
+ $this->ctf_notes_style = $this->si_contact_convert_css($si_contact_opt['notes_style']);
  $this->ctf_form_style = $this->si_contact_convert_css($si_contact_opt['form_style']);
  $this->ctf_border_style = $this->si_contact_convert_css($si_contact_opt['border_style']);
  $this->ctf_select_style = $this->si_contact_convert_css($si_contact_opt['select_style']);
@@ -41,6 +41,16 @@ if ($si_contact_opt['border_enable'] == 'true') {
  $string .= '
 <form '.$have_attach.'action="'.esc_url( $form_action_url ).'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
 ';
+}
+
+if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_button') ) {
+
+      $string .= '<div '.$this->ctf_required_style.'>
+      <div '.$this->ctf_error_style.'>'."\n";
+      $string .= __('SFC Like and SCF share plugins cause problems with Fast Secure Contact Form, please disable or uninstall SFC Like and SCF share plugins.', 'si-contact-form');
+      $string .= '
+      </div>
+</div>'."\n";
 }
 
 // check attachment directory
