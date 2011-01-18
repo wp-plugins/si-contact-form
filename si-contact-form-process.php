@@ -545,9 +545,10 @@ if ($have_attach){
                     $msg .= $php_eol;
                 }
              } else {  // checkbox single
-                 if(${'ex_field'.$i} == 'selected')
+                 if(${'ex_field'.$i} == 'selected') {
                    $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('selected', 'si-contact-form').$php_eol.$php_eol;
                    $posted_data["ex_field$i"] = '* '.__('selected', 'si-contact-form');
+                 }
              }
          } else {  // text, textarea, date, password
                if(${'ex_field'.$i} != ''){
@@ -564,7 +565,6 @@ if ($have_attach){
     } // end for
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
-        $posted_data['message'] = $message;
     }
 
   // lookup country info for this ip
