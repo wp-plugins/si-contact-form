@@ -122,9 +122,9 @@ if (count($contacts) > 1) {
     $string .= ($si_contact_opt['title_select'] != '') ? esc_attr($si_contact_opt['title_select']) : esc_attr( __('Select', 'si-contact-form'));
     $string .= '</option>'."\n";
 
-     if ( !isset($cid) && isset($_GET['si_contact_CID']) ) {
-          $cid = (int)$_GET['si_contact_CID'];
-     }
+    if ( !isset($cid) && isset($_GET[$form_id_num .'mailto_id']) ) {
+        $cid = (int)$this->si_contact_get_var($form_id_num,'mailto_id');
+    }
 
      $selected = '';
 
@@ -327,9 +327,9 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
     $string .= ($si_contact_opt['title_select'] != '') ? esc_attr($si_contact_opt['title_select']) : esc_attr( __('Select', 'si-contact-form'));
     $string .= '</option>'."\n";
 
-     if ( !isset($sid) && isset($_GET['si_contact_SID']) ) {
-          $sid = (int)$_GET['si_contact_SID'];
-     }
+    if ( !isset($sid) && isset($_GET[$form_id_num .'subject_id']) ) {
+        $sid = (int)$this->si_contact_get_var($form_id_num,'subject_id');
+    }
 
      $selected = '';
 
@@ -344,12 +344,9 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
       $string .= '            </select>';
 
        } else {
-              if ($subject == '' && isset($_GET['si_contact_subject']) ) {
-                $subject = $_GET['si_contact_subject'];
+            // text entry subject
+              if ( $subject != '' ) {
                 $subject = substr($subject,0,75); // shorten to 75 chars or less
-                $subject = preg_replace("/ +/",' ', trim($subject));// remove extra spaces
-                $subject = strip_tags($subject); // no html
-                $subject = $this->ctf_clean_input($subject);
               }
             $string .=   '
         <div '.$this->ctf_title_style.'>

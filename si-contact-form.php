@@ -8,7 +8,7 @@ Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-/*  Copyright (C) 2008-2010 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
+/*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -306,15 +306,15 @@ $si_contact_error_print = '';
 $message_sent = 0;
 $mail_to    = '';
 $to_contact = '';
-$name       = '';
-$f_name     = '';
-$m_name     = '';
-$mi_name    = '';
-$l_name     = '';
-$email      = '';
-$email2     = '';
-$subject    = '';
-$message       = '';
+$name       = $this->si_contact_get_var($form_id_num,'name');
+$f_name     = $this->si_contact_get_var($form_id_num,'f_name');
+$m_name     = $this->si_contact_get_var($form_id_num,'m_name');
+$mi_name    = $this->si_contact_get_var($form_id_num,'mi_name');
+$l_name     = $this->si_contact_get_var($form_id_num,'l_name');
+$email      = $this->si_contact_get_var($form_id_num,'email');
+$email2     = $this->si_contact_get_var($form_id_num,'email');
+$subject    = $this->si_contact_get_var($form_id_num,'subject');
+$message    = $this->si_contact_get_var($form_id_num,'message');
 $captcha_code  = '';
 
 // optional extra fields
@@ -324,12 +324,57 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
       ${'ex_field'.$i} = '';
       ${'si_contact_error_ex_field'.$i} = '';
       if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
-         ${'ex_field'.$i.'h'} = '';
-         ${'ex_field'.$i.'m'} = '';
-         ${'ex_field'.$i.'ap'} = '';
+         ${'ex_field'.$i.'h'} = $this->si_contact_get_var($form_id_num,'ex_field'.$i.'h');
+         ${'ex_field'.$i.'m'} = $this->si_contact_get_var($form_id_num,'ex_field'.$i.'m');
+         ${'ex_field'.$i.'ap'} = $this->si_contact_get_var($form_id_num,'ex_field'.$i.'ap');
+      }
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden')
+         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'text')
+         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea')
+         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'date')
+         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'password')
+         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'radio' || $si_contact_opt['ex_field'.$i.'_type'] == 'select') {
+         $exf_opts_array = $this->si_contact_get_exf_opts_array($si_contact_opt['ex_field'.$i.'_label']);
+         $check_ex_field = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+         if($check_ex_field != '' && is_numeric($check_ex_field) && $check_ex_field > 0 ) {
+           if( isset($exf_opts_array[$check_ex_field-1]) )
+               ${'ex_field'.$i} = $exf_opts_array[$check_ex_field-1];
+         }
+      }
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
+         $exf_opts_array = $this->si_contact_get_exf_opts_array($si_contact_opt['ex_field'.$i.'_label']);
+         $ex_cnt = 1;
+         foreach ($exf_opts_array as $k) {
+             if( $this->si_contact_get_var($form_id_num,'ex_field'.$i.'_'.$ex_cnt) == 1 ){
+                 ${'ex_field'.$i.'_'.$ex_cnt} = 'selected';
+             }
+             $ex_cnt++;
+         }
+      }
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+         $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+         if(preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
+            $exf_opts_array = $this->si_contact_get_exf_opts_array($si_contact_opt['ex_field'.$i.'_label']);
+            $ex_cnt = 1;
+            foreach ($exf_opts_array as $k) {
+                if( $this->si_contact_get_var($form_id_num,'ex_field'.$i.'_'.$ex_cnt) == 1 ){
+                     ${'ex_field'.$i.'_'.$ex_cnt} = 'selected';
+                }
+                $ex_cnt++;
+            }
+         }else{
+              if($this->si_contact_get_var($form_id_num,'ex_field'.$i) == 1)
+              ${'ex_field'.$i} = 'selected';
+         }
       }
       if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment')
          $have_attach = 'enctype="multipart/form-data" '; // for <form post
+
    }
 }
 $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
@@ -372,6 +417,33 @@ if($message_sent) {
 }
  return $string;
 } // end function si_contact_form_short_code
+
+function si_contact_get_var($form_id_num,$name) {
+   $value = (isset( $_GET["$form_id_num$name"])) ? $this->ctf_clean_input($_GET["$form_id_num$name"]) : '';
+   return $value;
+}
+
+function si_contact_get_exf_opts_array($label) {
+  $exf_opts_array = array();
+  $exf_opts_label = '';
+  $exf_array_test = trim($label);
+  if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
+                // Error: A radio field is not configured properly in settings
+  } else {
+      list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
+      $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
+      $value = trim(str_replace('\,',',',$value)); // "\," changes to ","
+      if ($exf_opts_label != '' && $value != '') {
+          if(!preg_match("/;/", $value)) {
+             //Error: A radio field is not configured properly in settings.
+          } else {
+             // multiple options
+             $exf_opts_array = explode(";",$value);
+          }
+      }
+  } // end else
+  return $exf_opts_array;
+} //end function
 
 // needed for making temp directories for attachments and captcha session files
 function si_contact_init_temp_dir($dir) {

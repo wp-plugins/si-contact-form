@@ -15,8 +15,6 @@ http://www.642weather.com/weather/scripts.php
            if(!$si_contact_opt['ex_field'.$i.'_type'] ) $si_contact_opt['ex_field'.$i.'_type'] = 'text';
            if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '0';
            if(!$si_contact_opt['ex_field'.$i.'_notes'] ) $si_contact_opt['ex_field'.$i.'_notes'] = '';
-           //if ($si_contact_opt['ex_field'.$i.'_notes'] != '')
-           //    $si_contact_opt['ex_field'.$i.'_notes'] =  '<p>'.$si_contact_opt['ex_field'.$i.'_notes'].'</p>';
 
           switch ($si_contact_opt['ex_field'.$i.'_type']) {
            case 'fieldset':
@@ -179,6 +177,17 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
                <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'[]" multiple="multiple">
         ';
 
+  $ex_get = 0;
+  $ex_cnt = 1;
+  // any thing already selected by GET method?
+  foreach ($exf_opts_array as $k) {
+      if(isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' ){
+        $ex_get =1;
+        break;
+      }
+      $ex_cnt++;
+  }
+
 $exf_opts_ct = 1;
 $selected = '';
 foreach ($exf_opts_array as $k) {
@@ -187,9 +196,13 @@ foreach ($exf_opts_array as $k) {
       $selected = ' selected="selected"';
     }
  }
- if (!isset($_POST['si_contact_form_id']) && $exf_opts_ct == $si_contact_opt['ex_field'.$i.'_default']) {
+ // selected by default
+ if (!isset($_POST['si_contact_form_id']) && !$ex_get && $exf_opts_ct == $si_contact_opt['ex_field'.$i.'_default']) {
       $selected = ' selected="selected"';
  }
+ // selected by get
+ if ( $ex_get && isset(${'ex_field'.$i.'_'.$exf_opts_ct}) && ${'ex_field'.$i.'_'.$exf_opts_ct} == 'selected' )
+    $selected = ' selected="selected"';
  $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
  $exf_opts_ct++;
  $selected = '';
@@ -233,13 +246,24 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
         </div>
         <div '.$this->ctf_field_div_style.'>'. $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i});
 
-     $ex_cnt = 1;
+  $ex_get = 0;
+  $ex_cnt = 1;
+  // any thing already selected by GET method?
+  foreach ($exf_opts_array as $k) {
+      if(isset(${'ex_field'.$i.'_'.$ex_cnt}) && ${'ex_field'.$i.'_'.$ex_cnt} == 'selected' ){
+        $ex_get =1;
+        break;
+      }
+      $ex_cnt++;
+  }
+
+  $ex_cnt = 1;
   foreach ($exf_opts_array as $k) {
      if(!$exf_opts_inline && $ex_cnt > 1)
                $string .= "<br />\n";
      $string .=   '<span style="white-space:nowrap;"><input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
 
-    if (!isset($_POST['si_contact_form_id']) && $ex_cnt == $si_contact_opt['ex_field'.$i.'_default']) {
+    if (!isset($_POST['si_contact_form_id']) && !$ex_get && $ex_cnt == $si_contact_opt['ex_field'.$i.'_default']) {
       $string .= ' checked="checked"';
     }
 

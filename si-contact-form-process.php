@@ -282,7 +282,7 @@ if ($have_attach){
                   ${'si_contact_error_ex_field'.$i} = __('Error: A checkbox-multiple field is not configured properly in settings.', 'si-contact-form');
              }
            }else{  // end label'] == 'checkbox'
-                // text, textarea, select, date, password
+                // text, textarea, radio, select, date, password
                 if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                       ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
                 }else{
