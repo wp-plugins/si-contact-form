@@ -247,6 +247,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.7.1 =
+- (19 Jan 2011) - Added ability to pre-fill in form fields from a URL query string. [see FAQ page](http://www.fastsecurecontactform.com/query-string-parameters)
 - Select Single posted data fix.
 
 = 2.9.7 =
