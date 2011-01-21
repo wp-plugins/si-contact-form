@@ -864,6 +864,9 @@ if ($have_attach){
 
     $message_sent = 1;
 
+   unset($_POST['si_contact_action']);  //prevent form double posting
+   unset($_POST['si_contact_form_id']); //prevent form double posting
+
     // hook for other plugins to use (just after mail sent)
     $fsctf_posted_data = (object) array('title' => sprintf(__('Form: %d', 'si-contact-form'),$form_id_num), 'posted_data' => $posted_data, 'uploaded_files' => (array) $this->uploaded_files );
     do_action_ref_array( 'fsctf_mail_sent', array( &$fsctf_posted_data ) );
