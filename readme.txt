@@ -24,16 +24,15 @@ If you find this plugin useful to you, please consider [__making a small donatio
 Features:
 --------
  * Super easy customizable Options from Admin settings page.
- * Multi-Form feature that allows you to have as many different forms as you need.
- * Optional extra fields of any type: text, textarea, checkbox, radio, select, attachment, date, time, hidden, password, fieldset(box).
+ * Multi-Form feature that allows you to have as many different forms as you need.[see FAQ](http://www.fastsecurecontactform.com/multiple-e-mail-recipients)
+ * Optional extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, fieldset(box).
  * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
- * Backup/restore tool. You can backup/restore all your forms or single forms and settings.
+ * Backup/restore tool. You can backup/restore all your forms or single forms and settings.[see FAQ](http://www.fastsecurecontactform.com/backup-restore-forms)
  * Easy to hide subject and message fields for use as a newsletter signup.
- * Supports sending mail to multiple departments.
+ * Supports sending mail to multiple departments.[see FAQ](http://www.fastsecurecontactform.com/tip-form-preview)
  * Optional redirect to any URL after message sent.
- * Optional autoresponder E-mail message.
+ * Optional autoresponder E-mail message.[see FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
  * Valid coding for HTML, XHTML, HTML STRICT, Section 508, and WAI Accessibility.
- * JavaScript is not required.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
  * Validates syntax of E-mail address.
@@ -43,7 +42,9 @@ Features:
  * Customizable form field titles.
  * Customizable CSS style.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
- * I18n language translation support (see FAQ)
+ * Pre-fill in form fields from a URL query string[see FAQ](http://www.fastsecurecontactform.com/query-string-parameters)
+ * Save emails to the WordPress database, or export to CSV or Excel[see FAQ](http://www.fastsecurecontactform.com/save-to-database)
+ * I18n language translation support [see FAQ](http://www.fastsecurecontactform.com/how-to-translate)
 
 Security:
 --------
@@ -201,6 +202,7 @@ The following translations are included in the download zip file:
 * Polish (pl_PL) - Translated by [Pawel Mezyk]
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
+* Romanian (ro_RO) - Translated by [Anunturi Jibo](http://www.jibo.ro)
 * Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
 * Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
 * Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
@@ -248,6 +250,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Fixed a multiple email problem if using the same form in several posts. Anyway, it is recommended to use the form in a page or sidebar, not a post.
+- Added Romanian (ro_RO) - Translated by [Anunturi Jibo](http://www.jibo.ro)
 
 = 2.9.7.1 =
 - (19 Jan 2011) - Added ability to pre-fill in form fields from a URL query string. [see FAQ page](http://www.fastsecurecontactform.com/query-string-parameters)
