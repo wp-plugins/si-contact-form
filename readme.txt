@@ -68,7 +68,7 @@ Captcha Image Support:
 Requirements/Restrictions:
 -------------------------
  * Works with Wordpress 2.8+, WPMU, and BuddyPress (Wordpress 3.0+ is highly recommended)
- * PHP 4.3.9 or above with GD2 library support. (PHP5 is highly recommended)
+ * PHP5 
  * PHP register_globals and safe_mode should be set to "Off".
 
 == Installation ==
@@ -86,38 +86,8 @@ Requirements/Restrictions:
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-1. Make sure you have the correct "E-mail To:" set in options. 
 
-2. Check your spam folder, maybe the email went there. 
-
-3. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
-
-4. This setting on the contact form options might help you....
-Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail", then test from the contact form again. If it still does not work, try setting it to try setting it to "PHP". In most cases, this will resolve the problem. Remember to also change the settings on all your other forms.
-
-5. Maybe another plugin is conflicting. Do this as a test:
-Temporarily disable all your other plugins. Does it work now? If yes, enable the plugins one by one to determine which one conflicts. 
-
-6. Sometimes your mail server IP address ends up on a SORBS or RBL spam list and gets blocked by various mail systems. This may not be your fault because
-many sites on a web hosting server share the same IP. Check if your mail server IP is blacklisted by SORBS
-http://www.au.sorbs.net/
-You can find your email server IP in the header of a received email (if you have one) sent from your site. Contact your web host for support.
-
-7. Here is another option for you:
-Get a free gmail account.
-On the contact form settings page, find this setting: "Send E-mail function:", set it back to "WordPress".
-Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
-Set these settings for "WP Mail SMTP":
-Mailer: SMTP, 
-SMTP Host: smtp.gmail.com, 
-SMTP Port: 465, 
-Encryption: SSL, 
-Authentication: Yes, 
-Username: your full gmail address, 
-Password: your mail password.
-Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
-
-8. Maybe your web server has a broken mail function, contact your web host for support.
+[See FAQ page: Problem: I do not receive email, email does not send, or always goes to the “Spam” folder. How to troubleshoot mail delivery.]http://www.fastsecurecontactform.com/email-does-not-send)
 
 
 == Screenshots ==
@@ -137,47 +107,8 @@ Now use gmail to check for your contact form mail, or set gmail to forward the m
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-1. Make sure you have the correct "E-mail To:" set in options. 
+[See FAQ page: Problem: I do not receive email, email does not send, or always goes to the “Spam” folder. How to troubleshoot mail delivery.]http://www.fastsecurecontactform.com/email-does-not-send)
 
-2. Check your spam folder, maybe the email went there. 
-
-3. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
-
-4. This setting on the contact form options page might help you....
-Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
-
-5. Maybe another plugin is conflicting. Do this as a test: Look on the Admin - Plugins - menu.
-Temporarily Disable (not uninstall) all your other plugins. Does it work now? If yes, Activate the plugins one by one to determine which one conflicts.  
-
-6. Sometimes your mail server IP address ends up on a SORBS or RBL spam list and gets blocked by various mail systems. This may not be your fault because
-many sites on a web hosting server share the same IP. Check if your mail server IP is blacklisted by SORBS
-http://www.au.sorbs.net/
-You can find your email server IP in the header of a received email (if you have one) sent from your site. Contact your web host for support.
-
-7. Here is another option for you:
-Get a free gmail account.
-On the contact form settings page, find this setting: "Send E-mail function:", set it back to "WordPress".
-Install the plugin called [WP Mail SMTP](http://wordpress.org/extend/plugins/wp-mail-smtp/),  then set it to use gmail SMTP for mail.
-Set these settings for "WP Mail SMTP":
-Mailer: SMTP, 
-SMTP Host: smtp.gmail.com, 
-SMTP Port: 465, 
-Encryption: SSL, 
-Authentication: Yes, 
-Username: your full gmail address, 
-Password: your mail password.
-Now use gmail to check for your contact form mail, or set gmail to forward the mail to your other address.
-
-8. Maybe your web server has a broken mail function, contact your web host for support.
-
-= I am not receiving mail, my host says a fifth parameter -f must be added to the PHP mail function. This will set the name of the from email address. =
-
-Do this:
-
-1. Some web hosts do not allow PHP to send E-mail unless the "From:" E-mail address is on the same web domain as your web site. And they require it to be a real address on that domain, or mail will NOT SEND! (They do this to help prevent spam.) If your contact form does not send any E-mail, then set this to a real E-mail address on the SAME domain as your web site as a possible fix. After setting the from address; if your form still does not send any E-mail, also find this setting: "Send E-mail function:", try setting it to "geekMail" or "PHP", then test from the contact form again. In some cases, this will resolve the problem. 
-
-2. Use the E-mail test feature at the bottom of the settings page, if you are not receiving mail, try it. It might display troubleshooting information.
-                        
 
 = Is this plugin available in other languages? =
 
