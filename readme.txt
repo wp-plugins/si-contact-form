@@ -24,14 +24,14 @@ If you find this plugin useful to you, please consider [__making a small donatio
 Features:
 --------
  * Super easy customizable Options from Admin settings page.
- * Multi-Form feature that allows you to have as many different forms as you need.[see FAQ](http://www.fastsecurecontactform.com/multiple-e-mail-recipients)
- * Optional extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, fieldset(box).
+ * Multi-Form feature that allows you to have as many different forms as you need.[See FAQ](http://www.fastsecurecontactform.com/multiple-e-mail-recipients)
+ * Optional extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, fieldset(box). [See FAQ](http://www.fastsecurecontactform.com/how-to-add-extra-fields)
  * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
- * Backup/restore tool. You can backup/restore all your forms or single forms and settings.[see FAQ](http://www.fastsecurecontactform.com/backup-restore-forms)
+ * Backup/restore tool. You can backup/restore all your forms or single forms and settings.[See FAQ](http://www.fastsecurecontactform.com/backup-restore-forms)
  * Easy to hide subject and message fields for use as a newsletter signup.
- * Supports sending mail to multiple departments.[see FAQ](http://www.fastsecurecontactform.com/tip-form-preview)
+ * Supports sending mail to multiple departments.[See FAQ](http://www.fastsecurecontactform.com/tip-form-preview)
  * Optional redirect to any URL after message sent.
- * Optional autoresponder E-mail message.[see FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
+ * Optional autoresponder E-mail message.[See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
  * Valid coding for HTML, XHTML, HTML STRICT, Section 508, and WAI Accessibility.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
@@ -42,9 +42,9 @@ Features:
  * Customizable form field titles.
  * Customizable CSS style.
  * Sends E-mail with UTF-8 character encoding for US and International character support.
- * Pre-fill in form fields from a URL query string[see FAQ](http://www.fastsecurecontactform.com/query-string-parameters)
- * Save emails to the WordPress database, or export to CSV or Excel[see FAQ](http://www.fastsecurecontactform.com/save-to-database)
- * I18n language translation support [see FAQ](http://www.fastsecurecontactform.com/how-to-translate)
+ * Pre-fill in form fields from a URL query string. [See FAQ](http://www.fastsecurecontactform.com/query-string-parameters)
+ * Save emails to the WordPress database, or export to CSV or Excel. [See FAQ](http://www.fastsecurecontactform.com/save-to-database)
+ * I18n language translation support. [See FAQ](http://www.fastsecurecontactform.com/how-to-translate)
 
 Security:
 --------
