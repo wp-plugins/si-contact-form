@@ -99,7 +99,7 @@ if (empty($ctf_contacts)) {
 }
 
 if ($si_contact_opt['req_field_label_enable'] == 'true' && $si_contact_opt['req_field_indicator_enable'] == 'true' ) {
-   $string .=  '<div '.$this->ctf_required_style.'>'."\n";;
+   $string .=  '<div '.$this->ctf_required_style.'>'."\n";
    $string .= ($si_contact_opt['tooltip_required'] != '') ? '<span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' .$si_contact_opt['tooltip_required'] : '<span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' . __('(denotes required field)', 'si-contact-form');
    $string .= '
    </div>
