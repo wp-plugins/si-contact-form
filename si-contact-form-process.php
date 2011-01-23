@@ -565,7 +565,7 @@ if ($have_attach){
     } // end for
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
-        $posted_data['message'] = $message;   
+        $posted_data['message'] = $message;
     }
 
   // lookup country info for this ip
@@ -673,10 +673,15 @@ if ($have_attach){
       }
     } // end if(function_exists('akismet_http_post')){
    }
+   $posted_data['full_message'] = $msg;
+
+  $email_off = 0;
+  if ($si_contact_opt['redirect_enable'] == 'true' && $si_contact_opt['redirect_query'] == 'true' && $si_contact_opt['redirect_email_off'] == 'true')
+    $email_off = 1;
 
   if (!$this->si_contact_error) {
 
-    $posted_data['full_message'] = $msg;
+   if (!$email_off) {
     $header = '';  // for php mail and wp_mail
     $ctf_email_on_this_domain = $si_contact_opt['email_from']; // optional
     // prepare the email header
@@ -789,6 +794,7 @@ if ($have_attach){
 		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
 		}
     }
+   } // end if (!$email_off) {
 
    // autoresponder feature
    if ($si_contact_opt['auto_respond_enable'] == 'true' && $email != '' && $si_contact_opt['auto_respond_subject'] != '' && $si_contact_opt['auto_respond_message'] != ''){

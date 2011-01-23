@@ -313,7 +313,11 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'captcha_perm_level' =>       $_POST['si_contact_captcha_perm_level'],
          'redirect_enable' =>  (isset( $_POST['si_contact_redirect_enable'] ) ) ? 'true' : 'false',
          'redirect_seconds' => ( is_numeric(trim($_POST['si_contact_redirect_seconds'])) && trim($_POST['si_contact_redirect_seconds']) < 61 ) ? absint(trim($_POST['si_contact_redirect_seconds'])) : $si_contact_option_defaults['redirect_seconds'],
-         'redirect_url' =>        trim($_POST['si_contact_redirect_url']),
+         'redirect_url' =>        ( trim($_POST['si_contact_redirect_url']) != '' ) ? trim($_POST['si_contact_redirect_url']) : $si_contact_option_defaults['redirect_url'], // use default if empty
+         'redirect_query' =>  (isset( $_POST['si_contact_redirect_query'] ) ) ? 'true' : 'false',
+         'redirect_ignore' =>        trim($_POST['si_contact_redirect_ignore']),
+         'redirect_rename' =>        trim($_POST['si_contact_redirect_rename']),
+         'redirect_email_off' =>  (isset( $_POST['si_contact_redirect_email_off'] ) ) ? 'true' : 'false',
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
          'ex_fields_after_msg' => (isset( $_POST['si_contact_ex_fields_after_msg'] ) ) ? 'true' : 'false',
          'date_format' =>               $_POST['si_contact_date_format'],
@@ -1130,15 +1134,17 @@ if ( $si_contact_opt['email_bcc'] != ''){
 
     <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_akismet_tip');"><?php _e('help', 'si-contact-form'); ?></a>
     <div style="text-align:left; display:none" id="si_contact_akismet_tip">
-    <?php _e('Akismet is a WordPress spam prevention plugin. When Akismet is installed and active, all Fast Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form') ?>
+    <?php _e('Akismet is a WordPress spam prevention plugin. When Akismet is installed and active, this form will be checked with Akismet to help prevent spam.', 'si-contact-form') ?>
     </div>
     <br />
 
 <?php
+$akismet_installed = 0;
 if( $si_contact_opt['akismet_disable'] == 'false' ) {
  if (function_exists('akismet_verify_key')) {
     if (!isset($_POST['si_contact_akismet_check'])){
        echo '<span style="background-color:#99CC99;">'. __('Akismet is installed.', 'si-contact-form'). '</span>';
+       $akismet_installed = 1;
     }
     if (isset($_POST['si_contact_akismet_check'])){;
       $key_status = 'failed';
@@ -1149,8 +1155,9 @@ if( $si_contact_opt['akismet_disable'] == 'false' ) {
 			$key_status = akismet_verify_key( $key );
 		}
 		if ( $key_status == 'valid' ) {
-            ?><div id="message" class="updated"><strong><?php echo __('Akismet is enabled and the key is valid. All Fast Secure Contact Form posts will be checked with Akismet to help prevent spam', 'si-contact-form'); ?></strong></div><?php
-            echo '<span class="updated">' . __('Akismet is installed and the key is valid. All Fast Secure Contact Form posts will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></span>';
+		    $akismet_installed = 1;
+            ?><div id="message" class="updated"><strong><?php echo __('Akismet is enabled and the key is valid. This form will be checked with Akismet to help prevent spam', 'si-contact-form'); ?></strong></div><?php
+            echo '<span class="updated">' . __('Akismet is installed and the key is valid. This form will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></span>';
 		} else if ( $key_status == 'invalid' ) {
 			?><div id="message" class="error"><strong><?php echo __('Akismet plugin is enabled but key needs to be activated', 'si-contact-form'); ?></strong></div><?php
              echo '<span class="error">'. __('Akismet plugin is installed but key needs to be activated.', 'si-contact-form'). '</span>';
@@ -1326,44 +1333,9 @@ foreach ($captcha_difficulty_array as $k => $v) {
       <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
-<div class="form-tab"><?php echo __('Redirect:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
-<div class="clear"></div>
-<fieldset>
-
-        <input name="si_contact_redirect_enable" id="si_contact_redirect_enable" type="checkbox" <?php if( $si_contact_opt['redirect_enable'] == 'true' ) echo 'checked="checked"'; ?> />
-        <label for="si_contact_redirect_enable"><?php _e('Enable redirect after the message sends', 'si-contact-form'); ?>.</label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_redirect_enable_tip">
-        <?php _e('If enabled: After a user sends a message, the web browser will display "message sent" for x seconds, then redirect to the redirect URL. This can be used to redirect to the blog home page, or a custom "Thank You" page.', 'si-contact-form'); ?>
-        </div>
-        <br />
-
-        <label for="si_contact_redirect_seconds"><?php _e('Redirect delay in seconds', 'si-contact-form'); ?>:</label>
-        <input name="si_contact_redirect_seconds" id="si_contact_redirect_seconds" type="text" value="<?php echo absint($si_contact_opt['redirect_seconds']);  ?>" size="3" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_seconds_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_redirect_seconds_tip">
-        <?php _e('How many seconds the web browser will display "message sent" before redirecting to the redirect URL. Values of 0-60 are allowed.', 'si-contact-form'); ?>
-        </div>
-        <br />
-
-        <label for="si_contact_redirect_url"><?php _e('Redirect URL', 'si-contact-form'); ?>:</label><input name="si_contact_redirect_url" id="si_contact_redirect_url" type="text" value="<?php echo $si_contact_opt['redirect_url'];  ?>" size="50" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_url_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_redirect_url_tip">
-        <?php _e('The form will redirect to this URL after success. This can be used to redirect to the blog home page, or a custom "Thank You" page.', 'si-contact-form'); ?>
-        <?php _e('Use FULL URL including http:// for best results.', 'si-contact-form'); ?>
-        </div>
-</fieldset>
-
-    <p class="submit">
-      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
-    </p>
- <!-- begin Click for Advanced was here -->
-
 <div class="form-tab"><?php echo __('Form:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
 <div class="clear"></div>
 <fieldset>
-
- <!-- Click for Advanced stay on was here -->
 
 <strong><?php echo __('Standard Fields:', 'si-contact-form'); ?></strong><br />
        <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('stand_fields_tip');">
@@ -1644,6 +1616,160 @@ foreach ($cal_date_array as $k => $v) {
 
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast Secure Contact Form', 'si-contact-form'); ?></a>
+
+</fieldset>
+
+    <p class="submit">
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+    </p>
+
+<div class="form-tab"><?php echo __('Redirect:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
+<div class="clear"></div>
+<fieldset>
+
+        <input name="si_contact_redirect_enable" id="si_contact_redirect_enable" type="checkbox" <?php if( $si_contact_opt['redirect_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_redirect_enable"><?php _e('Enable redirect after the message sends', 'si-contact-form'); ?>.</label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_enable_tip">
+        <?php _e('If enabled: After a user sends a message, the web browser will display "message sent" for x seconds, then redirect to the redirect URL. This can be used to redirect to the blog home page, or a custom "Thank You" page.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label for="si_contact_redirect_seconds"><?php _e('Redirect delay in seconds', 'si-contact-form'); ?>:</label>
+        <input name="si_contact_redirect_seconds" id="si_contact_redirect_seconds" type="text" value="<?php echo absint($si_contact_opt['redirect_seconds']);  ?>" size="3" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_seconds_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_seconds_tip">
+        <?php _e('How many seconds the web browser will display "message sent" before redirecting to the redirect URL. Values of 0-60 are allowed.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label for="si_contact_redirect_url"><?php _e('Redirect URL', 'si-contact-form'); ?>:</label><input name="si_contact_redirect_url" id="si_contact_redirect_url" type="text" value="<?php echo $si_contact_opt['redirect_url'];  ?>" size="50" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_url_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_url_tip">
+        <?php _e('The form will redirect to this URL after success. This can be used to redirect to the blog home page, or a custom "Thank You" page.', 'si-contact-form'); ?>
+        <?php _e('Use FULL URL including http:// for best results.', 'si-contact-form'); ?>
+        </div>
+        <br />
+      <?php
+       if( $si_contact_opt['redirect_query'] == 'true' &&  $si_contact_opt['redirect_enable'] != 'true') {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires the "Enable redirect" to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+        <input name="si_contact_redirect_query" id="si_contact_redirect_query" type="checkbox" <?php if( $si_contact_opt['redirect_query'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_redirect_query"><?php _e('Enable posted data to be sent as a query string on the redirect URL.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_query_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_query_tip">
+        <?php _e('If enabled: The posted data is sent to the redirect URL. This can be used to send the posted data via GET query string to a another form.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label for="si_contact_redirect_ignore"><?php echo __('Query string fields to ignore', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_ignore_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_redirect_ignore_tip">
+        <?php _e('Optional list of field names for fields you do not want included in the query string.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+		<?php _e('Available fields on this form:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+        // name
+     if ($si_contact_opt['name_type'] != 'not_available') {
+        switch ($si_contact_opt['name_format']) {
+          case 'name':
+              echo 'from_name<br />';
+          break;
+          case 'first_last':
+              echo 'first_name<br />';
+              echo 'last_name<br />';
+          break;
+          case 'first_middle_i_last':
+              echo 'first_name<br />';
+              echo 'middle_initial<br />';
+              echo 'last_name<br />';
+          break;
+          case 'first_middle_last':
+              echo 'first_name<br />';
+              echo 'middle_name<br />';
+              echo 'last_name<br />';
+         break;
+      }
+   }
+        // email
+   if ($si_contact_opt['email_type'] != 'not_available')
+        echo 'from_email<br />';
+        // optional extra fields
+      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+              if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
+         if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
+             echo "ex_field$i<br />";
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
+             echo "ex_field$i<br />";
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php') {
+             echo "ex_field$i<br />";
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
+             echo "ex_field$i<br />";
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
+             echo "ex_field$i<br />";
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+              echo "ex_field$i<br />";
+         } else {  // text, textarea, date, password
+              echo "ex_field$i<br />";
+         }
+       }
+    } // end for
+   if ($si_contact_opt['subject_type'] != 'not_available')
+       echo 'subject<br />';
+   if ($si_contact_opt['message_type'] != 'not_available')
+        echo 'message<br />';
+        echo 'full_message<br />';
+       if( $akismet_installed  )
+         echo 'akismet<br />';
+        ?>
+</span>
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_redirect_ignore" id="si_contact_redirect_ignore"><?php echo $si_contact_opt['redirect_ignore']; ?></textarea>
+      <br />
+
+      <label for="si_contact_redirect_rename"><?php echo __('Query string fields to rename', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_rename_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_redirect_rename_tip">
+        <?php _e('Optional list of field names for fields that need to be renamed for the query string.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+        <?php _e('Type the old field name separated by the equals character, then type the new name, like this: oldname=newname', 'si-contact-form'); ?><br />
+		<?php _e('Examples:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        from_name=name<br />
+		from_email=email<br />
+		full_message=message</span><br />
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_redirect_rename" id="si_contact_redirect_rename"><?php echo $si_contact_opt['redirect_rename']; ?></textarea>
+      <br />
+
+      <?php
+       if( $si_contact_opt['redirect_email_off'] == 'true' && ($si_contact_opt['redirect_enable'] != 'true' || $si_contact_opt['redirect_query'] != 'true') ) {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires the "Enable redirect" and "Enable posted data to be sent as a query string" to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+
+       <?php
+       if( $si_contact_opt['redirect_email_off'] == 'true' && $si_contact_opt['redirect_enable'] == 'true' && $si_contact_opt['redirect_query'] == 'true' ) {
+        ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the redirect settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
+         echo '<br /><span class="updated">';
+         echo __('Warning: You have turned off email sending in the redirect settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+        <input name="si_contact_redirect_email_off" id="si_contact_redirect_email_off" type="checkbox" <?php if( $si_contact_opt['redirect_email_off'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_redirect_email_off"><?php _e('Disable email sending (use only when required while you have enabled query string on the redirect URL).', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_email_off_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_email_off_tip">
+        <?php _e('No email will be sent to you!! The posted data will ONLY be sent to the redirect URL. This can be used to send the posted data via GET query string to a another form. Note: the autoresponder will still send email if it is enabled.', 'si-contact-form'); ?>
+        </div>
+        <br />
 
 </fieldset>
 

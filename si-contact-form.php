@@ -230,65 +230,6 @@ $ctf_banned_ips = array(
 // SET  $ctf_wrap_message = 1;  ON,  $ctf_wrap_message = 0; for OFF.
 $ctf_wrap_message = 1;
 
-// Redirect to Home Page after message is sent
-$ctf_redirect_enable = $si_contact_opt['redirect_enable'];
-// Used for the delay timer once the message has been sent
-$ctf_redirect_timeout = $si_contact_opt['redirect_seconds']; // time in seconds to wait before loading another Web page
-// Web page to send the user to after the time has expired
-$ctf_redirect_url = $si_contact_opt['redirect_url'];
-
-// The $ctf_welcome_intro is what gets printed when the contact form is first presented.
-// It is not printed when there is an input error and not printed after the form is completed
-$ctf_welcome_intro = '
-
-'.$si_contact_opt['welcome'];
-
-// The $thank_you is what gets printed after the form is sent.
-$ctf_thank_you = '
-<p>
-';
-if ($si_contact_opt['text_message_sent'] != '') {
-        $ctf_thank_you .= $si_contact_opt['text_message_sent'];
-} else {
-        $ctf_thank_you .= __('Your message has been sent, thank you.', 'si-contact-form');
-}
-$ctf_thank_you .= '
-</p>
-';
-
-if ($ctf_redirect_enable == 'true') {
-  $wp_plugin_url = WP_PLUGIN_URL;
-
- $ctf_thank_you .= <<<EOT
-
-<script type="text/javascript" language="javascript">
-<!--
-var count=$ctf_redirect_timeout;
-var time;
-function si_timedCount() {
-  document.title='Redirecting in ' + count + ' seconds';
-  count=count-1;
-  time=setTimeout("si_timedCount()",1000);
-  if (count==-1) {
-    clearTimeout(time);
-    document.title='Redirecting ...';
-    self.location='$ctf_redirect_url';
-  }
-}
-window.onload=si_timedCount;
-//-->
-</script>
-EOT;
-
-$ctf_thank_you .= '
-<img src="'.$wp_plugin_url.'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
-'.__('Redirecting', 'si-contact-form').' ... ';
-
-
-// do not remove the above EOT line
-
-}
-
 // add numbered keys starting with 1 to the $contacts array
 $cont = array();
 $ct = 1;
@@ -406,15 +347,108 @@ if (isset($_POST['si_contact_action']) && ($_POST['si_contact_action'] == 'send'
 } // end if posted si_contact_action = send
 
 if($message_sent) {
+       // Redirect to Home Page after message is sent
+       $ctf_redirect_enable = $si_contact_opt['redirect_enable'];
+       // Used for the delay timer once the message has been sent
+       $ctf_redirect_timeout = $si_contact_opt['redirect_seconds']; // time in seconds to wait before loading another Web page
+       // Web page to send the user to after the time has expired
+       $ctf_redirect_url = $si_contact_opt['redirect_url'];
+
+// The $thank_you is what gets printed after the form is sent.
+$ctf_thank_you = '
+<p>
+';
+if ($si_contact_opt['text_message_sent'] != '') {
+        $ctf_thank_you .= $si_contact_opt['text_message_sent'];
+} else {
+        $ctf_thank_you .= __('Your message has been sent, thank you.', 'si-contact-form');
+}
+$ctf_thank_you .= '
+</p>
+';
+
+if ($ctf_redirect_enable == 'true') {
+
+    // redirect query string code
+   if ($si_contact_opt['redirect_query'] == 'true') {
+      // build query string
+      $query_string = '';
+       //rename field names array
+       $rename_fields = array();
+       $rename_fields_test = explode("\n",$si_contact_opt['redirect_rename']);
+       if ( !empty($rename_fields_test) ) {
+          foreach($rename_fields_test as $line) {
+            if(preg_match("/=/", $line) ) {
+               list($key, $value) = explode("=",$line);
+               $key   = trim($key);
+               $value = trim($value);
+               if ($key != '' && $value != '')
+                  $rename_fields[$key] = $value;
+            }
+          }
+       }
+       //ignore field names array
+       $ignore_fields = array();
+       $ignore_fields = explode("\n",$si_contact_opt['redirect_ignore']);
+      // $posted_data is an array of the form name value pairs
+      foreach ($posted_data as $key => $data) {
+	       if( is_string($data) ) {
+              $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
+              if ( in_array($key, $ignore_fields) )
+               continue;
+		      $query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
+           }
+      }
+      $ctf_redirect_url .= '?'.$query_string;
+   } // end if(redirect query
+
+
+ $ctf_thank_you .= <<<EOT
+
+<script type="text/javascript" language="javascript">
+<!--
+var count=$ctf_redirect_timeout;
+var time;
+function si_timedCount() {
+  document.title='Redirecting in ' + count + ' seconds';
+  count=count-1;
+  time=setTimeout("si_timedCount()",1000);
+  if (count==-1) {
+    clearTimeout(time);
+    document.title='Redirecting ...';
+    self.location='$ctf_redirect_url';
+  }
+}
+window.onload=si_timedCount;
+//-->
+</script>
+EOT;
+
+$ctf_thank_you .= '
+<img src="'.WP_PLUGIN_URL.'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
+'.__('Redirecting', 'si-contact-form').' ... ';
+
+
+// do not remove the above EOT line
+
+}
+
       // thank you message is printed here
       $string .= $ctf_thank_you;
 }else{
-      // welcome intro is printed here
-      $string .= $ctf_welcome_intro;
 
-      // include the code to display the form
-      include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-display.php');
-}
+     // The $ctf_welcome_intro is what gets printed when the contact form is first presented.
+     // It is not printed when there is an input error and not printed after the form is completed
+     $ctf_welcome_intro = "\n". $si_contact_opt['welcome'];
+
+     // welcome intro is printed here
+     $string .= $ctf_welcome_intro;
+
+     // include the code to display the form
+     include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-display.php');
+
+} // end if ( message sent
+
  return $string;
 } // end function si_contact_form_short_code
 
@@ -1029,6 +1063,10 @@ function si_contact_get_options($form_num) {
          'redirect_enable' => 'true',
          'redirect_seconds' => '3',
          'redirect_url' => get_option('home'),
+         'redirect_query' => 'false',
+         'redirect_ignore' => '',
+         'redirect_rename' => '',
+         'redirect_email_off' => 'false', 
          'ex_fields_after_msg' => 'false',
          'date_format' => 'mm/dd/yyyy',
          'cal_start_day' => '0',
@@ -1055,8 +1093,8 @@ function si_contact_get_options($form_num) {
          'field_div_style' => 'text-align:left;',
          'error_style' => 'text-align:left; color:red;',
          'select_style' => 'text-align:left;',
-         'captcha_div_style_sm' => 'width: 175px; height: 50px; padding-top:5px;',
-         'captcha_div_style_m' => 'width: 250px; height: 65px; padding-top:5px;',
+         'captcha_div_style_sm' => 'width:175px; height:50px; padding-top:5px;',
+         'captcha_div_style_m' => 'width:250px; height:65px; padding-top:5px;',
          'submit_div_style' => 'text-align:left; padding-top:8px;',
          'button_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'font-size:x-small; font-weight:normal; padding-top:5px;',

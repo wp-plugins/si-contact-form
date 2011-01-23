@@ -30,8 +30,9 @@ Features:
  * Backup/restore tool. You can backup/restore all your forms or single forms and settings.[See FAQ](http://www.fastsecurecontactform.com/backup-restore-forms)
  * Easy to hide subject and message fields for use as a newsletter signup.
  * Supports sending mail to multiple departments.[See FAQ](http://www.fastsecurecontactform.com/tip-form-preview)
- * Optional redirect to any URL after message sent.
- * Optional autoresponder E-mail message.[See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
+ * Optional - redirect to any URL after message sent.
+ * Optional - posted data can be sent as a query string on the redirect URL. [See faq](http://www.fastsecurecontactform.com/sending-data-by-query-string)
+ * Optional - autoresponder E-mail message.[See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
  * Valid coding for HTML, XHTML, HTML STRICT, Section 508, and WAI Accessibility.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
@@ -180,6 +181,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added new settings in the "Redirect" section: You can Enable posted data to be sent as a query string on the redirect URL. This can be used to send the posted data via GET query string to a another form. 
+- New settings for redirect: "Query string fields to ignore", "Query string fields to rename", and "Disable email sending (use only when required while you have enabled query string on the redirect URL)". [See FAQ](http://www.fastsecurecontactform.com/sending-data-by-query-string)
 - Fixed a multiple email problem if using the same form in several posts. Anyway, it is recommended to use the form in a page or sidebar, not a post.
 - Added Romanian (ro_RO) - Translated by [Anunturi Jibo](http://www.jibo.ro)
 
