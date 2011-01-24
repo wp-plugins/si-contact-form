@@ -170,20 +170,24 @@ http://www.642weather.com/weather/scripts.php
 <div id="message" class="updated fade"><p><strong><?php _e('Test Message Sent', 'si-contact-form'); echo '<br />'.$si_contact_opt['php_mailer_enable']; echo ' '.$subject; ?></strong></p>
 <?php if ($result != true) { ?>
 <p><?php _e('The result was:', 'si-contact-form'); ?></p>
+<?php echo '<p><a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>'; ?>
 <pre><?php var_dump($result); ?></pre>
 <?php
 if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
 ?>
 <p><?php _e('The full debugging output is shown below:', 'si-contact-form'); ?></p>
+<?php echo '<p><a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>'; ?>
 <pre><?php var_dump($phpmailer); ?></pre>
 <?php
     }
 } else {
   echo '<p>'._e('Be sure to check your email to see if you received it.', 'si-contact-form').'</p>';
+  echo '<p><a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>';
 }
       if ($smtp_debug != '') {
 ?>
 <p><?php _e('The E-mail debugging output is shown below:', 'si-contact-form'); ?></p>
+<?php echo '<p><a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>'; ?>
 <pre><?php echo $smtp_debug ?></pre>
 <?php }
 
@@ -1961,7 +1965,7 @@ foreach ($cal_date_array as $k => $v) {
 <legend><?php _e('Send a Test E-mail', 'si-contact-form'); ?></legend>
 <?php _e('If you are not receiving email from your form, try this test because it can display troubleshooting information.', 'si-contact-form'); ?><br />
 <?php _e('There are settings you can use to try to fix email delivery problems, see this FAQ for help:', 'si-contact-form'); ?>
- <a href="http://wordpress.org/extend/plugins/si-contact-form/faq/" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a><br />
+ <a href="http://www.fastsecurecontactform.com/email-does-not-send" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a><br />
 <?php _e('Type an email address here and then click Send Test to generate a test email.', 'si-contact-form'); ?>
 <?php
 if ( !function_exists('mail') ) {

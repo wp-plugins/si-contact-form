@@ -738,12 +738,14 @@ if ($have_attach){
           // Pass the Return-Path via sendmail's -f command.
           // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
         if (!mail($mail_to,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_sender)) {
-		    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+		    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
         }
       }else{
         // the fifth parameter is not allowed in safe mode
         if (!mail($mail_to,$subj,$msg,$header_php)) {
-	   	    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+	   	    die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
         }
       }
     }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
@@ -770,7 +772,8 @@ if ($have_attach){
 			    }
          }
          if (!$ctf_geekMail->send()) {
-              die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+              die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
              //$errors = $geekMail->getDebugger();
              //print_r($errors);
          }
@@ -790,10 +793,12 @@ if ($have_attach){
 				    $attach_this_mail[] = $path;
 			    }
 			    if (!wp_mail($mail_to,$subj,$msg,$header,$attach_this_mail))
-		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form').
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
 		} else {
 		        if (!wp_mail($mail_to,$subj,$msg,$header))
-		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') . '</p>');
+		            die('<p>' . __('The e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
 		}
     }
    } // end if (!$email_off) {
@@ -833,11 +838,13 @@ if ($have_attach){
             if (!$this->safe_mode) {
                    // Pass the Return-Path via sendmail's -f command.
               if (!mail($email,$subj,$msg,$header_php, '-f '.$this->si_contact_from_email))
-		         die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+		         die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
             } else {
               // the fifth parameter is not allowed in safe mode
               if (!mail($email,$subj,$msg,$header_php))
-		         die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+		         die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
             }
        }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
             // autoresponder sending with geekmail
@@ -858,7 +865,8 @@ if ($have_attach){
             $ctf_geekMail->subject($subj);
             $ctf_geekMail->message($msg);
             if (!$ctf_geekMail->send()) {
-                 die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+                 die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
                 //$errors = $geekMail->getDebugger();
                 //print_r($errors);
            }
@@ -867,7 +875,8 @@ if ($have_attach){
             add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
             add_filter( 'wp_mail_from', array(&$this,'si_contact_form_from_email'),1);
 	        if (!wp_mail($email,$subj,$msg,$header))
-		       die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') . '</p>');
+		       die('<p>' . __('The autoresponder e-mail could not be sent.', 'si-contact-form') .
+            ' <a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>');
        }
   }
 
