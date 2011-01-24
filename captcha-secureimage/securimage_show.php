@@ -6,13 +6,22 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
 
    include 'securimage.php';
 
-   $chars = 'ABCDEFHKLMNPRSTUVWYZ234578';
    $char_length = 4;
+   $chars = 'ABCDEFHKLMNPRSTUVWYZ234578';
+   $chars_num = '234578'; // do not change this or the code will break!!
+   // one random position always has to be a number so that a 4 letter swear word could never appear
+   $rand_pos = mt_rand( 0, $char_length - 1 );
    $captcha_word  = '';
    for ( $i = 0; $i < $char_length; $i++ ) {
-			$pos = mt_rand( 0, strlen( $chars ) - 1 );
-			$char = $chars[$pos];
-			$captcha_word .= $char;
+       // this rand character position is a number only so that a 4 letter swear word could never appear
+       if($i == $rand_pos) {
+              $pos = mt_rand( 0, strlen( $chars_num ) - 1 );
+              $char = $chars_num[$pos];
+       } else {
+              $pos = mt_rand( 0, strlen( $chars ) - 1 );
+              $char = $chars[$pos];
+       }
+	   $captcha_word .= $char;
    }
 
    $img = new securimage();

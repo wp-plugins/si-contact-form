@@ -933,10 +933,25 @@ class Securimage {
 	 */
 	function generateCode($len)
 	{
-		$code = '';
-
-		for($i = 1, $cslen = strlen($this->charset); $i <= $len; ++$i) {
-			$code .= $this->charset{rand(0, $cslen - 1)};
+        //mchallis modified so that a 4 letter swear word could never appear 
+//		$code = '';
+//		for($i = 1, $cslen = strlen($this->charset); $i <= $len; ++$i) {
+//			$code .= $this->charset{rand(0, $cslen - 1)};
+//		}
+        $chars_num = '234578'; // do not change this or the code will break!!
+        // one random position always has to be a number so that a 4 letter swear word could never appear
+        $rand_pos = mt_rand( 0, $len - 1 );
+        $code = '';
+		for($i = 0; $i < $len; $i++ ) {
+           // this rand character position is a number only so that a 4 letter swear word could never appear
+           if($i == $rand_pos) {
+                  $pos = mt_rand( 0, strlen( $chars_num ) - 1 );
+                  $char = $chars_num[$pos];
+           } else {
+                  $pos = mt_rand( 0, strlen( $this->charset ) - 1 );
+                  $char = $this->charset[$pos];
+           }
+	       $code .= $char;
 		}
         if ( $this->nosession == true )
            return $this->captcha_word;
