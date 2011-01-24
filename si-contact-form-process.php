@@ -617,6 +617,8 @@ if ($have_attach){
     if ($si_contact_opt['sender_info_enable'] == 'true')
        $msg .= $user_info_string;
 
+    $posted_data['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
+
     // wordwrap email message
     if ($ctf_wrap_message)
        $msg = wordwrap($msg, 70,$php_eol);

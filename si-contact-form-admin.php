@@ -682,8 +682,9 @@ _e('If you find this plugin useful to you, please consider making a small donati
 <?php
 if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_button') ) {
   echo '<div id="message" class="error">';
-  echo __('Warning: SFC Like and SCF share plugins cause problems with Fast Secure Contact Form, please disable or uninstall SFC Like and SCF share plugins.', 'si-contact-form');
-  echo "</div>\n";
+  echo __('SFC Like and SFC Share plugins cause problems with Fast Secure Contact Form, please disable or uninstall SFC Like and SFC Share plugins.', 'si-contact-form');
+  echo ' <a href="http://www.fastsecurecontactform.com/error-message-sfc-like">'. __('help', 'si-contact-form') . '</a>
+  </div>'."\n";
 }
 ?>
 

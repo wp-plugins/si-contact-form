@@ -47,8 +47,8 @@ if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_but
 
       $string .= '<div '.$this->ctf_required_style.'>
       <div '.$this->ctf_error_style.'>'."\n";
-      $string .= __('SFC Like and SCF share plugins cause problems with Fast Secure Contact Form, please disable or uninstall SFC Like and SCF share plugins.', 'si-contact-form');
-      $string .= '
+      $string .= __('SFC Like and SFC Share plugins cause problems with Fast Secure Contact Form, please disable or uninstall SFC Like and SFC Share plugins.', 'si-contact-form');
+      $string .= ' <a href="http://www.fastsecurecontactform.com/error-message-sfc-like">'.  __('help', 'si-contact-form') . '</a>
       </div>
 </div>'."\n";
 }
