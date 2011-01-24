@@ -181,6 +181,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fix: one CAPTCHA random position always has to be a number so that a 4 letter swear word could never appear. 
 - Added new settings in the "Redirect" section: You can Enable posted data to be sent as a query string on the redirect URL. This can be used to send the posted data via GET query string to a another form. 
 - New settings for redirect: "Query string fields to ignore", "Query string fields to rename", and "Disable email sending (use only when required while you have enabled query string on the redirect URL)". [See FAQ](http://www.fastsecurecontactform.com/sending-data-by-query-string)
 - Fixed a multiple email problem if using the same form in several posts. Anyway, it is recommended to use the form in a page or sidebar, not a post.
