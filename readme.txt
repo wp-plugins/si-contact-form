@@ -181,6 +181,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added setting: "Enable to receive email as HTML instead of plain text." Enable if you want the email message sent as HTML format. HTML format is desired if you want to avoid a 70 character line wordwrap when you copy and paste the email message. Normally the email is sent in plain text wordwrapped 70 characters per line to comply with most email programs. 
 - Fix: one CAPTCHA random position always has to be a number so that a 4 letter swear word could never appear. 
 - Added new settings in the "Redirect" section: You can Enable posted data to be sent as a query string on the redirect URL. This can be used to send the posted data via GET query string to a another form. 
 - New settings for redirect: "Query string fields to ignore", "Query string fields to rename", and "Disable email sending (use only when required while you have enabled query string on the redirect URL)". [See FAQ](http://www.fastsecurecontactform.com/sending-data-by-query-string)

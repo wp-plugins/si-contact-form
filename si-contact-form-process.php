@@ -620,8 +620,8 @@ if ($have_attach){
     $posted_data['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
 
     // wordwrap email message
-    if ($ctf_wrap_message)
-       $msg = wordwrap($msg, 70,$php_eol);
+    //if ($ctf_wrap_message)
+    //   $msg = wordwrap($msg, 70,$php_eol);
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
    if( $si_contact_opt['akismet_disable'] == 'false' ) { // per form disable feature
@@ -677,6 +677,15 @@ if ($have_attach){
    }
    $posted_data['full_message'] = $msg;
 
+   if ($si_contact_opt['email_html'] == 'true') {
+     $msg = str_replace(array("\r\n", "\r", "\n"), "<br>", $msg);
+     $msg = '<html><body>' . $php_eol . $msg . '</body></html>'.$php_eol;
+   }
+
+     // wordwrap email message
+    if ($ctf_wrap_message)
+       $msg = wordwrap($msg, 70,$php_eol);
+
   $email_off = 0;
   if ($si_contact_opt['redirect_enable'] == 'true' && $si_contact_opt['redirect_query'] == 'true' && $si_contact_opt['redirect_email_off'] == 'true')
     $email_off = 1;
@@ -724,7 +733,12 @@ if ($have_attach){
       $header .= "X-Sender: $this->si_contact_mail_sender\n";  // for php mail
       $header .= "Return-Path: $this->si_contact_mail_sender\n";   // for php mail
     }
-    $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+
+    if ($si_contact_opt['email_html'] == 'true') {
+            $header .= 'Content-type: text/html; charset='. get_option('blog_charset') . $php_eol;
+    } else {
+            $header .= 'Content-type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+    }
 
     @ini_set('sendmail_from', $this->si_contact_from_email);
 
@@ -752,7 +766,11 @@ if ($have_attach){
          // sending with geekmail
          require_once WP_PLUGIN_DIR . '/si-contact-form/ctf_geekMail-1.0.php';
          $ctf_geekMail = new ctf_geekMail();
-         $ctf_geekMail->setMailType('text');
+         if ($si_contact_opt['email_html'] == 'true') {
+                 $ctf_geekMail->setMailType('html');
+         } else {
+                 $ctf_geekMail->setMailType('text');
+         }
          $ctf_geekMail->_setcharSet(get_option('blog_charset'));
          $ctf_geekMail->_setnewLine($php_eol);
          if ($ctf_email_on_this_domain != '') {

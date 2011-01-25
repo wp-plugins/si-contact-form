@@ -305,6 +305,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'sender_info_enable' =>   (isset( $_POST['si_contact_sender_info_enable'] ) ) ? 'true' : 'false',
          'domain_protect' =>   (isset( $_POST['si_contact_domain_protect'] ) ) ? 'true' : 'false',
          'email_check_dns' =>  (isset( $_POST['si_contact_email_check_dns'] ) ) ? 'true' : 'false',
+         'email_html' =>  (isset( $_POST['si_contact_email_html'] ) ) ? 'true' : 'false',
          'akismet_disable' =>  (isset( $_POST['si_contact_akismet_disable'] ) ) ? 'true' : 'false',
          'akismet_send_anyway' =>  $_POST['si_contact_akismet_send_anyway'],
          'captcha_enable' =>   (isset( $_POST['si_contact_captcha_enable'] ) ) ? 'true' : 'false',
@@ -947,6 +948,14 @@ foreach (array( 'wordpress' => esc_attr(__('WordPress', 'si-contact-form')),'gee
         <?php _e('Note: attachments are only supported when using the "WordPress" or "geekMail" mail function.', 'si-contact-form'); ?>
        </div>
        <br />
+
+        <input name="si_contact_email_html" id="si_contact_email_html" type="checkbox" <?php if( $si_contact_opt['email_html'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_email_html"><?php _e('Enable to receive email as HTML instead of plain text.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_html_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_email_html_tip">
+        <?php _e('Enable if you want the email message sent as HTML format. HTML format is desired if you want to avoid a 70 character line wordwrap when you copy and paste the email message. Normally the email is sent in plain text wordwrapped 70 characters per line to comply with most email programs.', 'si-contact-form') ?>
+        </div>
+        <br />
 
         <label for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form'); ?>:</label>
 <?php
