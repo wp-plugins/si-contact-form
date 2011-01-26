@@ -77,7 +77,7 @@ function si_contact_update_lang() {
 } // end function si_contact_update_lang
 
 function si_contact_options_page() {
-  global $captcha_url_cf, $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults, $ctf_version; 
+  global $captcha_url_cf, $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults, $ctf_version;
 
   require_once(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-admin.php');
 
