@@ -8,6 +8,8 @@ Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
+$ctf_version = '2.9.7.1';
+
 /*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
     This program is free software; you can redistribute it and/or modify
@@ -44,6 +46,7 @@ if (!class_exists('siContactForm')) {
      var $si_contact_error;
      var $uploaded_files;
      var $ctf_notes_style;
+     var $ctf_version;
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('FS Contact Form Options', 'si-contact-form'), __('FS Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
@@ -74,7 +77,7 @@ function si_contact_update_lang() {
 } // end function si_contact_update_lang
 
 function si_contact_options_page() {
-  global $captcha_url_cf, $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults;
+  global $captcha_url_cf, $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults, $ctf_version; 
 
   require_once(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-admin.php');
 
@@ -103,7 +106,9 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
 // and does all the decision making to send the email or not
 // [si_contact_form form='2']
 function si_contact_form_short_code($atts) {
-   global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb;
+   global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb, $ctf_version;
+
+  $this->ctf_version = $ctf_version;
 
   // get options
   $si_contact_gb_mf = get_option("si_contact_form_gb");

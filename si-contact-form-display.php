@@ -24,7 +24,7 @@ if ($this->si_contact_error)
   $this->ctf_form_style = str_replace('display: none;','',$this->ctf_form_style);
 
 $string .= '
-<!-- Fast Secure Contact Form plugin - begin - http://www.FastSecureContactForm.com -->
+<!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - begin - http://www.FastSecureContactForm.com -->
 <a name="FSContact'.$form_id_num.'" id="FSContact'.$form_id_num.'"></a>
 <div '.$this->ctf_form_style.'>
 ';
@@ -422,6 +422,6 @@ $string .= '
 <p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast Secure Contact Form', 'si-contact-form'). '</a></p>
 ';
 }
-$string .= '<!-- Fast Secure Contact Form plugin - end - http://www.FastSecureContactForm.com -->
+$string .= '<!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - end - http://www.FastSecureContactForm.com -->
 ';
 ?>

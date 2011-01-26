@@ -550,20 +550,7 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
     }
 </script>
 
-<p>
-<a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |
-<a href="http://www.fastsecurecontactform.com/faq-wordpress-version" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a> |
-<a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
-<a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
-<a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
-<a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php _e('Free PHP Scripts', 'si-contact-form'); ?></a> |
-<a href="http://www.fastsecurecontactform.com/contact" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
-</p>
-
 <?php
-
-// action hook for database extension menu
-do_action( 'fsctf_menu_links' );
 
 if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -609,11 +596,36 @@ if (function_exists('get_transient')) {
 	  <div class="star star1"><img src="<?php echo admin_url('images/star.gif'); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
 	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
-      <br /> <br />
+      <br />
     <?php endif;
 
   } // if ( !is_wp_error($api)
  }// end if (function_exists('get_transient'
+
+if ( version_compare($api->version, $ctf_version, '>') ) {
+   $fsc_update = ', <a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('a newer version is available: %s', 'si-contact-form'),$api->version).'</a>';
+   echo '<div id="message" class="updated">';
+   echo '<a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('A newer version of Fast Secure Contact Form is available: %s', 'si-contact-form'),$api->version).'</a>';
+   echo "</div>\n";
+}else{
+   $fsc_update = ' '. __('(latest version)', 'si-contact-form');
+}
+?>
+
+<p>
+<?php echo __('Version:', 'si-contact-form'). ' '.$ctf_version.$fsc_update; ?> |
+<a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |
+<a href="http://www.fastsecurecontactform.com/faq-wordpress-version" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a> |
+<a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
+<a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
+<a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
+<a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php _e('Free PHP Scripts', 'si-contact-form'); ?></a> |
+<a href="http://www.fastsecurecontactform.com/contact" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
+</p>
+
+<?php
+// action hook for database extension menu
+do_action( 'fsctf_menu_links' );
 
 if ($si_contact_gb['donated'] != 'true') {
   ?>
