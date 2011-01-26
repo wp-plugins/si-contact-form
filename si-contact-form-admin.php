@@ -602,13 +602,16 @@ if (function_exists('get_transient')) {
   } // if ( !is_wp_error($api)
  }// end if (function_exists('get_transient'
 
-if ( version_compare($api->version, $ctf_version, '>') ) {
-   $fsc_update = ', <a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('a newer version is available: %s', 'si-contact-form'),$api->version).'</a>';
-   echo '<div id="message" class="updated">';
-   echo '<a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('A newer version of Fast Secure Contact Form is available: %s', 'si-contact-form'),$api->version).'</a>';
-   echo "</div>\n";
-}else{
-   $fsc_update = ' '. __('(latest version)', 'si-contact-form');
+$fsc_update = '';
+if (isset($api->version)) {
+ if ( version_compare($api->version, $ctf_version, '>') ) {
+     $fsc_update = ', <a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('a newer version is available: %s', 'si-contact-form'),$api->version).'</a>';
+     echo '<div id="message" class="updated">';
+     echo '<a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('A newer version of Fast Secure Contact Form is available: %s', 'si-contact-form'),$api->version).'</a>';
+     echo "</div>\n";
+  }else{
+     $fsc_update = ' '. __('(latest version)', 'si-contact-form');
+  }
 }
 ?>
 
