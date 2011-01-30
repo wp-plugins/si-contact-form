@@ -372,7 +372,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'title_capt' =>          trim($_POST['si_contact_title_capt']),
          'title_submit' =>        trim($_POST['si_contact_title_submit']),
          'text_message_sent' =>   trim($_POST['si_contact_text_message_sent']),
-         'tooltip_required' =>    trim($_POST['si_contact_tooltip_required']),
+         'tooltip_required' =>    $_POST['si_contact_tooltip_required'],
          'tooltip_captcha' =>     trim($_POST['si_contact_tooltip_captcha']),
          'tooltip_audio' =>       trim($_POST['si_contact_tooltip_audio']),
          'tooltip_refresh' =>     trim($_POST['si_contact_tooltip_refresh']),
@@ -410,7 +410,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
 
     // deal with quotes
     foreach($optionarray_update as $key => $val) {
-           $optionarray_update[$key] = str_replace('&quot;','"',trim($val));
+           $optionarray_update[$key] = str_replace('&quot;','"',$val);
     }
 
     if (isset($_POST['si_contact_reset_styles'])) {
@@ -1905,14 +1905,15 @@ foreach ($cal_date_array as $k => $v) {
        </div>
 <br />
 
-        <input name="si_contact_req_field_indicator_enable" id="si_contact_req_field_indicator_enable" type="checkbox" <?php if ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_req_field_indicator_enable"><?php _e('Enable required field indicators on contact form', 'si-contact-form') ?>.</label>
-<br />
-        <label for="si_contact_req_field_indicator"><?php _e('Required field indicator:', 'si-contact-form'); ?></label><input name="si_contact_req_field_indicator" id="si_contact_req_field_indicator" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['req_field_indicator']);  ?>" size="20" /><br />
-
         <input name="si_contact_req_field_label_enable" id="si_contact_req_field_label_enable" type="checkbox" <?php if ( $si_contact_opt['req_field_label_enable'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_req_field_label_enable"><?php _e('Enable required field label on contact form:', 'si-contact-form') ?></label> <?php echo ($si_contact_opt['tooltip_required'] != '') ? $si_contact_opt['req_field_indicator'] .$si_contact_opt['tooltip_required'] : $si_contact_opt['req_field_indicator'] . __('(denotes required field)', 'si-contact-form'); ?><br />
 
+        <label for="si_contact_tooltip_required"><?php _e('(denotes required field)', 'si-contact-form'); ?></label><input name="si_contact_tooltip_required" id="si_contact_tooltip_required" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_required']);  ?>" size="50" /><br />
+
+        <input name="si_contact_req_field_indicator_enable" id="si_contact_req_field_indicator_enable" type="checkbox" <?php if ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_req_field_indicator_enable"><?php _e('Enable required field indicators on contact form', 'si-contact-form') ?>.</label><br />
+
+        <label for="si_contact_req_field_indicator"><?php _e('Required field indicator:', 'si-contact-form'); ?></label><input name="si_contact_req_field_indicator" id="si_contact_req_field_indicator" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['req_field_indicator']);  ?>" size="20" /><br />
 
          <label for="si_contact_title_border"><?php _e('Contact Form', 'si-contact-form'); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_border']);  ?>" size="50" /><br />
          <label for="si_contact_title_dept"><?php _e('Department to Contact', 'si-contact-form'); ?>:</label><input name="si_contact_title_dept" id="si_contact_title_dept" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_dept']);  ?>" size="50" /><br />
@@ -1943,7 +1944,6 @@ foreach ($cal_date_array as $k => $v) {
        </div>
 <br />
 
-        <label for="si_contact_tooltip_required"><?php _e('(denotes required field)', 'si-contact-form'); ?></label><input name="si_contact_tooltip_required" id="si_contact_tooltip_required" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_required']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_captcha"><?php _e('CAPTCHA Image', 'si-contact-form'); ?></label><input name="si_contact_tooltip_captcha" id="si_contact_tooltip_captcha" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_captcha']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_audio"><?php _e('CAPTCHA Audio', 'si-contact-form'); ?></label><input name="si_contact_tooltip_audio" id="si_contact_tooltip_audio" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_audio']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_refresh"><?php _e('Refresh Image', 'si-contact-form'); ?></label><input name="si_contact_tooltip_refresh" id="si_contact_tooltip_refresh" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_refresh']);  ?>" size="50" />

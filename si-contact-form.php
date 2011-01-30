@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Blocks all common spammer tactics. Spam is no longer a problem. Includes a CAPTCHA and Akismet support. Does not require JavaScript. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 2.9.7.1
+Version: 2.9.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '2.9.7.1';
+$ctf_version = '2.9.8';
 
 /*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
@@ -323,7 +323,7 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
 
    }
 }
-$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
+$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 $si_contact_error_captcha = '';
 $si_contact_error_contact = '';
 $si_contact_error_name    = '';
@@ -664,7 +664,7 @@ function ctf_sfc_filter($classes) {
 // this function adds the captcha to the contact form
 function si_contact_get_captcha_html($si_contact_error_captcha,$form_id_num) {
    global $ctf_captcha_url, $ctf_captcha_dir, $captcha_path_cf, $captcha_url_cf, $si_contact_gb, $si_contact_opt;
-   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? ' <span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
+   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 
    $capt_disable_sess = 0;
    if ($si_contact_gb['captcha_disable_session'] == 'true')
@@ -787,8 +787,8 @@ $string .= '>
 </div>
       <div '.$this->ctf_title_style.'>
                 <label for="si_contact_captcha_code'.$form_id_num.'">';
-     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':';
-     $string .= $req_field_ind.'</label>
+     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':</label>';
+     $string .= $req_field_ind.'
         </div>
         <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($si_contact_error_captcha).'
                 <input '.$this->ctf_field_style.' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
@@ -1088,7 +1088,7 @@ function si_contact_get_options($form_num) {
          'auto_respond_message' => '',
          'req_field_indicator_enable' => 'true',
          'req_field_label_enable' => 'true',
-         'req_field_indicator' => '*',
+         'req_field_indicator' => ' *',
          'border_enable' => 'false',
          'form_style' => 'width:375px;',
          'border_style' => 'border:1px solid black; padding:10px;',

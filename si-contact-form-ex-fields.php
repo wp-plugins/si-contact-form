@@ -39,7 +39,7 @@ http://www.642weather.com/weather/scripts.php
                $this->si_contact_error = 1;
                $string .= $this->ctf_echo_if_error(__('Error: A hidden field is not configured properly in settings.', 'si-contact-form'));
             }
-            $string .=   '
+            $string .= '
                 <input type="hidden" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string($value) . '" />
 ';
            break;
@@ -47,39 +47,42 @@ http://www.642weather.com/weather/scripts.php
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-                 $string .=   '
+                 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                 <input '.$this->ctf_field_style.' type="password" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="'.$ctf_field_size.'" />
-        </div>';
+        </div>
+';
               break;
            case 'text':
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-                 $string .=   '
+                 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="'.$ctf_field_size.'" />
-        </div>';
+        </div>
+';
               break;
            case 'textarea':
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-                $string .=   '
+                $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                 <textarea '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" '.$ex_req_field_aria.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">';
                 $string .= ($si_contact_opt['textarea_html_allow'] == 'true') ? $this->ctf_stripslashes(${'ex_field'.$i}) : $this->ctf_output_string(${'ex_field'.$i});
                 $string .= '</textarea>
-        </div>';
+        </div>
+';
               break;
            case 'select':
 
@@ -110,9 +113,9 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-           $string .=   '
+           $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $exf_opts_label .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $exf_opts_label .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'">
@@ -131,13 +134,14 @@ foreach ($exf_opts_array as $k) {
     }
  }
 
- $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
+ $string .= '          <option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
  $exf_opts_ct++;
  $selected = '';
 
 }
-$string .= '</select>
-        </div>';
+$string .= '           </select>
+        </div>
+';
              break;
            case 'select-multiple':
 
@@ -169,13 +173,13 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-           $string .=   '
+           $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $exf_opts_label .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $exf_opts_label .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'[]" multiple="multiple">
-        ';
+';
 
   $ex_get = 0;
   $ex_cnt = 1;
@@ -203,13 +207,14 @@ foreach ($exf_opts_array as $k) {
  // selected by get
  if ( $ex_get && isset(${'ex_field'.$i.'_'.$exf_opts_ct}) && ${'ex_field'.$i.'_'.$exf_opts_ct} == 'selected' )
     $selected = ' selected="selected"';
- $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
+ $string .= '               <option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
  $exf_opts_ct++;
  $selected = '';
 
 }
-$string .= '</select>
-        </div>';
+$string .= '               </select>
+        </div>
+';
              break;
            case 'checkbox':
 
@@ -240,11 +245,12 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-           $string .=   '
+           $string .= '
         <div '.$this->ctf_title_style.'>
-        <label>' . $exf_opts_label .$ex_req_field_ind.'</label>
+                <label>' . $exf_opts_label .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'. $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i});
+$string .=   "\n";
 
   $ex_get = 0;
   $ex_cnt = 1;
@@ -260,8 +266,8 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
   $ex_cnt = 1;
   foreach ($exf_opts_array as $k) {
      if(!$exf_opts_inline && $ex_cnt > 1)
-               $string .= "<br />\n";
-     $string .=   '<span style="white-space:nowrap;"><input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
+               $string .= "                <br />\n";
+     $string .= '                <span style="white-space:nowrap;"><input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
 
     if (!isset($_POST['si_contact_form_id']) && !$ex_get && $ex_cnt == $si_contact_opt['ex_field'.$i.'_default']) {
       $string .= ' checked="checked"';
@@ -276,8 +282,7 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
      $ex_cnt++;
   }
 
-   $string .=   '
-        </div> '."\n";
+   $string .= '        </div>'."\n";
 
 } else {
 
@@ -289,7 +294,7 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
         <div '.$this->ctf_title_style.'>
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
-            <input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
+                <input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
     if (${'ex_field'.$i} != '') {
       if (${'ex_field'.$i} == 'selected') {
          $string .= 'checked="checked" ';
@@ -300,14 +305,13 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
       }
     }
                  $string .= '/>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
 ';
 
 } // end else
 
              break;
-
            case 'radio':
 
            // find the label and the options inside $si_contact_opt['ex_field'.$i.'_label']
@@ -342,13 +346,13 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-           $string .=   '
+           $string .= '
         <div '.$this->ctf_title_style.'>
-        <label>' . $exf_opts_label .$ex_req_field_ind.'</label>
+                <label>' . $exf_opts_label .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'. $this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i});
-         // if($exf_opts_inline)
-         //     $string .= "<br />\n";
+$string .=   "\n";
+
 $selected = '';
 $ex_cnt = 1;
 foreach ($exf_opts_array as $k) {
@@ -362,33 +366,33 @@ foreach ($exf_opts_array as $k) {
     }
  }
       if(!$exf_opts_inline && $ex_cnt > 1)
-               $string .= "<br />\n";
- $string .= '<span style="white-space:nowrap;"><input type="radio" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected.' />
- <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
+               $string .= "           <br />\n";
+ $string .= '           <span style="white-space:nowrap;"><input type="radio" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected.' />
+           <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
  $selected = '';
  $ex_cnt++;
 }
 $string .= '
-        </div>';
+        </div>
+';
              break;
-
            case 'attachment':
      if ($si_contact_opt['php_mailer_enable'] != 'php') {
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-            $string .= '        <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+            $string .= '
+        <div '.$this->ctf_title_style.'>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                 <input '.$this->ctf_field_style.' type="file" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="20" />
           <br /><span style="font-size:x-small;">'.sprintf(__('Acceptable file types: %s.', 'si-contact-form'),$si_contact_opt['attach_types']).'<br />
                 '.sprintf(__('Maximum file size: %s.', 'si-contact-form'),$si_contact_opt['attach_size']).'</span>
-        </div>';
+        </div>
+';
         }
           break;
-
-
              case 'date':
             $cal_date_array = array(
 'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
@@ -404,19 +408,18 @@ $string .= '
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
         }
-                 $string .=   '
+                 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' .$si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' .$si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="';
                 $string .=   ( isset(${'ex_field'.$i}) && ${'ex_field'.$i} != '') ? $this->ctf_output_string(${'ex_field'.$i}): $cal_date_array[$si_contact_opt['date_format']];
                 $string .=   '" '.$ex_req_field_aria.' size="15" />
-        </div>';
+        </div>
+';
 
              break;
-
-
              case 'time':
            // the time drop down list array will be made automatically by this code
 $exf_opts_array = array();
@@ -425,7 +428,7 @@ $exf_opts_array = array();
         }
            $string .=   '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .$ex_req_field_ind.'</label>
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] .'</label>'.$ex_req_field_ind.'
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'h">
@@ -440,11 +443,11 @@ for ($ii = 1; $ii <= 12; $ii++) {
       $selected = ' selected="selected"';
     }
  }
- $string .= '<option value="'.$this->ctf_output_string($ii).'"'.$selected.'>'.$this->ctf_output_string($ii).'</option>'."\n";
+ $string .= '           <option value="'.$this->ctf_output_string($ii).'"'.$selected.'>'.$this->ctf_output_string($ii).'</option>'."\n";
  $selected = '';
 
 }
-$string .= '</select>:<select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'m" name="si_contact_ex_field'.$i.'m">
+$string .= '            </select>:<select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'m" name="si_contact_ex_field'.$i.'m">
         ';
 $selected = '';
 // minutes
@@ -455,11 +458,11 @@ for ($ii = 00; $ii <= 59; $ii++) {
       $selected = ' selected="selected"';
     }
  }
- $string .= '<option value="'.$this->ctf_output_string($ii).'"'.$selected.'>'.$this->ctf_output_string($ii).'</option>'."\n";
+ $string .= '            <option value="'.$this->ctf_output_string($ii).'"'.$selected.'>'.$this->ctf_output_string($ii).'</option>'."\n";
  $selected = '';
 
 }
-$string .= '</select><select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'ap" name="si_contact_ex_field'.$i.'ap">
+$string .= '            </select><select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'ap" name="si_contact_ex_field'.$i.'ap">
         ';
 $selected = '';
 // am/pm
@@ -469,12 +472,13 @@ foreach (array(esc_attr(__('AM', 'si-contact-form')), esc_attr(__('PM', 'si-cont
       $selected = ' selected="selected"';
     }
  }
- $string .= '<option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
+ $string .= '            <option value="'.$this->ctf_output_string($k).'"'.$selected.'>'.$this->ctf_output_string($k).'</option>'."\n";
  $selected = '';
 
 }
-$string .= '</select>
- </div>';
+$string .= '            </select>
+        </div>
+ ';
              break;
 
           }
