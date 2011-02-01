@@ -302,7 +302,7 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
              $ex_cnt++;
          }
       }
-      if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox' || $si_contact_opt['ex_field'.$i.'_type'] == 'checkbox-multiple') {
          $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
          if(preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
             $exf_opts_array = $this->si_contact_get_exf_opts_array($si_contact_opt['ex_field'.$i.'_label']);

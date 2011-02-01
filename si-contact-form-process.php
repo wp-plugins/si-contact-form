@@ -206,7 +206,7 @@ if ($have_attach){
                  }
               }
               unset($ex_field_file);
-          }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+          }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox' || $si_contact_opt['ex_field'.$i.'_type'] == 'checkbox-multiple') {
              // see if checkbox children
              $exf_opts_array = array();
              $exf_opts_label = '';
@@ -458,6 +458,11 @@ if ($have_attach){
       $msg .= "$email$php_eol$php_eol";
       $posted_data['from_email'] = $email;
    }
+   // subject can include posted data names feature:
+   foreach ($posted_data as $key => $data) {
+      if( is_string($data) )
+          $subj = str_replace('['.$key.']',$data,$subj);
+   }
    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
@@ -515,7 +520,7 @@ if ($have_attach){
                     $msg .= $php_eol;
                 }
              }
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
+         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox' || $si_contact_opt['ex_field'.$i.'_type'] == 'checkbox-multiple') {
              $exf_opts_array = array();
              $exf_opts_label = '';
              $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
@@ -618,10 +623,6 @@ if ($have_attach){
        $msg .= $user_info_string;
 
     $posted_data['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
-
-    // wordwrap email message
-    //if ($ctf_wrap_message)
-    //   $msg = wordwrap($msg, 70,$php_eol);
 
    // Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
    if( $si_contact_opt['akismet_disable'] == 'false' ) { // per form disable feature
@@ -825,6 +826,18 @@ if ($have_attach){
    if ($si_contact_opt['auto_respond_enable'] == 'true' && $email != '' && $si_contact_opt['auto_respond_subject'] != '' && $si_contact_opt['auto_respond_message'] != ''){
        $subj = $si_contact_opt['auto_respond_subject'];
        $msg =  $si_contact_opt['auto_respond_message'];
+
+       // $posted_data is an array of the form name value pairs
+       // autoresponder can include posted data, tags are set on form settings page
+       foreach ($posted_data as $key => $data) {
+          if( in_array($key,array('message','full_message','akismet')) )  // disallow these
+            continue;
+	       if( is_string($data) ) {
+	         $subj = str_replace('['.$key.']',$data,$subj);
+             $msg = str_replace('['.$key.']',$data,$msg);
+           }
+       }
+
        // wordwrap email message
        if ($ctf_wrap_message)
              $msg = wordwrap($msg, 70,$php_eol);

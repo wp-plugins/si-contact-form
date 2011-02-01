@@ -397,7 +397,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
         $optionarray_update['ex_field'.$i.'_default'] = ( isset($_POST['si_contact_ex_field'.$i.'_default']) && is_numeric(trim($_POST['si_contact_ex_field'.$i.'_default'])) && trim($_POST['si_contact_ex_field'.$i.'_default']) >= 0 ) ? absint(trim($_POST['si_contact_ex_field'.$i.'_default'])) : '0'; // use default if empty
         $optionarray_update['ex_field'.$i.'_req'] = (isset( $_POST['si_contact_ex_field'.$i.'_req'] ) ) ? 'true' : 'false';
         $optionarray_update['ex_field'.$i.'_notes'] = (isset($_POST['si_contact_ex_field'.$i.'_notes'])) ? trim($_POST['si_contact_ex_field'.$i.'_notes']) : '';
-        if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','radio','select','select-multiple'))) {
+        if ($optionarray_update['ex_field'.$i.'_label'] != '' && !in_array($optionarray_update['ex_field'.$i.'_type'], array('checkbox','checkbox-multiple','radio','select','select-multiple'))) {
                 $optionarray_update['ex_field'.$i.'_default'] = '0';
         }
         if ($optionarray_update['ex_field'.$i.'_label'] == '' && $optionarray_update['ex_field'.$i.'_type'] != 'fieldset-close') {
@@ -551,6 +551,63 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 </script>
 
 <?php
+$av_fld_arr  = array(); // used to show available field tags this form
+$av_fld_subj_arr  = array(); // used to show available field tags for this form  subject
+
+if ($si_contact_opt['name_type'] != 'not_available') {
+   switch ($si_contact_opt['name_format']) {
+      case 'name':
+         $av_fld_arr[] = 'from_name';
+      break;
+      case 'first_last':
+         $av_fld_arr[] = 'first_name';
+         $av_fld_arr[] = 'last_name';
+      break;
+      case 'first_middle_i_last':
+         $av_fld_arr[] = 'first_name';
+         $av_fld_arr[] = 'middle_initial';
+         $av_fld_arr[] = 'last_name';
+      break;
+      case 'first_middle_last':
+         $av_fld_arr[] = 'first_name';
+         $av_fld_arr[] = 'middle_name';
+         $av_fld_arr[] = 'last_name';
+      break;
+   }
+}
+        // email
+if ($si_contact_opt['email_type'] != 'not_available')
+        $av_fld_arr[] = 'from_email';
+        $av_fld_subj_arr = $av_fld_arr;
+        // optional extra fields
+for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+    if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
+      if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
+      } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
+            $av_fld_arr[] = "ex_field$i";
+      } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
+            $av_fld_arr[] = "ex_field$i";
+      } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php') {
+            $av_fld_arr[] = "ex_field$i";
+      } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
+            $av_fld_arr[] = "ex_field$i";
+      } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
+            $av_fld_arr[] = "ex_field$i";
+      } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox' || $si_contact_opt['ex_field'.$i.'_type'] == 'checkbox-multiple') {
+            $av_fld_arr[] = "ex_field$i";
+      } else {  // text, textarea, date, password
+            $av_fld_arr[] = "ex_field$i";
+      }
+    }
+} // end for
+if ($si_contact_opt['subject_type'] != 'not_available')
+   $av_fld_arr[] = 'subject';
+if ($si_contact_opt['message_type'] != 'not_available')
+   $av_fld_arr[] = 'message';
+   $av_fld_arr[] = 'full_message';
+if (function_exists('akismet_verify_key'))
+   $av_fld_arr[] = 'akismet';
+
 
 if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -1015,6 +1072,16 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_subject_tip">
         <?php _e('This will become a prefix of the subject for the E-mail you receive.', 'si-contact-form'); ?>
+        <?php _e('Listed below is an optional list of field tags for fields you can add to the subject.', 'si-contact-form') ?><br />
+        <?php _e('Example: to include the name of the form sender, include this tag in the E-mail Subject Prefix:', 'si-contact-form'); ?> [from_name]<br />
+		<?php _e('Available field tags:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_subj_arr as $i)
+         echo "[$i]<br />";
+        ?>
+        </span>
         </div>
         <br />
 
@@ -1127,6 +1194,16 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_subject_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_subject_tip">
         <?php _e('Type your autoresponder E-mail subject here, then enable it with the setting above.', 'si-contact-form'); ?>
+        <?php _e('Listed below is an optional list of field tags for fields you can add to the subject.', 'si-contact-form') ?><br />
+        <?php _e('Example: to include the name of the form sender, include this tag in the Autoresponder E-mail subject:', 'si-contact-form'); ?> [from_name]<br />
+		<?php _e('Available field tags:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_subj_arr as $i)
+         echo "[$i]<br />";
+        ?>
+        </span>
         </div>
 <br />
 
@@ -1134,6 +1211,23 @@ if ( $si_contact_opt['email_bcc'] != ''){
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_auto_respond_message_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_auto_respond_message_tip">
         <?php _e('Type your autoresponder E-mail message here, then enable it with the setting above.', 'si-contact-form'); ?>
+        <?php _e('Listed below is an optional list of field tags for fields you can add to the autoresponder email message.', 'si-contact-form') ?><br />
+        <?php _e('Example: to include the name of the form sender, include this tag in the Autoresponder E-mail message:', 'si-contact-form'); ?> [from_name]<br />
+		<?php _e('Available field tags:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_arr as $i) {
+         if( in_array($i,array('message','full_message','akismet')) )  // exclude these
+            continue;
+         echo "[$i]<br />";
+       }
+        ?>
+        </span>
+        <?php _e('Note: If you add any extra fields, they will show up in this list of available tags.', 'si-contact-form'); ?>
+        <?php _e('Note: The message fields are intentionally disabled to help prevent spammers from using this form to relay spam.', 'si-contact-form'); ?>
+        <?php _e('Try to limit this feature to just using the name field to personalize the message. Do not try to use it to send a copy of what was posted.', 'si-contact-form'); ?>
+
         </div><br />
         <textarea rows="3" cols="50" name="si_contact_auto_respond_message" id="si_contact_auto_respond_message"><?php echo $this->ctf_output_string($si_contact_opt['auto_respond_message']);  ?></textarea>
 <br />
@@ -1482,10 +1576,10 @@ foreach ($name_type_array as $k => $v) {
        <?php _e('The text field is for single line text entry. The textarea field is for multiple line text entry.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Checkbox, Radio, Select, and Select-multiple extra fields:', 'si-contact-form'); ?></strong><br />
        <?php _e('To enable a checkbox field with a single option, just enter a label. Then check if you want the field to be required or not.', 'si-contact-form'); ?><br />
-       <?php _e('To enable fields with multiple options like checkbox, radio, select, or select-multiple field types; first enter the label and a comma, then include the options separating each one with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
-       <?php _e('To make "Green" the default selection: set "Default" to 2. The "Default" setting can be used for for checkbox, radio, select, or select-multiple field types.', 'si-contact-form'); ?><br />
+       <?php _e('To enable fields with multiple options like checkbox-multiple, radio, select, or select-multiple field types; first enter the label and a comma, then include the options separating each one with a semicolon like this example: Color:,Red;Green;Blue.', 'si-contact-form'); ?>
+       <?php _e('To make "Green" the default selection: set "Default" to 2. The "Default" setting can be used for for checkbox, checkbox-multiple, radio, select, or select-multiple field types.', 'si-contact-form'); ?><br />
        <?php _e('If you need to use a comma besides the one needed to separate the label, escape it with a back slash, like this: \,', 'si-contact-form'); ?><br />
-       <?php _e('You can also use fields that allow multiple options to be checked at once, such as checkbox and select-multiple like in this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple options can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?><br />
+       <?php _e('You can also use fields that allow multiple options to be checked at once, such as checkbox-multiple and select-multiple like in this example: Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes. Now multiple options can be checked for the "Pizza Toppings" label.', 'si-contact-form'); ?><br />
        <?php _e('By default radio and checkboxes are displayed vertical. Here is how to make them display horizontal: add the tag {inline} before the label, like this: {inline}Pizza Toppings:,olives;mushrooms;cheese;ham;tomatoes.', 'si-contact-form'); ?>
 <br /><strong><?php _e('Attachment:', 'si-contact-form'); ?></strong><br />
        <?php _e('The attachment is used to allow users to attach a file upload from the form. You can add multiple attachments. The attachment is sent with your email. Attachments are deleted from the server after the email is sent.', 'si-contact-form'); ?>
@@ -1522,6 +1616,7 @@ $field_type_array = array(
 'text' => esc_attr(__('text', 'si-contact-form')),
 'textarea' => esc_attr(__('textarea', 'si-contact-form')),
 'checkbox' => esc_attr(__('checkbox', 'si-contact-form')),
+'checkbox-multiple' => esc_attr(__('checkbox-multiple', 'si-contact-form')),
 'radio' => esc_attr(__('radio', 'si-contact-form')),
 'select' => esc_attr(__('select', 'si-contact-form')),
 'select-multiple' => esc_attr(__('select-multiple', 'si-contact-form')),
@@ -1702,61 +1797,11 @@ foreach ($cal_date_array as $k => $v) {
 		<?php _e('Available fields on this form:', 'si-contact-form'); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
         <?php
-        // name
-     if ($si_contact_opt['name_type'] != 'not_available') {
-        switch ($si_contact_opt['name_format']) {
-          case 'name':
-              echo 'from_name<br />';
-          break;
-          case 'first_last':
-              echo 'first_name<br />';
-              echo 'last_name<br />';
-          break;
-          case 'first_middle_i_last':
-              echo 'first_name<br />';
-              echo 'middle_initial<br />';
-              echo 'last_name<br />';
-          break;
-          case 'first_middle_last':
-              echo 'first_name<br />';
-              echo 'middle_name<br />';
-              echo 'last_name<br />';
-         break;
-      }
-   }
-        // email
-   if ($si_contact_opt['email_type'] != 'not_available')
-        echo 'from_email<br />';
-        // optional extra fields
-      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
-              if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
-         if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
-             echo "ex_field$i<br />";
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
-             echo "ex_field$i<br />";
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php') {
-             echo "ex_field$i<br />";
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
-             echo "ex_field$i<br />";
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
-             echo "ex_field$i<br />";
-         } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox') {
-              echo "ex_field$i<br />";
-         } else {  // text, textarea, date, password
-              echo "ex_field$i<br />";
-         }
-       }
-    } // end for
-   if ($si_contact_opt['subject_type'] != 'not_available')
-       echo 'subject<br />';
-   if ($si_contact_opt['message_type'] != 'not_available')
-        echo 'message<br />';
-        echo 'full_message<br />';
-       if( $akismet_installed  )
-         echo 'akismet<br />';
+       // show available fields
+       foreach ($av_fld_arr as $i)
+         echo "$i<br />";
         ?>
-</span>
+        </span>
       </div>
       <textarea rows="4" cols="25" name="si_contact_redirect_ignore" id="si_contact_redirect_ignore"><?php echo $si_contact_opt['redirect_ignore']; ?></textarea>
       <br />

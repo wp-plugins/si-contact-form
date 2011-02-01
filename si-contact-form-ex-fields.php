@@ -217,6 +217,7 @@ $string .= '               </select>
 ';
              break;
            case 'checkbox':
+           case 'checkbox-multiple':
 
 $exf_opts_array = array();
 $exf_opts_label = '';

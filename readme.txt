@@ -181,6 +181,9 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added features: Now you can add tags to print posted data for the email subject, autoresponder subject, or the autoresponder message.
+To see instructions, just click "help" next to any of these fields on the form edit page. [See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
+
 = 2.9.8 =
 - (29 Jan 2011) - Added setting: "Enable to receive email as HTML instead of plain text." Enable if you want the email message sent as HTML format. HTML format is desired if you want to avoid a 70 character line wordwrap when you copy and paste the email message. Normally the email is sent in plain text wordwrapped 70 characters per line to comply with most email programs. 
 - Added new settings in the "Redirect" section: You can Enable posted data to be sent as a query string on the redirect URL. This can be used to send the posted data via GET query string to a another form. 
