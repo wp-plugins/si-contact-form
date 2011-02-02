@@ -323,6 +323,10 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'redirect_ignore' =>        trim($_POST['si_contact_redirect_ignore']),
          'redirect_rename' =>        trim($_POST['si_contact_redirect_rename']),
          'redirect_email_off' =>  (isset( $_POST['si_contact_redirect_email_off'] ) ) ? 'true' : 'false',
+         'export_enable' =>  (isset( $_POST['si_contact_export_enable'] ) ) ? 'true' : 'false',
+         'export_ignore' =>        trim($_POST['si_contact_export_ignore']),
+         'export_rename' =>        trim($_POST['si_contact_export_rename']),
+         'export_email_off' =>  (isset( $_POST['si_contact_export_email_off'] ) ) ? 'true' : 'false',
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
          'ex_fields_after_msg' => (isset( $_POST['si_contact_ex_fields_after_msg'] ) ) ? 'true' : 'false',
          'date_format' =>               $_POST['si_contact_date_format'],
@@ -608,6 +612,7 @@ if ($si_contact_opt['message_type'] != 'not_available')
 if (function_exists('akismet_verify_key'))
    $av_fld_arr[] = 'akismet';
 
+$av_fld_arr[] = 'date_time';
 
 if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
@@ -1844,6 +1849,84 @@ foreach ($cal_date_array as $k => $v) {
         <?php _e('No email will be sent to you!! The posted data will ONLY be sent to the redirect URL. This can be used to send the posted data via GET query string to a another form. Note: the autoresponder will still send email if it is enabled.', 'si-contact-form'); ?>
         </div>
         <br />
+
+</fieldset>
+
+    <p class="submit">
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+    </p>
+
+<div class="form-tab"><?php echo __('Data Export:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
+<div class="clear"></div>
+<fieldset>
+
+         <?php echo sprintf( __('Posted fields data can be exported to another plugin such as the <a href="%s">Contact Form 7 to DB Extension Plugin</a>.', 'si-contact-form'),'http://www.fastsecurecontactform.com/save-to-database'); ?>
+         <br />
+         <br />
+
+        <input name="si_contact_export_enable" id="si_contact_export_enable" type="checkbox" <?php if( $si_contact_opt['redirect_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_export_enable"><?php _e('Enable data export after the message', 'si-contact-form'); ?>.</label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_export_enable_tip">
+        <?php echo sprintf( __('This settings requires a compatible data export plugin to be installed. If enabled: After a user sends a message, the posted fields data can be exported to another plugin such as the <a href="%s">Contact Form 7 to DB Extension Plugin</a>.', 'si-contact-form'),'http://www.fastsecurecontactform.com/save-to-database'); ?>
+        <?php _e(' You can uncheck this setting to turn off data export for this form.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label for="si_contact_export_ignore"><?php echo __('Data export fields to ignore', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_ignore_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_export_ignore_tip">
+        <?php _e('Optional list of field names for fields you do not want included in the data export.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+		<?php _e('Available fields on this form:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_arr as $i)
+         echo "$i<br />";
+        ?>
+        </span>
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_export_ignore" id="si_contact_export_ignore"><?php echo $si_contact_opt['export_ignore']; ?></textarea>
+      <br />
+
+      <label for="si_contact_export_rename"><?php echo __('Data export fields to rename', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_rename_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_export_rename_tip">
+        <?php _e('Optional list of field names for fields that need to be renamed before data export.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+        <?php _e('Type the old field name separated by the equals character, then type the new name, like this: oldname=newname', 'si-contact-form'); ?><br />
+		<?php _e('Examples:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        from_name=name<br />
+		from_email=email<br />
+		full_message=message</span><br />
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_export_rename" id="si_contact_export_rename"><?php echo $si_contact_opt['export_rename']; ?></textarea>
+      <br />
+
+      <?php
+       if( $si_contact_opt['export_email_off'] == 'true' && ($si_contact_opt['export_enable'] != 'true' ) ) {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires the "Enable data export" to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+
+       <?php
+       if( $si_contact_opt['export_email_off'] == 'true' && $si_contact_opt['export_enable'] == 'true' ) {
+        ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the data export settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
+         echo '<br /><span class="updated">';
+         echo __('Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+        <input name="si_contact_export_email_off" id="si_contact_export_email_off" type="checkbox" <?php if( $si_contact_opt['export_email_off'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_export_email_off"><?php _e('Disable email sending (use only when required while you have enabled data export).', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_email_off_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_export_email_off_tip">
+        <?php _e('No email will be sent to you!! The posted data will ONLY be sent to the data export. Note: the autoresponder will still send email if it is enabled.', 'si-contact-form'); ?>
+        </div>
 
 </fieldset>
 

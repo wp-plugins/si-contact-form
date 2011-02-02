@@ -691,6 +691,9 @@ if ($have_attach){
   if ($si_contact_opt['redirect_enable'] == 'true' && $si_contact_opt['redirect_query'] == 'true' && $si_contact_opt['redirect_email_off'] == 'true')
     $email_off = 1;
 
+  if ($si_contact_opt['export_enable'] == 'true' && $si_contact_opt['export_email_off'] == 'true')
+    $email_off = 1;
+
   if (!$this->si_contact_error) {
 
    if (!$email_off) {
@@ -916,9 +919,42 @@ if ($have_attach){
    unset($_POST['si_contact_action']);  //prevent form double posting
    unset($_POST['si_contact_form_id']); //prevent form double posting
 
-    // hook for other plugins to use (just after mail sent)
-    $fsctf_posted_data = (object) array('title' => sprintf(__('Form: %d', 'si-contact-form'),$form_id_num), 'posted_data' => $posted_data, 'uploaded_files' => (array) $this->uploaded_files );
-    do_action_ref_array( 'fsctf_mail_sent', array( &$fsctf_posted_data ) );
+  if ($si_contact_opt['export_enable'] == 'true') {
+
+       //rename field names array
+       $rename_fields = array();
+       $rename_fields_test = explode("\n",$si_contact_opt['export_rename']);
+       if ( !empty($rename_fields_test) ) {
+          foreach($rename_fields_test as $line) {
+            if(preg_match("/=/", $line) ) {
+               list($key, $value) = explode("=",$line);
+               $key   = trim($key);
+               $value = trim($value);
+               if ($key != '' && $value != '')
+                  $rename_fields[$key] = $value;
+            }
+          }
+       }
+       //ignore field names array
+       $posted_data_export = array();
+       $ignore_fields = array();
+       $ignore_fields = explode("\n",$si_contact_opt['export_ignore']);
+      // $posted_data is an array of the form name value pairs
+      foreach ($posted_data as $key => $data) {
+	       if( is_string($data) ) {
+              $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
+              if ( in_array($key, $ignore_fields) )
+               continue;
+		      $posted_data_export[$key] = $data;
+           }
+      }
+      // Use form name from form edit page if one is set.
+      $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
+
+      // hook for other plugins to use (just after message posted)
+      $fsctf_posted_data = (object) array('title' => $posted_form_name, 'posted_data' => $posted_data_export, 'uploaded_files' => (array) $this->uploaded_files );
+      do_action_ref_array( 'fsctf_mail_sent', array( &$fsctf_posted_data ) );
+   }  // end if export_enable
 
   } // end if ! error
  } // end if ! error
