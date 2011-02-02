@@ -846,7 +846,7 @@ function ctf_stripslashes($string) {
 
 // functions for protecting and validating form input vars
 function ctf_output_string($string) {
-    $string = str_replace('&', '&amp;', $string); 
+    $string = str_replace('&', '&amp;', $string);
     $string = str_replace('"', '&quot;', $string);
     return $string;
 } // end function ctf_output_string
