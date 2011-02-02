@@ -846,7 +846,9 @@ function ctf_stripslashes($string) {
 
 // functions for protecting and validating form input vars
 function ctf_output_string($string) {
-    return str_replace('"', '&quot;', $string);
+    $string = str_replace('&', '&amp;', $string); 
+    $string = str_replace('"', '&quot;', $string);
+    return $string;
 } // end function ctf_output_string
 
 // A function knowing about name case (i.e. caps on McDonald etc)

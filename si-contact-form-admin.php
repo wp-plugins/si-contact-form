@@ -412,9 +412,10 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
         }
     }
 
-    // deal with quotes
+    // deal with quote and ampersand
     foreach($optionarray_update as $key => $val) {
            $optionarray_update[$key] = str_replace('&quot;','"',$val);
+           $optionarray_update[$key] = str_replace('&amp;','&',$val);
     }
 
     if (isset($_POST['si_contact_reset_styles'])) {
