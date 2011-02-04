@@ -700,13 +700,8 @@ if ($have_attach){
     $header = '';  // for php mail and wp_mail
     $ctf_email_on_this_domain = $si_contact_opt['email_from']; // optional
     // prepare the email header
-    if($name == '')
-      $this->si_contact_from_name = 'WordPress';
-    else
-      $this->si_contact_from_name = $name;
-
-    if($email != '')
-      $this->si_contact_from_email = $email;
+    $this->si_contact_from_name  = ($name == '') ? 'WordPress' : $name;
+    $this->si_contact_from_email = ($email == '') ? get_option('admin_email') : $email;
 
     if ($ctf_email_on_this_domain != '' ) {
          if(!preg_match("/,/", $ctf_email_on_this_domain)) {
