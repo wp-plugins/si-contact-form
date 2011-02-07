@@ -106,6 +106,27 @@ if ($si_contact_opt['req_field_label_enable'] == 'true' && $si_contact_opt['req_
 ';
 }
 
+// allow shortcode hidden fields
+if ( $shortcode_hidden != '') {
+   $hidden_fields_test = explode(",",$shortcode_hidden);
+   if ( !empty($hidden_fields_test) ) {
+      foreach($hidden_fields_test as $line) {
+         if(preg_match("/=/", $line) ) {
+            list($key, $value) = explode("=",$line);
+            $key   = trim($key);
+            $value = trim($value);
+            if ($key != '' && $value != '') {
+              $string .= '
+         <div>
+               <input type="hidden" name="'.$key.'" value="'.$value.'" />
+        </div>
+';
+           }
+       }
+     }
+   }
+}
+
 if (count($contacts) > 1) {
 
      $string .= '

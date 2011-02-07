@@ -113,7 +113,7 @@ function si_contact_form_short_code($atts) {
   // get options
   $si_contact_gb_mf = get_option("si_contact_form_gb");
 
-   extract(shortcode_atts(array( 'form' => '' ), $atts));
+   extract(shortcode_atts(array( 'form' => '', 'redirect' => '', 'hidden' => '' ), $atts));
     $form_num = '';
     $form_id_num = 1;
     if ( isset($form) && is_numeric($form) && $form <= $si_contact_gb_mf['max_forms'] ) {
@@ -122,6 +122,10 @@ function si_contact_form_short_code($atts) {
        if ($form_num == 1)
          $form_num = '';
     }
+
+  //[si-contact-form form='1' redirect='http://www.mysite.com/thanks/' hidden='key=val']
+  $shortcode_redirect = $redirect;
+  $shortcode_hidden = $hidden;
 
   // get options
   $si_contact_gb = $this->si_contact_get_options($form_num);
@@ -358,6 +362,12 @@ if($message_sent) {
        $ctf_redirect_timeout = $si_contact_opt['redirect_seconds']; // time in seconds to wait before loading another Web page
        // Web page to send the user to after the time has expired
        $ctf_redirect_url = $si_contact_opt['redirect_url'];
+
+       // allow shortcode redirect to override redirect settings
+       if ( $shortcode_redirect != '') {
+           $ctf_redirect_enable = 'true';
+           $ctf_redirect_url = $shortcode_redirect;
+       }
 
 // The $thank_you is what gets printed after the form is sent.
 $ctf_thank_you = '

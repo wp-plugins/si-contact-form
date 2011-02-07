@@ -568,6 +568,24 @@ if ($have_attach){
          }
        }
     } // end for
+
+   // allow shortcode hidden fields
+   if ( $shortcode_hidden != '') {
+      $hidden_fields_test = explode(",",$shortcode_hidden);
+      if ( !empty($hidden_fields_test) ) {
+         foreach($hidden_fields_test as $line) {
+           if(preg_match("/=/", $line) ) {
+               list($key, $value) = explode("=",$line);
+               $key   = trim($key);
+               $value = trim($value);
+               if ($key != '' && $value != '') {
+                 $msg .= $key.$php_eol.$this->ctf_stripslashes($value).$php_eol.$php_eol;
+                 $posted_data[$key] = $value;
+              }
+          }
+        }
+      }
+   }
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
