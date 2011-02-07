@@ -419,7 +419,6 @@ if ($have_attach){
      }else{
           $subj = $si_contact_opt['email_subject'];
      }
-     $posted_data['subject'] = $subj;
      $msg =  __('To', 'si-contact-form').": $to_contact$php_eol$php_eol";
      if ($name != '' || $email != '')  {
         $msg .= __('From', 'si-contact-form').":$php_eol";
@@ -463,6 +462,7 @@ if ($have_attach){
       if( is_string($data) )
           $subj = str_replace('['.$key.']',$data,$subj);
    }
+   $posted_data['subject'] = $subj;
    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
@@ -694,6 +694,9 @@ if ($have_attach){
   if ($si_contact_opt['export_enable'] == 'true' && $si_contact_opt['export_email_off'] == 'true')
     $email_off = 1;
 
+  if ($si_contact_opt['silent_send'] != 'off' &&  $si_contact_opt['silent_email_off'] == 'true')
+    $email_off = 1;
+
   if (!$this->si_contact_error) {
 
    if (!$email_off) {
@@ -889,35 +892,32 @@ if ($have_attach){
    unset($_POST['si_contact_action']);  //prevent form double posting
    unset($_POST['si_contact_form_id']); //prevent form double posting
 
-  if ($si_contact_opt['export_enable'] == 'true') {
+  if ($si_contact_opt['silent_send'] == 'get' && $si_contact_opt['silent_url'] != '') {
+     // build query string
+     $query_string = $this->si_contact_export_convert($posted_data,$si_contact_opt['silent_rename'],$si_contact_opt['silent_ignore'],$si_contact_opt['silent_add'],'query');
+     if(!preg_match("/\?/", $si_contact_opt['silent_url']) )
+        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].'?'.$query_string, array( 'timeout' => 15 ) );
+      else
+        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].$query_string, array( 'timeout' => 15 ) );
+	 if ( !is_wp_error( $silent_result ) ) {
+       $silent_result = wp_remote_retrieve_body( $silent_result );
+	 }
+     //echo $silent_result;
+  }
 
-       //rename field names array
-       $rename_fields = array();
-       $rename_fields_test = explode("\n",$si_contact_opt['export_rename']);
-       if ( !empty($rename_fields_test) ) {
-          foreach($rename_fields_test as $line) {
-            if(preg_match("/=/", $line) ) {
-               list($key, $value) = explode("=",$line);
-               $key   = trim($key);
-               $value = trim($value);
-               if ($key != '' && $value != '')
-                  $rename_fields[$key] = $value;
-            }
-          }
-       }
-       //ignore field names array
-       $posted_data_export = array();
-       $ignore_fields = array();
-       $ignore_fields = explode("\n",$si_contact_opt['export_ignore']);
-      // $posted_data is an array of the form name value pairs
-      foreach ($posted_data as $key => $data) {
-	       if( is_string($data) ) {
-              $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
-              if ( in_array($key, $ignore_fields) )
-               continue;
-		      $posted_data_export[$key] = $data;
-           }
-      }
+  if ($si_contact_opt['silent_send'] == 'post' && $si_contact_opt['silent_url'] != '') {
+     // build post_array
+     $post_array = $this->si_contact_export_convert($posted_data,$si_contact_opt['silent_rename'],$si_contact_opt['silent_ignore'],$si_contact_opt['silent_add'],'array');
+	 $silent_result = wp_remote_post( $si_contact_opt['silent_url'], array( 'body' => $post_array, 'timeout' => 15 ) );
+	 if ( !is_wp_error( $silent_result ) ) {
+       $silent_result = wp_remote_retrieve_body( $silent_result );
+	 }
+     //echo $silent_result;
+  }
+
+  if ($si_contact_opt['export_enable'] == 'true') {
+      // filter posted data based on admin settings
+      $posted_data_export = $this->si_contact_export_convert($si_contact_opt['export_rename'],$si_contact_opt['export_ignore'],$si_contact_opt['export_add'],'array');
       // Use form name from form edit page if one is set.
       $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
 

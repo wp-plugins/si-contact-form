@@ -8,7 +8,7 @@ Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '2.9.8';
+$ctf_version = '2.9.8.1';
 
 /*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
@@ -377,36 +377,12 @@ if ($ctf_redirect_enable == 'true') {
     // redirect query string code
    if ($si_contact_opt['redirect_query'] == 'true') {
       // build query string
-      $query_string = '';
-       //rename field names array
-       $rename_fields = array();
-       $rename_fields_test = explode("\n",$si_contact_opt['redirect_rename']);
-       if ( !empty($rename_fields_test) ) {
-          foreach($rename_fields_test as $line) {
-            if(preg_match("/=/", $line) ) {
-               list($key, $value) = explode("=",$line);
-               $key   = trim($key);
-               $value = trim($value);
-               if ($key != '' && $value != '')
-                  $rename_fields[$key] = $value;
-            }
-          }
-       }
-       //ignore field names array
-       $ignore_fields = array();
-       $ignore_fields = explode("\n",$si_contact_opt['redirect_ignore']);
-      // $posted_data is an array of the form name value pairs
-      foreach ($posted_data as $key => $data) {
-	       if( is_string($data) ) {
-              $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
-              if ( in_array($key, $ignore_fields) )
-               continue;
-		      $query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
-           }
-      }
-      $ctf_redirect_url .= '?'.$query_string;
-   } // end if(redirect query
-
+      $query_string = $this->si_contact_export_convert($posted_data,$si_contact_opt['redirect_rename'],$si_contact_opt['redirect_ignore'],$si_contact_opt['redirect_add'],'query');
+      if(!preg_match("/\?/", $ctf_redirect_url) )
+        $ctf_redirect_url .= '?'.$query_string;
+      else
+       $ctf_redirect_url .= $query_string;
+   }
 
  $ctf_thank_you .= <<<EOT
 
@@ -456,6 +432,62 @@ $ctf_thank_you .= '
 
  return $string;
 } // end function si_contact_form_short_code
+
+function si_contact_export_convert($posted_data,$rename,$ignore,$add,$return = 'array') {
+    $query_string = '';
+    $posted_data_export = array();
+    //rename field names array
+    $rename_fields = array();
+    $rename_fields_test = explode("\n",$rename);
+    if ( !empty($rename_fields_test) ) {
+      foreach($rename_fields_test as $line) {
+         if(preg_match("/=/", $line) ) {
+            list($key, $value) = explode("=",$line);
+            $key   = trim($key);
+            $value = trim($value);
+            if ($key != '' && $value != '')
+              $rename_fields[$key] = $value;
+         }
+      }
+    }
+    // add fields
+    $add_fields_test = explode("\n",$add);
+    if ( !empty($add_fields_test) ) {
+      foreach($add_fields_test as $line) {
+         if(preg_match("/=/", $line) ) {
+            list($key, $value) = explode("=",$line);
+            $key   = trim($key);
+            $value = trim($value);
+            if ($key != '' && $value != '') {
+              if($return == 'array')
+		        $posted_data_export[$key] = $value;
+              else
+                $query_string .= $key . '=' . urlencode( stripslashes($value) ) . '&';
+            }
+         }
+      }
+    }
+    //ignore field names array
+    $ignore_fields = array();
+    $ignore_fields = explode("\n",$ignore);
+    // $posted_data is an array of the form name value pairs
+    foreach ($posted_data as $key => $value) {
+	  if( is_string($value) ) {
+         $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
+         if ( in_array($key, $ignore_fields) )
+            continue;
+         if($return == 'array')
+		    $posted_data_export[$key] = $value;
+         else
+            $query_string .= $key . '=' . urlencode( stripslashes($value) ) . '&';
+      }
+    }
+    if($return == 'array')
+      return $posted_data_export;
+    else
+      return $query_string;
+} // end function si_contact_export_convert
+
 
 function si_contact_get_var($form_id_num,$name) {
    $value = (isset( $_GET["$form_id_num$name"])) ? $this->ctf_clean_input($_GET["$form_id_num$name"]) : '';
@@ -1074,10 +1106,18 @@ function si_contact_get_options($form_num) {
          'redirect_query' => 'false',
          'redirect_ignore' => '',
          'redirect_rename' => '',
+         'redirect_add' => '',
          'redirect_email_off' => 'false',
+         'silent_send' => 'off',
+         'silent_url' => '',
+         'silent_ignore' => '',
+         'silent_rename' => '',
+         'silent_add' => '',
+         'silent_email_off' => 'false',
          'export_enable' => 'true',
          'export_ignore' => '',
          'export_rename' => '',
+         'export_add' => '',
          'export_email_off' => 'false',
          'ex_fields_after_msg' => 'false',
          'date_format' => 'mm/dd/yyyy',

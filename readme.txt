@@ -181,6 +181,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.8.1 =
+- (07 Feb 2011) - Added Silent Send feature: Use to send the posted data to another form or 3rd party API [See FAQ](http://www.fastsecurecontactform.com/send-form-data-elsewhere)
 - Fixed blank from email when email address was set to "not available".
 - Added features: Now you can add tags to print posted data for the email subject, autoresponder subject, or the autoresponder message.
 To see instructions, just click "help" next to any of these fields on the form edit page. [See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)

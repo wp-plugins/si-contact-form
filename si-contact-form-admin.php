@@ -322,10 +322,18 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'redirect_query' =>  (isset( $_POST['si_contact_redirect_query'] ) ) ? 'true' : 'false',
          'redirect_ignore' =>        trim($_POST['si_contact_redirect_ignore']),
          'redirect_rename' =>        trim($_POST['si_contact_redirect_rename']),
+         'redirect_add' =>        trim($_POST['si_contact_redirect_add']),
          'redirect_email_off' =>  (isset( $_POST['si_contact_redirect_email_off'] ) ) ? 'true' : 'false',
+         'silent_send' =>             $_POST['si_contact_silent_send'],
+         'silent_url' =>         trim($_POST['si_contact_silent_url']),
+         'silent_ignore' =>      trim($_POST['si_contact_silent_ignore']),
+         'silent_rename' =>      trim($_POST['si_contact_silent_rename']),
+         'silent_add' =>          trim($_POST['si_contact_silent_add']),
+         'silent_email_off' =>  (isset( $_POST['si_contact_silent_email_off'] ) ) ? 'true' : 'false',
          'export_enable' =>  (isset( $_POST['si_contact_export_enable'] ) ) ? 'true' : 'false',
          'export_ignore' =>        trim($_POST['si_contact_export_ignore']),
          'export_rename' =>        trim($_POST['si_contact_export_rename']),
+         'export_add' =>        trim($_POST['si_contact_export_add']),
          'export_email_off' =>  (isset( $_POST['si_contact_export_email_off'] ) ) ? 'true' : 'false',
          'border_enable' =>    (isset( $_POST['si_contact_border_enable'] ) ) ? 'true' : 'false',
          'ex_fields_after_msg' => (isset( $_POST['si_contact_ex_fields_after_msg'] ) ) ? 'true' : 'false',
@@ -1795,6 +1803,10 @@ foreach ($cal_date_array as $k => $v) {
         </div>
         <br />
 
+<table style="border:none;" cellspacing="20">
+  <tr>
+  <td valign="bottom">
+
         <label for="si_contact_redirect_ignore"><?php echo __('Query string fields to ignore', 'si-contact-form'); ?>:</label>
       <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_ignore_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
       <div style="text-align:left; display:none" id="si_contact_redirect_ignore_tip">
@@ -1812,6 +1824,8 @@ foreach ($cal_date_array as $k => $v) {
       <textarea rows="4" cols="25" name="si_contact_redirect_ignore" id="si_contact_redirect_ignore"><?php echo $si_contact_opt['redirect_ignore']; ?></textarea>
       <br />
 
+ </td><td valign="bottom">
+
       <label for="si_contact_redirect_rename"><?php echo __('Query string fields to rename', 'si-contact-form'); ?>:</label>
       <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_rename_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
       <div style="text-align:left; display:none" id="si_contact_redirect_rename_tip">
@@ -1827,6 +1841,28 @@ foreach ($cal_date_array as $k => $v) {
       <textarea rows="4" cols="25" name="si_contact_redirect_rename" id="si_contact_redirect_rename"><?php echo $si_contact_opt['redirect_rename']; ?></textarea>
       <br />
 
+  </td><td valign="bottom">
+
+      <label for="si_contact_redirect_add"><?php echo __('Query string key value pairs to add', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_add_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_redirect_add_tip">
+        <?php _e('Optional list of key value pairs that need to be added.', 'si-contact-form') ?><br />
+        <?php _e('Sometimes the outgoing connection will require fields that were not posted on your form.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+        <?php _e('Type the key separated by the equals character, then type the value, like this: key=value', 'si-contact-form'); ?><br />
+		<?php _e('Examples:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        account=3629675<br />
+		newsletter=join<br />
+		action=signup</span><br />
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_redirect_add" id="si_contact_redirect_add"><?php echo $si_contact_opt['redirect_add']; ?></textarea>
+      <br />
+
+ </td>
+ </tr>
+ </table>
+
       <?php
        if( $si_contact_opt['redirect_email_off'] == 'true' && ($si_contact_opt['redirect_enable'] != 'true' || $si_contact_opt['redirect_query'] != 'true') ) {
          echo '<br /><span class="updated">';
@@ -1839,7 +1875,7 @@ foreach ($cal_date_array as $k => $v) {
        if( $si_contact_opt['redirect_email_off'] == 'true' && $si_contact_opt['redirect_enable'] == 'true' && $si_contact_opt['redirect_query'] == 'true' ) {
         ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the redirect settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
          echo '<br /><span class="updated">';
-         echo __('Warning: You have turned off email sending in the redirect settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
+         echo __('Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
          echo "</span><br />\n";
        }
        ?>
@@ -1848,6 +1884,146 @@ foreach ($cal_date_array as $k => $v) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_email_off_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_redirect_email_off_tip">
         <?php _e('No email will be sent to you!! The posted data will ONLY be sent to the redirect URL. This can be used to send the posted data via GET query string to a another form. Note: the autoresponder will still send email if it is enabled.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+</fieldset>
+
+    <p class="submit">
+      <input type="submit" name="submit" value="<?php echo esc_attr( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+    </p>
+
+<div class="form-tab"><?php echo __('Silent Remote Sending:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
+<div class="clear"></div>
+<fieldset>
+
+   <?php echo __('Posted form data can be sent silently to a remote form using the method GET or POST.', 'si-contact-form'); ?>
+   <br />
+   <br />
+
+      <label for="si_contact_silent_send"><?php _e('Silent Remote Sending:', 'si-contact-form'); ?></label>
+      <select id="si_contact_silent_send" name="si_contact_silent_send">
+<?php
+$silent_send_array = array(
+'off' => esc_attr(__('Off', 'si-contact-form')),
+'get' => esc_attr(__('Enabled: Method GET', 'si-contact-form')),
+'post' => esc_attr(__('Enabled: Method POST', 'si-contact-form')),
+);
+$selected = '';
+foreach ($silent_send_array as $k => $v) {
+ if ($si_contact_opt['silent_send'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_silent_send_tip');">
+
+        <?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_silent_send_tip">
+        <?php _e('If enabled: After a user sends a message, the form can silently send the posted data to a third party remote URL. This can be used for a third party service such as a mailing list API.', 'si-contact-form'); ?>
+        <?php echo ' '; _e('Select method GET or POST based on the remote API requirement.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+       <?php
+       if( $si_contact_opt['silent_send'] != 'off' &&  $si_contact_opt['silent_url'] == '') {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires the "Silent Remote URL" to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+
+        <label for="si_contact_silent_url"><?php _e('Silent Remote URL', 'si-contact-form'); ?>:</label><input name="si_contact_silent_url" id="si_contact_silent_url" type="text" value="<?php echo $si_contact_opt['silent_url'];  ?>" size="50" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_silent_url_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_silent_url_tip">
+        <?php _e('The form will silently send the form data to this URL after success. This can be used for a third party service such as a mailing list API.', 'si-contact-form'); ?>
+        <?php _e('Use FULL URL including http:// for best results.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+<table style="border:none;" cellspacing="20">
+  <tr>
+  <td valign="bottom">
+
+        <label for="si_contact_silent_ignore"><?php echo __('Silent send fields to ignore', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_silent_ignore_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_silent_ignore_tip">
+        <?php _e('Optional list of field names for fields you do not want included.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+		<?php _e('Available fields on this form:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_arr as $i)
+         echo "$i<br />";
+        ?>
+        </span>
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_silent_ignore" id="si_contact_silent_ignore"><?php echo $si_contact_opt['silent_ignore']; ?></textarea>
+      <br />
+
+ </td><td valign="bottom">
+
+      <label for="si_contact_silent_rename"><?php echo __('Silent send fields to rename', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_silent_rename_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_silent_rename_tip">
+        <?php _e('Optional list of field names for fields that need to be renamed.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+        <?php _e('Type the old field name separated by the equals character, then type the new name, like this: oldname=newname', 'si-contact-form'); ?><br />
+		<?php _e('Examples:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        from_name=name<br />
+		from_email=email<br />
+		full_message=message</span><br />
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_silent_rename" id="si_contact_silent_rename"><?php echo $si_contact_opt['silent_rename']; ?></textarea>
+      <br />
+
+  </td><td valign="bottom">
+
+      <label for="si_contact_silent_add"><?php echo __('Silent send key value pairs to add', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_silent_add_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_silent_add_tip">
+        <?php _e('Optional list of key value pairs that need to be added.', 'si-contact-form') ?><br />
+        <?php _e('Sometimes the outgoing connection will require fields that were not posted on your form.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+        <?php _e('Type the key separated by the equals character, then type the value, like this: key=value', 'si-contact-form'); ?><br />
+		<?php _e('Examples:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        account=3629675<br />
+		newsletter=join<br />
+		action=signup</span><br />
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_silent_add" id="si_contact_silent_add"><?php echo $si_contact_opt['silent_add']; ?></textarea>
+      <br />
+
+ </td>
+ </tr>
+ </table>
+
+      <?php
+       if( $si_contact_opt['silent_email_off'] == 'true' && ($si_contact_opt['silent_send'] == 'off' || $si_contact_opt['silent_url'] == '') ) {
+         echo '<br /><span class="updated">';
+         echo __('Warning: Enabling this setting requires the "Silent Remote Send" and "Silent Remote URL" to also be set.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+
+       <?php
+       if( $si_contact_opt['silent_email_off'] == 'true' && $si_contact_opt['silent_send'] != 'off' ) {
+        ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the Silent Remote Send settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
+         echo '<br /><span class="updated">';
+         echo __('Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
+         echo "</span><br />\n";
+       }
+       ?>
+        <input name="si_contact_silent_email_off" id="si_contact_silent_email_off" type="checkbox" <?php if( $si_contact_opt['silent_email_off'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_silent_email_off"><?php _e('Disable email sending (use only when required while you have enabled silent remote sending).', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_silent_email_off_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_silent_email_off_tip">
+        <?php _e('No email will be sent to you!! The posted data will ONLY be sent to the silent remote URL. This can be used for a third party service such as a mailing list API. Note: the autoresponder will still send email if it is enabled.', 'si-contact-form'); ?>
         </div>
         <br />
 
@@ -1874,6 +2050,10 @@ foreach ($cal_date_array as $k => $v) {
         </div>
         <br />
 
+<table style="border:none;" cellspacing="20">
+  <tr>
+  <td valign="bottom">
+
         <label for="si_contact_export_ignore"><?php echo __('Data export fields to ignore', 'si-contact-form'); ?>:</label>
       <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_ignore_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
       <div style="text-align:left; display:none" id="si_contact_export_ignore_tip">
@@ -1888,8 +2068,11 @@ foreach ($cal_date_array as $k => $v) {
         ?>
         </span>
       </div>
+
       <textarea rows="4" cols="25" name="si_contact_export_ignore" id="si_contact_export_ignore"><?php echo $si_contact_opt['export_ignore']; ?></textarea>
       <br />
+
+ </td><td valign="bottom">
 
       <label for="si_contact_export_rename"><?php echo __('Data export fields to rename', 'si-contact-form'); ?>:</label>
       <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_rename_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
@@ -1905,6 +2088,28 @@ foreach ($cal_date_array as $k => $v) {
       </div>
       <textarea rows="4" cols="25" name="si_contact_export_rename" id="si_contact_export_rename"><?php echo $si_contact_opt['export_rename']; ?></textarea>
       <br />
+
+  </td><td valign="bottom">
+
+      <label for="si_contact_export_add"><?php echo __('Data export key value pairs to add', 'si-contact-form'); ?>:</label>
+      <a style="cursor:pointer;" title="<?php echo __('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_add_tip');"><?php echo __('help', 'si-contact-form'); ?></a><br />
+      <div style="text-align:left; display:none" id="si_contact_export_add_tip">
+        <?php _e('Optional list of key value pairs that need to be added.', 'si-contact-form') ?><br />
+        <?php _e('Sometimes the outgoing connection will require fields that were not posted on your form.', 'si-contact-form') ?><br />
+        <?php _e('Start each entry on a new line.', 'si-contact-form'); ?><br />
+        <?php _e('Type the key separated by the equals character, then type the value, like this: key=value', 'si-contact-form'); ?><br />
+		<?php _e('Examples:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        account=3629675<br />
+		newsletter=join<br />
+		action=signup</span><br />
+      </div>
+      <textarea rows="4" cols="25" name="si_contact_export_add" id="si_contact_silent_add"><?php echo $si_contact_opt['export_add']; ?></textarea>
+      <br />
+
+ </td>
+ </tr>
+ </table>
 
       <?php
        if( $si_contact_opt['export_email_off'] == 'true' && ($si_contact_opt['export_enable'] != 'true' ) ) {
