@@ -181,6 +181,11 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 2.9.8.2 =
+- (07 Feb 2011) - Fix critical error "invalid argument supplied foreach () /si-contact-form.php on line 474". Sorry for the inconvenience.
+- Fix "Enable data export after the message" setting would not uncheck.
+- Changed default setting: If you use Contact Form 7 to DB Extension Plugin, be sure to visit the form edit page and enable this setting: "Enable data export after the message", because it is not enabled by default.
+
 = 2.9.8.1 =
 - (07 Feb 2011) - Added Silent Send feature: Use to send the posted data to another form or 3rd party API [See FAQ](http://www.fastsecurecontactform.com/send-form-data-elsewhere)
 - Fixed blank from email when email address was set to "not available".

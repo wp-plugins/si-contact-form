@@ -917,7 +917,7 @@ if ($have_attach){
 
   if ($si_contact_opt['export_enable'] == 'true') {
       // filter posted data based on admin settings
-      $posted_data_export = $this->si_contact_export_convert($si_contact_opt['export_rename'],$si_contact_opt['export_ignore'],$si_contact_opt['export_add'],'array');
+      $posted_data_export = $this->si_contact_export_convert($posted_data,$si_contact_opt['export_rename'],$si_contact_opt['export_ignore'],$si_contact_opt['export_add'],'array');
       // Use form name from form edit page if one is set.
       $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
 

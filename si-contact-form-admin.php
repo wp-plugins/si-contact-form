@@ -2041,7 +2041,7 @@ foreach ($silent_send_array as $k => $v) {
          <br />
          <br />
 
-        <input name="si_contact_export_enable" id="si_contact_export_enable" type="checkbox" <?php if( $si_contact_opt['redirect_enable'] == 'true' ) echo 'checked="checked"'; ?> />
+        <input name="si_contact_export_enable" id="si_contact_export_enable" type="checkbox" <?php if( $si_contact_opt['export_enable'] == 'true' ) echo 'checked="checked"'; ?> />
         <label for="si_contact_export_enable"><?php _e('Enable data export after the message', 'si-contact-form'); ?>.</label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_export_enable_tip">
