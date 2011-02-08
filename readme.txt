@@ -181,6 +181,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Improvement: javascript is only loaded on pages when it is conditionally needed.
+
 = 2.9.8.2 =
 - (07 Feb 2011) - Fix critical error "invalid argument supplied foreach () /si-contact-form.php on line 474". Sorry for the inconvenience.
 - Fix "Enable data export after the message" setting would not uncheck.

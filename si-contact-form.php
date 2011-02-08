@@ -47,6 +47,7 @@ if (!class_exists('siContactForm')) {
      var $uploaded_files;
      var $ctf_notes_style;
      var $ctf_version;
+     var $ctf_add_script;
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('FS Contact Form Options', 'si-contact-form'), __('FS Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
@@ -106,7 +107,7 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
 // and does all the decision making to send the email or not
 // [si_contact_form form='2']
 function si_contact_form_short_code($atts) {
-   global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb, $ctf_version;
+  global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb, $ctf_version, $ctf_add_script;
 
   $this->ctf_version = $ctf_version;
 
@@ -657,7 +658,7 @@ function si_contact_validate_attach( $file, $ex_field  ) {
 
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
-   global $si_contact_opt;
+   global $si_contact_opt, $ctf_add_script;
 
    if ($si_contact_opt['captcha_enable'] !== 'true') {
         return false; // captcha setting is disabled for si contact
@@ -670,6 +671,7 @@ function isCaptchaEnabled() {
                return false;
         }
    }
+   $ctf_add_script = true;
    return true;
 } // end function isCaptchaEnabled
 
@@ -1576,8 +1578,14 @@ function si_contact_convert_css($string) {
 
 } // end function si_contact_convert_css
 
-function si_contact_enqueue_scripts(){
-   wp_enqueue_script('si_contact_form', plugins_url('si-contact-form/captcha-secureimage/ctf_captcha.js'));
+function si_contact_add_script(){
+    global $ctf_add_script;
+
+    if (!$ctf_add_script)
+      return;
+
+   wp_register_script('si_contact_form', plugins_url('captcha-secureimage/ctf_captcha.js', __FILE__), array(), '1.0', true);
+   wp_print_scripts('si_contact_form');
 }
 
 } // end of class
@@ -1616,14 +1624,13 @@ if (isset($si_contact_form)) {
 
   $si_contact_gb = get_option("si_contact_form_gb");
   if ( isset($si_contact_gb['captcha_disable_session']) && $si_contact_gb['captcha_disable_session'] == 'true') {
-      // add javascript header hooks
-      //add_action('wp_head', array(&$si_contact_form,'si_contact_header'),2);
-      add_action( 'init', array(&$si_contact_form,'si_contact_enqueue_scripts'),2);
+      // add javascript (conditionally to footer)
+      // http://scribu.net/wordpress/optimal-script-loading.html
+      add_action( 'wp_footer', array(&$si_contact_form,'si_contact_add_script'));
+      add_action( 'admin_footer', array(&$si_contact_form,'si_contact_add_script'));
   }  else {
      // start the PHP session
      add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
-     //add_action('parse_request', array(&$si_contact_form,'si_contact_start_session'),2);
-     //add_action('plugins_loaded', array(&$si_contact_form,'si_contact_start_session'),2);
   }
 
   // si contact form admin options
