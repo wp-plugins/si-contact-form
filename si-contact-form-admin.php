@@ -719,7 +719,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
    </div>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
   <input type="hidden" name="cmd" value="_s-xclick" />
-  <input type="hidden" name="hosted_button_id" value="8086141" />
+  <input type="hidden" name="hosted_button_id" value="5KKKX5BK5HHW2" />
   <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" style="border:none;" name="submit" alt="Paypal Donate" />
   <img alt="" style="border:none;" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </form>
