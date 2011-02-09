@@ -39,6 +39,8 @@ http://www.642weather.com/weather/scripts.php
                $this->si_contact_error = 1;
                $string .= $this->ctf_echo_if_error(__('Error: A hidden field is not configured properly in settings.', 'si-contact-form'));
             }
+            if (${'ex_field'.$i} != '') // guery string can overrride
+                 $value = ${'ex_field'.$i};
             $string .= '
                 <input type="hidden" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string($value) . '" />
 ';
