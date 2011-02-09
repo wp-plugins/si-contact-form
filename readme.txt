@@ -182,7 +182,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Improvement: javascript is only loaded on pages when it is conditionally needed.
-- Fixed 2 label alignment problems with some themes. 
+- Fixed 2 label alignment problems with some themes.
+- Fixed possible javascript conflict that can break the redirect feature. 
 - Added hidden field can accept query input. [see FAQ page](http://www.fastsecurecontactform.com/query-string-parameters)
 
 = 2.9.8.2 =

@@ -411,7 +411,25 @@ function ctf_redirect() {
     self.location='$ctf_redirect_url';
   }
 }
-window.onload=ctf_redirect;
+function ctf_addOnloadEvent(fnc){
+  if ( typeof window.addEventListener != "undefined" )
+    window.addEventListener( "load", fnc, false );
+  else if ( typeof window.attachEvent != "undefined" ) {
+    window.attachEvent( "onload", fnc );
+  }
+  else {
+    if ( window.onload != null ) {
+      var oldOnload = window.onload;
+      window.onload = function ( e ) {
+        oldOnload( e );
+        window[fnc]();
+      };
+    }
+    else
+      window.onload = fnc;
+  }
+}
+ctf_addOnloadEvent(ctf_redirect);
 //]]>
 </script>
 EOT;
