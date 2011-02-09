@@ -505,21 +505,21 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
  echo <<<EOT
 
 <script type="text/javascript" language="javascript">
-<!--
-var count=$ctf_redirect_timeout;
-var time;
-function timedCount() {
-  document.title='Redirecting in ' + count + ' seconds';
-  count=count-1;
-  time=setTimeout("timedCount()",1000);
-  if (count==-1) {
-    clearTimeout(time);
+//<![CDATA[
+var ctf_redirect_seconds=$ctf_redirect_timeout;
+var ctf_redirect_time;
+function ctf_redirect() {
+  document.title='Redirecting in ' + ctf_redirect_seconds + ' seconds';
+  ctf_redirect_seconds=ctf_redirect_seconds-1;
+  ctf_redirect_time=setTimeout("ctf_redirect()",1000);
+  if (ctf_redirect_seconds==-1) {
+    clearTimeout(ctf_redirect_time);
     document.title='Redirecting ...';
     self.location='$ctf_redirect_url';
   }
 }
-window.onload=timedCount;
-//-->
+window.onload=ctf_redirect;
+//]]>
 </script>
 EOT;
 
