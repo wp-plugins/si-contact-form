@@ -831,8 +831,8 @@ $string .= '>
 </div>
       <div '.$this->ctf_title_style.'>
                 <label for="si_contact_captcha_code'.$form_id_num.'">';
-     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':</label>';
-     $string .= $req_field_ind.'
+     $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':';
+     $string .= $req_field_ind.'</label>
         </div>
         <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($si_contact_error_captcha).'
                 <input '.$this->ctf_field_style.' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
