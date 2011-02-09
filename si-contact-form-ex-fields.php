@@ -279,7 +279,7 @@ $string .=   "\n";
 
 
                  $string .= '/>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
+                <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
      $ex_cnt++;
   }
 
@@ -306,7 +306,7 @@ $string .=   "\n";
       }
     }
                  $string .= '/>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
+                <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
         </div>
 ';
 
@@ -369,7 +369,7 @@ foreach ($exf_opts_array as $k) {
       if(!$exf_opts_inline && $ex_cnt > 1)
                $string .= "           <br />\n";
  $string .= '           <span style="white-space:nowrap;"><input type="radio" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected.' />
-           <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
+           <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
  $selected = '';
  $ex_cnt++;
 }
@@ -429,7 +429,7 @@ $exf_opts_array = array();
         }
            $string .=   '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label> 
+                <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                <select '.$this->ctf_field_style.' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'h">
