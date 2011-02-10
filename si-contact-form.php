@@ -114,7 +114,12 @@ function si_contact_form_short_code($atts) {
   // get options
   $si_contact_gb_mf = get_option("si_contact_form_gb");
 
-   extract(shortcode_atts(array( 'form' => '', 'redirect' => '', 'hidden' => '' ), $atts));
+   extract(shortcode_atts(array(
+   'form' => '',
+   'redirect' => '',
+   'hidden' => '',
+   'email_to' => '',
+   ), $atts));
     $form_num = '';
     $form_id_num = 1;
     if ( isset($form) && is_numeric($form) && $form <= $si_contact_gb_mf['max_forms'] ) {
@@ -127,6 +132,7 @@ function si_contact_form_short_code($atts) {
   //[si-contact-form form='1' redirect='http://www.mysite.com/thanks/' hidden='key=val']
   $shortcode_redirect = $redirect;
   $shortcode_hidden = $hidden;
+  $shortcode_email_to = $email_to;
 
   // get options
   $si_contact_gb = $this->si_contact_get_options($form_num);

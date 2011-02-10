@@ -23,6 +23,22 @@ http://www.642weather.com/weather/scripts.php
     $mail_to    = ( isset($contacts[$cid]['EMAIL']) )   ? $this->ctf_clean_input($contacts[$cid]['EMAIL'])  : '';
     $to_contact = ( isset($contacts[$cid]['CONTACT']) ) ? $this->ctf_clean_input($contacts[$cid]['CONTACT']): '';
 
+    // allow shortcode email_to
+    // Webmaster,user1@example.com (must have name,email)
+    // multiple emails allowed (additional ones will be Cc:)
+    // Webmaster,user1@example.com;user2@example.com
+   if ( $shortcode_email_to != '') {
+     if(preg_match("/,/", $shortcode_email_to) ) {
+       list($key, $value) = explode(",",$shortcode_email_to);
+       $key   = trim($key);
+       $value = trim($value);
+       if ($key != '' && $value != '') {
+             $mail_to    = $this->ctf_clean_input($value);
+             $to_contact = $this->ctf_clean_input($key);
+       }
+     }
+   }
+
     if ($si_contact_opt['name_type'] != 'not_available') {
         switch ($si_contact_opt['name_format']) {
           case 'name':
