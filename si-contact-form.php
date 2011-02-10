@@ -120,6 +120,7 @@ function si_contact_form_short_code($atts) {
    'hidden' => '',
    'email_to' => '',
    ), $atts));
+   
     $form_num = '';
     $form_id_num = 1;
     if ( isset($form) && is_numeric($form) && $form <= $si_contact_gb_mf['max_forms'] ) {
@@ -129,7 +130,7 @@ function si_contact_form_short_code($atts) {
          $form_num = '';
     }
 
-  //[si-contact-form form='1' redirect='http://www.mysite.com/thanks/' hidden='key=val']
+  // http://www.fastsecurecontactform.com/shortcode-options
   $shortcode_redirect = $redirect;
   $shortcode_hidden = $hidden;
   $shortcode_email_to = $email_to;
