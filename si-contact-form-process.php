@@ -444,29 +444,37 @@ if ($have_attach){
               $posted_data['from_name'] = $name;
           break;
           case 'first_last':
-              $msg .= __('First Name', 'si-contact-form').": $f_name$php_eol";
-              $msg .= __('Last Name', 'si-contact-form').": $l_name$php_eol";
+              $msg .= ($si_contact_opt['title_fname'] != '') ? $si_contact_opt['title_fname'] : __('First Name', 'si-contact-form').':';
+              $msg .= " $f_name$php_eol";
+              $msg .= ($si_contact_opt['title_lname'] != '') ? $si_contact_opt['title_lname'] : __('Last Name', 'si-contact-form').':';
+              $msg .= " $l_name$php_eol";
               $posted_data['first_name'] = $f_name;
               $posted_data['last_name'] = $l_name;
           break;
           case 'first_middle_i_last':
-              $msg .= __('First Name', 'si-contact-form').": $f_name$php_eol";
+              $msg .= ($si_contact_opt['title_fname'] != '') ? $si_contact_opt['title_fname'] : __('First Name', 'si-contact-form').':';
+              $msg .= " $f_name$php_eol";
               $posted_data['first_name'] = $f_name;
               if($mi_name != '') {
-                 $msg .= __('Middle Initial', 'si-contact-form').": $mi_name$php_eol";
+                 $msg .= ($si_contact_opt['title_miname'] != '') ? $si_contact_opt['title_miname'] : __('Middle Initial', 'si-contact-form').':';
+                 $msg .= " $mi_name$php_eol";
                  $posted_data['middle_initial'] = $mi_name;
               }
-              $msg .= __('Last Name', 'si-contact-form').": $l_name$php_eol";
+              $msg .= ($si_contact_opt['title_lname'] != '') ? $si_contact_opt['title_lname'] : __('Last Name', 'si-contact-form').':';
+              $msg .= " $l_name$php_eol";
               $posted_data['last_name'] = $l_name;
           break;
           case 'first_middle_last':
-              $msg .= __('First Name', 'si-contact-form').": $f_name$php_eol";
+              $msg .= ($si_contact_opt['title_fname'] != '') ? $si_contact_opt['title_fname'] : __('First Name', 'si-contact-form').':';
+              $msg .= " $f_name$php_eol";
               $posted_data['first_name'] = $f_name;
               if($m_name != '') {
-                 $msg .= __('Middle Name', 'si-contact-form').": $m_name$php_eol";
+                 $msg .= ($si_contact_opt['title_mname'] != '') ? $si_contact_opt['title_mname'] : __('Middle Name', 'si-contact-form').':';
+                 $msg .= " $m_name$php_eol";
                  $posted_data['middle_name'] = $m_name;
               }
-              $msg .= __('Last Name', 'si-contact-form').": $l_name$php_eol";
+              $msg .= ($si_contact_opt['title_lname'] != '') ? $si_contact_opt['title_lname'] : __('Last Name', 'si-contact-form').':';
+              $msg .= " $l_name$php_eol";
               $posted_data['last_name'] = $l_name;
          break;
       }

@@ -194,7 +194,8 @@ if($si_contact_opt['name_type'] != 'not_available' ) {
 
      $f_name_string = '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_f_name'.$form_id_num.'">' . __('First Name', 'si-contact-form').':';
+                <label for="si_contact_f_name'.$form_id_num.'">';
+     $f_name_string .= ($si_contact_opt['title_fname'] != '') ? $si_contact_opt['title_fname'] : __('First Name', 'si-contact-form').':';
      if($si_contact_opt['name_type'] == 'required' )
            $f_name_string .= $req_field_ind;
      $f_name_string .= '</label>
@@ -205,7 +206,8 @@ if($si_contact_opt['name_type'] != 'not_available' ) {
 
      $l_name_string = '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_l_name'.$form_id_num.'">' . __('Last Name', 'si-contact-form').':';
+                <label for="si_contact_l_name'.$form_id_num.'">';
+     $l_name_string .= ($si_contact_opt['title_lname'] != '') ? $si_contact_opt['title_lname'] : __('Last Name', 'si-contact-form').':';
      if($si_contact_opt['name_type'] == 'required' )
            $l_name_string .= $req_field_ind;
      $l_name_string .= '</label>
@@ -245,7 +247,9 @@ $string .= '
 
 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_mi_name'.$form_id_num.'">' . __('Middle Initial', 'si-contact-form').':</label>
+                <label for="si_contact_mi_name'.$form_id_num.'">';
+     $string .= ($si_contact_opt['title_miname'] != '') ? $si_contact_opt['title_miname'] : __('Middle Initial', 'si-contact-form').':';
+     $string .= '</label>
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($si_contact_error_mi_name).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_mi_name'.$form_id_num.'" name="si_contact_mi_name" value="' . $this->ctf_output_string($mi_name) .'" '.$this->ctf_aria_required.' size="2" />
@@ -260,7 +264,9 @@ $string .= '
 
 $string .= '
         <div '.$this->ctf_title_style.'>
-                <label for="si_contact_m_name'.$form_id_num.'">' . __('Middle Name', 'si-contact-form').':</label>
+                <label for="si_contact_m_name'.$form_id_num.'">';
+     $string .= ($si_contact_opt['title_mname'] != '') ? $si_contact_opt['title_mname'] : __('Middle Name', 'si-contact-form').':';
+     $string .= '</label>
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($si_contact_error_m_name).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_m_name'.$form_id_num.'" name="si_contact_m_name" value="' . $this->ctf_output_string($m_name) .'" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />

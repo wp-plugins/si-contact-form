@@ -120,7 +120,7 @@ function si_contact_form_short_code($atts) {
    'hidden' => '',
    'email_to' => '',
    ), $atts));
-   
+
     $form_num = '';
     $form_id_num = 1;
     if ( isset($form) && is_numeric($form) && $form <= $si_contact_gb_mf['max_forms'] ) {
@@ -1197,6 +1197,10 @@ function si_contact_get_options($form_num) {
          'title_dept' => '',
          'title_select' => '',
          'title_name' => '',
+         'title_fname' => '',
+         'title_mname' => '',
+         'title_miname' => '',
+         'title_lname' => '',
          'title_email' => '',
          'title_email2' => '',
          'title_email2_help' => '',

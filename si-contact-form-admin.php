@@ -376,6 +376,10 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'title_dept' =>          trim($_POST['si_contact_title_dept']),
          'title_select' =>        trim($_POST['si_contact_title_select']),
          'title_name' =>          trim($_POST['si_contact_title_name']),
+         'title_fname' =>         trim($_POST['si_contact_title_fname']),
+         'title_lname' =>         trim($_POST['si_contact_title_lname']),
+         'title_mname' =>         trim($_POST['si_contact_title_mname']),
+         'title_miname' =>        trim($_POST['si_contact_title_miname']),
          'title_email' =>         trim($_POST['si_contact_title_email']),
          'title_email2' =>        trim($_POST['si_contact_title_email2']),
          'title_email2_help' =>   trim($_POST['si_contact_title_email2_help']),
@@ -2271,6 +2275,10 @@ foreach ($silent_send_array as $k => $v) {
          <label for="si_contact_title_dept"><?php _e('Department to Contact', 'si-contact-form'); ?>:</label><input name="si_contact_title_dept" id="si_contact_title_dept" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_dept']);  ?>" size="50" /><br />
          <label for="si_contact_title_select"><?php _e('Select', 'si-contact-form'); ?>:</label><input name="si_contact_title_select" id="si_contact_title_select" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_select']);  ?>" size="50" /><br />
          <label for="si_contact_title_name"><?php _e('Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_name" id="si_contact_title_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_name']);  ?>" size="50" /><br />
+         <label for="si_contact_title_fname"><?php _e('First Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_fname" id="si_contact_title_fname" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_fname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_lname"><?php _e('Last Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_lname" id="si_contact_title_lname" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_lname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_mname"><?php _e('Middle Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_mname" id="si_contact_title_mname" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_mname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_miname"><?php _e('Middle Initial', 'si-contact-form'); ?>:</label><input name="si_contact_title_miname" id="si_contact_title_miname" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_miname']);  ?>" size="50" /><br />
          <label for="si_contact_title_email"><?php _e('E-Mail Address', 'si-contact-form'); ?>:</label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_email']);  ?>" size="50" /><br />
          <label for="si_contact_title_email2"><?php _e('E-Mail Address again', 'si-contact-form'); ?>:</label><input name="si_contact_title_email2" id="si_contact_title_email2" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_email2']);  ?>" size="50" /><br />
          <label for="si_contact_title_email2"><?php _e('Please enter your E-mail Address a second time.', 'si-contact-form'); ?></label><input name="si_contact_title_email2_help" id="si_contact_title_email2_help" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_email2_help']);  ?>" size="50" /><br />
