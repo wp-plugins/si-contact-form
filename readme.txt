@@ -108,7 +108,7 @@ Requirements/Restrictions:
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
-[See FAQ page: Problem: I do not receive email, email does not send, or always goes to the “Spam” folder. How to troubleshoot mail delivery.]http://www.fastsecurecontactform.com/email-does-not-send)
+[See FAQ page: How to troubleshoot email delivery](http://www.fastsecurecontactform.com/email-does-not-send)
 
 
 = Is this plugin available in other languages? =
