@@ -88,7 +88,7 @@ Requirements/Restrictions:
 = I just installed this and do not get any email from it, what could be wrong? =
 
 
-[See FAQ page: Problem: I do not receive email, email does not send, or always goes to the “Spam” folder. How to troubleshoot mail delivery.]http://www.fastsecurecontactform.com/email-does-not-send)
+[See FAQ page: How to troubleshoot mail delivery](http://www.fastsecurecontactform.com/email-does-not-send)
 
 
 == Screenshots ==
@@ -183,7 +183,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 - Improvement: javascript is only loaded on pages when it is conditionally needed.
 - Fixed 2 label alignment problems with some themes.
-- Fixed possible javascript conflict that can break the redirect feature. 
+- Fixed possible javascript conflict that can break the redirect feature.
+- Added more shortcode optional settings [see FAQ page](http://www.fastsecurecontactform.com/shortcode-options) 
 - Added hidden field can accept query input. [see FAQ page](http://www.fastsecurecontactform.com/query-string-parameters)
 
 = 2.9.8.2 =
