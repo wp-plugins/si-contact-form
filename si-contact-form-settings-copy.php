@@ -33,18 +33,18 @@ if ( isset($_POST['ctf_action'])
           $this_form_arr = get_option("si_contact_form$this_form");
 
           // strip slashes on get options array
-          foreach($this_form_arr as $key => $val) {
-             $this_form_arr[$key] = $this->ctf_stripslashes($val);
-          }
+/*          foreach($this_form_arr as $key => $val) {
+             $this_form_arr[$key] = addslashes($val);
+          }*/
 
         $ok = 0;
         if ($destination_form == '1'){
             // form 1
             if ($copy_what == 'styles') {
                 $destination_form_arr = get_option('si_contact_form');
-                foreach($destination_form_arr as $key => $val) {
-                   $destination_form_arr[$key] = $this->ctf_stripslashes($val);
-                }
+/*                foreach($destination_form_arr as $key => $val) {
+                   $destination_form_arr[$key] = addslashes($val);
+                }*/
                 $destination_form_arr = $this->si_contact_copy_styles($this_form_arr,$destination_form_arr);
                 update_option("si_contact_form", $destination_form_arr);
             } else {
@@ -58,9 +58,9 @@ if ( isset($_POST['ctf_action'])
             for ($i = 2; $i <= $si_contact_bk_gb['max_forms']; $i++) {
                if ($copy_what == 'styles') {
                    $destination_form_arr = get_option("si_contact_form$i");
-                   foreach($destination_form_arr as $key => $val) {
-                      $destination_form_arr[$key] = $this->ctf_stripslashes($val);
-                   }
+/*                   foreach($destination_form_arr as $key => $val) {
+                      $destination_form_arr[$key] = addslashes($val);
+                   }*/
                    $destination_form_arr = $this->si_contact_copy_styles($this_form_arr,$destination_form_arr);
                    update_option("si_contact_form$i", $destination_form_arr);
                } else {
@@ -72,9 +72,9 @@ if ( isset($_POST['ctf_action'])
            // form x
             if ($copy_what == 'styles') {
                 $destination_form_arr = get_option("si_contact_form$destination_form");
-                foreach($destination_form_arr as $key => $val) {
-                   $destination_form_arr[$key] = $this->ctf_stripslashes($val);
-                }
+/*                foreach($destination_form_arr as $key => $val) {
+                   $destination_form_arr[$key] = addslashes($val);
+                }*/
                 $destination_form_arr = $this->si_contact_copy_styles($this_form_arr,$destination_form_arr);
                 update_option("si_contact_form$destination_form", $destination_form_arr);
             } else {

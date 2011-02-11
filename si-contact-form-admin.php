@@ -2406,7 +2406,7 @@ foreach ($copy_what_array as $k => $v) {
 ?>
 </select>
 
-<label for="si_contact_backup_type"><?php echo sprintf(__('Select a form to copy form %d settings to:', 'si-contact-form'),$form_id); ?></label>
+<label for="si_contact_destination_form"><?php echo sprintf(__('Select a form to copy form %d settings to:', 'si-contact-form'),$form_id); ?></label>
 <select id="si_contact_destination_form" name="si_contact_destination_form">
 <?php
 $backup_type_array = array(
