@@ -135,7 +135,7 @@ http://www.642weather.com/weather/scripts.php
 
     switch ($si_contact_opt['name_format']) {
        case 'name':
-        if(empty($name) && $si_contact_opt['name_type'] == 'required') {
+        if($name == '' && $si_contact_opt['name_type'] == 'required') {
           $this->si_contact_error = 1;
           $si_contact_error_name =  ($si_contact_opt['error_name'] != '') ? $si_contact_opt['error_name'] : __('Your name is required.', 'si-contact-form');
         }
@@ -197,7 +197,7 @@ if ($have_attach){
           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
 
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
-               ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+               ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
                ${'ex_field'.$i.'h'}  = $this->ctf_clean_input($_POST["si_contact_ex_field".$i."h"]);
                ${'ex_field'.$i.'m'}  = $this->ctf_clean_input($_POST["si_contact_ex_field".$i."m"]);
@@ -255,8 +255,8 @@ if ($have_attach){
                      }
                 }
              }else{
-                ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
-                if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                if(${'ex_field'.$i} == '' && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
                     $this->si_contact_error = 1;
                     ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
                 }
@@ -279,7 +279,7 @@ if ($have_attach){
                      }
                      // required check (only 1 has to be checked to meet required)
                      $ex_reqd = 0;
-                     ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                     ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
                      if (is_array(${'ex_field'.$i}) && !empty(${'ex_field'.$i}) ) {
                        // loop
                        foreach ($exf_opts_array as $k) {  // checkbox multi
@@ -300,11 +300,11 @@ if ($have_attach){
            }else{  // end label'] == 'checkbox'
                 // text, textarea, radio, select, date, password
                 if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
-                      ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
+                      ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
                 }else{
-                     ${'ex_field'.$i} = ( empty($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+                      ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
                 }
-                if(empty(${'ex_field'.$i}) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                if(${'ex_field'.$i} == '' && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
                   $this->si_contact_error = 1;
                   ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
                 }
@@ -312,13 +312,13 @@ if ($have_attach){
         }  // end if label != ''
       } // end foreach
 
-   if ($si_contact_opt['subject_type'] == 'required' && empty($subject)) {
+   if ($si_contact_opt['subject_type'] == 'required' && $subject == '') {
        $this->si_contact_error = 1;
        if (count($subjects) == 0) {
          $si_contact_error_subject = ($si_contact_opt['error_subject'] != '') ? $si_contact_opt['error_subject'] : __('Subject text is required.', 'si-contact-form');
        }
    }
-   if($si_contact_opt['message_type'] == 'required' &&  empty($message)) {
+   if($si_contact_opt['message_type'] == 'required' &&  $message == '') {
        $this->si_contact_error = 1;
        $si_contact_error_message = ($si_contact_opt['error_message'] != '') ? $si_contact_opt['error_message'] : __('Message text is required.', 'si-contact-form');
    }
