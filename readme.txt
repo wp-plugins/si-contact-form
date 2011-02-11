@@ -185,6 +185,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 - Fixed 2 label alignment problems with some themes.
 - Fixed possible javascript conflict that can break the redirect feature.
 - More name labels can be changed.
+- Added new feature: Copy Settings Tool. This tool can copy your contact form settings from one form number to any of your other forms. Use to copy just the style settings, or all the settings from one form.
 - Added more shortcode optional settings [see FAQ page](http://www.fastsecurecontactform.com/shortcode-options) 
 - Added hidden field can accept query input. [see FAQ page](http://www.fastsecurecontactform.com/query-string-parameters)
 

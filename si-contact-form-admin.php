@@ -25,6 +25,22 @@ http://www.642weather.com/weather/scripts.php
   // a couple language options need to be translated now.
   $this->si_contact_update_lang();
 
+     // action copy settings
+	if ( isset($_POST['ctf_action'])
+    && $_POST['ctf_action'] == __('Copy Settings', 'si-contact-form')
+    && isset($_POST['si_contact_copy_what'])
+    && isset($_POST['si_contact_this_form'])
+    && is_numeric($_POST['si_contact_this_form'])
+    && isset($_POST['si_contact_destination_form']) ) {
+        check_admin_referer( 'si-contact-form-copy_settings'); // nonce
+
+     require_once WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-settings-copy.php';
+
+     // refresh settings to initialize the restored backup
+     $si_contact_gb = $this->si_contact_get_options($form_num);
+
+  } // end action backup restore
+
     // action backup restore
 	if (isset($_POST['ctf_action'])
     && $_POST['ctf_action'] == __('Restore Settings', 'si-contact-form')
@@ -431,11 +447,8 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
     }
 
     if (isset($_POST['si_contact_reset_styles'])) {
-         // reset styles feature
-         $style_resets_arr = array('border_enable','form_style','border_style','required_style','notes_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
-         foreach($style_resets_arr as $style_reset) {
-           $optionarray_update[$style_reset] = $si_contact_option_defaults[$style_reset];
-         }
+      // reset styles feature
+      $optionarray_update = $this->si_contact_copy_styles($si_contact_option_defaults,$optionarray_update);
     }
 
     if (isset($_POST['si_contact_reset_styles_left'])) {
@@ -466,8 +479,6 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
            $optionarray_update[$key] = $val;
          }
     }
-
-
 
     // save updated options to the database
     update_option("si_contact_form$form_num", $optionarray_update);
@@ -2368,6 +2379,65 @@ if ( !function_exists('mail') ) {
 
 <br />
 
+
+<form id="ctf_copy_settings" action="<?php echo admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php" ); ?>" method="post">
+<?php wp_nonce_field('si-contact-form-copy_settings'); ?>
+<fieldset class="options" style="border:1px solid black; padding:10px;">
+
+<legend><?php _e('Copy Settings', 'si-contact-form'); ?></legend>
+<?php _e('This tool can copy your contact form settings from this form number to any of your other forms.', 'si-contact-form'); ?><br />
+<?php _e('Use to copy just the style settings, or all the settings from this form.', 'si-contact-form'); ?><br />
+<?php _e('It is a good idea to backup all forms with the backup tool before you use this copy tool. Changes are permanent!', 'si-contact-form'); ?><br />
+
+<label for="si_contact_copy_what"><?php echo __('What to copy:', 'si-contact-form'); ?></label>
+<select id="si_contact_copy_what" name="si_contact_copy_what">
+<?php
+$copy_what_array = array(
+'all' => esc_attr(sprintf(__('Form %d - all settings', 'si-contact-form'),$form_id)),
+'styles' => esc_attr(sprintf(__('Form %d - style settings', 'si-contact-form'),$form_id)),
+);
+
+$selected = '';
+foreach ($copy_what_array as $k => $v) {
+ if (isset($_POST['si_contact_copy_what']) && $_POST['si_contact_copy_what'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+
+<label for="si_contact_backup_type"><?php echo sprintf(__('Select a form to copy form %d settings to:', 'si-contact-form'),$form_id); ?></label>
+<select id="si_contact_destination_form" name="si_contact_destination_form">
+<?php
+$backup_type_array = array(
+'all' => esc_attr(__('All Forms', 'si-contact-form')),
+);
+$backup_type_array["1"] = esc_attr(sprintf(__('Form: %d', 'si-contact-form'),1));
+// multi-forms > 1
+for ($i = 2; $i <= $si_contact_gb['max_forms']; $i++) {
+$backup_type_array[$i] = esc_attr(sprintf(__('Form: %d', 'si-contact-form'),$i));
+}
+$selected = '';
+foreach ($backup_type_array as $k => $v) {
+ if (isset($_POST['si_contact_destination_form']) && $_POST['si_contact_destination_form'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+
+
+<input type="hidden" name="si_contact_this_form" id="si_contact_this_form" value="<?php echo $form_id ?>"  />
+<p style="padding:0px;" class="submit">
+<input type="submit" name="ctf_action" onclick="alert('<?php _e('Are you sure you want to permanently make this change?', 'si-contact-form'); ?>')" value="<?php _e('Copy Settings', 'si-contact-form'); ?>" />
+</p>
+
+</fieldset>
+</form>
+
+<br />
+
+
 <form id="ctf_backup_settings" action="<?php echo admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php" ); ?>" method="post">
 <?php wp_nonce_field('si-contact-form-backup_settings'); ?>
 <fieldset class="options" style="border:1px solid black; padding:10px;">
@@ -2410,7 +2480,8 @@ foreach ($backup_type_array as $k => $v) {
 <fieldset class="options" style="border:1px solid black; padding:10px;">
 
 <legend><?php _e('Restore Settings', 'si-contact-form'); ?></legend>
-<?php _e('This tool can restore a backup of your contact form settings. If you have previously made a backup, you can restore one or all your forms. It is a good idea to backup all forms before you restore any. Changes are permanent!', 'si-contact-form'); ?><br />
+<?php _e('This tool can restore a backup of your contact form settings. If you have previously made a backup, you can restore one or all your forms.', 'si-contact-form'); ?><br />
+<?php _e('It is a good idea to backup all forms with the backup tool before you restore any. Changes are permanent!', 'si-contact-form'); ?><br />
 <label for="si_contact_restore_backup_type"><?php _e('Select a form to restore:', 'si-contact-form'); ?></label>
 
 <select id="si_contact_restore_backup_type" name="si_contact_backup_type">

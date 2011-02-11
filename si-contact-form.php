@@ -1288,10 +1288,7 @@ function si_contact_get_options($form_num) {
   }
   if ($si_contact_opt['title_style'] == '' && $si_contact_opt['field_style'] == '') {
      // if styles seem to be blank, reset styles
-     $style_resets_arr = array('border_enable','form_style','border_style','required_style','notes_style','title_style','field_style','field_div_style','error_style','select_style','captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style','powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
-     foreach($style_resets_arr as $style_reset) {
-           $si_contact_opt[$style_reset] = $si_contact_option_defaults[$style_reset];
-     }
+     $si_contact_opt = $this->si_contact_copy_styles($si_contact_option_defaults,$si_contact_opt);
   }
 
   // new field type defaults on version 2.6.3
@@ -1333,6 +1330,20 @@ function si_contact_get_options($form_num) {
     return $si_contact_gb;
 
 } // end function si_contact_get_options
+
+// used when resetting or copying style settings
+function si_contact_copy_styles($this_form_arr,$destination_form_arr) {
+
+     $style_copy_arr = array(
+     'border_enable','form_style','border_style','required_style','notes_style',
+     'title_style','field_style','field_div_style','error_style','select_style',
+     'captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style',
+     'powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
+     foreach($style_copy_arr as $style_copy) {
+           $destination_form_arr[$style_copy] = $this_form_arr[$style_copy];
+     }
+     return $destination_form_arr;
+}
 
 function si_contact_start_session() {
   // a PHP session cookie is set so that the captcha can be remembered and function
