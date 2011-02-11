@@ -43,7 +43,7 @@ if ($si_contact_opt['border_enable'] == 'true') {
 ';
 }
 
-if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_button') ) {
+/*if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_button') ) {
 
       $string .= '<div '.$this->ctf_required_style.'>
       <div '.$this->ctf_error_style.'>'."\n";
@@ -51,7 +51,7 @@ if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_but
       $string .= ' <a href="http://www.fastsecurecontactform.com/error-message-sfc-like">'.  __('help', 'si-contact-form') . '</a>
       </div>
 </div>'."\n";
-}
+}*/
 
 // check attachment directory
 $attach_dir_error = 0;
