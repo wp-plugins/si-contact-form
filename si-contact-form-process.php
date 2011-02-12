@@ -771,7 +771,13 @@ if ($have_attach){
     if ($ctf_email_address_bcc != '')
             $header .= "Bcc: $ctf_email_address_bcc\n"; // for php mail and wp_mail
 
-    $header .= "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
+    if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
+         $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n"; // for php mail and wp_mail
+    }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
+         $header .= "Reply-To: $email\n"; // for php mail and wp_mail
+    }else {
+         $header .= "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
+    }
 
     if ($ctf_email_on_this_domain != '') {
       $header .= "X-Sender: $this->si_contact_mail_sender\n";  // for php mail
@@ -817,7 +823,13 @@ if ($have_attach){
          }
          $ctf_geekMail->from($this->si_contact_from_email, $this->si_contact_from_name);
          $ctf_geekMail->to($mail_to);
-         $ctf_geekMail->_replyTo($this->si_contact_from_email);
+         if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
+              $ctf_geekMail->_replyTo($si_contact_opt['email_reply_to']);
+         }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
+              $ctf_geekMail->_replyTo($email);
+         }else {
+              $ctf_geekMail->_replyTo($this->si_contact_from_email);
+         }
          if ($ctf_email_address_bcc != '')
            $ctf_geekMail->bcc($ctf_email_address_bcc);
          $ctf_geekMail->subject($subj);

@@ -99,6 +99,14 @@ http://www.642weather.com/weather/scripts.php
          }
     }
     $header_php =  "From: $this->si_contact_from_name <$this->si_contact_from_email>\n"; // header for php mail only
+
+    if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
+         $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n"; // for php mail and wp_mail
+    }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
+         $header .= "Reply-To: $email\n"; // for php mail and wp_mail
+    }else {
+         $header .= "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
+    }
     $header = "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
 
     if ($ctf_email_on_this_domain != '') {
@@ -139,7 +147,13 @@ http://www.642weather.com/weather/scripts.php
          }
          $ctf_geekMail->from($this->si_contact_from_email, $this->si_contact_from_name);
          $ctf_geekMail->to($email);
-         $ctf_geekMail->_replyTo($this->si_contact_from_email);
+         if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
+              $ctf_geekMail->_replyTo($si_contact_opt['email_reply_to']);
+         }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
+              $ctf_geekMail->_replyTo($email);
+         }else {
+              $ctf_geekMail->_replyTo($this->si_contact_from_email);
+         }
          $ctf_geekMail->subject($subject);
          $ctf_geekMail->message($message);
          // Start output buffering to grab smtp debugging output
@@ -308,6 +322,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'email_from' =>        trim($_POST['si_contact_email_from']), // optional
          'email_from_enforced' => (isset( $_POST['si_contact_email_from_enforced'] ) ) ? 'true' : 'false',
          'email_bcc' =>           trim($_POST['si_contact_email_bcc']),
+         'email_reply_to' =>      trim($_POST['si_contact_email_reply_to']),
          'email_subject' =>     ( trim($_POST['si_contact_email_subject']) != '' ) ? trim($_POST['si_contact_email_subject']) : '',
          'email_subject_list' =>  trim($_POST['si_contact_email_subject_list']),
          'name_format' =>           $_POST['si_contact_name_format'],
@@ -1021,7 +1036,7 @@ if ( $si_contact_opt['email_from'] != '' ) {
    }
 }
 ?>
-        <label for="si_contact_email_from"><?php _e('E-mail From (optional)', 'si-contact-form'); ?>:</label>
+        <label for="si_contact_email_from"><?php _e('Custom E-mail From (optional)', 'si-contact-form'); ?>:</label>
         <input name="si_contact_email_from" id="si_contact_email_from" type="text" value="<?php echo $si_contact_opt['email_from'];  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_tip">
@@ -1045,6 +1060,17 @@ if ( $si_contact_opt['email_from'] != '' ) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_from_enforced_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_from_enforced_tip">
         <?php _e('If your form does not send any email, then set the "E-mail From" setting above to an address on the same web domain as your web site. If email still does not send, also check this setting. (ie: some users report this is required by yahoo small business web hosting)', 'si-contact-form') ?>
+        </div>
+        <br />
+
+        <label for="si_contact_email_reply_to"><?php _e('Custom Reply To (optional)', 'si-contact-form'); ?>:</label>
+        <input name="si_contact_email_reply_to" id="si_contact_email_reply_to" type="text" value="<?php echo $si_contact_opt['email_reply_to'];  ?>" size="50" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_reply_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_email_reply_to_tip">
+        <?php _e('Leave this setting blank for most forms because the "reply to" is set automatically. Only use this setting if you are using the form for a mailing list and you do NOT want the reply going to the form user.', 'si-contact-form'); ?>
+        <?php _e('Defines the email address that is automatically inserted into the "To:" field when a user replies to an email message.', 'si-contact-form'); ?>
+        <br />
+        <?php _e('Enter just an email: user1@example.com', 'si-contact-form'); ?><br />
         </div>
         <br />
 
