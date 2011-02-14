@@ -352,6 +352,7 @@ if ($have_attach){
            $this->si_contact_error = 1;
            $si_contact_error_captcha = __('Could not read CAPTCHA token file.', 'si-contact-form');
            $check_this_dir = untrailingslashit( $ctf_captcha_dir );
+           $si_cec = '';
            if(is_writable($check_this_dir)) {
 				//echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
            } else if(!file_exists($check_this_dir)) {
@@ -575,6 +576,7 @@ if ($have_attach){
                 }
              } else {  // checkbox single
                  if(${'ex_field'.$i} == 'selected') {
+                   $si_contact_opt['ex_field'.$i.'_label'] = trim(str_replace('\,',',',$si_contact_opt['ex_field'.$i.'_label'])); // "\," changes to ","
                    $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('selected', 'si-contact-form').$php_eol.$php_eol;
                    $posted_data["ex_field$i"] = '* '.__('selected', 'si-contact-form');
                  }

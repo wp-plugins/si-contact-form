@@ -307,6 +307,7 @@ $string .=   "\n";
          $string .= 'checked="checked" ';
       }
     }
+    $si_contact_opt['ex_field'.$i.'_label'] = trim(str_replace('\,',',',$si_contact_opt['ex_field'.$i.'_label'])); // "\," changes to ","
                  $string .= '/>
                 <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
         </div>

@@ -99,7 +99,7 @@ http://www.642weather.com/weather/scripts.php
          }
     }
     $header_php =  "From: $this->si_contact_from_name <$this->si_contact_from_email>\n"; // header for php mail only
-
+    $header = '';
     if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
          $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n"; // for php mail and wp_mail
     }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
@@ -107,8 +107,6 @@ http://www.642weather.com/weather/scripts.php
     }else {
          $header .= "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
     }
-    $header = "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
-
     if ($ctf_email_on_this_domain != '') {
       $header .= "X-Sender: $this->si_contact_mail_sender\n";  // for php mail
       $header .= "Return-Path: $this->si_contact_mail_sender\n";   // for php mail
@@ -1861,7 +1859,8 @@ foreach ($cal_date_array as $k => $v) {
         <?php _e('If enabled: The posted data is sent to the redirect URL. This can be used to send the posted data via GET query string to a another form.', 'si-contact-form'); ?>
         </div>
         <br />
-
+        <a href="http://www.fastsecurecontactform.com/sending-data-by-query-string" target="_new"><?php echo __('FAQ: Posted data can be sent as a query string on the redirect URL', 'si-contact-form'); ?></a>
+        <br />
 <table style="border:none;" cellspacing="20">
   <tr>
   <td valign="bottom">
@@ -1894,8 +1893,15 @@ foreach ($cal_date_array as $k => $v) {
 		<?php _e('Examples:', 'si-contact-form'); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
         from_name=name<br />
-		from_email=email<br />
-		full_message=message</span><br />
+		from_email=email</span><br />
+       	<?php _e('Available fields on this form:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_arr as $i)
+         echo "$i<br />";
+        ?>
+        </span>
       </div>
       <textarea rows="4" cols="25" name="si_contact_redirect_rename" id="si_contact_redirect_rename"><?php echo $si_contact_opt['redirect_rename']; ?></textarea>
       <br />
@@ -1957,6 +1963,8 @@ foreach ($cal_date_array as $k => $v) {
 <fieldset>
 
    <?php echo __('Posted form data can be sent silently to a remote form using the method GET or POST.', 'si-contact-form'); ?>
+   <br />
+   <a href="http://www.fastsecurecontactform.com/send-form-data-elsewhere" target="_new"><?php echo __('FAQ: Send the posted form data to another site.', 'si-contact-form'); ?></a>
    <br />
    <br />
 
@@ -2034,8 +2042,15 @@ foreach ($silent_send_array as $k => $v) {
 		<?php _e('Examples:', 'si-contact-form'); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
         from_name=name<br />
-		from_email=email<br />
-		full_message=message</span><br />
+		from_email=email</span><br />
+        <?php _e('Available fields on this form:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_arr as $i)
+         echo "$i<br />";
+        ?>
+        </span>
       </div>
       <textarea rows="4" cols="25" name="si_contact_silent_rename" id="si_contact_silent_rename"><?php echo $si_contact_opt['silent_rename']; ?></textarea>
       <br />
@@ -2096,10 +2111,11 @@ foreach ($silent_send_array as $k => $v) {
 <div class="clear"></div>
 <fieldset>
 
-         <?php echo sprintf( __('Posted fields data can be exported to another plugin such as the <a href="%s">Contact Form 7 to DB Extension Plugin</a>.', 'si-contact-form'),'http://www.fastsecurecontactform.com/save-to-database'); ?>
+         <?php echo sprintf( __('Posted fields data can be exported to another plugin such as the <a href="%s" target="_new">Contact Form 7 to DB Extension Plugin</a>.', 'si-contact-form'),'http://www.fastsecurecontactform.com/save-to-database'); ?>
+         <br />
+         <a href="http://www.fastsecurecontactform.com/save-to-database" target="_new"><?php echo __('FAQ: Save to a database or export to CSV file.', 'si-contact-form'); ?></a>
          <br />
          <br />
-
         <input name="si_contact_export_enable" id="si_contact_export_enable" type="checkbox" <?php if( $si_contact_opt['export_enable'] == 'true' ) echo 'checked="checked"'; ?> />
         <label for="si_contact_export_enable"><?php _e('Enable data export after the message', 'si-contact-form'); ?>.</label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_export_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
@@ -2142,8 +2158,15 @@ foreach ($silent_send_array as $k => $v) {
 		<?php _e('Examples:', 'si-contact-form'); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
         from_name=name<br />
-		from_email=email<br />
-		full_message=message</span><br />
+		from_email=email</span><br />
+        <?php _e('Available fields on this form:', 'si-contact-form'); ?>
+		<span style="margin: 2px 0" dir="ltr"><br />
+        <?php
+       // show available fields
+       foreach ($av_fld_arr as $i)
+         echo "$i<br />";
+        ?>
+        </span>
       </div>
       <textarea rows="4" cols="25" name="si_contact_export_rename" id="si_contact_export_rename"><?php echo $si_contact_opt['export_rename']; ?></textarea>
       <br />

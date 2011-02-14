@@ -181,7 +181,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Improvement: javascript is only loaded on pages when it is conditionally needed.
+= 2.9.8.3 =
+- (14 Feb 2011) - Improvement: javascript is only loaded on pages when it is conditionally needed.
 - Fixed 2 label alignment problems with some themes.
 - Fixed possible javascript conflict that can break the redirect feature.
 - Fixed extra fields were not accepting zero.
@@ -189,6 +190,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 - Added new feature: Copy Settings Tool. This tool can copy your contact form settings from one form number to any of your other forms. Use to copy just the style settings, or all the settings from one form.
 - Added more shortcode optional settings [see FAQ page](http://www.fastsecurecontactform.com/shortcode-options) 
 - Added hidden field can accept query input. [see FAQ page](http://www.fastsecurecontactform.com/query-string-parameters)
+- Other fixes and enhancements
 
 = 2.9.8.2 =
 - (07 Feb 2011) - Fix critical error "invalid argument supplied foreach () /si-contact-form.php on line 474". Sorry for the inconvenience.
