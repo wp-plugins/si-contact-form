@@ -950,9 +950,9 @@ if ($have_attach){
      // build query string
      $query_string = $this->si_contact_export_convert($posted_data,$si_contact_opt['silent_rename'],$si_contact_opt['silent_ignore'],$si_contact_opt['silent_add'],'query');
      if(!preg_match("/\?/", $si_contact_opt['silent_url']) )
-        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].'?'.$query_string, array( 'timeout' => 15 ) );
+        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].'?'.$query_string, array( 'timeout' => 20, 'sslverify'=>false ) );
       else
-        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].$query_string, array( 'timeout' => 15 ) );
+        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].$query_string, array( 'timeout' => 20, 'sslverify'=>false ) );
 	 if ( !is_wp_error( $silent_result ) ) {
        $silent_result = wp_remote_retrieve_body( $silent_result );
 	 }
@@ -962,7 +962,7 @@ if ($have_attach){
   if ($si_contact_opt['silent_send'] == 'post' && $si_contact_opt['silent_url'] != '') {
      // build post_array
      $post_array = $this->si_contact_export_convert($posted_data,$si_contact_opt['silent_rename'],$si_contact_opt['silent_ignore'],$si_contact_opt['silent_add'],'array');
-	 $silent_result = wp_remote_post( $si_contact_opt['silent_url'], array( 'body' => $post_array, 'timeout' => 15 ) );
+	 $silent_result = wp_remote_post( $si_contact_opt['silent_url'], array( 'body' => $post_array, 'timeout' => 20, 'sslverify'=>false ) );
 	 if ( !is_wp_error( $silent_result ) ) {
        $silent_result = wp_remote_retrieve_body( $silent_result );
 	 }
