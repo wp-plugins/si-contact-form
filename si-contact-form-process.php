@@ -954,7 +954,7 @@ if ($have_attach){
      if(!preg_match("/\?/", $si_contact_opt['silent_url']) )
         $silent_result = wp_remote_get( $si_contact_opt['silent_url'].'?'.$query_string, array( 'timeout' => 20, 'sslverify'=>false ) );
       else
-        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].$query_string, array( 'timeout' => 20, 'sslverify'=>false ) );
+        $silent_result = wp_remote_get( $si_contact_opt['silent_url'].'&'.$query_string, array( 'timeout' => 20, 'sslverify'=>false ) );
 	 if ( !is_wp_error( $silent_result ) ) {
        $silent_result = wp_remote_retrieve_body( $silent_result );
 	 }
