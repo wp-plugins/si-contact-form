@@ -1112,7 +1112,7 @@ function si_contact_get_options($form_num) {
          'php_mailer_enable' => 'wordpress',
          'email_from' => '',
          'email_from_enforced' => 'false',
-         'email_reply_to' => '',          
+         'email_reply_to' => '',
          'email_bcc' => '',
          'email_subject' => get_option('blogname') . ' ' .__('Contact:', 'si-contact-form'),
          'email_subject_list' => '',
@@ -1448,9 +1448,14 @@ function si_contact_form_backup_restore($bk_form_num) {
             if ( !isset($ctf_backup_array[2]) || !is_array($ctf_backup_array[2])  )
               return '<div id="message" class="updated fade"><p>'.__('Restore failed: Selected All to restore, but backup file is a single form.', 'si-contact-form').'</p></div>';
 
+            $my_max_forms = $si_contact_gb['max_forms'];
             // if current max_forms or max_fields are more, go with higher value
-            if($si_contact_gb['max_forms'] > $ctf_backup_array[0]['max_forms'])
+            if($si_contact_gb['max_forms'] > $ctf_backup_array[0]['max_forms']) {
+                $my_max_forms = $ctf_backup_array[0]['max_forms'];
                 $ctf_backup_array[0]['max_forms'] = $si_contact_gb['max_forms'];
+            } else {
+                $my_max_forms = $ctf_backup_array[0]['max_forms'];
+            }
             if($si_contact_gb['max_fields'] > $ctf_backup_array[0]['max_fields'])
                 $ctf_backup_array[0]['max_fields'] = $si_contact_gb['max_fields'];
             update_option("si_contact_form_gb", $ctf_backup_array[0]);
@@ -1461,7 +1466,7 @@ function si_contact_form_backup_restore($bk_form_num) {
             }
             update_option("si_contact_form", $ctf_backup_array[1]);
             // multi-forms > 1
-            for ($i = 2; $i <= $ctf_backup_array[0]['max_forms']; $i++) {
+            for ($i = 2; $i <= $my_max_forms; $i++) {
               // deal with quotes
               foreach($ctf_backup_array[$i] as $key => $val) {
                   $ctf_backup_array[$i][$key] = str_replace('&quot;','"',trim($val));
@@ -1472,7 +1477,7 @@ function si_contact_form_backup_restore($bk_form_num) {
                    update_option("si_contact_form$i", $ctf_backup_array[$i]);
               }
             }
-
+           //error_reporting(0); // suppress errors because a different version backup may have uninitialized vars
            // success
            return '<div id="message" class="updated fade"><p>'.__('All form settings have been restored from the backup file.', 'si-contact-form').'</p></div>';
 
