@@ -505,12 +505,12 @@ function si_contact_export_convert($posted_data,$rename,$ignore,$add,$return = '
     }
     //ignore field names array
     $ignore_fields = array();
-    $ignore_fields = explode("\n",$ignore);
+    $ignore_fields = array_map('trim', explode("\n", $ignore));
     // $posted_data is an array of the form name value pairs
     foreach ($posted_data as $key => $value) {
 	  if( is_string($value) ) {
          $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
-         if ( in_array($key, $ignore_fields) )
+         if(in_array($key, $ignore_fields))
             continue;
          if($return == 'array')
 		    $posted_data_export[$key] = $value;

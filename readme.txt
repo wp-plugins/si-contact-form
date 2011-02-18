@@ -183,7 +183,9 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fixed broken "fields to ignore" feature. 
 - File attach type and size labels can be changed.
+- If you installed 2.9.8.3 before 02-18-2011 11:30pm PST need these fixes now, [manually update](http://www.fastsecurecontactform.com/update-to-the-latest)
 
 = 2.9.8.3 =
 - (14 Feb 2011) - Improvement: javascript is only loaded on pages when it is conditionally needed.
