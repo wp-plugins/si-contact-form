@@ -399,7 +399,7 @@ if ($ctf_redirect_enable == 'true') {
       if(!preg_match("/\?/", $ctf_redirect_url) )
         $ctf_redirect_url .= '?'.$query_string;
       else
-       $ctf_redirect_url .= $query_string;
+       $ctf_redirect_url .= '&'.$query_string;
    }
 
  $ctf_thank_you .= <<<EOT
@@ -1214,6 +1214,8 @@ function si_contact_get_options($form_num) {
          'tooltip_captcha' => '',
          'tooltip_audio' => '',
          'tooltip_refresh' => '',
+         'tooltip_filetypes' => '',
+         'tooltip_filesize' => '',
          'enable_credit_link' => 'true',
          'error_contact_select' => '',
          'error_name'           => '',

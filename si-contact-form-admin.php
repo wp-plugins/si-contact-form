@@ -421,6 +421,8 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'tooltip_captcha' =>     trim($_POST['si_contact_tooltip_captcha']),
          'tooltip_audio' =>       trim($_POST['si_contact_tooltip_audio']),
          'tooltip_refresh' =>     trim($_POST['si_contact_tooltip_refresh']),
+         'tooltip_filetypes' =>   trim($_POST['si_contact_tooltip_filetypes']),
+         'tooltip_filesize' =>    trim($_POST['si_contact_tooltip_filesize']),
          'enable_credit_link' => (isset( $_POST['si_contact_enable_credit_link'] ) ) ? 'true' : 'false',
          'error_contact_select' => trim($_POST['si_contact_error_contact_select']),
          'error_name'           => trim($_POST['si_contact_error_name']),
@@ -2366,7 +2368,9 @@ foreach ($silent_send_array as $k => $v) {
 
         <label for="si_contact_tooltip_captcha"><?php _e('CAPTCHA Image', 'si-contact-form'); ?></label><input name="si_contact_tooltip_captcha" id="si_contact_tooltip_captcha" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_captcha']);  ?>" size="50" /><br />
         <label for="si_contact_tooltip_audio"><?php _e('CAPTCHA Audio', 'si-contact-form'); ?></label><input name="si_contact_tooltip_audio" id="si_contact_tooltip_audio" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_audio']);  ?>" size="50" /><br />
-        <label for="si_contact_tooltip_refresh"><?php _e('Refresh Image', 'si-contact-form'); ?></label><input name="si_contact_tooltip_refresh" id="si_contact_tooltip_refresh" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_refresh']);  ?>" size="50" />
+        <label for="si_contact_tooltip_refresh"><?php _e('Refresh Image', 'si-contact-form'); ?></label><input name="si_contact_tooltip_refresh" id="si_contact_tooltip_refresh" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_refresh']);  ?>" size="50" /><br />
+        <label for="si_contact_tooltip_filetypes"><?php _e('Acceptable file types:', 'si-contact-form'); ?></label><input name="si_contact_tooltip_filetypes" id="si_contact_tooltip_filetypes" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_filetypes']);  ?>" size="50" /><br />
+        <label for="si_contact_tooltip_filesize"><?php _e('Maximum file size:', 'si-contact-form'); ?></label><input name="si_contact_tooltip_filesize" id="si_contact_tooltip_filesize" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['tooltip_filesize']);  ?>" size="50" />
 
 </fieldset>
 

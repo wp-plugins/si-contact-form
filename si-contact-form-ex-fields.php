@@ -8,6 +8,8 @@ http://www.642weather.com/weather/scripts.php
 // display extra fields on the contact form
 
       $ex_fieldset = 0;
+      $printed_tooltip_filetypes = 0;
+      $ex_loop_cnt = 1;
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '' || $si_contact_opt['ex_field'.$i.'_type'] == 'fieldset-close') {
            $ex_req_field_ind = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $req_field_ind : '';
@@ -390,10 +392,16 @@ $string .= '
                 <label for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
-                <input '.$this->ctf_field_style.' type="file" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="20" />
-          <br /><span style="font-size:x-small;">'.sprintf(__('Acceptable file types: %s.', 'si-contact-form'),$si_contact_opt['attach_types']).'<br />
-                '.sprintf(__('Maximum file size: %s.', 'si-contact-form'),$si_contact_opt['attach_size']).'</span>
-        </div>
+                <input '.$this->ctf_field_style.' type="file" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' size="20" />';
+ if(!$printed_tooltip_filetypes || ($printed_tooltip_filetypes+1) != $ex_loop_cnt) {
+    $string .=  '<br /><span style="font-size:x-small;">';
+    $string .= ($si_contact_opt['tooltip_filetypes'] != '') ? $si_contact_opt['tooltip_filetypes'] : __('Acceptable file types:', 'si-contact-form');
+    $string .= ' '.$si_contact_opt['attach_types'] . '.<br />';
+    $string .= ($si_contact_opt['tooltip_filesize'] != '') ? $si_contact_opt['tooltip_filesize'] : __('Maximum file size:', 'si-contact-form');
+    $string .= ' '.$si_contact_opt['attach_size'].'.</span>';
+ }
+ $printed_tooltip_filetypes = $ex_loop_cnt;
+$string .= '        </div>
 ';
         }
           break;
@@ -488,6 +496,7 @@ $string .= '            </select>
           }
 
         } // end if label
+       $ex_loop_cnt++;
       } // end foreach
 
  // how many extra fields are date fields?

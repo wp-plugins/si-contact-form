@@ -183,6 +183,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- File attach type and size labels can be changed.
+
 = 2.9.8.3 =
 - (14 Feb 2011) - Improvement: javascript is only loaded on pages when it is conditionally needed.
 - Fixed 2 label alignment problems with some themes.
