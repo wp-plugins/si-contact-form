@@ -1152,7 +1152,7 @@ function si_contact_get_options($form_num) {
          'silent_rename' => '',
          'silent_add' => '',
          'silent_email_off' => 'false',
-         'export_enable' => 'false',
+         'export_enable' => 'true',
          'export_ignore' => '',
          'export_rename' => '',
          'export_add' => '',
