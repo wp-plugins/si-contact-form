@@ -187,7 +187,7 @@ if ($have_attach){
 	}
 }
 
-   // optional extra fields
+   // optional extra fields form post validation
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
           if(preg_match('/^{inline}/',$si_contact_opt['ex_field'.$i.'_label'])) {
@@ -195,6 +195,25 @@ if ($have_attach){
               $si_contact_opt['ex_field'.$i.'_label'] = str_replace('{inline}','',$si_contact_opt['ex_field'.$i.'_label']);
           }
           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
+
+          }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'date') {
+
+                      $cal_date_array = array(
+'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
+'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
+'mm-dd-yyyy' => esc_attr(__('mm-dd-yyyy', 'si-contact-form')),
+'dd-mm-yyyy' => esc_attr(__('dd-mm-yyyy', 'si-contact-form')),
+'mm.dd.yyyy' => esc_attr(__('mm.dd.yyyy', 'si-contact-form')),
+'dd.mm.yyyy' => esc_attr(__('dd.mm.yyyy', 'si-contact-form')),
+'yyyy/mm/dd' => esc_attr(__('yyyy/mm/dd', 'si-contact-form')),
+'yyyy-mm-dd' => esc_attr(__('yyyy-mm-dd', 'si-contact-form')),
+'yyyy.mm.dd' => esc_attr(__('yyyy.mm.dd', 'si-contact-form')),
+);
+               ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
+               if( (${'ex_field'.$i} == '' || ${'ex_field'.$i} == $cal_date_array[$si_contact_opt['date_format']]) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
+                  $this->si_contact_error = 1;
+                  ${'si_contact_error_ex_field'.$i} = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
+                }
 
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
                ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
@@ -298,7 +317,7 @@ if ($have_attach){
                   ${'si_contact_error_ex_field'.$i} = __('Error: A checkbox-multiple field is not configured properly in settings.', 'si-contact-form');
              }
            }else{  // end label'] == 'checkbox'
-                // text, textarea, radio, select, date, password
+                // text, textarea, radio, select, password
                 if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                       ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $_POST["si_contact_ex_field$i"];
                 }else{
@@ -802,7 +821,6 @@ if ($have_attach){
        $header_php .= $header;
       if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
           // Pass the Return-Path via sendmail's -f command.
-          // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
           @mail($mail_to,$subj,$msg,$header_php, '-f '.$this->si_contact_mail_sender);
       }else{
           // the fifth parameter is not allowed in safe mode
@@ -976,7 +994,6 @@ if ($have_attach){
       $posted_data_export = $this->si_contact_export_convert($posted_data,$si_contact_opt['export_rename'],$si_contact_opt['export_ignore'],$si_contact_opt['export_add'],'array');
       // Use form name from form edit page if one is set.
       $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
-
       // hook for other plugins to use (just after message posted)
       $fsctf_posted_data = (object) array('title' => $posted_form_name, 'posted_data' => $posted_data_export, 'uploaded_files' => (array) $this->uploaded_files );
       do_action_ref_array( 'fsctf_mail_sent', array( &$fsctf_posted_data ) );
