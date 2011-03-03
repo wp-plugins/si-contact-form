@@ -419,6 +419,7 @@ if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
 
  $this->ctf_submit_div_style = $this->si_contact_convert_css($si_contact_opt['submit_div_style']);
  $this->ctf_submit_style = $this->si_contact_convert_css($si_contact_opt['button_style']);
+ $this->ctf_reset_style = $this->si_contact_convert_css($si_contact_opt['reset_style']);  
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
 
 if ( $this->isCaptchaEnabled() ) {
@@ -431,8 +432,15 @@ $string .= '
   <input type="hidden" name="si_contact_form_id" value="'.$form_id_num.'" />
   <input type="submit" '.$this->ctf_submit_style.' value="';
      $string .= ($si_contact_opt['title_submit'] != '') ? esc_attr( $si_contact_opt['title_submit'] ) : esc_attr( __('Submit', 'si-contact-form'));
-     $string .= '" />
-</div>
+     $string .= '" /> ';
+   if($si_contact_opt['enable_reset'] == 'true') {
+     $string .= '<input type="reset" '.$this->ctf_reset_style.' value="';
+     $string .= ($si_contact_opt['title_reset'] != '') ? esc_attr( $si_contact_opt['title_reset'] ) : esc_attr( __('Reset', 'si-contact-form'));
+     $string .= '" onclick="alert(\'';
+     $string .= __('Do you really want to reset the form?', 'si-contact-form');
+     $string .= '\')"  />'."\n";
+    }
+$string .= '</div>
 ';
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '

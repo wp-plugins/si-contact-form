@@ -125,7 +125,6 @@ http://www.642weather.com/weather/scripts.php
 	   ob_start();
       if ($ctf_email_on_this_domain != '' && !$this->safe_mode) {
         // Pass the Return-Path via sendmail's -f command.
-        // http://www.knowledge-transfers.com/it/the-fifth-parameter-in-php-mail-function
         $result = mail($email,$subject,$message,$header_php, '-f '.$this->si_contact_mail_sender);
       }else{
         // the fifth parameter is not allowed in safe mode
@@ -394,6 +393,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'captcha_div_style_m' =>   ( trim($_POST['si_contact_captcha_div_style_m']) != '' ) ? trim($_POST['si_contact_captcha_div_style_m']) : $si_contact_option_defaults['captcha_div_style_m'],
          'submit_div_style' =>        ( trim($_POST['si_contact_submit_div_style']) != '' ) ? trim($_POST['si_contact_submit_div_style']) : $si_contact_option_defaults['submit_div_style'],
          'button_style' =>        ( trim($_POST['si_contact_button_style']) != '' ) ? trim($_POST['si_contact_button_style']) : $si_contact_option_defaults['button_style'],
+         'reset_style' =>        ( trim($_POST['si_contact_reset_style']) != '' ) ? trim($_POST['si_contact_reset_style']) : $si_contact_option_defaults['reset_style'],
          'powered_by_style' =>    ( trim($_POST['si_contact_powered_by_style']) != '' ) ? trim($_POST['si_contact_powered_by_style']) : $si_contact_option_defaults['powered_by_style'],
          'field_size' => ( is_numeric(trim($_POST['si_contact_field_size'])) && trim($_POST['si_contact_field_size']) > 14 ) ? absint(trim($_POST['si_contact_field_size'])) : $si_contact_option_defaults['field_size'], // use default if empty
          'captcha_field_size' => ( is_numeric(trim($_POST['si_contact_captcha_field_size'])) && trim($_POST['si_contact_captcha_field_size']) > 4 ) ? absint(trim($_POST['si_contact_captcha_field_size'])) : $si_contact_option_defaults['captcha_field_size'],
@@ -416,6 +416,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'title_mess' =>          trim($_POST['si_contact_title_mess']),
          'title_capt' =>          trim($_POST['si_contact_title_capt']),
          'title_submit' =>        trim($_POST['si_contact_title_submit']),
+         'title_reset' =>         trim($_POST['si_contact_title_reset']),
          'text_message_sent' =>   trim($_POST['si_contact_text_message_sent']),
          'tooltip_required' =>    $_POST['si_contact_tooltip_required'],
          'tooltip_captcha' =>     trim($_POST['si_contact_tooltip_captcha']),
@@ -423,6 +424,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'tooltip_refresh' =>     trim($_POST['si_contact_tooltip_refresh']),
          'tooltip_filetypes' =>   trim($_POST['si_contact_tooltip_filetypes']),
          'tooltip_filesize' =>    trim($_POST['si_contact_tooltip_filesize']),
+         'enable_reset' =>     (isset( $_POST['si_contact_enable_reset'] ) ) ? 'true' : 'false',
          'enable_credit_link' => (isset( $_POST['si_contact_enable_credit_link'] ) ) ? 'true' : 'false',
          'error_contact_select' => trim($_POST['si_contact_error_contact_select']),
          'error_name'           => trim($_POST['si_contact_error_name']),
@@ -482,6 +484,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'captcha_div_style_m' => 'padding-left:146px; width:210px; height:65px; padding-top:5px;',
          'submit_div_style' => 'padding-left:146px; text-align:left; float:left; clear:left; padding-top:8px;',
          'button_style' => 'cursor:pointer; margin:0;',
+         'reset_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'padding-left:146px; float:left; clear:left; font-size:x-small; font-weight:normal; padding-top:5px;',
          'field_size' => '39',
          'captcha_field_size' => '6',
@@ -1811,6 +1814,14 @@ foreach ($cal_date_array as $k => $v) {
         </div>
 <br />
 
+        <input name="si_contact_enable_reset" id="si_contact_enable_reset" type="checkbox" <?php if( $si_contact_opt['enable_reset'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_enable_reset"><?php _e('Enable a "Reset" button on the form.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_reset_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_enable_reset_tip">
+        <?php _e('When a visitor clicks a reset button, the form entries are reset to the default values.', 'si-contact-form'); ?>
+        </div>
+<br />
+
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast Secure Contact Form', 'si-contact-form'); ?></a>
 
@@ -2274,6 +2285,7 @@ foreach ($silent_send_array as $k => $v) {
         <label for="si_contact_captcha_div_style_m"><?php _e('CSS style for CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_m" id="si_contact_captcha_div_style_m" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_div_style_m']);  ?>" size="60" /><br />
         <label for="si_contact_submit_div_style"><?php _e('CSS style for Submit DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_submit_div_style" id="si_contact_submit_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['submit_div_style']);  ?>" size="60" /><br />
         <label for="si_contact_button_style"><?php _e('CSS style for Submit button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['button_style']);  ?>" size="60" /><br />
+        <label for="si_contact_reset_style"><?php _e('CSS style for Reset button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_reset_style" id="si_contact_reset_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['reset_style']);  ?>" size="60" /><br />
         <label for="si_contact_powered_by_style"><?php _e('CSS style for "Powered by" message on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_powered_by_style" id="si_contact_powered_by_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['powered_by_style']);  ?>" size="60" />
 <br />
 
@@ -2348,6 +2360,7 @@ foreach ($silent_send_array as $k => $v) {
          <label for="si_contact_title_mess"><?php _e('Message', 'si-contact-form'); ?>:</label><input name="si_contact_title_mess" id="si_contact_title_mess" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_mess']);  ?>" size="50" /><br />
          <label for="si_contact_title_capt"><?php _e('CAPTCHA Code', 'si-contact-form'); ?>:</label><input name="si_contact_title_capt" id="si_contact_title_capt" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_capt']);  ?>" size="50" /><br />
          <label for="si_contact_title_submit"><?php _e('Submit', 'si-contact-form'); ?></label><input name="si_contact_title_submit" id="si_contact_title_submit" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_submit']);  ?>" size="50" /><br />
+         <label for="si_contact_title_reset"><?php _e('Reset', 'si-contact-form'); ?></label><input name="si_contact_title_reset" id="si_contact_title_reset" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_reset']);  ?>" size="50" /><br />  
          <label for="si_contact_text_message_sent"><?php _e('Your message has been sent, thank you.', 'si-contact-form'); ?></label><input name="si_contact_text_message_sent" id="si_contact_text_message_sent" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['text_message_sent']);  ?>" size="50" /><br />
 
 </fieldset>

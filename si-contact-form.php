@@ -1187,6 +1187,7 @@ function si_contact_get_options($form_num) {
          'captcha_div_style_m' => 'width:250px; height:65px; padding-top:5px;',
          'submit_div_style' => 'text-align:left; padding-top:8px;',
          'button_style' => 'cursor:pointer; margin:0;',
+         'reset_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'font-size:x-small; font-weight:normal; padding-top:5px;',
          'field_size' => '40',
          'captcha_field_size' => '6',
@@ -1209,6 +1210,7 @@ function si_contact_get_options($form_num) {
          'title_mess' => '',
          'title_capt' => '',
          'title_submit' => '',
+         'title_reset' => '',
          'text_message_sent' => '',
          'tooltip_required' => '',
          'tooltip_captcha' => '',
@@ -1216,6 +1218,7 @@ function si_contact_get_options($form_num) {
          'tooltip_refresh' => '',
          'tooltip_filetypes' => '',
          'tooltip_filesize' => '',
+         'enable_reset' => 'false',
          'enable_credit_link' => 'true',
          'error_contact_select' => '',
          'error_name'           => '',
@@ -1340,7 +1343,7 @@ function si_contact_copy_styles($this_form_arr,$destination_form_arr) {
      $style_copy_arr = array(
      'border_enable','form_style','border_style','required_style','notes_style',
      'title_style','field_style','field_div_style','error_style','select_style',
-     'captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style',
+     'captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style', 'reset_style',
      'powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
      foreach($style_copy_arr as $style_copy) {
            $destination_form_arr[$style_copy] = $this_form_arr[$style_copy];
