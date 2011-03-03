@@ -1435,8 +1435,8 @@ function si_contact_form_backup_restore($bk_form_num) {
     if ( !isset($ctf_backup_array) || !is_array($ctf_backup_array) || !isset($ctf_backup_array[0]['backup_type']) )
          return '<div id="message" class="updated fade"><p>'.__('Restore failed: Backup file contains invalid data.', 'si-contact-form').'</p></div>';
 
-   // print_r($ctf_backup_array);
-   // exit;
+   //print_r($ctf_backup_array);
+   //exit;
 
          $ctf_backup_type = $ctf_backup_array[0]['backup_type'];
          unset($ctf_backup_array[0]['backup_type']);
@@ -1465,16 +1465,16 @@ function si_contact_form_backup_restore($bk_form_num) {
                 $ctf_backup_array[0]['max_fields'] = $si_contact_gb['max_fields'];
             update_option("si_contact_form_gb", $ctf_backup_array[0]);
 
-            // deal with quotes
+            // deal with
             foreach($ctf_backup_array[1] as $key => $val) {
-                $ctf_backup_array[1][$key] = str_replace('&quot;','"',trim($val));
+                $ctf_backup_array[1][$key] = str_replace('\,','\\,',$val);
             }
             update_option("si_contact_form", $ctf_backup_array[1]);
             // multi-forms > 1
             for ($i = 2; $i <= $my_max_forms; $i++) {
-              // deal with quotes
+              // deal with
               foreach($ctf_backup_array[$i] as $key => $val) {
-                  $ctf_backup_array[$i][$key] = str_replace('&quot;','"',trim($val));
+                  $ctf_backup_array[$i][$key] = str_replace('\,','\\,',$val);
               }
               if(!get_option("si_contact_form$i")) {
                     add_option("si_contact_form$i", $ctf_backup_array[$i], '', 'yes');
@@ -1504,9 +1504,9 @@ function si_contact_form_backup_restore($bk_form_num) {
             if ( !isset($ctf_backup_array[2]) || !is_array($ctf_backup_array[2])  ) {
                //single
 
-               // deal with quotes
+               // deal with
                foreach($ctf_backup_array[1] as $key => $val) {
-                   $ctf_backup_array[1][$key] = str_replace('&quot;','"',trim($val));
+                   $ctf_backup_array[1][$key] = str_replace('\,','\\,',$val);
                }
                if ($bk_form_num == 1)
                   update_option("si_contact_form", $ctf_backup_array[1]);
@@ -1519,7 +1519,7 @@ function si_contact_form_backup_restore($bk_form_num) {
                // "all" backup file, but wants to restore only one form, match the form #
                // deal with quotes
                foreach($ctf_backup_array[$bk_form_num] as $key => $val) {
-                   $ctf_backup_array[$bk_form_num][$key] = str_replace('&quot;','"',trim($val));
+                   $ctf_backup_array[$bk_form_num][$key] = str_replace('\,','\\,',$val);
                }
                if ($bk_form_num == 1)
                   update_option("si_contact_form", $ctf_backup_array[1]);

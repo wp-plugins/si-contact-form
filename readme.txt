@@ -184,7 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Improved required date fields
-- Added optional form "reset" button
+- Added optional form "reset" button.
+- Fixed escaped comma bug in Restore Tool
 
 = 2.9.8.4 =
 - (23 Feb 2011) - Fixed broken "fields to ignore" feature. 
