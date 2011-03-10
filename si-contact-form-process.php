@@ -190,10 +190,6 @@ if ($have_attach){
    // optional extra fields form post validation
       for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
-          if(preg_match('/^{inline}/',$si_contact_opt['ex_field'.$i.'_label'])) {
-            // remove the {inline} modifier tag from the label
-              $si_contact_opt['ex_field'.$i.'_label'] = str_replace('{inline}','',$si_contact_opt['ex_field'.$i.'_label']);
-          }
           if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
 
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'date') {
@@ -515,6 +511,11 @@ if ($have_attach){
    // optional extra fields
    for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
       if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
+          if(preg_match('/^{inline}/',$si_contact_opt['ex_field'.$i.'_label'])) {
+            // remove the {inline} modifier tag from the label
+              $si_contact_opt['ex_field'.$i.'_label'] = str_replace('{inline}','',$si_contact_opt['ex_field'.$i.'_label']);
+          }
+
          if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
              $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {

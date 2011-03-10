@@ -183,6 +183,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fix horizontal display feature for radio and multiple checkbox after post.
+
 = 2.9.8.5 =
 - (08 Mar 2011) - Improved required date fields
 - Added optional form "reset" button.
