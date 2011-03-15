@@ -183,6 +183,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fix HTML notes would not appear before a fieldset open.
 - Fix horizontal display feature for radio and multiple checkbox after post.
 
 = 2.9.8.5 =

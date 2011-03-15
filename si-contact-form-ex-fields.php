@@ -22,6 +22,9 @@ http://www.642weather.com/weather/scripts.php
            case 'fieldset':
                 if($ex_fieldset)
                    $string .=   "</fieldset>\n";
+                if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
+                   $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
+                }
                 $string .=   '<fieldset '.$this->ctf_border_style.'>
         <legend>' . $si_contact_opt['ex_field'.$i.'_label'] ."</legend>\n";
                 $ex_fieldset = 1;
