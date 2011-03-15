@@ -304,7 +304,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
    $optionarray_gb_update = array(
          'donated' =>          (isset( $_POST['si_contact_donated'] ) ) ? 'true' : 'false',
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb['max_forms'],
-         'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 100 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb['max_fields'],
+         'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 200 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb['max_fields'],
          'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
          );
 
