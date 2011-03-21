@@ -121,6 +121,7 @@ At this point it would be useful to read [Installing WordPress in Your Language]
 The following translations are included in the download zip file:
 
 * Albanian (sq_AL) - Translated by [Romeo Shuka](http://www.romeolab.com)
+* Arabic (ar) partial translation - Translated by Jasmine Hassan
 * Bulgarian (bg_BG) - Translated by [Dimitar Atanasov](http://chereshka.net)
 * Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/) 
 * Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
@@ -185,6 +186,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 - Fix HTML notes would not appear before a fieldset open.
 - Fix horizontal display feature for radio and multiple checkbox after post.
+- Added Arabic (ar) partial translation - Translated by Jasmine Hassan
 
 = 2.9.8.5 =
 - (08 Mar 2011) - Improved required date fields
