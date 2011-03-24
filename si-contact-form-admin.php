@@ -2593,9 +2593,9 @@ foreach ($backup_type_array as $k => $v) {
 <?php
 if ($si_contact_gb['donated'] != 'true') { ?>
    </td><td width="350">
-   <?php echo sprintf(__('"I recommend <a href="%s" target="_blank">HostGator Web Hosting</a>. All my sites are hosted there. The prices are great and they offer the most features." - Mike Challis', 'si-contact-form'), 'http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp'); ?>
+   <?php echo sprintf(__('"I recommend <a href="%s" target="_blank">HostGator Web Hosting</a>. All my sites are hosted there. The prices are great and they offer the most features." - Mike Challis', 'si-contact-form'), 'http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml'); ?>
    </td><td width="100">
-    <a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp" target="_blank"><img title="<?php echo esc_attr(__('Web Site Hosting', 'si-contact-form')); ?>" alt="<?php echo esc_attr(__('Web Site Hosting', 'si-contact-form')); ?>" src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/hostgator-blog.gif" width="100" height="100" /></a>
+    <a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml" target="_blank"><img title="<?php echo esc_attr(__('Web Site Hosting', 'si-contact-form')); ?>" alt="<?php echo esc_attr(__('Web Site Hosting', 'si-contact-form')); ?>" src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/hostgator-blog.gif" width="100" height="100" /></a>
 
 <?php
   }
