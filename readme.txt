@@ -184,13 +184,14 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Fix HTML notes would not appear before a fieldset open.
+= 2.9.8.6 =
+- (27 Mar 2011) - Fix HTML notes would not appear before a fieldset open.
 - Fix horizontal display feature for radio and multiple checkbox after post.
 - Fixed date calender on some themes by adding a high z-index to the CSS.
 - Added ability to use comma in "Email To:" name. If you need to use a comma besides the one needed to separate the name and email, escape it with a back slash, like this: \,
 - Added ability to specify cc and bcc in "Email To:". Example: Webmaster,user1@example.com;[cc]user2@example.com;[bcc]user3@example.com
 - Added more WordPress logged in user details to the email message footer.
-- Added optional "Are you sure?" on form submit popup message.
+- Added optional "Are you sure?" form submit popup message (message can also be changed).
 - Added Arabic (ar) partial translation - Translated by Jasmine Hassan
 
 = 2.9.8.5 =
