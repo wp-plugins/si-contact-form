@@ -173,23 +173,27 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
   if (is_array($ctf_ct_arr) ) {
     foreach($ctf_ct_arr as $line) {
        // echo '|'.$line.'|' ;
-       list($key, $value) = explode(",",$line);
-       $key   = trim($key);
+       list($key, $value) = preg_split('#(?<!\\\)\,#',$line); //string will be split by "," but "\," will be ignored
+       $key   = trim(str_replace('\,',',',$key)); // "\," changes to ","
        $value = trim($value);
        if ($key != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // just one email here
                // Webmaster,user1@example.com
+               $value = str_replace('[cc]','',$value);
+               $value = str_replace('[bcc]','',$value);
                if ($this->ctf_validate_email($value)) {
                   $ctf_contacts[] = array('CONTACT' => $this->ctf_output_string($key),  'EMAIL' => $value);
                }
           } else {
-               // multiple emails here (additional ones will be Cc:)
-               // Webmaster,user1@example.com;user2@example.com
+               // multiple emails here
+               // Webmaster,user1@example.com;user2@example.com;user3@example.com;[cc]user4@example.com;[bcc]user5@example.com
                $multi_cc_arr = explode(";",$value);
                $multi_cc_string = '';
                foreach($multi_cc_arr as $multi_cc) {
-                   if ($this->ctf_validate_email($multi_cc)) {
+                  $multi_cc_t = str_replace('[cc]','',$multi_cc);
+                  $multi_cc_t = str_replace('[bcc]','',$multi_cc_t);
+                  if ($this->ctf_validate_email($multi_cc_t)) {
                      $multi_cc_string .= "$multi_cc,";
                    }
                }
@@ -1163,6 +1167,7 @@ function si_contact_get_options($form_num) {
          'attach_types' =>  'doc,pdf,txt,gif,jpg,jpeg,png',
          'attach_size' =>   '1mb',
          'textarea_html_allow' => 'false',
+         'enable_areyousure' => 'false',
          'auto_respond_enable' => 'false',
          'auto_respond_html' => 'false',
          'auto_respond_from_name' => 'WordPress',
@@ -1211,6 +1216,7 @@ function si_contact_get_options($form_num) {
          'title_capt' => '',
          'title_submit' => '',
          'title_reset' => '',
+         'title_areyousure' => '',
          'text_message_sent' => '',
          'tooltip_required' => '',
          'tooltip_captcha' => '',

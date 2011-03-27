@@ -25,13 +25,13 @@ http://www.642weather.com/weather/scripts.php
 
     // allow shortcode email_to
     // Webmaster,user1@example.com (must have name,email)
-    // multiple emails allowed (additional ones will be Cc:)
+    // multiple emails allowed
     // Webmaster,user1@example.com;user2@example.com
    if ( $shortcode_email_to != '') {
      if(preg_match("/,/", $shortcode_email_to) ) {
-       list($key, $value) = explode(",",$shortcode_email_to);
-       $key   = trim($key);
-       $value = trim($value);
+       list($key, $value) = preg_split('#(?<!\\\)\,#',$shortcode_email_to); //string will be split by "," but "\," will be ignored
+       $key   = trim(str_replace('\,',',',$key)); // "\," changes to ","
+       $value = trim(str_replace(';',',',$value)); // ";" changes to ","
        if ($key != '' && $value != '') {
              $mail_to    = $this->ctf_clean_input($value);
              $to_contact = $this->ctf_clean_input($key);
@@ -671,9 +671,14 @@ if ($have_attach){
     $userdomain = '';
     $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $user_info_string = '';
-    if ($user_ID != '' && !current_user_can('level_10') ) {
+    if ($user_ID != '') {
         //user logged in
-        $user_info_string .= __('From a WordPress user', 'si-contact-form').': '.$current_user->user_login . $php_eol;
+       if ($current_user->user_login != '') $user_info_string .= __('From a WordPress user', 'si-contact-form').': '.$current_user->user_login . $php_eol;
+       if ($current_user->user_email != '') $user_info_string .= __('User email', 'si-contact-form').': '.$current_user->user_email . $php_eol;
+       if ($current_user->user_firstname != '') $user_info_string .= __('User first name', 'si-contact-form').': '.$current_user->user_firstname . $php_eol;
+       if ($current_user->user_lastname != '') $user_info_string .= __('User last name', 'si-contact-form').': '.$current_user->user_lastname . $php_eol;
+       if ($current_user->display_name != '') $user_info_string .= __('User display name', 'si-contact-form').': '.$current_user->display_name . $php_eol;
+       if ($current_user->ID != '') $user_info_string .= __('User ID', 'si-contact-form').': '.$current_user->ID . $php_eol;
     }
     $user_info_string .= __('Sent from (ip address)', 'si-contact-form').': '.$_SERVER['REMOTE_ADDR']." ($userdomain)".$php_eol;
     if ( $geo_loc != '' ) {
@@ -790,8 +795,27 @@ if ($have_attach){
     }
     $header_php =  "From: $this->si_contact_from_name <$this->si_contact_from_email>\n"; // header for php mail only
 
+    // process $mail_to user1@example.com,user2@example.com,user3@example.com,[cc]user4@example.com,[bcc]user5@example.com
+    // some are cc, some are bcc
+    $mail_to_arr = explode( ',', $mail_to );
+    $mail_to = '';
     if ($ctf_email_address_bcc != '')
+            $ctf_email_address_bcc = $ctf_email_address_bcc. ',';
+	foreach ( $mail_to_arr as $key => $this_mail_to ) {
+	       if (preg_match("/\[bcc\]/i",$this_mail_to) )  {
+                 $this_mail_to = str_replace('[bcc]','',$this_mail_to);
+                 $ctf_email_address_bcc .= "$this_mail_to,";
+           }else{
+                 $this_mail_to = str_replace('[cc]','',$this_mail_to);
+                 $mail_to .= "$this_mail_to,";
+           }
+    }
+    $mail_to = rtrim($mail_to, ',');
+
+    if ($ctf_email_address_bcc != '') {
+            $ctf_email_address_bcc = rtrim($ctf_email_address_bcc, ',');
             $header .= "Bcc: $ctf_email_address_bcc\n"; // for php mail and wp_mail
+    }
 
     if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
          $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n"; // for php mail and wp_mail

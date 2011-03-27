@@ -370,6 +370,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'attach_types' =>      trim(str_replace('.','',$_POST['si_contact_attach_types'])),
          'attach_size' =>       ( preg_match('/^([[0-9.]+)([kKmM]?[bB])?$/',$_POST['si_contact_attach_size']) ) ? trim($_POST['si_contact_attach_size']) : $si_contact_option_defaults['attach_size'],
          'textarea_html_allow' =>    (isset( $_POST['si_contact_textarea_html_allow'] ) ) ? 'true' : 'false',
+         'enable_areyousure' =>    (isset( $_POST['si_contact_enable_areyousure'] ) ) ? 'true' : 'false',
          'auto_respond_enable' =>    (isset( $_POST['si_contact_auto_respond_enable'] ) ) ? 'true' : 'false',
          'auto_respond_html' =>      (isset( $_POST['si_contact_auto_respond_html'] ) ) ? 'true' : 'false',
          'auto_respond_from_name' => ( trim($_POST['si_contact_auto_respond_from_name']) != '' ) ? trim($_POST['si_contact_auto_respond_from_name']) : $si_contact_option_defaults['auto_respond_from_name'], // use default if empty
@@ -417,6 +418,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'title_capt' =>          trim($_POST['si_contact_title_capt']),
          'title_submit' =>        trim($_POST['si_contact_title_submit']),
          'title_reset' =>         trim($_POST['si_contact_title_reset']),
+         'title_areyousure' =>    trim($_POST['si_contact_title_areyousure']),
          'text_message_sent' =>   trim($_POST['si_contact_text_message_sent']),
          'tooltip_required' =>    $_POST['si_contact_tooltip_required'],
          'tooltip_captcha' =>     trim($_POST['si_contact_tooltip_captcha']),
@@ -922,13 +924,15 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
   if (is_array($ctf_ct_arr) ) {
     foreach($ctf_ct_arr as $line) {
         // echo '|'.$line.'|' ;
-       list($key, $value) = explode(",",$line);
-       $key   = trim($key);
+       list($key, $value) = preg_split('#(?<!\\\)\,#',$line); //string will be split by "," but "\," will be ignored
+       $key   = trim(str_replace('\,',',',$key)); // "\," changes to ","
        $value = trim($value);
        if ($key != '' && $value != '') {
           if(!preg_match("/;/", $value)) {
                // just one email here
                // Webmaster,user1@example.com
+               $value = str_replace('[cc]','',$value);
+               $value = str_replace('[bcc]','',$value);
                if ($this->ctf_validate_email($value)) {
                   $ctf_contacts[] = array('CONTACT' => $key,  'EMAIL' => $value);
                } else {
@@ -936,11 +940,13 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
                }
           } else {
                // multiple emails here (additional ones will be Cc:)
-               // Webmaster,user1@example.com;user2@example.com
+               // Webmaster,user1@example.com;user2@example.com;user3@example.com;[cc]user4@example.com;[bcc]user5@example.com
                $multi_cc_arr = explode(";",$value);
                $multi_cc_string = '';
                foreach($multi_cc_arr as $multi_cc) {
-                  if ($this->ctf_validate_email($multi_cc)) {
+               $multi_cc_t = str_replace('[cc]','',$multi_cc);
+               $multi_cc_t = str_replace('[bcc]','',$multi_cc_t);
+                  if ($this->ctf_validate_email($multi_cc_t)) {
                      $multi_cc_string .= "$multi_cc,";
                   } else {
                      $ctf_contacts_error = 1;
@@ -974,12 +980,15 @@ if ( !function_exists('mail') ) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_to_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_to_tip">
         <?php _e('E-mail address the messages are sent to (your email). Add as many contacts as you need, the drop down list on the contact form will be made automatically. Each contact has a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:', 'si-contact-form'); ?><br />
+        <?php _e('If you need to use a comma in the name, escape it with a back slash, like this: \,', 'si-contact-form'); ?><br />
         Webmaster,user1@example.com<br />
         Sales,user2@example.com<br /><br />
 
-        <?php echo  __('Also, you can have multiple E-mails per contact, this is called a CC(Carbon Copy). Separate each CC with a semicolon. If you need to add more than one contact, each with a CC, follow this example:', 'si-contact-form'); ?><br />
-        Webmaster,user1@example.com<br />
-        Sales,user3@example.com;user4@example.com;user5@example.com
+        <?php echo  __('You can have multiple emails per contact using [cc]Carbon Copy. Separate each email with a semicolon. Follow this example:', 'si-contact-form'); ?><br />
+        Sales,user3@example.com;user4@example.com;user5@example.com<br /><br />
+
+        <?php echo  __('You can specify [cc]Carbon Copy or [bcc]Blind Carbon Copy by using tags. Separate each email with a semicolon. Follow this example:', 'si-contact-form'); ?><br />
+        Sales,user3@example.com;[cc]user1@example.com;[cc]user2@example.com;[bcc]user3@example.com;[bcc]user4@example.com
         </div>
         <br />
   <?php
@@ -1822,6 +1831,14 @@ foreach ($cal_date_array as $k => $v) {
         </div>
 <br />
 
+        <input name="si_contact_enable_areyousure" id="si_contact_enable_reset" type="checkbox" <?php if( $si_contact_opt['enable_areyousure'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_enable_areyousure"><?php _e('Enable an "Are you sure?" popup for the submit button.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_areyousure_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_enable_areyousure_tip">
+        <?php _e('When a visitor clicks the form submit button, a popup message will ask "Are you sure?". This message can be changed in the "change field labels" settings below.', 'si-contact-form'); ?>
+        </div>
+<br />
+
         <input name="si_contact_enable_credit_link" id="si_contact_enable_credit_link" type="checkbox" <?php if ( $si_contact_opt['enable_credit_link'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast Secure Contact Form', 'si-contact-form'); ?></a>
 
@@ -2360,7 +2377,8 @@ foreach ($silent_send_array as $k => $v) {
          <label for="si_contact_title_mess"><?php _e('Message', 'si-contact-form'); ?>:</label><input name="si_contact_title_mess" id="si_contact_title_mess" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_mess']);  ?>" size="50" /><br />
          <label for="si_contact_title_capt"><?php _e('CAPTCHA Code', 'si-contact-form'); ?>:</label><input name="si_contact_title_capt" id="si_contact_title_capt" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_capt']);  ?>" size="50" /><br />
          <label for="si_contact_title_submit"><?php _e('Submit', 'si-contact-form'); ?></label><input name="si_contact_title_submit" id="si_contact_title_submit" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_submit']);  ?>" size="50" /><br />
-         <label for="si_contact_title_reset"><?php _e('Reset', 'si-contact-form'); ?></label><input name="si_contact_title_reset" id="si_contact_title_reset" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_reset']);  ?>" size="50" /><br />  
+         <label for="si_contact_title_reset"><?php _e('Reset', 'si-contact-form'); ?></label><input name="si_contact_title_reset" id="si_contact_title_reset" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_reset']);  ?>" size="50" /><br />
+         <label for="si_contact_title_areyousure"><?php _e('Are you sure?', 'si-contact-form'); ?></label><input name="si_contact_title_areyousure" id="si_contact_title_areyousure" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['title_areyousure']);  ?>" size="50" /><br />
          <label for="si_contact_text_message_sent"><?php _e('Your message has been sent, thank you.', 'si-contact-form'); ?></label><input name="si_contact_text_message_sent" id="si_contact_text_message_sent" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['text_message_sent']);  ?>" size="50" /><br />
 
 </fieldset>
@@ -2495,7 +2513,7 @@ foreach ($backup_type_array as $k => $v) {
 
 <input type="hidden" name="si_contact_this_form" id="si_contact_this_form" value="<?php echo $form_id ?>"  />
 <p style="padding:0px;" class="submit">
-<input type="submit" name="ctf_action" onclick="alert('<?php _e('Are you sure you want to permanently make this change?', 'si-contact-form'); ?>')" value="<?php _e('Copy Settings', 'si-contact-form'); ?>" />
+<input type="submit" name="ctf_action" onclick="return confirm('<?php _e('Are you sure you want to permanently make this change?', 'si-contact-form'); ?>')" value="<?php _e('Copy Settings', 'si-contact-form'); ?>" />
 </p>
 
 </fieldset>
@@ -2574,7 +2592,7 @@ foreach ($backup_type_array as $k => $v) {
 <input style="text-align:left; margin:0;" type="file" id="si_contact_backup_file" name="si_contact_backup_file" value=""  size="20" />
 
 <p style="padding:0px;" class="submit">
-<input type="submit" name="ctf_action" onclick="alert('<?php _e('Are you sure you want to permanently make this change?', 'si-contact-form'); ?>')" value="<?php _e('Restore Settings', 'si-contact-form'); ?>" />
+<input type="submit" name="ctf_action" onclick="return confirm('<?php _e('Are you sure you want to permanently make this change?', 'si-contact-form'); ?>')" value="<?php _e('Restore Settings', 'si-contact-form'); ?>" />
 </p>
 
 </fieldset>
