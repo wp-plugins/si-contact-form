@@ -184,6 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Email validate DNS check disabled by default.
+
 = 2.9.8.6 =
 - (27 Mar 2011) - Fix HTML notes would not appear before a fieldset open.
 - Fix horizontal display feature for radio and multiple checkbox after post.

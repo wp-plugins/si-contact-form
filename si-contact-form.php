@@ -1130,7 +1130,7 @@ function si_contact_get_options($form_num) {
          'name_case_enable' => 'false',
          'sender_info_enable' => 'true',
          'domain_protect' => 'true',
-         'email_check_dns' => 'true',
+         'email_check_dns' => 'false',
          'email_html' => 'false',
          'akismet_disable' => 'false',
          'akismet_send_anyway' => 'true',
