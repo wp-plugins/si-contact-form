@@ -80,7 +80,7 @@ Requirements/Restrictions:
 
 2. Activate the plugin through the `Plugins` menu in WordPress. Look for the Settings link to configure the Options. 
 
-3. You must add the shortcode `[si-contact-form form='1']` in a Page(not a Post). That Page will become your Contact Form. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si-contact-form form='1']` in the page, uncheck `Allow Comments`, click `Publish`. 
+3. Add the shortcode `[si-contact-form form='1']` in a Page, Post, or Text Widget. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si-contact-form form='1']` in the page, uncheck `Allow Comments`, click `Publish`. 
 
 4. Test an email from your form.
 

@@ -818,7 +818,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
 
 
 <p>
-<?php _e('You must add the shortcode in a Page(not a post). That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
+<?php _e('Add the shortcode in a Page, Post, or Text Widget', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
 <br />
 <?php _e('Shortcode for this form:', 'si-contact-form'); echo " [si-contact-form form='$form_id']"; ?>
 </p>
