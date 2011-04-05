@@ -675,6 +675,7 @@ if (function_exists('akismet_verify_key'))
    $av_fld_arr[] = 'akismet';
 
 $av_fld_arr[] = 'date_time';
+$av_fld_subj_arr[] = 'form_label';
 
 if (function_exists('get_transient')) {
   require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );

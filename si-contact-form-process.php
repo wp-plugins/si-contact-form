@@ -502,6 +502,8 @@ if ($have_attach){
       if( is_string($data) )
           $subj = str_replace('['.$key.']',$data,$subj);
    }
+   $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
+   $subj = str_replace('[form_label]',$posted_form_name,$subj);
    $posted_data['subject'] = $subj;
    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
@@ -922,6 +924,7 @@ if ($have_attach){
              $msg = str_replace('['.$key.']',$data,$msg);
            }
        }
+       $subj = str_replace('[form_label]',$posted_form_name,$subj);
 
        // wordwrap email message
        if ($ctf_wrap_message)
