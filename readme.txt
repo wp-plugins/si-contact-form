@@ -184,6 +184,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fix - trim spaces on extra field multiple options. 
 - Email validate DNS check disabled by default.
 
 = 2.9.8.6 =

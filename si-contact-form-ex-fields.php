@@ -131,6 +131,7 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
 $exf_opts_ct = 1;
 $selected = '';
 foreach ($exf_opts_array as $k) {
+ $k = trim($k);
  if (${'ex_field'.$i} != '') {
     if (${'ex_field'.$i} == "$k") {
       $selected = ' selected="selected"';
@@ -202,6 +203,7 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
 $exf_opts_ct = 1;
 $selected = '';
 foreach ($exf_opts_array as $k) {
+ $k = trim($k);
  if (is_array(${'ex_field'.$i}) && ${'ex_field'.$i} != '') {
     if (in_array($k, ${'ex_field'.$i} ) ) {
       $selected = ' selected="selected"';
@@ -273,6 +275,7 @@ $string .=   "\n";
 
   $ex_cnt = 1;
   foreach ($exf_opts_array as $k) {
+     $k = trim($k);
      if(!$exf_opts_inline && $ex_cnt > 1)
                $string .= "                <br />\n";
      $string .= '                <span style="white-space:nowrap;"><input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'_'.$ex_cnt.'" value="selected"  ';
@@ -365,6 +368,7 @@ $string .=   "\n";
 $selected = '';
 $ex_cnt = 1;
 foreach ($exf_opts_array as $k) {
+ $k = trim($k);  
  if (${'ex_field'.$i} != '') {
     if (${'ex_field'.$i} == "$k") {
       $selected = ' checked="checked"';
