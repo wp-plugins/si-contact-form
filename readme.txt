@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.8
-Tested up to: 3.1
+Tested up to: 3.1.1
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
