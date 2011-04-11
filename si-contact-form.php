@@ -630,6 +630,7 @@ function si_contact_validate_attach( $file, $ex_field  ) {
 	if ( $file_type_pattern == '' )
 		$file_type_pattern = 'doc,pdf,txt,gif,jpg,jpeg,png';
     $file_type_pattern = str_replace(',','|',$si_contact_opt['attach_types']);
+    $file_type_pattern = str_replace(' ','',$file_type_pattern);
 	$file_type_pattern = trim( $file_type_pattern, '|' );
 	$file_type_pattern = '(' . $file_type_pattern . ')';
 	$file_type_pattern = '/\.' . $file_type_pattern . '$/i';

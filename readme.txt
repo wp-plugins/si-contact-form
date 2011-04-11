@@ -185,6 +185,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Fix - trim spaces on extra field multiple options.
+- Fix - attached field allowed types separated by spaces.
 - Added optional [form_label] tag for subject. 
 - Email validate DNS check disabled by default.
 
