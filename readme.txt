@@ -184,6 +184,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added feature: Field labels are bold when HTML email is enabled.
 - Fix - trim spaces on extra field multiple options.
 - Fix - attached field allowed types separated by spaces.
 - Added optional [form_label] tag for subject. 

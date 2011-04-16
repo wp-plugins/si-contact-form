@@ -451,9 +451,9 @@ if ($have_attach){
      }else{
           $subj = $si_contact_opt['email_subject'];
      }
-     $msg =  __('To', 'si-contact-form').": $to_contact$php_eol$php_eol";
+     $msg = $this->make_bold(__('To', 'si-contact-form')).": $to_contact$php_eol$php_eol";
      if ($name != '' || $email != '')  {
-        $msg .= __('From', 'si-contact-form').":$php_eol";
+        $msg .= $this->make_bold(__('From', 'si-contact-form')).":$php_eol";
         switch ($si_contact_opt['name_format']) {
           case 'name':
               $msg .= "$name$php_eol";
@@ -506,7 +506,7 @@ if ($have_attach){
    $subj = str_replace('[form_label]',$posted_form_name,$subj);
    $posted_data['subject'] = $subj;
    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
-        $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
+        $msg .= $this->make_bold(__('Message', 'si-contact-form')).":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
    }
 
@@ -519,22 +519,22 @@ if ($have_attach){
           }
 
          if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
-             $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol;
+             $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label']).$php_eol;
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
              list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$si_contact_opt['ex_field'.$i.'_label']); //string will be split by "," but "\," will be ignored
              $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
-             $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
+             $msg .= $this->make_bold($exf_opts_label)."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
              $posted_data["ex_field$i"] = ${'ex_field'.$i};
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
-             $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.${'ex_field'.$i.'h'}.':'.${'ex_field'.$i.'m'}.' '.${'ex_field'.$i.'ap'}.$php_eol.$php_eol;
+             $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label']).$php_eol.${'ex_field'.$i.'h'}.':'.${'ex_field'.$i.'m'}.' '.${'ex_field'.$i.'ap'}.$php_eol.$php_eol;
              $posted_data["ex_field$i"] = ${'ex_field'.$i.'h'}.':'.${'ex_field'.$i.'m'}.' '.${'ex_field'.$i.'ap'};
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php' && ${'ex_field'.$i} != '') {
-             $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
+             $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label'])."$php_eol * ".__('File is attached:', 'si-contact-form')." ${'ex_field'.$i}".$php_eol.$php_eol;
              $posted_data["ex_field$i"] = __('File is attached:', 'si-contact-form')." ${'ex_field'.$i}";
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select' || $si_contact_opt['ex_field'.$i.'_type'] == 'radio') {
              list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$si_contact_opt['ex_field'.$i.'_label']); //string will be split by "," but "\," will be ignored
              $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
-             $msg .= $exf_opts_label."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
+             $msg .= $this->make_bold($exf_opts_label)."$php_eol${'ex_field'.$i}".$php_eol.$php_eol;
              $posted_data["ex_field$i"] = ${'ex_field'.$i};
          } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
              $exf_opts_array = array();
@@ -551,7 +551,7 @@ if ($have_attach){
                          // multiple options
                          $exf_opts_array = explode(";",$value);
                     }
-                    $msg .= $exf_opts_label.$php_eol;
+                    $msg .= $this->make_bold($exf_opts_label).$php_eol;
                     $posted_data["ex_field$i"] = '';
                     if (is_array(${'ex_field'.$i}) && ${'ex_field'.$i} != '') {
                        // loop
@@ -583,7 +583,7 @@ if ($have_attach){
                          // multiple options
                          $exf_opts_array = explode(";",$value);
                     }
-                    $msg .= $exf_opts_label.$php_eol;
+                    $msg .= $this->make_bold($exf_opts_label).$php_eol;
                     $posted_data["ex_field$i"] = '';
                     // loop
                     $ex_cnt = 1;
@@ -599,17 +599,17 @@ if ($have_attach){
              } else {  // checkbox single
                  if(${'ex_field'.$i} == 'selected') {
                    $si_contact_opt['ex_field'.$i.'_label'] = trim(str_replace('\,',',',$si_contact_opt['ex_field'.$i.'_label'])); // "\," changes to ","
-                   $msg .= $si_contact_opt['ex_field'.$i.'_label']."$php_eol * ".__('selected', 'si-contact-form').$php_eol.$php_eol;
+                   $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label'])."$php_eol * ".__('selected', 'si-contact-form').$php_eol.$php_eol;
                    $posted_data["ex_field$i"] = '* '.__('selected', 'si-contact-form');
                  }
              }
          } else {  // text, textarea, date, password
                if(${'ex_field'.$i} != ''){
                    if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
-                        $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.$this->ctf_stripslashes(${'ex_field'.$i}).$php_eol.$php_eol;
+                        $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label']).$php_eol.$this->ctf_stripslashes(${'ex_field'.$i}).$php_eol.$php_eol;
                         $posted_data["ex_field$i"] = ${'ex_field'.$i};
                    }else{
-                        $msg .= $si_contact_opt['ex_field'.$i.'_label'].$php_eol.${'ex_field'.$i}.$php_eol.$php_eol;
+                        $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label']).$php_eol.${'ex_field'.$i}.$php_eol.$php_eol;
                         $posted_data["ex_field$i"] = ${'ex_field'.$i};
                    }
                }
@@ -627,7 +627,7 @@ if ($have_attach){
                $key   = trim($key);
                $value = trim($value);
                if ($key != '' && $value != '') {
-                 $msg .= $key.$php_eol.$this->ctf_stripslashes($value).$php_eol.$php_eol;
+                 $msg .= $this->make_bold($key).$php_eol.$this->ctf_stripslashes($value).$php_eol.$php_eol;
                  $posted_data[$key] = $value;
               }
           }
@@ -635,7 +635,7 @@ if ($have_attach){
       }
    }
     if ($si_contact_opt['ex_fields_after_msg'] != 'true' && $message != '') {
-        $msg .= __('Message', 'si-contact-form').":$php_eol$message$php_eol$php_eol";
+        $msg .= $this->make_bold(__('Message', 'si-contact-form')).":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
     }
 

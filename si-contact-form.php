@@ -686,6 +686,17 @@ function si_contact_validate_attach( $file, $ex_field  ) {
 	return $result;
 }
 
+// makes bold html email labels
+function make_bold($label) {
+   global $si_contact_opt;
+
+   if ($si_contact_opt['email_html'] == 'true')
+        return '<b>'.$label.'</b>';
+   else
+        return $label;
+
+}
+
 // checks if captcha is enabled based on the current captcha permission settings set in the plugin options
 function isCaptchaEnabled() {
    global $si_contact_opt, $ctf_add_script;
