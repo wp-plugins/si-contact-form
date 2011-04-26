@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 2.9.8.6
+Version: 3.0
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '2.9.8.6';
+$ctf_version = '3.0';
 
 /*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
@@ -280,6 +280,7 @@ $message    = $this->si_contact_get_var($form_id_num,'message');
 $captcha_code  = '';
 
 // optional extra fields
+// capture query string vars
 $have_attach = '';
 for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
    if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
@@ -290,16 +291,9 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
          ${'ex_field'.$i.'m'} = $this->si_contact_get_var($form_id_num,'ex_field'.$i.'m');
          ${'ex_field'.$i.'ap'} = $this->si_contact_get_var($form_id_num,'ex_field'.$i.'ap');
       }
-      if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden')
+      if( in_array($si_contact_opt['ex_field'.$i.'_type'],array('hidden','text','email','url','textarea','date','password')) ) {
          ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
-      if ($si_contact_opt['ex_field'.$i.'_type'] == 'text')
-         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
-      if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea')
-         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
-      if ($si_contact_opt['ex_field'.$i.'_type'] == 'date')
-         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
-      if ($si_contact_opt['ex_field'.$i.'_type'] == 'password')
-         ${'ex_field'.$i} = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
+      }
       if ($si_contact_opt['ex_field'.$i.'_type'] == 'radio' || $si_contact_opt['ex_field'.$i.'_type'] == 'select') {
          $exf_opts_array = $this->si_contact_get_exf_opts_array($si_contact_opt['ex_field'.$i.'_label']);
          $check_ex_field = $this->si_contact_get_var($form_id_num,'ex_field'.$i);
@@ -969,6 +963,22 @@ function ctf_name_case($name) {
    return $newname;
 } // end function ctf_name_case
 
+// checks proper url syntax (not perfect, none of these are, but this is the best I can find)
+//   tutorialchip.com/php/preg_match-examples-7-useful-code-snippets/
+function ctf_validate_url($url) {
+
+    $regex = "((https?|ftp)\:\/\/)?"; // Scheme
+	$regex .= "([a-zA-Z0-9+!*(),;?&=\$_.-]+(\:[a-zA-Z0-9+!*(),;?&=\$_.-]+)?@)?"; // User and Pass
+    $regex .= "([a-zA-Z0-9-.]*)\.([a-zA-Z]{2,6})"; // Host or IP
+    $regex .= "(\:[0-9]{2,5})?"; // Port
+    $regex .= "(\/#\!)?"; // Path hash bang  (twitter) (mike challis added)
+    $regex .= "(\/([a-zA-Z0-9+\$_-]\.?)+)*\/?"; // Path
+    $regex .= "(\?[a-zA-Z+&\$_.-][a-zA-Z0-9;:@&%=+\/\$_.-]*)?"; // GET Query
+    $regex .= "(#[a-zA-Z_.-][a-zA-Z0-9+\$_.-]*)?"; // Anchor
+
+	return preg_match("/^$regex$/", $url);
+
+} // end function ctf_validate_url
 
 // checks proper email syntax (not perfect, none of these are, but this is the best I can find)
 function ctf_validate_email($email) {
@@ -1176,6 +1186,7 @@ function si_contact_get_options($form_num) {
          'ex_fields_after_msg' => 'false',
          'date_format' => 'mm/dd/yyyy',
          'cal_start_day' => '0',
+         'time_format' => '12',
          'attach_types' =>  'doc,pdf,txt,gif,jpg,jpeg,png',
          'attach_size' =>   '1mb',
          'textarea_html_allow' => 'false',
@@ -1259,10 +1270,18 @@ function si_contact_get_options($form_num) {
   }
   for ($i = 1; $i <= $si_contact_max_fields; $i++) { // initialize new
         $si_contact_option_defaults['ex_field'.$i.'_default'] = '0';
+        $si_contact_option_defaults['ex_field'.$i.'_default_text'] = '';
         $si_contact_option_defaults['ex_field'.$i.'_req'] = 'false';
         $si_contact_option_defaults['ex_field'.$i.'_label'] = '';
         $si_contact_option_defaults['ex_field'.$i.'_type'] = 'text';
+        $si_contact_option_defaults['ex_field'.$i.'_max_len'] = '';
+        $si_contact_option_defaults['ex_field'.$i.'_label_css'] = '';
+        $si_contact_option_defaults['ex_field'.$i.'_input_css'] = '';
+        $si_contact_option_defaults['ex_field'.$i.'_attributes'] = '';
+        $si_contact_option_defaults['ex_field'.$i.'_regex'] = '';
+        $si_contact_option_defaults['ex_field'.$i.'_regex_error'] = '';
         $si_contact_option_defaults['ex_field'.$i.'_notes'] = '';
+        $si_contact_option_defaults['ex_field'.$i.'_notes_after'] = '';
   }
 
   // upgrade path from old version
@@ -1513,9 +1532,9 @@ function si_contact_form_backup_restore($bk_form_num) {
                return '<div id="message" class="updated fade"><p>'.__('Restore failed: Form to restore to does not exist.', 'si-contact-form').'</p></div>';
 
             // update the globals
-            if($si_contact_gb['max_fields'] > $ctf_backup_array[0]['max_fields']) {
-                $ctf_backup_array[0]['max_fields'] = $si_contact_gb['max_fields'];
-                update_option("si_contact_form_gb", $ctf_backup_array[0]);
+            if($si_contact_gb['max_fields'] < $ctf_backup_array[0]['max_fields']) {
+                $si_contact_gb['max_fields'] = $ctf_backup_array[0]['max_fields'];
+                update_option("si_contact_form_gb", $si_contact_gb);
             }
 
             // is the uploaded file of the "single" type?

@@ -184,11 +184,25 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Added feature: Field labels are bold when HTML email is enabled.
+= 3.0 =
+- (25 Apr 2011) - Added (extra fields) default text can be set for text or textarea.
+- Added (extra fields) max length can be set for password, text or textarea.
+- Added (extra fields) attributes can be set for password, text or textarea.
+- Added (extra fields) validation regex can be set for password, text or textarea.
+- Added (extra fields) validation regex fail message can be set for password, text or textarea.
+- Added (extra fields) label or input CSS can be set individually for any extra field.
+- Added (extra fields) HTML before and after can be set.
+- Added (extra fields) 'email' extra field type with validation.
+- Added (extra fields) 'url' extra field type with validation.
+- Added 'email' field pulls up proper keyboard on iphone/ipad.
+- Added optional [form_label] tag for subject. 
+- Added time format option for 'time' extra field (select 12 or 24 hour).
+- Improved extra fields admin GUI.
+- Added Field labels are bold when HTML email is enabled.
 - Fix - trim spaces on extra field multiple options.
 - Fix - attached field allowed types separated by spaces.
-- Added optional [form_label] tag for subject. 
-- Email validate DNS check disabled by default.
+- Fix - bug in restore tool could cause data loss.
+- Email validate DNS check disabled by default because some servers have big delay.
 
 = 2.9.8.6 =
 - (27 Mar 2011) - Fix HTML notes would not appear before a fieldset open.
