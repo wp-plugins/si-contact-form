@@ -194,6 +194,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 - Added (extra fields) HTML before and after can be set.
 - Added (extra fields) 'email' extra field type with validation.
 - Added (extra fields) 'url' extra field type with validation.
+- Added (extra fields) first option of select field type can be in brackets to indicate [Please select].
 - Added 'email' field pulls up proper keyboard on iphone/ipad.
 - Added optional [form_label] tag for subject. 
 - Added time format option for 'time' extra field (select 12 or 24 hour).
