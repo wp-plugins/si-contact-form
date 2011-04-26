@@ -201,7 +201,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 - Added Field labels are bold when HTML email is enabled.
 - Fix - trim spaces on extra field multiple options.
 - Fix - attached field allowed types separated by spaces.
-- Fix - bug in restore tool could cause data loss.
+- Fix - bug in restore tool that could cause data loss.
 - Email validate DNS check disabled by default because some servers have big delay.
 
 = 2.9.8.6 =
