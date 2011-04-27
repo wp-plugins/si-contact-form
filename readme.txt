@@ -184,6 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Added setting: CSS style for CAPTCHA input field on the contact form
+
 = 3.0 =
 - (25 Apr 2011) - Added (extra fields) default text can be set for text or textarea.
 - Added (extra fields) max length can be set for password, text or textarea.

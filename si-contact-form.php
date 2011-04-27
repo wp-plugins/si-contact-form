@@ -870,7 +870,7 @@ $string .= '>
      $string .= $req_field_ind.'</label>
         </div>
         <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($si_contact_error_captcha).'
-                <input '.$this->ctf_field_style.' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
+                <input '.$this->si_contact_convert_css($si_contact_opt['captcha_input_style']).' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
        </div>
 ';
 } else {
@@ -1213,6 +1213,7 @@ function si_contact_get_options($form_num) {
          'select_style' => 'text-align:left;',
          'captcha_div_style_sm' => 'width:175px; height:50px; padding-top:5px;',
          'captcha_div_style_m' => 'width:250px; height:65px; padding-top:5px;',
+         'captcha_input_style' => 'text-align:left; margin:0; width:50px;',
          'submit_div_style' => 'text-align:left; padding-top:8px;',
          'button_style' => 'cursor:pointer; margin:0;',
          'reset_style' => 'cursor:pointer; margin:0;',
@@ -1380,7 +1381,7 @@ function si_contact_copy_styles($this_form_arr,$destination_form_arr) {
      $style_copy_arr = array(
      'border_enable','form_style','border_style','required_style','notes_style',
      'title_style','field_style','field_div_style','error_style','select_style',
-     'captcha_div_style_sm','captcha_div_style_m','submit_div_style','button_style', 'reset_style',
+     'captcha_div_style_sm','captcha_div_style_m','captcha_input_style','submit_div_style','button_style', 'reset_style',
      'powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
      foreach($style_copy_arr as $style_copy) {
            $destination_form_arr[$style_copy] = $this_form_arr[$style_copy];

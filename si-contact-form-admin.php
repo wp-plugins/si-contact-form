@@ -393,6 +393,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'error_style' =>         ( trim($_POST['si_contact_error_style']) != '' ) ? trim($_POST['si_contact_error_style']) : $si_contact_option_defaults['error_style'],
          'captcha_div_style_sm' =>   ( trim($_POST['si_contact_captcha_div_style_sm']) != '' ) ? trim($_POST['si_contact_captcha_div_style_sm']) : $si_contact_option_defaults['captcha_div_style_sm'],
          'captcha_div_style_m' =>   ( trim($_POST['si_contact_captcha_div_style_m']) != '' ) ? trim($_POST['si_contact_captcha_div_style_m']) : $si_contact_option_defaults['captcha_div_style_m'],
+         'captcha_input_style' =>   ( trim($_POST['si_contact_captcha_input_style']) != '' ) ? trim($_POST['si_contact_captcha_input_style']) : $si_contact_option_defaults['captcha_input_style'],
          'submit_div_style' =>        ( trim($_POST['si_contact_submit_div_style']) != '' ) ? trim($_POST['si_contact_submit_div_style']) : $si_contact_option_defaults['submit_div_style'],
          'button_style' =>        ( trim($_POST['si_contact_button_style']) != '' ) ? trim($_POST['si_contact_button_style']) : $si_contact_option_defaults['button_style'],
          'reset_style' =>        ( trim($_POST['si_contact_reset_style']) != '' ) ? trim($_POST['si_contact_reset_style']) : $si_contact_option_defaults['reset_style'],
@@ -501,6 +502,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'select_style' => 'text-align:left;',
          'captcha_div_style_sm' => 'padding-left:146px; width:162px; height:50px; padding-top:5px;',
          'captcha_div_style_m' => 'padding-left:146px; width:210px; height:65px; padding-top:5px;',
+         'captcha_input_style' => 'text-align:left; float:left; padding:2px; margin:0; width:50px;',
          'submit_div_style' => 'padding-left:146px; text-align:left; float:left; clear:left; padding-top:8px;',
          'button_style' => 'cursor:pointer; margin:0;',
          'reset_style' => 'cursor:pointer; margin:0;',
@@ -2383,6 +2385,7 @@ foreach ($silent_send_array as $k => $v) {
         <label for="si_contact_select_style"><?php _e('CSS style for contact drop down select on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_select_style" id="si_contact_select_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['select_style']);  ?>" size="60" /><br />
         <label for="si_contact_captcha_div_style_sm"><?php _e('CSS style for Small CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_sm" id="si_contact_captcha_div_style_sm" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_div_style_sm']);  ?>" size="60" /><br />
         <label for="si_contact_captcha_div_style_m"><?php _e('CSS style for CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_m" id="si_contact_captcha_div_style_m" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_div_style_m']);  ?>" size="60" /><br />
+        <label for="si_contact_captcha_input_style"><?php _e('CSS style for CAPTCHA input field on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_input_style" id="si_contact_captcha_input_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['captcha_input_style']);  ?>" size="60" /><br />
         <label for="si_contact_submit_div_style"><?php _e('CSS style for Submit DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_submit_div_style" id="si_contact_submit_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['submit_div_style']);  ?>" size="60" /><br />
         <label for="si_contact_button_style"><?php _e('CSS style for Submit button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['button_style']);  ?>" size="60" /><br />
         <label for="si_contact_reset_style"><?php _e('CSS style for Reset button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_reset_style" id="si_contact_reset_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['reset_style']);  ?>" size="60" /><br />
