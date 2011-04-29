@@ -134,6 +134,7 @@ The following translations are included in the download zip file:
 * Hungarian (hu_HU) - Translated by [Jozsef Burgyan](http://dmgmedia.hu)
 * Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 * Japanese (ja) - Translated by [Ichiro Kozuka]
+* Norwegian Bokmal (nb_NO) - Translated by [Tore Johnny Bratveit](http://punktlig-ikt.no)
 * Polish (pl_PL) - Translated by [Pawel Mezyk]
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
@@ -185,6 +186,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Added setting: CSS style for CAPTCHA input field on the contact form.
+- Added Norwegian Bokmal (nb_NO) - Translated by [Tore Johnny Bratveit](http://punktlig-ikt.no)
 
 = 3.0 =
 - (25 Apr 2011) - Added (extra fields) default text can be set for text or textarea.
