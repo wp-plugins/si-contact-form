@@ -520,7 +520,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
            $optionarray_update[$key] = str_replace('&apos;',"'",$val);
            $optionarray_update[$key] = str_replace('&quot;','"',$val);
            $optionarray_update[$key] = str_replace('&amp;','&',$val);
-    }    
+    }
 
     // save updated options to the database
     update_option("si_contact_form$form_num", $optionarray_update);
