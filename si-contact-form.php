@@ -87,11 +87,11 @@ function si_contact_options_page() {
 function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
         // choices: Display text => permission_level
         $choices = array (
-                 esc_attr( __('All registered users', 'si-contact-form')) => 'read',
-                 esc_attr( __('Edit posts', 'si-contact-form')) => 'edit_posts',
-                 esc_attr( __('Publish Posts', 'si-contact-form')) => 'publish_posts',
-                 esc_attr( __('Moderate Comments', 'si-contact-form')) => 'moderate_comments',
-                 esc_attr( __('Administer site', 'si-contact-form')) => 'level_10'
+                 $this->ctf_output_string( __('All registered users', 'si-contact-form')) => 'read',
+                 $this->ctf_output_string( __('Edit posts', 'si-contact-form')) => 'edit_posts',
+                 $this->ctf_output_string( __('Publish Posts', 'si-contact-form')) => 'publish_posts',
+                 $this->ctf_output_string( __('Moderate Comments', 'si-contact-form')) => 'moderate_comments',
+                 $this->ctf_output_string( __('Administer site', 'si-contact-form')) => 'level_10'
                  );
         // print the <select> and loop through <options>
         echo '<select name="' . $select_name . '" id="' . $select_name . '">' . "\n";
@@ -440,7 +440,7 @@ ctf_addOnloadEvent(ctf_redirect);
 EOT;
 
 $ctf_thank_you .= '
-<img src="'.WP_PLUGIN_URL.'/si-contact-form/ctf-loading.gif" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
+<img src="'.WP_PLUGIN_URL.'/si-contact-form/ctf-loading.gif" alt="'.$this->ctf_output_string(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
 '.__('Redirecting', 'si-contact-form').' ... ';
 
 
@@ -772,8 +772,11 @@ $this->ctf_captcha_div_style_m = $this->si_contact_convert_css($si_contact_opt['
 
 // url for no session captcha image
 $securimage_show_url = $captcha_url_cf .'/securimage_show.php?';
-
-if($si_contact_opt['captcha_small'] == 'true') $securimage_show_url .= 'ctf_sm_captcha=1&amp;';
+$securimage_size = 'width="175" height="60"';
+if($si_contact_opt['captcha_small'] == 'true') {
+  $securimage_show_url .= 'ctf_sm_captcha=1&amp;';
+  $securimage_size = 'width="132" height="45"';
+}
 if($si_contact_opt['captcha_difficulty'] == 'low') $securimage_show_url .= 'difficulty=1&amp;';
 if($si_contact_opt['captcha_difficulty'] == 'high') $securimage_show_url .= 'difficulty=2&amp;';
 if($si_contact_opt['captcha_no_trans'] == 'true') $securimage_show_url .= 'no_trans=1&amp;';
@@ -800,15 +803,16 @@ if($capt_disable_sess) {
 $string .= ($si_contact_opt['captcha_small'] == 'true') ? $this->ctf_captcha_div_style_sm : $this->ctf_captcha_div_style_m;
 $string .= '>
     <img class="ctf-captcha" id="si_image_ctf'.$form_id_num.'" ';
-    $string .= ($si_contact_opt['captcha_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['captcha_image_style'] ).'"' : '';
-    $string .= ' src="'.$securimage_show_url.'" alt="';
-    $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
+    $string .= ($si_contact_opt['captcha_image_style'] != '') ? 'style="' . $this->ctf_output_string( $si_contact_opt['captcha_image_style'] ).'"' : '';
+    $string .= ' src="'.$securimage_show_url.'" '.$securimage_size.' alt="';
+    $string .= ($si_contact_opt['tooltip_captcha'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_captcha'] ) : $this->ctf_output_string(__('CAPTCHA Image', 'si-contact-form'));
     $string .='" title="';
-    $string .= ($si_contact_opt['tooltip_captcha'] != '') ? esc_attr( $si_contact_opt['tooltip_captcha'] ) : esc_attr(__('CAPTCHA Image', 'si-contact-form'));
+    $string .= ($si_contact_opt['tooltip_captcha'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_captcha'] ) : $this->ctf_output_string(__('CAPTCHA Image', 'si-contact-form'));
     $string .= '" />'."\n";
     if($capt_disable_sess)
         $string .= '    <input id="si_code_ctf_'.$form_id_num.'" type="hidden" name="si_code_ctf_'.$form_id_num.'" value="'.$prefix.'" />'."\n";
 
+    $ctf_audio_type = 'noaudio';
     if($si_contact_opt['enable_audio'] == 'true') {
         $parseUrl = parse_url($captcha_url_cf);
         $securimage_url = $parseUrl['path'];
@@ -838,28 +842,28 @@ $string .= '>
                 $securimage_play_url = $captcha_url_cf.'/securimage_play.php?prefix='.$prefix;
          $string .= '    <div id="si_audio_ctf'.$form_id_num.'">'."\n";
          $string .= '      <a id="si_aud_ctf'.$form_id_num.'" href="'.$securimage_play_url.'" rel="nofollow" title="';
-         $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
+         $string .= ($si_contact_opt['tooltip_audio'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_audio'] ) : $this->ctf_output_string(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '">
-      <img src="'.$captcha_url_cf.'/images/audio_icon.png" alt="';
-         $string .= ($si_contact_opt['tooltip_audio'] != '') ? esc_attr( $si_contact_opt['tooltip_audio'] ) : esc_attr(__('CAPTCHA Audio', 'si-contact-form'));
+      <img src="'.$captcha_url_cf.'/images/audio_icon.png" width="22" height="20" alt="';
+         $string .= ($si_contact_opt['tooltip_audio'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_audio'] ) : $this->ctf_output_string(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '" ';
-         $string .= ($si_contact_opt['audio_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['audio_image_style'] ).'"' : '';
+         $string .= ($si_contact_opt['audio_image_style'] != '') ? 'style="' . $this->ctf_output_string( $si_contact_opt['audio_image_style'] ).'"' : '';
          $string .= ' onclick="this.blur();" /></a>
      </div>'."\n";
      }
    }
          $string .= '    <div id="si_refresh_ctf'.$form_id_num.'">'."\n";
          $string .= '      <a href="#" rel="nofollow" title="';
-         $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
+         $string .= ($si_contact_opt['tooltip_refresh'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_refresh'] ) : $this->ctf_output_string(__('Refresh Image', 'si-contact-form'));
          if($capt_disable_sess) {
            $string .= '" onclick="si_contact_captcha_refresh(\''.$form_id_num.'\',\''.$ctf_audio_type.'\',\''.$securimage_url.'\',\''.$securimage_show_rf_url.'\'); return false;">'."\n";
          }else{
            $string .= '" onclick="document.getElementById(\'si_image_ctf'.$form_id_num.'\').src = \''.$securimage_show_url.'&amp;sid=\''.' + Math.random(); return false;">'."\n";
          }
-         $string .= '      <img src="'.$captcha_url_cf.'/images/refresh.png" alt="';
-         $string .= ($si_contact_opt['tooltip_refresh'] != '') ? esc_attr( $si_contact_opt['tooltip_refresh'] ) : esc_attr(__('Refresh Image', 'si-contact-form'));
+         $string .= '      <img src="'.$captcha_url_cf.'/images/refresh.png" width="22" height="20" alt="';
+         $string .= ($si_contact_opt['tooltip_refresh'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_refresh'] ) : $this->ctf_output_string(__('Refresh Image', 'si-contact-form'));
          $string .=  '" ';
-         $string .= ($si_contact_opt['reload_image_style'] != '') ? 'style="' . esc_attr( $si_contact_opt['reload_image_style'] ).'"' : '';
+         $string .= ($si_contact_opt['reload_image_style'] != '') ? 'style="' . $this->ctf_output_string( $si_contact_opt['reload_image_style'] ).'"' : '';
          $string .=  ' onclick="this.blur();" /></a>
    </div>
    </div>
@@ -916,17 +920,21 @@ function ctf_sanitize_string($string, $preserve_space = 0) {
 
 // functions for protecting and validating form vars
 function ctf_stripslashes($string) {
-       // if (get_magic_quotes_gpc()) {
+        //if (get_magic_quotes_gpc()) {
+          // wordpress always has magic_quotes On regardless of PHP settings!!
                 return stripslashes($string);
        // } else {
-       //        return $string;
+        //       return $string;
        // }
 } // end function ctf_stripslashes
 
-// functions for protecting and validating form input vars
+// functions for protecting output against XSS. encode  < > & " ' (less than, greater than, ampersand, double quote, single quote).
 function ctf_output_string($string) {
     $string = str_replace('&', '&amp;', $string);
     $string = str_replace('"', '&quot;', $string);
+    $string = str_replace("'", '&apos;', $string);
+    $string = str_replace('<', '&lt;', $string);
+    $string = str_replace('>', '&gt;', $string);
     return $string;
 } // end function ctf_output_string
 
@@ -1503,16 +1511,16 @@ function si_contact_form_backup_restore($bk_form_num) {
                 $ctf_backup_array[0]['max_fields'] = $si_contact_gb['max_fields'];
             update_option("si_contact_form_gb", $ctf_backup_array[0]);
 
-            // deal with
+               // extra field labels might have \, (make sure it does not get removed)
             foreach($ctf_backup_array[1] as $key => $val) {
-                $ctf_backup_array[1][$key] = str_replace('\,','\\,',$val);
+                $ctf_backup_array[1][$key] = str_replace('\,','\\\,',$val);
             }
             update_option("si_contact_form", $ctf_backup_array[1]);
             // multi-forms > 1
             for ($i = 2; $i <= $my_max_forms; $i++) {
-              // deal with
+               // extra field labels might have \, (make sure it does not get removed)
               foreach($ctf_backup_array[$i] as $key => $val) {
-                  $ctf_backup_array[$i][$key] = str_replace('\,','\\,',$val);
+                  $ctf_backup_array[$i][$key] = str_replace('\,','\\\,',$val);
               }
               if(!get_option("si_contact_form$i")) {
                     add_option("si_contact_form$i", $ctf_backup_array[$i], '', 'yes');
@@ -1542,9 +1550,9 @@ function si_contact_form_backup_restore($bk_form_num) {
             if ( !isset($ctf_backup_array[2]) || !is_array($ctf_backup_array[2])  ) {
                //single
 
-               // deal with
+               // extra field labels might have \, (make sure it does not get removed)
                foreach($ctf_backup_array[1] as $key => $val) {
-                   $ctf_backup_array[1][$key] = str_replace('\,','\\,',$val);
+                  $ctf_backup_array[1][$key] = str_replace('\,','\\\,',$val);
                }
                if ($bk_form_num == 1)
                   update_option("si_contact_form", $ctf_backup_array[1]);
@@ -1555,9 +1563,9 @@ function si_contact_form_backup_restore($bk_form_num) {
                // is the uploaded file of the "all" type?
             } else {
                // "all" backup file, but wants to restore only one form, match the form #
-               // deal with quotes
+               // extra field labels might have \, (make sure it does not get removed)
                foreach($ctf_backup_array[$bk_form_num] as $key => $val) {
-                   $ctf_backup_array[$bk_form_num][$key] = str_replace('\,','\\,',$val);
+                   $ctf_backup_array[$bk_form_num][$key] = str_replace('\,','\\\,',$val);
                }
                if ($bk_form_num == 1)
                   update_option("si_contact_form", $ctf_backup_array[1]);
@@ -1736,6 +1744,10 @@ if (isset($si_contact_form)) {
   // can use dashes or underscores: [si-contact-form] or [si_contact_form]
   add_shortcode('si_contact_form', array(&$si_contact_form,'si_contact_form_short_code'),1);
   add_shortcode('si-contact-form', array(&$si_contact_form,'si_contact_form_short_code'),1);
+
+  // If you want to use shortcodes in your widgets or footer
+  add_filter('widget_text', 'do_shortcode');
+  add_filter('wp_footer', 'do_shortcode');
 
     // options deleted when this plugin is deleted in WP 2.7+
   if ( function_exists('register_uninstall_hook') )

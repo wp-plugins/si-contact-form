@@ -518,15 +518,15 @@ $string .= '        </div>
           break;
              case 'date':
             $cal_date_array = array(
-'mm/dd/yyyy' => esc_attr(__('mm/dd/yyyy', 'si-contact-form')),
-'dd/mm/yyyy' => esc_attr(__('dd/mm/yyyy', 'si-contact-form')),
-'mm-dd-yyyy' => esc_attr(__('mm-dd-yyyy', 'si-contact-form')),
-'dd-mm-yyyy' => esc_attr(__('dd-mm-yyyy', 'si-contact-form')),
-'mm.dd.yyyy' => esc_attr(__('mm.dd.yyyy', 'si-contact-form')),
-'dd.mm.yyyy' => esc_attr(__('dd.mm.yyyy', 'si-contact-form')),
-'yyyy/mm/dd' => esc_attr(__('yyyy/mm/dd', 'si-contact-form')),
-'yyyy-mm-dd' => esc_attr(__('yyyy-mm-dd', 'si-contact-form')),
-'yyyy.mm.dd' => esc_attr(__('yyyy.mm.dd', 'si-contact-form')),
+'mm/dd/yyyy' => $this->ctf_output_string(__('mm/dd/yyyy', 'si-contact-form')),
+'dd/mm/yyyy' => $this->ctf_output_string(__('dd/mm/yyyy', 'si-contact-form')),
+'mm-dd-yyyy' => $this->ctf_output_string(__('mm-dd-yyyy', 'si-contact-form')),
+'dd-mm-yyyy' => $this->ctf_output_string(__('dd-mm-yyyy', 'si-contact-form')),
+'mm.dd.yyyy' => $this->ctf_output_string(__('mm.dd.yyyy', 'si-contact-form')),
+'dd.mm.yyyy' => $this->ctf_output_string(__('dd.mm.yyyy', 'si-contact-form')),
+'yyyy/mm/dd' => $this->ctf_output_string(__('yyyy/mm/dd', 'si-contact-form')),
+'yyyy-mm-dd' => $this->ctf_output_string(__('yyyy-mm-dd', 'si-contact-form')),
+'yyyy.mm.dd' => $this->ctf_output_string(__('yyyy.mm.dd', 'si-contact-form')),
 );
         if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
            $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
@@ -609,7 +609,7 @@ $string .= '<select ';
         ';
 $selected = '';
 // am/pm
-foreach (array(esc_attr(__('AM', 'si-contact-form')), esc_attr(__('PM', 'si-contact-form')) ) as $k) {
+foreach (array($this->ctf_output_string(__('AM', 'si-contact-form')), $this->ctf_output_string(__('PM', 'si-contact-form')) ) as $k) {
  if (${'ex_field'.$i.'ap'} != '') {
     if (${'ex_field'.$i.'ap'} == "$k") {
       $selected = ' selected="selected"';

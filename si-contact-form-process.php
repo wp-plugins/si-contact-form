@@ -994,6 +994,8 @@ if ($have_attach){
 	         $subj = str_replace('['.$key.']',$data,$subj);
              $msg = str_replace('['.$key.']',$data,$msg);
            }
+           $subj = str_replace('['.$key.']','',$subj); // remove empty tags
+           $msg = str_replace('['.$key.']','',$msg);
        }
        $subj = str_replace('[form_label]',$posted_form_name,$subj);
 
