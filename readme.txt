@@ -185,6 +185,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+
 = 3.0.1 =
 - (02 Jun 2011) - CAPTCHA Audio feature is disabled by Mike Challis until further notice because a proof of concept code CAPTCHA solving exploit was released - Security Advisory - SOS-11-007. CAPTCHA image is not involved.
 - Security enhancements for possible low level XSS exploit in admin settings: thanks to [Julio Potier](http://secu.boiteaweb.fr/).
