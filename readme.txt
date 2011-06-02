@@ -185,11 +185,14 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 3.0.1 =
+- (02 Jun 2011) - CAPTCHA Audio feature is disabled by Mike Challis until further notice because a proof of concept code CAPTCHA solving exploit was released - Security Advisory - SOS-11-007. CAPTCHA image is not involved.
 - Security enhancements for possible low level XSS exploit in admin settings: thanks to [Julio Potier](http://secu.boiteaweb.fr/).
 - Fix javascript error when CAPTCHA audio is disabled.
 - Fixed missing width/height attributes for CAPTCHA images.
 - Fixed backslash probem on Restore Settings tool.
 - Fixed empty autoresponder field tags were showing.
+- Fixed various style improvements for admin error messages.
 - Added a popup alert for when changing the number of forms or extra fields.
 - Added setting: CSS style for CAPTCHA input field on the contact form.
 - Added Norwegian Bokmal (nb_NO) - Translated by [Tore Johnny Bratveit](http://punktlig-ikt.no)

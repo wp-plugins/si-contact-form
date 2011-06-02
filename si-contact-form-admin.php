@@ -194,7 +194,7 @@ http://www.642weather.com/weather/scripts.php
 
 		// Output the response
 		?>
-<div id="message" class="updated fade"><p><strong><?php _e('Test Message Sent', 'si-contact-form'); echo '<br />'.$si_contact_opt['php_mailer_enable']; echo ' '.$subject; ?></strong></p>
+<div id="message" class="updated"><p><strong><?php _e('Test Message Sent', 'si-contact-form'); echo '<br />'.$si_contact_opt['php_mailer_enable']; echo ' '.$subject; ?></strong></p>
 <?php if ($result != true) { ?>
 <p><?php _e('The result was:', 'si-contact-form'); ?></p>
 <?php echo '<p><a href="http://www.fastsecurecontactform.com/email-does-not-send">'.  __('See FAQ', 'si-contact-form') . '</a></p>'; ?>
@@ -219,7 +219,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
 <?php }
 
    }else{
-     echo '<div id="message" class="updated fade"><p><strong>'.__('Test failed: Invalid E-mail address', 'si-contact-form').'</strong></p>';
+     echo '<div id="message" class="updated"><p><strong>'.__('Test failed: Invalid E-mail address', 'si-contact-form').'</strong></p>';
    }
 ?>
 </div>
@@ -599,7 +599,7 @@ ctf_addOnloadEvent(ctf_redirect);
 EOT;
 
 echo '
-<div id="message" class="updated fade"><p><strong>
+<div id="message" class="updated"><p><strong>
 <img src="'.WP_PLUGIN_URL .'/si-contact-form/ctf-loading.gif" alt="'.$this->ctf_output_string(__('Redirecting to Form 1', 'si-contact-form')).'" />&nbsp;&nbsp;
 '.__('Redirecting to Form 1', 'si-contact-form').' ...
 </strong></p></div>
@@ -620,7 +620,7 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 
 ?>
 <?php if ( !empty($_POST )  && !isset($_POST['ctf_action'])) : ?>
-<div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'si-contact-form'); ?></strong></p></div>
+<div id="message" class="updated"><p><strong><?php _e('Options saved.', 'si-contact-form'); ?></strong></p></div>
 <?php endif; ?>
 
 <div class="wrap">
@@ -663,10 +663,14 @@ if ($si_contact_opt['name_type'] != 'not_available') {
       break;
    }
 }
-        // email
-if ($si_contact_opt['email_type'] != 'not_available')
+// email
+$autoresp_ok = 1; // used in autoresp settings below
+if ($si_contact_opt['email_type'] != 'not_available') {
         $av_fld_arr[] = 'from_email';
         $av_fld_subj_arr = $av_fld_arr;
+}else{
+   $autoresp_ok = 0;
+}
         // optional extra fields
 for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
     if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
@@ -675,6 +679,8 @@ for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
             $av_fld_arr[] = "ex_field$i";
       } else {  // text, textarea, date, password, email, url, hidden, time, select, select-multiple, radio, checkbox, checkbox-multiple
             $av_fld_arr[] = "ex_field$i";
+            if ($si_contact_opt['ex_field'.$i.'_type'] == 'email')
+              $autoresp_ok = 1;
       }
     }
 } // end for
@@ -980,12 +986,15 @@ if(!preg_match("/,/", $ctf_contacts_test) ) {
         <label for="si_contact_email_to"><?php _e('E-mail To', 'si-contact-form'); ?>:</label>
 <?php
 if (empty($ctf_contacts) || $ctf_contacts_error ) {
-   echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span>'."\n";
+       echo '<div id="message" class="error">';
+       echo __('ERROR: Misconfigured "E-mail To" address.', 'si-contact-form');
+       echo "</div>\n";
+       echo '<div class="fsc-error">'. __('ERROR: Misconfigured "E-mail To" address.', 'si-contact-form').'</div>'."\n";
 }
 
 if ( !function_exists('mail') ) {
-   echo '<br /><span style="color:red;">'. __('Warning: Your web host has the mail() function disabled. PHP cannot send email.', 'si-contact-form').'</span><br />'."\n";
-  echo '<span style="color:red;">'. __('Have them fix it. Or you can install the "WP Mail SMTP" plugin and configure it to use SMTP.', 'si-contact-form').'</span><br />'."\n";
+   echo '<div class="fsc-error">'. __('Warning: Your web host has the mail() function disabled. PHP cannot send email.', 'si-contact-form');
+   echo ' '. __('Have them fix it. Or you can install the "WP Mail SMTP" plugin and configure it to use SMTP.', 'si-contact-form').'</div>'."\n";
 }
 ?>
         <br />
@@ -1011,7 +1020,7 @@ if ( !function_exists('mail') ) {
       echo '<br /><span style="color:red;">'. __('Warning: Your web host has PHP safe_mode turned on.', 'si-contact-form');
       echo '</span> ';
       echo __('PHP safe_mode can cause problems like sending mail failures and file permission errors.', 'si-contact-form')."<br />\n";
-      echo __('PHP safe_mode is better turned off, relying on this feature might work, but is highly discouraged. Contact your web host for support.', 'si-contact-form')."<br /><br />\n";
+      echo __('Contact your web host for support.', 'si-contact-form')."<br /><br />\n";
     }
 
     // Check for older than PHP5
@@ -1019,7 +1028,7 @@ if ( !function_exists('mail') ) {
       echo '<br /><span style="color:red;">'. __('Warning: Your web host has not upgraded from PHP4 to PHP5.', 'si-contact-form');
       echo '</span> ';
       echo __('PHP4 was officially discontinued August 8, 2008 and is no longer considered safe.', 'si-contact-form')."<br />\n";
-      echo __('PHP5 is faster, has more features, and is and safer. Using PHP4 might still work, but is highly discouraged. Contact your web host for support.', 'si-contact-form')."<br /><br />\n";
+      echo __('Contact your web host for support.', 'si-contact-form')."<br /><br />\n";
     }
 
 if ( $si_contact_opt['email_from'] != '' ) {
@@ -1043,9 +1052,9 @@ if ( $si_contact_opt['email_from'] != '' ) {
 
    if ($from_fail)  {
        echo '<div id="message" class="error">';
-       echo __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form');
+       echo __('ERROR: Misconfigured "E-mail From" address.', 'si-contact-form');
        echo "</div>\n";
-       echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+       echo '<div class="fsc-error">'. __('ERROR: Misconfigured "E-mail From" address.', 'si-contact-form').'</div>'."\n";
    } else {
        $uri = parse_url(get_option('home'));
        $blogdomain = preg_replace("/^www\./i",'',$uri['host']);
@@ -1054,9 +1063,9 @@ if ( $si_contact_opt['email_from'] != '' ) {
        echo '<div id="message" class="updated">';
        echo sprintf(__('Warning: "E-mail From" is not set to an address from the same domain name as your web site (%s). This can sometimes cause mail not to send, or send but be delivered to a Spam folder. Be sure to test that your form is sending email and that you are receiving it, if not, fix this setting.', 'si-contact-form'), $blogdomain);
        echo "</div>\n";
-       echo '<br /><span class="updated">';
+       echo '<div class="fsc-notice">';
        echo sprintf(__('Warning: "E-mail From" is not set to an address from the same domain name as your web site (%s). This can sometimes cause mail not to send, or send but be delivered to a Spam folder. Be sure to test that your form is sending email and that you are receiving it, if not, fix this setting.', 'si-contact-form'), $blogdomain);
-       echo "</span><br />\n";
+       echo "</div>\n";
        }
    }
 }
@@ -1075,9 +1084,9 @@ if ( $si_contact_opt['email_from'] != '' ) {
 
         <?php
        if( $si_contact_opt['email_from_enforced'] == 'true' && $si_contact_opt['email_from'] == '') {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: Enabling this setting requires the "E-mail From" setting above to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
         <input name="si_contact_email_from_enforced" id="si_contact_email_from_enforced" type="checkbox" <?php if( $si_contact_opt['email_from_enforced'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -1126,8 +1135,6 @@ foreach (array( 'wordpress' => $this->ctf_output_string(__('WordPress', 'si-cont
         <?php _e('Enable if you want the email message sent as HTML format. HTML format is desired if you want to avoid a 70 character line wordwrap when you copy and paste the email message. Normally the email is sent in plain text wordwrapped 70 characters per line to comply with most email programs.', 'si-contact-form') ?>
         </div>
         <br />
-
-        <label for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form'); ?>:</label>
 <?php
 if ( $si_contact_opt['email_bcc'] != ''){
     $bcc_fail = 0;
@@ -1150,12 +1157,14 @@ if ( $si_contact_opt['email_bcc'] != ''){
    }
    if ($bcc_fail)  {
       echo '<div id="message" class="error">';
-      echo __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form');
+      echo __('ERROR: Misconfigured "Bcc E-mail" address.', 'si-contact-form');
       echo "</div>\n";
-      echo '<span style="color:red;">'. __('ERROR: Misconfigured E-mail address in options.', 'si-contact-form').'</span><br />'."\n";
+      echo '<div class="fsc-error">'. __('ERROR: Misconfigured "Bcc E-mail" address.', 'si-contact-form').'</div>'."\n";
    }
 }
 ?>
+
+      <label for="si_contact_email_bcc"><?php _e('E-mail Bcc (optional)', 'si-contact-form'); ?>:</label>
         <input name="si_contact_email_bcc" id="si_contact_email_bcc" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['email_bcc']);  ?>" size="50" />
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_email_bcc_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_email_bcc_tip">
@@ -1262,9 +1271,19 @@ if ( $si_contact_opt['email_bcc'] != ''){
 
       <?php
        if( $si_contact_opt['auto_respond_enable'] == 'true' && ($si_contact_opt['auto_respond_from_name'] == '' || $si_contact_opt['auto_respond_from_email'] == '' || $si_contact_opt['auto_respond_reply_to'] == '' || $si_contact_opt['auto_respond_subject'] == '' || $si_contact_opt['auto_respond_message'] == '') ) {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-notice">';
          echo __('Warning: Enabling this setting requires all the autoresponder fields below to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
+       }
+       if( !$autoresp_ok && $si_contact_opt['auto_respond_enable'] == 'true' && $si_contact_opt['auto_respond_from_name'] != '' && $si_contact_opt['auto_respond_from_email'] != '' && $si_contact_opt['auto_respond_reply_to'] != '' && $si_contact_opt['auto_respond_subject'] != '' && $si_contact_opt['auto_respond_message'] != '' ) {
+         echo '<div class="fsc-error">';
+         echo __('Warning: No email address field is set, you will not be able to reply to emails and the autoresponder will not work.', 'si-contact-form');
+         echo "</div>\n";
+       }
+       if( !$autoresp_ok ) {
+         echo '<div id="message" class="updated">';
+         echo __('Warning: No email address field is set, you will not be able to reply to emails and the autoresponder will not work.', 'si-contact-form');
+         echo "</div>\n";
        }
        ?>
         <label for="si_contact_auto_respond_from_name"><?php _e('Autoresponder E-mail "From" name', 'si-contact-form'); ?>:</label><input name="si_contact_auto_respond_from_name" id="si_contact_auto_respond_from_name" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['auto_respond_from_name']);  ?>" size="60" />
@@ -1378,13 +1397,13 @@ if( $si_contact_opt['akismet_disable'] == 'false' ) {
 		if ( $key_status == 'valid' ) {
 		    $akismet_installed = 1;
             ?><div id="message" class="updated"><strong><?php echo __('Akismet is enabled and the key is valid. This form will be checked with Akismet to help prevent spam', 'si-contact-form'); ?></strong></div><?php
-            echo '<span class="updated">' . __('Akismet is installed and the key is valid. This form will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></span>';
+            echo '<div class="fsc-notice">' . __('Akismet is installed and the key is valid. This form will be checked with Akismet to help prevent spam.', 'si-contact-form'). '</strong></div>';
 		} else if ( $key_status == 'invalid' ) {
 			?><div id="message" class="error"><strong><?php echo __('Akismet plugin is enabled but key needs to be activated', 'si-contact-form'); ?></strong></div><?php
-             echo '<span class="error">'. __('Akismet plugin is installed but key needs to be activated.', 'si-contact-form'). '</span>';
+             echo '<div class="fsc-error">'. __('Akismet plugin is installed but key needs to be activated.', 'si-contact-form'). '</div>';
 		} else if ( !empty($key) && $key_status == 'failed' ) {
 			?><div id="message" class="error"><strong><?php echo __('Akismet plugin is enabled but key failed to verify', 'si-contact-form'); ?></strong></div><?php
-             echo '<span class="error">'.__('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</span>';
+             echo '<div class="fsc-error">'.__('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</div>';
 		}
     }
 ?>
@@ -1395,10 +1414,10 @@ if( $si_contact_opt['akismet_disable'] == 'false' ) {
 <?php echo '<a href="'.admin_url(  "plugins.php?page=akismet-key-config" ).'">' . __('Configure Akismet', 'si-contact-form').'</a>'; ?>
 <?php
   }else{
-     echo '<span class="error">'.__('Akismet plugin is not installed or is deactivated.', 'si-contact-form'). '</span>';
+     echo '<div class="fsc-notice">'.__('Akismet plugin is not installed or is deactivated.', 'si-contact-form'). '</div>';
   }
 } else {
-    echo '<span class="error">'.__('Akismet is turned off for this form.', 'si-contact-form'). '</span>';
+    echo '<div class="fsc-notice">'.__('Akismet is turned off for this form.', 'si-contact-form'). '</div>';
 }
  if( $si_contact_opt['akismet_disable'] == 'false' ) {
 ?>
@@ -1532,7 +1551,9 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <?php _e('Enables an icon so the user can listen to an audio sound of the CAPTCHA.', 'si-contact-form') ?>
         </div>
         <br />
-
+        <?php
+        echo '<div class="fsc-notice">'.__('Audio feature is disabled by Mike Challis until further notice because a proof of concept code CAPTCHA solving exploit was released - Security Advisory - SOS-11-007.', 'si-contact-form'). '</div>';
+        ?>
         <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true') echo ' checked="checked" '; ?> />
         <label for="si_contact_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-contact-form'); ?></label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_audio_flash_tip');"><?php _e('help', 'si-contact-form'); ?></a>
@@ -1965,9 +1986,9 @@ foreach ($time_format_array as $k => $v) {
         <br />
       <?php
        if( $si_contact_opt['redirect_query'] == 'true' &&  $si_contact_opt['redirect_enable'] != 'true') {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: Enabling this setting requires the "Enable redirect" to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
         <input name="si_contact_redirect_query" id="si_contact_redirect_query" type="checkbox" <?php if( $si_contact_opt['redirect_query'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -2048,18 +2069,18 @@ foreach ($time_format_array as $k => $v) {
 
       <?php
        if( $si_contact_opt['redirect_email_off'] == 'true' && ($si_contact_opt['redirect_enable'] != 'true' || $si_contact_opt['redirect_query'] != 'true') ) {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: Enabling this setting requires the "Enable redirect" and "Enable posted data to be sent as a query string" to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
 
        <?php
        if( $si_contact_opt['redirect_email_off'] == 'true' && $si_contact_opt['redirect_enable'] == 'true' && $si_contact_opt['redirect_query'] == 'true' ) {
         ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the redirect settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-notice">';
          echo __('Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
         <input name="si_contact_redirect_email_off" id="si_contact_redirect_email_off" type="checkbox" <?php if( $si_contact_opt['redirect_email_off'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -2114,9 +2135,9 @@ foreach ($silent_send_array as $k => $v) {
 
        <?php
        if( $si_contact_opt['silent_send'] != 'off' &&  $si_contact_opt['silent_url'] == '') {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: Enabling this setting requires the "Silent Remote URL" to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
 
@@ -2197,18 +2218,18 @@ foreach ($silent_send_array as $k => $v) {
 
       <?php
        if( $si_contact_opt['silent_email_off'] == 'true' && ($si_contact_opt['silent_send'] == 'off' || $si_contact_opt['silent_url'] == '') ) {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: Enabling this setting requires the "Silent Remote Send" and "Silent Remote URL" to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
 
        <?php
        if( $si_contact_opt['silent_email_off'] == 'true' && $si_contact_opt['silent_send'] != 'off' ) {
         ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the Silent Remote Send settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
         <input name="si_contact_silent_email_off" id="si_contact_silent_email_off" type="checkbox" <?php if( $si_contact_opt['silent_email_off'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -2313,18 +2334,18 @@ foreach ($silent_send_array as $k => $v) {
 
       <?php
        if( $si_contact_opt['export_email_off'] == 'true' && ($si_contact_opt['export_enable'] != 'true' ) ) {
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-error">';
          echo __('Warning: Enabling this setting requires the "Enable data export" to also be set.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div>\n";
        }
        ?>
 
        <?php
        if( $si_contact_opt['export_email_off'] == 'true' && $si_contact_opt['export_enable'] == 'true' ) {
         ?><div id="message" class="updated"><strong><?php echo __('Warning: You have turned off email sending in the data export settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form'); ?></strong></div><?php
-         echo '<br /><span class="updated">';
+         echo '<div class="fsc-notice">';
          echo __('Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form');
-         echo "</span><br />\n";
+         echo "</div\n";
        }
        ?>
         <input name="si_contact_export_email_off" id="si_contact_export_email_off" type="checkbox" <?php if( $si_contact_opt['export_email_off'] == 'true' ) echo 'checked="checked"'; ?> />
@@ -2537,8 +2558,8 @@ foreach ($silent_send_array as $k => $v) {
 <?php _e('Type an email address here and then click Send Test to generate a test email.', 'si-contact-form'); ?>
 <?php
 if ( !function_exists('mail') ) {
-  echo '<br /><span style="color:red;">'. __('Warning: Your web host has the mail() function disabled. PHP cannot send email.', 'si-contact-form').'</span><br />'."\n";
-  echo '<span style="color:red;">'. __('Have them fix it. Or you can install the "WP Mail SMTP" plugin and configure it to use SMTP.', 'si-contact-form').'</span>'."\n";
+   echo '<div class="fsc-error">'. __('Warning: Your web host has the mail() function disabled. PHP cannot send email.', 'si-contact-form');
+   echo ' '. __('Have them fix it. Or you can install the "WP Mail SMTP" plugin and configure it to use SMTP.', 'si-contact-form').'</div>'."\n";
 }
 ?>
 <br />

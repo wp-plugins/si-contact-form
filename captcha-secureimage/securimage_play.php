@@ -33,6 +33,9 @@
  * @package Securimage
  *
  */
+/*
+Audio feature is disabled by Mike Challis because a proof of concept code CAPTCHA solving exploit was released.
+PHPCaptcha / Securimage 2.0.2 – Authentication Bypass - Security Advisory - SOS-11-007
 if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix']) ){
   // no session
   $prefix = $_GET['prefix'];
@@ -59,6 +62,6 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
   $img->audio_format = 'mp3';
 }
 
-$img->outputAudioFile();
+$img->outputAudioFile();*/
 
 ?>

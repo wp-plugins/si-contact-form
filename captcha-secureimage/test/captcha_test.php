@@ -46,9 +46,9 @@ function si_contact_captcha_refresh() {
   //alert(si_image);
   document.getElementById('si_image').src = si_image;
 
-  var si_aud = '../securimage_play.php?prefix='+prefix;
+  //var si_aud = '../securimage_play.php?prefix='+prefix;
   //alert(si_aud);
-  document.getElementById('si_aud').href = si_aud;
+  //document.getElementById('si_aud').href = si_aud;
 }
 //-->
 </script>
@@ -328,10 +328,13 @@ echo '</p>
  <div style="width:430px; height:55px">
  <img id="si_image" style="padding-right:5px; border-style:none; float:left;"
  src="../securimage_show.php?prefix='.$prefix.'"
- alt="CAPTCHA Image" title="CAPTCHA Image" />
+ alt="CAPTCHA Image" title="CAPTCHA Image" />';
+/*
  <a id="si_aud" href="../securimage_play.php?prefix='.$prefix.'" title="CAPTCHA Audio">
  <img src="../images/audio_icon.gif" alt="CAPTCHA Audio"
- style="border-style:none; vertical-align:top; border-style:none;" onclick="this.blur()" /></a><br />
+ style="border-style:none; vertical-align:top; border-style:none;" onclick="this.blur()" /></a>
+ */
+ echo '<br />
  <a href="#" title="Refresh Image" style="border-style:none"
  onclick="javascript:si_contact_captcha_refresh(); return false;">
  <img src="../images/refresh.gif" alt="Refresh Image"
@@ -383,10 +386,13 @@ if(is_writable($check_this_dir)) {
  echo '<div style="width:430px; height:55px">
  <img id="si_image" style="padding-right:5px; border-style:none; float:left;"
  src="../securimage_show.php?sid='.md5(uniqid(time())).'"
- alt="CAPTCHA Image" title="CAPTCHA Image" />
+ alt="CAPTCHA Image" title="CAPTCHA Image" />';
+/*
  <a href="../securimage_play.php" title="CAPTCHA Audio">
  <img src="../images/audio_icon.gif" alt="CAPTCHA Audio"
- style="border-style:none; vertical-align:top; border-style:none;" onclick="this.blur()" /></a><br />
+ style="border-style:none; vertical-align:top; border-style:none;" onclick="this.blur()" /></a>
+ */
+ echo '<br />
  <a href="#" title="Refresh Image" style="border-style:none"
  onclick="document.getElementById(\'si_image\').src = \'../securimage_show.php?sid=\' + Math.random(); return false;">
  <img src="../images/refresh.gif" alt="Refresh Image"
