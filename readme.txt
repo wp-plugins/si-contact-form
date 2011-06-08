@@ -185,6 +185,9 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 3.0.2 =
+- (08 Jun 2011) - Fixed error: Undefined variable: securimage_url 
+- Added id tags to submit and reset buttons.
 - Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 3.0.1 =

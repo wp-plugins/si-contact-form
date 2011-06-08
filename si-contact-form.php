@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.0.1
+Version: 3.0.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.0.1';
+$ctf_version = '3.0.2';
 
 /*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
@@ -777,6 +777,10 @@ if($si_contact_opt['captcha_small'] == 'true') {
   $securimage_show_url .= 'ctf_sm_captcha=1&amp;';
   $securimage_size = 'width="132" height="45"';
 }
+
+$parseUrl = parse_url($captcha_url_cf);
+$securimage_url = $parseUrl['path'];
+
 if($si_contact_opt['captcha_difficulty'] == 'low') $securimage_show_url .= 'difficulty=1&amp;';
 if($si_contact_opt['captcha_difficulty'] == 'high') $securimage_show_url .= 'difficulty=2&amp;';
 if($si_contact_opt['captcha_no_trans'] == 'true') $securimage_show_url .= 'no_trans=1&amp;';
@@ -817,8 +821,6 @@ $string .= '>
     $si_contact_opt['enable_audio'] = 'false';
 
     if($si_contact_opt['enable_audio'] == 'true') {
-        $parseUrl = parse_url($captcha_url_cf);
-        $securimage_url = $parseUrl['path'];
         $ctf_audio_type = 'wav';
        if($si_contact_opt['enable_audio_flash'] == 'true') {
           $ctf_audio_type = 'flash';

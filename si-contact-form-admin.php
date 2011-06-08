@@ -1469,6 +1469,42 @@ foreach ($akismet_send_anyway_array as $k => $v) {
         </div>
         <br />
 
+        <label for="si_contact_captcha_difficulty"><?php _e('CAPTCHA difficulty level:', 'si-contact-form'); ?></label>
+      <select id="si_contact_captcha_difficulty" name="si_contact_captcha_difficulty">
+<?php
+$captcha_difficulty_array = array(
+'low' => $this->ctf_output_string(__('Low', 'si-contact-form')),
+'medium' => $this->ctf_output_string(__('Medium', 'si-contact-form')),
+'high' => $this->ctf_output_string(__('High', 'si-contact-form')),
+);
+$selected = '';
+foreach ($captcha_difficulty_array as $k => $v) {
+ if ($si_contact_opt['captcha_difficulty'] == "$k")  $selected = ' selected="selected"';
+ echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
+ $selected = '';
+}
+?>
+</select>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_difficulty_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_difficulty_tip">
+        <?php _e('Changes level of distortion of the CAPTCHA image text.', 'si-contact-form') ?>
+        </div>
+        <br />
+
+        <input name="si_contact_captcha_small" id="si_contact_captcha_small" type="checkbox" <?php if ( $si_contact_opt['captcha_small'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_captcha_small"><?php _e('Enable smaller size CAPTCHA image.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_small_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_small_tip">
+        <?php _e('Makes the CAPTCHA image smaller.', 'si-contact-form') ?>
+        </div>
+        <br />
+
+        <input name="si_contact_captcha_perm" id="si_contact_captcha_perm" type="checkbox" <?php if( $si_contact_opt['captcha_perm'] == 'true' ) echo 'checked="checked"'; ?> />
+        <label for="si_contact_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-contact-form'); ?>
+        <strong><?php _e('registered', 'si-contact-form'); ?></strong> <?php __('users who can', 'si-contact-form'); ?>:</label>
+        <?php $this->si_contact_captcha_perm_dropdown('si_contact_captcha_perm_level', $si_contact_opt['captcha_perm_level']);  ?>
+        <br />
+
         <input name="si_contact_captcha_disable_session" id="si_contact_captcha_disable_session" type="checkbox" <?php if ( $si_contact_gb['captcha_disable_session'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_captcha_disable_session"><?php _e('Use CAPTCHA without PHP session.', 'si-contact-form'); ?></label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_disable_session_tip');"><?php _e('help', 'si-contact-form'); ?></a>
@@ -1506,36 +1542,6 @@ foreach ($akismet_send_anyway_array as $k => $v) {
 
         ?>
 
-        <label for="si_contact_captcha_difficulty"><?php _e('CAPTCHA difficulty level:', 'si-contact-form'); ?></label>
-      <select id="si_contact_captcha_difficulty" name="si_contact_captcha_difficulty">
-<?php
-$captcha_difficulty_array = array(
-'low' => $this->ctf_output_string(__('Low', 'si-contact-form')),
-'medium' => $this->ctf_output_string(__('Medium', 'si-contact-form')),
-'high' => $this->ctf_output_string(__('High', 'si-contact-form')),
-);
-$selected = '';
-foreach ($captcha_difficulty_array as $k => $v) {
- if ($si_contact_opt['captcha_difficulty'] == "$k")  $selected = ' selected="selected"';
- echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>'."\n";
- $selected = '';
-}
-?>
-</select>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_difficulty_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_captcha_difficulty_tip">
-        <?php _e('Changes level of distortion of the CAPTCHA image text.', 'si-contact-form') ?>
-        </div>
-        <br />
-
-        <input name="si_contact_captcha_small" id="si_contact_captcha_small" type="checkbox" <?php if ( $si_contact_opt['captcha_small'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_captcha_small"><?php _e('Enable smaller size CAPTCHA image.', 'si-contact-form'); ?></label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_small_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_captcha_small_tip">
-        <?php _e('Makes the CAPTCHA image smaller.', 'si-contact-form') ?>
-        </div>
-        <br />
-
         <input name="si_contact_captcha_no_trans" id="si_contact_captcha_no_trans" type="checkbox" <?php if ( $si_contact_opt['captcha_no_trans'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_captcha_no_trans"><?php _e('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-contact-form'); ?></label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_no_trans_tip');"><?php _e('help', 'si-contact-form'); ?></a>
@@ -1543,29 +1549,6 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <?php _e('Sometimes fixes missing text on the CAPTCHA image. If this does not fix missing text, your PHP server is not compatible with the CAPTCHA functions. You can disable CAPTCHA or have your web server fixed.', 'si-contact-form') ?>
         </div>
         <br />
-
-        <input name="si_contact_enable_audio" id="si_contact_enable_audio" type="checkbox" <?php if ( $si_contact_opt['enable_audio'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_enable_audio"><?php _e('Enable Audio for the CAPTCHA.', 'si-contact-form'); ?></label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_audio_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_enable_audio_tip">
-        <?php _e('Enables an icon so the user can listen to an audio sound of the CAPTCHA.', 'si-contact-form') ?>
-        </div>
-        <br />
-        <?php
-        echo '<div class="fsc-notice">'.__('Audio feature is disabled by Mike Challis until further notice because a proof of concept code CAPTCHA solving exploit was released - Security Advisory - SOS-11-007.', 'si-contact-form'). '</div>';
-        ?>
-        <input name="si_contact_enable_audio_flash" id="si_contact_enable_audio_flash" type="checkbox" <?php if ( $si_contact_opt['enable_audio_flash'] == 'true') echo ' checked="checked" '; ?> />
-        <label for="si_contact_enable_audio_flash"><?php _e('Enable Flash Audio for the CAPTCHA.', 'si-contact-form'); ?></label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_audio_flash_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_enable_audio_flash_tip">
-        <?php _e('Enables a flash object so the user can listen to an audio sound of the CAPTCHA without having to download the sound file.', 'si-contact-form') ?>
-        </div>
-        <br />
-
-        <input name="si_contact_captcha_perm" id="si_contact_captcha_perm" type="checkbox" <?php if( $si_contact_opt['captcha_perm'] == 'true' ) echo 'checked="checked"'; ?> />
-        <label for="si_contact_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-contact-form'); ?>
-        <strong><?php _e('registered', 'si-contact-form'); ?></strong> <?php __('users who can', 'si-contact-form'); ?>:</label>
-        <?php $this->si_contact_captcha_perm_dropdown('si_contact_captcha_perm_level', $si_contact_opt['captcha_perm_level']);  ?><br />
 
         <a href="<?php echo "$captcha_url_cf/test/index.php"; ?>" target="_new"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-contact-form'); ?></a>
 

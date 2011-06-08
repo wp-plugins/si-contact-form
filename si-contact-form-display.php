@@ -420,7 +420,7 @@ $string .= '
 <div '.$this->ctf_submit_div_style.'>
   <input type="hidden" name="si_contact_action" value="send" />
   <input type="hidden" name="si_contact_form_id" value="'.$form_id_num.'" />
-  <input type="submit" '.$this->ctf_submit_style.' value="';
+  <input type="submit" id="fsc-submit" '.$this->ctf_submit_style.' value="';
      $string .= ($si_contact_opt['title_submit'] != '') ? $this->ctf_output_string( $si_contact_opt['title_submit'] ) : $this->ctf_output_string( __('Submit', 'si-contact-form'));
      $string .= '" ';
    if($si_contact_opt['enable_areyousure'] == 'true') {
@@ -430,7 +430,7 @@ $string .= '
     }
      $string .= '/> ';
    if($si_contact_opt['enable_reset'] == 'true') {
-     $string .= '<input type="reset" '.$this->ctf_reset_style.' value="';
+     $string .= '<input type="reset" id="fsc-reset" '.$this->ctf_reset_style.' value="';
      $string .= ($si_contact_opt['title_reset'] != '') ? $this->ctf_output_string( $si_contact_opt['title_reset'] ) : $this->ctf_output_string( __('Reset', 'si-contact-form'));
      $string .= '" onclick="return confirm(\'';
      $string .= addslashes(__('Do you really want to reset the form?', 'si-contact-form'));
