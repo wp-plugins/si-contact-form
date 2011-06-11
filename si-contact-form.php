@@ -1588,7 +1588,7 @@ function si_contact_form_backup_restore($bk_form_num) {
 
 // outputs a contact form settings backup file
 function si_contact_backup_download() {
-  global $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults;
+  global $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults, $ctf_version;
 
   require_once WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-backup.php';
 

@@ -185,6 +185,9 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Tested compatible with WP 3.2
+- Misc. admin Fixes.
+
 = 3.0.2 =
 - (08 Jun 2011) - Fixed error: Undefined variable: securimage_url 
 - Added id tags to submit and reset buttons.

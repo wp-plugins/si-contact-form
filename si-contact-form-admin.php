@@ -252,7 +252,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
 
 
 <p>
-<?php _e('You must add the shortcode in a Page(not a post). That page will become your Contact Form', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
+<?php _e('Add the shortcode in a Page, Post, or Text Widget', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
 <br />
 <?php _e('Shortcode for this form:', 'si-contact-form'); echo " [si-contact-form form='$form_id']"; ?>
 </p>
@@ -1404,7 +1404,10 @@ if( $si_contact_opt['akismet_disable'] == 'false' ) {
 		} else if ( !empty($key) && $key_status == 'failed' ) {
 			?><div id="message" class="error"><strong><?php echo __('Akismet plugin is enabled but key failed to verify', 'si-contact-form'); ?></strong></div><?php
              echo '<div class="fsc-error">'.__('Akismet plugin is installed but key failed to verify.', 'si-contact-form'). '</div>';
-		}
+		} else {
+            ?><div id="message" class="error"><strong><?php echo __('Akismet plugin is installed but key has not been entered.', 'si-contact-form'); ?></strong></div><?php
+             echo '<div class="fsc-error">'.__('Akismet plugin is installed but key has not been entered.', 'si-contact-form'). '</div>';
+        }
     }
 ?>
 <br />
