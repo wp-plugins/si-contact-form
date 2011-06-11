@@ -64,7 +64,6 @@ Captcha Image Support:
  * Uses Open-source free PHP CAPTCHA library by www.phpcaptcha.org (customized version included)
  * Abstract background with multi colored, angled, and transparent text
  * Arched lines through text
- * Visual and Audible CAPTCHA
  * Refresh button to reload captcha if you cannot read it
  * CAPTCHA can be disabled in Options
 
@@ -186,6 +185,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Tested compatible with WP 3.2
+- CAPTCHA audio feature removed.
 - Misc. admin Fixes.
 
 = 3.0.2 =
