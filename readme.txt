@@ -185,6 +185,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 == Changelog ==
 
 - Tested compatible with WP 3.2
+- "Number of available extra fields" setting is now for each form # instead of all forms.
 - CAPTCHA audio feature removed.
 - Misc. admin Fixes.
 

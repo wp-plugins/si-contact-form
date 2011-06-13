@@ -304,7 +304,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
    $optionarray_gb_update = array(
          'donated' =>          (isset( $_POST['si_contact_donated'] ) ) ? 'true' : 'false',
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb['max_forms'],
-         'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 200 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb['max_fields'],
+         'max_fields' =>  $si_contact_gb['max_fields'],
          'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
          );
 
@@ -328,6 +328,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
          'subject_type' =>          $_POST['si_contact_subject_type'],
          'message_type' =>          $_POST['si_contact_message_type'],
          'preserve_space_enable' => (isset( $_POST['si_contact_preserve_space_enable'] ) ) ? 'true' : 'false',
+         'max_fields' =>   ( is_numeric(trim($_POST['si_contact_max_fields'])) && trim($_POST['si_contact_max_fields']) < 200 ) ? absint(trim($_POST['si_contact_max_fields'])) : $si_contact_gb['max_fields'],
          'double_email' =>     (isset( $_POST['si_contact_double_email'] ) ) ? 'true' : 'false', // true or false
          'name_case_enable' => (isset( $_POST['si_contact_name_case_enable'] ) ) ? 'true' : 'false',
          'sender_info_enable' =>   (isset( $_POST['si_contact_sender_info_enable'] ) ) ? 'true' : 'false',
@@ -672,7 +673,7 @@ if ($si_contact_opt['email_type'] != 'not_available') {
    $autoresp_ok = 0;
 }
         // optional extra fields
-for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
     if ( $si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'fieldset-close') {
       if ($si_contact_opt['ex_field'.$i.'_type'] == 'fieldset') {
       } else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment' && $si_contact_opt['php_mailer_enable'] != 'php') {
@@ -1517,20 +1518,20 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <br />
         <?php
          if ( $si_contact_gb['captcha_disable_session'] == 'true' ){
-            $check_this_dir = WP_PLUGIN_DIR . '/si-contact-form/captcha-secureimage/captcha-temp';
+            $check_this_dir = WP_PLUGIN_DIR . '/si-contact-form/captcha/temp';
            if(is_writable($check_this_dir)) {
 				//echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
            } else if(!file_exists($check_this_dir)) {
               echo '<span style="color: red;">';
               echo __('There is a problem with the directory', 'si-contact-form');
-              echo ' /captcha-secureimage/captcha-temp/. ';
+              echo ' /captcha/temp/. ';
 	          echo __('The directory is not found, a <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">permissions</a> problem may have prevented this directory from being created.', 'si-contact-form');
               echo ' ';
               echo __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
               echo '</span><br />';
            } else {
              echo '<span style="color: red;">';
-             echo __('There is a problem with the directory', 'si-contact-form') .' /captcha-secureimage/captcha-temp/. ';
+             echo __('There is a problem with the directory', 'si-contact-form') .' /captcha/temp/. ';
              echo __('The directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form').'. ';
              echo __('Permissions are: ', 'si-contact-form');
              echo ' ';
@@ -1670,8 +1671,8 @@ foreach ($name_type_array as $k => $v) {
 <br />
 <br />
 
-<strong><?php _e('Extra Fields:', 'si-contact-form'); ?></strong><br />
-       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_extra_fields_tip');"><?php _e('Click here to see instructions for extra fields.', 'si-contact-form'); ?></a>
+<strong><?php _e('Extra Fields:', 'si-contact-form'); ?></strong>
+       <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_extra_fields_tip');"><h3><?php _e('Click here to see instructions for extra fields.', 'si-contact-form'); ?></a></h3>
        <div style="text-align:left; display:none" id="si_contact_extra_fields_tip">
        <br />
 <strong><?php _e('Instructions for how to use Extra Fields:', 'si-contact-form'); ?></strong>
@@ -1729,16 +1730,7 @@ foreach ($name_type_array as $k => $v) {
        </blockquote>
 </div>
 
- <br />
 
- <label for="si_contact_max_fields"><?php _e('Number of available extra fields', 'si-contact-form'); ?>:</label>
- <input name="si_contact_max_fields" id="si_contact_max_fields" type="text" onclick="return alert('<?php _e('Caution: This setting changes all forms. Increase the number as needed, but make sure you do not change to a lower number than what is needed for any of your forms.', 'si-contact-form'); ?>')" value="<?php echo absint($si_contact_gb['max_fields']);  ?>" size="3" />
- <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_max_fields_tip');"><?php _e('help', 'si-contact-form'); ?></a>
- <div style="text-align:left; display:none" id="si_contact_max_fields_tip">
-   <?php _e('Caution: This setting changes all forms. Increase the number as needed, but make sure you do not change to a lower number than what is needed for any of your forms.', 'si-contact-form'); ?>
- </div>
-
- <br />
 
       <?php
 $field_type_array = array(
@@ -1760,7 +1752,7 @@ $field_type_array = array(
 'fieldset-close' => $this->ctf_output_string(__('fieldset(box-close)', 'si-contact-form')),
 );
       // optional extra fields
-      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+      for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
       ?>
       <fieldset style="padding:4px; margin:4px;">
         <legend style="padding:4px;"><b><?php echo sprintf( __('Extra field %d', 'si-contact-form'),$i);?></b></legend>
@@ -1818,6 +1810,16 @@ foreach ($field_type_array as $k => $v) {
       <?php
       } // end foreach
       ?>
+
+ <br />
+
+ <label for="si_contact_max_fields"><?php _e('Number of available extra fields', 'si-contact-form'); ?>:</label>
+ <input name="si_contact_max_fields" id="si_contact_max_fields" type="text" onclick="return alert('<?php _e('Caution: Increase the number of extra fields as needed, but make sure you do not change to a lower number than what is being used on this form.', 'si-contact-form'); ?>')" value="<?php echo absint($si_contact_opt['max_fields']);  ?>" size="3" />
+ <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_max_fields_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+ <div style="text-align:left; display:none" id="si_contact_max_fields_tip">
+   <?php _e('Caution: Increase the number of extra fields as needed, but make sure you do not change to a lower number than what is being used on this form.', 'si-contact-form'); ?>
+ </div>
+
 <br />
       <input name="si_contact_ex_fields_after_msg" id="si_contact_ex_fields_after_msg" type="checkbox" <?php if( $si_contact_opt['ex_fields_after_msg'] == 'true' ) echo 'checked="checked"'; ?> />
       <label for="si_contact_ex_fields_after_msg"><?php _e('Move extra fields to after the Message field.', 'si-contact-form'); ?></label>

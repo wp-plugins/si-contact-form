@@ -217,9 +217,9 @@ You can find this setting on the contact form admin settings page.
     <?php print_status($gd_support && $gd_info['GIF Create Support']); ?>
   </li>
    <li>
-    <strong>Directory /captcha-temp/</strong>
+    <strong>Directory /captcha/temp/</strong>
 			<?php
-            $check_this_dir = '../captcha-temp';
+            $check_this_dir = '../temp';
             if(is_writable($check_this_dir)) {
 				echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
 			} else if(!file_exists($check_this_dir)) {

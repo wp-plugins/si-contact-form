@@ -282,7 +282,7 @@ $captcha_code  = '';
 // optional extra fields
 // capture query string vars
 $have_attach = '';
-for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
    if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
       ${'ex_field'.$i} = '';
       ${'si_contact_error_ex_field'.$i} = '';
@@ -1161,6 +1161,7 @@ function si_contact_get_options($form_num) {
          'subject_type' => 'required',
          'message_type' => 'required',
          'preserve_space_enable' => 'false',
+         'max_fields' => $si_contact_gb_defaults['max_fields'],
          'double_email' => 'false',
          'name_case_enable' => 'false',
          'sender_info_enable' => 'true',
@@ -1277,11 +1278,12 @@ function si_contact_get_options($form_num) {
   );
 
    // optional extra fields
-  $si_contact_max_fields = ( isset($_POST['si_contact_max_fields']) && is_numeric($_POST['si_contact_max_fields']) ) ? $_POST['si_contact_max_fields'] : $si_contact_gb_defaults['max_fields'];
-  if ($si_contact_gb = get_option("si_contact_form_gb")) { // initialize new
-   $si_contact_max_fields = $si_contact_gb['max_fields'];
-   unset($si_contact_gb);
+  $si_contact_max_fields = $si_contact_gb_defaults['max_fields'];
+  if ($si_contact_opt = get_option("si_contact_form$form_num")) { // when not in admin
+     if (isset($si_contact_opt['max_fields'])) // use previous setting if it is set
+     $si_contact_max_fields = $si_contact_opt['max_fields'];
   }
+
   for ($i = 1; $i <= $si_contact_max_fields; $i++) { // initialize new
         $si_contact_option_defaults['ex_field'.$i.'_default'] = '0';
         $si_contact_option_defaults['ex_field'.$i.'_default_text'] = '';
@@ -1336,6 +1338,11 @@ function si_contact_get_options($form_num) {
   // get the options from the database
   $si_contact_opt = get_option("si_contact_form$form_num");
 
+  if (!isset($si_contact_opt['max_fields'])) {  // updated from version < 3.0.3
+          $si_contact_opt['max_fields'] = $si_contact_gb['max_fields'];
+          update_option("si_contact_form$form_num", $si_contact_opt);
+  }
+
   // array merge incase this version has added new options
   $si_contact_opt = array_merge($si_contact_option_defaults, $si_contact_opt);
 
@@ -1351,19 +1358,31 @@ function si_contact_get_options($form_num) {
   // new field type defaults on version 2.6.3
   if ( !isset($si_contact_gb['2.6.3']) ) {
           // optional extra fields
-    for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+    for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] != 'radio' && $si_contact_opt['ex_field'.$i.'_type'] != 'select' ) {
                 $si_contact_opt['ex_field'.$i.'_default'] = '0';
         }
         if ($si_contact_opt['ex_field'.$i.'_label'] == '') {
           $si_contact_opt['ex_field'.$i.'_default'] = '0';
+          $si_contact_opt['ex_field'.$i.'_default_text'] = '';
+          $si_contact_opt['ex_field'.$i.'_req'] = 'false';
+          $si_contact_opt['ex_field'.$i.'_label'] = '';
+          $si_contact_opt['ex_field'.$i.'_type'] = 'text';
+          $si_contact_opt['ex_field'.$i.'_max_len'] = '';
+          $si_contact_opt['ex_field'.$i.'_label_css'] = '';
+          $si_contact_opt['ex_field'.$i.'_input_css'] = '';
+          $si_contact_opt['ex_field'.$i.'_attributes'] = '';
+          $si_contact_opt['ex_field'.$i.'_regex'] = '';
+          $si_contact_opt['ex_field'.$i.'_regex_error'] = '';
+          $si_contact_opt['ex_field'.$i.'_notes'] = '';
+          $si_contact_opt['ex_field'.$i.'_notes_after'] = '';
         }
     }
     update_option("si_contact_form", $si_contact_opt);
     for ($i = 2; $i <= $si_contact_gb['max_forms']; $i++) {
        // get the options from the database
        $si_contact_opt{$i} = get_option("si_contact_form$i");
-       for ($f = 1; $f <= $si_contact_gb['max_fields']; $f++) {
+       for ($f = 1; $f <= $si_contact_opt['max_fields']; $f++) {
          if ($si_contact_opt{$i}['ex_field'.$f.'_label'] != '' && $si_contact_opt{$i}['ex_field'.$f.'_type'] != 'radio' && $si_contact_opt{$i}['ex_field'.$f.'_type'] != 'select' ) {
                 $si_contact_opt{$i}['ex_field'.$f.'_default'] = '0';
          }
@@ -1610,12 +1629,12 @@ function get_captcha_url_cf() {
   $site_uri = parse_url(get_option('home'));
   $home_uri = parse_url(get_option('siteurl'));
 
-  $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
+  $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha';
 
   if ($site_uri['host'] == $home_uri['host']) {
-      $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha-secureimage';
+      $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha';
   } else {
-      $captcha_url_cf  = get_option( 'home' ) . '/'.PLUGINDIR.'/si-contact-form/captcha-secureimage';
+      $captcha_url_cf  = get_option( 'home' ) . '/'.PLUGINDIR.'/si-contact-form/captcha';
   }
   // set the type of request (SSL or not)
   if ( getenv('HTTPS') == 'on' ) {
@@ -1689,7 +1708,7 @@ function si_contact_add_script(){
     if (!$ctf_add_script)
       return;
 
-   wp_register_script('si_contact_form', plugins_url('captcha-secureimage/ctf_captcha.js', __FILE__), array(), '1.0', true);
+   wp_register_script('si_contact_form', plugins_url('captcha/ctf_captcha.js', __FILE__), array(), '1.0', true);
    wp_print_scripts('si_contact_form');
 }
 
@@ -1717,11 +1736,11 @@ if (class_exists("siContactForm")) {
 if (isset($si_contact_form)) {
 
   $captcha_url_cf  = $si_contact_form->get_captcha_url_cf();
-  $captcha_path_cf = WP_PLUGIN_DIR . '/si-contact-form/captcha-secureimage';
+  $captcha_path_cf = WP_PLUGIN_DIR . '/si-contact-form/captcha';
 
   // only used for the no-session captcha setting
-  $ctf_captcha_url = $captcha_url_cf  . '/captcha-temp/';
-  $ctf_captcha_dir = $captcha_path_cf . '/captcha-temp/';
+  $ctf_captcha_url = $captcha_url_cf  . '/temp/';
+  $ctf_captcha_dir = $captcha_path_cf . '/temp/';
   $si_contact_form->si_contact_init_temp_dir($ctf_captcha_dir);
 
   // si_contact initialize options

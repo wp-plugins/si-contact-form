@@ -38,7 +38,7 @@ if ( isset($_GET['prefix']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['prefix
    //set some settings
    $img->nosession = true;
    $img->prefix = $prefix;
-   $img->captcha_path = getcwd() . '/captcha-temp/';
+   $img->captcha_path = getcwd() . '/temp/';
    if(file_exists($img->captcha_path . $prefix . '.php') && is_readable( $img->captcha_path . $prefix . '.php' ) ) {
        include( $img->captcha_path . $prefix . '.php' );
        $img->captcha_word = $captcha_word;

@@ -312,7 +312,8 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
 
 if ($si_contact_opt['ex_fields_after_msg'] != 'true') {
      // are there any optional extra fields/
-     for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+
+     for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
            // include the code to display extra fields
            include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-ex-fields.php');
@@ -398,7 +399,7 @@ $string .= '
 
 if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
      // are there any optional extra fields/
-     for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+     for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '') {
            // include the code to display extra fields
            include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-ex-fields.php');

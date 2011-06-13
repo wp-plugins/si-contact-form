@@ -10,7 +10,7 @@ http://www.642weather.com/weather/scripts.php
       $ex_fieldset = 0;
       $printed_tooltip_filetypes = 0;
       $ex_loop_cnt = 1;
-      for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+      for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '' || $si_contact_opt['ex_field'.$i.'_type'] == 'fieldset-close') {
            $ex_req_field_ind = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $req_field_ind : '';
            $ex_req_field_aria = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $this->ctf_aria_required : '';
@@ -637,7 +637,7 @@ $string .= '
 
  // how many extra fields are date fields?
      $ex_date_found = array();
-     for ($i = 1; $i <= $si_contact_gb['max_fields']; $i++) {
+     for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
         if ($si_contact_opt['ex_field'.$i.'_label'] != '' && $si_contact_opt['ex_field'.$i.'_type'] == 'date') {
           $ex_date_found[$i] = $i;
         }
