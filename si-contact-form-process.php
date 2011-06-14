@@ -994,9 +994,9 @@ if ($have_attach){
 	         $subj = str_replace('['.$key.']',$data,$subj);
              $msg = str_replace('['.$key.']',$data,$msg);
            }
-           $subj = str_replace('['.$key.']','',$subj); // remove empty tags
-           $msg = str_replace('['.$key.']','',$msg);
        }
+       $subj = preg_replace('/(\[ex_field)(\d+)(\])/','',$subj); // remove empty ex_field tags
+       $msg = preg_replace('/(\[ex_field)(\d+)(\])/','',$msg);   // remove empty ex_field tags
        $subj = str_replace('[form_label]',$posted_form_name,$subj);
 
        // wordwrap email message

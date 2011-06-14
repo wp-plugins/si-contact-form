@@ -188,6 +188,7 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 - "Number of available extra fields" setting is now for each form # instead of all forms.
 - CAPTCHA audio feature removed.
 - Misc. admin Fixes.
+- Another fix for empty autoresponder field tags were showing.
 
 = 3.0.2 =
 - (08 Jun 2011) - Fixed error: Undefined variable: securimage_url 
