@@ -507,9 +507,9 @@ function si_contact_export_convert($posted_data,$rename,$ignore,$add,$return = '
     // $posted_data is an array of the form name value pairs
     foreach ($posted_data as $key => $value) {
 	  if( is_string($value) ) {
-         $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
          if(in_array($key, $ignore_fields))
             continue;
+         $key = ( isset($rename_fields[$key]) ) ? $rename_fields[$key] : $key;
          if($return == 'array')
 		    $posted_data_export[$key] = $value;
          else
