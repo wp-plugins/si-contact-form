@@ -765,7 +765,7 @@ if ($this->captchaCheckRequires()) {
 // the captch html
 
  $string = '
-<div '.$this->ctf_title_style.'>
+<div '.$this->ctf_title_style.'>&nbsp;</div>
  <div ';
 $this->ctf_captcha_div_style_sm = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_sm']);
 $this->ctf_captcha_div_style_m = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_m']);
@@ -872,7 +872,7 @@ $string .= '>
          $string .=  ' onclick="this.blur();" /></a>
    </div>
    </div>
-</div>
+
       <div '.$this->ctf_title_style.'>
                 <label for="si_contact_captcha_code'.$form_id_num.'">';
      $string .= ($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form').':';
@@ -1225,10 +1225,10 @@ function si_contact_get_options($form_num) {
          'field_div_style' => 'text-align:left;',
          'error_style' => 'text-align:left; color:red;',
          'select_style' => 'text-align:left;',
-         'captcha_div_style_sm' => 'width:175px; height:50px; padding-top:5px;',
-         'captcha_div_style_m' => 'width:250px; height:65px; padding-top:5px;',
+         'captcha_div_style_sm' => 'width:175px; height:50px; padding-top:2px;',
+         'captcha_div_style_m' => 'width:250px; height:65px; padding-top:2px;',
          'captcha_input_style' => 'text-align:left; margin:0; width:50px;',
-         'submit_div_style' => 'text-align:left; padding-top:8px;',
+         'submit_div_style' => 'text-align:left; padding-top:2px;',
          'button_style' => 'cursor:pointer; margin:0;',
          'reset_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'font-size:x-small; font-weight:normal; padding-top:5px;',
