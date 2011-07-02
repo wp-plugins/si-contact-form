@@ -937,7 +937,7 @@ function ctf_stripslashes($string) {
 function ctf_output_string($string) {
     $string = str_replace('&', '&amp;', $string);
     $string = str_replace('"', '&quot;', $string);
-    $string = str_replace("'", '&apos;', $string);
+    $string = str_replace("'", '&#39;', $string);
     $string = str_replace('<', '&lt;', $string);
     $string = str_replace('>', '&gt;', $string);
     return $string;

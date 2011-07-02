@@ -184,6 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fix for apos showing for single quotes on IE7
+
 = 3.0.3 =
 - (16 Jun 2011) - Tested compatible with WP 3.2 Beta 2
 - "Number of available extra fields" setting is now for each form # instead of all forms.

@@ -518,7 +518,7 @@ if ($si_contact_opt['php_mailer_enable'] == 'wordpress') {
     foreach($optionarray_update as $key => $val) {
            $optionarray_update[$key] = str_replace('&lt;','<',$val);
            $optionarray_update[$key] = str_replace('&gt;','>',$val);
-           $optionarray_update[$key] = str_replace('&apos;',"'",$val);
+           $optionarray_update[$key] = str_replace('&#39;',"'",$val);
            $optionarray_update[$key] = str_replace('&quot;','"',$val);
            $optionarray_update[$key] = str_replace('&amp;','&',$val);
     }
