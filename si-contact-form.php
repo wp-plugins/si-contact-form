@@ -765,7 +765,7 @@ if ($this->captchaCheckRequires()) {
 // the captch html
 
  $string = '
-<div '.$this->ctf_title_style.'>&nbsp;</div>
+<div '.$this->ctf_title_style.'> </div>
  <div ';
 $this->ctf_captcha_div_style_sm = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_sm']);
 $this->ctf_captcha_div_style_m = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_m']);
