@@ -184,7 +184,10 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Fix for apos showing for single quotes on IE7
+= 3.0.3.1 =
+- (05 Jul 2011) - Tested / fixed to be compatible with WP 3.2
+- Fix for `&apos` entity showing for single quotes on IE7, IE8
+- Fix for CAPTCHA input field out of position on IE7 with labels left CSS setting.
 
 = 3.0.3 =
 - (16 Jun 2011) - Tested compatible with WP 3.2 Beta 2
