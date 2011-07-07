@@ -184,6 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+- Fix, added missing 00 to 24 hour time select.
+
 = 3.0.3.1 =
 - (05 Jul 2011) - Tested / fixed to be compatible with WP 3.2
 - Fix for `&apos` entity showing for single quotes on IE7, IE8

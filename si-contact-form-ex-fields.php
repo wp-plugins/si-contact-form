@@ -573,7 +573,7 @@ $exf_opts_array = array();
 $selected = '';
 // hours
 $tf_hours = ($si_contact_opt['time_format'] == '24') ? '23' : '12';
-for ($ii = 1; $ii <= $tf_hours; $ii++) {
+for ($ii = ($si_contact_opt['time_format'] == '24') ? 0 : 1; $ii <= $tf_hours; $ii++) {
  $ii = sprintf("%02d",$ii);
  if (${'ex_field'.$i.'h'} != '') {
     if (${'ex_field'.$i.'h'} == "$ii") {
