@@ -1263,7 +1263,7 @@ function si_contact_get_options($form_num) {
          'tooltip_filetypes' => '',
          'tooltip_filesize' => '',
          'enable_reset' => 'false',
-         'enable_credit_link' => 'true',
+         'enable_credit_link' => 'false',
          'error_contact_select' => '',
          'error_name'           => '',
          'error_email'          => '',
