@@ -1140,7 +1140,7 @@ function si_contact_get_options($form_num) {
       $si_contact_gb_defaults = array(
          'donated' => 'false',
          'max_forms' => '4',
-         'max_fields' => '8',
+         'max_fields' => '4',
          'captcha_disable_session' => 'true',
       );
 
