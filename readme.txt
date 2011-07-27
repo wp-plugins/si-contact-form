@@ -184,6 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 3.0.3.2 =
+- (27 Jul 2011) - Fixed medium XSS HTB23036 - as advised by High-Tech Bridge SA Security Research Lab.
 - Fix, added missing 00 to 24 hour time select.
 
 = 3.0.3.1 =
