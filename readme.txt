@@ -184,7 +184,8 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
-- Fix default text could not be 0.
+= 3.0.4 =
+- (09 Oct 2011) - Fix default text could not be 0.
 - Fix HTML validation with date field.
 - Fix rows and cols extra field atrributes.
 - Fix javascript console error on date calendar popup.

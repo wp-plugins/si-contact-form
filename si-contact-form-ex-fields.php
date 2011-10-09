@@ -16,7 +16,7 @@ http://www.642weather.com/weather/scripts.php
            $ex_req_field_aria = ($si_contact_opt['ex_field'.$i.'_req'] == 'true') ? $this->ctf_aria_required : '';
            if(!$si_contact_opt['ex_field'.$i.'_type'] ) $si_contact_opt['ex_field'.$i.'_type'] = 'text';
            if(!$si_contact_opt['ex_field'.$i.'_default'] ) $si_contact_opt['ex_field'.$i.'_default'] = '0';
-           if(!$si_contact_opt['ex_field'.$i.'_default_text'] ) $si_contact_opt['ex_field'.$i.'_default_text'] = '';
+           if(!isset($si_contact_opt['ex_field'.$i.'_default_text'] )) $si_contact_opt['ex_field'.$i.'_default_text'] = '';
            if(!$si_contact_opt['ex_field'.$i.'_max_len'] ) $si_contact_opt['ex_field'.$i.'_max_len'] = '';
            if(!$si_contact_opt['ex_field'.$i.'_label_css'] ) $si_contact_opt['ex_field'.$i.'_label_css'] = '';
            if(!$si_contact_opt['ex_field'.$i.'_input_css'] ) $si_contact_opt['ex_field'.$i.'_input_css'] = '';
@@ -55,7 +55,7 @@ http://www.642weather.com/weather/scripts.php
             if (${'ex_field'.$i} != '') // guery string can overrride
                  $value = ${'ex_field'.$i};
             $string .= '
-                <input type="hidden" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string($value) . '" />
+                <input type="hidden" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string($value) . '" />
 ';
            break;
            case 'password':
@@ -72,7 +72,8 @@ http://www.642weather.com/weather/scripts.php
                 <input '.$this->ctf_field_style.' type="password" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="' . $this->ctf_output_string(${'ex_field'.$i}) . '" '.$ex_req_field_aria.' ';
                 if($si_contact_opt['ex_field'.$i.'_max_len'] != '')
                   $string .=  ' maxlength="'.$si_contact_opt['ex_field'.$i.'_max_len'].'" ';
-                $string .= 'size="'.$ctf_field_size.'"';
+                if(strpos($si_contact_opt['ex_field'.$i.'_attributes'],'size')===false)
+                   $string .= 'size="'.$ctf_field_size.'"';
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '')
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
                 $string .= ' />
@@ -106,7 +107,8 @@ http://www.642weather.com/weather/scripts.php
                  $string .= '" '.$ex_req_field_aria.' ';
                 if($si_contact_opt['ex_field'.$i.'_max_len'] != '')
                   $string .= ' maxlength="'.$si_contact_opt['ex_field'.$i.'_max_len'].'" ';
-                $string .= 'size="'.$ctf_field_size.'"';
+                if(strpos($si_contact_opt['ex_field'.$i.'_attributes'],'size')===false)
+                   $string .= 'size="'.$ctf_field_size.'"';
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '')
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
                 $string .= ' />
@@ -129,7 +131,12 @@ http://www.642weather.com/weather/scripts.php
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error(${'si_contact_error_ex_field'.$i}).'
                 <textarea ';
          $string .= ($si_contact_opt['ex_field'.$i.'_input_css'] != '') ? $this->si_contact_convert_css($si_contact_opt['ex_field'.$i.'_input_css']) : $this->ctf_field_style;
-         $string .= ' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" '.$ex_req_field_aria.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'"';
+         $string .= ' id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" '.$ex_req_field_aria;
+         if(strpos($si_contact_opt['ex_field'.$i.'_attributes'],'cols')===false)
+            $string .= ' cols="'.absint($si_contact_opt['text_cols']).'"';
+         if(strpos($si_contact_opt['ex_field'.$i.'_attributes'],'rows')===false)
+            $string .= ' rows="'.absint($si_contact_opt['text_rows']).'"';
+
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '')
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
                 $string .= '>';
@@ -643,9 +650,14 @@ $string .= '
         }
      }
      if (isset($ex_date_found) && count($ex_date_found) > 0 ) {
-     $string .=   '
-<link rel="stylesheet" type="text/css" href="'.WP_PLUGIN_URL.'/si-contact-form/date/ctf_epoch_styles.css?'.time().'" />
-<script type="text/javascript">
+     $string .=
+/*'<link rel="stylesheet" type="text/css" href="'.WP_PLUGIN_URL.'/si-contact-form/date/ctf_epoch_styles.css?'.time().'" />*/
+'<script type="text/javascript">
+	var ctf_css = document.createElement(\'link\');
+	ctf_css.rel = \'stylesheet\';
+	ctf_css.type = \'text/css\';
+	ctf_css.href = \'' . plugins_url('date/ctf_epoch_styles.css?'.time(), __FILE__) . '\';
+	document.getElementsByTagName(\'head\')[0].appendChild(ctf_css);
 	var ctf_daylist = new Array( \''.__('Su', 'si-contact-form').'\',\''.__('Mo', 'si-contact-form').'\',\''.__('Tu', 'si-contact-form').'\',\''.__('We', 'si-contact-form').'\',\''.__('Th', 'si-contact-form').'\',\''.__('Fr', 'si-contact-form').'\',\''.__('Sa', 'si-contact-form').'\',\''.__('Su', 'si-contact-form').'\',\''.__('Mo', 'si-contact-form').'\',\''.__('Tu', 'si-contact-form').'\',\''.__('We', 'si-contact-form').'\',\''.__('Th', 'si-contact-form').'\',\''.__('Fr', 'si-contact-form').'\',\''.__('Sa', 'si-contact-form').'\' );
 	var ctf_months_sh = new Array( \''.__('Jan', 'si-contact-form').'\',\''.__('Feb', 'si-contact-form').'\',\''.__('Mar', 'si-contact-form').'\',\''.__('Apr', 'si-contact-form').'\',\''.__('May', 'si-contact-form').'\',\''.__('Jun', 'si-contact-form').'\',\''.__('Jul', 'si-contact-form').'\',\''.__('Aug', 'si-contact-form').'\',\''.__('Sep', 'si-contact-form').'\',\''.__('Oct', 'si-contact-form').'\',\''.__('Nov', 'si-contact-form').'\',\''.__('Dec', 'si-contact-form').'\' );
 	var ctf_monthup_title = \''.__('Go to the next month', 'si-contact-form').'\';

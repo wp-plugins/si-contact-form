@@ -676,7 +676,7 @@ if ($have_attach){
                         $msg .= $this->make_bold($si_contact_opt['ex_field'.$i.'_label']).$php_eol.${'ex_field'.$i}.$php_eol.$php_eol;
                         $posted_data["ex_field$i"] = ${'ex_field'.$i};
                         if ($si_contact_opt['ex_field'.$i.'_type'] == 'email' && $email == '' && $si_contact_opt['email_type'] == 'not_available') {
-                          // admin set the standard email field 'not_avaulable' then added an email extra field type.
+                          // admin set the standard email field 'not_available' then added an email extra field type.
                           // lets capture that as the 'from_email'.
                            $email = ${'ex_field'.$i};
                            $this->ctf_forbidifnewlines($email);

@@ -25,9 +25,7 @@ if ($this->si_contact_error)
 
 $string .= '
 <!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - begin - FastSecureContactForm.com -->
-<a name="FSContact'.$form_id_num.'" id="FSContact'.$form_id_num.'"></a>
-<div '.$this->ctf_form_style.'>
-';
+<div id="FSContact'.$form_id_num.'" '.$this->ctf_form_style.'>';
 
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
