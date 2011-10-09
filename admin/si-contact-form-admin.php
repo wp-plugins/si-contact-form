@@ -481,7 +481,7 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 
 <?php
 
-echo 'post var count: ' . count($_POST).'<br />';
+// for testing echo 'post var count: ' . count($_POST).'<br />';
 
 $av_fld_arr  = array(); // used to show available field tags this form
 $av_fld_subj_arr  = array(); // used to show available field tags for this form  subject
