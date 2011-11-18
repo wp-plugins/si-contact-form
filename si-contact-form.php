@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.0.4
+Version: 3.0.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.0.4';
+$ctf_version = '3.0.5';
 
 /*  Copyright (C) 2008-2011 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
@@ -573,12 +573,13 @@ function si_contact_init_temp_dir($dir) {
 } // end function si_contact_init_temp_dir
 
 // needed for emptying temp directories for attachments and captcha session files
-function si_contact_clean_temp_dir($dir, $minutes = 60) {
+function si_contact_clean_temp_dir($dir, $minutes = 30) {
     // deletes all files over xx minutes old in a temp directory
   	if ( ! is_dir( $dir ) || ! is_readable( $dir ) || ! is_writable( $dir ) )
 		return false;
 
 	$count = 0;
+    $list = array();
 	if ( $handle = @opendir( $dir ) ) {
 		while ( false !== ( $file = readdir( $handle ) ) ) {
 			if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == 'index.php')
@@ -588,9 +589,20 @@ function si_contact_clean_temp_dir($dir, $minutes = 60) {
 			if ( ( $stat['mtime'] + $minutes * 60 ) < time() ) {
 			    @unlink( $dir . $file );
 				$count += 1;
-			}
+			} else {
+               $list[$stat['mtime']] = $file;
+            }
 		}
 		closedir( $handle );
+        // purge xx amount of files based on age to limit a DOS flood attempt. Oldest ones first, limit 500
+        if( isset($list) && count($list) > 499) {
+          ksort($list);
+          $ct = 1;
+          foreach ($list as $k => $v) {
+            if ($ct > 499) @unlink( $dir . $v );
+            $ct += 1;
+          }
+       }
 	}
 	return $count;
 }
@@ -788,7 +800,7 @@ if($si_contact_opt['captcha_no_trans'] == 'true') $securimage_show_url .= 'no_tr
 
 if($capt_disable_sess) {
      // clean out old captcha no session temp files
-    $this->si_contact_clean_temp_dir($ctf_captcha_dir, 30);
+    $this->si_contact_clean_temp_dir($ctf_captcha_dir);
     // pick new prefix token
     $prefix_length = 16;
     $prefix_characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';

@@ -184,6 +184,10 @@ For more help... [See the official FAQ at FastSecureContactForm.com](http://www.
 
 == Changelog ==
 
+= 3.0.5 =
+- (18 Nov 2011) - Harden security for CAPTCHA by limiting the number of created cache files. This condition could only be realized with a script. Found by [Brian St. Pierre](http://bstpierre.org/).
+- HTML validation fix, added unique id for submit and reset buttons.
+
 = 3.0.4 =
 - (09 Oct 2011) - Fix default text could not be 0.
 - Fix HTML validation with date field.
