@@ -435,6 +435,16 @@ $string .= '
      $string .= addslashes(__('Do you really want to reset the form?', 'si-contact-form'));
      $string .= '\')"  />'."\n";
     }
+	
+	/* --- vCita Scheduler Display - Start --- */
+    if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true') {
+		$vcita_set_meeting_style = $this->si_contact_convert_css($si_contact_opt['vcita_set_meeting_style']);
+		
+		// Add tracking for the button impression
+		$string .= '<img style="width:1px;height:1px" src="http://www.vcita.com/tr_pics/wp-fscf.gif?type=set-meeting&expert_id='.$si_contact_opt['vcita_uid'].'" />';
+		$string .= 'or <input type="button" onclick="vcita_set_meeting('.$form_id_num.', \''.$si_contact_opt['vcita_uid'].'\');return false;" value="Set a meeting" '.$vcita_set_meeting_style.'></input>';
+	}
+	/* --- vCita Scheduler Display - End --- */
 $string .= '</div>
 ';
 if ($si_contact_opt['border_enable'] == 'true') {

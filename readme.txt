@@ -11,7 +11,7 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 == Description ==
 
-This plugin allows a webmaster to easily create and add contact forms to WordPress. The contact form will let the user send emails to a site's admin. An administration panel is present, where the webmaster can create and preview unlimited forms. 
+This plugin allows a webmaster to easily create and add contact forms to WordPress. The contact form will let the user send emails to a site's admin, and also send a meeting request to talk over phone or video. An administration panel is present, where the webmaster can create and preview unlimited forms. 
 
 Features a super easy admin panel, multi-form feature, autoresponder, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
 
@@ -48,6 +48,16 @@ Features:
  * Pre-fill in form fields from a URL query string. [See FAQ](http://www.fastsecurecontactform.com/query-string-parameters)
  * Save emails to the WordPress database, or export to CSV or Excel. [See FAQ](http://www.fastsecurecontactform.com/save-to-database)
  * I18n language translation support. [See FAQ](http://www.fastsecurecontactform.com/how-to-translate)
+ 
+Scheduling, Meeting and Payments via vCita:
+-------------------------------------------
+ * Offer visitors to Schedule Meetings as part of your Contact Form
+ * Set your availability and synchronize your contact form with your Google calendar
+ * Meet online with web-based video meeting room
+ * Meet over phone conference
+ * Record your meetings
+ * Collect payments and bill for your time and services
+ * Send a payment request once a meeting is completed or secure a fee in advance according to your hourly rate
 
 Security:
 --------
@@ -110,7 +120,6 @@ Requirements/Restrictions:
 = I just installed this and do not get any email from it, what could be wrong? =
 
 [See FAQ page: How to troubleshoot email delivery](http://www.fastsecurecontactform.com/email-does-not-send)
-
 
 = Is this plugin available in other languages? =
 
@@ -182,7 +191,20 @@ No setting necessary, it just works.
 
 For more help... [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
 
+= What is the "Set a meeting" option I have in my form? = 
+
+You can extend your contact form to let your users to Schedule Meetings based on your availability, meet online with web-based video, talk over phone conference, and collect payments for your time and services.
+
+You can enable this option in "Accept Meeting Requests" section at contact form settings page.
+You can then configure your meeting preferences, set your availability and more by activating your free vCita account (again at the contact form settings).
+
+You can learn more about vCita at [www.vcita.com](http://www.vcita.com?invite=FSContact)
+If you have any question about the Schedule Meetings feature please contact support@vcita.com
+
 == Changelog ==
+
+= 3.1 =
+- (06 Dec 2011) - Add "Set a meeting" option to your contact form using vCita Meeting Scheduler. Meet users over video or phone, and collect payment for services. 
 
 = 3.0.5 =
 - (18 Nov 2011) - Harden security for CAPTCHA by limiting the number of created cache files. This condition could only be realized with a script. Found by [Brian St. Pierre](http://bstpierre.org/).

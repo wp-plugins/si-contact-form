@@ -146,6 +146,8 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'max_forms' =>    ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb['max_forms'],
          'max_fields' =>  $si_contact_gb['max_fields'],
          'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
+         'vcita_auto_install' => trim($_POST['si_contact_vcita_auto_install']), /* --- vCita Global Settings --- */
+         'vcita_version' => '1.0',
          );
 
    if(isset($si_contact_gb['2.6.3'] ))
@@ -282,6 +284,12 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'error_captcha_blank'  => trim($_POST['si_contact_error_captcha_blank']),
          'error_captcha_wrong'  => trim($_POST['si_contact_error_captcha_wrong']),
          'error_correct'        => trim($_POST['si_contact_error_correct']),
+         'vcita_enabled'        => (isset($_POST['si_contact_vcita_enable_meeting_scheduler']) ) ? 'true' : 'false', /* --- vCita Parameters --- */
+         'vcita_email'		=> trim($_POST['si_contact_vcita_email']),
+         'vcita_confirm_token'	=> trim($_POST['si_contact_vcita_confirm_token']),
+         'vcita_initialized'	=> trim($_POST['si_contact_vcita_initialized']),
+         'vcita_uid'	=> trim($_POST['si_contact_vcita_uid']),
+         'vcita_set_meeting_style' =>    ( trim($_POST['si_contact_vcita_set_meeting_style']) != '' ) ? trim($_POST['si_contact_vcita_set_meeting_style']) : $si_contact_option_defaults['vcita_set_meeting_style'],
   );
 
     // optional extra fields
@@ -363,6 +371,14 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
            $optionarray_update[$key] = str_replace('&amp;','&',$val);
     }
 
+	/* --- vCita Update details - Start --- */
+	
+	if ($optionarray_update['vcita_enabled'] == 'true') {
+	    $optionarray_update = $this->vcita_generate_or_validate_user($optionarray_update);
+	}
+	
+	/* --- vCita Update details - End --- */
+	
     // save updated options to the database
     update_option("si_contact_form$form_num", $optionarray_update);
 
@@ -1788,6 +1804,59 @@ foreach ($time_format_array as $k => $v) {
       <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
+<?php /* --- vCita Admin Display - Start --- */ ?>
+<div class="form-tab"><?php echo __('Meeting Scheduler - by vCita:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
+<div class="clear"></div>
+
+<fieldset>
+	<div style="max-width:600px;">
+		<div>Extend your contact form and let your users Schedule Meetings based on your availability.<br/>
+		   You can meet users with web-based video, talk over phone conference, set a location for meetings <br/>
+		   and collect payments for your time and services.<br/>
+		   <b>To learn more</b>, <a href="http://www.vcita.com/?autoplay=1&no_redirect=true&invite=wp-fscf" target="_blank">Take a Tour</a>
+		</div>
+
+		<div style="width:400px;float:left;">
+			<?php $this->vcita_add_notification($si_contact_opt); ?>
+			<input name="si_contact_vcita_confirm_token" type="hidden" value="<?php echo $si_contact_opt['vcita_confirm_token']; ?>" />
+			<input name="si_contact_vcita_initialized" type="hidden" value="<?php echo $si_contact_opt['vcita_initialized']; ?>" />
+			<input name="si_contact_vcita_uid" type="hidden" value="<?php echo $si_contact_opt['vcita_uid']; ?>" />
+			<input name="si_contact_vcita_auto_install" type="hidden" value="<?php echo $si_contact_gb['vcita_auto_install']; ?>" />
+
+
+			<input name="si_contact_vcita_enable_meeting_scheduler" id="si_contact_vcita_enable_meeting_scheduler" type="checkbox" <?php if ( $si_contact_opt['vcita_enabled'] != 'false' ) echo ' checked="checked" '; ?> />
+			<label for="si_contact_vcita_enable_meeting_scheduler"><?php _e('Accept Meeting Requests via vCita', 'si-contact-form') ?></label>
+			<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_vcita_enable_meeting_scheduler_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+			<div style="text-align:left; display:none" id="si_contact_vcita_enable_meeting_scheduler_tip">
+				<?php _e('Check this option to add "Set a Meeting" button to your Contact Form, and let users send meeting requests', 'si-contact-form'); ?>
+			</div>
+
+			<br/>
+
+			<label for="si_contact_vcita_email"><?php _e('Override Email Address:', 'si-contact-form') ?></label>
+			<input name="si_contact_vcita_email" id="si_contact_vcita_email" type="text" value="<?php echo $si_contact_opt['vcita_email']; ?>"  />
+			<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_vcita_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+			<div style="text-align:left; display:none" id="si_contact_vcita_email_tip">
+				<?php _e('You can set a different email address for meeting requests than the one you set for your contact form messages', 'si-contact-form'); ?>
+			</div>
+
+			<br/>
+			<br/>
+
+			<?php $this->vcita_add_config($si_contact_opt); ?>
+		</div>
+		<div style="float:left;max-width:155px;">
+			<img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/vcita/vcita_icons.png" height="178px" width="151px" />
+		</div>
+	</div>
+</fieldset>
+
+ <p class="submit">
+      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+    </p>
+
+<?php /* --- vCita Admin Display - End --- */ ?>
+
 <div class="form-tab"><?php echo __('Redirect:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
 <div class="clear"></div>
 <fieldset>
@@ -2244,7 +2313,11 @@ foreach ($silent_send_array as $k => $v) {
         <label for="si_contact_submit_div_style"><?php _e('CSS style for Submit DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_submit_div_style" id="si_contact_submit_div_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['submit_div_style']);  ?>" size="60" /><br />
         <label for="si_contact_button_style"><?php _e('CSS style for Submit button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['button_style']);  ?>" size="60" /><br />
         <label for="si_contact_reset_style"><?php _e('CSS style for Reset button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_reset_style" id="si_contact_reset_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['reset_style']);  ?>" size="60" /><br />
-        <label for="si_contact_powered_by_style"><?php _e('CSS style for "Powered by" message on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_powered_by_style" id="si_contact_powered_by_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['powered_by_style']);  ?>" size="60" />
+        <label for="si_contact_powered_by_style"><?php _e('CSS style for "Powered by" message on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_powered_by_style" id="si_contact_powered_by_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['powered_by_style']);  ?>" size="60" /><br/>
+		
+		<?php /* --- vCita CSS Style - Start --- */ ?>
+        <label for="si_contact_vcita_set_meeting_style"><?php _e('CSS style for vCita Meeting Scheduler', 'si-contact-form'); ?>:</label><input name="si_contact_vcita_set_meeting_style" id="si_contact_vcita_set_meeting_style" type="text" value="<?php echo $this->ctf_output_string($si_contact_opt['vcita_set_meeting_style']);  ?>" size="90" />
+		<?php /* --- vCita CSS Style - End --- */ ?>
 <br />
 
        <label for="si_contact_field_size"><?php _e('Input Text Field Size', 'si-contact-form'); ?>:</label><input name="si_contact_field_size" id="si_contact_field_size" type="text" value="<?php echo absint($si_contact_opt['field_size']);  ?>" size="3" />
