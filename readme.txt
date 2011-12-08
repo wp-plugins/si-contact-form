@@ -203,8 +203,11 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+
 = 3.1 =
-- (06 Dec 2011) - Add "Set a meeting" option to your contact form using vCita Meeting Scheduler. Meet users over video or phone, and collect payment for services. 
+- (06 Dec 2011) - Add "Set a meeting" option to your contact form using vCita Meeting Scheduler. Meet users over video or phone, and collect payment for services.
+- Improved HTML code on message sent.
 
 = 3.0.5 =
 - (18 Nov 2011) - Harden security for CAPTCHA by limiting the number of created cache files. This condition could only be realized with a script. Found by [Brian St. Pierre](http://bstpierre.org/).
