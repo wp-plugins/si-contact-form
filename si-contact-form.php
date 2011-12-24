@@ -99,16 +99,16 @@ function si_contact_options_page() {
 function vcita_validate_initialized_user($form_num, $form_params, $auto_install) {
 
   // Check if a initializtion is required
-  if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') {
+  if ( $form_params['vcita_enabled'] == 'true' && (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') ) {
 
-    // New Install - Create the user 
+    // New Install - Create the user
     if ($auto_install == 'true') {
       $form_params = $this->vcita_generate_or_validate_user($form_params);
-      $form_params['vcita_enabled'] = 'true';
-		
+      //$form_params['vcita_enabled'] = 'true';
+
     } else {
 	  if ($this->vcita_check_expert_available($form_params)) {
-	   	$form_params['vcita_enabled'] =  'true';
+	   	//$form_params['vcita_enabled'] =  'true';
 	  }
 	  
 	  $form_params['vcita_initialized'] = 'true'; // Stop initialize if upgrade process
