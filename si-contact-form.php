@@ -99,16 +99,16 @@ function si_contact_options_page() {
 function vcita_validate_initialized_user($form_num, $form_params, $auto_install) {
 
   // Check if a initializtion is required
-  if ( $form_params['vcita_enabled'] == 'true' && (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') ) {
+  if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') {
 
     // New Install - Create the user
     if ($auto_install == 'true') {
       $form_params = $this->vcita_generate_or_validate_user($form_params);
-      //$form_params['vcita_enabled'] = 'true';
+      $form_params['vcita_enabled'] = 'true';
 
     } else {
 	  if ($this->vcita_check_expert_available($form_params)) {
-	   	//$form_params['vcita_enabled'] =  'true';
+	   	$form_params['vcita_enabled'] =  'true';
 	  }
 	  
 	  $form_params['vcita_initialized'] = 'true'; // Stop initialize if upgrade process
@@ -1360,7 +1360,7 @@ function si_contact_get_options($form_num) {
          'max_forms' => '4',
          'max_fields' => '4',
          'captcha_disable_session' => 'true',
-		 'vcita_auto_install' => 'false', /* --- vCita Global Settings --- */
+		 'vcita_auto_install' => 'true', /* --- vCita Global Settings --- */
 		 'vcita_version' => '1.0',
       );
 
@@ -1559,7 +1559,7 @@ function si_contact_get_options($form_num) {
   if (!isset($si_contact_gb['vcita_auto_install'])) {
     $si_contact_gb['vcita_auto_install'] = 'false';
   } 
-  
+
   /* --- vCita Migrate - End --- */
   
  
