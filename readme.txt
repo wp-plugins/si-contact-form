@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
 Requires at least: 2.8
-Tested up to: 3.3
+Tested up to: 3.3.1
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -203,6 +203,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Updated vCita functions and added new schedule a meeting buttons. 
 - Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 3.1 =

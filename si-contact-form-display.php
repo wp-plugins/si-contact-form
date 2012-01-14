@@ -27,6 +27,8 @@ $string .= '
 <!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - begin - FastSecureContactForm.com -->
 <div id="FSContact'.$form_id_num.'" '.$this->ctf_form_style.'>';
 
+$string .= '<div style="float:left;" class="fsc_data_container">';
+
 if ($si_contact_opt['border_enable'] == 'true') {
   $string .= '
     <form '.$have_attach.'action="'.esc_url( $form_action_url ).'#FSContact'.$form_id_num.'" id="si_contact_form'.$form_id_num.'" method="post">
@@ -436,15 +438,6 @@ $string .= '
      $string .= '\')"  />'."\n";
     }
 	
-	/* --- vCita Scheduler Display - Start --- */
-    if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true') {
-		$vcita_set_meeting_style = $this->si_contact_convert_css($si_contact_opt['vcita_set_meeting_style']);
-		
-		// Add tracking for the button impression
-		$string .= '<img style="width:1px;height:1px" src="http://www.vcita.com/tr_pics/wp-fscf.gif?type=set-meeting&expert_id='.$si_contact_opt['vcita_uid'].'" />';
-		$string .= 'or <input type="button" onclick="vcita_set_meeting('.$form_id_num.', \''.$si_contact_opt['vcita_uid'].'\');return false;" value="Set a meeting" '.$vcita_set_meeting_style.'></input>';
-	}
-	/* --- vCita Scheduler Display - End --- */
 $string .= '</div>
 ';
 if ($si_contact_opt['border_enable'] == 'true') {
@@ -454,7 +447,6 @@ if ($si_contact_opt['border_enable'] == 'true') {
 }
 $string .= '
 </form>
-</div>
 ';
 if ($si_contact_opt['enable_credit_link'] == 'true') {
   $this->ctf_powered_by_style = $this->si_contact_convert_css($si_contact_opt['powered_by_style']);
@@ -462,6 +454,22 @@ $string .= '
 <p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast Secure Contact Form', 'si-contact-form'). '</a></p>
 ';
 }
-$string .= '<!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - end - FastSecureContactForm.com -->
-';
+
+
+$string .= '</div>';
+
+/* --- vCita Scheduler Display - Start --- */
+if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true') {
+		$confirmation_token = $this->vcita_should_store_expert_confirmation_token($si_contact_opt);
+		
+		$string .= "<div class='fscf_vcita_container' ";
+		$string .= empty($confirmation_token) ? "" : "confirmation_token=".$confirmation_token;
+		$string .= " vcita_uid = '".$si_contact_opt['vcita_uid']."' custom_style='".$si_contact_opt['vcita_font_style']."' ></div>";
+}
+
+$string .= "<div style='clear:both;'></div>"; // "Reset" the float properties
+/* --- vCita Scheduler Display - End --- */
+
+$string .= '</div>
+<!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - end - FastSecureContactForm.com -->';	
 ?>

@@ -51,6 +51,7 @@ if (!class_exists('siContactForm')) {
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('FS Contact Form Options', 'si-contact-form'), __('FS Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
+	
 }
 
 function si_contact_update_lang() {
@@ -87,6 +88,17 @@ function si_contact_options_page() {
 /* --- vCita Admin Functions - Start ---  */
 
 /**
+ * Add the vcita Javascript to the admin section 
+ */
+function vcita_add_admin_js() {
+	if(!isset($_GET['page']) || preg_match('/si-contact-form.php$/',$_GET['page']) ) {
+		wp_enqueue_script('jquery');
+		wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
+		wp_print_scripts('vcita_fscf');
+	}
+}
+
+/**
  * This method makes sure that a vCita user is available for the given form paramters.
  * The logic is as follows:
  * 1. If this is the first install - create a user and enable
@@ -97,10 +109,8 @@ function si_contact_options_page() {
  * In the end, It stores the form data.
  */
 function vcita_validate_initialized_user($form_num, $form_params, $auto_install) {
-
   // Check if a initializtion is required
   if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') {
-
     // New Install - Create the user
     if ($auto_install == 'true') {
       $form_params = $this->vcita_generate_or_validate_user($form_params);
@@ -117,6 +127,17 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install)
     update_option("si_contact_form$form_num", $form_params);
   }
   
+  $confirm_token = $form_params['vcita_confirm_token'];
+	  
+  // Migrate token to the new field
+  if (!empty($confirm_token) && !empty($form_params["vcita_uid"])) {
+    $form_params["vcita_confirm_tokens"] = "";
+    $form_params = $this->vcita_set_confirmation_token($form_params, $confirm_token);
+		
+    $form_params["vcita_confirm_token"] = null;
+	update_option("si_contact_form$form_num", $form_params);
+  }
+  
   return $form_params;
 }
 
@@ -127,14 +148,17 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install)
  * @return array of the user name, id and if he finished the registration or not
  */
 function vcita_generate_or_validate_user($params) {
+	// Don't create / validate if this isn't the expert
+	if (empty($_SESSION) || empty($_SESSION["vcita_expert"]) || !$_SESSION["vcita_expert"]) {
+		return $params;
+	}
+
 	$used_email = $this->vcita_get_email($params);
-	$generate_warning = "";
 	
 	// Only generate a user if the mail isn't the default one.
 	if ($used_email == 'mail@example.com') {
-		$generate_warning = "You are currently using the default mail: <b>mail@example.com</b>, To activate - please enter you email above.";
+		$params['vcita_uid'] = '';
 		
-		$params['vcita_last_error'] = $generate_warning;
 		return $params;
 	} 
 	
@@ -154,20 +178,20 @@ function vcita_parse_user_info($params, $success, $raw_data) {
 	$params['vcita_uid'] = '';
 	
 	if (!$success) {
-		$params['vcita_last_error'] = "Temporary problems, please try again later";
+		$params['vcita_last_error'] = "Temporary problem, please try again later";
 	} else {
 		$data = json_decode($raw_data);
-		$widget_params['last_error'] = "Temporary problems, please try again later";
 		
 		if ($data->{'success'} == 1 || $data->{'exists'}) {
-			if ($previous_id != $data->{'id'}) {
-				$params['vcita_confirm_token'] = $data->{'confirmation_token'};
-			}
-						
 			$params['vcita_confirmed'] = $data->{'confirmed'};
-			$params['vcita_last_error'] = $generate_warning;
+			$params['vcita_last_error'] = "";
 			$params['vcita_uid'] = $data->{'id'};
 			$params['vcita_initialized'] = 'true';
+			
+			if ($previous_id != $data->{'id'}) {
+				$params = $this->vcita_set_confirmation_token($params, $data->{'confirmation_token'});
+			}
+			
 		} else {
 			$params['vcita_last_error'] = $data-> {'error'};
 		}
@@ -207,6 +231,8 @@ function vcita_get_contents($url) {
  * Add the dynamic notification area based on the current user status
  */
 function vcita_add_notification($params) {
+	$confirmation_token = $this->vcita_get_confirmation_token($params);
+	
 	if ($params['vcita_enabled'] == 'false') {
 		$message = '<b>Meeting Scheduler is disabled</b>, please check the box below to allow users to request meetings via your contact form';        
 		$message_type = "fsc-notice";
@@ -217,16 +243,21 @@ function vcita_add_notification($params) {
 		
     } elseif (!empty($params['vcita_uid'])) {
 	    $message_type = "fsc-notice";
-		$message = "Configured Mail: <b>".$this->vcita_get_email($params)."</b>, <br/>";
+		$message = "vCita Meeting Scheduler is <b>active</b>.<br/>";
 		
-        if (!$params['vcita_confirmed']) {
-			$message .= "Your meeting preferences have not been set.<br/>Please follow the link below";
-	     } else {
-		    $message .= "To change - type your email below";
-	     }
-    }
+        if (!$params['vcita_confirmed'] && !empty($confirmation_token)) {
+		    $message .= "You still <b>havn't completed</b> your Meeting Scheduler settings. </br>".
+						"<div style='margin-top:10px;'><a href='http://www.vcita.com/users/confirmation?confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.2' target='_blank'><img src=".WP_PLUGIN_URL."/si-contact-form/vcita/vcita_configure.png height='41px' width='242px' /></a></div>";
+			$message_type = "fsc-error";
+	    }
+    } elseif ($this->vcita_get_email($params) == 'mail@example.com') {
+		$message = "You are currently using the default mail: <b>mail@example.com</b>, To activate - please enter you email below.";
+		$message_type = "fsc-notice";
+	}
 	
     echo "<br/><div class=".$message_type.">".$message."</div>";
+	
+	echo "<div style='clear:both;display:block'></div>";
 }
 
 /**
@@ -236,19 +267,24 @@ function vcita_add_notification($params) {
 function vcita_add_config($params) {
 	// Only show the Edit link in case the user is available
 	if (!empty($params["vcita_uid"]) && $params['vcita_enabled'] == 'true') {
-
+		$confirmation_token = $this->vcita_get_confirmation_token($params);
+		
 		if ($params['vcita_confirmed']) {
 			echo "<div style='clear:both;float:left;text-align:left;display:block;padding:5px 0 10px 0;'>
                  <div style='margin-right:5px;float:left;'><a href='http://www.vcita.com/settings?section=profile' target='_blank'>Edit Profile</a></div>
                  <div style='margin-right:5px;float:left;'><a href='http://www.vcita.com/settings?section=configuration' target='_blank'>Edit Meeting Preferences</a></div></div>";
 				 
-		} elseif (!empty($params['vcita_confirm_token'])) {
-			echo "<div style='margin-right:5px;float:left;'><a href='http://www.vcita.com/users/confirmation?confirmation_token=".$params['vcita_confirm_token']."' target='_blank'>Configure your meeting preferences</a></div>";
-			
-		} else {
+		} elseif (empty($confirmation_token)) {
 			echo "<div style='margin-right:5px;float:left;'><a href='http://www.vcita.com/users/send_password_instructions?activation=true&email=".$this->vcita_get_email($params)."' target='_blank'>Configure your account</a></div>";
 		}
 	}
+}
+
+/**
+ * Show the error about incomplete error
+ */
+function vcita_complete_registration_error($params) {
+	return "You still <b>havn't completed</b> your Meeting Scheduler settings. <a href='http://www.vcita.com/users/confirmation?confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.3' target='_blank'>Click here to configure</a>";
 }
 
 /**
@@ -281,8 +317,93 @@ function vcita_check_expert_available($params) {
 	return $available;
 }
 
+/**
+ * Get the confirmation token matches the current user
+ */
+function vcita_get_confirmation_token($params) {
+	$token = "";
+	
+	if (!empty($params["vcita_confirm_tokens"])) {
+		$token = "";
+		$tokens = explode("|", $params["vcita_confirm_tokens"]);
+		if (count($tokens) > 0) {
+			foreach ($tokens as $raw_token) {
+				$token_values = explode("-", $raw_token);
+				
+				if ($token_values[0] == $params["vcita_uid"]) {
+					$token = $token_values[1];
+					
+					if (!empty($_SESSION) && $_SESSION['vcita_expert']) {
+						$_SESSION['vcita_owner-of-'.$params['vcita_uid']] = true;
+					}
+					
+					break;
+				}
+			}
+		}
+	}
+	return $token;
+}
+
+/** 
+ * Set the confirmation for the current user
+ */ 
+function vcita_set_confirmation_token($params, $confirmation_token) {
+	if (!empty($confirmation_token)) {
+		$tokens = explode("|", $params["vcita_confirm_tokens"]);
+		array_push($tokens, $params["vcita_uid"]."-".$confirmation_token);
+	
+		$params["vcita_confirm_tokens"] = implode("|", $tokens); 
+	}
+	
+	return $params;
+}
+
+/**
+ * Check if the vcita confirmation token should be saved.
+ * Currently this means it will be also saved in the client side in a dedicated cookie.
+ */
+function vcita_should_store_expert_confirmation_token($params) {
+	$confirmation_token = $this->vcita_get_confirmation_token($params);
+	
+	if (!empty($confirmation_token) && !empty($_SESSION) && $_SESSION['vcita_owner-of-'.$params['vcita_uid']]) {
+		return $confirmation_token;
+	} else {
+		return "";
+	}
+}
 
 /* --- vCita Admin Functions - End --- */
+
+/* --- vCita Contact Functions - Start --- */
+
+/** 
+ * Add the vcita script to the pages of the fast secure
+ */
+function vcita_si_contact_add_script(){
+    global $si_contact_opt, $ctf_add_script;
+	
+	/* --- vCita  Loading JS - Start --- */
+	
+	wp_enqueue_script('jquery');
+    wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
+	
+	/* --- vCita  Loading JS - End ---   */
+
+    wp_print_scripts('vcita_fscf');
+   
+   ?>
+	<!-- begin Fast Secure Contact Form - vCita Scheduler page header -->
+	<style type="text/css">
+			.vcita-widget-right { float: left !important; }
+			.vcita-widget-bottom { float: none !important; clear:both;}
+	</style>
+	<!-- end Fast Secure Contact Form - vCita Scheduler page header -->
+
+	<?php
+}
+
+/* --- vCita Contact Functions - End --- */
 
 function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
         // choices: Display text => permission_level
@@ -1361,7 +1482,6 @@ function si_contact_get_options($form_num) {
          'max_fields' => '4',
          'captcha_disable_session' => 'true',
 		 'vcita_auto_install' => 'true', /* --- vCita Global Settings --- */
-		 'vcita_version' => '1.0',
       );
 
      $si_contact_option_defaults = array(
@@ -1498,9 +1618,9 @@ function si_contact_get_options($form_num) {
          'vcita_enabled'        => 'false', /* --- vCita Settings --- */
          'vcita_uid'            => '',
          'vcita_email'          => '',
-         'vcita_confirm_token'	=> '',
+         'vcita_confirm_tokens'	=> '',
          'vcita_initialized'	=> 'false',
-         'vcita_set_meeting_style' => 'cursor:pointer;background-color:#8DBCF8;color:white;margin:0px;',
+         'vcita_font_style' 	=> '',
   );
 
    // optional extra fields
@@ -1669,11 +1789,18 @@ function si_contact_start_session() {
   // this has to be set before any header output
   //echo "starting session ctf";
   // start cookie session, but do not start session if captcha is disabled in options
+  // Also required for vCita functionallity
   if( !isset( $_SESSION ) ) { // play nice with other plugins
     session_cache_limiter ('private, must-revalidate');
     session_start();
+	
     //echo "session started ctf";
   }
+  
+  if (is_admin()) {
+    $_SESSION["vcita_expert"] = true;
+  }
+	
 } // end function si_contact_start_session
 
 function si_contact_migrate($si_contact_option_defaults) {
@@ -1781,6 +1908,7 @@ div.star img {width:19px; height:19px; border-left:1px solid #fff; border-right:
 </style>
 <!-- end Fast Secure Contact Form - admin settings page header code -->
 <?php
+
   } // end if(isset($_GET['page'])
 
 }
@@ -1821,12 +1949,6 @@ function si_contact_convert_css($string) {
 function si_contact_add_script(){
     global $si_contact_opt, $ctf_add_script;
 	
-	/* --- vCita  Loading JS - Start --- */
-   if ($si_contact_opt['vcita_enabled'] == 'true') {
-     wp_register_script('si_contact_form', plugins_url('vcita/vcita_wordpress.js', __FILE__), array(), '1.0', true);
-   }
-   /* --- vCita  Loading JS - End ---   */
-
     if (!$ctf_add_script)
       return;
 
@@ -1874,17 +1996,21 @@ if (isset($si_contact_form)) {
       // http://scribu.net/wordpress/optimal-script-loading.html
       add_action( 'wp_footer', array(&$si_contact_form,'si_contact_add_script'));
       add_action( 'admin_footer', array(&$si_contact_form,'si_contact_add_script'));
-  }  else {
-     // start the PHP session
-     add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
   }
-
+  
+  // start the PHP session - also used by vCita - start in any case
+  add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
+  
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
   add_action('admin_head', array(&$si_contact_form,'si_contact_admin_head'),1);
+  
+  add_action('wp_footer', array(&$si_contact_form,'vcita_si_contact_add_script'),1);
 
   // this is for downloading settings backup txt file.
   add_action('admin_init', array(&$si_contact_form,'si_contact_backup_download'),1);
+  
+  add_action('admin_enqueue_scripts', array(&$si_contact_form,'vcita_add_admin_js'),1);
 
   // adds "Settings" link to the plugin action page
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);
