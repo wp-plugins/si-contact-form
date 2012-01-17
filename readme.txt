@@ -204,6 +204,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 == Changelog ==
 
 - Updated vCita functions and added new schedule a meeting buttons. 
+- Replace the use of WP_PLUGIN_URL with plugins_url() for better SSL compatibility.
 - Updated Italian language (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 = 3.1 =

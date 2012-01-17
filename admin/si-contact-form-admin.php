@@ -92,7 +92,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 
 
 <p>
-<?php _e('Add the shortcode in a Page, Post, or Text Widget', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
+<?php _e('Add the shortcode in a Page, Post, or Text Widget', 'si-contact-form'); ?>. <a href="<?php echo plugins_url( 'si-contact-form/screenshot-4.gif' ); ?>" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
 <br />
 <?php _e('Shortcode for this form:', 'si-contact-form'); echo " [si-contact-form form='$form_id']"; ?>
 </p>
@@ -456,7 +456,7 @@ EOT;
 
 echo '
 <div id="message" class="updated"><p><strong>
-<img src="'.WP_PLUGIN_URL .'/si-contact-form/ctf-loading.gif" alt="'.$this->ctf_output_string(__('Redirecting to Form 1', 'si-contact-form')).'" />&nbsp;&nbsp;
+<img src="'.plugins_url( 'si-contact-form/ctf-loading.gif' ) .'" alt="'.$this->ctf_output_string(__('Redirecting to Form 1', 'si-contact-form')).'" />&nbsp;&nbsp;
 '.__('Redirecting to Form 1', 'si-contact-form').' ...
 </strong></p></div>
 ';
@@ -619,11 +619,11 @@ if (function_exists('get_transient')) {
       <?php if ( ! empty($api->rating) ) : ?>
 	  <div class="star-holder" title="<?php echo $this->ctf_output_string(sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings))); ?>">
 	  <div class="star star-rating" style="width: <?php echo $this->ctf_output_string($api->rating) ?>px"></div>
-	  <div class="star star5"><img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/star.png" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star4"><img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/star.png" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star3"><img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/star.png" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star2"><img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/star.png" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star1"><img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/star.png" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
+	  <div class="star star5"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star4"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star3"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star2"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
+	  <div class="star star1"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
 	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
       <br />
@@ -700,7 +700,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
 <br />
 
 <div style="text-align:left; display:none" id="si_contact_mike_challis_tip">
-<img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/si-contact-form.jpg" width="250" height="185" alt="Mike Challis" /><br />
+<img src="<?php echo plugins_url( 'si-contact-form/si-contact-form.jpg' ); ?>" width="250" height="185" alt="Mike Challis" /><br />
 <?php _e('Mike Challis says: "Hello, I have spent hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
 <?php echo ' '; _e('Most people donate $3, $5, $10, $20, or more. Though no amount is too small. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
  <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>.
@@ -724,7 +724,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
 
 
 <p>
-<?php _e('Add the shortcode in a Page, Post, or Text Widget', 'si-contact-form'); ?>. <a href="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/screenshot-4.gif" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
+<?php _e('Add the shortcode in a Page, Post, or Text Widget', 'si-contact-form'); ?>. <a href="<?php echo plugins_url( 'si-contact-form/screenshot-4.gif' ); ?>" target="_new"><?php _e('help', 'si-contact-form'); ?></a>
 <br />
 <?php _e('Shortcode for this form:', 'si-contact-form'); echo " [si-contact-form form='$form_id']"; ?>
 </p>
@@ -1887,7 +1887,7 @@ foreach ($time_format_array as $k => $v) {
 			<?php $this->vcita_add_config($si_contact_opt); ?>
 		</div>
 		<div style="float:left;max-width:155px;">
-			<img src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/vcita/vcita_icons.png" height="178px" width="151px" />
+			<img src="<?php echo plugins_url( 'si-contact-form/vcita/vcita_icons.png' ); ?>" height="178px" width="151px" />
 		</div>
 	</div>
 </fieldset>
@@ -2663,7 +2663,7 @@ if ($si_contact_gb['donated'] != 'true') { ?>
    </td><td width="350">
    <?php echo sprintf(__('"I recommend <a href="%s" target="_blank">HostGator Web Hosting</a>. All my sites are hosted there. The prices are great and they offer great features for WordPress users. If you click this link and start an account at HostGator, I get a small commission." - Mike Challis', 'si-contact-form'), 'http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml'); ?>
    </td><td width="100">
-    <a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml" target="_blank"><img title="<?php echo $this->ctf_output_string(__('Web Site Hosting', 'si-contact-form')); ?>" alt="<?php echo $this->ctf_output_string(__('Web Site Hosting', 'si-contact-form')); ?>" src="<?php echo WP_PLUGIN_URL; ?>/si-contact-form/hostgator-blog.gif" width="100" height="100" /></a>
+    <a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml" target="_blank"><img title="<?php echo $this->ctf_output_string(__('Web Site Hosting', 'si-contact-form')); ?>" alt="<?php echo $this->ctf_output_string(__('Web Site Hosting', 'si-contact-form')); ?>" src="<?php echo plugins_url( 'si-contact-form/hostgator-blog.gif' ); ?>" width="100" height="100" /></a>
 
 <?php
   }

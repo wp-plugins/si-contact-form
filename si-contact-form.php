@@ -88,7 +88,7 @@ function si_contact_options_page() {
 /* --- vCita Admin Functions - Start ---  */
 
 /**
- * Add the vcita Javascript to the admin section 
+ * Add the vcita Javascript to the admin section
  */
 function vcita_add_admin_js() {
 	if(!isset($_GET['page']) || preg_match('/si-contact-form.php$/',$_GET['page']) ) {
@@ -247,7 +247,7 @@ function vcita_add_notification($params) {
 		
         if (!$params['vcita_confirmed'] && !empty($confirmation_token)) {
 		    $message .= "You still <b>havn't completed</b> your Meeting Scheduler settings. </br>".
-						"<div style='margin-top:10px;'><a href='http://www.vcita.com/users/confirmation?confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.2' target='_blank'><img src=".WP_PLUGIN_URL."/si-contact-form/vcita/vcita_configure.png height='41px' width='242px' /></a></div>";
+						"<div style='margin-top:10px;'><a href='http://www.vcita.com/users/confirmation?confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.2' target='_blank'><img src=".plugins_url( 'vcita/vcita_configure.png' , __FILE__ )." height='41px' width='242px' /></a></div>";
 			$message_type = "fsc-error";
 	    }
     } elseif ($this->vcita_get_email($params) == 'mail@example.com') {
@@ -764,7 +764,7 @@ EOT;
 
 $ctf_thank_you .= '
 <div '.$this->ctf_form_style.'>
-<img src="'.WP_PLUGIN_URL.'/si-contact-form/ctf-loading.gif" alt="'.$this->ctf_output_string(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
+<img src="'.plugins_url( 'ctf-loading.gif' , __FILE__ ).'" alt="'.$this->ctf_output_string(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
 '.__('Redirecting', 'si-contact-form').' ...
 </div>
 <!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - end - FastSecureContactForm.com -->
@@ -1872,10 +1872,10 @@ function get_captcha_url_cf() {
   $site_uri = parse_url(get_option('home'));
   $home_uri = parse_url(get_option('siteurl'));
 
-  $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha';
+  $captcha_url_cf  = plugins_url( 'captcha' , __FILE__ );
 
   if ($site_uri['host'] == $home_uri['host']) {
-      $captcha_url_cf  = WP_PLUGIN_URL . '/si-contact-form/captcha';
+      // use $captcha_url_cf above
   } else {
       $captcha_url_cf  = get_option( 'home' ) . '/'.PLUGINDIR.'/si-contact-form/captcha';
   }
