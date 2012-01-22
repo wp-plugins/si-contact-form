@@ -543,7 +543,7 @@ $ctf_sitename = get_option('blogname');
 $this->ctf_domain = $blogdomain;
 
 // set the type of request (SSL or not)
-if ( getenv('HTTPS') == 'on' ) {
+if ( is_ssl() ) {
     $form_action_url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 } else {
     $form_action_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -1880,7 +1880,7 @@ function get_captcha_url_cf() {
       $captcha_url_cf  = get_option( 'home' ) . '/'.PLUGINDIR.'/si-contact-form/captcha';
   }
   // set the type of request (SSL or not)
-  if ( getenv('HTTPS') == 'on' ) {
+  if ( is_ssl() ) {
 		$captcha_url_cf = preg_replace('|http://|', 'https://', $captcha_url_cf);
   }
 
