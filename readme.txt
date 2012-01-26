@@ -203,7 +203,11 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
-- Use WP function is_ssl() for better SSL compatibility.
+= 3.1.2 =
+- (25 Jan 2012) - Use WP function is_ssl() for better SSL compatibility.
+- Fix vCita 'JS on every page' bug in admin and WP site.
+- Fix vCita had some output when disabled.
+- Fix calendar week number bug.
 
 = 3.1.1 =
 - (21 Jan 2012) - Updated vCita functions and added new schedule a meeting buttons. 

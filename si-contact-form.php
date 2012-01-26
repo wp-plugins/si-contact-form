@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.1
+Version: 3.1.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.1';
+$ctf_version = '3.1.2';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -48,6 +48,7 @@ if (!class_exists('siContactForm')) {
      var $ctf_notes_style;
      var $ctf_version;
      var $ctf_add_script;
+     var $vcita_add_script;
 
 function si_contact_add_tabs() {
     add_submenu_page('plugins.php', __('FS Contact Form Options', 'si-contact-form'), __('FS Contact Form Options', 'si-contact-form'), 'manage_options', __FILE__,array(&$this,'si_contact_options_page'));
@@ -91,10 +92,11 @@ function si_contact_options_page() {
  * Add the vcita Javascript to the admin section
  */
 function vcita_add_admin_js() {
-	if(!isset($_GET['page']) || preg_match('/si-contact-form.php$/',$_GET['page']) ) {
-		wp_enqueue_script('jquery');
-		wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
-		wp_print_scripts('vcita_fscf');
+	if(isset($_GET['page']) && preg_match('/si-contact-form.php$/',$_GET['page']) ) {
+		//wp_enqueue_script('jquery');
+		//wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
+          wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array(), '1.0', true);
+          wp_print_scripts('vcita_fscf');
 	}
 }
 
@@ -381,28 +383,33 @@ function vcita_should_store_expert_confirmation_token($params) {
  * Add the vcita script to the pages of the fast secure
  */
 function vcita_si_contact_add_script(){
-    global $si_contact_opt, $ctf_add_script;
-	
-	/* --- vCita  Loading JS - Start --- */
-	
-	wp_enqueue_script('jquery');
-    wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
-	
-	/* --- vCita  Loading JS - End ---   */
+    global $si_contact_opt, $vcita_add_script;
 
-    wp_print_scripts('vcita_fscf');
-   
-   ?>
-	<!-- begin Fast Secure Contact Form - vCita Scheduler page header -->
-	<style type="text/css">
-			.vcita-widget-right { float: left !important; }
-			.vcita-widget-bottom { float: none !important; clear:both;}
-	</style>
-	<!-- end Fast Secure Contact Form - vCita Scheduler page header -->
-
+    if (!$vcita_add_script)
+      return;
+   //wp_enqueue_script('jquery');
+   //wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
+   wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array(), '1.0', true);
+   wp_print_scripts('vcita_fscf');
+      ?>
+    <script type="text/javascript">
+//<![CDATA[
+var vicita_fscf_style = "\
+	<!-- begin Fast Secure Contact Form - vCita scheduler page header -->\
+	<style type="text/css">\
+			.vcita-widget-right { float: left !important; }\
+			.vcita-widget-bottom { float: none !important; clear:both;}\
+	</style>\
+	<!-- end Fast Secure Contact Form - vCita scheduler page header -->\
+";
+jQuery(document).ready(function($) {
+$('head').append(vicita_fscf_style);
+});
+//]]>
+</script>
 	<?php
-}
 
+}
 /* --- vCita Contact Functions - End --- */
 
 function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
@@ -428,7 +435,7 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
 // and does all the decision making to send the email or not
 // [si_contact_form form='2']
 function si_contact_form_short_code($atts) {
-  global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb, $ctf_version, $ctf_add_script;
+  global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb, $ctf_version, $ctf_add_script, $vcita_add_script;
 
   $this->ctf_version = $ctf_version;
 
@@ -599,6 +606,9 @@ $email2     = $this->si_contact_get_var($form_id_num,'email');
 $subject    = $this->si_contact_get_var($form_id_num,'subject');
 $message    = $this->si_contact_get_var($form_id_num,'message');
 $captcha_code  = '';
+$vcita_add_script = false;
+if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true')
+  $vcita_add_script = true;
 
 // optional extra fields
 // capture query string vars
@@ -1948,7 +1958,7 @@ function si_contact_convert_css($string) {
 
 function si_contact_add_script(){
     global $si_contact_opt, $ctf_add_script;
-	
+
     if (!$ctf_add_script)
       return;
 
