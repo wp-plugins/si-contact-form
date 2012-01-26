@@ -554,7 +554,6 @@ if ($si_contact_opt['name_type'] != 'not_available') {
 $autoresp_ok = 1; // used in autoresp settings below
 if ($si_contact_opt['email_type'] != 'not_available') {
         $av_fld_arr[] = 'from_email';
-        $av_fld_subj_arr = $av_fld_arr;
 }else{
    $autoresp_ok = 0;
 }
@@ -571,6 +570,8 @@ for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
       }
     }
 } // end for
+if ($si_contact_opt['email_type'] != 'not_available')
+        $av_fld_subj_arr = $av_fld_arr;
 if ($si_contact_opt['subject_type'] != 'not_available')
    $av_fld_arr[] = 'subject';
 if ($si_contact_opt['message_type'] != 'not_available')

@@ -557,14 +557,14 @@ if ($have_attach){
       $msg .= "$email$php_eol$php_eol";
       $posted_data['from_email'] = $email;
    }
-   // subject can include posted data names feature:
+/*   // subject can include posted data names feature:
    foreach ($posted_data as $key => $data) {
       if( is_string($data) )
           $subj = str_replace('['.$key.']',$data,$subj);
    }
    $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
    $subj = str_replace('[form_label]',$posted_form_name,$subj);
-   $posted_data['subject'] = $subj;
+   $posted_data['subject'] = $subj;*/
    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= $this->make_bold(__('Message', 'si-contact-form')).":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
@@ -709,6 +709,18 @@ if ($have_attach){
         $msg .= $this->make_bold(__('Message', 'si-contact-form')).":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
     }
+
+   // subject can include posted data names feature:
+   foreach ($posted_data as $key => $data) {
+         if( in_array($key,array('message','full_message','akismet')) )  // disallow these
+            continue;
+	     if( is_string($data) )
+              $subj = str_replace('['.$key.']',$data,$subj);
+   }
+   $subj = preg_replace('/(\[ex_field)(\d+)(\])/','',$subj); // remove empty ex_field tags
+   $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
+   $subj = str_replace('[form_label]',$posted_form_name,$subj);
+   $posted_data['subject'] = $subj;
 
   // lookup country info for this ip
   // geoip lookup using Visitor Maps and Who's Online plugin
