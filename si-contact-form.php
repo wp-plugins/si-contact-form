@@ -93,9 +93,8 @@ function si_contact_options_page() {
  */
 function vcita_add_admin_js() {
 	if(isset($_GET['page']) && preg_match('/si-contact-form.php$/',$_GET['page']) ) {
-		//wp_enqueue_script('jquery');
-		//wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
-          wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array(), '1.0', true);
+		  wp_enqueue_script('jquery');
+		  wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
           wp_print_scripts('vcita_fscf');
 	}
 }
@@ -387,10 +386,9 @@ function vcita_si_contact_add_script(){
 
     if (!$vcita_add_script)
       return;
-   //wp_enqueue_script('jquery');
-   //wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
-   wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array(), '1.0', true);
-   wp_print_scripts('vcita_fscf');
+    wp_enqueue_script('jquery');
+    wp_register_script('vcita_fscf', plugins_url('vcita/vcita_fscf.js', __FILE__), array('jquery'), '1.0', true);
+    wp_print_scripts('vcita_fscf');
       ?>
     <script type="text/javascript">
 //<![CDATA[
