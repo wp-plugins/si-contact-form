@@ -121,9 +121,9 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install)
 	  if ($this->vcita_check_expert_available($form_params)) {
 	   	$form_params['vcita_enabled'] =  'true';
 	  }
-	  
-	  $form_params['vcita_initialized'] = 'true'; // Stop initialize if upgrade process
-    }
+	}
+	
+	$form_params['vcita_initialized'] = 'true'; // Mark as initialized
 
     update_option("si_contact_form$form_num", $form_params);
   }
