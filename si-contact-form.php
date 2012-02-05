@@ -129,14 +129,15 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install)
   }
 
   $confirm_token = '';
-  $confirm_token = $form_params['vcita_confirm_token'];
-	  
+  if (isset($form_params['vcita_confirm_tokens']))
+    $confirm_token = $form_params['vcita_confirm_tokens'];
+
   // Migrate token to the new field
   if (!empty($confirm_token) && !empty($form_params["vcita_uid"])) {
-    $form_params["vcita_confirm_tokens"] = "";
+    $form_params['vcita_confirm_tokens'] = '';
     $form_params = $this->vcita_set_confirmation_token($form_params, $confirm_token);
 		
-    $form_params["vcita_confirm_token"] = null;
+    //$form_params["vcita_confirm_token"] = null;
 	update_option("si_contact_form$form_num", $form_params);
   }
   
@@ -296,8 +297,14 @@ function vcita_get_email($params) {
 	if (!empty($params["vcita_email"])) {
 		return $params["vcita_email"];
 	} else {
-		list($name, $email) = preg_split('#(?<!\\\)\,#',array_shift(preg_split('/[;]/',$params["email_to"])));
-		return empty($email) ? $name : $email;
+	  $ctf_contacts_test = trim($params['email_to']);
+      if(!preg_match("/,/", $ctf_contacts_test) ) { // single email without,name
+        $name = '';        // name,email
+        $email = $ctf_contacts_test;
+      }else{
+        list($name, $email) = preg_split('#(?<!\\\)\,#',array_shift(preg_split('/[;]/',$ctf_contacts_test)));
+      }
+	  return empty($email) ? $name : $email;
 	}
 }
 
@@ -355,7 +362,7 @@ function vcita_set_confirmation_token($params, $confirmation_token) {
 		$tokens = explode("|", $params["vcita_confirm_tokens"]);
 		array_push($tokens, $params["vcita_uid"]."-".$confirmation_token);
 	
-		$params["vcita_confirm_tokens"] = implode("|", $tokens); 
+		$params["vcita_confirm_tokens"] = implode("|", $tokens);
 	}
 	
 	return $params;
@@ -1629,7 +1636,6 @@ function si_contact_get_options($form_num) {
          'vcita_email'          => '',
          'vcita_confirm_tokens'	=> '',
          'vcita_initialized'	=> 'false',
-         'vcita_font_style' 	=> '',
   );
 
    // optional extra fields

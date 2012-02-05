@@ -466,7 +466,7 @@ if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 
 		
 		$string .= "\n<div class='fscf_vcita_container' ";
 		$string .= empty($confirmation_token) ? "" : "confirmation_token=".$confirmation_token;
-		$string .= " vcita_uid = '".$si_contact_opt['vcita_uid']."' custom_style='".$si_contact_opt['vcita_font_style']."'>
+		$string .= " vcita_uid = '".$si_contact_opt['vcita_uid']."'>
 </div>";
         $string .= "\n<div style='clear:both;'></div>\n"; // "Reset" the float properties
         $string .= '</div>';

@@ -288,7 +288,6 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'vcita_confirm_tokens'	=> trim($_POST['si_contact_vcita_confirm_tokens']),
          'vcita_initialized'	=> trim($_POST['si_contact_vcita_initialized']),
          'vcita_uid'	=> trim($_POST['si_contact_vcita_uid']),
-         'vcita_font_style' =>    ( trim($_POST['si_contact_vcita_font_style']) != '' ) ? trim($_POST['si_contact_vcita_font_style']) : $si_contact_option_defaults['vcita_set_meeting_style'],
   );
 
     // optional extra fields
@@ -1834,7 +1833,7 @@ foreach ($time_format_array as $k => $v) {
 
 <?php 
 
-	/* --- vCita Admin Display - Start --- */ 
+	/* --- vCita Admin Display - Start --- */
 
 	$confirmation_token = $this->vcita_get_confirmation_token($si_contact_opt);
 	
