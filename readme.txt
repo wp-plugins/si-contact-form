@@ -203,8 +203,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
-
-- Extra field tags can be used in subject setting. For available field tags, click 'help' next to the 'E-mail Subject Prefix:' setting.
+= 3.1.3 =
+- (04 Feb 2012) - Extra field tags can be used in subject setting. For available field tags, click 'help' next to the 'E-mail Subject Prefix:' setting.
 - Fix vCita could not be disabled during invalid email condition.
 - Fix JS on form edit preview page.
 
