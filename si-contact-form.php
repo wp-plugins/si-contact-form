@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.3
+Version: 3.1.3.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.3';
+$ctf_version = '3.1.3.1';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -129,15 +129,15 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install)
   }
 
   $confirm_token = '';
-  if (isset($form_params['vcita_confirm_tokens']))
-    $confirm_token = $form_params['vcita_confirm_tokens'];
+  if (isset($form_params['vcita_confirm_token']))
+    $confirm_token = $form_params['vcita_confirm_token'];
 
   // Migrate token to the new field
-  if (!empty($confirm_token) && !empty($form_params["vcita_uid"])) {
+  if (!empty($confirm_token) && !empty($form_params['vcita_uid'])) {
     $form_params['vcita_confirm_tokens'] = '';
     $form_params = $this->vcita_set_confirmation_token($form_params, $confirm_token);
 		
-    //$form_params["vcita_confirm_token"] = null;
+    $form_params['vcita_confirm_token'] = null;
 	update_option("si_contact_form$form_num", $form_params);
   }
   
