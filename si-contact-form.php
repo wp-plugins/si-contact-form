@@ -127,7 +127,8 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install)
 
     update_option("si_contact_form$form_num", $form_params);
   }
-  
+
+  $confirm_token = '';
   $confirm_token = $form_params['vcita_confirm_token'];
 	  
   // Migrate token to the new field
