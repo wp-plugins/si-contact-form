@@ -557,14 +557,7 @@ if ($have_attach){
       $msg .= "$email$php_eol$php_eol";
       $posted_data['from_email'] = $email;
    }
-/*   // subject can include posted data names feature:
-   foreach ($posted_data as $key => $data) {
-      if( is_string($data) )
-          $subj = str_replace('['.$key.']',$data,$subj);
-   }
-   $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
-   $subj = str_replace('[form_label]',$posted_form_name,$subj);
-   $posted_data['subject'] = $subj;*/
+
    if ($si_contact_opt['ex_fields_after_msg'] == 'true' && $message != '') {
         $msg .= $this->make_bold(__('Message', 'si-contact-form')).":$php_eol$message$php_eol$php_eol";
         $posted_data['message'] = $message;
@@ -880,10 +873,12 @@ if ($have_attach){
     }
     $header_php =  "From: $this->si_contact_from_name <$this->si_contact_from_email>\n"; // header for php mail only
 
-    // process $mail_to user1@example.com,user2@example.com,user3@example.com,[cc]user4@example.com,[bcc]user5@example.com
+    // process $mail_to user1@example.com,[cc]user2@example.com,[cc]user3@example.com,[bcc]user4@example.com,[bcc]user5@example.com
     // some are cc, some are bcc
     $mail_to_arr = explode( ',', $mail_to );
-    $mail_to = '';
+    $mail_to = trim($mail_to_arr[0]);
+    unset($mail_to_arr[0]);
+    $ctf_email_address_cc = '';
     if ($ctf_email_address_bcc != '')
             $ctf_email_address_bcc = $ctf_email_address_bcc. ',';
 	foreach ( $mail_to_arr as $key => $this_mail_to ) {
@@ -892,11 +887,13 @@ if ($have_attach){
                  $ctf_email_address_bcc .= "$this_mail_to,";
            }else{
                  $this_mail_to = str_replace('[cc]','',$this_mail_to);
-                 $mail_to .= "$this_mail_to,";
+                 $ctf_email_address_cc .= "$this_mail_to,";
            }
     }
-    $mail_to = rtrim($mail_to, ',');
-
+    if ($ctf_email_address_cc != '') {
+            $ctf_email_address_cc = rtrim($ctf_email_address_cc, ',');
+            $header .= "Cc: $ctf_email_address_cc\n"; // for php mail and wp_mail
+    }
     if ($ctf_email_address_bcc != '') {
             $ctf_email_address_bcc = rtrim($ctf_email_address_bcc, ',');
             $header .= "Bcc: $ctf_email_address_bcc\n"; // for php mail and wp_mail
@@ -960,6 +957,8 @@ if ($have_attach){
          }else {
               $ctf_geekMail->_replyTo($this->si_contact_from_email);
          }
+         if ($ctf_email_address_cc != '')
+           $ctf_geekMail->cc($ctf_email_address_cc);
          if ($ctf_email_address_bcc != '')
            $ctf_geekMail->bcc($ctf_email_address_bcc);
          $ctf_geekMail->subject($subj);

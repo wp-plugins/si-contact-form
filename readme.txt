@@ -203,6 +203,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= Fix to use separate CC: email header.
+
 = 3.1.3.1 =
 - (05 Feb 2012) - Fix vCita had some uninitialized variable errors when debugging is on.
 
