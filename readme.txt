@@ -147,7 +147,7 @@ The following translations are included in the download zip file:
 * Portuguese (pt_PT) - Translated by [AJBFerreira Blog](http://pws.op351.net/)
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Romanian (ro_RO) - Translated by [Anunturi Jibo](http://www.jibo.ro)
-* Russian (ru_RU) - Translated by [Bezraznizi](http://www.sprestij.ru/)
+* Russian (ru_RU) - Translated by [Iflexion](http://www.iflexion.com/)
 * Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
 * Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
@@ -204,6 +204,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 == Changelog ==
 
 - Fix to use separate CC: email header.
+- Updated Russian (ru_RU) - Translated by [Iflexion](http://www.iflexion.com/)
 
 = 3.1.3.1 =
 - (05 Feb 2012) - Fix vCita had some uninitialized variable errors when debugging is on.
