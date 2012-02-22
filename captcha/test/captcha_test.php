@@ -353,7 +353,7 @@ if( isset($_GET['chmod']) ) {
     echo 'Permissions for directory captcha/temp/ ';
     echo substr(sprintf('%o', fileperms('../temp')), -4);
     echo '<br />';
-  if( isset($_GET['token']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['token']) ){
+  if( isset($_GET['token']) && is_string($_GET['token']) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_GET['token']) ){
     clearstatcache();
     echo 'Permissions for captcha token file: ';
     $token = $_GET['token'];

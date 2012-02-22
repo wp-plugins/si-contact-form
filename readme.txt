@@ -203,6 +203,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Fix possible error: preg_match() expects parameter to be string. 
 - Fix to use separate CC: email header.
 - Updated Russian (ru_RU) - Translated by [Iflexion](http://www.iflexion.com/)
 

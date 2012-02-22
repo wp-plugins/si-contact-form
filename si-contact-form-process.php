@@ -408,7 +408,7 @@ if ($have_attach){
          $si_contact_error_captcha = __('Could not find CAPTCHA token.', 'si-contact-form');
       }else{
          $prefix = 'xxxxxx';
-         if ( isset($_POST['si_code_ctf_'.$form_id_num]) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_POST['si_code_ctf_'.$form_id_num]) ){
+         if ( isset($_POST['si_code_ctf_'.$form_id_num]) && is_string($_POST['si_code_ctf_'.$form_id_num]) && preg_match('/^[a-zA-Z0-9]{15,17}$/',$_POST['si_code_ctf_'.$form_id_num]) ){
            $prefix = $_POST['si_code_ctf_'.$form_id_num];
          }
          if ( is_readable( $ctf_captcha_dir . $prefix . '.php' ) ) {
