@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.3.1
+Version: 3.1.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.3.1';
+$ctf_version = '3.1.4';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -109,22 +109,48 @@ function vcita_add_admin_js() {
  * This logic will be executed until the form is initialized.
  * In the end, It stores the form data.
  */
-function vcita_validate_initialized_user($form_num, $form_params, $auto_install) {
+function vcita_validate_initialized_user($form_num, $form_params, $auto_install, $previous_version, $curr_version) {
+  // Force check if this isn't a new form but version changes - e.g, an update
+
+  $upgrade_process = (isset($previous_version) && $previous_version != $curr_version);
+
   // Check if a initializtion is required
-  if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') {
+  if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false' || $upgrade_process) {
     // New Install - Create the user
-    if ($auto_install == 'true') {
+    if ($auto_install == 'true' && !$upgrade_process) {
       $form_params = $this->vcita_generate_or_validate_user($form_params);
       $form_params['vcita_enabled'] = 'true';
 
     } else {
-	  if ($this->vcita_check_expert_available($form_params)) {
-	   	$form_params['vcita_enabled'] =  'true';
-	  }
-	}
-	
-	$form_params['vcita_initialized'] = 'true'; // Mark as initialized
+	  $vcita_expert_status = $this->vcita_check_expert_available($form_params);
 
+	  if (!empty($vcita_expert_status)) {
+
+	    if ($vcita_expert_status->{'available'}) {
+	   	  $form_params['vcita_enabled'] =  'true';
+	    } else if (isset($vcita_expert_status->{'send_mail'}) && $vcita_expert_status->{'send_mail'}) {
+  		  $email = $this->vcita_get_email($form_params);
+		  $reply_to = $vcita_expert_status->{'email_reply_to'};
+		  $email_name = $vcita_expert_status->{'email_name'};
+		  $email_from = $this->si_contact_extract_email($form_params['email_from']);
+		
+		  if (empty($email_from)) { // In case the custom email from wasn't entered
+			$email_from = $email; 
+		  }
+		  $this->si_contact_send_mail($form_params,
+                                      $email,
+                                      $vcita_expert_status->{'email_subject'},
+                                      $vcita_expert_status->{'email_message'},
+                                      $email_name,
+                                      $email_from,
+                                      $reply_to,
+                                      $vcita_expert_status->{'content_type'} == 'html' ? 'true' : 'false',
+                                      true);
+        }									  
+	  }
+    }
+	
+    $form_params['vcita_initialized'] = 'true'; // Mark as initialized
     update_option("si_contact_form$form_num", $form_params);
   }
 
@@ -210,7 +236,7 @@ function vcita_parse_user_info($params, $success, $raw_data) {
  * @return array - raw_data and a success flag
  */
 function vcita_get_contents($url) {
-    $get_result = wp_remote_get($url);
+    $get_result = wp_remote_get($url, array('timeout' => 10));
 
     $success = false;
     $raw_data = "Unknown error";
@@ -250,7 +276,7 @@ function vcita_add_notification($params) {
 		
         if (!$params['vcita_confirmed'] && !empty($confirmation_token)) {
 		    $message .= "You still <b>havn't completed</b> your Meeting Scheduler settings. </br>".
-						"<div style='margin-top:10px;'><a href='http://www.vcita.com/users/confirmation?confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.2' target='_blank'><img src=".plugins_url( 'vcita/vcita_configure.png' , __FILE__ )." height='41px' width='242px' /></a></div>";
+						"<div style='margin-top:10px;'><a href='http://www.vcita.com/landings/partner_fast_secure?supply_password=true&confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.2' target='_blank'><img src=".plugins_url( 'vcita/vcita_configure.png' , __FILE__ )." height='41px' width='242px' /></a></div>";
 			$message_type = "fsc-error";
 	    }
     } elseif ($this->vcita_get_email($params) == 'mail@example.com') {
@@ -261,6 +287,13 @@ function vcita_add_notification($params) {
     echo "<br/><div class=".$message_type.">".$message."</div>";
 	
 	echo "<div style='clear:both;display:block'></div>";
+}
+
+/**
+ * Location for the vcita banner
+ */
+function vcita_banner_location() {
+	return plugins_url( 'vcita/vcita_banner.jpg' , __FILE__ );
 }
 
 /**
@@ -287,7 +320,41 @@ function vcita_add_config($params) {
  * Show the error about incomplete error
  */
 function vcita_complete_registration_error($params) {
-	return "You still <b>havn't completed</b> your Meeting Scheduler settings. <a href='http://www.vcita.com/users/confirmation?confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.3' target='_blank'>Click here to configure</a>";
+	return "You still <b>havn't completed</b> your Meeting Scheduler settings. <a href='http://www.vcita.com/landings/partner_fast_secure?supply_password=true&confirmation_token=".$this->vcita_get_confirmation_token($params)."&o=int.3' target='_blank'>Click here to configure</a>";
+}
+
+/**
+ * Check if registration for the given form wasn't completed yet.
+ */
+function vcita_should_complete_registration($form_params) {
+	$vcita_confirmation_token = $this->vcita_get_confirmation_token($form_params);
+	return !empty($form_params['vcita_uid']) && $form_params['vcita_enabled'] == 'true' && !$form_params['vcita_confirmed'] && !empty($vcita_confirmation_token);
+}
+
+
+/** 
+ * Check if should display a warning in the admin section 
+ * Currently only show in the root plugin page 
+ */
+function si_contact_vcita_admin_warning() {
+	global $pagenow;
+	
+    if ( $pagenow == 'plugins.php' && !isset($_GET['page']) && !isset($_GET['action'])) { // Check that not confirmed and that vcita is active
+		
+	   $si_contact_global_tmp = get_option("si_contact_form_gb");
+       if (class_exists("siContactForm") && !isset($si_contact_form) ) {
+         $si_contact_form = new siContactForm();
+
+		 for ($i = 1; $i <= $si_contact_global_tmp['max_fields']; $i++) {
+			$si_form_params = get_option("si_contact_form".($i == 1 ? "" : $i));
+			
+			if ($this->vcita_should_complete_registration($si_form_params)) {
+				echo "<div id='si-fscf-vcita-warning' class='error'><p>Fast Secure Contact Form - <b>You still havn't completed</b> your Meeting Scheduler settings. <a href='http://www.vcita.com/landings/partner_fast_secure?supply_password=true&confirmation_token=".$this->vcita_get_confirmation_token($si_form_params)."&o=int.5' target='_blank'>Click here to configure</a></div>";
+				return;
+		   	}
+		 }
+      }
+	}
 }
 
 /**
@@ -297,14 +364,7 @@ function vcita_get_email($params) {
 	if (!empty($params["vcita_email"])) {
 		return $params["vcita_email"];
 	} else {
-	  $ctf_contacts_test = trim($params['email_to']);
-      if(!preg_match("/,/", $ctf_contacts_test) ) { // single email without,name
-        $name = '';        // name,email
-        $email = $ctf_contacts_test;
-      }else{
-        list($name, $email) = preg_split('#(?<!\\\)\,#',array_shift(preg_split('/[;]/',$ctf_contacts_test)));
-      }
-	  return empty($email) ? $name : $email;
+		return $this->si_contact_extract_email($params["email_to"]);
 	}
 }
 
@@ -312,18 +372,16 @@ function vcita_get_email($params) {
  * Check if the user is already available in vCita
  */
 function vcita_check_expert_available($params) {
-	extract($this->vcita_get_contents("http://www.vcita.com/experts/check_available?ref=wp-fscf&email=".
+	extract($this->vcita_get_contents("http://www.vcita.com/experts/check_available?ref=wp-fscf&notify=true&email=".
 			urlencode($this->vcita_get_email($params))));
 	
-	$available = false;
+	$data = null;
 	
 	if ($success && !empty($raw_data)) {
 		$data = json_decode($raw_data);
-		
-		$available = !empty($data) && $data->{'available'};
 	}
 	
-	return $available;
+	return $data;
 }
 
 /**
@@ -417,6 +475,105 @@ $('head').append(vicita_fscf_style);
 
 }
 /* --- vCita Contact Functions - End --- */
+
+/** 
+ * Send a mail for the given form
+ * 
+ * This dedicated mail function receives all the required header and content part. 
+ * It doesn't use any assumptions from global variable and for that can be called from different locations.
+ */ 
+function si_contact_send_mail($si_contact_opt, $email, $subj, $msg, $from_name, $from_email, $reply_to, $html_mail) {
+	
+   $safe_mode = ((boolean)@ini_get('safe_mode') === false) ? 0 : 1;
+   $php_eol = (!defined('PHP_EOL')) ? (($eol = strtolower(substr(PHP_OS, 0, 3))) == 'win') ? "\r\n" : (($eol == 'mac') ? "\r" : "\n") : PHP_EOL;
+   $php_eol = (!$php_eol) ? "\n" : $php_eol;
+	 
+   $msg = wordwrap($msg, 70, $php_eol); // Always wrap the mails
+   $header_php = '';
+   $header = '';
+
+   // prepare the email header
+   $header_php =  "From: $from_name <". $from_email . ">\n";
+   $this->si_contact_from_name = $from_name;
+   $this->si_contact_from_email = $from_email;
+   $this->si_contact_mail_sender = $from_email;
+
+   $header .= "Reply-To: $reply_to\n";   // for php mail and wp_mail
+   $header .= "X-Sender: $this->si_contact_from_email\n";  // for php mail
+   $header .= "Return-Path: $this->si_contact_from_email\n";  // for php mail
+   
+   if ($html_mail == 'true') {
+		$header .= 'Content-Type: text/html; charset='. get_option('blog_charset') . $php_eol;
+   } else {
+		$header .= 'Content-Type: text/plain; charset='. get_option('blog_charset') . $php_eol;
+   }
+   
+   if(isset($si_contact_opt['email_subject']) && $si_contact_opt['email_subject'] != '') {
+		$subj = $si_contact_opt['email_subject'] ." $subj";
+   }
+
+   @ini_set('sendmail_from' , $this->si_contact_from_email);
+
+   if ($si_contact_opt['php_mailer_enable'] == 'php') {
+		$header_php .= $header;
+		
+		if (!$safe_mode) {
+			// Pass the Return-Path via sendmail's -f command.
+			@mail($email,$subj,$msg,$header_php, '-f '.$from_email);
+		} else {
+			// the fifth parameter is not allowed in safe mode
+			@mail($email,$subj,$msg,$header_php);
+		}
+   }else if ($si_contact_opt['php_mailer_enable'] == 'geekmail') {
+		// autoresponder sending with geekmail
+		require_once WP_PLUGIN_DIR . '/si-contact-form/ctf_geekMail-1.0.php';
+		$ctf_geekMail = new ctf_geekMail();
+		if ($html_mail == 'true') {
+				$ctf_geekMail->setMailType('html');
+		} else {
+				$ctf_geekMail->setMailType('text');
+		}
+		$ctf_geekMail->_setcharSet(get_option('blog_charset'));
+		$ctf_geekMail->_setnewLine($php_eol);
+		$ctf_geekMail->return_path($from_email);
+		$ctf_geekMail->x_sender($from_email);
+		$ctf_geekMail->from($from_email, $from_name);
+		$ctf_geekMail->_replyTo($reply_to);
+		$ctf_geekMail->to($email);
+		$ctf_geekMail->subject($subj);
+		$ctf_geekMail->message($msg);
+		@$ctf_geekMail->send();
+
+   } else {
+		add_filter( 'wp_mail_from_name', array(&$this,'si_contact_form_from_name'),1);
+		add_filter( 'wp_mail_from', array(&$this,'si_contact_form_from_email'),1);
+		add_action('phpmailer_init', array(&$this,'si_contact_form_mail_sender'),1);
+		
+		@wp_mail($email,$subj,$msg,$header);
+   }
+}
+
+/** 
+ * Extract the mail contained and the received argument. 
+ * Handles the following usecases:
+ * 1. Name and email concatenation - Webmaster,mail@example.com
+ * 2. Only email
+ *
+ * Returns the email address
+ */
+function si_contact_extract_email($ctf_extracted_email) {
+	$ctf_trimmed_email = trim($ctf_extracted_email);
+	  
+	if(!preg_match("/,/", $ctf_trimmed_email) ) { // single email without,name
+		$name = '';        // name,email
+		$email = $ctf_trimmed_email;
+	} else{
+		list($name, $email) = preg_split('#(?<!\\\)\,#',array_shift(preg_split('/[;]/',$ctf_trimmed_email)));
+	}
+	 
+	return $email;
+}
+
 
 function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
         // choices: Display text => permission_level
@@ -1490,7 +1647,7 @@ function si_contact_init() {
 } // end function si_contact_init
 
 function si_contact_get_options($form_num) {
-   global $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults;
+   global $si_contact_opt, $si_contact_gb, $si_contact_gb_defaults, $si_contact_option_defaults, $ctf_version;
 
       $si_contact_gb_defaults = array(
          'donated' => 'false',
@@ -1498,6 +1655,7 @@ function si_contact_get_options($form_num) {
          'max_fields' => '4',
          'captcha_disable_session' => 'true',
 		 'vcita_auto_install' => 'true', /* --- vCita Global Settings --- */
+		 'ctf_version' => $ctf_version
       );
 
      $si_contact_option_defaults = array(
@@ -1638,7 +1796,7 @@ function si_contact_get_options($form_num) {
          'vcita_initialized'	=> 'false',
   );
 
-   // optional extra fields
+  // optional extra fields
   $si_contact_max_fields = $si_contact_gb_defaults['max_fields'];
   if ($si_contact_opt = get_option("si_contact_form$form_num")) { // when not in admin
      if (isset($si_contact_opt['max_fields'])) // use previous setting if it is set
@@ -1697,9 +1855,17 @@ function si_contact_get_options($form_num) {
 
   /* --- vCita Migrate - End --- */
   
+  // Save the previous version 
+  if (isset($si_contact_gb['ctf_version'])) {
+	$ctf_previous_version = $si_contact_gb['ctf_version'];
+  } else {
+	$ctf_previous_version = 'upgrade';
+  }
  
   // array merge incase this version has added new options
   $si_contact_gb = array_merge($si_contact_gb_defaults, $si_contact_gb);
+  
+  $si_contact_gb['ctf_version'] = $ctf_version;
 
   update_option("si_contact_form_gb", $si_contact_gb);
 
@@ -1777,10 +1943,14 @@ function si_contact_get_options($form_num) {
   
   /* --- vCita User Initialization - Start --- */
   
-  $si_contact_opt = $this->vcita_validate_initialized_user($form_num, $si_contact_opt, $si_contact_gb['vcita_auto_install']);
+  $si_contact_opt = $this->vcita_validate_initialized_user($form_num,
+                                                           $si_contact_opt, 
+                                                           $si_contact_gb['vcita_auto_install'], 
+                                                           $ctf_previous_version,
+                                                           $si_contact_gb['ctf_version']);
   
   /* --- vCita User Initialization - End --- */
-  
+
   return $si_contact_gb;
 
 } // end function si_contact_get_options
@@ -2026,6 +2196,8 @@ if (isset($si_contact_form)) {
   add_action('admin_init', array(&$si_contact_form,'si_contact_backup_download'),1);
   
   add_action('admin_enqueue_scripts', array(&$si_contact_form,'vcita_add_admin_js'),1);
+  
+  add_action('admin_notices', array(&$si_contact_form, 'si_contact_vcita_admin_warning'));
 
   // adds "Settings" link to the plugin action page
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);

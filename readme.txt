@@ -203,8 +203,11 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.4 =
+- (05 Feb 2012) - Fix bug in Extra field tags can be used in subject setting.
 - Fix possible error: preg_match() expects parameter to be string. 
 - Fix to use separate CC: email header.
+- vCita improvements.
 - Updated Russian (ru_RU) - Translated by [Iflexion](http://www.iflexion.com/)
 
 = 3.1.3.1 =

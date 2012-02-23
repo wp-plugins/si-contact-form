@@ -147,6 +147,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'max_fields' =>  $si_contact_gb['max_fields'],
          'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
          'vcita_auto_install' => trim($_POST['si_contact_vcita_auto_install']), /* --- vCita Global Settings --- */
+		 'ctf_version' => trim($_POST['si_contact_ctf_version']),
          );
 
    if(isset($si_contact_gb['2.6.3'] ))
@@ -495,8 +496,7 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
   
   /* --- vCita Header Error Messages - Start --- */
   
-  $vcita_confirmation_token = $this->vcita_get_confirmation_token($si_contact_opt);
-  if ( !empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true' && !$si_contact_opt['vcita_confirmed'] && !empty($vcita_confirmation_token)) : ?>
+  if ( $this->vcita_should_complete_registration($si_contact_opt)) : ?>
 		<div class='error'><p><strong><?php _e($this->vcita_complete_registration_error($si_contact_opt), 'si-contact-form'); ?></strong></p></div>
   <?php endif; ?>
 	
@@ -569,9 +569,9 @@ for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
       }
     }
 } // end for
-if ($si_contact_opt['email_type'] != 'not_available')
+//if ($si_contact_opt['email_type'] != 'not_available')
         $av_fld_subj_arr = $av_fld_arr;
-if ($si_contact_opt['subject_type'] != 'not_available')
+//if ($si_contact_opt['subject_type'] != 'not_available')
    $av_fld_arr[] = 'subject';
 if ($si_contact_opt['message_type'] != 'not_available')
    $av_fld_arr[] = 'message';
@@ -686,13 +686,35 @@ _e('If you find this plugin useful to you, please consider making a small donati
 
   </td><td>
 
-  <div style="width:385px;height:200px; float:left;background-color:white;padding: 10px 10px 10px 20px; border: 1px solid #ddd;">
+<?php
+ $banner_alt_1 = '<div style="width:415px;height:220px; float:left;padding: 0; border: 1px solid #ddd;">
+		<a href="http://www.vcita.com/landings/partner_fast_secure?invite=wp-fscf&email='.urlencode($this->vcita_get_email($si_contact_opt)).'&o=int.6" target="_blank">
+			<img src="' . $this->vcita_banner_location() .'" width="415px" height="220px" />
+		</a>
+	</div>
+';
+
+ $banner_alt_2 = '<div style="width:385px;height:200px; float:left;background-color:white;padding: 10px 10px 10px 20px; border: 1px solid #ddd;">
 		<div>
-			<h3><?php _e('ThemeFuse Original WP Themes', 'si-contact-form'); ?></h3>
-            <?php echo sprintf(__('Try <a href="%s" target="_blank">ThemeFuse</a>, they make some amazing original WP themes that have a cool 1 click auto install feature and excellent after care support services. Check out some of their themes!', 'si-contact-form'), 'https://www.e-junkie.com/ecom/gb.php?cl=136641&c=ib&aff=148937'); ?>
+			<h3>' . __('ThemeFuse Original WP Themes', 'si-contact-form') .'</h3>
+            '. sprintf(__('Try <a href="%s" target="_blank">ThemeFuse</a>, they make some amazing original WP themes that have a cool 1 click auto install feature and excellent after care support services. Check out some of their themes!', 'si-contact-form'), 'https://www.e-junkie.com/ecom/gb.php?cl=136641&c=ib&aff=148937') .'
 		</div>
-        <a href="https://www.e-junkie.com/ecom/gb.php?cl=136641&c=ib&aff=148937" target="_blank"><img title="<?php echo $this->ctf_output_string(__('ThemeFuse', 'si-contact-form')); ?>" alt="<?php echo $this->ctf_output_string(__('ThemeFuse', 'si-contact-form')); ?>" src="http://themefuse.com/wp-content/themes/themefuse/images/campaigns/themefuse.jpg" width="375" height="85" /></a>
+        <a href="https://www.e-junkie.com/ecom/gb.php?cl=136641&c=ib&aff=148937" target="_blank"><img title="'. $this->ctf_output_string(__('ThemeFuse', 'si-contact-form')) .'" alt="'.$this->ctf_output_string(__('ThemeFuse', 'si-contact-form')).'" src="http://themefuse.com/wp-content/themes/themefuse/images/campaigns/themefuse.jpg" width="375" height="85" /></a>
   </div>
+ ';
+ $banner_alt_num = rand (1,2);
+ if ($si_contact_opt['vcita_enabled'] == 'true')
+    $banner_alt_num = 2;
+ switch ($banner_alt_num)
+ {
+ case 1:
+ echo $banner_alt_1;
+ break;
+ case 2:
+ echo $banner_alt_2;
+ }
+  ?>
+  
   </td>
  </tr>
  </table>
@@ -1845,6 +1867,7 @@ foreach ($time_format_array as $k => $v) {
 		<?php
 	}	
 ?>
+<a name="vCitaSettings"></a>
 <div class="form-tab"><?php echo __('Meeting Scheduler - by vCita:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
 <div class="clear"></div>
 
@@ -1863,6 +1886,7 @@ foreach ($time_format_array as $k => $v) {
 			<input name="si_contact_vcita_initialized" type="hidden" value="<?php echo $si_contact_opt['vcita_initialized']; ?>" />
 			<input name="si_contact_vcita_uid" type="hidden" value="<?php echo $si_contact_opt['vcita_uid']; ?>" />
 			<input name="si_contact_vcita_auto_install" type="hidden" value="<?php echo $si_contact_gb['vcita_auto_install']; ?>" />
+			<input name="si_contact_ctf_version" type="hidden" value="<?php echo $si_contact_gb['ctf_version']; ?>" />
 
 
 			<input name="si_contact_vcita_enable_meeting_scheduler" id="si_contact_vcita_enable_meeting_scheduler" type="checkbox" <?php if ( $si_contact_opt['vcita_enabled'] != 'false' ) echo ' checked="checked" '; ?> />
