@@ -688,7 +688,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
 
 <?php
  $banner_alt_1 = '<div style="width:415px;height:220px; float:left;padding: 0; border: 1px solid #ddd;">
-		<a href="http://www.vcita.com/landings/partner_fast_secure?invite=wp-fscf&email='.urlencode($this->vcita_get_email($si_contact_opt)).'&o=int.6" target="_blank">
+		<a href="http://www.vcita.com/landings/partner_fast_secure?supply_password=true&invite=wp-fscf&email='.urlencode($this->vcita_get_email($si_contact_opt)).'&o=int.6" target="_blank">
 			<img src="' . $this->vcita_banner_location() .'" width="415px" height="220px" />
 		</a>
 	</div>

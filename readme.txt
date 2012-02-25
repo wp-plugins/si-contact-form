@@ -203,8 +203,12 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.4.1 =
+- (24 Feb 2012) - vCita is disabled by default.
+- Email will only be passed to vCita servers when you choose to enable vCita services. 
+
 = 3.1.4 =
-- (05 Feb 2012) - Fix bug in Extra field tags can be used in subject setting.
+- (23 Feb 2012) - Fix bug in Extra field tags can be used in subject setting.
 - Fix possible error: preg_match() expects parameter to be string. 
 - Fix to use separate CC: email header.
 - vCita improvements.

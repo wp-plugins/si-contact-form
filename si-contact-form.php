@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.4
+Version: 3.1.4.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.4';
+$ctf_version = '3.1.4.1';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -101,59 +101,10 @@ function vcita_add_admin_js() {
 
 /**
  * This method makes sure that a vCita user is available for the given form paramters.
- * The logic is as follows:
- * 1. If this is the first install - create a user and enable
- * 2. If this is an upgrade - check if the user is already a vcita user
- * 3. If this is an upgrade, but the user is now created on vcita system - enable the scheduler.
- * 
- * This logic will be executed until the form is initialized.
- * In the end, It stores the form data.
+ *  
+ * Currently only performs migration from previous version and doesn't do anything else.
  */
 function vcita_validate_initialized_user($form_num, $form_params, $auto_install, $previous_version, $curr_version) {
-  // Force check if this isn't a new form but version changes - e.g, an update
-
-  $upgrade_process = (isset($previous_version) && $previous_version != $curr_version);
-
-  // Check if a initializtion is required
-  if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false' || $upgrade_process) {
-    // New Install - Create the user
-    if ($auto_install == 'true' && !$upgrade_process) {
-      $form_params = $this->vcita_generate_or_validate_user($form_params);
-      $form_params['vcita_enabled'] = 'true';
-
-    } else {
-	  $vcita_expert_status = $this->vcita_check_expert_available($form_params);
-
-	  if (!empty($vcita_expert_status)) {
-
-	    if ($vcita_expert_status->{'available'}) {
-	   	  $form_params['vcita_enabled'] =  'true';
-	    } else if (isset($vcita_expert_status->{'send_mail'}) && $vcita_expert_status->{'send_mail'}) {
-  		  $email = $this->vcita_get_email($form_params);
-		  $reply_to = $vcita_expert_status->{'email_reply_to'};
-		  $email_name = $vcita_expert_status->{'email_name'};
-		  $email_from = $this->si_contact_extract_email($form_params['email_from']);
-		
-		  if (empty($email_from)) { // In case the custom email from wasn't entered
-			$email_from = $email; 
-		  }
-		  $this->si_contact_send_mail($form_params,
-                                      $email,
-                                      $vcita_expert_status->{'email_subject'},
-                                      $vcita_expert_status->{'email_message'},
-                                      $email_name,
-                                      $email_from,
-                                      $reply_to,
-                                      $vcita_expert_status->{'content_type'} == 'html' ? 'true' : 'false',
-                                      true);
-        }									  
-	  }
-    }
-	
-    $form_params['vcita_initialized'] = 'true'; // Mark as initialized
-    update_option("si_contact_form$form_num", $form_params);
-  }
-
   $confirm_token = '';
   if (isset($form_params['vcita_confirm_token']))
     $confirm_token = $form_params['vcita_confirm_token'];
@@ -477,7 +428,7 @@ $('head').append(vicita_fscf_style);
 /* --- vCita Contact Functions - End --- */
 
 /** 
- * Send a mail for the given form
+ * Send a mail for the given form 
  * 
  * This dedicated mail function receives all the required header and content part. 
  * It doesn't use any assumptions from global variable and for that can be called from different locations.
@@ -513,7 +464,7 @@ function si_contact_send_mail($si_contact_opt, $email, $subj, $msg, $from_name, 
    }
 
    @ini_set('sendmail_from' , $this->si_contact_from_email);
-
+   		
    if ($si_contact_opt['php_mailer_enable'] == 'php') {
 		$header_php .= $header;
 		
@@ -1654,7 +1605,7 @@ function si_contact_get_options($form_num) {
          'max_forms' => '4',
          'max_fields' => '4',
          'captcha_disable_session' => 'true',
-		 'vcita_auto_install' => 'true', /* --- vCita Global Settings --- */
+		 'vcita_auto_install' => 'false', /* --- vCita Global Settings --- */
 		 'ctf_version' => $ctf_version
       );
 
@@ -1943,14 +1894,14 @@ function si_contact_get_options($form_num) {
   
   /* --- vCita User Initialization - Start --- */
   
-  $si_contact_opt = $this->vcita_validate_initialized_user($form_num,
+  $si_contact_opt = $this->vcita_validate_initialized_user($form_num, 
                                                            $si_contact_opt, 
                                                            $si_contact_gb['vcita_auto_install'], 
                                                            $ctf_previous_version,
                                                            $si_contact_gb['ctf_version']);
   
   /* --- vCita User Initialization - End --- */
-
+  
   return $si_contact_gb;
 
 } // end function si_contact_get_options
