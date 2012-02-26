@@ -203,6 +203,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Email parameter removed from vCita banner URL.
+
 = 3.1.4.1 =
 - (24 Feb 2012) - vCita is disabled by default.
 - Email will only be passed to vCita servers when you choose to enable vCita services. 
