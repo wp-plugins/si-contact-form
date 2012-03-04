@@ -204,6 +204,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 == Changelog ==
 
 - Email parameter removed from vCita banner URL.
+- Added shortcode setting to show Form Page URL in the email message [si-contact-form form='1' hidden='form_page=1']
 
 = 3.1.4.1 =
 - (24 Feb 2012) - vCita is disabled by default.

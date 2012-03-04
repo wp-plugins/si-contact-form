@@ -681,7 +681,7 @@ if ($have_attach){
        }
     } // end for
 
-   // allow shortcode hidden fields
+   // allow shortcode hidden fields   http://www.fastsecurecontactform.com/shortcode-options
    if ( $shortcode_hidden != '') {
       $hidden_fields_test = explode(",",$shortcode_hidden);
       if ( !empty($hidden_fields_test) ) {
@@ -691,8 +691,13 @@ if ($have_attach){
                $key   = trim($key);
                $value = trim($value);
                if ($key != '' && $value != '') {
-                 $msg .= $this->make_bold($key).$php_eol.$this->ctf_stripslashes($value).$php_eol.$php_eol;
-                 $posted_data[$key] = $value;
+                 if($key = 'form_page') {  // page url
+                   $msg .= $this->make_bold(__('Form Page', 'si-contact-form')).$php_eol.$form_action_url.$php_eol.$php_eol;
+                   $posted_data['form_page'] = $form_action_url;
+                 }else{
+                   $msg .= $this->make_bold($key).$php_eol.$this->ctf_stripslashes($value).$php_eol.$php_eol;
+                   $posted_data[$key] = $value;
+                 }
               }
           }
         }
