@@ -67,7 +67,16 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 
 	} // end Send a test mail if necessary
 
-
+	
+	/* --- vCita Admin Actions --- */
+	if (isset($_POST['vcita_disconnect'])) {
+	    $si_contact_gb = $this->si_contact_get_options($form_num);
+	    $si_contact_opt = $this->vcita_disconnect_form($si_contact_opt);
+	    $vcita_user_changed = true;
+	    
+	    update_option("si_contact_form$form_num", $si_contact_opt);
+	}
+	
  // preview forms, viewable to logged in admin only
  if ( isset($_GET['show_form']) && is_numeric($_GET['show_form']) && !isset($_POST['ctf_action']) ) {
 
@@ -138,7 +147,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
  }// end preview forms
 
 
-  if (isset($_POST['submit']) && !isset($_POST['ctf_action'])) {
+  if ((isset($_POST['submit']) || isset($_POST['vcita_create'])) && !isset($_POST['ctf_action'])) {
      check_admin_referer( 'si-contact-form-options_update'); // nonce
    // post changes to the options array
    $optionarray_gb_update = array(
@@ -285,12 +294,16 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'error_captcha_wrong'  => trim($_POST['si_contact_error_captcha_wrong']),
          'error_correct'        => trim($_POST['si_contact_error_correct']),
          'vcita_enabled'        => (isset($_POST['si_contact_vcita_enable_meeting_scheduler']) ) ? 'true' : 'false', /* --- vCita Parameters --- */
-         'vcita_email'		=> trim($_POST['si_contact_vcita_email']),
+         'vcita_approved'		=> (isset($_POST['si_contact_vcita_approved']) ) ? 'true' : 'false',
+         'vcita_email'		=> trim($_POST['si_contact_vcita_email']), /* Keep the old email, let the dedicated logic change it */
          'vcita_confirm_tokens'	=> trim($_POST['si_contact_vcita_confirm_tokens']),
          'vcita_initialized'	=> trim($_POST['si_contact_vcita_initialized']),
          'vcita_uid'	=> trim($_POST['si_contact_vcita_uid']),
-  );
-
+         'vcita_first_name'	=> trim($_POST['si_contact_vcita_first_name']),
+         'vcita_last_name'	=> trim($_POST['si_contact_vcita_last_name']),
+           
+    );
+    
     // optional extra fields
     for ($i = 1; $i <= $optionarray_update['max_fields']; $i++) {
         $optionarray_update['ex_field'.$i.'_label'] = (isset($_POST['si_contact_ex_field'.$i.'_label'])) ? trim($_POST['si_contact_ex_field'.$i.'_label']) : '';
@@ -372,8 +385,21 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 
 	/* --- vCita Update details - Start --- */
 	
-	if ($optionarray_update['vcita_enabled'] == 'true') {
+    $email_changed = isset($_POST['si_contact_vcita_email_new']) && $optionarray_update['vcita_email'] != trim($_POST['si_contact_vcita_email_new']);
+    $vcita_user_changed = isset($_POST['vcita_create']);
+    
+    if (isset($_POST['si_contact_vcita_email_new']) && trim($_POST['si_contact_vcita_email_new']) != "" && 
+        ($email_changed || $optionarray_update['vcita_initialized'] == 'false')) {
+        
+	    $optionarray_update['vcita_approved'] = 'true';
+	    $optionarray_update['vcita_enabled'] = 'true';
+	    $optionarray_update['vcita_email'] = trim($_POST['si_contact_vcita_email_new']);
+	    
 	    $optionarray_update = $this->vcita_generate_or_validate_user($optionarray_update);
+	    $vcita_user_changed = true;
+	    
+	} elseif ($optionarray_update['vcita_approved'] == 'true' && $optionarray_update['vcita_enabled'] == 'true' && !empty($optionarray_update['vcita_uid'])) {
+	    $optionarray_update = $this->vcita_check_user($optionarray_update);
 	}
 	
 	/* --- vCita Update details - End --- */
@@ -486,31 +512,31 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
 
   if (empty($_POST )) {
     // Check if the current user is unconfirmed - if so, check his current status
-    if ($si_contact_opt['vcita_enabled'] == 'true' && !empty($si_contact_opt['vcita_uid']) && !$si_contact_opt['vcita_confirmed']) {
-      $si_contact_opt = $this->vcita_generate_or_validate_user($si_contact_opt);
-      update_option("si_contact_form$form_num", $si_contact_opt);
+    if ($si_contact_opt['vcita_enabled'] == 'true' && $si_contact_opt['vcita_approved'] == 'true' && !empty($si_contact_opt['vcita_uid'])) {
+        $si_contact_opt = $this->vcita_check_user($si_contact_opt);
+        update_option("si_contact_form$form_num", $si_contact_opt);
     }
 
   }
+  
   /* --- vCita Check for changes in normal page view - End  --- */
-  
-  /* --- vCita Header Error Messages - Start --- */
-  
-  if ( $this->vcita_should_complete_registration($si_contact_opt)) : ?>
-		<div class='error'><p><strong><?php _e($this->vcita_complete_registration_error($si_contact_opt), 'si-contact-form'); ?></strong></p></div>
-  <?php endif; ?>
-	
-  <?php if (!empty($si_contact_opt["vcita_last_error"])) : ?>
-	<div class='error'><p><strong><?php _e("Meeting Scheduler - ".$si_contact_opt["vcita_last_error"], 'si-contact-form'); ?></strong></p></div>
-  <?php endif; ?>
-  
-  <?php /* --- vCita Header Error Messages - End --- */ ?>
+?>
 
 <div class="wrap">
  <div id="main">
 
 <h2><?php _e('Fast Secure Contact Form Options', 'si-contact-form'); ?></h2>
 
+<?php
+   
+  /* --- vCita Header Error Messages - Start --- */
+  
+  $this->vcita_print_admin_page_notification($si_contact_opt, $form_num, true);
+  
+  /* --- vCita Header Error Messages - End --- */
+  
+?>
+  
 <script type="text/javascript">
     function toggleVisibility(id) {
        var e = document.getElementById(id);
@@ -1848,7 +1874,7 @@ foreach ($time_format_array as $k => $v) {
         <label for="si_contact_enable_credit_link"><?php _e('Enable plugin credit link:', 'si-contact-form') ?></label> <?php echo __('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_new">'.__('Fast Secure Contact Form', 'si-contact-form'); ?></a>
 
 </fieldset>
-
+<a id="vCitaSectionAnchor" data-user-changed="<?php echo (isset($vcita_user_changed) && $vcita_user_changed ? "true" : "false");?>" name="vCitaSettings"></a>
     <p class="submit">
       <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
@@ -1865,9 +1891,15 @@ foreach ($time_format_array as $k => $v) {
 			VC_FSCF_set_cookie("<?php echo $si_contact_opt['vcita_uid']; ?>", "confirmation_token=<?php echo $confirmation_token; ?>");
 		</script>
 		<?php
+	} else {
+	    ?>
+	    <script type="text/javascript">
+	        VC_FSCF_set_cookie("generic-expert", "true");
+	    </script>
+	    <?php
 	}	
 ?>
-<a name="vCitaSettings"></a>
+
 <div class="form-tab"><?php echo __('Meeting Scheduler - by vCita:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
 <div class="clear"></div>
 
@@ -1876,7 +1908,7 @@ foreach ($time_format_array as $k => $v) {
 		<div>vCita extends your contact form and lets your users Schedule Meetings based on your availability.<br/>
 		   You can meet users with web-based video, talk over phone conference, set a location for meetings  <br/>
 		   and collect payments for your time and services.<br/>
-		   <b>To learn more</b>, <a href="http://www.vcita.com/?autoplay=1&no_redirect=true&invite=wp-fscf" target="_blank">Take a Tour</a>
+		   <b>To learn more about vCita</b>, <a href="http://www.vcita.com/?autoplay=1&no_redirect=true&invite=wp-fscf" target="_blank">Take a Tour</a>
 		</div>
 
 		<div style="width:400px;float:left;">
@@ -1885,30 +1917,43 @@ foreach ($time_format_array as $k => $v) {
 			<input name="si_contact_vcita_confirm_tokens" type="hidden" value="<?php echo $si_contact_opt['vcita_confirm_tokens']; ?>" />
 			<input name="si_contact_vcita_initialized" type="hidden" value="<?php echo $si_contact_opt['vcita_initialized']; ?>" />
 			<input name="si_contact_vcita_uid" type="hidden" value="<?php echo $si_contact_opt['vcita_uid']; ?>" />
+			<input name="si_contact_vcita_approved" type="hidden" value="<?php echo $si_contact_opt['vcita_approved']; ?>" />
 			<input name="si_contact_vcita_auto_install" type="hidden" value="<?php echo $si_contact_gb['vcita_auto_install']; ?>" />
 			<input name="si_contact_ctf_version" type="hidden" value="<?php echo $si_contact_gb['ctf_version']; ?>" />
-
-
-			<input name="si_contact_vcita_enable_meeting_scheduler" id="si_contact_vcita_enable_meeting_scheduler" type="checkbox" <?php if ( $si_contact_opt['vcita_enabled'] != 'false' ) echo ' checked="checked" '; ?> />
+			<input name="si_contact_vcita_email" type="hidden" value="<?php echo $si_contact_opt['vcita_email']; ?>" />
+			
+			<?php if ( empty($si_contact_opt['vcita_uid'])) : ?>
+			    
+			    <label class="vcita-label" for="si_contact_vcita_email_new"><?php _e('Email Address:', 'si-contact-form') ?></label>
+    			<input name="si_contact_vcita_email_new" id="si_contact_vcita_email_new" type="text" value="<?php echo $si_contact_opt['vcita_email']; ?>"  />
+    			<a style="cursor:pointer;" title="<?php _e('Privacy Policy', 'si-contact-form'); ?>" target="_blank" href="http://www.vcita.com/about/privacy_policy"><?php _e('Privacy Policy', 'si-contact-form'); ?></a>
+    			<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_vcita_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+    			<div style="text-align:left; display:none" id="si_contact_vcita_email_tip">
+    				<?php _e('Your email and name will only be used to send you meeting requests and additional communication from vCita, and will not be shared with your clients or third party.', 'si-contact-form'); ?>
+    			</div>
+    			
+    			<br/>
+    			<label class="vcita-label" for="si_contact_vcita_first_name"><?php _e('First Name:', 'si-contact-form') ?></label>
+    			<input name="si_contact_vcita_first_name" id="si_contact_vcita_first_name" type="text" value="<?php echo $si_contact_opt['vcita_first_name']; ?>"  />
+    			<br/>
+    			<label class="vcita-label" for="si_contact_vcita_last_name"><?php _e('Last Name:', 'si-contact-form') ?></label>
+    			<input name="si_contact_vcita_last_name" id="si_contact_vcita_last_name" type="text" value="<?php echo $si_contact_opt['vcita_last_name']; ?>"  />
+    			<br/><br/>
+    			
+            <?php else : ?>
+                <input name="si_contact_vcita_first_name" type="hidden" value="<?php echo $si_contact_opt['vcita_first_name']; ?>" />
+                <input name="si_contact_vcita_last_name" type="hidden" value="<?php echo $si_contact_opt['vcita_last_name']; ?>" />
+                
+                <?php $this->vcita_add_config($si_contact_opt); ?>
+            <?php endif ?>
+            
+            <br/>
+            <input name="si_contact_vcita_enable_meeting_scheduler" id="si_contact_vcita_enable_meeting_scheduler" type="checkbox" <?php if ( $si_contact_opt['vcita_enabled'] != 'false' ) echo ' checked="checked" '; ?> />
 			<label for="si_contact_vcita_enable_meeting_scheduler"><?php _e('Accept Meeting Requests via vCita', 'si-contact-form') ?></label>
 			<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_vcita_enable_meeting_scheduler_tip');"><?php _e('help', 'si-contact-form'); ?></a>
 			<div style="text-align:left; display:none" id="si_contact_vcita_enable_meeting_scheduler_tip">
 				<?php _e('Check this option to add "Set a Meeting" button to your Contact Form, and let users send meeting requests', 'si-contact-form'); ?>
 			</div>
-
-			<br/>
-
-			<label for="si_contact_vcita_email"><?php _e('Override Email Address:', 'si-contact-form') ?></label>
-			<input name="si_contact_vcita_email" id="si_contact_vcita_email" type="text" value="<?php echo $si_contact_opt['vcita_email']; ?>"  />
-			<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_vcita_email_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-			<div style="text-align:left; display:none" id="si_contact_vcita_email_tip">
-				<?php _e('You can set a different email address for meeting requests than the one you set for your contact form messages', 'si-contact-form'); ?>
-			</div>
-
-			<br/>
-			<br/>
-
-			<?php $this->vcita_add_config($si_contact_opt); ?>
 		</div>
 		<div style="float:left;max-width:155px;">
 			<img src="<?php echo plugins_url( 'si-contact-form/vcita/vcita_icons.png' ); ?>" height="178px" width="151px" />
@@ -1917,7 +1962,7 @@ foreach ($time_format_array as $k => $v) {
 </fieldset>
 
  <p class="submit">
-      <input type="submit" name="submit" value="<?php echo $this->ctf_output_string( __('Update Options', 'si-contact-form')); ?> &raquo;" />
+      <input type="submit" name="vcita_create" value="<?php echo $this->ctf_output_string( __('Update Options', 'si-contact-form')); ?> &raquo;" />
     </p>
 
 <?php /* --- vCita Admin Display - End --- */ ?>

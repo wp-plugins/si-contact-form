@@ -27,7 +27,7 @@ $string .= '
 <!-- Fast Secure Contact Form plugin '.$this->ctf_version.' - begin - FastSecureContactForm.com -->
 <div id="FSContact'.$form_id_num.'" '.$this->ctf_form_style.'>';
 
-if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true') {
+if ($si_contact_opt['vcita_enabled'] == 'true') {
   $string .= "\n<div style='float:left;' class='fsc_data_container'>\n";
 }
 
@@ -461,12 +461,12 @@ $string .= '
 $string .= '</div>';
 
 /* --- vCita Scheduler Display - Start --- */
-if (!empty($si_contact_opt['vcita_uid']) && $si_contact_opt['vcita_enabled'] == 'true') {
+if ($si_contact_opt['vcita_enabled'] == 'true') {
 		$confirmation_token = $this->vcita_should_store_expert_confirmation_token($si_contact_opt);
 		
 		$string .= "\n<div class='fscf_vcita_container' ";
 		$string .= empty($confirmation_token) ? "" : "confirmation_token=".$confirmation_token;
-		$string .= " vcita_uid = '".$si_contact_opt['vcita_uid']."'>
+		$string .= (empty($si_contact_opt['vcita_uid']) ? "preview=true" : " vcita_uid = '").$si_contact_opt['vcita_uid']."'>
 </div>";
         $string .= "\n<div style='clear:both;'></div>\n"; // "Reset" the float properties
         $string .= '</div>';

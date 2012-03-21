@@ -203,6 +203,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.5 =
+- (20 Mar 2012) - vCita improved so your email address is not sent to VCita unless you type it in yourself when activating the service.
 - Email parameter removed from vCita banner URL.
 - Added shortcode setting to show Form Page URL in the email message [si-contact-form form='1' hidden='form_page=1']
 

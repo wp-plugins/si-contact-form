@@ -93,6 +93,15 @@
 		return confirmation_token;
 	}
 	
+	/**
+	 * Check by using cookies if the expert is associated with this doamin.
+	 */
+	function VC_FSCF_is_admin() {
+		var generic_expert = VC_FSCF_read_cookie('generic-expert');
+		
+		return generic_expert != null && generic_expert == "true"
+	}
+	
 	/** 
 	 * Build the url of the widget, use the cookie to add a parameter regarding the user token.
 	 */
@@ -100,12 +109,21 @@
 		var divClass = "";
 		var uid = container.attr("vcita_uid");
 		var custom_style = "color:" + container.css("color") + ";";
-		var confirmation_token = VC_FSCF_get_confirmation_token(container, uid);
-		var url = "http://www.vcita.com/" + uid + "/buttons?invite=wp-fscf";
+		var url = "http://www.vcita.com/";
 		
+		// Build the url according to available paramters 
 		
-		if (confirmation_token != null && confirmation_token != "") {
-			url += "&confirmation_token=" + confirmation_token;
+		if (typeof uid !== 'undefined' && uid != "") {
+			var confirmation_token = VC_FSCF_get_confirmation_token(container, uid);
+			url += uid + "/buttons?invite=wp-fscf";
+			
+			if (confirmation_token != null && confirmation_token != "") {
+				url += "&confirmation_token=" + confirmation_token;
+			}
+			
+		} else {
+			var is_admin = "&expert=" + (VC_FSCF_is_admin(container) ? "true" : "false");
+			url += "/experts/buttons_preview?invite=wp-fscf" + is_admin;
 		}
 		
 		if (container.attr("custom_style") != null && container.attr("custom_style") != "") {
