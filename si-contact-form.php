@@ -2293,7 +2293,8 @@ if (isset($si_contact_form)) {
   
   add_action('admin_enqueue_scripts', array(&$si_contact_form,'vcita_add_admin_js'),1);
   
-  add_action('admin_notices', array(&$si_contact_form, 'si_contact_vcita_admin_warning'));
+  // disabled until a "dismiss" feature is ready
+  //add_action('admin_notices', array(&$si_contact_form, 'si_contact_vcita_admin_warning'));
 
   // adds "Settings" link to the plugin action page
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);
