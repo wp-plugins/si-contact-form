@@ -203,6 +203,9 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.5.1 =
+- (20 Mar 2012) - removed message “You still haven’t completed your Meeting Scheduler settings.” on admin pages.
+
 = 3.1.5 =
 - (20 Mar 2012) - vCita improved so your email address is not sent to VCita unless you type it in yourself when activating the service.
 - Email parameter removed from vCita banner URL.
