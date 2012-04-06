@@ -33,7 +33,9 @@ http://www.642weather.com/weather/scripts.php
                 if($si_contact_opt['ex_field'.$i.'_notes'] != '') {
                    $string .=  $this->ctf_notes($si_contact_opt['ex_field'.$i.'_notes']);
                 }
-                $string .=   '<fieldset '.$this->ctf_border_style.'>
+                $string .=   '<fieldset ';
+         $string .= ($si_contact_opt['ex_field'.$i.'_label_css'] != '') ? $this->si_contact_convert_css($si_contact_opt['ex_field'.$i.'_label_css']) : $this->ctf_border_style;
+         $string .= '>
         <legend>' . $si_contact_opt['ex_field'.$i.'_label'] ."</legend>\n";
                 $ex_fieldset = 1;
            break;
@@ -377,7 +379,7 @@ $string .=   "\n";
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '')
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
                 $string .= ' />
-                <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>'."\n";
+                <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>';
      $ex_cnt++;
   }
 

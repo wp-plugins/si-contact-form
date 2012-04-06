@@ -89,7 +89,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
      if ($form_num == 1)
         $form_num = '';
   }
-
+  
    // show form number links
    ?>
 
@@ -146,8 +146,17 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
   ';
  }// end preview forms
 
-
-  if ((isset($_POST['submit']) || isset($_POST['vcita_create'])) && !isset($_POST['ctf_action'])) {
+ $vcita_dismissed = false;
+ 
+ if ( isset($_GET['vcita_dismiss']) && $_GET['vcita_dismiss'] == "true") {
+     $si_contact_gb = $this->si_contact_get_options($form_num);
+ 
+     $si_contact_gb = $this->vcita_dismiss_pending_notification($si_contact_gb, $form_num);
+     
+     $vcita_dismissed = true;
+ }
+ 
+ if ((isset($_POST['submit']) || isset($_POST['vcita_create'])) && !isset($_POST['ctf_action'])) {
      check_admin_referer( 'si-contact-form-options_update'); // nonce
    // post changes to the options array
    $optionarray_gb_update = array(
@@ -156,6 +165,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'max_fields' =>  $si_contact_gb['max_fields'],
          'captcha_disable_session' =>   (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
          'vcita_auto_install' => trim($_POST['si_contact_vcita_auto_install']), /* --- vCita Global Settings --- */
+         'vcita_dismiss' => trim($_POST['si_contact_vcita_dismiss']), /* --- vCita Global Settings --- */
 		 'ctf_version' => trim($_POST['si_contact_ctf_version']),
          );
 
@@ -531,7 +541,12 @@ if ( !isset($_GET['show_form']) && !isset($_POST['fsc_action']) ) {
    
   /* --- vCita Header Error Messages - Start --- */
   
-  $this->vcita_print_admin_page_notification($si_contact_opt, $form_num, true);
+  if ($vcita_dismissed) {
+      // Put visible notification that vCita was removed.
+      echo "<div class='fsc-success'>vCita Meeting Scheduler has been disabled</div><div style='clear:both;display:block'></div>";
+  } else {
+      $this->vcita_print_admin_page_notification($si_contact_gb, $si_contact_opt, $form_num, true);
+  }
   
   /* --- vCita Header Error Messages - End --- */
   
@@ -750,7 +765,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
 <div style="text-align:left; display:none" id="si_contact_mike_challis_tip">
 <img src="<?php echo plugins_url( 'si-contact-form/si-contact-form.jpg' ); ?>" width="250" height="185" alt="Mike Challis" /><br />
 <?php _e('Mike Challis says: "Hello, I have spent hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
-<?php echo ' '; _e('Most people donate $3, $5, $10, $20, or more. Though no amount is too small. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
+<?php echo ' '; _e('Suggested donation: $25, $20, $15, $10, $5, $3. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also rate my plugin."', 'si-contact-form'); ?>
  <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a>.
 <br />
 <a style="cursor:pointer;" title="Close" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('Close this message', 'si-contact-form'); ?></a>
@@ -1919,6 +1934,7 @@ foreach ($time_format_array as $k => $v) {
 			<input name="si_contact_vcita_uid" type="hidden" value="<?php echo $si_contact_opt['vcita_uid']; ?>" />
 			<input name="si_contact_vcita_approved" type="hidden" value="<?php echo $si_contact_opt['vcita_approved']; ?>" />
 			<input name="si_contact_vcita_auto_install" type="hidden" value="<?php echo $si_contact_gb['vcita_auto_install']; ?>" />
+			<input name="si_contact_vcita_dismiss" type="hidden" value="<?php echo $si_contact_gb['vcita_dismiss']; ?>" />
 			<input name="si_contact_ctf_version" type="hidden" value="<?php echo $si_contact_gb['ctf_version']; ?>" />
 			<input name="si_contact_vcita_email" type="hidden" value="<?php echo $si_contact_opt['vcita_email']; ?>" />
 			

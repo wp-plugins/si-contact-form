@@ -203,6 +203,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- vCita message dismiss feature.
+
 = 3.1.5.2 =
 - (02 Apr 2012) - Fixed hidden shortcode settings broken since version 3.1.5
 
@@ -215,8 +217,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 - Added shortcode setting to show Form Page URL in the email message [si-contact-form form='1' hidden='form_page=1']
 
 = 3.1.4.1 =
-- (24 Feb 2012) - vCita is disabled by default.
-- Email will only be passed to vCita servers when you choose to enable vCita services. 
+- (24 Feb 2012) - Email will only be passed to vCita servers when you choose to enable vCita services. 
 
 = 3.1.4 =
 - (23 Feb 2012) - Fix bug in Extra field tags can be used in subject setting.

@@ -109,13 +109,17 @@ function vcita_add_admin_js() {
  * 2. New User - enable vCita if the auto install flag is set to true  
  * 3. Upgrade - enable vCita if wasn't previously disabled - Currently nothing is done
  */
-function vcita_validate_initialized_user($form_num, $form_params, $auto_install, $previous_version, $curr_version) {
+function vcita_validate_initialized_user($form_num, $form_params, $general_params, $previous_version) {
+    $auto_install = $general_params['vcita_auto_install'];
+    $curr_version = $general_params['ctf_version'];
+    $vcita_dismiss = $general_params['vcita_dismiss'];
+    
     // Check if a initializtion is required
     if (!isset($form_params['vcita_initialized']) || $form_params['vcita_initialized'] == 'false') {
         // New Install - Only enable vCita 
         // This will cause the notification about misconfigured installation be shown.
          
-        if ($auto_install == 'true') {
+        if ($auto_install == 'true' && $vcita_dismiss == "false") {
             $form_params['vcita_enabled'] = 'true';
         }
         
@@ -146,8 +150,8 @@ function vcita_validate_initialized_user($form_num, $form_params, $auto_install,
         
         $form_params['vcita_approved'] = 'true';
         update_option("si_contact_form$form_num", $form_params);
-    } 
-  
+    }
+    
     return $form_params;
 }
 
@@ -229,7 +233,6 @@ function vcita_disconnect_form($form_params) {
      $form_params['vcita_email']       = $si_contact_option_defaults['vcita_email'];
      $form_params['vcita_first_name']  = $si_contact_option_defaults['vcita_first_name'];
      $form_params['vcita_last_name']   = $si_contact_option_defaults['vcita_last_name'];
-     $form_params['vcita_enabled']     = 'false';
      $form_params['vcita_initialized'] = 'true'; // Don't re-enable next time
      
      // On Purpose keeping the confirmation_tokens
@@ -351,7 +354,7 @@ function vcita_add_config($params) {
                  <div style='margin-right:10px;float:left;'><a href='http://www.vcita.com/settings?section=configuration' target='_blank'>Edit Meeting Preferences</a></div>
                  <div style='margin-right:10px;float:left;'>
                      <input style='display:none;' id='vcita_disconnect_button' type='submit' name='vcita_disconnect'/>
-                    <a id='vcita_fscf_disconnected_button' href='#' onclick='document.formoptions.vcita_disconnect_button.click();return false;' target='_blank'>Disconnect</a>
+                    <a id='vcita_fscf_disconnected_button' href='#' onclick='document.formoptions.vcita_disconnect_button.click();return false;' target='_blank'>Change Account</a>
                  </div>";
 				 
 		} elseif (empty($confirmation_token)) {
@@ -360,13 +363,13 @@ function vcita_add_config($params) {
 			     <a href='http://www.vcita.com/users/send_password_instructions?activation=true&email=".$this->vcita_get_email($params)."' target='_blank'>Configure your account</a></div>
 			     <div style='margin-right:5px;float:left;'>
                     <input style='display:none;' id='vcita_disconnect_button' type='submit' name='vcita_disconnect'/>
-                   <a id='vcita_fscf_disconnected_button' href='#' onclick='document.formoptions.vcita_disconnect_button.click();return false;' target='_blank'>Disconnect</a>
+                   <a id='vcita_fscf_disconnected_button' href='#' onclick='document.formoptions.vcita_disconnect_button.click();return false;' target='_blank'>Change Account</a>
                 </div>";
 		} else {
 		    $vcita_curr_notifcation .= "
 		        <div style='margin-right:5px;float:left;'>
         		    <input style='display:none;' id='vcita_disconnect_button' type='submit' name='vcita_disconnect''/>
-		            <a id='vcita_fscf_disconnected_button' href='#' onclick='document.formoptions.vcita_disconnect_button.click();return false;' target='_blank'>Disconnect</a>
+		            <a id='vcita_fscf_disconnected_button' href='#' onclick='document.formoptions.vcita_disconnect_button.click();return false;' target='_blank'>Change Account</a>
 		        </div>";
 		}
 		
@@ -377,9 +380,17 @@ function vcita_add_config($params) {
 }
 
 /**
- * Print the notification for the admin page for the main plugins page or the fast secure page
+ * Print the notification for the admin page for the main plugins page or the fast secure page 
+ * 
  */
-function vcita_print_admin_page_notification($form_params = null, $form_num = "", $internal_page = false) {
+function vcita_print_admin_page_notification($si_contact_global_tmp = null, $form_params = null, $form_num = "", $internal_page = false) {
+    $form_used = isset($form_params["vcita_enabled"]) && $form_params["vcita_enabled"] == "true";
+     
+    // Don't do anything if dismissed
+    if (isset($si_contact_global_tmp["vcita_dismiss"]) && $si_contact_global_tmp["vcita_dismiss"] == "true" && !$form_used) {
+        return false;
+    }
+    
     $notification_created = false;
     $prefix = ($internal_page) ? "" : "<p><b>Fast Secure Contact Form - </b>";
     $suffix = ($internal_page) ? "" : "</p>"; 
@@ -388,18 +399,23 @@ function vcita_print_admin_page_notification($form_params = null, $form_num = ""
     $notification_created = true;
     
     $vcita_section_url = admin_url( "plugins.php?ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php#vCitaSettings");
+    $vcita_dismiss_url = admin_url( "plugins.php?vcita_dismiss=true&amp;ctf_form_num=$form_num&amp;page=si-contact-form/si-contact-form.php"); 
     
-    if (empty($form_params) || $this->vcita_should_notify_missing_details($form_params)) {
-        echo "<div id='si-fscf-vcita-warning' class='".$class."'>".$prefix."<b>You still haven't completed</b> your Meeting Scheduler settings. <a href='".$vcita_section_url."'>Click here to learn more</a>".$suffix."</div>";
+    // Show if empty, missing details, or internal page, vcita not used and upgrade 
+    if (empty($form_params) || 
+        $this->vcita_should_notify_missing_details($form_params) || 
+        ($internal_page && !$this->vcita_is_being_used() && $this->vcita_should_show_when_not_used($si_contact_global_tmp))) {
         
-    } elseif ($this->vcita_should_complete_registration($form_params)) {
+        echo "<div id='si-fscf-vcita-warning' class='".$class."'>".$prefix."You still haven't completed your Meeting Scheduler settings. <a href='".$vcita_section_url."'>Click here to learn more</a>, or <a href='".$vcita_dismiss_url."'>Dismiss.</a>".$suffix."</div>";
+        
+    } elseif ($internal_page && $this->vcita_should_complete_registration($form_params)) {
         $vcita_complete_url = "http://www.vcita.com/users/confirmation?force=true&non_avail=continue&confirmation_token=".$this->vcita_get_confirmation_token($form_params).$origin."' target='_blank";
         
-        if (!$internal_page) { // In case the warning happens in an outside page, direct to the vcita section so the real status can be checked.
+        if (!$internal_page) { // direct outside pages to vCita section (This currently won't happen but keeping for future use.) 
             $vcita_complete_url = $vcita_section_url;
         }
         
-        echo "<div id='si-fscf-vcita-warning' class='".$class."'>".$prefix."<b>You still havn't completed</b> your Meeting Scheduler settings. <a href='".$vcita_complete_url."'>Click here to configure</a>".$suffix."</div>";
+        echo "<div id='si-fscf-vcita-warning' class='".$class."'>".$prefix."Your Meeting Scheduler is active but some settings are still missing. <a href='".$vcita_complete_url."'>Click here to configure</a>, or <a href='".$vcita_section_url."'>here to disable</a>".$suffix."</div>";
         
     } elseif (!empty($params["vcita_last_error"])) {
         echo "<div class='".$class."'>".$prefix."<strong>"._e('Meeting Scheduler - '.$si_contact_opt["vcita_last_error"], 'si-contact-form')."</strong>".$suffix."</div>";
@@ -416,14 +432,14 @@ function vcita_print_admin_page_notification($form_params = null, $form_num = ""
  */
 function vcita_should_complete_registration($form_params) {
 	$vcita_confirmation_token = $this->vcita_get_confirmation_token($form_params);
-	return !empty($form_params['vcita_uid']) && $form_params['vcita_enabled'] == 'true' && !$form_params['vcita_confirmed'] && !empty($vcita_confirmation_token);
+	return isset($form_params['vcita_uid']) && !empty($form_params['vcita_uid']) && $form_params['vcita_enabled'] == 'true' && !$form_params['vcita_confirmed'] && !empty($vcita_confirmation_token);
 }
 
 /**
  * Check if a notification for the current form should be displayed to the user 
  */
 function vcita_should_notify_missing_details($form_params) {
-    return empty($form_params['vcita_uid']) && $form_params['vcita_enabled'] == 'true';
+    return isset($form_params['vcita_uid']) && empty($form_params['vcita_uid']) && $form_params['vcita_enabled'] == 'true';
 }
 
 
@@ -444,13 +460,23 @@ function si_contact_vcita_admin_warning() {
              $this->vcita_print_admin_page_notification();
               
          } else {
-             for ($i = 1; $i <= $si_contact_global_tmp['max_fields']; $i++) {
+             $vcita_never_used = true;
+             
+             for ($i = 1; $i <= $si_contact_global_tmp['max_forms']; $i++) {
                  $form_num = ($i == 1) ? "" : $i;
                  $si_form_params = get_option("si_contact_form$form_num");
                   
-                 if ($this->vcita_print_admin_page_notification($si_form_params, $form_num)) {
+                 if ($this->vcita_print_admin_page_notification($si_contact_global_tmp, $si_form_params, $form_num)) {
+                     $vcita_never_used = false;
                      return;
-                 }
+                     
+                 } else if ($this->vcita_is_form_used($si_form_params)) {
+                     $vcita_never_used = false;
+                 } 
+             }
+             
+             if ($vcita_never_used && $this->vcita_should_show_when_not_used($si_contact_global_tmp)) {
+                 $this->vcita_print_admin_page_notification($si_contact_global_tmp, null); // Put the general 
              }
          }
       }
@@ -533,6 +559,87 @@ function vcita_should_store_expert_confirmation_token($params) {
 	}
 }
 
+/**
+ * Flip the dismiss flag to true and make all the neccessary adjustments.
+ */
+function vcita_dismiss_pending_notification($global_params, $current_form_num) {
+    global $si_contact_opt;
+    
+    // Go over all the forms and disable the pending ones
+    for ($i = 1; $i <= $global_params['max_forms']; $i++) {
+        $form_num = ($i == 1) ? "" : $i;
+        
+        if ($current_form_num == $form_num) {
+            $si_form_params = $si_contact_opt;
+        } else {
+            $si_form_params = get_option("si_contact_form$form_num");
+        }
+
+        if ($this->vcita_should_complete_registration($si_form_params) || 
+            $this->vcita_should_notify_missing_details($si_form_params)) {
+            
+            $si_form_params['vcita_enabled'] = 'false';
+            $si_form_params['vcita_last_error'] = '';
+            $si_form_params['vcita_uid'] = '';
+            $si_form_params['vcita_first_name'] = '';
+            $si_form_params['vcita_last_name'] = '';
+            $si_form_params['vcita_email'] = '';
+            update_option("si_contact_form$form_num", $si_form_params);
+
+            // Also update the global variable
+            if ($current_form_num == $form_num) {
+                $si_contact_opt = $si_form_params;
+            }
+        }
+    }
+
+    // Put the dismiss flag
+    $global_params["vcita_dismiss"] = "true";
+    update_option("si_contact_form_gb", $global_params);
+    
+    return $global_params;
+}
+
+
+/**
+ * True / False if notification should be displayed if user didn't use vCita
+ * 
+ * True only if upgrade user (never had auto install vCita) 
+ */
+function vcita_should_show_when_not_used($global_params) {
+    return isset($global_params['vcita_auto_install']) && $global_params['vcita_auto_install'] == "false";
+}
+
+/**
+ * vCita form is used if one of the following:
+ *  
+ * - form enabled
+ * - has a vcita_uid 
+ * - has a confirmation_token -> in the past had a user
+ */
+function vcita_is_form_used($form_param) {
+    return ((isset($form_param["vcita_enabled"]) && $form_param["vcita_enabled"] == "true") || 
+            (isset($form_param["vcita_uid"]) && !empty($form_param["vcita_uid"])) || 
+            (isset($form_param["vcita_confirm_tokens"]) && !empty($form_param["vcita_confirm_tokens"])));
+}
+
+/**
+ * Check if vcita is used in any form
+ */
+function vcita_is_being_used() {
+    $si_contact_global_tmp = get_option("si_contact_form_gb");
+
+    for ($i = 1; $i <= $si_contact_global_tmp['max_forms']; $i++) {
+        $form_num = ($i == 1) ? "" : $i;
+        $si_form_params = get_option("si_contact_form$form_num");
+    
+        if ($this->vcita_is_form_used($si_form_params)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
 
 /* --- vCita Admin Functions - End --- */
 
@@ -1747,6 +1854,7 @@ function si_contact_get_options($form_num) {
          'max_fields' => '4',
          'captcha_disable_session' => 'true',
 		 'vcita_auto_install' => 'true', /* --- vCita Global Settings --- */
+         'vcita_dismiss' => 'false',
 		 'ctf_version' => $ctf_version
       );
 
@@ -1946,7 +2054,12 @@ function si_contact_get_options($form_num) {
   // Upgrade ! - Save state and check if the user already in vCita, happens only once.
   if (!isset($si_contact_gb['vcita_auto_install'])) {
     $si_contact_gb['vcita_auto_install'] = 'false';
-  } 
+  }
+
+  // Upgrade ! - Set initial value for dismiss flag
+  if (!isset($si_contact_gb['vcita_dismiss'])) {
+    $si_contact_gb['vcita_dismiss'] = 'false';
+  }
 
   /* --- vCita Migrate - End --- */
   
@@ -2040,10 +2153,9 @@ function si_contact_get_options($form_num) {
   
   $si_contact_opt = $this->vcita_validate_initialized_user($form_num, 
                                                            $si_contact_opt, 
-                                                           $si_contact_gb['vcita_auto_install'], 
-                                                           $ctf_previous_version,
-                                                           $si_contact_gb['ctf_version']);
-  
+                                                           $si_contact_gb, 
+                                                           $ctf_previous_version);
+
   /* --- vCita User Initialization - End --- */
   
   return $si_contact_gb;
@@ -2185,6 +2297,7 @@ div.star img {width:19px; height:19px; border-left:1px solid #fff; border-right:
 .fsc-error{background-color:#ffebe8;border-color:red;border-width:1px;border-style:solid;padding:5px;margin:5px 5px 20px;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
 .fsc-error a{color:#c00;}
 .fsc-notice{background-color:#ffffe0;border-color:#e6db55;border-width:1px;border-style:solid;padding:5px;margin:5px 5px 20px;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
+.fsc-success{background-color:#E6EFC2;border-color:#C6D880;border-width:1px;border-style:solid;padding:5px;margin:5px 5px 20px;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
 .vcita-label{width: 93px; display: block; float: left; margin-top: 4px;}
 </style>
 <!-- end Fast Secure Contact Form - admin settings page header code -->
@@ -2293,8 +2406,7 @@ if (isset($si_contact_form)) {
   
   add_action('admin_enqueue_scripts', array(&$si_contact_form,'vcita_add_admin_js'),1);
   
-  // disabled until a "dismiss" feature is ready
-  //add_action('admin_notices', array(&$si_contact_form, 'si_contact_vcita_admin_warning'));
+  add_action('admin_notices', array(&$si_contact_form, 'si_contact_vcita_admin_warning'));
 
   // adds "Settings" link to the plugin action page
   add_filter( 'plugin_action_links', array(&$si_contact_form,'si_contact_plugin_action_links'),10,2);
