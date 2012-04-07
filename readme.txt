@@ -204,6 +204,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 == Changelog ==
 
 - vCita message dismiss feature.
+- put # for the redirect URL and it will redirect to the same page the form is on regardless of the page.
 
 = 3.1.5.2 =
 - (02 Apr 2012) - Fixed hidden shortcode settings broken since version 3.1.5

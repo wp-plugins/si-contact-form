@@ -1084,6 +1084,8 @@ $ctf_thank_you .= '
 ';
 
 if ($ctf_redirect_enable == 'true') {
+  if ($ctf_redirect_url == '#')   // if you put # for the redirect URL it will redirect to the same page the form is on regardless of the page.
+    $ctf_redirect_url = $form_action_url;
 
     // redirect query string code
    if ($si_contact_opt['redirect_query'] == 'true') {
