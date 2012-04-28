@@ -203,6 +203,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Better detection of checkbox config errors.
+
 = 3.1.5.3 =
 - (11 Apr 2012) - vCita message dismiss feature.
 - put # for the redirect URL and it will redirect to the same page the form is on regardless of the page.

@@ -319,6 +319,11 @@ $exf_opts_array = array();
 $exf_opts_label = '';
 $exf_opts_inline = 0;
 $exf_array_test = trim($si_contact_opt['ex_field'.$i.'_label'] );
+if ( ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox' && preg_match('#(?<!\\\)\,#', $exf_array_test) ) ||
+($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox-multiple' && !preg_match("/;/", $exf_array_test))  ) {
+   $this->si_contact_error = 1;
+   $string .= $this->ctf_echo_if_error(__('Error: A checkbox field is not configured properly in settings.', 'si-contact-form'));
+}
 if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_test) ) {
        list($exf_opts_label, $value) = preg_split('#(?<!\\\)\,#',$exf_array_test); //string will be split by "," but "\," will be ignored
        $exf_opts_label   = trim(str_replace('\,',',',$exf_opts_label)); // "\," changes to ","
