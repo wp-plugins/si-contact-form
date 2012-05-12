@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.5.3
+Version: 3.1.5.4
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.5.3';
+$ctf_version = '3.1.5.4';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -2188,7 +2188,7 @@ function si_contact_start_session() {
     session_cache_limiter ('private, must-revalidate');
     session_start();
 	
-    //echo "session started ctf";
+   // echo "session started ctf";
   }
   
   if (is_admin()) {
@@ -2393,14 +2393,17 @@ if (isset($si_contact_form)) {
       add_action( 'wp_footer', array(&$si_contact_form,'si_contact_add_script'));
       add_action( 'admin_footer', array(&$si_contact_form,'si_contact_add_script'));
   }
-  
-  // start the PHP session - also used by vCita - start in any case
-  add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
+  //echo 'vcita:'.$si_contact_gb['vcita_dismiss'].' sess:'.$si_contact_gb['captcha_disable_session'];
+
+  if ( $si_contact_gb['captcha_disable_session'] == 'false' || $si_contact_gb['vcita_dismiss'] == 'false' ) {
+    // start the PHP session - used by CAPTCHA, also used by vCita
+    add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
+  }
   
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
   add_action('admin_head', array(&$si_contact_form,'si_contact_admin_head'),1);
-  
+
   add_action('wp_footer', array(&$si_contact_form,'vcita_si_contact_add_script'),1);
 
   // this is for downloading settings backup txt file.
