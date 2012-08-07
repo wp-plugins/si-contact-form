@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.5.4
+Version: 3.1.5.5
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.5.4';
+$ctf_version = '3.1.5.5';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -1256,7 +1256,7 @@ function si_contact_init_temp_dir($dir) {
     $dir = trailingslashit( $dir );
     // make the temp directory
 	wp_mkdir_p( $dir );
-	@chmod( $dir, 0733 );
+	//@chmod( $dir, 0733 );
 	$htaccess_file = $dir . '.htaccess';
 	if ( !file_exists( $htaccess_file ) ) {
 	   if ( $handle = @fopen( $htaccess_file, 'w' ) ) {
@@ -2381,7 +2381,6 @@ if (isset($si_contact_form)) {
   // only used for the no-session captcha setting
   $ctf_captcha_url = $captcha_url_cf  . '/temp/';
   $ctf_captcha_dir = $captcha_path_cf . '/temp/';
-  $si_contact_form->si_contact_init_temp_dir($ctf_captcha_dir);
 
   // si_contact initialize options
   add_action('init', array(&$si_contact_form, 'si_contact_init'),1);
@@ -2392,6 +2391,7 @@ if (isset($si_contact_form)) {
       // http://scribu.net/wordpress/optimal-script-loading.html
       add_action( 'wp_footer', array(&$si_contact_form,'si_contact_add_script'));
       add_action( 'admin_footer', array(&$si_contact_form,'si_contact_add_script'));
+      $si_contact_form->si_contact_init_temp_dir($ctf_captcha_dir);
   }
   //echo 'vcita:'.$si_contact_gb['vcita_dismiss'].' sess:'.$si_contact_gb['captcha_disable_session'];
 

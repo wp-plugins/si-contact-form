@@ -203,6 +203,9 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.5.5 =
+- (06 Aug 2012) - Fix so permissions of the captcha temp folder is not changed.
+
 = 3.1.5.4 =
 - (12 May 2012) - Better detection of checkbox config errors.
 
