@@ -147,7 +147,7 @@ if (count($contacts) > 1) {
           if (!empty($cid) && $cid == $k) {
                     $selected = ' selected="selected"';
           }
-          $string .= '                <option value="' . $this->ctf_output_string($k) . '"' . $selected . '>' . $this->ctf_output_string($v['CONTACT']) . '</option>' . "\n";
+          $string .= '                <option value="' . $k . '"' . $selected . '>' . $v['CONTACT'] . '</option>' . "\n";  
           $selected = '';
       }
 

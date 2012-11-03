@@ -2,9 +2,9 @@
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
-Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu, buddypress
+Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 2.8
-Tested up to: 3.4.1
+Tested up to: 3.4.2
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -13,7 +13,7 @@ A super customizable contact form that lets your visitors send you email. Blocks
 
 This plugin allows a webmaster to easily create and add contact forms to WordPress. The contact form will let the user send emails to a site's admin, and also send a meeting request to talk over phone or video. An administration panel is present, where the webmaster can create and preview unlimited forms. 
 
-Features a super easy admin panel, multi-form feature, autoresponder, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
+Features: easy form edit, multiple forms, confirmation emails, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block spammers. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
 
 * [FastSecureContactForm.com](http://www.fastsecurecontactform.com/)
 * [Download WordPress Plugin Version](http://downloads.wordpress.org/plugin/si-contact-form.zip)
@@ -79,7 +79,7 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.8+, WPMU, and BuddyPress (Wordpress 3.0+ is highly recommended)
+ * Works with Wordpress 2.8+ and WPMU (Wordpress 3.0+ is highly recommended)
  * PHP5 
  * PHP register_globals and safe_mode should be set to "Off".
 
@@ -202,6 +202,9 @@ You can learn more about vCita at [www.vcita.com](http://www.vcita.com?invite=FS
 If you have any question about the Schedule Meetings feature please contact support@vcita.com
 
 == Changelog ==
+
+= 3.1.5.6 =
+- (03 Nov 2012) - Fix HTML entity problem in multiple email list. 
 
 = 3.1.5.5 =
 - (06 Aug 2012) - Fix so permissions of the captcha temp folder is not changed.

@@ -735,12 +735,11 @@ _e('If you find this plugin useful to you, please consider making a small donati
 	</div>
 ';
 
- $banner_alt_2 = '<div style="width:385px;height:200px; float:left;background-color:white;padding: 10px 10px 10px 20px; border: 1px solid #ddd;">
+ $banner_alt_2 = '<div style="width:305px;height:300px; float:left;background-color:white;padding: 10px 10px 10px 20px; border: 1px solid #ddd;">
 		<div>
 			<h3>' . __('ThemeFuse Original WP Themes', 'si-contact-form') .'</h3>
-            '. sprintf(__('Try <a href="%s" target="_blank">ThemeFuse</a>, they make some amazing original WP themes that have a cool 1 click auto install feature and excellent after care support services. Check out some of their themes!', 'si-contact-form'), 'https://www.e-junkie.com/ecom/gb.php?cl=136641&c=ib&aff=148937') .'
 		</div>
-        <a href="https://www.e-junkie.com/ecom/gb.php?cl=136641&c=ib&aff=148937" target="_blank"><img title="'. $this->ctf_output_string(__('ThemeFuse', 'si-contact-form')) .'" alt="'.$this->ctf_output_string(__('ThemeFuse', 'si-contact-form')).'" src="http://themefuse.com/wp-content/themes/themefuse/images/campaigns/themefuse.jpg" width="375" height="85" /></a>
+        <a href="http://themefuse.com/amember/aff/go?r=6664&i=46"><img src="http://themefuse.com/amember/file/get/path/.banners.505787138b254/i/6664" border=0 alt="300x250" width="300" height="250"></a>
   </div>
  ';
  $banner_alt_num = rand (1,2);
