@@ -207,7 +207,8 @@ If you have any question about the Schedule Meetings feature please contact supp
 - (04 Dec 2012) - Fix uninitialized error on vCita code. 
 - Powered by link will open in new window. 
 - Added support for Fast Secure Contact Form Newsletter plugin addon.
-- Use correct comment_type = contact-form for Akismet API call. 
+- Use correct comment_type = contact-form for Akismet API call.
+- Improve visual style of rating stars. 
 
 = 3.1.5.6 =
 - (03 Nov 2012) - Fix HTML entity problem in multiple email list. 
