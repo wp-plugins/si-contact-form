@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.5.6
+Version: 3.1.5.7
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.5.6';
+$ctf_version = '3.1.5.7';
 
 /*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -2287,12 +2287,12 @@ if(isset($_GET['page']) && is_string($_GET['page']) && preg_match('/si-contact-f
 ?>
 <!-- begin Fast Secure Contact Form - admin settings page header code -->
 <style type="text/css">
-div.star-holder { position: relative; height:19px; width:100px; font-size:19px;}
-div.star {height: 100%; position:absolute; top:0px; left:0px; background-color: transparent; letter-spacing:1ex; border:none;}
-.star1 {width:20%;} .star2 {width:40%;} .star3 {width:60%;} .star4 {width:80%;} .star5 {width:100%;}
-.star.star-rating {background-color: #fc0;}
-.star img{display:block; position:absolute; right:0px; border:none; text-decoration:none;}
-div.star img {width:19px; height:19px; border-left:1px solid #fff; border-right:1px solid #fff;}
+div.fsc-star-holder { position: relative; height:19px; width:100px; font-size:19px;}
+div.fsc-star {height: 100%; position:absolute; top:0px; left:0px; background-color: transparent; letter-spacing:1ex; border:none;}
+.fsc-star1 {width:20%;} .fsc-star2 {width:40%;} .fsc-star3 {width:60%;} .fsc-star4 {width:80%;} .fsc-star5 {width:100%;}
+.fsc-star.fsc-star-rating {background-color: #fc0;}
+.fsc-star img{display:block; position:absolute; right:0px; border:none; text-decoration:none;}
+div.fsc-star img {width:19px; height:19px; border-left:1px solid #fff; border-right:1px solid #fff;}
 #main fieldset {border: 1px solid #B8B8B8; padding:19px; margin: 0 0 20px 0;background: #F1F1F1; font:13px Arial, Helvetica, sans-serif;}
 .form-tab {background:#F1F1F1; display:block; font-weight:bold; padding:7px 20px; float:left; font-size:13px; margin-bottom:-1px; border:1px solid #B8B8B8; border-bottom:none;}
 .submit {padding:7px; margin-bottom:15px;}
@@ -2352,8 +2352,57 @@ function si_contact_add_script(){
    wp_print_scripts('si_contact_form');
 }
 
+/**
+ * Remotely fetch, cache, and display HTML ad for the Fast Secure Contact Form Newsletter plugin addon.
+ * To use, either add kws_get_remote_ad() to the plugin, or
+ * add `do_action('example_do_action');` where the ad should be, then
+ * `add_action('example_do_action', 'kws_get_remote_ad');` elsewhere in the plugin.
+ */
+function kws_get_remote_ad() {
+
+    // The ad is stored locally for 30 days as a transient. See if it exists.
+    $cache = function_exists('get_site_transient') ? get_site_transient('fscf_kws_ad') : get_transient('fscf_kws_ad');
+
+    // If it exists, use that (so we save some request time), unless ?cache is set.
+    if(!empty($cache) && !isset($_REQUEST['cache'])) { echo $cache; return; }
+
+    // Grab the FSCF settings for version info
+    $si_contact_gb = get_option("si_contact_form_gb");
+
+    // Get the advertisement remotely. An encrypted site identifier, the language of the site, and the version of the FSCF plugin will be sent to katz.co
+    $response = wp_remote_post('http://katz.co/ads/', array('timeout' => 45,'body' => array('siteid' => sha1(site_url()), 'language' => get_bloginfo('language'), 'version' => (isset($si_contact_gb) && isset($si_contact_gb['ctf_version'])) ? $si_contact_gb['ctf_version'] : null )));
+
+    // If it was a successful request, process it.
+    if(!is_wp_error($response)) {
+
+        // Basically, remove <script>, <iframe> and <object> tags for security reasons
+        $body = strip_tags(trim(rtrim($response['body'])), '<b><strong><em><i><span><u><ul><li><ol><div><attr><cite><a><style><blockquote><q><p><form><br><meta><option><textarea><input><select><pre><code><s><del><small><table><tbody><tr><th><td><tfoot><thead><u><dl><dd><dt><col><colgroup><fieldset><address><button><aside><article><legend><label><source><kbd><tbody><hr><noscript><link><h1><h2><h3><h4><h5><h6><img>');
+
+        // If the result is empty, cache it for 8 hours. Otherwise, cache it for 30 days.
+        $cache_time = empty($response['body']) ? floatval(60*60*8) : floatval(60*60*30);
+
+        if(function_exists('set_site_transient')) {
+            set_site_transient('fscf_kws_ad', $body, $cache_time);
+        } else {
+            set_transient('fscf_kws_ad', $body, $cache_time);
+        }
+
+        // Print the results.
+        echo  $body;
+    }
+}
+
+function fscf_enqueue_scripts() {
+ // used when clicking the link to install the Fast Secure Contact Form Newsletter plugin addon.
+  if(isset($_GET['page']) && is_string($_GET['page']) && preg_match('/si-contact-form.php$/',$_GET['page']) ) {
+    wp_enqueue_script('thickbox');
+    wp_enqueue_style('thickbox');
+  }
+}
+
 } // end of class
 } // end of if class
+
 
 // Pre-2.8 compatibility
 if ( ! function_exists( 'esc_html' ) ) {
@@ -2395,7 +2444,8 @@ if (isset($si_contact_form)) {
   }
   //echo 'vcita:'.$si_contact_gb['vcita_dismiss'].' sess:'.$si_contact_gb['captcha_disable_session'];
 
-  if ( $si_contact_gb['captcha_disable_session'] == 'false' || $si_contact_gb['vcita_dismiss'] == 'false' ) {
+
+  if ( $si_contact_gb['captcha_disable_session'] == 'false' || (isset($si_contact_gb['vcita_dismiss']) && $si_contact_gb['vcita_dismiss'] == 'false') )  {
     // start the PHP session - used by CAPTCHA, also used by vCita
     add_action('init', array(&$si_contact_form,'si_contact_start_session'),2);
   }
@@ -2404,11 +2454,14 @@ if (isset($si_contact_form)) {
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
   add_action('admin_head', array(&$si_contact_form,'si_contact_admin_head'),1);
 
+
   add_action('wp_footer', array(&$si_contact_form,'vcita_si_contact_add_script'),1);
 
   // this is for downloading settings backup txt file.
   add_action('admin_init', array(&$si_contact_form,'si_contact_backup_download'),1);
-  
+
+  add_action('admin_init', array(&$si_contact_form,'fscf_enqueue_scripts'),2);
+
   add_action('admin_enqueue_scripts', array(&$si_contact_form,'vcita_add_admin_js'),1);
   
   add_action('admin_notices', array(&$si_contact_form, 'si_contact_vcita_admin_warning'));

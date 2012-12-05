@@ -658,13 +658,13 @@ if (function_exists('get_transient')) {
 ?>
 
       <?php if ( ! empty($api->rating) ) : ?>
-	  <div class="star-holder" title="<?php echo $this->ctf_output_string(sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings))); ?>">
-	  <div class="star star-rating" style="width: <?php echo $this->ctf_output_string($api->rating) ?>px"></div>
-	  <div class="star star5"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star4"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star3"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star2"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
-	  <div class="star star1"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
+	  <div class="fsc-star-holder" title="<?php echo $this->ctf_output_string(sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings))); ?>">
+	  <div class="fsc-star fsc-star-rating" style="width: <?php echo $this->ctf_output_string($api->rating) ?>px"></div>
+	  <div class="fsc-star fsc-star5"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('5 stars', 'si-contact-form') ?>" /></div>
+	  <div class="fsc-star fsc-star4"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('4 stars', 'si-contact-form') ?>" /></div>
+	  <div class="fsc-star fsc-star3"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('3 stars', 'si-contact-form') ?>" /></div>
+	  <div class="fsc-star fsc-star2"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
+	  <div class="fsc-star fsc-star1"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
 	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
       <br />
@@ -700,6 +700,9 @@ if (isset($api->version)) {
 <?php
 // action hook for database extension menu
 do_action( 'fsctf_menu_links' );
+
+// Remotely fetch, cache, and display HTML ad for the Fast Secure Contact Form Newsletter plugin addon.
+$this->kws_get_remote_ad();
 
 if ($si_contact_gb['donated'] != 'true') {
   ?>

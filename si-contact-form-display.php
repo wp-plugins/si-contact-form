@@ -454,7 +454,7 @@ $string .= '
 if ($si_contact_opt['enable_credit_link'] == 'true') {
   $this->ctf_powered_by_style = $this->si_contact_convert_css($si_contact_opt['powered_by_style']);
 $string .= '
-<p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/">'.__('Fast Secure Contact Form', 'si-contact-form'). '</a></p>
+<p '.$this->ctf_powered_by_style.'>'.__('Powered by', 'si-contact-form'). ' <a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank">'.__('Fast Secure Contact Form', 'si-contact-form'). '</a></p>
 ';
 }
 
