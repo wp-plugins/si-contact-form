@@ -686,6 +686,11 @@ if (isset($api->version)) {
 }
 ?>
 
+<p>Good news! A major update is being worked on. The Fast Secure Contact Form 4.0 project began in late August 2012 and is making great progress. Read about the changes here:<br />
+<a href="http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports" target="_blank">Fast Secure Contact Form 4.0 project reports</a></p>
+<p><strong>How you can help with the new 4.0 verion:</strong> <a href="http://www.fastsecurecontactform.com/donate" target="_blank">Donate to the project</a>, and/or contribute your ideas in the <a href="http://wordpress.org/support/topic/working-on-a-40-version" target="_blank">Working on a 4.0 Version</a> post.
+</p>
+
 <p>
 <?php echo __('Version:', 'si-contact-form'). ' '.$ctf_version.$fsc_update; ?> |
 <a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |

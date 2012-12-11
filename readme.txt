@@ -23,6 +23,12 @@ Features: easy form edit, multiple forms, confirmation emails, no templates to m
 
 If you find this plugin useful to you, please consider [__making a small donation__](http://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - [__Mike Challis__](http://profiles.wordpress.org/users/MikeChallis/)
 
+= Good news! A major update is being worked on =
+ 
+The Fast Secure Contact Form 4.0 project began in late August 2012 and is making great progress. Read about the changes here:
+[Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-report)
+How you can help with the new 4.0 verion: [Donate to the project](http://www.fastsecurecontactform.com/donate), and/or contribute your ideas in the [Working on a 4.0 Version](http://wordpress.org/support/topic/working-on-a-40-version) post.
+
 Features:
 --------
  * Super easy customizable Options from Admin settings page.
@@ -202,6 +208,9 @@ You can learn more about vCita at [www.vcita.com](http://www.vcita.com?invite=FS
 If you have any question about the Schedule Meetings feature please contact support@vcita.com
 
 == Changelog ==
+
+= 3.1.5.8 =
+- (11 Dec 2012) - added announcement about the Fast Secure Contact Form 4.0 project.
 
 = 3.1.5.7 =
 - (04 Dec 2012) - Fix uninitialized error on vCita code. 
