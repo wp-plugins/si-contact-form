@@ -26,7 +26,7 @@ If you find this plugin useful to you, please consider [__making a small donatio
 = Good news! A major update is being worked on =
  
 The Fast Secure Contact Form 4.0 project began in late August 2012 and is making great progress. Read about the changes here:
-[Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-report)
+[Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports)
 How you can help with the new 4.0 verion: [Donate to the project](http://www.fastsecurecontactform.com/donate), and/or contribute your ideas in the [Working on a 4.0 Version](http://wordpress.org/support/topic/working-on-a-40-version) post.
 
 Features:
