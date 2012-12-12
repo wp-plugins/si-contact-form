@@ -26,7 +26,7 @@ If you find this plugin useful to you, please consider [__making a small donatio
 = Good news! A major update is being worked on =
  
 The Fast Secure Contact Form 4.0 project began in late August 2012 and is making great progress. Read about the changes here:
-[Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports)
+[Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports). 
 How you can help with the new 4.0 verion: [Donate to the project](http://www.fastsecurecontactform.com/donate), and/or contribute your ideas in the [Working on a 4.0 Version](http://wordpress.org/support/topic/working-on-a-40-version) post.
 
 Features:
@@ -40,7 +40,7 @@ Features:
  * Supports sending mail to multiple departments.[See FAQ](http://www.fastsecurecontactform.com/tip-form-preview)
  * Optional - redirect to any URL after message sent.
  * Optional - posted data can be sent as a query string on the redirect URL. [See faq](http://www.fastsecurecontactform.com/sending-data-by-query-string)
- * Optional - autoresponder E-mail message.[See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
+ * Optional - confirmation E-mail message.[See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
  * Valid coding for HTML, XHTML, HTML STRICT, Section 508, and WAI Accessibility.
  * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
@@ -66,8 +66,7 @@ Scheduling, Meeting and Payments via vCita:
  * Send a payment request once a meeting is completed or secure a fee in advance according to your hourly rate
 
 Security:
---------
- * It has very tight security, stops all automated spammers.
+---------
  * Akismet spam protection support.
  * Spam checks E-mail address input from common spammer tactics...
 prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection attempts to spam the world.
