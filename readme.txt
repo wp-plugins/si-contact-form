@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 2.8
-Tested up to: 3.4.2
+Tested up to: 3.5
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -84,7 +84,7 @@ Captcha Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.8+ and WPMU (Wordpress 3.0+ is highly recommended)
+ * Works with Wordpress 2.8+ and WPMU (Wordpress 3.5+ is highly recommended)
  * PHP5 
  * PHP register_globals and safe_mode should be set to "Off".
 
