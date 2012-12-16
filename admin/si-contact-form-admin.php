@@ -666,7 +666,7 @@ if (function_exists('get_transient')) {
 	  <div class="fsc-star fsc-star2"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
 	  <div class="fsc-star fsc-star1"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
-	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/extend/plugins/<?php echo $api->slug ?>/"> <?php _e('rate', 'si-contact-form') ?></a></small>
+	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/si-contact-form"> <?php _e('rate', 'si-contact-form') ?></a></small>
       <br />
     <?php endif;
 
