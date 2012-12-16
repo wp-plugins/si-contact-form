@@ -695,7 +695,7 @@ if (isset($api->version)) {
 <?php echo __('Version:', 'si-contact-form'). ' '.$ctf_version.$fsc_update; ?> |
 <a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/faq-wordpress-version" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a> |
-<a href="http://wordpress.org/extend/plugins/si-contact-form/" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
+<a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
 <a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php _e('Free PHP Scripts', 'si-contact-form'); ?></a> |
@@ -747,7 +747,7 @@ _e('If you find this plugin useful to you, please consider making a small donati
 		<div>
 			<h3>' . __('ThemeFuse Original WP Themes', 'si-contact-form') .'</h3>
 		</div>
-        <a href="http://themefuse.com/amember/aff/go?r=6664&i=46"><img src="http://themefuse.com/amember/file/get/path/.banners.505787138b254/i/6664" border=0 alt="300x250" width="300" height="250"></a>
+        <a href="http://themefuse.com/amember/aff/go?r=6664&i=46" target="_blank"><img src="http://themefuse.com/amember/file/get/path/.banners.505787138b254/i/6664" border=0 alt="300x250" width="300" height="250"></a>
   </div>
  ';
  $banner_alt_num = rand (1,2);
@@ -1508,9 +1508,6 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <div style="text-align:left; display:none" id="si_contact_captcha_no_trans_tip">
         <?php _e('Sometimes fixes missing text on the CAPTCHA image. If this does not fix missing text, your PHP server is not compatible with the CAPTCHA functions. You can disable CAPTCHA or have your web server fixed.', 'si-contact-form') ?>
         </div>
-        <br />
-
-        <a href="<?php echo "$captcha_url_cf/test/index.php"; ?>" target="_new"><?php _e('Test if your PHP installation will support the CAPTCHA', 'si-contact-form'); ?></a>
 
 </fieldset>
 
