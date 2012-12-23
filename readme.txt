@@ -208,6 +208,10 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.5.9 =
+- (23 Dec 2012) - fix form action URL is now compatible with qtranslate plugin with multi-lingual pages, so the correct /de/ /en/ language url is used.
+- fixed checkbox-multiple alignment issue on some themes. 
+
 = 3.1.5.8 =
 - (11 Dec 2012) - added announcement about the Fast Secure Contact Form 4.0 project.
 

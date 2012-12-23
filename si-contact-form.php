@@ -3,14 +3,14 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.5.8
+Version: 3.1.5.9
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.5.8';
+$ctf_version = '3.1.5.9';
 
-/*  Copyright (C) 2008-2012 Mike Challis  (http://www.fastsecurecontactform.com/contact)
+/*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -661,7 +661,7 @@ function vcita_si_contact_add_script(){
 //<![CDATA[
 var vicita_fscf_style = "<!-- begin Fast Secure Contact Form - vCita scheduler page header -->" +  
 "<style type='text/css'>" + 
-".vcita-widget-right { float: left !important; }\n" + 
+".vcita-widget-right { float: left !important; } " +
 ".vcita-widget-bottom { float: none !important; clear:both;}" + 
 "</style>" + 
 "<!-- end Fast Secure Contact Form - vCita scheduler page header -->";
@@ -784,13 +784,16 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
                  $this->ctf_output_string( __('Administer site', 'si-contact-form')) => 'level_10'
                  );
         // print the <select> and loop through <options>
-        echo '<select name="' . $select_name . '" id="' . $select_name . '">' . "\n";
+        echo '<select name="' . $select_name . '" id="' . $select_name . '">
+';
         foreach ($choices as $text => $capability) :
                 if ($capability == $checked_value) $checked = ' selected="selected" ';
-                echo "\t". '<option value="' . $capability . '"' . $checked . ">$text</option> \n";
+                echo '    <option value="' . $capability . '"' . $checked . ">$text</option>
+";
                 $checked = '';
         endforeach;
-        echo "\t</select>\n";
+        echo "    </select>
+";
 } // end function si_contact_captcha_perm_dropdown
 
 // this function prints the contact form
@@ -911,12 +914,16 @@ $ctf_sitename = get_option('blogname');
 
 $this->ctf_domain = $blogdomain;
 
+if(function_exists(qtrans_convertURL))
+      // compatible with qtranslate plugin
+      // In case of multi-lingual pages, the /de/ /en/ language url is used.
+      $form_action_url = qtrans_convertURL($_SERVER['REQUEST_URI']);
+else
+      $form_action_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
 // set the type of request (SSL or not)
-if ( is_ssl() ) {
-    $form_action_url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-} else {
-    $form_action_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-}
+if ( is_ssl() )
+      $form_action_url = preg_replace('|http://|', 'https://', $form_action_url);
 
 // Make sure the form was posted from your host name only.
 // This is a security feature to prevent spammers from posting from files hosted on other domain names
@@ -1155,7 +1162,8 @@ $ctf_thank_you .= '
 
      // The $ctf_welcome_intro is what gets printed when the contact form is first presented.
      // It is not printed when there is an input error and not printed after the form is completed
-     $ctf_welcome_intro = "\n". $si_contact_opt['welcome'];
+     $ctf_welcome_intro = "
+".$si_contact_opt['welcome'];
 
      // welcome intro is printed here
      $string .= $ctf_welcome_intro;
@@ -1525,9 +1533,11 @@ $string .= '>
     $string .= ($si_contact_opt['tooltip_captcha'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_captcha'] ) : $this->ctf_output_string(__('CAPTCHA Image', 'si-contact-form'));
     $string .='" title="';
     $string .= ($si_contact_opt['tooltip_captcha'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_captcha'] ) : $this->ctf_output_string(__('CAPTCHA Image', 'si-contact-form'));
-    $string .= '" />'."\n";
+    $string .= '" />
+';
     if($capt_disable_sess)
-        $string .= '    <input id="si_code_ctf_'.$form_id_num.'" type="hidden" name="si_code_ctf_'.$form_id_num.'" value="'.$prefix.'" />'."\n";
+        $string .= '    <input id="si_code_ctf_'.$form_id_num.'" type="hidden" name="si_code_ctf_'.$form_id_num.'" value="'.$prefix.'" />
+';
 
     $ctf_audio_type = 'noaudio';
     //Audio feature is disabled by Mike Challis until further notice because a proof of concept code CAPTCHA solving exploit was released - Security Advisory - SOS-11-007.
@@ -1558,7 +1568,8 @@ $string .= '>
          $securimage_play_url = $captcha_url_cf.'/securimage_play.php?ctf_form_num='.$form_id_num;
          if($capt_disable_sess)
                 $securimage_play_url = $captcha_url_cf.'/securimage_play.php?prefix='.$prefix;
-         $string .= '    <div id="si_audio_ctf'.$form_id_num.'">'."\n";
+         $string .= '    <div id="si_audio_ctf'.$form_id_num.'">
+';
          $string .= '      <a id="si_aud_ctf'.$form_id_num.'" href="'.$securimage_play_url.'" rel="nofollow" title="';
          $string .= ($si_contact_opt['tooltip_audio'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_audio'] ) : $this->ctf_output_string(__('CAPTCHA Audio', 'si-contact-form'));
          $string .= '">
@@ -1567,16 +1578,20 @@ $string .= '>
          $string .= '" ';
          $string .= ($si_contact_opt['audio_image_style'] != '') ? 'style="' . $this->ctf_output_string( $si_contact_opt['audio_image_style'] ).'"' : '';
          $string .= ' onclick="this.blur();" /></a>
-     </div>'."\n";
+     </div>
+';
      }
    }
-         $string .= '    <div id="si_refresh_ctf'.$form_id_num.'">'."\n";
+         $string .= '    <div id="si_refresh_ctf'.$form_id_num.'">
+';
          $string .= '      <a href="#" rel="nofollow" title="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_refresh'] ) : $this->ctf_output_string(__('Refresh Image', 'si-contact-form'));
          if($capt_disable_sess) {
-           $string .= '" onclick="si_contact_captcha_refresh(\''.$form_id_num.'\',\''.$ctf_audio_type.'\',\''.$securimage_url.'\',\''.$securimage_show_rf_url.'\'); return false;">'."\n";
+           $string .= '" onclick="si_contact_captcha_refresh(\''.$form_id_num.'\',\''.$ctf_audio_type.'\',\''.$securimage_url.'\',\''.$securimage_show_rf_url.'\'); return false;">
+';
          }else{
-           $string .= '" onclick="document.getElementById(\'si_image_ctf'.$form_id_num.'\').src = \''.$securimage_show_url.'&amp;sid=\''.' + Math.random(); return false;">'."\n";
+           $string .= '" onclick="document.getElementById(\'si_image_ctf'.$form_id_num.'\').src = \''.$securimage_show_url.'&amp;sid=\''.' + Math.random(); return false;">
+';
          }
          $string .= '      <img src="'.$captcha_url_cf.'/images/refresh.png" width="22" height="20" alt="';
          $string .= ($si_contact_opt['tooltip_refresh'] != '') ? $this->ctf_output_string( $si_contact_opt['tooltip_refresh'] ) : $this->ctf_output_string(__('Refresh Image', 'si-contact-form'));
@@ -1606,7 +1621,8 @@ function ctf_echo_if_error($this_error){
   if ($this->si_contact_error) {
     if (!empty($this_error)) {
          return '
-         <div '.$this->ctf_error_style.'>'. $this_error . '</div>'."\n";
+         <div '.$this->ctf_error_style.'>'. $this_error . '</div>
+';
     }
   }
 } // end function ctf_echo_if_error
