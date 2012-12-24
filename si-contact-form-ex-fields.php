@@ -391,7 +391,7 @@ $string .=   "
 
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '')
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
-                $string .= ' /><label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>';
+                $string .= ' /> <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>';
      $ex_cnt++;
   }
 
@@ -425,8 +425,7 @@ $string .=   "
 
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '')
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
-                $string .= ' />
-                <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
+                $string .= ' /> <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'">' . $si_contact_opt['ex_field'.$i.'_label'] . $ex_req_field_ind.'</label>
         </div>
 ';
 
@@ -498,7 +497,7 @@ foreach ($exf_opts_array as $k) {
  $string .= '           <span style="white-space:nowrap;"><input type="radio" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'" name="si_contact_ex_field'.$i.'" value="'.$this->ctf_output_string($k).'"'.$selected;
                 if($si_contact_opt['ex_field'.$i.'_attributes'] != '') 
                   $string .= ' '.$si_contact_opt['ex_field'.$i.'_attributes'];
-  $string .= ' /><label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>';
+  $string .= ' /> <label style="display:inline;" for="si_contact_ex_field'.$form_id_num.'_'.$i.'_'.$ex_cnt.'">' . $k .'</label></span>';
  $selected = '';
  $ex_cnt++;
 }

@@ -74,13 +74,13 @@ prevents spammer forcing to:, cc:, bcc:, newlines, and other E-mail injection at
  * Filters all form inputs from HTML and other nasties.
  * E-mail message footer shows blog username(if logged on), Date/Time timestamp, IP address, and user agent (browser version) of user who contacted you.
 
-Captcha Image Support:
+CAPTCHA Image Support:
 ---------------------
  * Uses Open-source free PHP CAPTCHA library by www.phpcaptcha.org (customized version included)
  * Abstract background with multi colored, angled, and transparent text
  * Arched lines through text
- * Refresh button to reload captcha if you cannot read it
- * CAPTCHA can be disabled in Options
+ * Refresh button to reload CAPTCHA
+ * CAPTCHA can be disabled on form edit page
 
 Requirements/Restrictions:
 -------------------------
@@ -162,7 +162,7 @@ The following translations are included in the download zip file:
 
 = Can I provide a translation? =
 
-Of course! 
+Yes! 
 How to translate Fast Secure Contact Form for WordPress
 http://www.fastsecurecontactform.com/how-to-translate
 
