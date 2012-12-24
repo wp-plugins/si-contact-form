@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.5.9
+Version: 3.1.6
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.5.9';
+$ctf_version = '3.1.6';
 
 /*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -914,7 +914,7 @@ $ctf_sitename = get_option('blogname');
 
 $this->ctf_domain = $blogdomain;
 
-if(function_exists(qtrans_convertURL))
+if(function_exists('qtrans_convertURL'))
       // compatible with qtranslate plugin
       // In case of multi-lingual pages, the /de/ /en/ language url is used.
       $form_action_url = qtrans_convertURL($_SERVER['REQUEST_URI']);
