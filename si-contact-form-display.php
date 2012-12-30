@@ -292,7 +292,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($si_contact_error_email).'
          '.$this->ctf_echo_if_error($si_contact_error_double_email).'
-                <input '.$this->ctf_field_style.' type="email" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_email2_'.$form_id_num.'">';
@@ -303,7 +303,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
                 <span style="font-size:x-small; font-weight:normal;">';
      $string .= ($si_contact_opt['title_email2_help'] != '') ? $si_contact_opt['title_email2_help'] : __('Please enter your E-mail Address a second time.', 'si-contact-form');
      $string .= '</span><br />
-                 <input '.$this->ctf_field_style.' type="email" id="si_contact_email2_'.$form_id_num.'" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+                 <input '.$this->ctf_field_style.' type="text" id="si_contact_email2_'.$form_id_num.'" name="si_contact_email2" value="' . $this->ctf_output_string($email2) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
 ';
 
@@ -317,7 +317,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
      $string .= '</label>
         </div>
         <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($si_contact_error_email).'
-                <input '.$this->ctf_field_style.' type="email" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
+                <input '.$this->ctf_field_style.' type="text" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . $this->ctf_output_string($email) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />
         </div>
 ';
   }
