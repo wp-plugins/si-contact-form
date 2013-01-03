@@ -208,6 +208,12 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Jan 03 2013 Many security improvements and code cleanup.
+- Autoresponder email is renamed to Confirmation email.
+- Border title can now be disabled by deleting the "Border title" setting.
+- Removed geekmail mail send function, you can still use WordPress or PHP.
+- Email field is now type=text instead of type=email because too many themes did not style for it. Version 4.0 will have an option to select this.
+
 = 3.1.6 =
 - (23 Dec 2012) - fix form action URL is now compatible with qtranslate plugin with multi-lingual pages, so the correct /de/ /en/ language url is used.
 - fixed checkbox-multiple alignment issue on some themes. 
