@@ -422,6 +422,12 @@ if ($have_attach){
 			if ( 0 == strcasecmp( $captcha_code, $captcha_word ) ) {
               // captcha was matched
               @unlink ($ctf_captcha_dir . $prefix . '.php');
+              // some empty field and time based honyepot traps for spam bots
+              $hp_check = $this->si_contact_check_honeypot("$form_id_num");
+              if($hp_check != 'ok') {
+                  $this->si_contact_error = 1;
+                  $si_contact_error_captcha =  ($si_contact_opt['error_spambot'] != '') ? $si_contact_opt['error_spambot'] : __('Possible spam bot.', 'si-contact-form');
+              }
 			} else {
               $this->si_contact_error = 1;
               $si_contact_error_captcha = ($si_contact_opt['error_captcha_wrong'] != '') ? $si_contact_opt['error_captcha_wrong'] : __('That CAPTCHA was incorrect.', 'si-contact-form');
@@ -457,6 +463,12 @@ if ($have_attach){
            $valid = $img->check("$captcha_code");
            // Check, that the right CAPTCHA password has been entered, display an error message otherwise.
            if($valid == true) {
+              // some empty field and time based honyepot traps for spam bots
+              $hp_check = $this->si_contact_check_honeypot("$form_id_num");
+              if($hp_check != 'ok') {
+                  $this->si_contact_error = 1;
+                  $si_contact_error_captcha =  ($si_contact_opt['error_spambot'] != '') ? $si_contact_opt['error_spambot'] : __('Possible spam bot.', 'si-contact-form');
+              }
              // ok can continue
            } else {
               $this->si_contact_error = 1;
@@ -466,6 +478,15 @@ if ($have_attach){
      }
    } // end if captcha use session
  } // end if enable captcha
+
+ if (!$this->si_contact_error && !$this->isCaptchaEnabled() ) { // skip if there are already form erros, if captcha is enabled this check is done in the captcha test
+    // some empty field and time based honyepot traps for spam bots
+    $hp_check = $this->si_contact_check_honeypot("$form_id_num");
+    if($hp_check != 'ok') {
+        $this->si_contact_error = 1;
+        $si_contact_error_captcha =  ($si_contact_opt['error_spambot'] != '') ? $si_contact_opt['error_spambot'] : __('Possible spam bot.', 'si-contact-form');
+    }
+ }
 
   if (!$this->si_contact_error) {
      // ok to send the email, so prepare the email message

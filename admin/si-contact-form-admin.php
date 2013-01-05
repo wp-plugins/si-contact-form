@@ -210,6 +210,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'enable_audio_flash' =>        (isset( $_POST['si_contact_enable_audio_flash'] ) ) ? 'true' : 'false',
          'captcha_perm' =>              (isset( $_POST['si_contact_captcha_perm'] ) ) ? 'true' : 'false',
          'captcha_perm_level' =>     strip_tags($_POST['si_contact_captcha_perm_level']),
+         'honeypot_enable' =>           (isset( $_POST['si_contact_honeypot_enable'] ) ) ? 'true' : 'false',
          'redirect_enable' =>           (isset( $_POST['si_contact_redirect_enable'] ) ) ? 'true' : 'false',
          'redirect_seconds' =>( is_numeric(trim($_POST['si_contact_redirect_seconds'])) && trim($_POST['si_contact_redirect_seconds']) < 61 ) ? absint(trim($_POST['si_contact_redirect_seconds'])) : $si_contact_option_defaults['redirect_seconds'],
          'redirect_url' =>               ( trim($_POST['si_contact_redirect_url']) != '' ) ? strip_tags(trim($_POST['si_contact_redirect_url'])) : $si_contact_option_defaults['redirect_url'], // use default if empty
@@ -306,6 +307,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'error_input'          => strip_tags(trim($_POST['si_contact_error_input'])),
          'error_captcha_blank'  => strip_tags(trim($_POST['si_contact_error_captcha_blank'])),
          'error_captcha_wrong'  => strip_tags(trim($_POST['si_contact_error_captcha_wrong'])),
+         'error_spambot'        => strip_tags(trim($_POST['si_contact_error_spambot'])),
          'error_correct'        => strip_tags(trim($_POST['si_contact_error_correct'])),
          'vcita_enabled'        => (isset($_POST['si_contact_vcita_enable_meeting_scheduler']) ) ? 'true' : 'false', /* --- vCita Parameters --- */
          'vcita_approved'		=> (isset($_POST['si_contact_vcita_approved']) ) ? 'true' : 'false',
@@ -1509,6 +1511,15 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <div style="text-align:left; display:none" id="si_contact_captcha_no_trans_tip">
         <?php _e('Sometimes fixes missing text on the CAPTCHA image. If this does not fix missing text, your PHP server is not compatible with the CAPTCHA functions. You can disable CAPTCHA or have your web server fixed.', 'si-contact-form') ?>
         </div>
+        <br />
+
+        <input name="si_contact_honeypot_enable" id="si_contact_honeypot_enable" type="checkbox" <?php if ( $si_contact_opt['honeypot_enable'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_honeypot_enable"><?php _e('Enable honeypot spambot trap.', 'si-contact-form'); ?></label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_honeypot_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_honeypot_enable_tip">
+        <?php _e('Enables empty field and time based honyepot traps for spam bots. For best results, do not enable unless you have a spam problem.', 'si-contact-form') ?>
+        </div>
+
 
 </fieldset>
 
@@ -2513,7 +2524,7 @@ foreach ($silent_send_array as $k => $v) {
          <label for="si_contact_title_miname"><?php _e('Middle Initial', 'si-contact-form'); ?>:</label><input name="si_contact_title_miname" id="si_contact_title_miname" type="text" value="<?php echo esc_attr($si_contact_opt['title_miname']);  ?>" size="50" /><br />
          <label for="si_contact_title_email"><?php _e('E-Mail Address', 'si-contact-form'); ?>:</label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo esc_attr($si_contact_opt['title_email']);  ?>" size="50" /><br />
          <label for="si_contact_title_email2"><?php _e('E-Mail Address again', 'si-contact-form'); ?>:</label><input name="si_contact_title_email2" id="si_contact_title_email2" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2']);  ?>" size="50" /><br />
-         <label for="si_contact_title_email2"><?php _e('Please enter your E-mail Address a second time.', 'si-contact-form'); ?></label><input name="si_contact_title_email2_help" id="si_contact_title_email2_help" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2_help']);  ?>" size="50" /><br />
+         <label for="si_contact_title_email2"><?php _e('Please enter your e-mail Address a second time.', 'si-contact-form'); ?></label><input name="si_contact_title_email2_help" id="si_contact_title_email2_help" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2_help']);  ?>" size="50" /><br />
          <label for="si_contact_title_subj"><?php _e('Subject', 'si-contact-form'); ?>:</label><input name="si_contact_title_subj" id="si_contact_title_subj" type="text" value="<?php echo esc_attr($si_contact_opt['title_subj']);  ?>" size="50" /><br />
          <label for="si_contact_title_mess"><?php _e('Message', 'si-contact-form'); ?>:</label><input name="si_contact_title_mess" id="si_contact_title_mess" type="text" value="<?php echo esc_attr($si_contact_opt['title_mess']);  ?>" size="50" /><br />
          <label for="si_contact_title_capt"><?php _e('CAPTCHA Code', 'si-contact-form'); ?>:</label><input name="si_contact_title_capt" id="si_contact_title_capt" type="text" value="<?php echo esc_attr($si_contact_opt['title_capt']);  ?>" size="50" /><br />
@@ -2569,6 +2580,7 @@ foreach ($silent_send_array as $k => $v) {
          <label for="si_contact_error_input"><?php _e('Contact Form has Invalid Input', 'si-contact-form'); ?></label><input name="si_contact_error_input" id="si_contact_error_input" type="text" value="<?php echo esc_attr($si_contact_opt['error_input']);  ?>" size="50" /><br />
          <label for="si_contact_error_captcha_blank"><?php _e('Please complete the CAPTCHA.', 'si-contact-form'); ?></label><input name="si_contact_error_captcha_blank" id="si_contact_error_captcha_blank" type="text" value="<?php echo esc_attr($si_contact_opt['error_captcha_blank']);  ?>" size="50" /><br />
          <label for="si_contact_error_captcha_wrong"><?php _e('That CAPTCHA was incorrect.', 'si-contact-form'); ?></label><input name="si_contact_error_captcha_wrong" id="si_contact_error_captcha_wrong" type="text" value="<?php echo esc_attr($si_contact_opt['error_captcha_wrong']);  ?>" size="50" /><br />
+         <label for="si_contact_error_spambot"><?php _e('Possible spam bot.', 'si-contact-form'); ?></label><input name="si_contact_error_spambot" id="si_contact_error_spambot" type="text" value="<?php echo esc_attr($si_contact_opt['error_spambot']);  ?>" size="50" /><br />
          <label for="si_contact_error_correct"><?php _e('Please make corrections below and try again.', 'si-contact-form'); ?></label><input name="si_contact_error_correct" id="si_contact_error_correct" type="text" value="<?php echo esc_attr($si_contact_opt['error_correct']);  ?>" size="50" />
 </fieldset>
 

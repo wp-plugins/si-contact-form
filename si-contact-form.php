@@ -1364,6 +1364,41 @@ function captchaCheckRequires() {
   return true;
 }
 
+// check the honeypot traps for spam bots
+// this is a very basic implementation, more agressive approaches might have to be added later
+function si_contact_check_honeypot($form_id) {
+    global $si_contact_opt;
+
+    if ($si_contact_opt['honeypot_enable'] == 'false')
+         return 'ok';
+
+    // hidden honeypot field
+    if( isset($_POST["email_$form_id"]) && trim($_POST["email_$form_id"]) != '')
+         return 'failed honeypot';
+
+    // server-side timestamp forgery token.
+    if (!isset($_POST["si_tok_$form_id"]) || empty($_POST["si_tok_$form_id"]) || strpos($_POST["si_tok_$form_id"] , ',') === false )
+         return 'no timestamp';
+
+    $vars = explode(',', $_POST["si_tok_$form_id"]);
+    if ( empty($vars[0]) || empty($vars[1]) || ! preg_match("/^[0-9]+$/",$vars[1]) )
+         return 'bad timestamp';
+
+    if ( wp_hash( $vars[1] ) != $vars[0] )
+       return 'bad timestamp';
+
+      $form_timestamp = $vars[1];
+      $now_timestamp  = time();
+      $human_typing_time = 5; // page load (1s) + submit (1s) + typing time (3s)
+      if ( $now_timestamp - $form_timestamp < $human_typing_time )
+	     return 'too fast less than 5 sec';
+      if ( $now_timestamp - $form_timestamp > 1800 )
+	     return 'over 30 min';
+
+      return 'ok';
+
+}  //  end function si_contact_validate_honeypot
+
 // this function adds the captcha to the contact form
 function si_contact_get_captcha_html($si_contact_error_captcha,$form_id_num) {
    global $ctf_captcha_url, $ctf_captcha_dir, $captcha_path_cf, $captcha_url_cf, $si_contact_gb, $si_contact_opt;
@@ -1807,6 +1842,7 @@ function si_contact_get_options($form_num) {
          'enable_audio_flash' => 'false',
          'captcha_perm' => 'false',
          'captcha_perm_level' => 'read',
+         'honeypot_enable' => 'false',
          'redirect_enable' => 'true',
          'redirect_seconds' => '3',
          'redirect_url' => get_option('home'),
@@ -1904,6 +1940,7 @@ function si_contact_get_options($form_num) {
          'error_captcha_blank'  => '',
          'error_captcha_wrong'  => '',
          'error_correct'        => '',
+         'error_spambot'        => '',
          'vcita_enabled'        => 'false', /* --- vCita Settings --- */
          'vcita_approved'       => 'false', /* --- vCita Settings --- */
          'vcita_uid'            => '',

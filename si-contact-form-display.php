@@ -97,6 +97,19 @@ if ($this->si_contact_error) {
 </div>
 ';
     }
+     if ( !$this->isCaptchaEnabled() && $si_contact_error_captcha ) {
+      // honeypot without captcha
+$string .= '<div '.$this->ctf_required_style.'>
+      <div '.$this->ctf_error_style.'>
+';
+      $string .= esc_html($si_contact_error_captcha);
+      $string .= '
+      </div>
+</div>
+';
+
+     }
+
 }
 if (empty($contacts)) {
    $string .= '<div '.$this->ctf_required_style.'>
@@ -441,6 +454,15 @@ if ( $this->isCaptchaEnabled() ) {
   $string .= $this->si_contact_get_captcha_html($si_contact_error_captcha,$form_id_num)."
 ";
 }
+
+   if($si_contact_opt['honeypot_enable'] == 'true' ) {
+      // hidden empty honeypot field
+      $string .= '    <input name="email_'.$form_id_num.'" value="" style="display:none;" />
+';
+      // server-side timestamp forgery token.
+      $string .= '    <input type="hidden" name="si_tok_'.$form_id_num.'" value="'. wp_hash( time() ).','.time() .'" />
+';
+   }
 
 $string .= '
 <div '.$this->ctf_submit_div_style.'>

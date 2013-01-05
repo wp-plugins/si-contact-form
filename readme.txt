@@ -208,6 +208,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Jan 5 2013 added new setting "Enable honeypot spambot trap". Enables empty field and time based honyepot traps for spam bots. For best results, do not enable unless you have a spam bot problem. 
 - Jan 03 2013 Many security improvements and code cleanup.
 - Autoresponder email is renamed to Confirmation email.
 - Border title can now be disabled by deleting the "Border title" setting.
