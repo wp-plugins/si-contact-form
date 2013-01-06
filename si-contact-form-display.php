@@ -457,7 +457,10 @@ if ( $this->isCaptchaEnabled() ) {
 
    if($si_contact_opt['honeypot_enable'] == 'true' ) {
       // hidden empty honeypot field
-      $string .= '    <input name="email_'.$form_id_num.'" value="" style="display:none;" />
+      $string .= '        <div style="display:none;">
+          <label for="email_'.$form_id_num.'"><small>'.__('Leave this field empty', 'si-contact-form').'</small></label>
+          <input type="text" name="email_'.$form_id_num.'" id="email_'.$form_id_num.'" value="" />
+        </div>
 ';
       // server-side timestamp forgery token.
       $string .= '    <input type="hidden" name="si_tok_'.$form_id_num.'" value="'. wp_hash( time() ).','.time() .'" />

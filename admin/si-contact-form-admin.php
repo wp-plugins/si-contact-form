@@ -2417,10 +2417,10 @@ foreach ($silent_send_array as $k => $v) {
         <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
        <div style="text-align:left; display:none" id="si_contact_border_enable_tip">
-       <?php _e('Enable to draw a fieldset box around all the form elements. The border title for the fieldset is "Contact Form:", but you can change it or remove it with the setting below.', 'si-contact-form'); ?>
+       <?php _e('Enable to draw a fieldset box around all the form elements. You can add a border label or remove it with the setting below.', 'si-contact-form'); ?>
        </div>
 <br />
-         <label for="si_contact_title_border"><?php _e('Border title', 'si-contact-form'); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo esc_attr($si_contact_opt['title_border']);  ?>" size="50" /><br />
+         <label for="si_contact_title_border"><?php _e('Border label', 'si-contact-form'); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo esc_attr($si_contact_opt['title_border']);  ?>" size="50" /><br />
 
 <br />
 
