@@ -512,7 +512,7 @@ if ($have_attach){
              }
           break;
           case 'first_last':
-              $msg .= ($si_contact_opt['title_fname'] != '') ? $si_contact_opt['title_fname'] : __('First Name:', 'si-contact-form').;
+              $msg .= ($si_contact_opt['title_fname'] != '') ? $si_contact_opt['title_fname'] : __('First Name:', 'si-contact-form');
               $msg .= " $f_name$php_eol";
               $msg .= ($si_contact_opt['title_lname'] != '') ? $si_contact_opt['title_lname'] : __('Last Name:', 'si-contact-form');
               $msg .= " $l_name$php_eol";
