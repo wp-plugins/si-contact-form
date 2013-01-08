@@ -944,7 +944,7 @@ for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
 
    }
 }
-$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">'.esc_html($si_contact_opt['req_field_indicator']).'</span>' : '';
+$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.esc_html($si_contact_opt['req_field_indicator']).'</span>' : '';
 $si_contact_error_captcha = '';
 $si_contact_error_contact = '';
 $si_contact_error_name    = '';
@@ -1017,7 +1017,6 @@ if ($ctf_redirect_enable == 'true') {
        $ctf_redirect_url .= '&'.$query_string;
    }
 
- $ctf_redirect_url = esc_url($ctf_redirect_url);
  $ctf_thank_you .= <<<EOT
 
 <script type="text/javascript" language="javascript">
@@ -1061,7 +1060,7 @@ EOT;
 $ctf_thank_you .= '
 <div '.$this->ctf_form_style.'>
 <img src="'.plugins_url( 'ctf-loading.gif' , __FILE__ ).'" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
-'.__('Redirecting', 'si-contact-form').' ... <a href="'.esc_url($ctf_redirect_url).'">'. __('click here if your browser does not automatically redirect you', 'si-contact-form').'</a>
+'.__('Redirecting', 'si-contact-form').' ... <a href="'.$ctf_redirect_url.'">'. __('click here if your browser does not automatically redirect you', 'si-contact-form').'</a>
 </div>
 <!-- Fast Secure Contact Form plugin '.esc_html($this->ctf_version).' - end - FastSecureContactForm.com -->
 ';
@@ -1402,7 +1401,7 @@ function si_contact_check_honeypot($form_id) {
 // this function adds the captcha to the contact form
 function si_contact_get_captcha_html($si_contact_error_captcha,$form_id_num) {
    global $ctf_captcha_url, $ctf_captcha_dir, $captcha_path_cf, $captcha_url_cf, $si_contact_gb, $si_contact_opt;
-   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span class="required">'.esc_html($si_contact_opt['req_field_indicator']).'</span>' : '';
+   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.esc_html($si_contact_opt['req_field_indicator']).'</span>' : '';
 
    $capt_disable_sess = 0;
    if ($si_contact_gb['captcha_disable_session'] == 'true')
@@ -1537,7 +1536,7 @@ $string .= '>
 
       <div '.$this->ctf_title_style.'>
                 <label for="si_contact_captcha_code'.$form_id_num.'">';
-     $string .= esc_html(($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code', 'si-contact-form')).':';
+     $string .= esc_html(($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code:', 'si-contact-form'));
      $string .= $req_field_ind.'</label>
         </div>
         <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($si_contact_error_captcha).'

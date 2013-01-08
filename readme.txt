@@ -208,6 +208,11 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+
+- fixed redirect query vars bug caused by 3.1.6.1
+- added more help links for css settings on form edit page.
+- required field indicators are now styled by the setting "CSS style for required field text", so now it controls the message and the indicators the same.
+
 = 3.1.6.1 =
 - (06 Jan 2013) - added new setting "Enable honeypot spambot trap". Enables empty field and time based honyepot traps for spam bots. For best results, do not enable unless you have a spam bot problem. Does not stop human spammers, Akismet should be enabled for that.
 - Many security improvements and code cleanup.

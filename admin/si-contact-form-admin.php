@@ -2407,23 +2407,6 @@ foreach ($silent_send_array as $k => $v) {
 <div class="clear"></div>
 <fieldset>
 
-        <input name="si_contact_reset_styles" id="si_contact_reset_styles" type="checkbox" />
-        <label for="si_contact_reset_styles"><strong><?php _e('Reset the styles to labels on top (default).', 'si-contact-form') ?></strong></label><br />
-
-        <input name="si_contact_reset_styles_left" id="si_contact_reset_styles_left" type="checkbox" />
-        <label for="si_contact_reset_styles_left"><strong><?php _e('Reset the styles to labels on left.', 'si-contact-form') ?></strong></label><br />
-
-        <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-       <div style="text-align:left; display:none" id="si_contact_border_enable_tip">
-       <?php _e('Enable to draw a fieldset box around all the form elements. You can add a border label or remove it with the setting below.', 'si-contact-form'); ?>
-       </div>
-<br />
-         <label for="si_contact_title_border"><?php _e('Border label', 'si-contact-form'); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo esc_attr($si_contact_opt['title_border']);  ?>" size="50" /><br />
-
-<br />
-
         <strong><?php _e('Modifiable CSS Style Feature:', 'si-contact-form'); ?></strong>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_css_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_css_tip">
@@ -2436,40 +2419,150 @@ foreach ($silent_send_array as $k => $v) {
         </div>
 <br />
 
-        <label for="si_contact_form_style"><?php _e('CSS style for form DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_form_style" id="si_contact_form_style" type="text" value="<?php echo esc_attr($si_contact_opt['form_style']);  ?>" size="60" />
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_form_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_form_style_tip">
+        <input name="si_contact_reset_styles" id="si_contact_reset_styles" type="checkbox" />
+        <label for="si_contact_reset_styles"><strong><?php _e('Reset the styles to labels on top (default).', 'si-contact-form') ?></strong></label><br />
+
+        <input name="si_contact_reset_styles_left" id="si_contact_reset_styles_left" type="checkbox" />
+        <label for="si_contact_reset_styles_left"><strong><?php _e('Reset the styles to labels on left.', 'si-contact-form') ?></strong></label><br />
+ <br />
+
+        <input name="si_contact_border_enable" id="si_contact_border_enable" type="checkbox" <?php if ( $si_contact_opt['border_enable'] == 'true' ) echo ' checked="checked" '; ?> />
+        <label for="si_contact_border_enable"><?php _e('Enable border on contact form', 'si-contact-form') ?>.</label>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+       <div style="text-align:left; display:none" id="si_contact_border_enable_tip">
+       <?php _e('Enable to draw a fieldset box around all the form elements. You can add a border label or remove it with the setting below.', 'si-contact-form'); ?>
+       </div>
+<br />
+         <label for="si_contact_title_border"><?php _e('Border label', 'si-contact-form'); ?>:</label><input name="si_contact_title_border" id="si_contact_title_border" type="text" value="<?php echo esc_attr($si_contact_opt['title_border']);  ?>" size="50" />
+
+<br />
+
+        <label for="si_contact_border_style"><?php _e('CSS style for border', 'si-contact-form'); ?>:</label><input name="si_contact_border_style" id="si_contact_border_style" type="text" value="<?php echo esc_attr($si_contact_opt['border_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_border_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_border_style_tip">
         <?php _e('Use to adjust the style of the contact form border (if border is enabled).', 'si-contact-form'); ?>
         </div>
 <br />
+<br />
 
-        <label for="si_contact_border_style"><?php _e('CSS style for border on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_border_style" id="si_contact_border_style" type="text" value="<?php echo esc_attr($si_contact_opt['border_style']);  ?>" size="60" /><br />
-        <label for="si_contact_required_style"><?php _e('CSS style for required field text on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_required_style" id="si_contact_required_style" type="text" value="<?php echo esc_attr($si_contact_opt['required_style']);  ?>" size="60" /><br />
-        <label for="si_contact_notes_style"><?php _e('CSS style for extra field HTML on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_notes_style" id="si_contact_notes_style" type="text" value="<?php echo esc_attr($si_contact_opt['notes_style']);  ?>" size="60" /><br />
-        <label for="si_contact_title_style"><?php _e('CSS style for form input titles on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo esc_attr($si_contact_opt['title_style']);  ?>" size="60" /><br />
-        <label for="si_contact_field_style"><?php _e('CSS style for form input fields on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_field_style" id="si_contact_field_style" type="text" value="<?php echo esc_attr($si_contact_opt['field_style']);  ?>" size="60" /><br />
-        <label for="si_contact_field_div_style"><?php _e('CSS style for form input fields DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_field_div_style" id="si_contact_field_div_style" type="text" value="<?php echo esc_attr($si_contact_opt['field_div_style']);  ?>" size="60" /><br />
-        <label for="si_contact_error_style"><?php _e('CSS style for form input errors on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_error_style" id="si_contact_error_style" type="text" value="<?php echo esc_attr($si_contact_opt['error_style']);  ?>" size="60" /><br />
-        <label for="si_contact_select_style"><?php _e('CSS style for contact drop down select on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_select_style" id="si_contact_select_style" type="text" value="<?php echo esc_attr($si_contact_opt['select_style']);  ?>" size="60" /><br />
-        <label for="si_contact_captcha_div_style_sm"><?php _e('CSS style for Small CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_sm" id="si_contact_captcha_div_style_sm" type="text" value="<?php echo esc_attr($si_contact_opt['captcha_div_style_sm']);  ?>" size="60" /><br />
-        <label for="si_contact_captcha_div_style_m"><?php _e('CSS style for CAPTCHA DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_m" id="si_contact_captcha_div_style_m" type="text" value="<?php echo esc_attr($si_contact_opt['captcha_div_style_m']);  ?>" size="60" /><br />
-        <label for="si_contact_captcha_input_style"><?php _e('CSS style for CAPTCHA input field on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_input_style" id="si_contact_captcha_input_style" type="text" value="<?php echo esc_attr($si_contact_opt['captcha_input_style']);  ?>" size="60" /><br />
-        <label for="si_contact_submit_div_style"><?php _e('CSS style for Submit DIV on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_submit_div_style" id="si_contact_submit_div_style" type="text" value="<?php echo esc_attr($si_contact_opt['submit_div_style']);  ?>" size="60" /><br />
-        <label for="si_contact_button_style"><?php _e('CSS style for Submit button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo esc_attr($si_contact_opt['button_style']);  ?>" size="60" /><br />
-        <label for="si_contact_reset_style"><?php _e('CSS style for Reset button on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_reset_style" id="si_contact_reset_style" type="text" value="<?php echo esc_attr($si_contact_opt['reset_style']);  ?>" size="60" /><br />
-        <label for="si_contact_powered_by_style"><?php _e('CSS style for "Powered by" message on the contact form', 'si-contact-form'); ?>:</label><input name="si_contact_powered_by_style" id="si_contact_powered_by_style" type="text" value="<?php echo esc_attr($si_contact_opt['powered_by_style']);  ?>" size="60" /><br/>
+
+        <label for="si_contact_form_style"><?php _e('CSS style for form DIV', 'si-contact-form'); ?>:</label><input name="si_contact_form_style" id="si_contact_form_style" type="text" value="<?php echo esc_attr($si_contact_opt['form_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_form_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_form_style_tip">
+        <?php _e('Use to adjust the style in the form wrapping DIV.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+
+        <label for="si_contact_required_style"><?php _e('CSS style for required field text', 'si-contact-form'); ?>:</label><input name="si_contact_required_style" id="si_contact_required_style" type="text" value="<?php echo esc_attr($si_contact_opt['required_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_required_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_required_style_tip">
+        <?php _e('Use to adjust the style of the message that says a field is required, and the required field indicator.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_notes_style"><?php _e('CSS style for extra field HTML', 'si-contact-form'); ?>:</label><input name="si_contact_notes_style" id="si_contact_notes_style" type="text" value="<?php echo esc_attr($si_contact_opt['notes_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_notes_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_notes_style_tip">
+        <?php _e('Use to adjust the style in the HTML before and after DIVs for extra fields.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_title_style"><?php _e('CSS style for form input field labels', 'si-contact-form'); ?>:</label><input name="si_contact_title_style" id="si_contact_title_style" type="text" value="<?php echo esc_attr($si_contact_opt['title_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_title_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_title_style_tip">
+        <?php _e('Use to adjust the style for the form field labels.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_field_style"><?php _e('CSS style inside form input fields', 'si-contact-form'); ?>:</label><input name="si_contact_field_style" id="si_contact_field_style" type="text" value="<?php echo esc_attr($si_contact_opt['field_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_field_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_field_style_tip">
+        <?php _e('Use to adjust the style inside the form input fields such as text field types.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_field_div_style"><?php _e('CSS style for form input fields DIV', 'si-contact-form'); ?>:</label><input name="si_contact_field_div_style" id="si_contact_field_div_style" type="text" value="<?php echo esc_attr($si_contact_opt['field_div_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_div_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_div_style_tip">
+        <?php _e('Use to adjust the style in the form input field alignment wrapping DIVs.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_error_style"><?php _e('CSS style for form input errors', 'si-contact-form'); ?>:</label><input name="si_contact_error_style" id="si_contact_error_style" type="text" value="<?php echo esc_attr($si_contact_opt['error_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_error_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_error_style_tip">
+        <?php _e('Use to adjust the style of form input validation messages.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_select_style"><?php _e('CSS style for contact drop down select', 'si-contact-form'); ?>:</label><input name="si_contact_select_style" id="si_contact_select_style" type="text" value="<?php echo esc_attr($si_contact_opt['select_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_select_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_select_style_tip">
+        <?php _e('Use to adjust the style of any form select field types including subject, if enabled.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_captcha_div_style_sm"><?php _e('CSS style for Small CAPTCHA DIV', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_sm" id="si_contact_captcha_div_style_sm" type="text" value="<?php echo esc_attr($si_contact_opt['captcha_div_style_sm']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_div_style_sm_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_div_style_sm_tip">
+        <?php _e('Use to adjust the style in the form Small CAPTCHA wrapping DIV, if enabled.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_captcha_div_style_m"><?php _e('CSS style for CAPTCHA DIV', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_div_style_m" id="si_contact_captcha_div_style_m" type="text" value="<?php echo esc_attr($si_contact_opt['captcha_div_style_m']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_div_style_m_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_div_style_m_tip">
+        <?php _e('Use to adjust the style in the form CAPTCHA wrapping DIV.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_captcha_input_style"><?php _e('CSS style for CAPTCHA input field', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_input_style" id="si_contact_captcha_input_style" type="text" value="<?php echo esc_attr($si_contact_opt['captcha_input_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_input_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_input_style_tip">
+        <?php _e('Use to adjust the style in the CAPTCHA code input text field.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_submit_div_style"><?php _e('CSS style for Submit DIV', 'si-contact-form'); ?>:</label><input name="si_contact_submit_div_style" id="si_contact_submit_div_style" type="text" value="<?php echo esc_attr($si_contact_opt['submit_div_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_submit_div_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_submit_div_style_tip">
+        <?php _e('Use to adjust the style in the form submit button wrapping DIV.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_button_style"><?php _e('CSS style for Submit button', 'si-contact-form'); ?>:</label><input name="si_contact_button_style" id="si_contact_button_style" type="text" value="<?php echo esc_attr($si_contact_opt['button_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_button_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_button_style_tip">
+        <?php _e('Use to adjust the style for the form submit button text.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_reset_style"><?php _e('CSS style for Reset button', 'si-contact-form'); ?>:</label><input name="si_contact_reset_style" id="si_contact_reset_style" type="text" value="<?php echo esc_attr($si_contact_opt['reset_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_reset_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_reset_style_tip">
+        <?php _e('Use to adjust the style for the form reset button text, if enabled.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_powered_by_style"><?php _e('CSS style for "Powered by" message', 'si-contact-form'); ?>:</label><input name="si_contact_powered_by_style" id="si_contact_powered_by_style" type="text" value="<?php echo esc_attr($si_contact_opt['powered_by_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_powered_by_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_powered_by_style_tip">
+        <?php _e('Use to adjust the style for the "powered by" message link.', 'si-contact-form'); ?>
+        </div>
+<br />
 
        <label for="si_contact_field_size"><?php _e('Input Text Field Size', 'si-contact-form'); ?>:</label><input name="si_contact_field_size" id="si_contact_field_size" type="text" value="<?php echo absint($si_contact_opt['field_size']);  ?>" size="3" />
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_field_size_tip');"><?php _e('help', 'si-contact-form'); ?></a>
        <div style="text-align:left; display:none" id="si_contact_field_size_tip">
-       <?php _e('Use to adjust the size of the contact form text input fields.', 'si-contact-form'); ?>
+       <?php _e('Use to adjust the size of the contact form text input fields. Note: your theme CSS might override this setting.', 'si-contact-form'); ?>
        </div>
 <br />
 
        <label for="si_contact_captcha_field_size"><?php _e('Input CAPTCHA Field Size', 'si-contact-form'); ?>:</label><input name="si_contact_captcha_field_size" id="si_contact_captcha_field_size" type="text" value="<?php echo absint($si_contact_opt['captcha_field_size']);  ?>" size="3" />
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_field_size_tip');"><?php _e('help', 'si-contact-form'); ?></a>
        <div style="text-align:left; display:none" id="si_contact_captcha_field_size_tip">
-       <?php _e('Use to adjust the size of the contact form CAPTCHA input field.', 'si-contact-form'); ?>
+       <?php _e('Use to adjust the size of the contact form CAPTCHA input field. Note: your theme CSS might override this setting.', 'si-contact-form'); ?>
        </div>
 <br />
 
@@ -2477,7 +2570,7 @@ foreach ($silent_send_array as $k => $v) {
        <label for="si_contact_text_rows"><?php _e('Rows', 'si-contact-form'); ?>:</label><input name="si_contact_text_rows" id="si_contact_text_rows" type="text" value="<?php echo absint($si_contact_opt['text_rows']);  ?>" size="3" />
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_text_rows_tip');"><?php _e('help', 'si-contact-form'); ?></a>
        <div style="text-align:left; display:none" id="si_contact_text_rows_tip">
-       <?php _e('Use to adjust the size of the contact form message textarea.', 'si-contact-form'); ?>
+       <?php _e('Use to adjust the size of the contact form message textarea. Note: your theme CSS might override this setting.', 'si-contact-form'); ?>
        </div>
 <br />
 
@@ -2515,19 +2608,19 @@ foreach ($silent_send_array as $k => $v) {
 
         <label for="si_contact_req_field_indicator"><?php _e('Required field indicator:', 'si-contact-form'); ?></label><input name="si_contact_req_field_indicator" id="si_contact_req_field_indicator" type="text" value="<?php echo esc_attr($si_contact_opt['req_field_indicator']);  ?>" size="20" /><br />
 
-         <label for="si_contact_title_dept"><?php _e('Department to Contact', 'si-contact-form'); ?>:</label><input name="si_contact_title_dept" id="si_contact_title_dept" type="text" value="<?php echo esc_attr($si_contact_opt['title_dept']);  ?>" size="50" /><br />
-         <label for="si_contact_title_select"><?php _e('Select', 'si-contact-form'); ?>:</label><input name="si_contact_title_select" id="si_contact_title_select" type="text" value="<?php echo esc_attr($si_contact_opt['title_select']);  ?>" size="50" /><br />
-         <label for="si_contact_title_name"><?php _e('Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_name" id="si_contact_title_name" type="text" value="<?php echo esc_attr($si_contact_opt['title_name']);  ?>" size="50" /><br />
-         <label for="si_contact_title_fname"><?php _e('First Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_fname" id="si_contact_title_fname" type="text" value="<?php echo esc_attr($si_contact_opt['title_fname']);  ?>" size="50" /><br />
-         <label for="si_contact_title_lname"><?php _e('Last Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_lname" id="si_contact_title_lname" type="text" value="<?php echo esc_attr($si_contact_opt['title_lname']);  ?>" size="50" /><br />
-         <label for="si_contact_title_mname"><?php _e('Middle Name', 'si-contact-form'); ?>:</label><input name="si_contact_title_mname" id="si_contact_title_mname" type="text" value="<?php echo esc_attr($si_contact_opt['title_mname']);  ?>" size="50" /><br />
-         <label for="si_contact_title_miname"><?php _e('Middle Initial', 'si-contact-form'); ?>:</label><input name="si_contact_title_miname" id="si_contact_title_miname" type="text" value="<?php echo esc_attr($si_contact_opt['title_miname']);  ?>" size="50" /><br />
-         <label for="si_contact_title_email"><?php _e('E-Mail Address', 'si-contact-form'); ?>:</label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo esc_attr($si_contact_opt['title_email']);  ?>" size="50" /><br />
-         <label for="si_contact_title_email2"><?php _e('E-Mail Address again', 'si-contact-form'); ?>:</label><input name="si_contact_title_email2" id="si_contact_title_email2" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2']);  ?>" size="50" /><br />
+         <label for="si_contact_title_dept"><?php _e('Department to Contact:', 'si-contact-form'); ?></label><input name="si_contact_title_dept" id="si_contact_title_dept" type="text" value="<?php echo esc_attr($si_contact_opt['title_dept']);  ?>" size="50" /><br />
+         <label for="si_contact_title_select"><?php _e('Select', 'si-contact-form'); ?></label><input name="si_contact_title_select" id="si_contact_title_select" type="text" value="<?php echo esc_attr($si_contact_opt['title_select']);  ?>" size="50" /><br />
+         <label for="si_contact_title_name"><?php _e('Name:', 'si-contact-form'); ?></label><input name="si_contact_title_name" id="si_contact_title_name" type="text" value="<?php echo esc_attr($si_contact_opt['title_name']);  ?>" size="50" /><br />
+         <label for="si_contact_title_fname"><?php _e('First Name:', 'si-contact-form'); ?></label><input name="si_contact_title_fname" id="si_contact_title_fname" type="text" value="<?php echo esc_attr($si_contact_opt['title_fname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_lname"><?php _e('Last Name:', 'si-contact-form'); ?></label><input name="si_contact_title_lname" id="si_contact_title_lname" type="text" value="<?php echo esc_attr($si_contact_opt['title_lname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_mname"><?php _e('Middle Name;', 'si-contact-form'); ?></label><input name="si_contact_title_mname" id="si_contact_title_mname" type="text" value="<?php echo esc_attr($si_contact_opt['title_mname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_miname"><?php _e('Middle Initial:', 'si-contact-form'); ?></label><input name="si_contact_title_miname" id="si_contact_title_miname" type="text" value="<?php echo esc_attr($si_contact_opt['title_miname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_email"><?php _e('E-Mail Address;', 'si-contact-form'); ?></label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo esc_attr($si_contact_opt['title_email']);  ?>" size="50" /><br />
+         <label for="si_contact_title_email2"><?php _e('E-Mail Address again:', 'si-contact-form'); ?></label><input name="si_contact_title_email2" id="si_contact_title_email2" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2']);  ?>" size="50" /><br />
          <label for="si_contact_title_email2"><?php _e('Please enter your e-mail Address a second time.', 'si-contact-form'); ?></label><input name="si_contact_title_email2_help" id="si_contact_title_email2_help" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2_help']);  ?>" size="50" /><br />
-         <label for="si_contact_title_subj"><?php _e('Subject', 'si-contact-form'); ?>:</label><input name="si_contact_title_subj" id="si_contact_title_subj" type="text" value="<?php echo esc_attr($si_contact_opt['title_subj']);  ?>" size="50" /><br />
-         <label for="si_contact_title_mess"><?php _e('Message', 'si-contact-form'); ?>:</label><input name="si_contact_title_mess" id="si_contact_title_mess" type="text" value="<?php echo esc_attr($si_contact_opt['title_mess']);  ?>" size="50" /><br />
-         <label for="si_contact_title_capt"><?php _e('CAPTCHA Code', 'si-contact-form'); ?>:</label><input name="si_contact_title_capt" id="si_contact_title_capt" type="text" value="<?php echo esc_attr($si_contact_opt['title_capt']);  ?>" size="50" /><br />
+         <label for="si_contact_title_subj"><?php _e('Subject:', 'si-contact-form'); ?></label><input name="si_contact_title_subj" id="si_contact_title_subj" type="text" value="<?php echo esc_attr($si_contact_opt['title_subj']);  ?>" size="50" /><br />
+         <label for="si_contact_title_mess"><?php _e('Message:', 'si-contact-form'); ?></label><input name="si_contact_title_mess" id="si_contact_title_mess" type="text" value="<?php echo esc_attr($si_contact_opt['title_mess']);  ?>" size="50" /><br />
+         <label for="si_contact_title_capt"><?php _e('CAPTCHA Code:', 'si-contact-form'); ?></label><input name="si_contact_title_capt" id="si_contact_title_capt" type="text" value="<?php echo esc_attr($si_contact_opt['title_capt']);  ?>" size="50" /><br />
          <label for="si_contact_title_submit"><?php _e('Submit', 'si-contact-form'); ?></label><input name="si_contact_title_submit" id="si_contact_title_submit" type="text" value="<?php echo esc_attr($si_contact_opt['title_submit']);  ?>" size="50" /><br />
          <label for="si_contact_title_reset"><?php _e('Reset', 'si-contact-form'); ?></label><input name="si_contact_title_reset" id="si_contact_title_reset" type="text" value="<?php echo esc_attr($si_contact_opt['title_reset']);  ?>" size="50" /><br />
          <label for="si_contact_title_areyousure"><?php _e('Are you sure?', 'si-contact-form'); ?></label><input name="si_contact_title_areyousure" id="si_contact_title_areyousure" type="text" value="<?php echo esc_attr($si_contact_opt['title_areyousure']);  ?>" size="50" /><br />
