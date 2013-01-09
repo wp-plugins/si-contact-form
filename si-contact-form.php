@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.6.2
+Version: 3.1.6.3
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.6.2';
+$ctf_version = '3.1.6.3';
 
 /*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -983,6 +983,14 @@ $ctf_thank_you = '
 <div id="FSContact'.$form_id_num.'" '.$this->ctf_form_style.'>
 ';
 
+if ($si_contact_opt['border_enable'] == 'true') {
+  $ctf_thank_you .= '
+    <fieldset '.$this->ctf_border_style.'>
+';
+  if ($si_contact_opt['title_border'] != '')
+        $ctf_thank_you .= '      <legend>'.esc_html($si_contact_opt['title_border']).'</legend>';
+}
+
        // Redirect to Home Page after message is sent
        $ctf_redirect_enable = $si_contact_opt['redirect_enable']; // true or false
        // Used for the delay timer once the message has been sent
@@ -1052,22 +1060,20 @@ EOT;
 // do not remove the above EOT line
 
 
-if ($si_contact_opt['border_enable'] == 'true') {
-  $ctf_thank_you .= '
-    <fieldset '.$this->ctf_border_style.'>
-';
-  if ($si_contact_opt['title_border'] != '')
-        $ctf_thank_you .= '      <legend>'.esc_html($si_contact_opt['title_border']).'</legend>';
-}
+} // end if ($ctf_redirect_enable == 'true')
+
 $ctf_thank_you .= '
 <div '.$this->si_contact_convert_css($si_contact_opt['redirect_style']).'>
 ';
 $ctf_thank_you .= esc_html(($si_contact_opt['text_message_sent'] != '') ? $si_contact_opt['text_message_sent'] : __('Your message has been sent, thank you.', 'si-contact-form'));
 
+if ($ctf_redirect_enable == 'true') {
 $ctf_thank_you .= '
   <br />
   <img src="'.plugins_url( 'ctf-loading.gif' , __FILE__ ).'" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />
-  <a href="'.$ctf_redirect_url.'">'.__('Redirecting', 'si-contact-form').'</a>
+  <a href="'.$ctf_redirect_url.'">'.__('Redirecting', 'si-contact-form').'</a>';
+}
+$ctf_thank_you .= '
 </div>';
 
 if ($si_contact_opt['border_enable'] == 'true') {
@@ -1078,8 +1084,6 @@ $ctf_thank_you .= '
 </div>
 <!-- Fast Secure Contact Form plugin '.esc_html($this->ctf_version).' - end - FastSecureContactForm.com -->
 ';
-
-} // end if ($ctf_redirect_enable == 'true')
 
       // thank you message is printed here
       $string .= $ctf_thank_you;

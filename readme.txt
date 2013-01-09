@@ -208,7 +208,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
-= 3.1.6.2 =
+= 3.1.6.3 =
 - (08 Jan 2013) - fixed redirect query vars bug caused by 3.1.6.1
 - fixed a couple PHP errors caused by 3.1.6.1
 - fixed some field labels had a semicolon outside of the translatable text.
