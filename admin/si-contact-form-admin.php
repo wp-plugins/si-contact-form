@@ -289,7 +289,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'title_submit' =>        strip_tags(trim($_POST['si_contact_title_submit'])),
          'title_reset' =>         strip_tags(trim($_POST['si_contact_title_reset'])),
          'title_areyousure' =>    strip_tags(trim($_POST['si_contact_title_areyousure'])),
-         'text_message_sent' =>   strip_tags(trim($_POST['si_contact_text_message_sent'])),
+         'text_message_sent' =>   trim($_POST['si_contact_text_message_sent']), // can have HTML
          'tooltip_required' =>    strip_tags($_POST['si_contact_tooltip_required']), // can be a space
          'tooltip_captcha' =>     strip_tags(trim($_POST['si_contact_tooltip_captcha'])),
          'tooltip_audio' =>       strip_tags(trim($_POST['si_contact_tooltip_audio'])),

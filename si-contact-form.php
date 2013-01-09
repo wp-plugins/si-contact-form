@@ -1065,7 +1065,7 @@ EOT;
 $ctf_thank_you .= '
 <div '.$this->si_contact_convert_css($si_contact_opt['redirect_style']).'>
 ';
-$ctf_thank_you .= esc_html(($si_contact_opt['text_message_sent'] != '') ? $si_contact_opt['text_message_sent'] : __('Your message has been sent, thank you.', 'si-contact-form'));
+$ctf_thank_you .= ($si_contact_opt['text_message_sent'] != '') ? $si_contact_opt['text_message_sent'] : __('Your message has been sent, thank you.', 'si-contact-form'); // can have HTML
 
 if ($ctf_redirect_enable == 'true') {
 $ctf_thank_you .= '
