@@ -208,9 +208,14 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
-
-- fixed redirect query vars bug caused by 3.1.6.1
-- fixed some field labels that did not have the semicolon in the translatable text.
+= 3.1.6.2 =
+- (08 Jan 2013) - fixed redirect query vars bug caused by 3.1.6.1
+- fixed a couple PHP errors caused by 3.1.6.1
+- fixed some field labels had a semicolon outside of the translatable text.
+- fixed styles left required indicator alignment.
+- fixed to allow HTML in "Required field indicator" setting.
+- added redirect message is inside a border when form border is enabled.
+- added new setting "CSS style for redirecting message".
 - added more help links for css settings on form edit page.
 - required field indicators are now styled by the setting "CSS style for required field text", so now it controls both the message and the indicators the same.
 

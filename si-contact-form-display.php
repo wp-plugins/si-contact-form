@@ -122,7 +122,8 @@ if (empty($contacts)) {
 if ($si_contact_opt['req_field_label_enable'] == 'true' && $si_contact_opt['req_field_indicator_enable'] == 'true' ) {
    $string .=  '<div '.$this->ctf_required_style.'>
 ';
-   $string .= ($si_contact_opt['tooltip_required'] != '') ? '<span class="required">'.esc_html($si_contact_opt['req_field_indicator']).'</span>' .esc_html($si_contact_opt['tooltip_required']) : '<span class="required">'.esc_html($si_contact_opt['req_field_indicator']).'</span>' . esc_html(__('(denotes required field)', 'si-contact-form'));
+
+   $string .= ($si_contact_opt['tooltip_required'] != '') ? $si_contact_opt['req_field_indicator'].' ' . esc_html($si_contact_opt['tooltip_required']) : $si_contact_opt['req_field_indicator'].' '. esc_html(__('(denotes required field)', 'si-contact-form'));
    $string .= '
    </div>
 ';
@@ -333,7 +334,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
     $string .= '
         <div '.$this->ctf_title_style.'>
                 <label for="si_contact_email'.$form_id_num.'">';
-     $string .= esc_html(($si_contact_opt['title_email'] != '') ? $si_contact_opt['title_email'] : __('E-Mail Address', 'si-contact-form')).':';
+     $string .= esc_html(($si_contact_opt['title_email'] != '') ? $si_contact_opt['title_email'] : __('E-Mail Address:', 'si-contact-form'));
      if($si_contact_opt['email_type'] == 'required' )
            $string .= $req_field_ind;
      $string .= '</label>

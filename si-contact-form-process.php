@@ -132,8 +132,8 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
        wp_die("$forbidden");
 
    // check for banned ip
-   if( $ctf_enable_ip_bans && in_array($_SERVER['REMOTE_ADDR'], $ctf_banned_ips) )
-      wp_die(__('Your IP is Banned', 'si-contact-form'));
+//   if( $ctf_enable_ip_bans && in_array($_SERVER['REMOTE_ADDR'], $ctf_banned_ips) )
+//      wp_die(__('Your IP is Banned', 'si-contact-form'));
 
    // CAPS Decapitator
    if ($si_contact_opt['name_case_enable'] == 'true' && !preg_match("/[a-z]/", $message))

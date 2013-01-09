@@ -246,7 +246,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'auto_respond_reply_to' =>      ( trim($_POST['si_contact_auto_respond_reply_to']) != '' && $this->ctf_validate_email($_POST['si_contact_auto_respond_reply_to'])) ? trim($_POST['si_contact_auto_respond_reply_to']) : $si_contact_option_defaults['auto_respond_reply_to'], // use default if empty
          'auto_respond_message' =>         trim($_POST['si_contact_auto_respond_message']),  // can be empty, can have HTML
          'auto_respond_subject' => strip_tags(trim($_POST['si_contact_auto_respond_subject'])),  // can be empty
-         'req_field_indicator' =>  strip_tags(trim($_POST['si_contact_req_field_indicator'])),
+         'req_field_indicator' =>  trim($_POST['si_contact_req_field_indicator']), // can have HTML
          'req_field_label_enable' =>       (isset( $_POST['si_contact_req_field_label_enable'] ) ) ? 'true' : 'false',
          'req_field_indicator_enable' =>   (isset( $_POST['si_contact_req_field_indicator_enable'] ) ) ? 'true' : 'false',
          'form_style' =>            ( trim($_POST['si_contact_form_style']) != '' ) ? strip_tags(trim($_POST['si_contact_form_style'])) : $si_contact_option_defaults['form_style'],
@@ -265,6 +265,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'button_style' =>          ( trim($_POST['si_contact_button_style']) != '' ) ? strip_tags(trim($_POST['si_contact_button_style'])) : $si_contact_option_defaults['button_style'],
          'reset_style' =>           ( trim($_POST['si_contact_reset_style']) != '' ) ? strip_tags(trim($_POST['si_contact_reset_style'])) : $si_contact_option_defaults['reset_style'],
          'powered_by_style' =>      ( trim($_POST['si_contact_powered_by_style']) != '' ) ? strip_tags(trim($_POST['si_contact_powered_by_style'])) : $si_contact_option_defaults['powered_by_style'],
+         'redirect_style' =>      ( trim($_POST['si_contact_redirect_style']) != '' ) ? strip_tags(trim($_POST['si_contact_redirect_style'])) : $si_contact_option_defaults['redirect_style'],
          'field_size' =>         ( is_numeric(trim($_POST['si_contact_field_size'])) && trim($_POST['si_contact_field_size']) > 14 ) ? absint(trim($_POST['si_contact_field_size'])) : $si_contact_option_defaults['field_size'], // use default if empty
          'captcha_field_size' => ( is_numeric(trim($_POST['si_contact_captcha_field_size'])) && trim($_POST['si_contact_captcha_field_size']) > 4 ) ? absint(trim($_POST['si_contact_captcha_field_size'])) : $si_contact_option_defaults['captcha_field_size'],
          'text_cols' =>           absint(trim($_POST['si_contact_text_cols'])),
@@ -364,7 +365,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'border_enable' => 'false',
          'form_style' => 'width:550px;',
          'border_style' => 'border:1px solid black; padding:10px;',
-         'required_style' => 'padding-left:146px; text-align:left; ',
+         'required_style' => 'text-align:left;',
          'notes_style' => 'padding-left:146px; text-align:left; clear:left;',
          'title_style' => 'width:138px; text-align:right; float:left; clear:left; padding-top:8px; padding-right:10px;',
          'field_style' => 'text-align:left; float:left; padding:2px; margin:0;',
@@ -378,6 +379,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'button_style' => 'cursor:pointer; margin:0;',
          'reset_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'padding-left:146px; float:left; clear:left; font-size:x-small; font-weight:normal; padding-top:5px;',
+         'redirect_style' => 'text-align:left;',
          'field_size' => '39',
          'captcha_field_size' => '6',
          'text_cols' => '30',
@@ -2552,6 +2554,14 @@ foreach ($silent_send_array as $k => $v) {
         </div>
 <br />
 
+        <label for="si_contact_redirect_style"><?php _e('CSS style for redirecting message', 'si-contact-form'); ?>:</label><input name="si_contact_redirect_style" id="si_contact_redirect_style" type="text" value="<?php echo esc_attr($si_contact_opt['redirect_style']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_redirect_style_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_redirect_style_tip">
+        <?php _e('Use to adjust the style for the "redirecting" message shown after the form is sent.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+
        <label for="si_contact_field_size"><?php _e('Input Text Field Size', 'si-contact-form'); ?>:</label><input name="si_contact_field_size" id="si_contact_field_size" type="text" value="<?php echo absint($si_contact_opt['field_size']);  ?>" size="3" />
        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_field_size_tip');"><?php _e('help', 'si-contact-form'); ?></a>
        <div style="text-align:left; display:none" id="si_contact_field_size_tip">
@@ -2613,9 +2623,9 @@ foreach ($silent_send_array as $k => $v) {
          <label for="si_contact_title_name"><?php _e('Name:', 'si-contact-form'); ?></label><input name="si_contact_title_name" id="si_contact_title_name" type="text" value="<?php echo esc_attr($si_contact_opt['title_name']);  ?>" size="50" /><br />
          <label for="si_contact_title_fname"><?php _e('First Name:', 'si-contact-form'); ?></label><input name="si_contact_title_fname" id="si_contact_title_fname" type="text" value="<?php echo esc_attr($si_contact_opt['title_fname']);  ?>" size="50" /><br />
          <label for="si_contact_title_lname"><?php _e('Last Name:', 'si-contact-form'); ?></label><input name="si_contact_title_lname" id="si_contact_title_lname" type="text" value="<?php echo esc_attr($si_contact_opt['title_lname']);  ?>" size="50" /><br />
-         <label for="si_contact_title_mname"><?php _e('Middle Name;', 'si-contact-form'); ?></label><input name="si_contact_title_mname" id="si_contact_title_mname" type="text" value="<?php echo esc_attr($si_contact_opt['title_mname']);  ?>" size="50" /><br />
+         <label for="si_contact_title_mname"><?php _e('Middle Name:', 'si-contact-form'); ?></label><input name="si_contact_title_mname" id="si_contact_title_mname" type="text" value="<?php echo esc_attr($si_contact_opt['title_mname']);  ?>" size="50" /><br />
          <label for="si_contact_title_miname"><?php _e('Middle Initial:', 'si-contact-form'); ?></label><input name="si_contact_title_miname" id="si_contact_title_miname" type="text" value="<?php echo esc_attr($si_contact_opt['title_miname']);  ?>" size="50" /><br />
-         <label for="si_contact_title_email"><?php _e('E-Mail Address;', 'si-contact-form'); ?></label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo esc_attr($si_contact_opt['title_email']);  ?>" size="50" /><br />
+         <label for="si_contact_title_email"><?php _e('E-Mail Address:', 'si-contact-form'); ?></label><input name="si_contact_title_email" id="si_contact_title_email" type="text" value="<?php echo esc_attr($si_contact_opt['title_email']);  ?>" size="50" /><br />
          <label for="si_contact_title_email2"><?php _e('E-Mail Address again:', 'si-contact-form'); ?></label><input name="si_contact_title_email2" id="si_contact_title_email2" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2']);  ?>" size="50" /><br />
          <label for="si_contact_title_email2"><?php _e('Please enter your e-mail Address a second time.', 'si-contact-form'); ?></label><input name="si_contact_title_email2_help" id="si_contact_title_email2_help" type="text" value="<?php echo esc_attr($si_contact_opt['title_email2_help']);  ?>" size="50" /><br />
          <label for="si_contact_title_subj"><?php _e('Subject:', 'si-contact-form'); ?></label><input name="si_contact_title_subj" id="si_contact_title_subj" type="text" value="<?php echo esc_attr($si_contact_opt['title_subj']);  ?>" size="50" /><br />

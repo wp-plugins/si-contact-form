@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.6.1
+Version: 3.1.6.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.6.1';
+$ctf_version = '3.1.6.2';
 
 /*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -944,7 +944,7 @@ for ($i = 1; $i <= $si_contact_opt['max_fields']; $i++) {
 
    }
 }
-$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.esc_html($si_contact_opt['req_field_indicator']).'</span>' : '';
+$req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 $si_contact_error_captcha = '';
 $si_contact_error_contact = '';
 $si_contact_error_name    = '';
@@ -981,12 +981,6 @@ $this->ctf_form_style = $this->si_contact_convert_css($si_contact_opt['form_styl
 $ctf_thank_you = '
 <!-- Fast Secure Contact Form plugin '.esc_html($this->ctf_version).' - begin - FastSecureContactForm.com -->
 <div id="FSContact'.$form_id_num.'" '.$this->ctf_form_style.'>
-';
-
-$ctf_thank_you .= esc_html(($si_contact_opt['text_message_sent'] != '') ? $si_contact_opt['text_message_sent'] : __('Your message has been sent, thank you.', 'si-contact-form'));
-
-$ctf_thank_you .= '
-</div>
 ';
 
        // Redirect to Home Page after message is sent
@@ -1057,10 +1051,30 @@ ctf_addOnloadEvent(ctf_redirect);
 EOT;
 // do not remove the above EOT line
 
+
+if ($si_contact_opt['border_enable'] == 'true') {
+  $ctf_thank_you .= '
+    <fieldset '.$this->ctf_border_style.'>
+';
+  if ($si_contact_opt['title_border'] != '')
+        $ctf_thank_you .= '      <legend>'.esc_html($si_contact_opt['title_border']).'</legend>';
+}
 $ctf_thank_you .= '
-<div '.$this->ctf_form_style.'>
-<img src="'.plugins_url( 'ctf-loading.gif' , __FILE__ ).'" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />&nbsp;&nbsp;
-'.__('Redirecting', 'si-contact-form').' ... <a href="'.$ctf_redirect_url.'">'. __('click here if your browser does not automatically redirect you', 'si-contact-form').'</a>
+<div '.$this->si_contact_convert_css($si_contact_opt['redirect_style']).'>
+';
+$ctf_thank_you .= esc_html(($si_contact_opt['text_message_sent'] != '') ? $si_contact_opt['text_message_sent'] : __('Your message has been sent, thank you.', 'si-contact-form'));
+
+$ctf_thank_you .= '
+  <br />
+  <img src="'.plugins_url( 'ctf-loading.gif' , __FILE__ ).'" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />
+  <a href="'.$ctf_redirect_url.'">'.__('Redirecting', 'si-contact-form').'</a>
+</div>';
+
+if ($si_contact_opt['border_enable'] == 'true') {
+  $ctf_thank_you .= '
+    </fieldset>';
+}
+$ctf_thank_you .= '
 </div>
 <!-- Fast Secure Contact Form plugin '.esc_html($this->ctf_version).' - end - FastSecureContactForm.com -->
 ';
@@ -1401,7 +1415,7 @@ function si_contact_check_honeypot($form_id) {
 // this function adds the captcha to the contact form
 function si_contact_get_captcha_html($si_contact_error_captcha,$form_id_num) {
    global $ctf_captcha_url, $ctf_captcha_dir, $captcha_path_cf, $captcha_url_cf, $si_contact_gb, $si_contact_opt;
-   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.esc_html($si_contact_opt['req_field_indicator']).'</span>' : '';
+   $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 
    $capt_disable_sess = 0;
    if ($si_contact_gb['captcha_disable_session'] == 'true')
@@ -1896,6 +1910,7 @@ function si_contact_get_options($form_num) {
          'button_style' => 'cursor:pointer; margin:0;',
          'reset_style' => 'cursor:pointer; margin:0;',
          'powered_by_style' => 'font-size:x-small; font-weight:normal; padding-top:5px;',
+         'redirect_style' => 'text-align:left;',
          'field_size' => '40',
          'captcha_field_size' => '6',
          'text_cols' => '30',
@@ -2120,7 +2135,7 @@ function si_contact_copy_styles($this_form_arr,$destination_form_arr) {
      'border_enable','form_style','border_style','required_style','notes_style',
      'title_style','field_style','field_div_style','error_style','select_style',
      'captcha_div_style_sm','captcha_div_style_m','captcha_input_style','submit_div_style','button_style', 'reset_style',
-     'powered_by_style','field_size','captcha_field_size','text_cols','text_rows');
+     'powered_by_style','redirect_style','field_size','captcha_field_size','text_cols','text_rows');
      foreach($style_copy_arr as $style_copy) {
            $destination_form_arr[$style_copy] = $this_form_arr[$style_copy];
      }
