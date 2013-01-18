@@ -1013,6 +1013,7 @@ get_currentuserinfo();
            if (!empty($subjects)) {
             // posted subject select input
             $sid = $this->si_contact_post_var('si_contact_subject_ID');
+            if ($sid == '') $sid = 1;
             $subject = $this->ctf_clean_input($subjects[$sid]);
            }
        }
@@ -3527,12 +3528,12 @@ function si_contact_start_session() {
       @ini_set("session.cookie_httponly", 1);
     session_cache_limiter ('private, must-revalidate');
     session_start();
-    if(isset($_SESSION['fsc_form_display_html']))
-       unset($_SESSION['fsc_form_display_html']); // clear for next page
-    if(isset($_SESSION['fsc_sent_mail']))
-       unset($_SESSION['fsc_sent_mail']);  // clear for next page
    // echo "session started ctf";
   }
+  if(isset($_SESSION['fsc_form_display_html']))
+       unset($_SESSION['fsc_form_display_html']); // clear for next page
+  if(isset($_SESSION['fsc_sent_mail']))
+       unset($_SESSION['fsc_sent_mail']);  // clear for next page
   
   if (is_admin()) {
     $_SESSION["vcita_expert"] = true;
