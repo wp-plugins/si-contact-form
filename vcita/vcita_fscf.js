@@ -1,4 +1,4 @@
-	
+
 	/* --- vCita Constants --- */
 	
 	var VC_REQUIRED_MIN_SPACE_WIDTH = 125;
@@ -36,7 +36,9 @@
 		var date = new Date();
 		date.setTime(date.getTime()+(1*365*86400*1000)); // Expires in one year
 		var expires = "; expires="+date.toGMTString();
-		document.cookie = VC_FSCF_cookie_name(uid) + "=" + value + expires + "; path=/";
+        // mike challis  added ; HttpOnly for PCI compliance
+        // 01/15/2013
+		document.cookie = VC_FSCF_cookie_name(uid) + "=" + value + expires + "; path=/; HttpOnly";
 	}
 
 	/** 

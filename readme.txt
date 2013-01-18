@@ -86,7 +86,8 @@ Requirements/Restrictions:
 -------------------------
  * Works with Wordpress 2.8+ and WPMU (Wordpress 3.5+ is highly recommended)
  * PHP5 
- * PHP register_globals and safe_mode should be set to "Off".
+ * PHP register_globals and safe_mode MUST be set to "Off".
+ * PHP session support must not be broken on your server.
 
 == Installation ==
 
@@ -207,6 +208,22 @@ You can learn more about vCita at [www.vcita.com](http://www.vcita.com?invite=FS
 If you have any question about the Schedule Meetings feature please contact support@vcita.com
 
 == Changelog ==
+
+= 3.1.7 =
+- (17 Jan 2013) - major fix for compatibility with JetPack, SFC Like, and other plugins that modify "The content".
+- fixed all "Could not read CAPTCHA token file" errors.
+- fixed redirect not working when other plugins modify "The content".
+- fixed "Your message has been sent" message not displaying when other plugins modify "The content".
+- fixed vCita cookie was setting even if vCita is disabled.
+- fixed some false "Invalid Input" errors on form input sanitization.
+- PHP sessions are utilized and required now.
+- removed the CAPTCHA temp folder since PHP sessions are always used now.
+- PHP session cookie now uses HTTPOnly mode for better security (PHP 5.2.0 and up) 
+- added click back button and send again prevention trap, when you try to do that, it will show a blank form.
+- changed message sent redirect from javascript to meta refresh in HTML header.
+- removed the last of the CAPTCHA audio code.
+- removed the setting "Use captcha without PHP session".
+- other bug fixes.
 
 = 3.1.6.3 =
 - (09 Jan 2013) - fixed message sent HTML when redirect is disabled.

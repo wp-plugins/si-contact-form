@@ -139,7 +139,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
   <br />
 
   <?php
-   echo $this->si_contact_form_short_code( array( 'form' => "$form" ) );
+   echo $this->si_contact_display_form( array( 'form' => "$form" ) );
 
   echo '
   </fieldset>
@@ -167,7 +167,6 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'donated' =>                 (isset( $_POST['si_contact_donated'] ) ) ? 'true' : 'false',
          'max_forms' =>     ( is_numeric(trim($_POST['si_contact_max_forms'])) && trim($_POST['si_contact_max_forms']) < 100 ) ? absint(trim($_POST['si_contact_max_forms'])) : $si_contact_gb['max_forms'],
          'max_fields' =>          absint(trim($si_contact_gb['max_fields'])),
-         'captcha_disable_session' => (isset( $_POST['si_contact_captcha_disable_session'] ) ) ? 'true' : 'false',
          'vcita_auto_install' =>         strip_tags(trim($_POST['si_contact_vcita_auto_install'])), /* --- vCita Global Settings --- */
          'vcita_dismiss' =>              strip_tags(trim($_POST['si_contact_vcita_dismiss'])), /* --- vCita Global Settings --- */
 		 'ctf_version' =>                strip_tags(trim($_POST['si_contact_ctf_version'])),
@@ -1468,44 +1467,11 @@ foreach ($captcha_difficulty_array as $k => $v) {
         <label for="si_contact_captcha_perm"><?php _e('Hide CAPTCHA for', 'si-contact-form'); ?>
         <strong><?php _e('registered', 'si-contact-form'); ?></strong> <?php __('users who can', 'si-contact-form'); ?>:</label>
         <?php $this->si_contact_captcha_perm_dropdown('si_contact_captcha_perm_level', $si_contact_opt['captcha_perm_level']);  ?>
-        <br />
-
-        <input name="si_contact_captcha_disable_session" id="si_contact_captcha_disable_session" type="checkbox" <?php if ( $si_contact_gb['captcha_disable_session'] == 'true' ) echo ' checked="checked" '; ?> />
-        <label for="si_contact_captcha_disable_session"><?php _e('Use CAPTCHA without PHP session.', 'si-contact-form'); ?></label>
-        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_disable_session_tip');"><?php _e('help', 'si-contact-form'); ?></a>
-        <div style="text-align:left; display:none" id="si_contact_captcha_disable_session_tip">
-        <?php _e('Sometimes the CAPTCHA code never validates because of a server problem with PHP session handling. If the CAPTCHA code never validates and does not work, you can enable this setting to use files for session.', 'si-contact-form'); ?>
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_captcha_perm_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_captcha_perm_tip">
+        <?php _e('Registered users will not have to use the CAPTCHA feature. Do not enable this setting if you do not trust your registered users as some could be spammers.', 'si-contact-form') ?>
         </div>
         <br />
-        <?php
-         if ( $si_contact_gb['captcha_disable_session'] == 'true' ){
-            $check_this_dir = WP_PLUGIN_DIR . '/si-contact-form/captcha/temp';
-           if(is_writable($check_this_dir)) {
-				//echo '<span style="color: green">OK - Writable</span> ' . substr(sprintf('%o', fileperms($check_this_dir)), -4);
-           } else if(!file_exists($check_this_dir)) {
-              echo '<span style="color: red;">';
-              echo __('There is a problem with the directory', 'si-contact-form');
-              echo ' /captcha/temp/. ';
-	          echo __('The directory is not found, a <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">permissions</a> problem may have prevented this directory from being created.', 'si-contact-form');
-              echo ' ';
-              echo __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
-              echo '</span><br />';
-           } else {
-             echo '<span style="color: red;">';
-             echo __('There is a problem with the directory', 'si-contact-form') .' /captcha/temp/. ';
-             echo __('The directory Unwritable (<a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">fix permissions</a>)', 'si-contact-form').'. ';
-             echo __('Permissions are: ', 'si-contact-form');
-             echo ' ';
-             echo substr(sprintf('%o', fileperms($check_this_dir)), -4);
-             echo ' ';
-             echo __('Fixing this may require assigning 0755 permissions or higher (e.g. 0777 on some hosts. Try 0755 first, because 0777 is sometimes too much and will not work.)', 'si-contact-form');
-             echo ' ';
-             echo __('Fixing the actual problem is recommended, but you can uncheck this setting on the contact form options page: "Use CAPTCHA without PHP session" and the captcha will work this way just fine (as long as PHP sessions are working).', 'si-contact-form');
-             echo '</span><br />';
-          }
-         }
-
-        ?>
 
         <input name="si_contact_captcha_no_trans" id="si_contact_captcha_no_trans" type="checkbox" <?php if ( $si_contact_opt['captcha_no_trans'] == 'true' ) echo ' checked="checked" '; ?> />
         <label for="si_contact_captcha_no_trans"><?php _e('Disable CAPTCHA transparent text (only if captcha text is missing on the image, try this fix).', 'si-contact-form'); ?></label>
