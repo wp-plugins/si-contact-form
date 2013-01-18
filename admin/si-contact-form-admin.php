@@ -139,7 +139,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
   <br />
 
   <?php
-   echo $this->si_contact_display_form( array( 'form' => "$form" ) );
+   echo $this->si_contact_form_short_code( array( 'form' => "$form" ) );
 
   echo '
   </fieldset>

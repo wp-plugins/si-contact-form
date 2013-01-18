@@ -786,7 +786,7 @@ return $contacts;
 
 // this function builds the contact form content
 // [si_contact_form form='2']
-function si_contact_display_form($atts) {
+function si_contact_form_short_code($atts) {
   global $captcha_path_cf, $ctf_captcha_dir, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $attach_names, $fsc_error_message;
 
   $this->ctf_version = $ctf_version;
@@ -1606,7 +1606,7 @@ if ($have_attach){
                      $fsc_error_message["ex_field$i"]  = $ex_field_file_check['error'];
                  } else {
                     ${'ex_field'.$i} = $ex_field_file_check['file_name'];  // needed for email message
-                    // because the file should only be uploaded once, this var is set for the display_form function
+                    // because the file should only be uploaded once, this var is set for the si_contact_form_short_code function
                     $fsc_attach_names[$i] = $ex_field_file_check['file_name'];
                  }
               }
@@ -2522,8 +2522,8 @@ $ctf_thank_you .= '
 <!-- Fast Secure Contact Form plugin '.esc_html($this->ctf_version).' - end - FastSecureContactForm.com -->
 ';
 
-      // thank you message html that can now be used in display_form function
-      // saved into a session var because the display_form function can be run multiple times by other plugins applying "the_content" filter
+      // thank you message html that can now be used in si_contact_form_short_code function
+      // saved into a session var because the si_contact_form_short_code function can be run multiple times by other plugins applying "the_content" filter
       $_SESSION['fsc_form_display_html'] = $ctf_thank_you;
 
 } // end if message sent
@@ -3785,8 +3785,8 @@ if (isset($si_contact_form)) {
 
   // use shortcode to print the contact form or process contact form logic
   // can use dashes or underscores: [si-contact-form] or [si_contact_form]
-  add_shortcode('si_contact_form', array(&$si_contact_form,'si_contact_display_form'),1);
-  add_shortcode('si-contact-form', array(&$si_contact_form,'si_contact_display_form'),1);
+  add_shortcode('si_contact_form', array(&$si_contact_form,'si_contact_form_short_code'),1);
+  add_shortcode('si-contact-form', array(&$si_contact_form,'si_contact_form_short_code'),1);
 
   // If you want to use shortcodes in your widgets or footer
   add_filter('widget_text', 'do_shortcode');
