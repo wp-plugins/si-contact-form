@@ -209,6 +209,9 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.7.1 =
+- (18 Jan 2013) - fix a few critical errors such as "illegal characters in POST", Notice: Undefined index si-contact-form.php on line 1016, and users cannot send the form a 2nd time.
+
 = 3.1.7 =
 - (17 Jan 2013) - major fix for compatibility with JetPack, SFC Like, and other plugins that modify "The content".
 - fixed all "Could not read CAPTCHA token file" errors.
