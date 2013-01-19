@@ -2361,6 +2361,8 @@ if ($have_attach){
      //echo $silent_result;
   }
 
+  $ctf_redirect_enable = 'false';
+
   if ($si_contact_opt['export_enable'] == 'true') {
       // filter posted data based on admin settings
       $posted_data_export = $this->si_contact_export_convert($posted_data,$si_contact_opt['export_rename'],$si_contact_opt['export_ignore'],$si_contact_opt['export_add'],'array');
@@ -3366,7 +3368,7 @@ function si_contact_get_options($form_num) {
   }
 
   /* --- vCita Migrate - End --- */
-  
+
   // Save the previous version 
   if (isset($si_contact_gb['ctf_version'])) {
 	$ctf_previous_version = $si_contact_gb['ctf_version'];
