@@ -209,6 +209,11 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.7.2 =
+- (19 Jan 2013) fix a parse error when akismet is enabled.
+- fix error whenthe  form is called from PHP shortcode method.
+- display a more helpful error when checkbox is not configured properly.
+
 = 3.1.7.1 =
 - (18 Jan 2013) - fix a few critical errors such as "illegal characters in POST", Notice: Undefined index si-contact-form.php on line 1016, and users cannot send the form a 2nd time.
 

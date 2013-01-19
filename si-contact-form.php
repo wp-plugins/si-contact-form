@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.7.1
+Version: 3.1.7.2
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.7.1';
+$ctf_version = '3.1.7.2';
 
 /*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -1623,7 +1623,7 @@ if ($have_attach){
                   if ($exf_opts_label != '' && $value != '') {
                      if(!preg_match("/;/", $value)) {
                         $this->si_contact_error = 1;
-                        $fsc_error_message["ex_field$i"]  = __('Error: A checkbox field is not configured properly in settings.', 'si-contact-form');
+                        $fsc_error_message["ex_field$i"]  = __('Error: A checkbox field is not configured properly in settings. If you are trying to use multiple checkbox options, make sure this field type is set to checkbox-multiple instead of just checkbox', 'si-contact-form');
                      } else {
                         // multiple options
                          $exf_opts_array = explode(";",$value);
@@ -2125,6 +2125,7 @@ if ($have_attach){
 	     if( is_string($data) )
 		    $query_string .= $key . '=' . urlencode( stripslashes($data) ) . '&';
       }
+      //echo "test $akismet_api_host, $akismet_api_port, $query_string"; exit;
 	  $response = akismet_http_post($query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
 	  if ( 'true' == $response[1] ) {
 	    if( $si_contact_opt['akismet_send_anyway'] == 'false' ) {
@@ -2395,6 +2396,7 @@ if ($have_attach){
                else
                   $ctf_redirect_url .= '&'.$query_string;
            }
+           // using meta refresh instead
 /*           if ($have_attach){
              // unlink attachment temp files
               foreach ( (array) $this->uploaded_files as $path ) {
@@ -2446,46 +2448,7 @@ if ($ctf_redirect_enable == 'true') {
 
        $ctf_redirect_timeout = absint($si_contact_opt['redirect_seconds']); // time in seconds to wait before loading another Web page
 
-// disabled in favor of header meta refresh
- $ctf_thank_you_eeeeeee = <<<EOT
-
-<script type="text/javascript" language="javascript">
-//<![CDATA[
-var ctf_redirect_seconds=$ctf_redirect_timeout;
-var ctf_redirect_time;
-function ctf_redirect() {
-  document.title='Redirecting in ' + ctf_redirect_seconds + ' seconds';
-  ctf_redirect_seconds=ctf_redirect_seconds-1;
-  ctf_redirect_time=setTimeout("ctf_redirect()",1000);
-  if (ctf_redirect_seconds==-1) {
-    clearTimeout(ctf_redirect_time);
-    document.title='Redirecting ...';
-    self.location='$ctf_redirect_url';
-  }
-}
-function ctf_addOnloadEvent(fnc){
-  if ( typeof window.addEventListener != "undefined" )
-    window.addEventListener( "load", fnc, false );
-  else if ( typeof window.attachEvent != "undefined" ) {
-    window.attachEvent( "onload", fnc );
-  }
-  else {
-    if ( window.onload != null ) {
-      var oldOnload = window.onload;
-      window.onload = function ( e ) {
-        oldOnload( e );
-        window[fnc]();
-      };
-    }
-    else
-      window.onload = fnc;
-  }
-}
-ctf_addOnloadEvent(ctf_redirect);
-//]]>
-</script>
-EOT;
-// do not remove the above EOT line
+// disabled javascript refresh in favor of header meta refresh
 
 // meta refresh page timer feature
 $this->meta_string = "<meta http-equiv=\"refresh\" content=\"$ctf_redirect_timeout;URL=$ctf_redirect_url\">\n";
@@ -3763,7 +3726,7 @@ if (isset($si_contact_form)) {
   // start the PHP session - used by CAPTCHA, the form action logic, and also used by vCita
   add_action('init', array(&$si_contact_form,'si_contact_start_session'),1);
   // process the form POST logic
-  add_action('init', array(&$si_contact_form,'si_contact_check_and_send'),1);
+  add_action('init', array(&$si_contact_form,'si_contact_check_and_send'),10);
 
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);
