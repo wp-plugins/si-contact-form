@@ -209,9 +209,12 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- fix passing Passing query string parameters to contact form page feature.
+- fix Notice: Undefined variable: ctf_redirect_enable 
+
 = 3.1.7.2 =
 - (19 Jan 2013) fix a parse error when akismet is enabled.
-- fix error whenthe  form is called from PHP shortcode method.
+- fix error when the  form is called from PHP shortcode method.
 - display a more helpful error when checkbox is not configured properly.
 
 = 3.1.7.1 =
