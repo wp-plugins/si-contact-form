@@ -241,8 +241,8 @@ get_currentuserinfo();
                   ${'ex_field'.$i.'ap'} = $this->si_contact_post_var("si_contact_ex_field".$i."ap");
               }
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
-                   // file name that was uploaded.
-                   ${'ex_field'.$i} = ( isset($attach_names[$i]) ) ? $attach_names[$i] : '';
+                   // file name that was uploaded.  PHP and browser security does not allow access to the local selected file path
+                   ${'ex_field'.$i} = '';
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'checkbox' || $si_contact_opt['ex_field'.$i.'_type'] == 'checkbox-multiple') {
              // see if checkbox children
              $exf_opts_array = array();

@@ -85,7 +85,7 @@
  * @subpackage classes
  *
  */
-class Securimage {
+class Securimage_ctf {
 
 	/**
 	 * The desired width of the CAPTCHA image.
@@ -370,7 +370,7 @@ class Securimage {
 	 * </code>
 	 *
 	 */
-	function Securimage()
+	function Securimage_ctf()
 	{
 
 		// Set Default Values
@@ -426,7 +426,7 @@ class Securimage {
 	 * <code>
 	 *   <?php
 	 *   include 'securimage.php';
-	 *   $securimage = new Securimage();
+	 *   $securimage = new Securimage_ctf();
 	 *   $securimage->show('bg.jpg');
 	 *   ?>
 	 * </code>
@@ -1059,17 +1059,17 @@ class Securimage {
     }
 
 
-} /* class Securimage */
+} /* end class Securimage_ctf */
 
 /**
- * Color object for Securimage CAPTCHA
+ * Color object for Securimage_ctf CAPTCHA
  *
  * @since 2.0
  * @package Securimage
  * @subpackage classes
  *
  */
-class Securimage_Color {
+class Securimage_Color_ctf {
 	/**
 	 * Red component: 0-255
 	 *
@@ -1090,7 +1090,7 @@ class Securimage_Color {
 	var $b;
 
 	/**
-	 * Create a new Securimage_Color object.<br />
+	 * Create a new Securimage_Color_ctf object.<br />
 	 * Specify the red, green, and blue components using their HTML hex code equivalent.<br />
 	 * i.e. #4A203C is declared as new Securimage_Color(0x4A, 0x20, 0x3C)
 	 *
@@ -1098,7 +1098,7 @@ class Securimage_Color {
 	 * @param $green Green component 0-255
 	 * @param $blue Blue component 0-255
 	 */
-	function Securimage_Color($red, $green, $blue)
+	function Securimage_Color_ctf($red, $green, $blue)
 	{
 		if ($red < 0) $red       = 0;
 		if ($red > 255) $red     = 255;

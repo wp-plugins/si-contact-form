@@ -3,7 +3,7 @@
        // session
    include 'securimage.php';
 
-   $img = new securimage();
+   $img = new Securimage_ctf();
    $img->code_length = 4;
 
    $img->image_width   = 175;
@@ -42,7 +42,7 @@
   }
    $img->charset = 'ABCDEFHKLMNPRSTUVWYZ234578';
    $img->ttf_file = getcwd() . '/ttffonts/ahg-bold.ttf';   // single font
-   $img->line_color = new Securimage_Color(rand(0, 64), rand(64, 128), rand(128, 255));
+   $img->line_color = new Securimage_Color_ctf(rand(0, 64), rand(64, 128), rand(128, 255));
    $img->image_type = 'png';
    $img->background_directory = getcwd() . '/backgrounds';
    $img->ttf_font_directory  = getcwd() . '/ttffonts';

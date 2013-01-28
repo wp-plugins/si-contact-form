@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 2.8
-Tested up to: 3.5
+Tested up to: 3.5.1
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -209,11 +209,14 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
-- fix passing Passing query string parameters to contact form page feature.
-- fix Notice: Undefined variable: ctf_redirect_enable 
+= 3.1.7.3 =
+- (27 Jan 2013) - fix passing Passing query string parameters to contact form page feature.
+- fix Notice: Undefined variable: ctf_redirect_enable.
+- change to securimage_ctf class name for CAPTCHA.
+- added error message for when PHP sessions are broken.
 
 = 3.1.7.2 =
-- (19 Jan 2013) fix a parse error when akismet is enabled.
+- (19 Jan 2013) - fix a parse error when akismet is enabled.
 - fix error when the  form is called from PHP shortcode method.
 - display a more helpful error when checkbox is not configured properly.
 
