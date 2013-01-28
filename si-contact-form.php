@@ -903,11 +903,12 @@ function si_contact_check_and_send(  ) {
 					// Check all input data
 				$this->si_contact_check_form($form_id_num);
             }
-     }else{
-            //PHP sessions are broken
-            $die_msg = __('PHP sessions are broken on this server. <a href="http://www.fastsecurecontactform.com/session-start-error" target="_new">Learn how to fix the PHP session problem</a>', 'si-contact-form');
-            wp_die( $die_msg );
      }
+     //else{
+     //       //PHP sessions are broken //  or just stale? disabled this code because of false positives
+     //       $die_msg = __('PHP sessions are broken on this server. <a href="http://www.fastsecurecontactform.com/session-start-error" target="_new">Learn how to fix the PHP session problem</a>', 'si-contact-form');
+     //       wp_die( $die_msg );
+     //}
   }
 
 
