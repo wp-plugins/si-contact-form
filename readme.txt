@@ -209,7 +209,7 @@ If you have any question about the Schedule Meetings feature please contact supp
 == Changelog ==
 
 = 3.1.8 =
-- (30 Jan 2013) - removed PHP sessions and replaced with a built-in session method: WP Session Manager by Eric Mann.
+- (30 Jan 2013) - removed PHP sessions and replaced with a built-in WP session method: WP Session Manager by Eric Mann.
 - added border formatting of HTML email where it displays user info.
 
 = 3.1.7.3 =
