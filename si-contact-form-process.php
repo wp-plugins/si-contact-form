@@ -180,9 +180,9 @@ get_currentuserinfo();
     // Webmaster,user1@example.com (must have name,email)
     // multiple emails allowed
     // Webmaster,user1@example.com;user2@example.com
-   if ( $_SESSION["fsc_shortcode_email_to_$form_id_num"] != '') {
-     if(preg_match("/,/", $_SESSION["fsc_shortcode_email_to_$form_id_num"]) ) {
-       list($key, $value) = preg_split('#(?<!\\\)\,#',$_SESSION["fsc_shortcode_email_to_$form_id_num"]); //string will be split by "," but "\," will be ignored
+   if ( $wp_session["fsc_shortcode_email_to_$form_id_num"] != '') {
+     if(preg_match("/,/", $wp_session["fsc_shortcode_email_to_$form_id_num"]) ) {
+       list($key, $value) = preg_split('#(?<!\\\)\,#',$wp_session["fsc_shortcode_email_to_$form_id_num"]); //string will be split by "," but "\," will be ignored
        $key   = trim(str_replace('\,',',',$key)); // "\," changes to ","
        $value = trim(str_replace(';',',',$value)); // ";" changes to ","
        if ($key != '' && $value != '') {
@@ -545,12 +545,12 @@ get_currentuserinfo();
       var_dump($_COOKIE);
       echo "\n\n";
       echo "SESSION ";
-      var_dump($_SESSION);
+      var_dump($wp_session);
       echo "</pre>\n";*/
 
       $captcha_code = $this->ctf_clean_input($_POST['si_contact_captcha_code']);
 
-      if (!isset($_SESSION['securimage_code_ctf_'.$form_id_num]) || empty($_SESSION['securimage_code_ctf_'.$form_id_num])) {
+      if (!isset($wp_session['securimage_code_ctf_'.$form_id_num]) || empty($wp_session['securimage_code_ctf_'.$form_id_num])) {
           $this->si_contact_error = 1;
           $fsc_error_message['captcha'] = __('Could not read CAPTCHA cookie. Try again.', 'si-contact-form');
       }else{
@@ -775,8 +775,8 @@ get_currentuserinfo();
     } // end for
 
    // allow shortcode hidden fields   http://www.fastsecurecontactform.com/shortcode-options
-   if ( $_SESSION["fsc_shortcode_hidden_$form_id_num"] != '') {
-      $hidden_fields_test = explode(",",$_SESSION["fsc_shortcode_hidden_$form_id_num"]);
+   if ( $wp_session["fsc_shortcode_hidden_$form_id_num"] != '') {
+      $hidden_fields_test = explode(",",$wp_session["fsc_shortcode_hidden_$form_id_num"]);
       if ( !empty($hidden_fields_test) ) {
          foreach($hidden_fields_test as $line) {
            if(preg_match("/=/", $line) ) {
@@ -847,6 +847,8 @@ get_currentuserinfo();
     $userdomain = '';
     $userdomain = gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $user_info_string = '';
+    if ($si_contact_opt['email_html'] == 'true')
+      $user_info_string = '<div style="background:#eee;border:1px solid gray;color:gray;padding:1em;margin:1em 0;">';
     if ($user_ID != '') {
         //user logged in
        if ($current_user->user_login != '') $user_info_string .= __('From a WordPress user', 'si-contact-form').': '.$current_user->user_login . $php_eol;
@@ -864,6 +866,8 @@ get_currentuserinfo();
     $user_info_string .= __('Date/Time', 'si-contact-form').': '.date_i18n(get_option('date_format').' '.get_option('time_format'), time() ) . $php_eol;
     $user_info_string .= __('Coming from (referer)', 'si-contact-form').': '.esc_url($form_action_url). $php_eol;
     $user_info_string .= __('Using (user agent)', 'si-contact-form').': '.$this->ctf_clean_input($_SERVER['HTTP_USER_AGENT']) . $php_eol.$php_eol;
+    if ($si_contact_opt['email_html'] == 'true')
+        $user_info_string .= '</div>';
     if ($si_contact_opt['sender_info_enable'] == 'true')
        $msg .= $user_info_string;
 
@@ -1149,15 +1153,15 @@ get_currentuserinfo();
       do_action_ref_array( 'fsctf_mail_sent', array( &$fsctf_posted_data ) );
    }  // end if export_enable
 
-        $_SESSION["fsc_sent_mail"] = true; // toggle this on so check_and_send won't send back to this function a 2nd time
+        $wp_session["fsc_sent_mail"] = true; // toggle this on so check_and_send won't send back to this function a 2nd time
        if( $si_contact_opt['redirect_enable'] == 'true' ){
           $ctf_redirect_enable = 'true';
           $ctf_redirect_url = $si_contact_opt['redirect_url'];
        }
        // allow shortcode redirect to override options redirect settings
-       if ( $_SESSION["fsc_shortcode_redirect_$form_id_num"] != '') {
+       if ( $wp_session["fsc_shortcode_redirect_$form_id_num"] != '') {
            $ctf_redirect_enable = 'true';
-           $ctf_redirect_url = strip_tags($_SESSION["fsc_shortcode_redirect_$form_id_num"]);
+           $ctf_redirect_url = strip_tags($wp_session["fsc_shortcode_redirect_$form_id_num"]);
        }
        if ($ctf_redirect_enable == 'true') {
            if ($ctf_redirect_url == '#') {  // if you put # for the redirect URL it will redirect to the same page the form is on regardless of the page.
@@ -1265,7 +1269,7 @@ $ctf_thank_you .= '
 
       // thank you message html that can now be used in si_contact_form_short_code function
       // saved into a session var because the si_contact_form_short_code function can be run multiple times by other plugins applying "the_content" filter
-      $_SESSION['fsc_form_display_html'] = $ctf_thank_you;
+      $wp_session['fsc_form_display_html'] = $ctf_thank_you;
 
 } // end if message sent
 

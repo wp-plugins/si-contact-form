@@ -137,9 +137,9 @@ get_currentuserinfo();
     // Webmaster,user1@example.com (must have name,email)
     // multiple emails allowed
     // Webmaster,user1@example.com;user2@example.com
-   if ( $_SESSION["fsc_shortcode_email_to_$form_id_num"] != '') {
-     if(preg_match("/,/", $_SESSION["fsc_shortcode_email_to_$form_id_num"]) ) {
-       list($key, $value) = preg_split('#(?<!\\\)\,#',$_SESSION["fsc_shortcode_email_to_$form_id_num"]); //string will be split by "," but "\," will be ignored
+   if ( $wp_session["fsc_shortcode_email_to_$form_id_num"] != '') {
+     if(preg_match("/,/", $wp_session["fsc_shortcode_email_to_$form_id_num"]) ) {
+       list($key, $value) = preg_split('#(?<!\\\)\,#',$wp_session["fsc_shortcode_email_to_$form_id_num"]); //string will be split by "," but "\," will be ignored
        $key   = trim(str_replace('\,',',',$key)); // "\," changes to ","
        $value = trim(str_replace(';',',',$value)); // ";" changes to ","
        if ($key != '' && $value != '') {
@@ -455,8 +455,8 @@ if ($si_contact_opt['req_field_label_enable'] == 'true' && $si_contact_opt['req_
 }
 
 // allow shortcode hidden fields
-if ( $_SESSION["fsc_shortcode_hidden_$form_id_num"] != '') {
-   $hidden_fields_test = explode(",",$_SESSION["fsc_shortcode_hidden_$form_id_num"]);
+if ( $wp_session["fsc_shortcode_hidden_$form_id_num"] != '') {
+   $hidden_fields_test = explode(",",$wp_session["fsc_shortcode_hidden_$form_id_num"]);
    if ( !empty($hidden_fields_test) ) {
       foreach($hidden_fields_test as $line) {
          if(preg_match("/=/", $line) ) {

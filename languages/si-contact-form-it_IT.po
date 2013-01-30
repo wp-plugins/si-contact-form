@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Fast and Secure Contact Form in italiano\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
 "POT-Creation-Date: 2013-01-10 17:13:26+00:00\n"
-"PO-Revision-Date: 2013-01-11 21:50+0100\n"
-"Last-Translator: Gianni Diurno (aka gidibao) <gidibao[at]gmail[dot]com>\n"
+"PO-Revision-Date: 2013-01-28 14:22+0100\n"
+"Last-Translator: Daniele <info@sinapsi.org>\n"
 "Language-Team: Gianni Diurno | gidibao.net & CarmingPress\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
@@ -197,7 +197,7 @@ msgstr "esprimi la tua valutazione"
 
 #: admin/si-contact-form-admin.php:687
 msgid "a newer version is available: %s"
-msgstr "una nuova versione é disponibile: %s"
+msgstr "una nuova versione è disponibile: %s"
 
 #: admin/si-contact-form-admin.php:689
 msgid "A newer version of Fast Secure Contact Form is available: %s"
@@ -394,7 +394,7 @@ msgid ""
 "forms of a higher number than the number you set."
 msgstr ""
 "Usa questa impostazione per aumentare oppure diminuire il numero di moduli "
-"disponibili. Il numero massimo di moduli inseribili é pari a 99. Attenzione: "
+"disponibili. Il numero massimo di moduli inseribili è pari a 99. Attenzione: "
 "diminuendo il valore di questo numero farà sì che vengano cancellati i "
 "moduli in eccesso impostati in precedenza."
 
@@ -533,7 +533,7 @@ msgid ""
 "PHP4 was officially discontinued August 8, 2008 and is no longer considered "
 "safe."
 msgstr ""
-"Lo sviluppo de PHP4 ha avuto termine l'8 Agosto 2008 e non é quindi più da "
+"Lo sviluppo de PHP4 ha avuto termine l'8 Agosto 2008 e non è quindi più da "
 "considerarsi sicuro."
 
 #: admin/si-contact-form-admin.php:1017 admin/si-contact-form-admin.php:1019
@@ -547,7 +547,7 @@ msgid ""
 "but be delivered to a Spam folder. Be sure to test that your form is sending "
 "email and that you are receiving it, if not, fix this setting."
 msgstr ""
-"Attenzione: il \"Mittente email\" non é impostato con un indirizzo uguale al "
+"Attenzione: il \"Mittente email\" non è impostato con un indirizzo uguale al "
 "nome del dominio del tuo sito (%s). In ragione di questo, la email potrebbe "
 "non essere inviata oppure ricevuta dal destinatario nella cartella dello "
 "spam. Assicurati che il tuo modulo invii una email che tu sia in grado di "
@@ -584,7 +584,7 @@ msgstr ""
 "Qualora il tuo modulo non inviasse alcuna email, seleziona l'opzione qui "
 "sotto: \"Attiva quando il web host richede che il \"Mittente email\" "
 "corrisponda all'account email del dominio\". In alcuni casi, questa "
-"operazione dovrebbe risolvere il problema. Questa impostazione é altresì "
+"operazione dovrebbe risolvere il problema. Questa impostazione è altresì "
 "raccomandabile per gli utenti gmail in modo tale che le loro email non "
 "finiscano nella cartella dello spam."
 
@@ -635,7 +635,7 @@ msgid ""
 "automatically. Only use this setting if you are using the form for a mailing "
 "list and you do NOT want the reply going to the form user."
 msgstr ""
-"Lascia in bianco questa impostazione perché il \"rispondi a\" é azionato in "
+"Lascia in bianco questa impostazione perché il \"rispondi a\" è azionato in "
 "automatico. Usa questa impostazione nel caso in cui facessi uso del modulo "
 "come mailing list e NON desiderassi quindi che venga inviata una risposta "
 "all'utente."
@@ -700,7 +700,7 @@ msgid ""
 "wordwrapped 70 characters per line to comply with most email programs."
 msgstr ""
 "Attiva qualora graadissi che il messaggio email venga inviato in formato "
-"HTML. Il formato HTML é preferibile nel caso in cui volessi evitare il "
+"HTML. Il formato HTML è preferibile nel caso in cui volessi evitare il "
 "rientro a capo (70 caratteri) quando copi ed incolli il messagio della "
 "email. Generalmente, la maggior parte dei programmi email invia la email con "
 "un rientro a capo impostato a 70 caratteri per riga."
@@ -796,7 +796,7 @@ msgid ""
 "Enable on English language only because it can cause accent character "
 "problems if enabled on other languages."
 msgstr ""
-"Disponibile per la sola lingua inglese poiché può determinare dei problemi "
+"Disponibile per la sola lingua inglese poichè può determinare dei problemi "
 "con i caratteri presenti in altre lingue."
 
 #: admin/si-contact-form-admin.php:1186
@@ -809,7 +809,7 @@ msgid ""
 "Address, date, time, and which web browser they used."
 msgstr ""
 "Riceverai nella email le informazioni dettagliate sul mittente quali ad "
-"esempio: l'indirizzo IP, la data, l'ora e quale browser é stato da egli "
+"esempio: l'indirizzo IP, la data, l'ora e quale browser è stato da egli "
 "utilizzato."
 
 #: admin/si-contact-form-admin.php:1190
@@ -1030,19 +1030,19 @@ msgid ""
 "Akismet is a WordPress spam prevention plugin. When Akismet is installed and "
 "active, this form will be checked with Akismet to help prevent spam."
 msgstr ""
-"Akismet é un plugin WordPress per la prevenzione dello spam. Una volta "
+"Akismet è un plugin WordPress per la prevenzione dello spam. Una volta "
 "installato ed attivato, questo modulo sarà verificato via Akismet."
 
 #: admin/si-contact-form-admin.php:1348
 msgid "Akismet is installed."
-msgstr "Akismet é stato installato"
+msgstr "Akismet è stato installato"
 
 #: admin/si-contact-form-admin.php:1361
 msgid ""
 "Akismet is enabled and the key is valid. This form will be checked with "
 "Akismet to help prevent spam"
 msgstr ""
-"Akismet é installato e la chiave é valida. Questo modulo sarà verificato via "
+"Akismet è installato e la chiave è valida. Questo modulo sarà verificato via "
 "Akismet"
 
 #: admin/si-contact-form-admin.php:1362
@@ -1050,30 +1050,30 @@ msgid ""
 "Akismet is installed and the key is valid. This form will be checked with "
 "Akismet to help prevent spam."
 msgstr ""
-"Akismet é installato e la chiave é valida. Akismet proteggerà dallo spam "
+"Akismet è installato e la chiave è valida. Akismet proteggerà dallo spam "
 "questo modulo."
 
 #: admin/si-contact-form-admin.php:1364
 msgid "Akismet plugin is enabled but key needs to be activated"
-msgstr "Il plugin Akismet é stato installato: ricordati di attivare la chiave!"
+msgstr "Il plugin Akismet è stato installato: ricordati di attivare la chiave!"
 
 #: admin/si-contact-form-admin.php:1365
 msgid "Akismet plugin is installed but key needs to be activated."
-msgstr "Il plugin Akismet é stato installato: attiva la chiave!"
+msgstr "Il plugin Akismet è stato installato: attiva la chiave!"
 
 #: admin/si-contact-form-admin.php:1367
 msgid "Akismet plugin is enabled but key failed to verify"
 msgstr ""
-"Il plugin Akismet é stato attivato ma la chiave non ha superato la verifica!"
+"Il plugin Akismet è stato attivato ma la chiave non ha superato la verifica!"
 
 #: admin/si-contact-form-admin.php:1368
 msgid "Akismet plugin is installed but key failed to verify."
 msgstr ""
-"Il plugin Akismet é stato installato: la chiave non ha superato la verifica!"
+"Il plugin Akismet è stato installato: la chiave non ha superato la verifica!"
 
 #: admin/si-contact-form-admin.php:1370 admin/si-contact-form-admin.php:1371
 msgid "Akismet plugin is installed but key has not been entered."
-msgstr "Il plugin Akismet é stato installato: inserisci la chiave!"
+msgstr "Il plugin Akismet è stato installato: inserisci la chiave!"
 
 #: admin/si-contact-form-admin.php:1377
 msgid ""
@@ -1089,15 +1089,15 @@ msgstr "Configura Akismet"
 
 #: admin/si-contact-form-admin.php:1382
 msgid "Akismet plugin is not installed or is deactivated."
-msgstr "Il plugin Akismet non é stato installato oppure é ancora da attivare."
+msgstr "Il plugin Akismet non è stato installato oppure è ancora da attivare."
 
 #: admin/si-contact-form-admin.php:1385
 msgid "Akismet is turned off for this form."
-msgstr "Akismet non é attivo per questo modulo."
+msgstr "Akismet non è attivo per questo modulo."
 
 #: admin/si-contact-form-admin.php:1390
 msgid "What should happen if Akismet determines the message is spam?"
-msgstr "Cosa accade quando Akismet ritiene che un messaggio é spam?"
+msgstr "Cosa accade quando Akismet ritiene che un messaggio è spam?"
 
 #: admin/si-contact-form-admin.php:1394
 msgid "Block spam messages"
@@ -1150,7 +1150,7 @@ msgid ""
 msgstr ""
 "Blocca gli spam bots richiedendo all'utente di superare un test CAPTCHA "
 "prima di potere inviare un commento. Volendo, potrai anche disattivare "
-"CAPTCHA poiché il modulo sarà protetto da Akismet (nota: Akismet installato "
+"CAPTCHA poichè il modulo sarà protetto da Akismet (nota: Akismet installato "
 "con la chiave attiva)."
 
 #: admin/si-contact-form-admin.php:1437
@@ -1211,7 +1211,7 @@ msgstr ""
 
 #: admin/si-contact-form-admin.php:1487 admin/si-contact-form-admin.php:1495
 msgid "There is a problem with the directory"
-msgstr "Si é verificato un errore riferito alla cartella"
+msgstr "Si è verificato un errore riferito alla cartella"
 
 #: admin/si-contact-form-admin.php:1489
 msgid ""
@@ -1219,7 +1219,7 @@ msgid ""
 "Changing_File_Permissions\" target=\"_blank\">permissions</a> problem may "
 "have prevented this directory from being created."
 msgstr ""
-"Non é stata trovata la cartella: un problema con i <a href=\"http://codex."
+"Non è stata trovata la cartella: un problema con i <a href=\"http://codex."
 "wordpress.org/Changing_File_Permissions\" target=\"_blank\">permessi</a> "
 "potrebbe avere fatto sì che la cartella non fosse stata creata."
 
@@ -1240,7 +1240,7 @@ msgid ""
 "The directory Unwritable (<a href=\"http://codex.wordpress.org/"
 "Changing_File_Permissions\" target=\"_blank\">fix permissions</a>)"
 msgstr ""
-"La cartella non é scrivibile: (<a href=\"http://codex.wordpress.org/"
+"La cartella non è scrivibile: (<a href=\"http://codex.wordpress.org/"
 "Changing_File_Permissions\" target=\"_blank\">impostazione permessi</a>)"
 
 #: admin/si-contact-form-admin.php:1497
@@ -1272,7 +1272,7 @@ msgid ""
 "You can disable CAPTCHA or have your web server fixed."
 msgstr ""
 "Alcune volte corregge il testo mancante della immagine del CAPTCHA. Se così "
-"non fosse, potrebbe dipendere dal fatto che il tuo server PHP non é "
+"non fosse, potrebbe dipendere dal fatto che il tuo server PHP non è "
 "compatibile con le funzioni CAPTCHA. Puoi disattivare il CAPTCHA oppure "
 "sistemare la configurazione del server."
 
@@ -1408,7 +1408,7 @@ msgid ""
 "The text field is for single line text entry. The textarea field is for "
 "multiple line text entry."
 msgstr ""
-"Il campo per il testo é una singola linea ove inserire un testo. Il campo "
+"Il campo per il testo è una singola linea ove inserire un testo. Il campo "
 "area di testo sono più linee ove inserire un testo."
 
 #: admin/si-contact-form-admin.php:1650
@@ -1978,7 +1978,7 @@ msgid ""
 "settings. Very few servers will accept more than 2mb. Sizes under 1mb will "
 "usually have best results. examples:"
 msgstr ""
-"Nota: la dimensione massima é soggetta alle risorse disponibili offerte dal "
+"Nota: la dimensione massima è soggetta alle risorse disponibili offerte dal "
 "server e dalle varie impostazioni PHP. Sono molto pochi i server che "
 "accettano più di 2mb. Le dimensioni inferiori a 1mb sono quelle che "
 "generalmente offrono i migliori risultati. esempi:"
@@ -2040,7 +2040,7 @@ msgid ""
 "settings below."
 msgstr ""
 "Quando un visitatore clicca sul pulsante di invio del modulo, un messaggio "
-"popup domanderà \"Ne sei certo?\". Questo messaggio é modificabile nelle "
+"popup domanderà \"Ne sei certo?\". Questo messaggio è modificabile nelle "
 "impostazioni \"modifica etichette campo\" qui sotto."
 
 #: admin/si-contact-form-admin.php:1907
@@ -2272,7 +2272,7 @@ msgid ""
 "intended, then ignore this message."
 msgstr ""
 "Attenzione: hai disattivato l'invio delle email nelle impostazioni di "
-"reindirizzamento qui sotto. Questo é solo un avvertimento nel caso in cui "
+"reindirizzamento qui sotto. Questo è solo un avvertimento nel caso in cui "
 "avessi commesso un errore di impostazione. Se così non fosse, ignora questo "
 "messaggio."
 
@@ -2284,7 +2284,7 @@ msgid ""
 "then ignore this message."
 msgstr ""
 "Attenzione: hai disattivato l'invio delle email nelle impostazioni qui "
-"sotto. Questo é solo un avvertimento nel caso in cui avessi commesso un "
+"sotto. Questo è solo un avvertimento nel caso in cui avessi commesso un "
 "errore di impostazione. Se così non fosse, ignora questo messaggio."
 
 #: admin/si-contact-form-admin.php:2131
@@ -2408,7 +2408,7 @@ msgid ""
 "is what you intended, then ignore this message."
 msgstr ""
 "Attenzione: hai disattivato l'invio delle email nelle impostazioni invio "
-"Silent Remote qui sotto. Questo é solo un avvertimento nel caso in cui "
+"Silent Remote qui sotto. Questo è solo un avvertimento nel caso in cui "
 "avessi commesso un errore di impostazione. Se così non fosse, ignora questo "
 "messaggio."
 
@@ -2515,7 +2515,7 @@ msgid ""
 "you intended, then ignore this message."
 msgstr ""
 "Attenzione: hai disattivato l'invio delle email nelle impostazioni "
-"esportazione dati qui sotto. Questo é solo un avvertimento nel caso in cui "
+"esportazione dati qui sotto. Questo è solo un avvertimento nel caso in cui "
 "avessi commesso un errore di impostazione. Se così non fosse, ignora questo "
 "messaggio."
 
@@ -2595,7 +2595,7 @@ msgid ""
 "Use to adjust the style of the contact form border (if border is enabled)."
 msgstr ""
 "Serve per la regolazione dello stile per il bordo del modulo di contatto (se "
-"il bordo é attivo)."
+"il bordo è attivo)."
 
 #: admin/si-contact-form-admin.php:2451
 msgid "CSS style for form DIV"
@@ -2731,7 +2731,7 @@ msgstr "Stile CSS per il pulsante di Ripristino"
 msgid "Use to adjust the style for the form reset button text, if enabled."
 msgstr ""
 "Serve per la regolazione dello stile per il testo del pulsante di ripristino "
-"(se il bordo é attivo)."
+"(se il bordo è attivo)."
 
 #: admin/si-contact-form-admin.php:2550
 msgid "CSS style for \"Powered by\" message"
@@ -2809,7 +2809,7 @@ msgid ""
 "by the HTML validator, so you can safely ignore the validation error it will "
 "cause."
 msgstr ""
-"aria-required é un modulo di input tag WAI ARIA. Gli utenti lo utilizzeranno "
+"aria-required è un modulo di input tag WAI ARIA. Gli utenti lo utilizzeranno "
 "per determinare quali campi sono richiesti. Sebbene l'attivazione migliorerà "
 "l'accessibilità, ricordo che non verrà passata la W3C Validation (non esiste "
 "un attributo \"aria-required. Gli attributi WAI ARIA verranno a breve "
@@ -2913,7 +2913,7 @@ msgstr "Ne sei certo?"
 
 #: admin/si-contact-form-admin.php:2637 si-contact-form.php:1068
 msgid "Your message has been sent, thank you."
-msgstr "Il tuo messaggio é stato inviato! Grazie."
+msgstr "Il tuo messaggio è stato inviato! Grazie."
 
 #: admin/si-contact-form-admin.php:2645
 msgid "Tooltips:"
@@ -2970,7 +2970,7 @@ msgstr "E' necessaria la selezione di un contatto."
 #: admin/si-contact-form-admin.php:2677 si-contact-form-process.php:146
 #: si-contact-form-process.php:152 si-contact-form-process.php:156
 msgid "Your name is required."
-msgstr "Il nome é obbligatorio."
+msgstr "Il nome è obbligatorio."
 
 #: admin/si-contact-form-admin.php:2678 si-contact-form-process.php:168
 #: si-contact-form-process.php:172
@@ -2986,7 +2986,7 @@ msgstr "I due indirizzi email non coincidono. Ripetere l'operazione."
 #: si-contact-form-process.php:338 si-contact-form-process.php:355
 #: si-contact-form-process.php:377 si-contact-form.php:1266
 msgid "This field is required."
-msgstr "Questo campo é obbligatorio."
+msgstr "Questo campo è obbligatorio."
 
 #: admin/si-contact-form-admin.php:2681 si-contact-form-process.php:396
 msgid "Subject text is required."
@@ -2998,7 +2998,7 @@ msgstr "Non hai inserito il messaggio!"
 
 #: admin/si-contact-form-admin.php:2683
 msgid "Contact Form has Invalid Input"
-msgstr "Il modulo di contatto non é stato compilato correttamente."
+msgstr "Il modulo di contatto non è stato compilato correttamente."
 
 #: admin/si-contact-form-admin.php:2684 si-contact-form-process.php:411
 #: si-contact-form-process.php:458
@@ -3008,7 +3008,7 @@ msgstr "Inserisci il CAPTCHA."
 #: admin/si-contact-form-admin.php:2685 si-contact-form-process.php:433
 #: si-contact-form-process.php:475
 msgid "That CAPTCHA was incorrect."
-msgstr "Il CAPTCHA non é corretto."
+msgstr "Il CAPTCHA non è corretto."
 
 #: admin/si-contact-form-admin.php:2686 si-contact-form-process.php:429
 #: si-contact-form-process.php:470 si-contact-form-process.php:487
@@ -3167,7 +3167,7 @@ msgid ""
 msgstr ""
 "\"Suggerisco il servizio di hosting <a href=\"%s\" target=\"_blank"
 "\">HostGator</a> (ne faccio uso per tutti i miei siti). I prezzi sono "
-"interessanti ed il servizio é ottimo. Attivando un account HostGator "
+"interessanti ed il servizio è ottimo. Attivando un account HostGator "
 "cliccando su questo link riceverò una piccola commissione\" - Mike Challis"
 
 #: admin/si-contact-form-admin.php:2878
@@ -3191,12 +3191,12 @@ msgid ""
 "This is a test mail generated by the Fast Secure Contact Form WordPress "
 "plugin."
 msgstr ""
-"Questa é una email di prova creata dal plugin Fast Secure Contact Form "
+"Questa è una email di prova creata dal plugin Fast Secure Contact Form "
 "WordPress."
 
 #: admin/si-contact-form-do-test-mail.php:119
 msgid "Test Message Sent"
-msgstr "Il messaggio di prova é stato inviato"
+msgstr "Il messaggio di prova è stato inviato"
 
 #: admin/si-contact-form-do-test-mail.php:121
 msgid "The result was:"
@@ -3211,7 +3211,7 @@ msgstr "Vedi FAQ"
 
 #: admin/si-contact-form-do-test-mail.php:127
 msgid "The full debugging output is shown below:"
-msgstr "Il risultato complessivo del debug é mostrato qui sotto:"
+msgstr "Il risultato complessivo del debug è mostrato qui sotto:"
 
 #: admin/si-contact-form-do-test-mail.php:133
 msgid "Be sure to check your email to see if you received it."
@@ -3221,7 +3221,7 @@ msgstr ""
 
 #: admin/si-contact-form-do-test-mail.php:138
 msgid "The E-mail debugging output is shown below:"
-msgstr "Il risultato del debug email é mostrato qui sotto:"
+msgstr "Il risultato del debug email è mostrato qui sotto:"
 
 #: admin/si-contact-form-do-test-mail.php:144
 msgid "Test failed: Invalid E-mail address"
@@ -3229,11 +3229,11 @@ msgstr "Test non riuscito: indirizzo email non valido"
 
 #: admin/si-contact-form-restore.php:17 admin/si-contact-form-restore.php:23
 msgid "Restore failed: Backup file is required."
-msgstr "Backup fallito: é richiesto un file di backup."
+msgstr "Backup fallito: è richiesto un file di backup."
 
 #: admin/si-contact-form-restore.php:20
 msgid "Restore failed: Backup file upload failed."
-msgstr "Backup fallito: il caricamento del file di backup é fallito."
+msgstr "Backup fallito: il caricamento del file di backup è fallito."
 
 #: admin/si-contact-form-restore.php:28
 msgid "Restore failed: Backup file type not allowed."
@@ -3241,7 +3241,7 @@ msgstr "Ripristino fallito: il file di backup ha una estensione non permessa. "
 
 #: admin/si-contact-form-restore.php:33
 msgid "Restore failed: Backup file size is too large."
-msgstr "Ripristino fallito: la dimensione del file di backup é troppo grande."
+msgstr "Ripristino fallito: la dimensione del file di backup è troppo grande."
 
 #: admin/si-contact-form-restore.php:41
 msgid "Restore failed: Backup file contains invalid data."
@@ -3317,33 +3317,33 @@ msgstr "Sei certo di volere ripristinare il modulo?"
 #: si-contact-form-ex-fields.php:58
 msgid "Error: A hidden field is not configured properly in settings."
 msgstr ""
-"Errore: un campo nascosto non é stato configurato correttamente nelle "
+"Errore: un campo nascosto non è stato configurato correttamente nelle "
 "impostazioni."
 
 #: si-contact-form-ex-fields.php:170 si-contact-form-ex-fields.php:179
 msgid "Error: A select field is not configured properly in settings."
 msgstr ""
-"Errore: un campo selezionato non é stato configurato correttamente nelle "
+"Errore: un campo selezionato non è stato configurato correttamente nelle "
 "impostazioni."
 
 #: si-contact-form-ex-fields.php:246 si-contact-form-ex-fields.php:256
 #: si-contact-form-process.php:308
 msgid "Error: A select-multiple field is not configured properly in settings."
 msgstr ""
-"Errore: un campo selezione-multipla non é stato configurato correttamente "
+"Errore: un campo selezione-multipla non è stato configurato correttamente "
 "nelle impostazioni."
 
 #: si-contact-form-ex-fields.php:331 si-contact-form-ex-fields.php:341
 #: si-contact-form-process.php:270
 msgid "Error: A checkbox field is not configured properly in settings."
 msgstr ""
-"Errore: un campo casella di selezione non é stato configurato correttamente "
+"Errore: un campo casella di selezione non è stato configurato correttamente "
 "nelle impostazioni."
 
 #: si-contact-form-ex-fields.php:448 si-contact-form-ex-fields.php:457
 msgid "Error: A radio field is not configured properly in settings."
 msgstr ""
-"Errore: un campo radio non é stato configurato correttamente nelle "
+"Errore: un campo radio non è stato configurato correttamente nelle "
 "impostazioni."
 
 #: si-contact-form-ex-fields.php:637
@@ -3448,7 +3448,7 @@ msgstr "Leva dal calendario ogni data selezionata"
 
 #: si-contact-form-ex-fields.php:686
 msgid "This is the maximum range"
-msgstr "Questa é la massima estensione"
+msgstr "Questa è la massima estensione"
 
 #: si-contact-form-process.php:24
 msgid "Requested Contact not found."
@@ -3473,13 +3473,13 @@ msgstr "Immissione non valida."
 
 #: si-contact-form-process.php:287 si-contact-form-process.php:326
 msgid "At least one item in this field is required."
-msgstr "Almeno un elemento di questo campo é obbligatorio."
+msgstr "Almeno un elemento di questo campo è obbligatorio."
 
 #: si-contact-form-process.php:331
 msgid ""
 "Error: A checkbox-multiple field is not configured properly in settings."
 msgstr ""
-"Errore: un campo casella di selezione-multipla non é stato configurato "
+"Errore: un campo casella di selezione-multipla non è stato configurato "
 "correttamente nelle impostazioni."
 
 #: si-contact-form-process.php:348
@@ -3500,11 +3500,11 @@ msgstr "Impossibile trovare il testo del CAPTCHA."
 
 #: si-contact-form-process.php:437
 msgid "Could not read CAPTCHA token file. Try again."
-msgstr "Non é stato possibile leggere il token file del CAPTCHA. Riprovare."
+msgstr "Non è stato possibile leggere il token file del CAPTCHA. Riprovare."
 
 #: si-contact-form-process.php:454
 msgid "Could not read CAPTCHA cookie. Try again."
-msgstr "Non é stato possibile leggere il cookie del CAPTCHA. Riprovare."
+msgstr "Non è stato possibile leggere il cookie del CAPTCHA. Riprovare."
 
 #: si-contact-form-process.php:504
 msgid "To"
@@ -3516,7 +3516,7 @@ msgstr "Da"
 
 #: si-contact-form-process.php:581 si-contact-form-process.php:582
 msgid "File is attached:"
-msgstr "Il file é allegato:"
+msgstr "Il file è allegato:"
 
 #: si-contact-form-process.php:651 si-contact-form-process.php:652
 msgid "selected"
@@ -3653,11 +3653,11 @@ msgstr "Allegato non accettato: estensione non permessa. "
 
 #: si-contact-form.php:1299
 msgid "Attachment file size is too large."
-msgstr "La dimensione del file in allegato é troppo grande."
+msgstr "La dimensione del file in allegato è troppo grande."
 
 #: si-contact-form.php:1317
 msgid "Attachment upload failed while moving file."
-msgstr "L'upload dell'allegato é fallito durante lo spostamento del file."
+msgstr "L'upload dell'allegato è fallito durante lo spostamento del file."
 
 #: si-contact-form.php:1367
 msgid ""
@@ -3762,7 +3762,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "\"_blank\">fix permissions</a>)"
 #~ msgstr ""
 #~ "Questo modulo di contatto contiene dei campi allegati file, ma la "
-#~ "cartella temporanea per i file (%s) non esiste oppure non é scrivibile. "
+#~ "cartella temporanea per i file (%s) non esiste oppure non è scrivibile. "
 #~ "Crea la cartella oppure modifica manualmente i suoi (<a href=\"http://"
 #~ "codex.wordpress.org/Changing_File_Permissions\" target=\"_blank"
 #~ "\">permessi</a>)"
@@ -3808,7 +3808,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ msgstr ""
 #~ "Attiva solamente nel caso in cui volessi che gli utenti possano inviare "
 #~ "del codice HTML nell'area di testo extra dei campi (funzione disattivata "
-#~ "da predefinite per ragioni di sicurezza). Il codice HTML é necessario per "
+#~ "da predefinite per ragioni di sicurezza). Il codice HTML è necessario per "
 #~ "la condivisione dei link video, esempi di codice PHP, etc."
 
 #~ msgid "Override Email Address:"
@@ -3826,7 +3826,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "Stile CSS per i titoli dei campi di inserimento nel modulo di contatto"
 
 #~ msgid "Your IP is Banned"
-#~ msgstr "Il tuo IP é bannato"
+#~ msgstr "Il tuo IP è bannato"
 
 #~ msgid ""
 #~ "You must add the shortcode in a Page(not a post). That page will become "
@@ -3849,7 +3849,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "proof of concept code CAPTCHA solving exploit was released - Security "
 #~ "Advisory - SOS-11-007."
 #~ msgstr ""
-#~ "La funzione audio é stata disattivata da Mike Challis sino a data da "
+#~ "La funzione audio è stata disattivata da Mike Challis sino a data da "
 #~ "definirsi per causa di problemi di sicurezza CAPTCHA - Security Advisory "
 #~ "- SOS-11-007."
 
@@ -3867,7 +3867,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "PHP safe_mode is better turned off, relying on this feature might work, "
 #~ "but is highly discouraged. Contact your web host for support."
 #~ msgstr ""
-#~ "Sebbene questa funzione possa essere comunque operativa, é preferibile "
+#~ "Sebbene questa funzione possa essere comunque operativa, è preferibile "
 #~ "che il PHP safe_mode non sia attivo. Contatta il tuo fornitore di hosting "
 #~ "per un supporto."
 
@@ -3875,26 +3875,26 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "PHP5 is faster, has more features, and is and safer. Using PHP4 might "
 #~ "still work, but is highly discouraged. Contact your web host for support."
 #~ msgstr ""
-#~ "Il PHP5 é più veloce, offre un numero maggiore di funzioni ed é sicuro. "
-#~ "Sebbene sotto PHP4 il plugin potrebbe funzionare, é preferibile evitare "
+#~ "Il PHP5 è più veloce, offre un numero maggiore di funzioni ed è sicuro. "
+#~ "Sebbene sotto PHP4 il plugin potrebbe funzionare, è preferibile evitare "
 #~ "questa situazione. Contatta il tuo fornitore di hosting per un supporto."
 
 #~ msgid ""
 #~ "Directory Unwritable (<a href=\"http://codex.wordpress.org/"
 #~ "Changing_File_Permissions\" target=\"_blank\">fix permissions</a>)"
 #~ msgstr ""
-#~ "La cartella non é scrivibile: (<a href=\"http://codex.wordpress.org/"
+#~ "La cartella non è scrivibile: (<a href=\"http://codex.wordpress.org/"
 #~ "Changing_File_Permissions\" target=\"_blank\">impostazione permessi</a>)"
 
 #~ msgid "CAPTCHA token file is missing."
-#~ msgstr "Non é stato possibile leggere il token file del CAPTCHA."
+#~ msgstr "Non è stato possibile leggere il token file del CAPTCHA."
 
 #~ msgid ""
 #~ "Could not read CAPTCHA cookie. Make sure you have cookies enabled and not "
 #~ "blocking in your web browser settings. Or another plugin is conflicting. "
 #~ "See plugin FAQ."
 #~ msgstr ""
-#~ "Non é stato possibile leggere il CAPTCHA cookie. Assicurati di avere i "
+#~ "Non è stato possibile leggere il CAPTCHA cookie. Assicurati di avere i "
 #~ "cookie abilitati e nessun blocco attivo nelle impostazioni del tuo "
 #~ "browser diversamente, potrebbe dipendere da un conflitto con un altro "
 #~ "plugin. Vedi le FAQ."
@@ -3909,7 +3909,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "CAPTCHA senza la sessione PHP\" quindi, i file temporanei saranno "
 #~ "utilizzati per la conservazione della frase per il CAPTCHA. Grazie a "
 #~ "questo, il CAPTCHA potrà funzionare senza le sessioni PHP. Questa "
-#~ "funzione é disponibile nella pagina delle impostazioni del modulo di "
+#~ "funzione è disponibile nella pagina delle impostazioni del modulo di "
 #~ "contatto."
 
 #~ msgid "Label for extra form field %d:"
@@ -3933,7 +3933,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "(questa operazione dovrebbe risolvere il problema)."
 
 #~ msgid "\"geekMail\" is a mail function that is included with this plugin."
-#~ msgstr "\"geekMail\" é una funzione mail inclusa in questo plugin."
+#~ msgstr "\"geekMail\" è una funzione mail inclusa in questo plugin."
 
 #~ msgid ""
 #~ "After setting the from address; if your form still does not send any E-"
@@ -3970,7 +3970,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "This Bcc address is global, which means that if you have multi \"E-mail To"
 #~ "\" contacts, any contact selected will send to this also."
 #~ msgstr ""
-#~ "L'indirizzo email Bcc (Copia Carbone Nascosta) é generale. Ciò significa "
+#~ "L'indirizzo email Bcc (Copia Carbone Nascosta) è generale. Ciò significa "
 #~ "che, qualora avessi dei contatti multipli \"Destinatario email\", ogni "
 #~ "contatto selezionato verrà altresì inviato all'indirizzo Bcc."
 
@@ -3982,7 +3982,7 @@ msgstr "http://www.642weather.com/weather/scripts.php"
 #~ "is installed and active, all Fast Secure Contact Form posts will be "
 #~ "checked with Akismet to help prevent spam."
 #~ msgstr ""
-#~ "Akismet é un plugin per WordPress grazie al quale potrai ridurre se non "
+#~ "Akismet è un plugin per WordPress grazie al quale potrai ridurre se non "
 #~ "eliminare completamente dal tuo sito i commenti ed i trackback spam. Nel "
 #~ "caso in cui uno di essi superasse il blocco, vai nella pagina dei "
 #~ "commenti, segnalalo come \"spam\" ed Akismet imparerà dai propri errori. "

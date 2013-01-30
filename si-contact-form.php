@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.7.3
+Version: 3.1.8
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.7.3';
+$ctf_version = '3.1.8';
 
 /*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -168,10 +168,11 @@ function vcita_validate_initialized_user($form_num, $form_params, $general_param
  * @return array of the user name, id and if he finished the registration or not
  */
 function vcita_generate_or_validate_user($params) {
+   global $wp_session;
     $used_email = $params['vcita_email'];
     
 	// Don't create / validate if this isn't the expert
-	if (empty($_SESSION) || empty($_SESSION["vcita_expert"]) || !$_SESSION["vcita_expert"]) {
+	if (empty($wp_session) || empty($wp_session["vcita_expert"]) || !$wp_session["vcita_expert"]) {
 		return $params;
 	}
 	
@@ -442,7 +443,7 @@ function vcita_should_complete_registration($form_params) {
 }
 
 /**
- * Check if a notification for the current form should be displayed to the user 
+ * Check if a notification for the current form should be displayed to the user
  */
 function vcita_should_notify_missing_details($form_params) {
     return isset($form_params['vcita_uid']) && empty($form_params['vcita_uid']) && $form_params['vcita_enabled'] == 'true';
@@ -450,7 +451,7 @@ function vcita_should_notify_missing_details($form_params) {
 
 
 /** 
- * Check if should display a warning in the admin section 
+ * Check if should display a warning in the admin section
  * Warning will be shown in all admin pages (as being done by many other plugins)
  * Won't shown for the actual fast contact page - it is being called directly from the page 
  */
@@ -513,6 +514,7 @@ function vcita_check_user($params) {
  * Get the confirmation token matches the current user
  */
 function vcita_get_confirmation_token($params) {
+   global $wp_session;
 	$token = "";
 	
 	if (!empty($params["vcita_confirm_tokens"])) {
@@ -525,8 +527,8 @@ function vcita_get_confirmation_token($params) {
 				if (!empty($raw_token) && $token_values[0] == $params["vcita_uid"]) {
 					$token = $token_values[1];
 					
-					if (!empty($_SESSION) && $_SESSION['vcita_expert']) {
-						$_SESSION['vcita_owner-of-'.$params['vcita_uid']] = true;
+					if (!empty($wp_session) && $wp_session['vcita_expert']) {
+						$wp_session['vcita_owner-of-'.$params['vcita_uid']] = true;
 					}
 					
 					break;
@@ -556,9 +558,10 @@ function vcita_set_confirmation_token($params, $confirmation_token) {
  * Currently this means it will be also saved in the client side in a dedicated cookie.
  */
 function vcita_should_store_expert_confirmation_token($params) {
+    global $wp_session;
 	$confirmation_token = $this->vcita_get_confirmation_token($params);
 	
-	if (!empty($confirmation_token) && !empty($_SESSION) && $_SESSION['vcita_owner-of-'.$params['vcita_uid']]) {
+	if (!empty($confirmation_token) && !empty($wp_session) && $wp_session['vcita_owner-of-'.$params['vcita_uid']]) {
 		return $confirmation_token;
 	} else {
 		return "";
@@ -787,7 +790,7 @@ return $contacts;
 // this function builds the contact form content
 // [si_contact_form form='2']
 function si_contact_form_short_code($atts) {
-  global $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
+  global $wp_session, $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
 
   $this->ctf_version = $ctf_version;
   // get options
@@ -808,12 +811,12 @@ function si_contact_form_short_code($atts) {
        if ($form_num == 1)
          $form_num = '';
     }
-  $_SESSION["fsc_shortcode_form_id_$form_id_num"] = $form_id_num;
+  $wp_session["fsc_shortcode_form_id_$form_id_num"] = $form_id_num;
 
   // http://www.fastsecurecontactform.com/shortcode-options
-  $_SESSION["fsc_shortcode_redirect_$form_id_num"] = $redirect;
-  $_SESSION["fsc_shortcode_hidden_$form_id_num"] = $hidden;
-  $_SESSION["fsc_shortcode_email_to_$form_id_num"] = $email_to;
+  $wp_session["fsc_shortcode_redirect_$form_id_num"] = $redirect;
+  $wp_session["fsc_shortcode_hidden_$form_id_num"] = $hidden;
+  $wp_session["fsc_shortcode_email_to_$form_id_num"] = $email_to;
 
   // get options
   $si_contact_gb = $this->si_contact_get_options($form_num);
@@ -822,11 +825,11 @@ function si_contact_form_short_code($atts) {
   if(   ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
       && (isset($_POST['si_contact_form_id']) && is_numeric($_POST['si_contact_form_id'])) ){
      $form_id_num_this = (int)$_POST['si_contact_form_id'];
-     if ( isset($_SESSION["fsc_shortcode_form_id_$form_id_num_this"]) ) {
+     if ( isset($wp_session["fsc_shortcode_form_id_$form_id_num_this"]) ) {
             // return the form HTML now
-      		if( isset( $_SESSION['fsc_form_display_html'] ) ) {
+      		if( isset( $wp_session['fsc_form_display_html'] ) ) {
                    //already processed, this variable is used to print the form results HTML to shortcode now, even more than once if other plugins cause
-                   return $_SESSION['fsc_form_display_html'];
+                   return $wp_session['fsc_form_display_html'];
             }
      } else {
             wp_die(__('No form selected', 'si-contact-form'));
@@ -863,7 +866,7 @@ function form_action_url( ) {
 
 // validation Check all form input data, called during init
 function si_contact_check_and_send(  ) {
-    global $si_contact_opt, $fsc_error_message;
+   global $wp_session, $si_contact_opt, $fsc_error_message;
 
    $not_mailed_before = 0;
 
@@ -871,7 +874,7 @@ function si_contact_check_and_send(  ) {
   if(   ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
       && (isset($_POST['si_contact_form_id']) && is_numeric($_POST['si_contact_form_id'])) ){
      $form_id_num = (int)$_POST['si_contact_form_id'];
-     if ( isset($_SESSION["fsc_shortcode_form_id_$form_id_num"]) ) { // a form that was really page viewed
+     if ( isset($wp_session["fsc_shortcode_form_id_$form_id_num"]) ) { // a form that was really page viewed
          // begin check server-side no back button mail again post once only token.
          if (!isset($_POST["si_postonce_$form_id_num"]) || empty($_POST["si_postonce_$form_id_num"]) || strpos($_POST["si_postonce_$form_id_num"] , ',') === false ) {
                 // redirect, get out
@@ -886,11 +889,11 @@ function si_contact_check_and_send(  ) {
 		        exit;
          }
          if ( wp_hash( $vars[1] ) == $vars[0] ) {
-             if ( isset($_SESSION["fsc_form_lastpost_$form_id_num"]) && ($_SESSION["fsc_form_lastpost_$form_id_num"] == $vars[0])){
+             if ( isset($wp_session["fsc_form_lastpost_$form_id_num"]) && ($wp_session["fsc_form_lastpost_$form_id_num"] == $vars[0])){
                wp_redirect( $this->form_action_url() ); // no back button mail again, show blank form
 		       exit;
              }
-             $_SESSION["fsc_form_lastpost_$form_id_num"] = $vars[0];
+             $wp_session["fsc_form_lastpost_$form_id_num"] = $vars[0];
 
          } else {
                 // redirect, get out
@@ -899,16 +902,11 @@ function si_contact_check_and_send(  ) {
          }
          // end check server-side no back button mail again post once token.
             // prevent double action
-      		if( !isset( $_SESSION["fsc_sent_mail"] )) { // form not already emailed out
+      		if( !isset( $wp_session["fsc_sent_mail"] )) { // form not already emailed out
 					// Check all input data
 				$this->si_contact_check_form($form_id_num);
             }
      }
-     //else{
-     //       //PHP sessions are broken //  or just stale? disabled this code because of false positives
-     //       $die_msg = __('PHP sessions are broken on this server. <a href="http://www.fastsecurecontactform.com/session-start-error" target="_new">Learn how to fix the PHP session problem</a>', 'si-contact-form');
-     //       wp_die( $die_msg );
-     //}
   }
 
 
@@ -918,7 +916,7 @@ function si_contact_check_and_send(  ) {
 // replaces  si-contact-form-process.php
 // if form validates, will send mail, and process silent posts
 function si_contact_check_form($form_id_num) {
-     global $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
+     global $wp_session, $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
 
 
      // include the code to process the form
@@ -1267,8 +1265,13 @@ if ($this->captchaCheckRequires()) {
 $this->ctf_captcha_div_style_sm = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_sm']);
 $this->ctf_captcha_div_style_m = $this->si_contact_convert_css($si_contact_opt['captcha_div_style_m']);
 
-// url for no session captcha image
-$securimage_show_url = $captcha_url_cf .'/securimage_show.php?';
+// url for captcha image
+$form_action_url = $this->form_action_url();
+if(!preg_match("/\?/", $form_action_url) )
+ $securimage_show_url = $form_action_url .'?ctf_show_captcha=1&';
+else
+ $securimage_show_url = $form_action_url .'&ctf_show_captcha=1&';
+
 $securimage_size = 'width="175" height="60"';
 if($si_contact_opt['captcha_small'] == 'true') {
   $securimage_show_url .= 'ctf_sm_captcha=1&';
@@ -1914,25 +1917,47 @@ function si_contact_copy_styles($this_form_arr,$destination_form_arr) {
 }
 
 function si_contact_start_session() {
+ global $wp_session;
   // start the PHP session - used by CAPTCHA, the form action logic, and also used by vCita
   // this has to be set before any header output
-  // echo "starting session ctf";
+
   // start cookie session
-  if( !isset( $_SESSION ) ) { // play nice with other plugins
+/*  if( !isset( $_SESSION ) ) { // play nice with other plugins
     //set the $_SESSION cookie into HTTPOnly mode for better security
     if (version_compare(PHP_VERSION, '5.2.0') >= 0)  // supported on PHP version 5.2.0  and higher
       @ini_set("session.cookie_httponly", 1);
     session_cache_limiter ('private, must-revalidate');
     session_start();
-   // echo "session started ctf";
-  }
-  if(isset($_SESSION['fsc_form_display_html']))
-       unset($_SESSION['fsc_form_display_html']); // clear for next page
-  if(isset($_SESSION['fsc_sent_mail']))
-       unset($_SESSION['fsc_sent_mail']);  // clear for next page
+  } */
+
+ /*
+ This class provides a $_SESSION like system but does not require that the host support sessions
+ from WP Session Manager, used with permission from Eric Mann
+ * http://jumping-duck.com/wordpress/plugins
+ * Prototype session management for WordPress.
+ * Version: 1.1
+ * Author: Eric Mann
+ */
+ if( ! defined( 'WP_SESSION_COOKIE' ) )
+	define( 'WP_SESSION_COOKIE', '_wp_session' );
+
+if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
+    require_once(WP_PLUGIN_DIR . '/si-contact-form/wp-session/class-recursive-arrayaccess.php');
+}
+
+// Only include the functionality if it's not pre-defined.
+if ( ! class_exists( 'WP_Session' ) ) {
+    require_once(WP_PLUGIN_DIR . '/si-contact-form/wp-session/class-wp-session.php');
+	require_once(WP_PLUGIN_DIR . '/si-contact-form/wp-session/wp-session.php');
+}
+  $wp_session = WP_Session::get_instance();
+  if(isset($wp_session['fsc_form_display_html']))
+       unset($wp_session['fsc_form_display_html']); // clear for next page
+  if(isset($wp_session['fsc_sent_mail']))
+       unset($wp_session['fsc_sent_mail']);  // clear for next page
   
   if (is_admin()) {
-    $_SESSION["vcita_expert"] = true;
+    $wp_session["vcita_expert"] = true;
   }
 	
 } // end function si_contact_start_session
@@ -2134,6 +2159,65 @@ function fscf_enqueue_scripts() {
   }
 }
 
+// outputs a CAPTCHA image from a $_GET method request
+function si_contact_do_captcha_image() {
+  global $captcha_path_cf;
+
+  if( isset($_GET['ctf_show_captcha']) ) {
+
+   require_once($captcha_path_cf .'/securimage.php');
+
+   $img = new Securimage_ctf();
+   $img->code_length = 4;
+
+   $img->image_width   = 175;
+   $img->image_height  = 60;
+
+   if(isset($_GET['ctf_sm_captcha']) && $_GET['ctf_sm_captcha'] == 1) {
+       $img->image_width   = 132;
+	   $img->image_height  = 45;
+   }
+
+   //set some settings
+   $img->form_num = 1;
+   if (isset($_GET['ctf_form_num']) && is_numeric($_GET['ctf_form_num']) && $_GET['ctf_form_num'] < 500){
+    $img->form_num = $_GET['ctf_form_num'];
+   }
+   $img->use_multi_text = true;
+   $img->use_transparent_text = true;
+   $img->text_transparency_percentage = 20;
+   $img->num_lines = 3;
+   $img->perturbation = 0.6; // 1.0 = high distortion, higher numbers = more distortion
+   $img->multi_text_color = array(
+       '#6666FF','#660000','#3333CC','#993300','#0060CC',
+       '#339900','#6633CC','#330000','#006666','#CC3366',
+   );
+  if (isset($_GET['difficulty']) && $_GET['difficulty'] == 1 ) {
+    $img->perturbation = 0.5; // 1.0 = high distortion, higher numbers = more distortion
+    $img->num_lines = 2;
+    $img->multi_text_color = array('#6666FF','#660000','#3333CC','#993300','#0060CC');
+  }
+  if (isset($_GET['difficulty']) && $_GET['difficulty'] == 2 ) {
+    $img->perturbation = 0.7; // 1.0 = high distortion, higher numbers = more distortion
+    $img->num_lines = 6;
+  }
+  if (isset($_GET['no_trans']) && $_GET['no_trans'] == 1) {
+     $img->use_transparent_text = false;
+  }
+   $img->charset = 'ABCDEFHKLMNPRSTUVWYZ234578';
+   $img->ttf_file = $captcha_path_cf . '/ttffonts/ahg-bold.ttf';   // single font
+   $img->line_color = new Securimage_Color_ctf(rand(0, 64), rand(64, 128), rand(128, 255));
+   $img->image_type = 'png';
+   $img->background_directory = $captcha_path_cf . '/backgrounds';
+   $img->ttf_font_directory  = $captcha_path_cf . '/ttffonts';
+   $img->show('');
+
+   unset($img);
+   exit;
+}
+
+} // end function si_contact_do_captcha_image
+
 } // end of class
 } // end of if class
 
@@ -2153,8 +2237,12 @@ if (isset($si_contact_form)) {
 
   // start the PHP session - used by CAPTCHA, the form action logic, and also used by vCita
   add_action('init', array(&$si_contact_form,'si_contact_start_session'),1);
+
   // process the form POST logic
   add_action('init', array(&$si_contact_form,'si_contact_check_and_send'),10);
+
+  // this is for displaying the CAPTCHA image.
+  add_action('init', array(&$si_contact_form,'si_contact_do_captcha_image'),10);
 
   // si contact form admin options
   add_action('admin_menu', array(&$si_contact_form,'si_contact_add_tabs'),1);

@@ -3,7 +3,7 @@ Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
-Requires at least: 2.8
+Requires at least: 3.4.2
 Tested up to: 3.5.1
 Stable tag: trunk
 
@@ -84,10 +84,9 @@ CAPTCHA Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.8+ and WPMU (Wordpress 3.5+ is highly recommended)
+ * Works with Wordpress 3.4.2+ and WPMU (Wordpress 3.5+ is highly recommended)
  * PHP5 
  * PHP register_globals and safe_mode MUST be set to "Off".
- * PHP session support must not be broken on your server.
 
 == Installation ==
 
@@ -209,11 +208,14 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.8 =
+- (30 Jan 2013) - removed PHP sessions and replaced with a built-in session method: WP Session Manager by Eric Mann.
+- added border formatting of HTML email where it displays user info.
+
 = 3.1.7.3 =
 - (27 Jan 2013) - fix passing Passing query string parameters to contact form page feature.
 - fix Notice: Undefined variable: ctf_redirect_enable.
 - change to securimage_ctf class name for CAPTCHA.
-- added error message for when PHP sessions are broken.
 
 = 3.1.7.2 =
 - (19 Jan 2013) - fix a parse error when akismet is enabled.
