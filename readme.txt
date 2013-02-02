@@ -208,6 +208,10 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.8.1 =
+- (02 Feb 2013) - Fixed multiple forms on same page was broken.
+- fixed ReferenceError: VC_FSCF_set_cookie is not defined.
+
 = 3.1.8 =
 - (30 Jan 2013) - removed PHP sessions and replaced with a built-in WP session method: WP Session Manager by Eric Mann.
 - added border formatting of HTML email where it displays user info.

@@ -11,6 +11,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 }
 
   // the admin settings page
+  // This code is inside function si_contact_options_page
 
    if ( function_exists('current_user_can') && !current_user_can('manage_options') )
              die(__('You do not have permissions for managing this option', 'si-contact-form'));
@@ -1882,8 +1883,11 @@ foreach ($time_format_array as $k => $v) {
 
 	/* --- vCita Admin Display - Start --- */
 
-	$confirmation_token = $this->vcita_get_confirmation_token($si_contact_opt);
-	
+ if ($si_contact_opt['vcita_enabled'] == 'true') {  // Mike challis added  02/01/2013
+     // prevent setting vcita cookies in admin if vcita is disabled on the form
+
+     	$confirmation_token = $this->vcita_get_confirmation_token($si_contact_opt);
+
 	if (!empty($confirmation_token)) {
 		?>
 		<script type="text/javascript">
@@ -1896,7 +1900,8 @@ foreach ($time_format_array as $k => $v) {
 	        VC_FSCF_set_cookie("generic-expert", "true");
 	    </script>
 	    <?php
-	}	
+	}
+  }
 ?>
 
 <div class="form-tab"><?php echo __('Meeting Scheduler - by vCita:', 'si-contact-form') .' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>

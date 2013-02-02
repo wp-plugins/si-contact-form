@@ -11,18 +11,17 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
  exit('Forbidden');
 }
 
-// the form is being processed to maybe send the mail now
-// errors are set for fields no validated
+// this is part of function si_contact_check_form
+// the form is being processed because it was the one POSTed to maybe send the mail now
+// this function will only be called once no matter how many forms are on the page
+// errors are set in $fsc_error_message array for fields not validated
 
-// this is part of  function si_contact_check_form
+// get options for this form
+$form_to_fetch = ($form_id_num == 1) ? '' : $form_id_num;
+$si_contact_gb = $this->si_contact_get_options($form_to_fetch);
 
-
-    // get options for this form
-    $form_to_fetch = ($form_id_num == 1) ? '' : $form_id_num;
-    $si_contact_gb = $this->si_contact_get_options($form_to_fetch);
-
-     // a couple language options need to be translated now.
-  $this->si_contact_update_lang();
+// a couple language options need to be translated now.
+$this->si_contact_update_lang();
 
 // Email address(s) to receive Bcc (Blind Carbon Copy) messages
 $ctf_email_address_bcc = $si_contact_opt['email_bcc']; // optional
@@ -69,7 +68,7 @@ $ctf_enable_double_email = $si_contact_opt['double_email'];
 
 
 // initialize vars
-$this->si_contact_error = 0;
+$this->si_contact_error = 0;  // if there is an error, this will be set to 1 for the function si_contact_form_short_code
 $fsc_error_message = array();
 $mail_to    = '';
 $to_contact = '';
@@ -1178,23 +1177,6 @@ get_currentuserinfo();
                else
                   $ctf_redirect_url .= '&'.$query_string;
            }
-           // using meta refresh instead
-/*           if ($have_attach){
-             // unlink attachment temp files
-              foreach ( (array) $this->uploaded_files as $path ) {
-                @unlink( $path );
-              }
-           }
-           if ($ctf_redirect_url_before == $this->form_action_url()){ // redirecting to same page so will have to show a message senrt
-               $ctf_redirect_url = str_replace("?fsc_form_message_sent$form_id_num=1",'',$ctf_redirect_url); // prevent this from doubling up on the URL
-               $ctf_redirect_url = str_replace("&fsc_form_message_sent$form_id_num=1",'',$ctf_redirect_url); //
-              if(!preg_match("/\?/", $ctf_redirect_url) )
-                   $ctf_redirect_url .= '?'."fsc_form_message_sent$form_id_num=1";
-               else
-                  $ctf_redirect_url .= '&'."fsc_form_message_sent$form_id_num=1";
-           }
-		   wp_redirect( $ctf_redirect_url );
-		   exit;*/
 		}
     $fsc_message_sent = 1;
   } // end if ! error
@@ -1243,7 +1225,6 @@ else
 } // end if ($ctf_redirect_enable == 'true')
 
 
-
 $ctf_thank_you .= '
 <div '.$this->si_contact_convert_css($si_contact_opt['redirect_style']).'>
 ';
@@ -1272,6 +1253,16 @@ $ctf_thank_you .= '
       $wp_session['fsc_form_display_html'] = $ctf_thank_you;
 
 } // end if message sent
+
+// clean up the attachment directory
+if ($have_attach){
+	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
+    $this->si_contact_init_temp_dir($attach_dir);
+	if ( is_dir($attach_dir) && is_writable($attach_dir)) {
+       // delete files over 3 minutes old in the attachment directory
+       $this->si_contact_clean_temp_dir($attach_dir, 3);
+	}
+}
 
         //  print_r($fsc_error_message); exit;
 

@@ -10,7 +10,18 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
  header('HTTP/1.0 403 Forbidden');
  exit('Forbidden');
 }
-  //print_r($fsc_error_message); exit;
+
+/*
+All the code in this file is inside function si_contact_form_short_code
+This function may be processed more than once via shortcode when there are multiple forms on a page,
+or when a plugin modifies "the content".
+The error display and the form post vars should only be processed for one form that was posted.
+Only one form can be posted at a time
+$this->si_contact_error is set if the form posted had errors in si_contact_form_check
+$fsc_form_posted is set to the form # posted in si_contact_form_check_and_send, will be 0 of not posted
+$display_only means that this iteration in the display code is not a form that was posted, so ignore post vars
+*/
+
 
   // a couple language options need to be translated now.
   $this->si_contact_update_lang();
@@ -52,7 +63,6 @@ $form_action_url = $this->form_action_url();
 // Double E-mail entry is optional
 // enabling this requires user to enter their email two times on the contact form.
 $ctf_enable_double_email = $si_contact_opt['double_email'];
-
 
 // initialize vars
 $string = '';
@@ -149,7 +159,7 @@ get_currentuserinfo();
      }
    }
 
-    if ($si_contact_opt['name_type'] != 'not_available') {
+    if ($si_contact_opt['name_type'] != 'not_available' && !$display_only) {
         switch ($si_contact_opt['name_format']) {
           case 'name':
              if (isset($_POST['si_contact_name']))
@@ -179,7 +189,7 @@ get_currentuserinfo();
          break;
       }
     }
-    if ($si_contact_opt['email_type'] != 'not_available') {
+    if ($si_contact_opt['email_type'] != 'not_available' && !$display_only) {
        if (isset($_POST['si_contact_email']))
          $email = strtolower($this->ctf_clean_input($_POST['si_contact_email']));
        if ($ctf_enable_double_email == 'true') {
@@ -188,7 +198,7 @@ get_currentuserinfo();
        }
     }
 
-    if ($si_contact_opt['message_type'] != 'not_available') {
+    if ($si_contact_opt['message_type'] != 'not_available' && !$display_only) {
        if (isset($_POST['si_contact_message'])) {
          if ($si_contact_opt['preserve_space_enable'] == 'true')
            $message = $this->ctf_clean_input($_POST['si_contact_message'],1);
@@ -197,7 +207,7 @@ get_currentuserinfo();
        }
     }
     if ( $this->isCaptchaEnabled() === true)
-         $captcha_code = $this->si_contact_post_var('si_contact_captcha_code');
+         $captcha_code = $this->si_contact_post_var('si_contact_captcha_code',$display_only);
 
   // CAPS Decapitator
    if ($si_contact_opt['name_case_enable'] == 'true' && !preg_match("/[a-z]/", $message))
@@ -230,15 +240,15 @@ get_currentuserinfo();
                //${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i");
 
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'hidden') {
-               ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i");
+               ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i",$display_only);
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'time') {
               if ( isset($_POST["si_contact_ex_field".$i."h"]) )
-                 ${'ex_field'.$i.'h'}  = $this->si_contact_post_var("si_contact_ex_field".$i."h");
+                 ${'ex_field'.$i.'h'}  = $this->si_contact_post_var("si_contact_ex_field".$i."h",$display_only);
               if ( isset($_POST["si_contact_ex_field".$i."m"]) )
-                 ${'ex_field'.$i.'m'}  = $this->si_contact_post_var("si_contact_ex_field".$i."m");
+                 ${'ex_field'.$i.'m'}  = $this->si_contact_post_var("si_contact_ex_field".$i."m",$display_only);
               if ($si_contact_opt['time_format'] == '12') {
                  if ( isset($_POST["si_contact_ex_field".$i."ap"]) )
-                  ${'ex_field'.$i.'ap'} = $this->si_contact_post_var("si_contact_ex_field".$i."ap");
+                  ${'ex_field'.$i.'ap'} = $this->si_contact_post_var("si_contact_ex_field".$i."ap",$display_only);
               }
           }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'attachment') {
                    // file name that was uploaded.  PHP and browser security does not allow access to the local selected file path
@@ -262,7 +272,7 @@ get_currentuserinfo();
                     $ex_reqd = 0;
                     foreach ($exf_opts_array as $k) {
                       if( isset($_POST["si_contact_ex_field$i".'_'.$ex_cnt]) && ! empty($_POST["si_contact_ex_field$i".'_'.$ex_cnt]) ){
-                        ${'ex_field'.$i.'_'.$ex_cnt} = $this->si_contact_post_var("si_contact_ex_field$i".'_'.$ex_cnt);
+                        ${'ex_field'.$i.'_'.$ex_cnt} = $this->si_contact_post_var("si_contact_ex_field$i".'_'.$ex_cnt,$display_only);
                         $ex_reqd++;
                       }
                       $ex_cnt++;
@@ -270,7 +280,7 @@ get_currentuserinfo();
                 }
              }else{
                if ( isset($_POST["si_contact_ex_field$i"]) )
-                ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i");
+                ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i",$display_only);
              }
            }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'select-multiple') {
              $exf_opts_array = array();
@@ -288,7 +298,7 @@ get_currentuserinfo();
                      // required check (only 1 has to be checked to meet required)
                      $ex_reqd = 0;
                      if ( isset($_POST["si_contact_ex_field$i"]) )
-                      ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i");
+                      ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i",$display_only);
                      if (is_array(${'ex_field'.$i}) && !empty(${'ex_field'.$i}) ) {
                        // loop
                        foreach ($exf_opts_array as $k) {  // checkbox multi
@@ -301,19 +311,19 @@ get_currentuserinfo();
              }
            }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'email') {
                  if ( isset($_POST["si_contact_ex_field$i"]) )
-                  ${'ex_field'.$i} = strtolower($this->si_contact_post_var("si_contact_ex_field$i"));
+                  ${'ex_field'.$i} = strtolower($this->si_contact_post_var("si_contact_ex_field$i",$display_only));
 
            }else if ($si_contact_opt['ex_field'.$i.'_type'] == 'url') {
                  if ( isset($_POST["si_contact_ex_field$i"]) )
-                  ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i");
+                  ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i",$display_only);
            }else{
                 // text, textarea, radio, select, password
                 if ($si_contact_opt['ex_field'.$i.'_type'] == 'textarea' && $si_contact_opt['textarea_html_allow'] == 'true') {
                      if ( isset($_POST["si_contact_ex_field$i"]) )
-                      ${'ex_field'.$i} = wp_kses_data(stripslashes($this->si_contact_post_var("si_contact_ex_field$i"))); // allow only some safe html
+                      ${'ex_field'.$i} = wp_kses_data(stripslashes($this->si_contact_post_var("si_contact_ex_field$i",$display_only))); // allow only some safe html
                 }else{
                      if ( isset($_POST["si_contact_ex_field$i"]) )
-                      ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i");
+                      ${'ex_field'.$i} = $this->si_contact_post_var("si_contact_ex_field$i",$display_only);
                 }
            }
         }  // end if label != ''
@@ -340,7 +350,7 @@ get_currentuserinfo();
 
  $this->ctf_aria_required = ($si_contact_opt['aria_required'] == 'true') ? ' aria-required="true" ' : '';
 
-if ($this->si_contact_error)
+if ($have_error)
   $this->ctf_form_style = str_replace('display: none;','',$this->ctf_form_style);
 
 $string .= '
@@ -375,35 +385,20 @@ if ($have_attach){
 	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
     $this->si_contact_init_temp_dir($attach_dir);
     if ($si_contact_opt['php_mailer_enable'] == 'php'){
-       $this->si_contact_error = 1;
+       $have_error = 1;
 	   $fsc_error_message['attach_dir_error'] = __('Attachments are only supported when the Send E-Mail function is set to WordPress. You can find this setting on the contact form edit page.', 'si-contact-form');
     }
 	if ( !is_dir($attach_dir) ) {
-        $this->si_contact_error = 1;
+        $have_error = 1;
 		$fsc_error_message['attach_dir_error'] = __('The temporary folder for the attachment field does not exist.', 'si-contact-form');
     } else if(!is_writable($attach_dir)) {
-          $this->si_contact_error = 1;
+          $have_error = 1;
 		 $fsc_error_message['attach_dir_error'] = __('The temporary folder for the attachment field is not writable.', 'si-contact-form');
-    } else {
-       // delete files over 3 minutes old in the attachment directory
-       $this->si_contact_clean_temp_dir($attach_dir, 3);
-	}
+    }
 }
-/*if (isset($_GET["fsc_form_message_sent$form_id_num"]) && !isset($_POST['si_contact_action'])){
-    $string .= '<div '.$this->ctf_required_style.'>
-    <div '.$this->ctf_error_style.'>
-';
-$string .= ($si_contact_opt['text_message_sent'] != '') ? $si_contact_opt['text_message_sent'] : __('Your message has been sent, thank you.', 'si-contact-form'); // can have HTML
-
-    $string .= '
-    </div>
-</div>
-';
-
-}*/
 
 // print any input errors
-if ($this->si_contact_error) {
+if ($have_error) {
     $string .= '<div '.$this->ctf_required_style.'>
     <div '.$this->ctf_error_style.'>
 ';
@@ -412,22 +407,22 @@ if ($this->si_contact_error) {
     </div>
 </div>
 ';
-    if($have_attach && $fsc_error_message['attach_dir_error'] != '') {
+    if($have_attach && $this->si_contact_error_var('attach_dir_error',$display_only) != '') {
       $string .= '<div '.$this->ctf_required_style.'>
       <div '.$this->ctf_error_style.'>
 ';
-      $string .= esc_html($fsc_error_message['attach_dir_error']);
+      $string .= esc_html($this->si_contact_error_var('attach_dir_error',$display_only));
       $string .= '
       </div>
 </div>
 ';
     }
-     if ( !$this->isCaptchaEnabled() && $fsc_error_message['captcha'] != '' ) {
+     if ( !$this->isCaptchaEnabled() && $this->si_contact_error_var('captcha',$display_only) != '' ) {
       // honeypot without captcha
 $string .= '<div '.$this->ctf_required_style.'>
       <div '.$this->ctf_error_style.'>
 ';
-      $string .= esc_html($fsc_error_message['captcha']);
+      $string .= esc_html($this->si_contact_error_var('captcha',$display_only));
       $string .= '
       </div>
 </div>
@@ -484,7 +479,7 @@ if (count($contacts) > 1 && $mail_to == '' ) { // $mail_to can come from shortco
      $string .= $req_field_ind.'</label>
         </div>
         <div '.$this->ctf_field_div_style.'>
-                '.$this->ctf_echo_if_error($fsc_error_message['contact']).'
+                '.$this->ctf_echo_if_error($this->si_contact_error_var('contact',$display_only)).'
                 <select '.$this->ctf_select_style.' id="si_contact_CID'.$form_id_num.'" name="si_contact_CID" '.$this->ctf_aria_required.'>
 ';
     $string .= '                <option value="">';
@@ -492,7 +487,7 @@ if (count($contacts) > 1 && $mail_to == '' ) { // $mail_to can come from shortco
     $string .= '</option>
 ';
 
-    $cid = $this->si_contact_post_var('si_contact_CID');
+    $cid = $this->si_contact_post_var('si_contact_CID',$display_only);
     //echo "cid:$mail_to"; exit;
     if ( $cid == '' && isset($_GET[$form_id_num .'mailto_id']) ) {
         $cid = (int)$this->si_contact_get_var($form_id_num,'mailto_id');
@@ -553,7 +548,7 @@ if($si_contact_opt['name_type'] != 'not_available' ) {
            $f_name_string .= $req_field_ind;
      $f_name_string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['f_name']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('f_name',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_f_name'.$form_id_num.'" name="si_contact_f_name" value="' . esc_attr($f_name) .'" '.$this->ctf_aria_required.' size="'.esc_attr($ctf_field_size).'" />
         </div>';
 
@@ -565,7 +560,7 @@ if($si_contact_opt['name_type'] != 'not_available' ) {
            $l_name_string .= $req_field_ind;
      $l_name_string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['l_name']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('l_name',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_l_name'.$form_id_num.'" name="si_contact_l_name" value="' . esc_attr($l_name) .'" '.$this->ctf_aria_required.' size="'.esc_attr($ctf_field_size).'" />
         </div>
 ';
@@ -582,7 +577,7 @@ $string .= '
            $string .= $req_field_ind;
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['name']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('name',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_name'.$form_id_num.'" name="si_contact_name" value="' . esc_attr($name) .'" '.$this->ctf_aria_required.' size="'.esc_attr($ctf_field_size).'" />
         </div>
 ';
@@ -604,7 +599,7 @@ $string .= '
      $string .= esc_html(($si_contact_opt['title_miname'] != '') ? $si_contact_opt['title_miname'] : __('Middle Initial:', 'si-contact-form'));
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['mi_name']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('mi_name',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_mi_name'.$form_id_num.'" name="si_contact_mi_name" value="' . esc_attr($mi_name) .'" '.$this->ctf_aria_required.' size="2" />
         </div>';
 
@@ -640,8 +635,8 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
            $string .= $req_field_ind;
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['email']).
-        $this->ctf_echo_if_error($fsc_error_message['double_email']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('email',$display_only)).
+        $this->ctf_echo_if_error($this->si_contact_error_var('double_email',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . esc_attr($email) . '" '.$this->ctf_aria_required.' size="'.esc_attr($ctf_field_size).'" />
         </div>
         <div '.$this->ctf_title_style.'>
@@ -649,7 +644,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
      $string .= esc_html(($si_contact_opt['title_email2'] != '') ? $si_contact_opt['title_email2'] : __('E-Mail Address again:', 'si-contact-form'));
      $string .= $req_field_ind.'</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['email2']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('email2',$display_only)).'
                 <span style="font-size:x-small; font-weight:normal;">';
      $string .= esc_html(($si_contact_opt['title_email2_help'] != '') ? $si_contact_opt['title_email2_help'] : __('Please enter your E-mail Address a second time.', 'si-contact-form'));
      $string .= '</span><br />
@@ -666,7 +661,7 @@ if($si_contact_opt['email_type'] != 'not_available' ) {
            $string .= $req_field_ind;
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['email']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('email',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_email'.$form_id_num.'" name="si_contact_email" value="' . esc_attr($email) . '" '.$this->ctf_aria_required.' size="'.esc_attr($ctf_field_size).'" />
         </div>
 ';
@@ -696,7 +691,7 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
            $string .= $req_field_ind;
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['subject']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('subject',$display_only)).'
 
                 <select '.$this->ctf_select_style.' id="si_contact_subject_ID'.$form_id_num.'" name="si_contact_subject_ID" '.$this->ctf_aria_required.'>
 ';
@@ -708,7 +703,7 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
     $sid = '';
     $subject = '';
     if( isset($_POST['si_contact_subject_ID']) )
-      $sid = (int)$this->si_contact_post_var('si_contact_subject_ID');
+      $sid = (int)$this->si_contact_post_var('si_contact_subject_ID',$display_only);
 
     if ( $sid == '' && isset($_GET[$form_id_num .'subject_id']) ) {
         $sid = (int)$this->si_contact_get_var($form_id_num,'subject_id');
@@ -733,7 +728,7 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
 
        } else {
             // text entry subject
-            if(isset($_POST['si_contact_subject']))
+            if(isset($_POST['si_contact_subject']) && !$display_only)
                   $subject = $this->ctf_name_case($this->ctf_clean_input($_POST['si_contact_subject']));
               if ( $subject != '' ) {
                 $subject = substr($subject,0,75); // shorten to 75 chars or less
@@ -746,7 +741,7 @@ if($si_contact_opt['subject_type'] != 'not_available' ) {
            $string .= $req_field_ind;
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['subject']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('subject',$display_only)).'
                 <input '.$this->ctf_field_style.' type="text" id="si_contact_subject'.$form_id_num.'" name="si_contact_subject" value="' . $this->ctf_output_string($subject) . '" '.$this->ctf_aria_required.' size="'.$ctf_field_size.'" />';
        }
 
@@ -764,7 +759,7 @@ $string .= '
            $string .= $req_field_ind;
      $string .= '</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($fsc_error_message['message']).'
+        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var('message',$display_only)).'
                 <textarea '.$this->ctf_field_style.' id="si_contact_message'.$form_id_num.'" name="si_contact_message" '.$this->ctf_aria_required.' cols="'.absint($si_contact_opt['text_cols']).'" rows="'.absint($si_contact_opt['text_rows']).'">' . $this->ctf_output_string($message) . '</textarea>
         </div>
 ';
@@ -787,7 +782,7 @@ if ($si_contact_opt['ex_fields_after_msg'] == 'true') {
 // captcha is optional but recommended to prevent spam bots from spamming your contact form
 
 if ( $this->isCaptchaEnabled() ) {
-  $string .= $this->si_contact_get_captcha_html($form_id_num)."
+  $string .= $this->si_contact_get_captcha_html($form_id_num,$display_only)."
 ";
 }
 

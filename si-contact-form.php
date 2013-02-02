@@ -3,12 +3,12 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. The contact form lets your visitors send you a quick E-mail message. Super customizable with a multi-form feature, optional extra fields, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block all common spammer tactics. Spam is no longer a problem. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 3.1.8
+Version: 3.1.8.1
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
 
-$ctf_version = '3.1.8';
+$ctf_version = '3.1.8.1';
 
 /*  Copyright (C) 2008-2013 Mike Challis  (http://www.fastsecurecontactform.com/contact)
 
@@ -43,6 +43,7 @@ function si_contact_unset_options() {
 if (!class_exists('siContactForm')) {
 
  class siContactForm {
+
      var $si_contact_error;
      var $uploaded_files;
      var $ctf_notes_style;
@@ -729,12 +730,13 @@ function si_contact_captcha_perm_dropdown($select_name, $checked_value='') {
 } // end function si_contact_captcha_perm_dropdown
 
 
-function get_contacts() {
-      global $si_contact_opt;
-// Returns a list of contacts for display
+// Returns a array of contacts for display
 // E-mail Contacts
 // the drop down list array will be made automatically by this code
 // checks for properly configured E-mail To: addresses in options.
+function get_contacts() {
+      global $si_contact_opt;
+
 $contacts = array ();
 $contacts[] = '';	// dummy entry to take up key 0
 $contacts_test = trim($si_contact_opt['email_to']);
@@ -787,10 +789,13 @@ return $contacts;
 
 } // end function get_contacts
 
-// this function builds the contact form content
+// this function builds and displays the contact form HTML content
 // [si_contact_form form='2']
+// This function may be processed more than once via shortcode when there are multiple forms on a page,
+// or when a plugin modifies "the content".
+
 function si_contact_form_short_code($atts) {
-  global $wp_session, $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
+  global $fsc_form_posted, $wp_session, $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
 
   $this->ctf_version = $ctf_version;
   // get options
@@ -821,11 +826,28 @@ function si_contact_form_short_code($atts) {
   // get options
   $si_contact_gb = $this->si_contact_get_options($form_num);
 
+ /*
+This next few lines of code controls logic for when two different forms are on one page.
+The error display and the form post vars should only be processed for one form that was posted.
+Only one form can be posted at a time
+$this->si_contact_error is set if the form posted had errors in si_contact_form_check
+$fsc_form_posted is set to the form # posted in si_contact_form_check_and_send, will be 0 of not posted
+$display_only means that this iteration in the display code is not a form that was posted, so ignore post vars
+*/
+$display_only = 0;
+$have_error = 0;
+if ($form_id_num != $fsc_form_posted) {
+    $display_only = 1;
+} else {
+     if ($this->si_contact_error)
+          $have_error = 1;
+}
+
   // did we already get a valid and action completed form result?
-  if(   ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
+  if(!$display_only && ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
       && (isset($_POST['si_contact_form_id']) && is_numeric($_POST['si_contact_form_id'])) ){
-     $form_id_num_this = (int)$_POST['si_contact_form_id'];
-     if ( isset($wp_session["fsc_shortcode_form_id_$form_id_num_this"]) ) {
+     $form_id_posted = (int)$_POST['si_contact_form_id'];
+     if ( isset($wp_session["fsc_shortcode_form_id_$form_id_posted"]) ) {
             // return the form HTML now
       		if( isset( $wp_session['fsc_form_display_html'] ) ) {
                    //already processed, this variable is used to print the form results HTML to shortcode now, even more than once if other plugins cause
@@ -864,24 +886,24 @@ function form_action_url( ) {
 
 } // end function form_action_url
 
-// validation Check all form input data, called during init
+// This function decides if the form # was posted and needs to be processed, called only once during init
+// even when there are multiple forms on a page, only one can be posted to and processed
+// Also has logic that prevents clicking the back button to mail again, if you try, it will redirect to blank form.
 function si_contact_check_and_send(  ) {
-   global $wp_session, $si_contact_opt, $fsc_error_message;
+   global $fsc_form_posted, $wp_session, $si_contact_opt, $fsc_error_message;
+   $fsc_form_posted = 0;
 
-   $not_mailed_before = 0;
-
-  // do we process form now?
+  // do we process one of our forms now?
   if(   ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
       && (isset($_POST['si_contact_form_id']) && is_numeric($_POST['si_contact_form_id'])) ){
      $form_id_num = (int)$_POST['si_contact_form_id'];
      if ( isset($wp_session["fsc_shortcode_form_id_$form_id_num"]) ) { // a form that was really page viewed
-         // begin check server-side no back button mail again post once only token.
+         // begin logic that prevents clicking the back button to mail again.
          if (!isset($_POST["si_postonce_$form_id_num"]) || empty($_POST["si_postonce_$form_id_num"]) || strpos($_POST["si_postonce_$form_id_num"] , ',') === false ) {
                 // redirect, get out
                 wp_redirect( $this->form_action_url() ); // token was no good
 		        exit;
          }
-
          $vars = explode(',', $_POST["si_postonce_$form_id_num"]);
          if ( empty($vars[0]) || empty($vars[1]) || ! preg_match("/^[0-9]+$/",$vars[1]) ) {
                 // redirect, get out
@@ -894,35 +916,32 @@ function si_contact_check_and_send(  ) {
 		       exit;
              }
              $wp_session["fsc_form_lastpost_$form_id_num"] = $vars[0];
-
          } else {
                 // redirect, get out
                 wp_redirect( $this->form_action_url() ); // token was no good
 		        exit;
          }
-         // end check server-side no back button mail again post once token.
+         // end logic that prevents clicking the back button to mail again.
             // prevent double action
       		if( !isset( $wp_session["fsc_sent_mail"] )) { // form not already emailed out
-					// Check all input data
-				$this->si_contact_check_form($form_id_num);
+			    // si_contact_check_form will check all posted input data and send the email if everything passes validation
+                // only called once for the form that was posted, not called if this form was not posted.
+                $fsc_form_posted = $form_id_num; // this is needed to prevent post vars and error display on wrong form when 2 diff forms on 1 page
+			   	$this->si_contact_check_form($form_id_num);
             }
      }
   }
-
-
 } // function si_contact_check_and_send
 
-// validation Check all form input data, called by si_contact_check_and_send during init
-// replaces  si-contact-form-process.php
-// if form validates, will send mail, and process silent posts
+// This function will check all posted input data and send the email if everything passes validation
+// only called once for the form that was posted, not called if this form was not posted.
+// if the form validates, it will send mail and process the optional silent posts,
+// then return the results HTML in a session var
 function si_contact_check_form($form_id_num) {
-     global $wp_session, $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
-
+     global $this_form_posted, $wp_session, $captcha_path_cf, $si_contact_opt, $si_contact_gb, $ctf_version, $vcita_add_script, $fsc_error_message;
 
      // include the code to process the form
      include(WP_PLUGIN_DIR . '/si-contact-form/si-contact-form-process.php');
-
-
 
 } // function si_contact_check_form
 
@@ -981,18 +1000,34 @@ function si_contact_export_convert($posted_data,$rename,$ignore,$add,$return = '
       return $query_string;
 } // end function si_contact_export_convert
 
-
+// initializes and sets the GET input vars for the form display HTML
+// the var is initialized from the matching GET var of this form # if it is set
+// if the GET var is not set, then the var is initialized empty
 function si_contact_get_var($form_id_num,$name) {
    $value = (isset( $_GET["$form_id_num$name"])) ? $this->ctf_clean_input($_GET["$form_id_num$name"]) : '';
    return $value;
 }
 
-function si_contact_post_var($index) {
-   $value = (isset( $_POST["$index"])) ? $this->ctf_clean_input($_POST["$index"]) : '';
+// initializes and sets the POST input vars for the form display HTML
+// if the form is display only, then the var is initialized empty
+// if the form is being processed, then the var is initialized from the post if it is set
+function si_contact_post_var($index,$display_only) {
+   $value = (isset( $_POST["$index"]) && !$display_only) ? $this->ctf_clean_input($_POST["$index"]) : '';
    return $value;
 }
 
+// initializes and sets the input validation error messages
+// $fsc_error_message array can only have values for the form that was posted.
+// if the form is display only, then the error message is initialized empty
+// if the form is being processed, then the error message is initialized from the $fsc_error_message array
+// $fsc_error_message array messages are set in si_contact_check_form when the form that was posted is processed.
+function si_contact_error_var($index,$display_only) {
+  global $fsc_error_message;
+   $value = (isset( $fsc_error_message["$index"]) && !$display_only) ? $fsc_error_message["$index"] : '';
+   return $value;
+}
 
+// returns an array of extra field options
 function si_contact_get_exf_opts_array($label) {
   $exf_opts_array = array();
   $exf_opts_label = '';
@@ -1013,7 +1048,7 @@ function si_contact_get_exf_opts_array($label) {
       }
   } // end else
   return $exf_opts_array;
-} //end function
+} //end function si_contact_get_exf_opts_array
 
 // needed for making temp directories for attachments
 function si_contact_init_temp_dir($dir) {
@@ -1038,6 +1073,8 @@ function si_contact_init_temp_dir($dir) {
 } // end function si_contact_init_temp_dir
 
 // needed for emptying temp directories for attachments
+// garbage collection
+// called in si_contact_check_form
 function si_contact_clean_temp_dir($dir, $minutes = 30) {
     // deletes all files over xx minutes old in a temp directory
   	if ( ! is_dir( $dir ) || ! is_readable( $dir ) || ! is_writable( $dir ) )
@@ -1070,9 +1107,12 @@ function si_contact_clean_temp_dir($dir, $minutes = 30) {
        }
 	}
 	return $count;
-}
+} // end function si_contact_clean_temp_dir
 
-// used for file attachment feature
+
+// validates and saves uploaded file attchments for file attach field types.
+// also sets errors if the file did not upload or was not accepted.
+// called in si_contact_check_form
 function si_contact_validate_attach( $file, $ex_field  ) {
     global $si_contact_opt;
 
@@ -1155,9 +1195,10 @@ function si_contact_validate_attach( $file, $ex_field  ) {
     $result['file_name'] = $filename; // needed for email message
 
 	return $result;
-}
+} // end function si_contact_validate_attach
 
-// makes bold html email labels
+// makes bold html email labels for the email message
+// called in si_contact_check_form
 function make_bold($label) {
    global $si_contact_opt;
 
@@ -1245,7 +1286,7 @@ function si_contact_check_honeypot($form_id) {
 }  //  end function si_contact_validate_honeypot
 
 // this function adds the captcha to the contact form
-function si_contact_get_captcha_html($form_id_num) {
+function si_contact_get_captcha_html($form_id_num,$display_only) {
    global $captcha_path_cf, $captcha_url_cf, $si_contact_gb, $si_contact_opt, $fsc_error_message;
    $req_field_ind = ( $si_contact_opt['req_field_indicator_enable'] == 'true' ) ? '<span '.$this->si_contact_convert_css($si_contact_opt['required_style']).'>'.$si_contact_opt['req_field_indicator'].'</span>' : '';
 
@@ -1321,7 +1362,7 @@ $string .= '>
      $string .= esc_html(($si_contact_opt['title_capt'] != '') ? $si_contact_opt['title_capt'] : __('CAPTCHA Code:', 'si-contact-form'));
      $string .= $req_field_ind.'</label>
         </div>
-        <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($fsc_error_message['captcha']).'
+        <div '.$this->si_contact_convert_css($si_contact_opt['field_div_style']).'>'.$this->ctf_echo_if_error($this->si_contact_error_var('captcha',$display_only)).'
                 <input '.$this->si_contact_convert_css($si_contact_opt['captcha_input_style']).' type="text" value="" id="si_contact_captcha_code'.$form_id_num.'" name="si_contact_captcha_code" '.$this->ctf_aria_required.' size="'.absint($si_contact_opt['captcha_field_size']).'" />
        </div>
 ';
@@ -1331,15 +1372,15 @@ $string .= '>
   return $string;
 } // end function si_contact_get_captcha_html
 
-// shows contact form errors
+// shows form validation error messages
 function ctf_echo_if_error($this_error){
-  if ($this->si_contact_error) {
+  //if ($this->si_contact_error) {
     if (!empty($this_error)) {
          return '
          <div '.$this->ctf_error_style.'>'. esc_html($this_error) . '</div>
 ';
     }
-  }
+ // }
 } // end function ctf_echo_if_error
 
 // functions for protecting and validating form input vars

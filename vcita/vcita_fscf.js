@@ -36,9 +36,7 @@
 		var date = new Date();
 		date.setTime(date.getTime()+(1*365*86400*1000)); // Expires in one year
 		var expires = "; expires="+date.toGMTString();
-        // mike challis  added ; HttpOnly for PCI compliance
-        // 01/15/2013
-		document.cookie = VC_FSCF_cookie_name(uid) + "=" + value + expires + "; path=/; HttpOnly";
+		document.cookie = VC_FSCF_cookie_name(uid) + "=" + value + expires + "; path=/";
 	}
 
 	/** 
@@ -96,7 +94,7 @@
 	}
 	
 	/**
-	 * Check by using cookies if the expert is associated with this doamin.
+	 * Check by using cookies if the expert is associated with this domain.
 	 */
 	function VC_FSCF_is_admin() {
 		var generic_expert = VC_FSCF_read_cookie('generic-expert');
