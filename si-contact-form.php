@@ -816,7 +816,11 @@ function si_contact_form_short_code($atts) {
        if ($form_num == 1)
          $form_num = '';
     }
-  $wp_session["fsc_shortcode_form_id_$form_id_num"] = $form_id_num;
+
+  // reset the flag for the logic that prevents clicking the back button to mail again
+  // used in function si_contact_check_and_send
+  if ( isset($wp_session["fsc_form_lastpost_$form_id_num"]) )
+       unset($wp_session["fsc_form_lastpost_$form_id_num"]);
 
   // http://www.fastsecurecontactform.com/shortcode-options
   $wp_session["fsc_shortcode_redirect_$form_id_num"] = $redirect;
@@ -847,14 +851,10 @@ if ($form_id_num != $fsc_form_posted) {
   if(!$display_only && ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
       && (isset($_POST['si_contact_form_id']) && is_numeric($_POST['si_contact_form_id'])) ){
      $form_id_posted = (int)$_POST['si_contact_form_id'];
-     if ( isset($wp_session["fsc_shortcode_form_id_$form_id_posted"]) ) {
-            // return the form HTML now
-      		if( isset( $wp_session['fsc_form_display_html'] ) ) {
-                   //already processed, this variable is used to print the form results HTML to shortcode now, even more than once if other plugins cause
-                   return $wp_session['fsc_form_display_html'];
-            }
-     } else {
-            wp_die(__('No form selected', 'si-contact-form'));
+     // return the form HTML now
+     if( isset( $wp_session['fsc_form_display_html'] ) ) {
+         //already processed, this variable is used to print the form results HTML to shortcode now, even more than once if other plugins cause
+         return $wp_session['fsc_form_display_html'];
      }
   }
 
@@ -897,28 +897,28 @@ function si_contact_check_and_send(  ) {
   if(   ( isset($_POST['si_contact_action']) && $_POST['si_contact_action'] == 'send')
       && (isset($_POST['si_contact_form_id']) && is_numeric($_POST['si_contact_form_id'])) ){
      $form_id_num = (int)$_POST['si_contact_form_id'];
-     if ( isset($wp_session["fsc_shortcode_form_id_$form_id_num"]) ) { // a form that was really page viewed
+
          // begin logic that prevents clicking the back button to mail again.
          if (!isset($_POST["si_postonce_$form_id_num"]) || empty($_POST["si_postonce_$form_id_num"]) || strpos($_POST["si_postonce_$form_id_num"] , ',') === false ) {
                 // redirect, get out
-                wp_redirect( $this->form_action_url() ); // token was no good
+                wp_redirect( $this->form_action_url() ); // token was no good, missing or in incorrect format
 		        exit;
          }
          $vars = explode(',', $_POST["si_postonce_$form_id_num"]);
          if ( empty($vars[0]) || empty($vars[1]) || ! preg_match("/^[0-9]+$/",$vars[1]) ) {
                 // redirect, get out
-                wp_redirect( $this->form_action_url() ); // token was no good
+                wp_redirect( $this->form_action_url() ); // token was no good, parts missing or in incorrect format
 		        exit;
          }
          if ( wp_hash( $vars[1] ) == $vars[0] ) {
              if ( isset($wp_session["fsc_form_lastpost_$form_id_num"]) && ($wp_session["fsc_form_lastpost_$form_id_num"] == $vars[0])){
-               wp_redirect( $this->form_action_url() ); // no back button mail again, show blank form
+               wp_redirect( $this->form_action_url() ); // the form was already posted, no clicking the back button to mail again, show blank form
 		       exit;
              }
              $wp_session["fsc_form_lastpost_$form_id_num"] = $vars[0];
          } else {
                 // redirect, get out
-                wp_redirect( $this->form_action_url() ); // token was no good
+                wp_redirect( $this->form_action_url() ); // token was no good, it was forged
 		        exit;
          }
          // end logic that prevents clicking the back button to mail again.
@@ -929,7 +929,7 @@ function si_contact_check_and_send(  ) {
                 $fsc_form_posted = $form_id_num; // this is needed to prevent post vars and error display on wrong form when 2 diff forms on 1 page
 			   	$this->si_contact_check_form($form_id_num);
             }
-     }
+
   }
 } // function si_contact_check_and_send
 

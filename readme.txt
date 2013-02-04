@@ -208,6 +208,9 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- Fixed error logic for attachment permissions.
+- Fixed form posting issues caused by cached pages or session timeout issues.
+
 = 3.1.8.1 =
 - (02 Feb 2013) - Fixed multiple forms on same page was broken.
 - fixed ReferenceError: VC_FSCF_set_cookie is not defined.

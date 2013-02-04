@@ -381,19 +381,23 @@ if ($si_contact_opt['border_enable'] == 'true') {
 }
 
 // check attachment directory
+$have_attach_error = 0;
 if ($have_attach){
 	$attach_dir = WP_PLUGIN_DIR . '/si-contact-form/attachments/';
     $this->si_contact_init_temp_dir($attach_dir);
     if ($si_contact_opt['php_mailer_enable'] == 'php'){
        $have_error = 1;
+       $have_attach_error = 1;
 	   $fsc_error_message['attach_dir_error'] = __('Attachments are only supported when the Send E-Mail function is set to WordPress. You can find this setting on the contact form edit page.', 'si-contact-form');
     }
 	if ( !is_dir($attach_dir) ) {
         $have_error = 1;
+        $have_attach_error = 1;
 		$fsc_error_message['attach_dir_error'] = __('The temporary folder for the attachment field does not exist.', 'si-contact-form');
     } else if(!is_writable($attach_dir)) {
           $have_error = 1;
-		 $fsc_error_message['attach_dir_error'] = __('The temporary folder for the attachment field is not writable.', 'si-contact-form');
+          $have_attach_error = 1;
+		  $fsc_error_message['attach_dir_error'] = __('The temporary folder for the attachment field is not writable.', 'si-contact-form');
     }
 }
 
@@ -407,11 +411,13 @@ if ($have_error) {
     </div>
 </div>
 ';
-    if($have_attach && $this->si_contact_error_var('attach_dir_error',$display_only) != '') {
+
+// print attach error if there is one
+if($have_attach && $have_attach_error ) {
       $string .= '<div '.$this->ctf_required_style.'>
       <div '.$this->ctf_error_style.'>
 ';
-      $string .= esc_html($this->si_contact_error_var('attach_dir_error',$display_only));
+      $string .= esc_html($fsc_error_message['attach_dir_error']);
       $string .= '
       </div>
 </div>
