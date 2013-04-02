@@ -1821,6 +1821,15 @@ function si_contact_get_options($form_num) {
         $si_contact_option_defaults['ex_field'.$i.'_notes_after'] = '';
   }
 
+  // upgrade path from old version 3.1.8.1 or older
+  if (!get_option('si_contact_form_version') ) {
+      // just now updating, session cleanup
+      si_contact_wp_session_cleanup();
+      update_option('si_contact_form_version', $ctf_version);
+  } elseif (get_option('si_contact_form_version') != $ctf_version) {
+      update_option('si_contact_form_version', $ctf_version);
+  }
+
   // upgrade path from old version
   if (!get_option('si_contact_form') && get_option('si_contact_email_to')) {
     // just now updating, migrate settings
@@ -2248,9 +2257,6 @@ if (isset($si_contact_form)) {
     // options deleted when this plugin is deleted in WP 2.7+
   if ( function_exists('register_uninstall_hook') )
      register_uninstall_hook(__FILE__, 'si_contact_unset_options');
-
-  if ( function_exists('register_activation_hook') )
-    register_activation_hook(__FILE__, 'si_contact_wp_session_cleanup');
 
 }
 
