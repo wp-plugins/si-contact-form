@@ -48,16 +48,16 @@ function si_contact_unset_options() {
 function si_contact_wp_session_cleanup() {
 	global $wpdb;
 
-	if ( defined( 'WP_SETUP_CONFIG' ) || class_exists( 'WP_Session' ) ) {
+	if ( class_exists( 'WP_Session' ) ) {
 		return;
     }
-	if ( ! defined( 'WP_INSTALLING' ) ) {
-		$expiration_keys = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_wp_session_%'" );
 
-		foreach( $expiration_keys as $expiration ) {
-				delete_option( $expiration->option_name );
-		}
+	$expiration_keys = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_wp_session_%'" );
+
+	foreach( $expiration_keys as $expiration ) {
+	    delete_option( $expiration->option_name );
 	}
+
 }  // end function si_contact_wp_session_cleanup
 
 
