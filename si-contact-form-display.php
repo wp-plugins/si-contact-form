@@ -857,8 +857,8 @@ if ($si_contact_opt['vcita_enabled'] == 'true') {
 		
 		$string .= "
 <div class='fscf_vcita_container' ";
-		$string .= empty($confirmation_token) ? "" : "confirmation_token=".$confirmation_token;
-		$string .= (empty($si_contact_opt['vcita_uid']) ? "preview=true" : " vcita_uid = '").$si_contact_opt['vcita_uid']."'>
+		$string .= empty($confirmation_token) ? "" : "confirmation_token='".$confirmation_token;
+		$string .= (empty($si_contact_opt['vcita_uid']) ? "preview='true" : " vcita_uid = '").$si_contact_opt['vcita_uid']."'>
 </div>";
         $string .= "
 <div style='clear:both;'></div>
