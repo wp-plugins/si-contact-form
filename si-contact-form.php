@@ -40,27 +40,6 @@ function si_contact_unset_options() {
   }
 } // end function si_contact_unset_options
 
-/**
- * Clean up wp sessions by removing entries from the WordPress options table.
- * wp sessions were used in version 3.1.8.1, but no longer used as of 3.1.8.2
- * if wp session is active, this function is skipped
- */
-function si_contact_wp_session_cleanup() {
-	global $wpdb;
-
-	if ( class_exists( 'WP_Session' ) ) {
-		return;
-    }
-
-	$expiration_keys = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_wp_session_%'" );
-
-	foreach( $expiration_keys as $expiration ) {
-	    delete_option( $expiration->option_name );
-	}
-
-}  // end function si_contact_wp_session_cleanup
-
-
 if (!class_exists('siContactForm')) {
 
  class siContactForm {
@@ -1823,10 +1802,12 @@ function si_contact_get_options($form_num) {
 
   // upgrade path from old version 3.1.8.1 or older
   if (!get_option('si_contact_form_version') ) {
-      // just now updating, session cleanup
-      si_contact_wp_session_cleanup();
+      // just now updating from version 3.1.8.1 or older, run any related functions you need here
+
       update_option('si_contact_form_version', $ctf_version);
   } elseif (get_option('si_contact_form_version') != $ctf_version) {
+       // just now updating from newer version than 3.1.8.1, run any related functions you need here
+
       update_option('si_contact_form_version', $ctf_version);
   }
 
