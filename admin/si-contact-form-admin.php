@@ -825,16 +825,6 @@ _e('If you find this plugin useful to you, please consider making a small donati
 <?php _e('Shortcode for this form:', 'si-contact-form'); echo " [si-contact-form form='$form_id']"; ?>
 </p>
 
-<?php
-if( function_exists('get_sfc_like_button') || function_exists('get_sfc_share_button') ) {
-  echo '<div id="message" class="error">';
-  echo __('SFC Like and SFC Share plugins cause problems with Fast Secure Contact Form, please disable or uninstall SFC Like and SFC Share plugins.', 'si-contact-form');
-  echo ' <a href="http://www.fastsecurecontactform.com/error-message-sfc-like">'. __('help', 'si-contact-form') . '</a>
-  </div>'."\n";
-}
-?>
-
-
 <h3><?php _e('Options', 'si-contact-form'); ?></h3>
 
 <div class="form-tab"><?php echo __('Multi-forms:', 'si-contact-form').' '. sprintf(__('(form %d)', 'si-contact-form'),$form_id);?></div>
@@ -1473,7 +1463,7 @@ foreach ($akismet_send_anyway_array as $k => $v) {
         <label for="si_contact_honeypot_enable"><?php _e('Enable honeypot spambot trap.', 'si-contact-form'); ?></label>
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_honeypot_enable_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_honeypot_enable_tip">
-        <?php _e('Enables empty field honyepot traps for spam bots. For best results, do not enable unless you have a spam problem.', 'si-contact-form') ?>
+        <?php _e('Enables hidden empty field honyepot trap for spam bots. For best results, do not enable unless you have a spam problem.', 'si-contact-form') ?>
         </div>
 
 
