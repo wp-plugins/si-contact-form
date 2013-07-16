@@ -208,6 +208,10 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+- added captcha font randomization
+- fixed date does not have to be required
+- fixed date error message translation
+
 = 3.1.8.4 =
 - (07 Jul 2013) - Fixed CAPTCHA PHP warning on some servers.
 - Added better date input validation.

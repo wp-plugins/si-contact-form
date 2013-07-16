@@ -672,7 +672,7 @@ function vcita_si_contact_add_script(){
 var vicita_fscf_style = "<!-- begin Fast Secure Contact Form - vCita scheduler page header -->" +
 "<style type='text/css'>" + 
 ".vcita-widget-right { float: left !important; } " +
-".vcita-widget-bottom { float: none !important; clear:both;}" + 
+".vcita-widget-bottom { float: none !important; clear:both;}" +
 "</style>" + 
 "<!-- end Fast Secure Contact Form - vCita scheduler page header -->";
 jQuery(document).ready(function($) {
@@ -1248,7 +1248,7 @@ function captchaCheckRequires() {
 }
 
 // check the honeypot trap for spam bots
-// this is very basic, just checks if an empty field was filled in
+// this is very basic, just checks if a hidden empty field was filled in
 function si_contact_check_honeypot($form_id) {
     global $si_contact_opt;
 
