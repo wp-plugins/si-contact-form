@@ -268,6 +268,8 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
          'text_rows' =>           absint(trim($_POST['si_contact_text_rows'])),
          'aria_required' =>       (isset( $_POST['si_contact_aria_required'] ) ) ? 'true' : 'false',
          'auto_fill_enable' =>    (isset( $_POST['si_contact_auto_fill_enable'] ) ) ? 'true' : 'false',
+         'form_attributes' =>     strip_tags(trim($_POST['si_contact_form_attributes'])),
+         'submit_attributes' =>   strip_tags(trim($_POST['si_contact_submit_attributes'])),
          'title_border' =>        strip_tags(trim($_POST['si_contact_title_border'])),
          'title_dept' =>          strip_tags(trim($_POST['si_contact_title_dept'])),
          'title_select' =>        strip_tags(trim($_POST['si_contact_title_select'])),
@@ -1844,6 +1846,24 @@ foreach ($time_format_array as $k => $v) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_enable_areyousure_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         <div style="text-align:left; display:none" id="si_contact_enable_areyousure_tip">
         <?php _e('When a visitor clicks the form submit button, a popup message will ask "Are you sure?". This message can be changed in the "change field labels" settings below.', 'si-contact-form'); ?>
+        </div>
+<br />
+
+        <label for="si_contact_submit_attributes"><?php _e('Submit button input attributes', 'si-contact-form'); ?>:</label><input name="si_contact_submit_attributes" id="si_contact_submit_attributes" type="text" value="<?php echo esc_attr($si_contact_opt['submit_attributes']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_submit_attributes_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_submit_attributes_tip">
+        <?php _e('Use to add submit button input attributes.', 'si-contact-form'); ?>
+        <?php _e('Useful for tracking a form submission with Google Analytics. example:', 'si-contact-form');
+        echo ' onSubmit="pageTracker._trackEvent(\'Contact Form\',\'Submit\');"'; ?>
+        </div>
+<br />
+
+        <label for="si_contact_form_attributes"><?php _e('Form action attributes', 'si-contact-form'); ?>:</label><input name="si_contact_form_attributes" id="si_contact_form_attributes" type="text" value="<?php echo esc_attr($si_contact_opt['form_attributes']);  ?>" size="60" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_form_attributes_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        <div style="text-align:left; display:none" id="si_contact_form_attributes_tip">
+        <?php _e('Use to add form action attributes.', 'si-contact-form'); ?>
+        <?php _e('Useful for tracking a form submission with Google Analytics. example:', 'si-contact-form');
+        echo ' onsubmit="_gaq.push([\'_trackEvent\', \'Contact\', \'SubmitForm\', \'Contacts\']);"'; ?>
         </div>
 <br />
 
