@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
-Tested up to: 3.5.2
+Tested up to: 3.6
 Stable tag: trunk
 
 A super customizable contact form that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -25,7 +25,7 @@ If you find this plugin useful to you, please consider [__making a small donatio
 
 = Good news! A major update is being worked on =
  
-The Fast Secure Contact Form 4.0 project began in late August 2012 and is making great progress. Read about the changes here:
+The Fast Secure Contact Form Version 4.0 Beta will be released Late August, 2013 Read about the changes here:
 [Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports). 
 How you can help with the new 4.0 verion: [Donate to the project](http://www.fastsecurecontactform.com/donate), and/or contribute your ideas in the [Working on a 4.0 Version](http://wordpress.org/support/topic/working-on-a-40-version) post.
 
@@ -207,6 +207,11 @@ You can learn more about vCita at [www.vcita.com](http://www.vcita.com?invite=FS
 If you have any question about the Schedule Meetings feature please contact support@vcita.com
 
 == Changelog ==
+
+= 3.1.8.6 =
+- (13 Aug 2013) - fixed label style for checkbox, checkbox-multiple, and radio field types.
+- removed divs for HTML before/after field settings.
+- minor bug fixes.
 
 = 3.1.8.5 =
 - (18 Jul 2013) - added new settings: "Submit button input attributes" and "Form action attributes". These can be used for Google Analytics tracking code.

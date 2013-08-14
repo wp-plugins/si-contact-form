@@ -970,6 +970,10 @@ get_currentuserinfo();
              $this->si_contact_from_email = $value;
          }
     }
+    // hook for modifying the from_name and from_email
+    $this->si_contact_from_name  = apply_filters('si_contact_from_name', $this->si_contact_from_name, $form_id_num);
+    $this->si_contact_from_email = apply_filters('si_contact_from_email', $this->si_contact_from_email, $form_id_num);
+
     $header_php =  "From: $this->si_contact_from_name <$this->si_contact_from_email>\n"; // header for php mail only
     $header = '';  // for php mail and wp_mail
     // process $mail_to user1@example.com,[cc]user2@example.com,[cc]user3@example.com,[bcc]user4@example.com,[bcc]user5@example.com
@@ -1150,6 +1154,7 @@ get_currentuserinfo();
       $posted_form_name = ( $si_contact_opt['form_name'] != '' ) ? $si_contact_opt['form_name'] : sprintf(__('Form: %d', 'si-contact-form'),$form_id_num);
       // hook for other plugins to use (just after message posted)
       $fsctf_posted_data = (object) array('title' => $posted_form_name, 'posted_data' => $posted_data_export, 'uploaded_files' => (array) $this->uploaded_files );
+      // action hook for mail was sent
       do_action_ref_array( 'fsctf_mail_sent', array( &$fsctf_posted_data ) );
    }  // end if export_enable
 

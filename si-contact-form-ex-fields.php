@@ -363,7 +363,9 @@ if( preg_match('#(?<!\\\)\,#', $exf_array_test) && preg_match("/;/", $exf_array_
          $string .= '>
                 <label>' . esc_html($exf_opts_label)  . $ex_req_field_ind.'</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'. $this->ctf_echo_if_error($this->si_contact_error_var("ex_field$i",$display_only) );
+        <div ';
+         $string .= ($si_contact_opt['ex_field'.$i.'_label_css'] != '') ? $this->si_contact_convert_css($si_contact_opt['ex_field'.$i.'_label_css']) : $this->ctf_title_style;
+         $string .= '>'. $this->ctf_echo_if_error($this->si_contact_error_var("ex_field$i",$display_only) );
 $string .=   "
 ";
 
@@ -412,9 +414,7 @@ $string .=   "
                $string .=   '
         <div ';
          $string .= ($si_contact_opt['ex_field'.$i.'_label_css'] != '') ? $this->si_contact_convert_css($si_contact_opt['ex_field'.$i.'_label_css']) : $this->ctf_title_style;
-         $string .= '>
-        </div>
-        <div '.$this->ctf_field_div_style.'>'.$this->ctf_echo_if_error($this->si_contact_error_var("ex_field$i",$display_only) ).'
+         $string .= '>'.$this->ctf_echo_if_error($this->si_contact_error_var("ex_field$i",$display_only) ).'
                 <input type="checkbox" style="width:13px;" id="si_contact_ex_field'.$form_id_num.'_'.$i.'" name="si_contact_ex_field'.$i.'" value="selected" ';
     if (${'ex_field'.$i} != '') {
       if (${'ex_field'.$i} == 'selected') {
@@ -478,7 +478,9 @@ if(!preg_match('#(?<!\\\)\,#', $exf_array_test) ) {
          $string .= '>
                 <label>' . esc_html($exf_opts_label)  . $ex_req_field_ind.'</label>
         </div>
-        <div '.$this->ctf_field_div_style.'>'. $this->ctf_echo_if_error($this->si_contact_error_var("ex_field$i",$display_only) );
+        <div ';
+         $string .= ($si_contact_opt['ex_field'.$i.'_label_css'] != '') ? $this->si_contact_convert_css($si_contact_opt['ex_field'.$i.'_label_css']) : $this->ctf_title_style;
+         $string .= '>'. $this->ctf_echo_if_error($this->si_contact_error_var("ex_field$i",$display_only) );
 $string .=   "
 ";
 
