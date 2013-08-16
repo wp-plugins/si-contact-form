@@ -712,25 +712,26 @@ if (isset($api->version)) {
      echo '<a href="'.admin_url( 'plugins.php' ).'">'.sprintf(__('A newer version of Fast Secure Contact Form is available: %s', 'si-contact-form'),$api->version).'</a>';
      echo "</div>\n";
   }else{
-     $fsc_update = ' '. __('(latest version)', 'si-contact-form');
+     $fsc_update = ' ';
   }
 }
 ?>
-
-<p>Good news! A major update is being worked on. The Fast Secure Contact Form Version 4.0 Beta will be released late August, 2013. Read about the changes here:<br />
-<a href="http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports" target="_blank">Fast Secure Contact Form 4.0 project reports</a></p>
-<p><strong>How you can help with the new 4.0 verion:</strong> <a href="http://www.fastsecurecontactform.com/donate" target="_blank">Donate to the project</a>, and/or contribute your ideas in the <a href="http://wordpress.org/support/topic/working-on-a-40-version" target="_blank">Working on a 4.0 Version</a> post.
-</p>
+<div id="message" class="updated">
+<h3>Fast Secure Contact Form Version 4.0 Beta was released August, 15 2013. Please help test it!<br />
+- <a href="http://www.fastsecurecontactform.com/beta" target="_blank">Download and test the 4.0 Beta</a><br />
+- <a href="http://www.fastsecurecontactform.com/donate" target="_blank">Donate to the project</a>
+</h3>
+</div>
 
 <p>
 <?php echo __('Version:', 'si-contact-form'). ' '.$ctf_version.$fsc_update; ?> |
 <a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/faq-wordpress-version" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a> |
-<a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
+<a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
-<a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php _e('Free PHP Scripts', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/contact" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
+
 </p>
 
 <?php

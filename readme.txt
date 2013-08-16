@@ -23,11 +23,12 @@ Features: easy form edit, multiple forms, confirmation emails, no templates to m
 
 If you find this plugin useful to you, please consider [__making a small donation__](http://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - [__Mike Challis__](http://profiles.wordpress.org/users/MikeChallis/)
 
-= Good news! A major update is being worked on =
+= Fast Secure Contact Form Version 4.0 Beta 1 =
  
-The Fast Secure Contact Form Version 4.0 Beta will be released Late August, 2013 Read about the changes here:
-[Fast Secure Contact Form 4.0 project reports](http://wordpress.org/support/topic/fast-secure-contact-form-40-project-reports). 
-How you can help with the new 4.0 verion: [Donate to the project](http://www.fastsecurecontactform.com/donate), and/or contribute your ideas in the [Working on a 4.0 Version](http://wordpress.org/support/topic/working-on-a-40-version) post.
+Version 4.0 Beta was released August, 15 2013. Please help test it!
+* [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta). 
+* [Donate to the project](http://www.fastsecurecontactform.com/donate)
+* [Contribute your ideas in the support forum](http://wordpress.org/support/plugin/si-contact-form)
 
 Features:
 --------
@@ -207,6 +208,10 @@ You can learn more about vCita at [www.vcita.com](http://www.vcita.com?invite=FS
 If you have any question about the Schedule Meetings feature please contact support@vcita.com
 
 == Changelog ==
+
+= 3.1.9 =
+- (15 Aug 2013) - Added announcement of Fast Secure Contact Form Version 4.0 Beta was released August, 15 2013. Please help test it!
+- [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta)
 
 = 3.1.8.6 =
 - (13 Aug 2013) - fixed label style for checkbox, checkbox-multiple, and radio field types.
