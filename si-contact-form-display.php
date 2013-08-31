@@ -338,8 +338,9 @@ get_currentuserinfo();
 '.$si_contact_opt['welcome'];
 
 // the form is being displayed now
- $this->ctf_notes_style = $this->si_contact_convert_css($si_contact_opt['notes_style']);
+ //$this->ctf_notes_style = $this->si_contact_convert_css($si_contact_opt['notes_style']);
  $this->ctf_form_style = $this->si_contact_convert_css($si_contact_opt['form_style']);
+ $this->ctf_option_label_style = $this->si_contact_convert_css($si_contact_opt['option_label_style']);
  $this->ctf_border_style = $this->si_contact_convert_css($si_contact_opt['border_style']);
  $this->ctf_select_style = $this->si_contact_convert_css($si_contact_opt['select_style']);
  $this->ctf_title_style = $this->si_contact_convert_css($si_contact_opt['title_style']);

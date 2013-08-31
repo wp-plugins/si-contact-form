@@ -15,9 +15,9 @@ This plugin allows a webmaster to easily create and add contact forms to WordPre
 
 Features: easy form edit, multiple forms, confirmation emails, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block spammers. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
 
-= Fast Secure Contact Form Version 4.0 Beta 1 =
+= Fast Secure Contact Form Version 4.0 Beta 2 =
  
-Version 4.0 Beta was released August, 15 2013. Please help test it!
+Version 4.0 Beta 2 was released August, 31 2013. Please help test it!
 
 * [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta) 
 * [Donate to the project](http://www.fastsecurecontactform.com/donate)
@@ -214,8 +214,15 @@ If you have any question about the Schedule Meetings feature please contact supp
 
 == Changelog ==
 
+= 3.1.9.1 =
+- (31 Aug 2013) - Fix bug: Custom Label CSS was ignored for checkbox, checkbox-multiple, and radio fields.
+- Fix bug: CSS setting 'labels on left' messed up checkbox, checkbox-multiple, and radio fields.
+- Fix bug: CSS setting 'labels on left' messed up HTML before/after form field position.
+- Added announcement of Fast Secure Contact Form Version 4.0 Beta 2 was released August, 31 2013. Please help test it!
+- [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta)
+
 = 3.1.9 =
-- (15 Aug 2013) - Added announcement of Fast Secure Contact Form Version 4.0 Beta was released August, 15 2013. Please help test it!
+- (15 Aug 2013) - Added announcement of Fast Secure Contact Form Version 4.0 Beta 1 was released August, 15 2013. Please help test it!
 - [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta)
 
 = 3.1.8.6 =

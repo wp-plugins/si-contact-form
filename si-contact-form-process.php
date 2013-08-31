@@ -949,11 +949,13 @@ get_currentuserinfo();
    if (!$email_off) {
     $ctf_email_on_this_domain = $si_contact_opt['email_from']; // optional
     // prepare the email header
-    $this->si_contact_from_name  = ($name == '') ? 'WordPress' : $name;
+    // if name field was disabled, the from name will be XXXX because we don't know the users name.
+    $this->si_contact_from_name  = ($name == '') ? 'XXXX' : $name;
+    // if email field was disabled, the from email will be admin email because we don't know the users email.
     $this->si_contact_from_email = ($email == '') ? get_option('admin_email') : $email;
 
     if ($ctf_email_on_this_domain != '' ) {
-         if(!preg_match("/,/", $ctf_email_on_this_domain)) {
+         if(!preg_match("/,/", $ctf_email_on_this_domain)) { // setting to force the from email to specified in settings
            // just an email: user1@example.com
            $this->si_contact_mail_sender = $ctf_email_on_this_domain;
            if($email == '' || $si_contact_opt['email_from_enforced'] == 'true')
@@ -998,19 +1000,19 @@ get_currentuserinfo();
     }
     if ($ctf_email_address_cc != '') {
             $ctf_email_address_cc = rtrim($ctf_email_address_cc, ',');
-            $header .= "Cc: $ctf_email_address_cc\n"; // for php mail and wp_mail
+            $header .= "Cc: $ctf_email_address_cc\n";
     }
     if ($ctf_email_address_bcc != '') {
             $ctf_email_address_bcc = rtrim($ctf_email_address_bcc, ',');
-            $header .= "Bcc: $ctf_email_address_bcc\n"; // for php mail and wp_mail
+            $header .= "Bcc: $ctf_email_address_bcc\n";
     }
 
     if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
-         $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n"; // for php mail and wp_mail
+         $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n";
     }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
-         $header .= "Reply-To: $email\n"; // for php mail and wp_mail
-    }else {
-         $header .= "Reply-To: $this->si_contact_from_email\n"; // for php mail and wp_mail
+         $header .= "Reply-To: $email\n"; 
+    } else {
+         $header .= "Reply-To: $this->si_contact_from_email\n";
     }
     if ($ctf_email_on_this_domain != '') {
       $header .= "X-Sender: $this->si_contact_mail_sender\n";  // for php mail
