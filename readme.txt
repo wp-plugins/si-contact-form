@@ -18,7 +18,6 @@ Features: easy form edit, multiple forms, confirmation emails, no templates to m
 = Fast Secure Contact Form Version 4.0 Beta 2 =
  
 Version 4.0 Beta 2 was released August, 31 2013. Please help test it!
-
 * [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta) 
 * [Donate to the project](http://www.fastsecurecontactform.com/donate)
 * [Contribute your ideas in the support forum](http://wordpress.org/support/plugin/si-contact-form)
