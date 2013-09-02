@@ -342,12 +342,11 @@ get_currentuserinfo();
 'yyyy-mm-dd' => __('yyyy-mm-dd', 'si-contact-form'),
 'yyyy.mm.dd' => __('yyyy.mm.dd', 'si-contact-form'),
 );
-               // required validate
+               // required validate date
                ${'ex_field'.$i} = ( !isset($_POST["si_contact_ex_field$i"]) ) ? '' : $this->ctf_clean_input($_POST["si_contact_ex_field$i"]);
-               if( (${'ex_field'.$i} == '' || ${'ex_field'.$i} == $cal_date_array[$si_contact_opt['date_format']]) && $si_contact_opt['ex_field'.$i.'_req'] == 'true') {
-                  $this->si_contact_error = 1;
-                  $fsc_error_message["ex_field$i"]  = ($si_contact_opt['error_field'] != '') ? $si_contact_opt['error_field'] : __('This field is required.', 'si-contact-form');
-               } else if (${'ex_field'.$i} != $cal_date_array[$si_contact_opt['date_format']] && !$this->validate_date( ${'ex_field'.$i} ) ) {
+               if( $si_contact_opt['ex_field'.$i.'_req'] != 'true' && ( ${'ex_field'.$i} == $cal_date_array[$si_contact_opt['date_format']] || empty(${'ex_field'.$i}) ) ) { // not required, no date picked
+                   // this field wasn't set to required, no date picked, or empty, so ignore it
+               } else if ( !$this->validate_date( ${'ex_field'.$i} ) ) {
 	              $this->si_contact_error = 1;
                   $fsc_error_message["ex_field$i"]  = sprintf(__('Please select a valid date in this format: %s', 'si-contact-form'), $cal_date_array[$si_contact_opt['date_format']]);
                }
@@ -1010,7 +1009,7 @@ get_currentuserinfo();
     if ($si_contact_opt['email_reply_to'] != '') { // custom reply_to
          $header .= "Reply-To: ".$si_contact_opt['email_reply_to']."\n";
     }else if($email != '') {   // trying this: keep users reply to even when email_from_enforced
-         $header .= "Reply-To: $email\n"; 
+         $header .= "Reply-To: $email\n";
     } else {
          $header .= "Reply-To: $this->si_contact_from_email\n";
     }
