@@ -16,10 +16,10 @@ This plugin allows a webmaster to easily create and add contact forms to WordPre
 Features: easy form edit, multiple forms, confirmation emails, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block spammers. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
 
 = Fast Secure Contact Form Version 4.0 Beta 2 =
- 
+
 Version 4.0 Beta 2 was released August, 31 2013. Please help test it!
 
-* [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta) 
+* [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta)
 * [Donate to the project](http://www.fastsecurecontactform.com/donate)
 * [Contribute your ideas in the support forum](http://wordpress.org/support/plugin/si-contact-form)
 
@@ -32,8 +32,6 @@ Version 4.0 Beta 2 was released August, 31 2013. Please help test it!
 = Help Keep This Plugin Free =
 
 If you find this plugin useful to you, please consider [__making a small donation__](http://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - [__Mike Challis__](http://profiles.wordpress.org/users/MikeChallis/)
-
-
 
 Features:
 --------

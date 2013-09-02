@@ -709,8 +709,8 @@ if (isset($api->version)) {
 }
 ?>
 <div id="message" class="updated">
-<h3>Fast Secure Contact Form Version 4.0 Beta was released August, 15 2013. Please help test it!<br />
-- <a href="http://www.fastsecurecontactform.com/beta" target="_blank">Download and test the 4.0 Beta</a><br />
+<h3>Fast Secure Contact Form Version 4.0 Beta 2 was released August, 31 2013. Please help test it!<br />
+- <a href="http://www.fastsecurecontactform.com/beta" target="_blank">Download and test the 4.0 Beta 2</a><br />
 - <a href="http://www.fastsecurecontactform.com/donate" target="_blank">Donate to the project</a>
 </h3>
 </div>
