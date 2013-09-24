@@ -689,7 +689,7 @@ if (function_exists('get_transient')) {
 	  <div class="fsc-star fsc-star2"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('2 stars', 'si-contact-form') ?>" /></div>
 	  <div class="fsc-star fsc-star1"><img src="<?php echo plugins_url( 'si-contact-form/star.png' ); ?>" alt="<?php _e('1 star', 'si-contact-form') ?>" /></div>
 	  </div>
-	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/si-contact-form"> <?php _e('rate', 'si-contact-form') ?></a></small>
+	  <small><?php echo sprintf(__('(Average rating based on %s ratings)', 'si-contact-form'),number_format_i18n($api->num_ratings)); ?> <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/si-contact-form?rate=5#postform"> <?php _e('rate', 'si-contact-form') ?></a></small>
       <br />
     <?php endif;
 
@@ -709,8 +709,8 @@ if (isset($api->version)) {
 }
 ?>
 <div id="message" class="updated">
-<h3>Fast Secure Contact Form Version 4.0 Beta 2 was released August, 31 2013. Please help test it!<br />
-- <a href="http://www.fastsecurecontactform.com/beta" target="_blank">Download and test the 4.0 Beta 2</a><br />
+<h3>Fast Secure Contact Form Version 4.0 Beta 4 was released September, 24 2013. This could be the last beta, so please help test it!<br />
+- <a href="http://www.fastsecurecontactform.com/beta" target="_blank">Download and test the 4.0 Beta 3</a><br />
 - <a href="http://www.fastsecurecontactform.com/donate" target="_blank">Donate to the project</a>
 </h3>
 </div>
@@ -720,7 +720,7 @@ if (isset($api->version)) {
 <a href="http://wordpress.org/extend/plugins/si-contact-form/changelog/" target="_blank"><?php _e('Changelog', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/faq-wordpress-version" target="_blank"><?php _e('FAQ', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support', 'si-contact-form'); ?></a> |
-<a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
+<a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form?rate=5#postform" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/contact" target="_blank"><?php _e('Contact', 'si-contact-form'); ?> Mike Challis</a>
 
