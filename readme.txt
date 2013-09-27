@@ -15,9 +15,9 @@ Easily create and add forms to WordPress. The contact form will let the user sen
 
 Features: easy form edit, multiple forms, confirmation emails, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block spammers. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
 
-= Fast Secure Contact Form Version 4.0 Beta 4 =
+= Fast Secure Contact Form Version 4.0 Beta 5 =
 
-Version 4.0 Beta 4 was released Sept, 34 2013. Please help test it!
+Version 4.0 Beta 5 was released Sept, 27 2013. Please help test it!
 
 * [Download and test the 4.0 Beta](http://www.fastsecurecontactform.com/beta)
 * [Donate to the project](http://www.fastsecurecontactform.com/donate)
