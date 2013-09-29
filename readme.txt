@@ -5,7 +5,7 @@ Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
 Tested up to: 3.6.1
-Stable tag: 3.1.9.2
+Stable tag: trunk
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
 
@@ -26,25 +26,44 @@ If you find this plugin useful to you, please consider [__making a small donatio
 
 Features:
 --------
- * Forms are easy to add, remove, label, and select for edit or preview. Add as many as you need.
- * Comes with standard fields of (Name, Email, Subject, Message).
+ * All new improved 4.xx version code base.
+ * New user interface with tabs.
+ * New 'Fields' tab where you can re-order the display sequence of all the fields via a drag and drop interface.
+ * Forms are easy to add, remove, label, and edit and preview. Add as many as you need.
+ * Comes with standard fields of (Name, Email, Subject, Message). Any of the standard fields can be disabled.
  * Fields are easy to add, remove, and re-order.
  * Add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, fieldset(box). [See FAQ](http://www.fastsecurecontactform.com/how-to-add-extra-fields)
  * File attachments are supported, see here for details: http://wordpress.org/support/topic/416371
  * Backup/restore tool. You can backup/restore all your forms or single forms and settings.[See FAQ](http://www.fastsecurecontactform.com/backup-restore-forms)
  * Easy to hide subject and message fields for use as a newsletter signup.
- * Supports sending mail to multiple contacts.[See FAQ](http://www.fastsecurecontactform.com/tip-form-preview)
+ * Send mail to single or multiple contacts.
  * Optional - redirect to any URL after message sent.
  * Optional - posted data can be sent as a query string on the redirect URL. [See faq](http://www.fastsecurecontactform.com/sending-data-by-query-string)
  * Optional - confirmation email message.[See FAQ](http://www.fastsecurecontactform.com/tip-add-email-autoresponder)
  * Valid coding for HTML, XHTML, HTML STRICT, Section 508, and WAI Accessibility.
- * Uses simple inline error messages.
  * Reloads form data and warns user if user forgets to fill out a field.
- * Validates syntax of email address.
  * CAPTCHA can be turned off or hidden from logged in users and or admins.
  * Auto form fill for logged in users.
  * Customizable form field labels.
  * Customizable CSS style.
+ * New PHP Sessions are no longer enabled by default allowing for best compatibility with servers, caching, themes, and other plugins. This should resolve any PHP sessions related issues some users had.
+ * New added filter hooks for 3rd party plugins and custom modifications.
+ * New improved validation of time fields.
+ * New improved CAPTCHA images.
+ * New improved select options setting.
+ * New more optimized HTML indents when view source, added ID tags to form elements.
+ * New setting on the Advanced tab to enable a "view / print message" button after message sent. This feature will be skipped if the "redirect after the message sends" is also enabled.
+ * New Default CSS style for 'labels on top' is now responsive(note:your theme style has to be responsive also).
+ * New improved Styles tab with internal or external CSS Style feature, you choose what you want.
+ * New easier to use field labels, tags, and field options. You no longer have to escape comas in form labels and options.
+ * New feature: for select, radio, checbox-miltiple, select-multiple field types: If you add options as a key==value set (use == to separate) the value will show on the form and the key will show in the email.
+ * New field Setting: "Hide label" check this setting if you want to hide the field label on the form.
+ * New field setting: "Default as placeholder" Check this setting if you want the default text to be a placeholder inside the form field. The placeholder is a short hint that is displayed in the input field before the user enters a value. Works with the following input types only: name, email, subject, message, text, textarea, url, and password.
+ * New tags capability for fields.
+ * New 'Reset Form' button to Tools tab.
+ * New 'Delete Form' function to Tools tab.
+ * New 'Reset Styles on all forms' button to the Tools tab.
+ * New setting to skip names of non-required and unfilled-out fields in emails.
  * Sends Email with UTF-8 character encoding for US and International character support.
  * Pre-fill in form fields from a URL query string. [See FAQ](http://www.fastsecurecontactform.com/query-string-parameters)
  * Save emails to the WordPress database, or export to CSV or Excel. [See FAQ](http://www.fastsecurecontactform.com/save-to-database)
@@ -114,6 +133,12 @@ Requirements/Restrictions:
 4. screenshot-5.png Schedule an appointment feature.
 
 
+== Credits ==
+
+* [Mike Challis](http://www.642weather.com/weather/scripts.php) - Plugin Author / Lead programmer
+* [Ken Carlson](http://kencarlsonconsulting.com/) - Plugin programmer
+
+
 == Frequently Asked Questions ==
 
 [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
@@ -121,6 +146,38 @@ Requirements/Restrictions:
 = I just installed this and do not get any email from it, what could be wrong? =
 
 [See FAQ page: How to troubleshoot email delivery](http://www.fastsecurecontactform.com/email-does-not-send)
+
+= If I upgrade from version 3.xx, will my forms and settings be lost? =
+No, it will automatic import of settings from versions 2.5.6 up to 3.xx. As long as you do not use the delete button when deactivating the plugin.
+You can and should [make a backup of your forms](http://www.fastsecurecontactform.com/backup-restore-forms).
+
+= What happens during upgrade from 3.xx, where are the settings stored? =
+
+The upgrade is run automatically only once after installing ir upgrading the 4.xx version over a 3.xx versions.
+The 4.xx version uses different wp options settings than 3.xx
+The options settings are rows in the wp_options database table.
+
+4.xx wp_options
+fs_contact_global
+fs_contact_form1
+fs_contact_form2
+fs_contact_form3
+
+3.xx wp_options
+si_contact_gb
+si_contact_form
+si_contact_form2
+si_contact_form3
+si_contact_form4
+
+During 4.xx install, the installation looks to see if 4.xx options are not present(first time install), and if 3.xx options are present(3.xx was installed previously), if it passes both those tests, then it runs the import code in
+class-fscf-import.php
+
+= How do I backup or restore my forms? =
+
+On the Tools settings tab is a backup / restore tool.
+The backup / restore feature can be used for backups or as a site to site transfer. You can back up ALL forms and transfer ALL forms to the same or new site using the restore feature. Or you can back up individual forms and restore them to the the same or new site replacing any one form selected during the restore. Please consider that restoring one form or ALL forms makes permanent replacements to the forms already on the site you restore them to.
+Read [more about backups](http://www.fastsecurecontactform.com/backup-restore-forms)
 
 = Is this plugin available in other languages? =
 
@@ -202,6 +259,53 @@ You can enable or disable this option in the "Scheduling" tab of your contact fo
 If you have additional questions visit [vCita Support Page](http://support.vcita.com)
 
 == Changelog ==
+
+= 4.0.6 =
+- (29 Sep 2013) - Version 4.0.6 is fiinally released after one year of programming by Mike Challis and Ken Carlson and 6 weeks of beta testing.
+- Most notable changes:
+– All new code base with better use of class structure.
+- New user interface with tabs.
+- New 'Fields' tab where you can re-order the display sequence of all the fields via a drag and drop interface.
+- The standard fields (name,email,subject,message) can now be manipulated and re-ordered along with the extra fields in the new 'Fields' tab.
+- Forms are easier to add, remove, label, and select for edit or preview.
+- Fields are easier to add, remove, and re-order.
+- Easier to use field labels, tags, and field options. You no longer have to escape comas in form labels and options.
+- Automatic import of settings from version 2.5.6 and all 3.xx versions.
+- You can restore your backed up forms from version 2.8 and newer with 'Restore Settings' on the new 'Tools' tab.
+- Updated Online Meeting Scheduler by vCita on the new 'Scheduler' tab.
+- Updated 'Constant Contact' plugin integration for the new 'Newsletter' settings tab.
+- PHP Sessions are no longer enabled by default allowing for best compatibility with servers, caching, themes, and other plugins. This should resolve any PHP sessions related issues some users had.
+– Added filter hooks for 3rd party plugins and custom modifications.
+- Improved validation of time fields.
+- Improved CAPTCHA images.
+- More optimized HTML indents when view source.
+- New setting on the Advanced tab to enable a "view / print message" button after message sent. This feature will be skipped if the "redirect after the message sends" is also enabled.
+- Default CSS style for 'labels on top' is now responsive(note:your theme style has to be responsive also).
+- New feature: for select, radio, checbox-miltiple, select-multiple field types: If you add options as a key==value set (use == to separate) the value will show on the form and the key will show in the email.
+- New field Setting: "Hide label" check this setting if you want to hide the field label on the form.
+- New field setting: "Default as placeholder" Check this setting if you want the default text to be a placeholder inside the form field. The placeholder is a short hint that is displayed in the input field before the user enters a value. Works with the following input types only: name, email, subject, message, text, textarea, url, and password.
+- New tags capability for fields.
+- New 'Reset Form' button to Tools tab.
+- New 'Delete Form' function to Tools tab.
+- New 'Reset Styles on all forms' button to the Tools tab.
+- Lots of work on the Style tab:
+- Added more style settings for Style of labels, field inputs, buttons, and text.
+- Separated style sections into "Alignment DIVs", and "Style of labels, field inputs, buttons, and text".
+"Alignment DIVs" settings are for adjusting the alignments of the form elements.
+You can also check "reset the alignment" to return to defaults and make the "labels on top" or "labels on left".
+"Style of labels, field inputs, buttons, and text" are for setting style of the form labels, field inputs, buttons, and text.
+This is a great way to change label or field colors. You can add color:red; any style attributes you want.
+You can also check "reset the styles" to return to defaults.
+- New setting on the Style tab: "Select the method of delivering the form style":
+"Internal Style Sheet CSS (default)"
+"External Style Sheet CSS (requires editing theme style.css)"
+By default, the FSCF form styles are editable below when using "Internal Style Sheet CSS". The style is included inline in the form HTML.
+CSS experts will like the flexibility of using their own custom style sheet by enabling "External Style Sheet CSS", then the FSCF CSS will NOT be included inline in the form HTML, and the custom CSS below must be included in the style.css of the theme. Be sure to remember this if you switch your theme later on.
+Premium themes can now add support for Fast Secure Contact Form style in the theme's CSS. Select "External Style Sheet CSS" when instructed by the theme's installation instructions.
+- New "Reset Styles on all forms" button to the Tools menu, and you should click it once after upgrading from version 3.xx to acquire the many changes/improvements to the default styles.
+- Editorial change: E-mail is now Email, and e-mail is now email.
+- Includes all the recent improvements from the 3.xx versions.
+- Hundreds of bug fixes and code improvements.
 
 = 4.0.5 Beta 5 =
 - (27 Sep 2013) - added ability to use "Default as placeholder" setting with "Enable double email entry" setting enabled. The "Default" setting should be in this example format: "Email==Re-enter Email". Separate words with == separators.
