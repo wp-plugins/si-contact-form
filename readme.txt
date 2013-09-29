@@ -5,7 +5,7 @@ Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
 Tested up to: 3.6.1
-Stable tag: trunk
+Stable tag: 3.1.9.2
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
 
