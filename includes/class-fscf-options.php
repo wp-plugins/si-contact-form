@@ -372,15 +372,7 @@ class FSCF_Options {
   }
   
   /* --- vCita Header Error Messages - End --- */
-?>
 
-<h3>
-You are testing the Version 4.0 beta. Please report any errors or bugs in the
-<a href="http://wordpress.org/support/plugin/si-contact-form" target="_blank"><?php _e('Support Forum', 'si-contact-form'); ?></a>.
-Please include BETA in the subject line, give specific details about the issue, steps needed to duplicate, and include a URL to your form page.
-</h3>
-
-<?php
         // action hook for database extension menu
         do_action( 'fsctf_menu_links' );
 ?>
