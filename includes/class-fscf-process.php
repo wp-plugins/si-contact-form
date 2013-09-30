@@ -1568,6 +1568,9 @@ class FSCF_Process {
 			//echo $silent_result;
 		}
 
+        // filter hook for modifying the email_fields array before export
+        self::$email_fields = apply_filters('si_contact_email_fields_posted', self::$email_fields, self::$form_id_num);
+
 		// Export option
 		// filter posted data based on admin settings
 		$posted_data_export = self::export_convert( self::$email_fields, self::$form_options['export_rename'], self::$form_options['export_ignore'], self::$form_options['export_add'], 'array' );
