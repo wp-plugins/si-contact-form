@@ -385,8 +385,8 @@ class FSCF_Options {
 		$preview = ( isset($_POST['ctf_action']) && __('Preview Form', 'si-contact-form') == $_POST['ctf_action'] ) ? true : false;
 		?>
 		<div class="fscf_left">
-        <form id="fscf_form_control" action="<?php echo admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php&amp;fscf_form=' 
-				. self::$current_form).'&fscf_tab='.self::$current_tab;; ?>" method="post" name="previewform">
+        <form id="fscf_form_control" action="<?php echo admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php&amp;fscf_form='
+				. self::$current_form).'&fscf_tab='.self::$current_tab; ?>" method="post" name="previewform">
             <?php wp_nonce_field( 'fs_contact_options-options', 'fs_options' );
 			// The value of the ctf_action field will be set by javascript when needed ?>
 			<input type="hidden" name="ctf_action" id="ctf_action" value="<?php
@@ -3856,7 +3856,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		self::$ads = array();
 
     //if (self::$global_options['vcita_enabled'] != 'true')
-		self::$ads[] = '	<a href="http://www.vcita.com/landings/partner_fast_secure?supply_password=true&invite=wp-fscf&o=int.6" target="_blank">
+		self::$ads[] = '	<a href="'.admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php&amp;fscf_form='. self::$current_form).'&fscf_tab=7">
         <img src="' . plugins_url( 'si-contact-form/includes/images/vcita_banner.jpg').'" class="fscf_centered" /></a>
 ';
 		self::$ads[] = '
@@ -3871,7 +3871,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 ';
 
     //if (self::$global_options['vcita_enabled'] != 'true')
-		self::$ads[] = '	<a href="http://www.vcita.com/landings/partner_fast_secure?supply_password=true&invite=wp-fscf&o=int.6" target="_blank">
+		self::$ads[] = '	<a href="'.admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php&amp;fscf_form='. self::$current_form).'&fscf_tab=7">
         <img src="' . plugins_url( 'si-contact-form/includes/images/vcita_banner.jpg').'" class="fscf_centered" /></a>
 ';
 

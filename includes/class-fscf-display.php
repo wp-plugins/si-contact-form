@@ -766,10 +766,11 @@ $f_name_string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$f_name_string .= self::$req_field_ind;
                 $f_name_string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$f_name_string .= self::$req_field_ind."\n";
-              }
+              }*/
 $f_name_string .= '    </div>
     <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'f_name' ) . '
 	  <input ';
@@ -797,10 +798,11 @@ $l_name_string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$l_name_string .= self::$req_field_ind;
                 $l_name_string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$l_name_string .= self::$req_field_ind."\n";
-              }
+              }*/
 $l_name_string .= '    </div>
     <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'l_name' ) . '
 	  <input ';
@@ -830,10 +832,11 @@ $string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
                 $string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind."\n";
-              }
+              }*/
 $string .= '    </div>
     <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'full_name' ) . '
       <input ';
@@ -958,10 +961,11 @@ $string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
                 $string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind."\n";
-              }
+              }*/
         $string .= "    </div>\n";
         $string .= '    <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'email' )
 			. "\n      <input ";
@@ -991,10 +995,11 @@ $string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
                 $string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind."\n";
-              }
+              }*/
         $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'email2' )
                 . "\n      <input ";
 		$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('field_style');
@@ -1031,10 +1036,11 @@ $string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
                 $string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind."\n";
-              }
+              }*/
 $string .= "    </div>";
 		}
         $type = $field['type'];
@@ -1085,10 +1091,11 @@ $string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
                 $string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind."\n";
-              }
+              }*/
 $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>'
 				. self::echo_if_error( 'message' ) . "\n      <textarea ";
 			$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('textarea_style');
@@ -1153,10 +1160,11 @@ $string .= '      <label ';
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
                 $string .= "</label>\n";
-              } else {
+              }
+/*              else {
                 if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind."\n";
-              }
+              }*/
 $string .= "    </div>";
 			// Check for subject_id parm for backward compatibility
 			if ( 0 == count(self::$form_content[$field['slug']]) && '' != self::$form_content['subject_id'])
