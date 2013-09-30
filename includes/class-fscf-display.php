@@ -15,7 +15,7 @@ class FSCF_Display {
 	static $style = array();		// styles for formatting the form
 	static $ext_css;		// styles for formatting the form
 	static $contact_error;
-	static $form_id_num;
+	static $form_id_num, $placeholder;
 	static $email_msg_print, $contacts;
 	static $req_field_ind, $ctf_field_size, $form_action_url, $aria_required;
 	static $have_attach = '';
@@ -113,6 +113,7 @@ class FSCF_Display {
 				}
 			}
 			// ***** Display the Form *****
+            self::$placeholder = 0;
             $string = "\n\n<!-- Fast Secure Contact Form plugin " . FSCF_VERSION . " - begin - FastSecureContactForm.com -->
 <div ".self::get_this_css('clear_style')."></div>\n" . self::$form_options['welcome'];
 			$string = self::display_form($string);
@@ -679,6 +680,29 @@ $string .= '
 		$string .= '</div>';	// closes fscf-container
 		$string .= "
 <div ".self::get_this_css('clear_style')."></div>\n" . self::$form_options['after_form_note'];
+if (self::$placeholder) {
+$string .= '
+<style type="text/css">
+
+   /* WebKit browsers */
+   input:focus::-webkit-input-placeholder { color:transparent; }
+   textarea:focus::-webkit-input-placeholder { color:transparent; }
+
+   /* Mozilla Firefox 4 to 18 */
+   input:focus:-moz-placeholder { color:transparent; }
+   textarea:focus:-moz-placeholder { color:transparent; }
+
+   /* Mozilla Firefox 19+ */
+   input:focus::-moz-placeholder { color:transparent; }
+   textarea:focus::-moz-placeholder { color:transparent; }
+
+   /* Internet Explorer 10+ */
+   input:-ms-input-placeholder { color:#999; }
+   textarea:-ms-input-placeholder { color:#999; }
+
+</style>
+';
+}
 		$string .= '
 <!-- Fast Secure Contact Form plugin '.FSCF_VERSION.' - end - FastSecureContactForm.com -->
 ';
@@ -755,9 +779,11 @@ $f_name_string .= '    </div>
         // XXX disabling text field size, textarea cols rows settings, to use CSS instead
         //if( strpos(self::$style['field'],'width') === false )
 		//				$f_name_string .= ' size="'.self::$ctf_field_size.'"';
-if ( 'true' == $field['placeholder'] && $f_default != '')
-$f_name_string .= ' onfocus="if(this.value==\''.esc_js($f_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($f_default).'\';"';
-
+if ( 'true' == $field['placeholder'] && $f_default != '') {
+         $f_name_string .= ' placeholder="'.esc_attr($f_default).'"';
+  //$f_name_string .= ' onfocus="if(this.value==\''.esc_js($f_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($f_default).'\';"';
+ self::$placeholder = 1;
+}
         $f_name_string .= ' />
     </div>';
 
@@ -783,9 +809,11 @@ $l_name_string .= '    </div>
         // XXX disabling text field size, textarea cols rows settings, to use CSS instead
         //if( strpos(self::$style['field'],'width') === false )
 		//				$l_name_string .= ' size="'.self::$ctf_field_size.'"';
- if ( 'true' == $field['placeholder'] && $l_default != '')
-$l_name_string .= ' onfocus="if(this.value==\''.esc_js($l_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($l_default).'\';"';
-
+ if ( 'true' == $field['placeholder'] && $l_default != '') {
+            $l_name_string .= ' placeholder="'.esc_attr($l_default).'"';
+  //$l_name_string .= ' onfocus="if(this.value==\''.esc_js($l_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($l_default).'\';"';
+  self::$placeholder = 1;
+}
         $l_name_string .= ' />
     </div>
 ';
@@ -814,9 +842,11 @@ $string .= '    </div>
         //XXX disabling text field size, textarea cols rows settings, to use CSS instead
         //if( strpos(self::$style['field'],'width') === false )
 		//				$string .= ' size="'.self::$ctf_field_size.'"';
-        if ( 'true' == $field['placeholder'] && $field['default'] != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
-
+if ( 'true' == $field['placeholder'] && $field['default'] != '') {
+   $string .= ' placeholder="'.esc_attr($field['default']).'"';
+ self::$placeholder = 1;
+}
+   //$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
         $string .= ' />
     </div>
 ';
@@ -841,8 +871,11 @@ $string .= '    </div>
        <input ';
 		$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('field_style');
 		$string .= ' type="text" id="fscf_mi_name' . self::$form_id_num . '" name="mi_name" value="' . esc_attr( self::$form_content['mi_name'] ) . '" ';
-        if ( 'true' == $field['placeholder'] && $mi_default != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($mi_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($mi_default).'\';"';
+        if ( 'true' == $field['placeholder'] && $mi_default != '') {
+          $string .= ' placeholder="'.esc_attr($mi_default).'"';
+          self::$placeholder = 1;
+        }
+//$string .= ' onfocus="if(this.value==\''.esc_js($mi_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($mi_default).'\';"';
 
         $string .= ' />
     </div>
@@ -868,8 +901,11 @@ $string .= '    </div>
         //XXX disabling text field size, textarea cols rows settings, to use CSS instead
         //if( strpos(self::$style['field'],'width') === false )
 		//				$string .= ' size="'.self::$ctf_field_size.'"';
- if ( 'true' == $field['placeholder'] && $m_default != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($m_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($m_default).'\';"';
+ if ( 'true' == $field['placeholder'] && $m_default != '') {
+      $string .= ' placeholder="'.esc_attr($m_default).'"';
+      self::$placeholder = 1;
+ }
+  //$string .= ' onfocus="if(this.value==\''.esc_js($m_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($m_default).'\';"';
 
         $string .= ' />
     </div>';
@@ -936,9 +972,11 @@ $string .= '      <label ';
         //XXX disabling text field size, textarea cols rows settings, to use CSS instead
         //if( strpos(self::$style['field'],'width') === false )
 		//				$string .= ' size="'.self::$ctf_field_size.'"';
-         if ( 'true' == $field['placeholder'] && $email_default != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($email_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($email_default).'\';"';
-
+         if ( 'true' == $field['placeholder'] && $email_default != '') {
+            $string .= ' placeholder="'.esc_attr($email_default).'"';
+            self::$placeholder = 1;
+         }
+//$string .= ' onfocus="if(this.value==\''.esc_js($email_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($email_default).'\';"';
         $string .= ' />'
         . "\n    </div>\n";
 
@@ -964,8 +1002,11 @@ $string .= '      <label ';
         //XXX disabling text field size, textarea cols rows settings, to use CSS instead
         //if( strpos(self::$style['field'],'width') === false )
 		//				$string .= ' size="'.self::$ctf_field_size.'"';
-         if ( 'true' == $field['placeholder'] && $email2_default != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($email2_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($email2_default).'\';"';
+         if ( 'true' == $field['placeholder'] && $email2_default != '') {
+              $string .= ' placeholder="'.esc_attr($email2_default).'"';
+              self::$placeholder = 1;
+         }
+  //$string .= ' onfocus="if(this.value==\''.esc_js($email2_default).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($email2_default).'\';"';
         $string .= ' />'
 				. "\n    </div>\n";
 		}
@@ -1019,8 +1060,11 @@ $string .= "    </div>";
 		if ( $field['attributes'] != '' )
 			$string .= ' ' . $field['attributes'];
 
-        if ( 'true' == $field['placeholder'] && $field['default'] != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
+        if ( 'true' == $field['placeholder'] && $field['default'] != '') {
+           $string .= ' placeholder="'.esc_attr($field['default']).'"';
+           self::$placeholder = 1;
+        }
+//$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
 
 		$string .= " />\n    </div>\n";
 
@@ -1052,8 +1096,11 @@ $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>'
             // XXX disabling textarea cols rows settings, use CSS instead
 			//	. ' cols="' . absint( self::$form_options['text_cols'] ) . '" rows="' . absint( self::$form_options['text_rows'] ). '"'
 
-             if ( 'true' == $field['placeholder'] && $field['default'] != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
+             if ( 'true' == $field['placeholder'] && $field['default'] != '') {
+                $string .= ' placeholder="'.esc_attr($field['default']).'"';
+                self::$placeholder = 1;
+             }
+//$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
 
 				$string .= '>' . esc_textarea( self::$form_content[$field['slug']] ) . "</textarea>\n    </div>\n";
 		} else {
@@ -1069,8 +1116,10 @@ $string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.valu
 
 			if ( $field['attributes'] != '' )
 				$string .= ' ' . $field['attributes'];
-              if ( 'true' == $field['placeholder'] && $field['default'] != '')
-$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
+              if ( 'true' == $field['placeholder'] && $field['default'] != '') {
+                 $string .= ' placeholder="'.esc_attr($field['default']).'"';
+              }
+  //$string .= ' onfocus="if(this.value==\''.esc_js($field['default']).'\')this.value=\'\';" onblur="if(this.value==\'\')this.value=\''.esc_js($field['default']).'\';"';
 
 			$string .= '>';
 			$string .= (self::$form_options['textarea_html_allow'] == 'true') ? stripslashes( self::$form_content[$field['slug']] ) : esc_textarea( self::$form_content[$field['slug']] );
@@ -1547,7 +1596,7 @@ $string .= "    </div>";
 			self::$form_content[$fld_name] = self::get_var(self::$form_id_num,$fld_name);
 		}
 
-        $default = self::$form_options['fields']['0']['default']; // name field
+/*        $default = self::$form_options['fields']['0']['default']; // name field
 
         if ( self::$form_options['name_format'] != 'name' && $default != '' ) {
            if ( self::$form_options['name_format'] == 'first_last' ) {
@@ -1580,7 +1629,7 @@ $string .= "    </div>";
                   if (self::$form_content['l_name'] == '') self::$form_content['l_name'] = $matches[5];
                }
             }
-        }
+        }*/
 
 		// XXX Might need to check for English standard field names, e.g. 'name', as well as the actual field name,
 		// which might be translated.  If so, set the field name element to the entry for uame, and unset the name element
@@ -1663,23 +1712,20 @@ $string .= "    </div>";
 					else
 						self::$form_content[$fld_name] = self::get_var(self::$form_id_num, $fld_name);
                     // fill in defaults if set
-					if ( '' == self::$form_content[$fld_name] && '' != $field['default'] ) {
-                       //if ('email' != $fld_name && 'true' != self::$form_options['double_email']) {
-
+					if ( '' == self::$form_content[$fld_name] && '' != $field['default'] && 'true' != $field['placeholder'] ) {
                            if('message' == $fld_name || 'textarea' == $field['type'])
                                self::$form_content[$fld_name] = str_replace('\n', "\n", $field['default']);
                            else if ('email' == $fld_name && 'false' == self::$form_options['double_email'])
                                self::$form_content[$fld_name] = $field['default'];
-                           else if ('email' != $fld_name)
+                           else if ('email' != $fld_name && 'full_name' != $fld_name )
                                self::$form_content[$fld_name] = $field['default'];
-                       //}
                     }
 
 			}	// end switch
 
 		}	// end foreach
 
-        $default = self::$form_options['fields']['1']['default']; // email field
+/*        $default = self::$form_options['fields']['1']['default']; // email field
         if ( 'true' == self::$form_options['double_email'] && $default != '' ) {
             // find the true default for email, email2
             // is there xx==xx
@@ -1689,7 +1735,7 @@ $string .= "    </div>";
                  if (self::$form_content['email'] == '') self::$form_content['email'] = $matches[1];
                  if (self::$form_content['email2'] == '') self::$form_content['email2'] = $matches[3];
             }
-        }
+        }*/
 		return;
 
 	}	// end function get_query_parms()

@@ -553,10 +553,10 @@ class FSCF_Process {
 
         $placeh_name_fail = $placeh_fname_fail = $placeh_lname_fail = $placeh_mname_fail = $placeh_miname_fail = 0;
 
-         if ( 'true' == $field['placeholder'] && $field['default'] != '' ) {
+/*         if ( 'true' == $field['placeholder'] && $field['default'] != '' ) {
                    // strip out the placeholder they might have posted with
                    $placeholder_input = '';
-                   if (self::$form_options['name_format'] == 'name' && self::$form_data['full_name'] != '') {
+                   if (self::$form_options['name_format'] == 'name' ) {
                       $placeholder_input = stripslashes(self::$form_data['full_name']);
                       if ($field['default'] == $placeholder_input )
                          $placeh_name_fail = 1;
@@ -602,7 +602,7 @@ class FSCF_Process {
                          $placeh_lname_fail = 1;
                       }
                   }
-		 }
+		 }*/
 
 		// If the name is required, make sure it is there
 		if ( 'true' == $field['req'] ) {
