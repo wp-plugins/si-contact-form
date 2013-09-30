@@ -13,6 +13,10 @@ class FSCF_Util {
 	static $global_options, $form_options, $admin_notices;
 
 	static function setup() {
+
+        // imports old settings on plugin upgrade
+        add_action('init', 'FSCF_Util::activate',1);
+
 		// Come here when the plugin is run
 		add_action('init', 'FSCF_Util::fscf_init',1);
 
@@ -43,14 +47,13 @@ class FSCF_Util {
 		} else {
               add_action( 'wp_footer', 'FSCF_Util::enqueue_scripts' );
 		}
-		
+
 		return;
 	}
 	
 	static function activate() {
-		// called when the plugin is activated
-		// *** Make sure this is called on an automatic upgrade! ***
-		
+		// called all the time
+
 		// Load global options 
 		self::$global_options = get_option( 'fs_contact_global' );
 		if ( self::$global_options ) {
@@ -59,7 +62,7 @@ class FSCF_Util {
 		} else {
 			// Global options do not exist--see if upgrading from an older version
 			$old_global_options = get_option('si_contact_form_gb');
-			if ($old_global_options) {;
+			if ($old_global_options) {
 				require_once FSCF_PATH . 'includes/class-fscf-import.php';
 				FSCF_Import::import_old_version();
 			} else {

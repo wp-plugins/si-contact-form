@@ -739,9 +739,12 @@ $f_name_string .= '      <label ';
 	    $f_name_string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$f_name_string .= ' for="fscf_f_name' . self::$form_id_num . '">';
 		$f_name_string .= (self::$form_options['title_fname'] != '') ? self::$form_options['title_fname'] : __( 'First Name:', 'si-contact-form' );
-		if ( 'true' == $field['req'] )
-			$f_name_string .= self::$req_field_ind;
-		$f_name_string .= "</label>\n";
+                if ( 'true' == $field['req'] )
+					$f_name_string .= self::$req_field_ind;
+                $f_name_string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$f_name_string .= self::$req_field_ind."\n";
               }
 $f_name_string .= '    </div>
     <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'f_name' ) . '
@@ -765,9 +768,12 @@ $l_name_string .= '      <label ';
 	    $l_name_string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$l_name_string .= ' for="fscf_l_name' . self::$form_id_num . '">';
 		$l_name_string .= (self::$form_options['title_lname'] != '') ? self::$form_options['title_lname'] : __( 'Last Name:', 'si-contact-form' );
-		if ( 'true' == $field['req'] )
-			$l_name_string .= self::$req_field_ind;
-		$l_name_string .= "</label>\n";
+                if ( 'true' == $field['req'] )
+					$l_name_string .= self::$req_field_ind;
+                $l_name_string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$l_name_string .= self::$req_field_ind."\n";
               }
 $l_name_string .= '    </div>
     <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'l_name' ) . '
@@ -793,9 +799,12 @@ $string .= '      <label ';
 	    $string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$string .= ' for="fscf_name' . self::$form_id_num . '">';
 				$string .= (self::$form_options['title_name'] != '') ? self::$form_options['title_name'] : __( 'Name:', 'si-contact-form' );
-				if ( 'true' == $field['req'] )
+                if ( 'true' == $field['req'] )
 					$string .= self::$req_field_ind;
-				$string .= "</label>\n";
+                $string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind."\n";
               }
 $string .= '    </div>
     <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'full_name' ) . '
@@ -910,10 +919,13 @@ $string .= '      <label ';
 	    $string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$string .= ' for="fscf_email' . self::$form_id_num . '">';
 			$string .= (self::$form_options['title_email'] != '') ? self::$form_options['title_email'] : __( 'Email:', 'si-contact-form' );
-			if ( 'true' == $field['req'] )
-				$string .= self::$req_field_ind;
-			$string .= "</label>\n";
-                }
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind;
+                $string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind."\n";
+              }
         $string .= "    </div>\n";
         $string .= '    <div ' . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'email' )
 			. "\n      <input ";
@@ -938,9 +950,13 @@ $string .= '      <label ';
 	    $string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$string .= ' for="fscf_email' . self::$form_id_num . '_2">';
 			$string .= (self::$form_options['title_email2'] != '') ? self::$form_options['title_email2'] : __( 'Re-enter Email:', 'si-contact-form' );
-			$string .= self::$req_field_ind
-			   . "</label>\n";
-                }
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind;
+                $string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind."\n";
+              }
         $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>' . self::echo_if_error( 'email2' )
                 . "\n      <input ";
 		$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('field_style');
@@ -971,9 +987,12 @@ $string .= '      <label ';
 	    $string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$string .= ' for="fscf_field'.self::$form_id_num.'_'.$key. '">';
 			$string .= (self::$form_options['title_subj'] != '') ? self::$form_options['title_subj'] : __( 'Subject:', 'si-contact-form' );
-			if ( 'true' == $field['req'] )
-				$string .= self::$req_field_ind;
-			$string .= "</label>\n";
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind;
+                $string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind."\n";
               }
 $string .= "    </div>";
 		}
@@ -1019,9 +1038,12 @@ $string .= '      <label ';
 	    $string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$string .= ' for="fscf_field'.self::$form_id_num.'_'.$key. '">';
 			$string .= (self::$form_options['title_mess'] != '') ? self::$form_options['title_mess'] : __( 'Message:', 'si-contact-form' );
-			if ( 'true' == $field['req'] )
-				$string .= self::$req_field_ind;
-			$string .= "</label>\n";
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind;
+                $string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind."\n";
               }
 $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>'
 				. self::echo_if_error( 'message' ) . "\n      <textarea ";
@@ -1079,10 +1101,13 @@ $string .= '      <label ';
 	    $string .= ( $field['label_css'] != '') ? self::convert_css( $field['label_css'] ) : self::get_this_css('label_style');
 		$string .= ' for="fscf_field' . self::$form_id_num . '_'.$key .'">';
 			$string .= (self::$form_options['title_subj'] != '') ? self::$form_options['title_subj'] : __( 'Subject:', 'si-contact-form' );
-			if ( 'true' == $field['req'] )
-				$string .= self::$req_field_ind;
-			$string .= "</label>\n";
-                }
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind;
+                $string .= "</label>\n";
+              } else {
+                if ( 'true' == $field['req'] )
+					$string .= self::$req_field_ind."\n";
+              }
 $string .= "    </div>";
 			// Check for subject_id parm for backward compatibility
 			if ( 0 == count(self::$form_content[$field['slug']]) && '' != self::$form_content['subject_id'])
@@ -2046,7 +2071,7 @@ newwin.document.close()
 	    if($form_options['vcita_approved'] == 'true' && !empty($form_options['vcita_uid'])){
 		     $string .=  " target='_blank' class='vcita-set-meeting' href=\"http://".$global_options['vcita_site']."/meeting_scheduler?v=" . self::$form_options['vcita_uid'] . "\"";
 		} else {
-		  	 $string .=  " onclick=\"alert('You need to configure your Fast Secure Contact Form / Appointments settings tab');\"";
+		  	 $string .=  " onclick=\"alert('You need to configure your Fast Secure Contact Form / Scheduling settings tab');\"";
 		}
 		$string .= '>' . $form_options['vcita_scheduling_button_label'].'</a>';
         if ($form_options['vcita_link'] == 'true')

@@ -494,7 +494,7 @@ class FSCF_Options {
 		<?php // See if old settings have been imported
 		if ( ! empty(self::$global_options['import_msg']) ) {
 			if ( self::$global_options['import_success'] ) {
-				echo '<div id="message" class="updated fade"><p>' . __( 'Settings have been imported from a previous version. Please check over the settings to be sure that everything is all right. Also, please to the Tools tab and click "Reset default style settings on all forms" so that all the new style changes are set for your imported forms.', 'si-contact-form' );
+				echo '<div id="message" class="updated fade"><p>' . __( 'Settings have been imported from a previous version. Please check over the settings to be sure that everything is all right. Also, please go to the Tools tab and click "Reset default style settings on all forms" so that all the new style changes are set for your imported forms.', 'si-contact-form' );
 				$msg_class = 'fsc-notice';
 			} else {
 				echo '<div id="message" class="error fade"><p>' . __( 'A previous version was detected, but settings could not be imported because it is too old. Installed as new.', 'si-contact-form' );
@@ -998,6 +998,7 @@ class FSCF_Options {
         $placeholder_error = 0;
         $name_format_error = 0;
         $email_format_error = 0;
+        $dup_field_error = 0;
 		$field_names = array();
         $fields_count = count(self::$form_options['fields']);
 		foreach ( self::$form_options['fields'] as $key => $field ) {
@@ -1102,10 +1103,13 @@ class FSCF_Options {
 			// Make sure field names are unique
 			if ( in_array( $field['label'], $field_names ) ) {
 				// We have a duplicate field label, display an error message
-				echo '<div id="message" class="error">';
-				echo __( 'ERROR: Duplicate field label. Now you must change the field label on the Fields tab and click <b>Save Changes</b>', 'si-contact-form' );
-				echo "</div>\n";
-				echo '<div class="fsc-error">' . __( 'ERROR: Duplicate field label. Change the field label and click <b>Save Changes</b>', 'si-contact-form' ) . '</div>' . "\n";
+                if (!$dup_field_error) {
+				  echo '<div class="updated">';
+				  echo __( 'Caution: Duplicate field label. Now you must change the field label on the Fields tab and click <b>Save Changes</b>', 'si-contact-form' );
+				  echo "</div>\n";
+                }
+				echo '<div class="fsc-notice">' . __( 'Caution: Duplicate field label. Change the field label and click <b>Save Changes</b>', 'si-contact-form' ) . '</div>' . "\n";
+                $dup_field_error = 1;
 			}
 			$field_names[] = $field['label'];
 			$k = +$key + 1;

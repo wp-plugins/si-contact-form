@@ -5,7 +5,7 @@ Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
 Tested up to: 3.6.1
-Stable tag: 3.1.9.2
+Stable tag: trunk
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
 
@@ -153,7 +153,7 @@ You can and should [make a backup of your forms](http://www.fastsecurecontactfor
 
 = What happens during upgrade from 3.xx, where are the settings stored? =
 
-The upgrade is run automatically only once after installing ir upgrading the 4.xx version over a 3.xx versions.
+The upgrade is run automatically only once after installing or upgrading the 4.xx version over a 3.xx versions.
 The 4.xx version uses different wp options settings than 3.xx
 The options settings are rows in the wp_options database table.
 

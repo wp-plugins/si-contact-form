@@ -95,10 +95,10 @@ class FSCF_Import {
 
 		foreach ( $new_options as $key => $val ) {
 			if ( ! empty($old_options[$key]) )
-				$new_options[$key] = $old_options[$key];
+				$new_options[$key] = stripslashes($old_options[$key]);
 		}
 		
-		// ***** Imnport fields *****
+		// ***** Import fields *****
 
 		// Keep a list of slugs so we can be sure they are unique
 		$slug_list = $fscf_special_slugs;
@@ -154,7 +154,7 @@ class FSCF_Import {
 									&& $old_options['ex_field' . $fld . '_default'] > 0 ) {
 								$new_field['default'] = $old_options['ex_field' . $fld . '_default'];
 							} else if ( ! empty($old_options['ex_field' . $fld . '_default_text']) ) {
-								$new_field['default'] = $old_options['ex_field' . $fld . '_default_text'];
+								$new_field['default'] = stripslashes($old_options['ex_field' . $fld . '_default_text']);
 							}
 							break;
 
@@ -165,14 +165,16 @@ class FSCF_Import {
 							$new_field[$key] = $old_options[$old_prop];
 							if ( in_array($old_type, self::$select_type_fields) && 'checkbox' != $old_type )
 								$new_field = self::parse_label($new_field);
-                            if ( 'checkbox' == $old_type )
+                            if ( 'checkbox' == $old_type ) {
                                // label might have \, (not needed in 4.x version, remove it)
-						       $new_field = str_replace( '\,', ',', $new_field ); // "\," changes to ","
+                               $new_field['label'] = str_replace( '\,', ',', $new_field['label'] ); // "\," changes to ","
+                               $new_field['label'] = stripslashes( $new_field['label'] );
+                            }
 							break;
 
 						default:
                             if ( ! empty($old_options[$old_prop]) )
-							  $new_field[$key] = $old_options[$old_prop];
+							  $new_field[$key] = stripslashes($old_options[$old_prop]);
 
 					}	// End switch
 				}	// end foreach $new_field
@@ -222,9 +224,9 @@ class FSCF_Import {
 		foreach ( $exf_opts_array as $key => $opt ) {
              $opt = trim($opt);
 			if ( 0 == $key )
-				$field['options'] = $opt;
+				$field['options'] = stripslashes($opt);
 			else
-				$field['options'] .=  "\n" . $opt;
+				$field['options'] .=  "\n" . stripslashes($opt);
 		}
 
 
@@ -234,7 +236,7 @@ class FSCF_Import {
 			$field['inline'] = 'true';
 		}
 		
-		$field['label'] = $exf_opts_label;
+		$field['label'] = stripslashes($exf_opts_label);
         //print_r($field);
 		return($field);
 	}	// end function parse_label()
