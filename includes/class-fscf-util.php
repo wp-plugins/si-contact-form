@@ -444,7 +444,9 @@ class FSCF_Util {
 		     'vcita_approved'       => 'false',
 		     'vcita_uid'            => '',
 		     'vcita_email'          => '',
-		     'vcita_email_new'      => ((get_option('admin_email') == 'user@example.com') ? '' : get_option('admin_email')),
+                                                // disabled because was causing signups on click "save changes" on any tab
+		     //'vcita_email_new'      => ((get_option('admin_email') == 'user@example.com') ? '' : get_option('admin_email')),
+             'vcita_email_new'      => '',
 		     'vcita_confirm_token'	=> '',
 		     'vcita_confirm_tokens'	=> '',
 	    	 'vcita_initialized'	=> 'false',
