@@ -265,6 +265,12 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.7 =
+- (01 Oct 2013) - Bug fix: none of the language translations were working.
+- Bug fix: there were some ui image 404 errors from includes/images
+- Bug fix: vCita setting error.
+- other minor bug fixes.
+
 = 4.0.6 =
 - (29 Sep 2013) - Version 4.0.6 is fiinally released after one year of programming by Mike Challis and Ken Carlson and 6 weeks of beta testing.
 - Most notable changes:
