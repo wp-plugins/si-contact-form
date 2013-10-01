@@ -262,9 +262,9 @@ function fscf_add_field($text) {
 function fscf_delete_field(key) {
 	// Mark the field for deletion.  It will be deleted in validate()
 	var e = document.getElementById('fs_contact_field'+key+'_label');
-	var resp = confirm("This will permanently delete the field '" + e.value + "'.\n\nAre you sure?");
+	var resp = confirm("This will permanently delete the field '" + e.value + "'.\n\nAre you sure?\n\nThe field will be deleted when you Save Changes.");
 	if ( resp ) {
-		alert('The field will be deleted when you Save Changes.');
+	   //	alert('The field will be deleted when you Save Changes.');
 		fscf_warning = true;
 		// Mark field for deletion
 		e = document.getElementById('delete-'+key);
