@@ -151,24 +151,29 @@ Requirements/Restrictions:
 No, it will automatic import of settings from versions 2.5.6 up to 3.xx. As long as you do not use the delete button when deactivating the plugin.
 You can and should [make a backup of your forms](http://www.fastsecurecontactform.com/backup-restore-forms).
 
+= I upgraded from version 3.xx, to 4.xx and my forms and settings did not import =
+
+The should have imported. In some rare cases, they don't import. Sorry for any inconvenience. There is a solution on this help page:
+[I upgraded to 4.xx version and my forms did not import](http://www.fastsecurecontactform.com/forms-did-not-import)
+
 = What happens during upgrade from 3.xx, where are the settings stored? =
 
 The upgrade is run automatically only once after installing or upgrading the 4.xx version over a 3.xx versions.
 The 4.xx version uses different wp options settings than 3.xx
 The options settings are rows in the wp_options database table.
 
-4.xx wp_options
-fs_contact_global
-fs_contact_form1
-fs_contact_form2
-fs_contact_form3
+4.xx wp_options:
+fs_contact_global,
+fs_contact_form1,
+fs_contact_form2,
+fs_contact_form3,
 
-3.xx wp_options
-si_contact_gb
-si_contact_form
-si_contact_form2
-si_contact_form3
-si_contact_form4
+3.xx wp_options:
+si_contact_gb,
+si_contact_form,
+si_contact_form2,
+si_contact_form3,
+si_contact_form4,
 
 During 4.xx install, the installation looks to see if 4.xx options are not present(first time install), and if 3.xx options are present(3.xx was installed previously), if it passes both those tests, then it runs the import code in
 class-fscf-import.php
