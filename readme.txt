@@ -153,7 +153,7 @@ You can and should [make a backup of your forms](http://www.fastsecurecontactfor
 
 = I upgraded from version 3.xx, to 4.xx and my forms and settings did not import =
 
-The should have imported. In some rare cases, they don't import. Sorry for any inconvenience. There is a solution on this help page:
+The forms should have imported. In some rare cases, they don't import. Sorry for any inconvenience. There is a solution on this help page:
 [I upgraded to 4.xx version and my forms did not import](http://www.fastsecurecontactform.com/forms-did-not-import)
 
 = What happens during upgrade from 3.xx, where are the settings stored? =
