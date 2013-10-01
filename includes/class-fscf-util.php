@@ -14,11 +14,16 @@ class FSCF_Util {
 
 	static function setup() {
 
-        // imports old settings on plugin upgrade
+        // Come here when the plugin is run
+
+        // load plugin textdomain for languages
+		add_action('plugins_loaded', 'FSCF_Util::fscf_init_languages',1);
+
+        // imports old settings on plugin activate or first time upgrade from 3.xx to 4.xx
         add_action('init', 'FSCF_Util::activate',1);
 
-		// Come here when the plugin is run
-		add_action('init', 'FSCF_Util::fscf_init',1);
+		// will start PHP session only if they are enabled (not enabled by default)
+		add_action('init', 'FSCF_Util::fscf_init_session',1);
 
 		// process the form POST logic
 		add_action('init', 'FSCF_Process::process_form',10);
@@ -81,18 +86,23 @@ class FSCF_Util {
 		
 		// New options table entries for individual forms will be created by FSCF_Options::get_options()
 		// when it is called, so don't need to do it here.
-	
+
 		return;
 	}
+
+	static function fscf_init_languages() {
+		if (function_exists('load_plugin_textdomain')) {
+			load_plugin_textdomain('si-contact-form', false, 'si-contact-form/languages' );
+		}
+	}
 	
-	static function fscf_init() {
+	static function fscf_init_session() {
 		self::get_global_options();
 		// start the PHP session if enabled - used by shortcode attributes (and the CAPTCHA, but only when enable_php_sessions)
+        // PHP Sessions are no longer enabled by default allowing for best compatibility with servers, caching, themes, and other plugins.
+        // This should resolve any PHP sessions related issues some users had.
 		if ( self::$global_options['enable_php_sessions'] == 'true' ) {
 			FSCF_Util::start_session();
-		}
-		if (function_exists('load_plugin_textdomain')) {
-			load_plugin_textdomain('si-contact-form', false, FSCF_PATH .'languages' );
 		}
 	}
 
