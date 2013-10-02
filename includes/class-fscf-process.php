@@ -407,21 +407,32 @@ class FSCF_Process {
 					break;
 
 				case 'time' :
-					if ( self::$form_options['time_format'] == '12' )
-						$concat_time = self::$form_data[$field['slug']]['h'] . ':' . self::$form_data[$field['slug']]['m']
-							. ' ' . self::$form_data[$field['slug']]['ap'];
-					else
-						$concat_time = self::$form_data[$field['slug']]['h'] . ':' . self::$form_data[$field['slug']]['m'];
-                    $not_chosen = 0;
-                    if( 'true' != $field['req'] && ( empty(self::$form_data[$field['slug']]['h']) && empty(self::$form_data[$field['slug']]['m']) && empty(self::$form_data[$field['slug']]['ap']) ) ) { // not required, no time picked
+                   $not_chosen = 0;
+				   if ( self::$form_options['time_format'] == '12' ) {
+						$concat_time = self::$form_data[$field['slug']]['h'] . ':' . self::$form_data[$field['slug']]['m'] . ' ' . self::$form_data[$field['slug']]['ap'];
+                        if( 'true' != $field['req'] && ( empty(self::$form_data[$field['slug']]['h']) && empty(self::$form_data[$field['slug']]['m']) && empty(self::$form_data[$field['slug']]['ap']) ) ) { // not required, no time picked
                              // this field wasn't set to required, no times picked, skip it
                              $not_chosen = 1;
                              $concat_time = '';
-                    } else if( 'true' != $field['req'] && ! self::validate_time( self::$form_data[$field['slug']]['h'], self::$form_data[$field['slug']]['m'], self::$form_data[$field['slug']]['ap'] )   ) {  // selection is incomplete
-						self::$form_errors[$field['slug']] = ( self::$form_options['error_time'] != '') ? self::$form_options['error_time'] : __('The time selections are incomplete, select all or none.', 'si-contact-form');
-                    } else if ( 'true' == $field['req'] && ( ! preg_match("/^[0-9]{2}$/", self::$form_data[$field['slug']]['h']) || ! preg_match("/^[0-9]{2}$/", self::$form_data[$field['slug']]['m']) || empty( self::$form_data[$field['slug']]['ap'] ) ) ) { // not picked a time
-						self::$form_errors[$field['slug']] = ( self::$form_options['error_field'] != '') ? self::$form_options['error_field'] : __('This field is required.', 'si-contact-form');
-					}
+                        } else if( 'true' != $field['req'] && ! self::validate_time_ap( self::$form_data[$field['slug']]['h'], self::$form_data[$field['slug']]['m'], self::$form_data[$field['slug']]['ap'] )   ) {  // selection is incomplete
+					         self::$form_errors[$field['slug']] = ( self::$form_options['error_time'] != '') ? self::$form_options['error_time'] : __('The time selections are incomplete, select all or none.', 'si-contact-form');
+                        } else if ( 'true' == $field['req'] && ( ! preg_match("/^[0-9]{2}$/", self::$form_data[$field['slug']]['h']) || ! preg_match("/^[0-9]{2}$/", self::$form_data[$field['slug']]['m']) || empty( self::$form_data[$field['slug']]['ap'] ) ) ) { // not picked a time
+					      	self::$form_errors[$field['slug']] = ( self::$form_options['error_field'] != '') ? self::$form_options['error_field'] : __('This field is required.', 'si-contact-form');
+					    }
+				   } else {
+                        // 24 hour format with no am/pm select field
+						$concat_time = self::$form_data[$field['slug']]['h'] . ':' . self::$form_data[$field['slug']]['m'];
+                        if( 'true' != $field['req'] && ( empty(self::$form_data[$field['slug']]['h']) && empty(self::$form_data[$field['slug']]['m']) ) ) { // not required, no time picked
+                             // this field wasn't set to required, no times picked, skip it
+                             $not_chosen = 1;
+                             $concat_time = '';
+                        } else if( 'true' != $field['req'] && ! self::validate_time( self::$form_data[$field['slug']]['h'], self::$form_data[$field['slug']]['m'] )   ) {  // selection is incomplete
+					         self::$form_errors[$field['slug']] = ( self::$form_options['error_time'] != '') ? self::$form_options['error_time'] : __('The time selections are incomplete, select all or none.', 'si-contact-form');
+                        } else if ( 'true' == $field['req'] && ( ! preg_match("/^[0-9]{2}$/", self::$form_data[$field['slug']]['h']) || ! preg_match("/^[0-9]{2}$/", self::$form_data[$field['slug']]['m']) ) ) { // not picked a time
+					      	self::$form_errors[$field['slug']] = ( self::$form_options['error_field'] != '') ? self::$form_options['error_field'] : __('This field is required.', 'si-contact-form');
+					    }
+
+                   }
                     if ( $not_chosen && self::$form_options['email_hide_empty'] == 'true' ) {
 
                     } else {
@@ -496,7 +507,25 @@ class FSCF_Process {
 	}  // end function validate_data
 
 
- 	static function validate_time( $hr, $min, $ap ) {
+ 	static function validate_time( $hr, $min ) {
+    // 24 hour format with no am/pm select field
+    // Checks time input to find out if time was selectors were selected but incomplete
+
+    // was all time inputs selected?
+    if ( preg_match("/^[0-9]{2}$/", $hr) && preg_match("/^[0-9]{2}$/", $min)  )
+     return true;
+
+     // were none time inputs not selected
+     if ( !preg_match("/^[0-9]{2}$/", $hr) && !preg_match("/^[0-9]{2}$/", $min) )
+     return true;
+
+     // only some were selected, but not all
+	 return false;
+
+    } // end function validate_time()
+
+    static function validate_time_ap( $hr, $min, $ap ) {
+    // 12 hour format with am/pm select field 
     // Checks time input to find out if time was selectors were selected but incomplete
 
     // was all time inputs selected?

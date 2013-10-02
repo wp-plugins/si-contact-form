@@ -268,7 +268,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-
+- Bug fix: time validation did not work on 24 hour format.
 
 = 4.0.7 & 4.0.8 =
 - (01 Oct 2013) - Added a button on the Tools tab "Import forms from 3.xx version" for those who might be troubled by an import failure.
