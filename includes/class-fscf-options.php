@@ -359,7 +359,7 @@ class FSCF_Options {
 
 <?php
   /* --- vCita Header Error Messages - Start --- */
-  
+
   if (self::$global_options['vcita_show_disable_msg'] == 'true') {
       // Put visible notification that vCita was removed.
       echo '<div class="fsc-success">'. __('vCita Meeting Scheduler has been disabled.', 'si-contact-form');
@@ -3213,6 +3213,20 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
         <input type="button" name="reset_all_styles" value="<?php esc_attr_e( 'Reset Styles on all forms', 'si-contact-form' ); ?>" onclick="fscf_reset_all_styles()" />
 		<?php _e('Reset default style settings on all forms.', 'si-contact-form' ); ?>
 
+        <br /><br />
+
+        <?php
+        $old_global_options = get_option('si_contact_form_gb');
+			  if ($old_global_options) {
+        ?>
+        <input type="button" name="import_old_forms" value="<?php esc_attr_e( 'Import forms from 3.xx version', 'si-contact-form' ); ?>" onclick="fscf_import_old_forms()" />
+		<?php _e('Note: this button will replace the current 4.xx settings and forms with your old version 3.xx ones!', 'si-contact-form' ); ?>
+
+        <?php } else {?>
+
+          <?php _e('3.xx version forms are not available for import, the import button is disabled.', 'si-contact-form' ); ?>
+
+        <?php } ?>
 
 		</fieldset>
 		</fieldset>

@@ -300,6 +300,18 @@ function fscf_reset_all_styles() {
 	}
 }
 
+function fscf_import_old_forms() {
+	// fscf_transl.import_all_forms is the translated version of "Import forms from 3.xx version"
+    var n = document.getElementById('fs_options');
+	nonce = n.value;
+	$resp = confirm("This will import forms and settings from the 3.xx version and will replace the current 4.xx forms. This cannot be reversed.\n\nAre you sure?");
+	if ($resp) {
+//		alert("This will reset all styles.");
+		var theUrl = fscf_get_url(false);	// get the URL, don't strip fscf_form
+		fscf_postwith(theUrl,{ctf_action:fscf_transl.import_old_forms,fs_options:nonce});
+	}
+}
+
 function fscf_delete_form(num) {
 	// the form num and name re used in the messages
 //	alert('Current form is ' + num);

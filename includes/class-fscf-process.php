@@ -1165,7 +1165,8 @@ class FSCF_Process {
 
   static function vcita_print_admin_page_notification($form_params, $global_options){
     if ($global_options['vcita_dismiss'] == 'false' && $form_params['vcita_enabled'] == 'true' && $form_params['vcita_scheduling_button'] == 'true' && $form_params['vcita_approved'] == 'false'){
-      echo "<div id='si-fscf-vcita-warning' class='fsc-error'>Appointment booking by vCita has not been configured yet&nbsp;<a href='#' onclick='document.getElementById(\"ui-id-7\").click();return false;'>Click to SETUP</a>, or <a href='#' onclick='document.getElementById(\"vcita_disable_button\").click();return false;'>Disable</a></div>";
+      echo "<div id='si-fscf-vcita-warning' class='fsc-error'>Appointment booking by vCita has not been configured on the Scheduling tab yet&nbsp;<a href='".
+      admin_url( 'plugins.php?page=si-contact-form/si-contact-form.php&fscf_form='. FSCF_Options::$current_form)."&fscf_tab=7'>Click to SETUP</a>, or <a href='#' onclick='document.getElementById(\"vcita_disable_button\").click();return false;'>Disable</a></div>";
     }
   }  // end function vcita_print_admin_page_notification()
 

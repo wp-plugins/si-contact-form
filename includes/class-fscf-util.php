@@ -20,7 +20,7 @@ class FSCF_Util {
 		add_action('plugins_loaded', 'FSCF_Util::fscf_init_languages',1);
 
         // imports old settings on plugin activate or first time upgrade from 3.xx to 4.xx
-        add_action('init', 'FSCF_Util::activate',1);
+        add_action('init', 'FSCF_Util::import',1);
 
 		// will start PHP session only if they are enabled (not enabled by default)
 		add_action('init', 'FSCF_Util::fscf_init_session',1);
@@ -41,6 +41,9 @@ class FSCF_Util {
 			// Set up admin actions
 			add_action( 'admin_menu', 'FSCF_Options::register_options_page' );
 
+            // imports old settings on plugin activate or first time upgrade from 3.xx to 4.xx
+            add_action( 'admin_init', 'FSCF_Util::import',1 );
+
 			add_action( 'admin_init', 'FSCF_Options::initialize_options' );
 
 			add_action( 'admin_notices', 'FSCF_Util::admin_notice' );
@@ -56,22 +59,36 @@ class FSCF_Util {
 		return;
 	}
 	
-	static function activate() {
+	static function import() {
 		// called all the time
 
-		// Load global options 
+		// Load global options
 		self::$global_options = get_option( 'fs_contact_global' );
 		if ( self::$global_options ) {
 			// Update the options tables entries if necessary
 			self::update_options_version();
 		} else {
-			// Global options do not exist--see if upgrading from an older version
+               // an import might be needed, run it now
+               self::import_forced();
+		}
+
+		// New options table entries for individual forms will be created by FSCF_Options::get_options()
+		// when it is called, so don't need to do it here.
+
+		return;
+	}
+
+	static function import_forced() {
+            // conditionally imports old settings only if they exist
+
+			// see if upgrading from an older version
 			$old_global_options = get_option('si_contact_form_gb');
 			if ($old_global_options) {
+                // import now
 				require_once FSCF_PATH . 'includes/class-fscf-import.php';
 				FSCF_Import::import_old_version();
 			} else {
-				// Create global options
+				// old options did not exist
 				self::$global_options = FSCF_Util::get_global_options();
 				// Is this is a really old version, prior to 2.6.5 (earlier versions did not have global options)
 				$temp = get_option( 'si_contact_form' );
@@ -82,10 +99,6 @@ class FSCF_Util {
 					update_option( 'fs_contact_global', self::$global_options );
 				}
 			}
-		}
-		
-		// New options table entries for individual forms will be created by FSCF_Options::get_options()
-		// when it is called, so don't need to do it here.
 
 		return;
 	}
@@ -137,6 +150,7 @@ class FSCF_Util {
 				'reset_form' => __('Reset Form', 'si-contact-form'),
                 'reset_all_styles' => __('Reset Styles on all forms', 'si-contact-form'),
 				'delete_form' => __('Delete Form', 'si-contact-form'),
+                'import_old_forms' => __('Import forms from 3.xx version', 'si-contact-form'),
 				);
 			wp_localize_script( 'fscf_scripts_admin', 'fscf_transl', $translation_array );
 			wp_enqueue_style( 'fscf-styles-admin', plugins_url( 'si-contact-form/includes/fscf-styles-admin.css' ), false, FSCF_BUILD );

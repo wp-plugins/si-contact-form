@@ -153,7 +153,10 @@ You can and should [make a backup of your forms](http://www.fastsecurecontactfor
 
 = I upgraded from version 3.xx, to 4.xx and my forms and settings did not import =
 
-The forms should have imported. In some rare cases, they don't import. Sorry for any inconvenience. There is a solution on this help page:
+The forms should have imported. In some rare cases, they don't import. Sorry for any inconvenience. 
+If you have version 4.0.7 or higher, click the button on the Tools tab "Import forms from 3.xx version". 
+
+More help is on this help page:
 [I upgraded to 4.xx version and my forms did not import](http://www.fastsecurecontactform.com/forms-did-not-import)
 
 = What happens during upgrade from 3.xx, where are the settings stored? =
@@ -265,8 +268,12 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-= 4.0.7 =
-- (01 Oct 2013) - Bug fix: none of the language translations were working.
+
+
+= 4.0.7 & 4.0.8 =
+- (01 Oct 2013) - Added a button on the Tools tab "Import forms from 3.xx version" for those who might be troubled by an import failure.
+- Bug Fix: fixed a couple problems with importing settings from 3.xx version.
+- Bug fix: none of the language translations were working.
 - Bug fix: there were some ui image 404 errors from includes/images
 - Bug fix: vCita setting error.
 - other minor bug fixes.

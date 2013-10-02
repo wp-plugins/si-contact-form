@@ -94,7 +94,8 @@ class FSCF_Import {
 		$new_options = FSCF_Util::get_form_defaults();
 
 		foreach ( $new_options as $key => $val ) {
-			if ( ! empty($old_options[$key]) )
+			//if ( ! empty($old_options[$key]) ) // caused empty  Welcome introduction to appear filled in
+            if ( isset($old_options[$key]) )
 				$new_options[$key] = stripslashes($old_options[$key]);
 		}
 		

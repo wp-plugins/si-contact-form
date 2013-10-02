@@ -48,6 +48,9 @@ class FSCF_Action {
 			case esc_attr__('Delete Form', 'si-contact-form'):
 				FSCF_Options::delete_form();
 				break;
+            case esc_attr__('Import forms from 3.xx version', 'si-contact-form'):
+				FSCF_Util::import_forced();
+				break;
 			default:
 			}  // end switch
 		}
