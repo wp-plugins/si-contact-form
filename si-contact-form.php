@@ -3,7 +3,7 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 4.0.8
+Version: 4.0.9
 Author: Mike Challis, Ken Carlson
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -37,8 +37,8 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 /********************
  * Global constants
  ********************/
-define( 'FSCF_VERSION', '4.0.8' );
-define( 'FSCF_BUILD', '143');		// Used to force load of latest .js files
+define( 'FSCF_VERSION', '4.0.9' );
+define( 'FSCF_BUILD', '144');		// Used to force load of latest .js files
 define( 'FSCF_FILE', __FILE__ );	               // /path/to/wp-content/plugins/si-contact-form/si-contact-form.php
 define( 'FSCF_PATH', plugin_dir_path(__FILE__) );  // /path/to/wp-content/plugins/si-contact-form/
 define( 'FSCF_URL', plugin_dir_url( __FILE__ ) );  // http://www.yoursite.com/wp-content/plugins/si-contact-form/
@@ -79,6 +79,16 @@ register_activation_hook( __FILE__, 'FSCF_Util::activate' );
 
 // Initialize plugin settings and hooks
 FSCF_Util::setup();
+
+if (!class_exists('siContactForm')) {
+   class siContactForm {
+      function si_contact_form_short_code($atts) {
+         // backwards compatibility with manual PHP call from 3.xx
+         echo FSCF_Display::process_short_code($atts);
+      }
+   }
+}
+$si_contact_form = new siContactForm();
 
 // Show activation time errors
 //echo get_option( 'plugin_error' );
