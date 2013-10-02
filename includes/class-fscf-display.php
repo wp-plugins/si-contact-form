@@ -1343,8 +1343,9 @@ $string .= "    </div>";
 			// This was designed to print the tip if it was not printed on the previous field
 			if ( ! self::$printed_tooltip_filetypes) {
 				$file_type_message = "<br />\n      <span ".'id="fscf_hint_file_types' . self::$form_id_num.'_'.$key.'" '.self::get_this_css('hint_style').'>';
-				$file_type_message .= (self::$form_options['tooltip_filetypes'] != '') ? self::$form_options['tooltip_filetypes'] : sprintf( __( 'Acceptable file types: %s.', 'si-contact-form' ), self::$form_options['attach_types'] ) . '<br />';
-				$file_type_message .= (self::$form_options['tooltip_filesize'] != '') ? self::$form_options['tooltip_filesize'] : sprintf( __( 'Maximum file size: %s.', 'si-contact-form' ), self::$form_options['attach_size']) . "</span>\n";
+				$file_type_message .= (self::$form_options['tooltip_filetypes'] != '') ?  sprintf( self::$form_options['tooltip_filetypes'], self::$form_options['attach_types'] ) : sprintf( __( 'Acceptable file types: %s.', 'si-contact-form' ), self::$form_options['attach_types'] );
+                $file_type_message .= '<br />';
+		        $file_type_message .= (self::$form_options['tooltip_filesize'] != '') ? sprintf( self::$form_options['tooltip_filesize'], self::$form_options['attach_size']) : sprintf( __( 'Maximum file size: %s.', 'si-contact-form' ), self::$form_options['attach_size']) . "</span>\n";
                 //filter hook for file attachment acceptable types message
                 $file_type_message = apply_filters( 'si_contact_file_type_message', $file_type_message, self::$form_options,  self::$form_id_num);
                 $string .= $file_type_message;

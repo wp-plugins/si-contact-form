@@ -268,6 +268,8 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+- Bug fix: Atachment file types, and file size labels were not working properly.
+
 = 4.0.9 =
 - (02 Oct 2013)  - Bug fix: PHP method of calling form display was not working.
 - Bug fix: time validation did not work on 24 hour format.
