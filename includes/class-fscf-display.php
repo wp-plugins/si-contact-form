@@ -1343,9 +1343,9 @@ $string .= "    </div>";
 			// This was designed to print the tip if it was not printed on the previous field
 			if ( ! self::$printed_tooltip_filetypes) {
 				$file_type_message = "<br />\n      <span ".'id="fscf_hint_file_types' . self::$form_id_num.'_'.$key.'" '.self::get_this_css('hint_style').'>';
-				$file_type_message .= (self::$form_options['tooltip_filetypes'] != '') ?  sprintf( self::$form_options['tooltip_filetypes'], self::$form_options['attach_types'] ) : sprintf( __( 'Acceptable file types: %s.', 'si-contact-form' ), self::$form_options['attach_types'] );
+				$file_type_message .= sprintf( (self::$form_options['tooltip_filetypes'] != '') ? self::$form_options['tooltip_filetypes'] : __( 'Acceptable file types: %s.', 'si-contact-form' ), self::$form_options['attach_types'] );
                 $file_type_message .= '<br />';
-		        $file_type_message .= (self::$form_options['tooltip_filesize'] != '') ? sprintf( self::$form_options['tooltip_filesize'], self::$form_options['attach_size']) : sprintf( __( 'Maximum file size: %s.', 'si-contact-form' ), self::$form_options['attach_size']) . "</span>\n";
+		        $file_type_message .= sprintf( (self::$form_options['tooltip_filesize'] != '') ? self::$form_options['tooltip_filesize'] :  __( 'Maximum file size: %s.', 'si-contact-form' ), self::$form_options['attach_size']) . "</span>\n";
                 //filter hook for file attachment acceptable types message
                 $file_type_message = apply_filters( 'si_contact_file_type_message', $file_type_message, self::$form_options,  self::$form_id_num);
                 $string .= $file_type_message;
@@ -1605,9 +1605,9 @@ $string .= "    </div>";
 			self::$form_content[$fld_name] = self::get_var(self::$form_id_num,$fld_name);
 		}
 
-/*        $default = self::$form_options['fields']['0']['default']; // name field
-
-        if ( self::$form_options['name_format'] != 'name' && $default != '' ) {
+        $default = self::$form_options['fields']['0']['default']; // name field
+        $placeholder = self::$form_options['fields']['0']['placeholder'];
+        if ( self::$form_options['name_format'] != 'name' && $default != '' && $placeholder != 'true'  ) {
            if ( self::$form_options['name_format'] == 'first_last' ) {
                // find the true default for first, last only
                // is there xx==xx
@@ -1638,7 +1638,7 @@ $string .= "    </div>";
                   if (self::$form_content['l_name'] == '') self::$form_content['l_name'] = $matches[5];
                }
             }
-        }*/
+        }
 
 		// XXX Might need to check for English standard field names, e.g. 'name', as well as the actual field name,
 		// which might be translated.  If so, set the field name element to the entry for uame, and unset the name element
@@ -1726,7 +1726,7 @@ $string .= "    </div>";
                                self::$form_content[$fld_name] = str_replace('\n', "\n", $field['default']);
                            else if ('email' == $fld_name && 'false' == self::$form_options['double_email'])
                                self::$form_content[$fld_name] = $field['default'];
-                           else if ('email' != $fld_name && 'full_name' != $fld_name )
+                           else if ('email' != $fld_name )
                                self::$form_content[$fld_name] = $field['default'];
                     }
 
@@ -1734,8 +1734,9 @@ $string .= "    </div>";
 
 		}	// end foreach
 
-/*        $default = self::$form_options['fields']['1']['default']; // email field
-        if ( 'true' == self::$form_options['double_email'] && $default != '' ) {
+        $default = self::$form_options['fields']['1']['default']; // email field
+        $placeholder = self::$form_options['fields']['1']['placeholder'];
+        if ( 'true' == self::$form_options['double_email'] && $default != '' && $placeholder != 'true'  ) {
             // find the true default for email, email2
             // is there xx==xx
             if ( !preg_match('/^(.*)(==)(.*)(==)(.*)$/', $default, $matches) )
@@ -1744,7 +1745,7 @@ $string .= "    </div>";
                  if (self::$form_content['email'] == '') self::$form_content['email'] = $matches[1];
                  if (self::$form_content['email2'] == '') self::$form_content['email2'] = $matches[3];
             }
-        }*/
+        }
 		return;
 
 	}	// end function get_query_parms()

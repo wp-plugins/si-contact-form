@@ -525,7 +525,7 @@ class FSCF_Process {
     } // end function validate_time()
 
     static function validate_time_ap( $hr, $min, $ap ) {
-    // 12 hour format with am/pm select field 
+    // 12 hour format with am/pm select field
     // Checks time input to find out if time was selectors were selected but incomplete
 
     // was all time inputs selected?

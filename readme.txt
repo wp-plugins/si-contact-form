@@ -269,6 +269,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 == Changelog ==
 
 - Bug fix: Atachment file types, and file size labels were not working properly.
+- Bug fix: Field default text was not showing in form.
 
 = 4.0.9 =
 - (02 Oct 2013)  - Bug fix: PHP method of calling form display was not working.
