@@ -551,9 +551,11 @@ class FSCF_Action {
 			
 			if ( $ctf_backup_type == 'all' && $bk_form_num == 'all' ) {
 				// all
+                $forms_we_have = count($ctf_backup_array);
 				// is the uploaded file of the "all" type?
-				if ( !isset( $ctf_backup_array[2] ) || !is_array( $ctf_backup_array[2] ) ) {
-					echo '<div id="message" class="updated fade"><p>' . __( 'Restore failed: Selected All to restore, but backup file is a single form.', 'si-contact-form' ) . '</p></div>';
+				//if ( !isset( $ctf_backup_array[2] ) || !is_array( $ctf_backup_array[2] ) ) { // did not always work
+                if ( $forms_we_have < 2 ) {
+					echo '<div id="message" class="updated fade"><p>' . __( 'Restore failed: Selected All to restore, but backup form is missing.', 'si-contact-form' ) . '</p></div>';
 					return;
 				}
 
