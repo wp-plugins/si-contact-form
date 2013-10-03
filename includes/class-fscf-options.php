@@ -2843,7 +2843,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 			?>
 			<br />
 			<label for="<?php echo self::$form_option_name; ?>[akismet_send_anyway]"><?php _e( 'What should happen if Akismet determines the message is spam?', 'si-contact-form' ); ?></label>
-			<select id="si_contact_akismet_send_anyway" name="si_contact_akismet_send_anyway">
+			<select id="si_contact_akismet_send_anyway" name="<?php echo self::$form_option_name; ?>[akismet_send_anyway]">
 			<?php
 			$akismet_send_anyway_array = array(
 				'false' => __( 'Block spam messages', 'si-contact-form'  ),
@@ -3478,7 +3478,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		// List of all checkbox settings names (except for checkboxes in fields)
 		$checkboxes = array ( 'email_from_enforced', 'preserve_space_enable', 'double_email',
 			 'name_case_enable' , 'sender_info_enable', 'domain_protect', 'email_check_dns',
-			 'email_html', 'akismet_disable', 'captcha_enable',
+			 'email_html', 'akismet_disable', 'captcha_enable', 'akismet_send_anyway',
 			 'captcha_small','email_hide_empty', 'email_keep_attachments','print_form_enable',
 			 'captcha_perm', 'honeypot_enable', 'redirect_enable', 'redirect_query', 'redirect_email_off',
 			 'silent_email_off', 'export_email_off', 'ex_fields_after_msg',
