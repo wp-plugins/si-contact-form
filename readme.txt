@@ -268,12 +268,16 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+
+= 4.0.10 =
+- (03 Oct 2013) - Bug fix: Activation generates "unexpected output" notice to admin.
+- Bug fix: Could not select "Block spam messages" for Akismet.
 - Bug fix: Field Regex was always validating as if required.
 - Bug fix: Atachment file types, and file size labels were not working properly.
 - Bug fix: Field default text was not showing in form.
 
 = 4.0.9 =
-- (02 Oct 2013)  - Bug fix: PHP method of calling form display was not working.
+- (02 Oct 2013) - Bug fix: PHP method of calling form display was not working.
 - Bug fix: time validation did not work on 24 hour format.
 
 = 4.0.7 & 4.0.8 =

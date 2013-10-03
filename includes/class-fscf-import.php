@@ -49,7 +49,7 @@ class FSCF_Import {
 			self::$global_options['max_form_num'] = self::$old_global_options['max_forms'];
 
 		// ***** Import form options *****
-
+        $max_fields_shim = 8;
 		for ($frm=1; $frm<=self::$global_options['max_form_num']; $frm++) {
 			$old_opt_name = 'si_contact_form';
 			$old_opt_name .= ($frm==1) ? '': $frm;
@@ -60,6 +60,12 @@ class FSCF_Import {
 			self::$form_options = FSCF_Util::get_form_options($frm, $use_defaults=false);
 			if ( self::$form_options ) continue;
 
+            // if max fields is missing it will be 8, or the value of the last one in the loop.
+            if (isset(self::$old_form_options['max_fields']) && self::$old_form_options['max_fields'] > 0)
+                $max_fields_shim = self::$old_form_options['max_fields'];
+            else
+               self::$old_form_options['max_fields'] = $max_fields_shim;
+  
 			$new_form_options = self::convert_form_options(self::$old_form_options, self::$old_form_options['max_fields']);
 
 			// Save the imported form

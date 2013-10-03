@@ -37,8 +37,8 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 /********************
  * Global constants
  ********************/
-define( 'FSCF_VERSION', '4.0.9' );
-define( 'FSCF_BUILD', '144');		// Used to force load of latest .js files
+define( 'FSCF_VERSION', '4.0.10' );
+define( 'FSCF_BUILD', '145');		// Used to force load of latest .js files
 define( 'FSCF_FILE', __FILE__ );	               // /path/to/wp-content/plugins/si-contact-form/si-contact-form.php
 define( 'FSCF_PATH', plugin_dir_path(__FILE__) );  // /path/to/wp-content/plugins/si-contact-form/
 define( 'FSCF_URL', plugin_dir_url( __FILE__ ) );  // http://www.yoursite.com/wp-content/plugins/si-contact-form/
@@ -69,16 +69,11 @@ if ( is_admin() ) {
 	require_once FSCF_PATH . 'includes/class-fscf-options.php';
 }
 
-// Uncomment to catch activation time errors:
-//function tl_save_error() {
-//    update_option( 'plugin_error',  ob_get_contents() );
-//}
-//add_action( 'activated_plugin', 'tl_save_error' );
-
-register_activation_hook( __FILE__, 'FSCF_Util::activate' );
 
 // Initialize plugin settings and hooks
 FSCF_Util::setup();
+
+register_activation_hook( __FILE__, 'FSCF_Util::import' );
 
 if (!class_exists('siContactForm')) {
    class siContactForm {
