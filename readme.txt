@@ -268,6 +268,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+- Bug fix: Field Regex was always validating as if required.
 - Bug fix: Atachment file types, and file size labels were not working properly.
 - Bug fix: Field default text was not showing in form.
 

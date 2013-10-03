@@ -245,9 +245,12 @@ class FSCF_Process {
 			}
 
 			// Regex validate (not for hidden, checkbox/m, select/m, radio)
-			if ( ! in_array($field['type'], self::$select_type_fields) && 'hidden' != $field['type']  && 'checkbox' != $field['type']
-					&& $field['regex'] != '' && ! preg_match($field['regex'],$_POST[$field['slug']]) ) {
-				self::$form_errors[$field['slug']] = ($field['regex_error'] != '') ? $field['regex_error'] : __('Invalid input.', 'si-contact-form');
+			if ( ! in_array($field['type'], self::$select_type_fields) && 'hidden' != $field['type'] && 'checkbox' != $field['type'] && $field['regex'] != '' ) {
+               if ( 'true' == $field['req'] && empty($_POST[$field['slug']]) ) {
+                   self::$form_errors[$field['slug']] = ( self::$form_options['error_field'] != '') ? self::$form_options['error_field'] : __('This field is required.', 'si-contact-form');
+               } else if ( !empty($_POST[$field['slug']]) && ! preg_match($field['regex'],$_POST[$field['slug']])) {
+                  self::$form_errors[$field['slug']] = ($field['regex_error'] != '') ? $field['regex_error'] : __('Invalid input.', 'si-contact-form');
+               }
 			}
 
            // filter hook for form input validation
