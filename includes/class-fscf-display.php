@@ -687,7 +687,7 @@ $string .= '
 
 		$string .= '</div>';	// closes fscf-container
 		$string .= "
-<div ".self::get_this_css('clear_style')."></div>\n" . self::$form_options['placeholder_style'];
+<div ".self::get_this_css('clear_style')."></div>\n";
 if (self::$placeholder && self::$form_options['external_style'] == 'false') {
 
    $placeholder_style = self::$form_options['placeholder_style'];
