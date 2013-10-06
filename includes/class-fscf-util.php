@@ -47,8 +47,10 @@ class FSCF_Util {
 			add_action( 'admin_init', 'FSCF_Options::initialize_options' );
 
 			add_action( 'admin_notices', 'FSCF_Util::admin_notice' );
-			
+
 			add_action( 'admin_enqueue_scripts', 'FSCF_Util::enqueue_admin_scripts' );
+
+            add_action( 'admin_footer', 'FSCF_Util::fscf_admin_footer' );
 
 			// adds "Settings" link to the plugin action page
 			add_filter( 'plugin_action_links', 'FSCF_Util::fscf_plugin_action_links',10,2);
@@ -119,6 +121,14 @@ class FSCF_Util {
 		}
 	}
 
+    static function fscf_admin_footer() {
+		// add placeholder javascript in form preview page only if needed
+        if ( isset(FSCF_Display::$placeholder) && FSCF_Display::$placeholder) {
+             // makes placeholder work on old browsers
+             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
+        }
+    }
+
 	static function enqueue_admin_scripts( $hook ) {
 		// Add jquery and css for tabs on options page only for this plugin
 		if( strpos ( $hook, 'si-contact-form' ) > 0 ) {
@@ -157,16 +167,16 @@ class FSCF_Util {
 		}
 	}
 
-	static function enqueue_scripts( $hook ) {
+	static function enqueue_scripts() {
 		// Add js and css needed for the forms
 
-		if ( FSCF_Display::$add_fscf_script ) {
+		if ( isset(FSCF_Display::$add_fscf_script) && FSCF_Display::$add_fscf_script ) {
 			// only include if a form is on this page or post
 			wp_enqueue_script( 'jquery-ui-core' ); // needed for the feature "Has the form already been submitted?  If so, reset the form"
 			//wp_enqueue_style( 'fscf-styles', plugins_url( 'si-contact-form/includes/fscf-styles.css' ), false, FSCF_BUILD );
 			wp_enqueue_script( 'fscf_scripts', plugins_url( 'si-contact-form/includes/fscf-scripts.js' ), false, FSCF_BUILD );
 		}
-        if ( FSCF_Display::$placeholder ) {
+        if ( isset(FSCF_Display::$add_placeholder_script) && FSCF_Display::$add_placeholder_script ) {
             // makes placeholder work on old browsers
             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
         }

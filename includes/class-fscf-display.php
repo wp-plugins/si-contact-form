@@ -20,7 +20,7 @@ class FSCF_Display {
 	static $req_field_ind, $ctf_field_size, $form_action_url, $aria_required;
 	static $have_attach = '';
 	static $printed_tooltip_filetypes;
-	static $add_fscf_script;
+	static $add_fscf_script, $add_placeholder_script;
 
 	static function process_short_code($atts) {
 		// Process shortcode and display the form
@@ -689,7 +689,7 @@ $string .= '
 		$string .= "
 <div ".self::get_this_css('clear_style')."></div>\n";
 if (self::$placeholder && self::$form_options['external_style'] == 'false') {
-
+   self::$add_placeholder_script = 1; // for adding the javascript
    $placeholder_style = self::$form_options['placeholder_style'];
    if ( preg_match( "/^style=\"(.*)\"$/i", $placeholder_style, $matches ) )
 			$placeholder_style = $matches[1];
