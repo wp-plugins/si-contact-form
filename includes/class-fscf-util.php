@@ -166,6 +166,10 @@ class FSCF_Util {
 			//wp_enqueue_style( 'fscf-styles', plugins_url( 'si-contact-form/includes/fscf-styles.css' ), false, FSCF_BUILD );
 			wp_enqueue_script( 'fscf_scripts', plugins_url( 'si-contact-form/includes/fscf-scripts.js' ), false, FSCF_BUILD );
 		}
+        if ( FSCF_Display::$placeholder ) {
+            // makes placeholder work on old browsers
+            wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
+        }
 	}
 	
 	static function admin_notice() {
@@ -569,12 +573,12 @@ class FSCF_Util {
             'select_style'         => 'text-align:left;',  // Input Select
  			'checkbox_style'       => 'width:13px;',  // Input checkbox
             'radio_style'          => 'width:13px;',  // Input radio
+            'placeholder_style'    => 'opacity:0.5; color:#333333;', // placeholder style
 
 			'button_style'         => 'cursor:pointer; margin:0;', // Submit button
 			'reset_style'          => 'cursor:pointer; margin:0;', // Reset button
 			'vcita_button_style'   => 'text-decoration:none; display:block; text-align:center; background:linear-gradient(to bottom, #ed6a31 0%, #e55627 100%); color:#fff !important; padding:10px;',
             'vcita_div_button_style' => 'border-left:1px dashed #ccc; margin-top:25px; padding:8px 20px;', // vCita button div box
-
  			'powered_by_style'     => 'font-size:x-small; font-weight:normal; padding-top:5px; text-align:center;', // the "powered by" link
 
 

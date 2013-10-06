@@ -267,6 +267,12 @@ class FSCF_Action {
 
             // Alignment DIVs
 			'form_style',           // Form DIV, how wide is the form DIV
+            'left_box_style',       // left box DIV, container for vcita
+            'right_box_style',      // right box DIV, container for vcita
+            'clear_style',          // clear both
+		    'field_left_style',        // field left (wider)
+ 		    'field_prefollow_style',   // field pre follow (narrower)
+		    'field_follow_style',   // field follow
 			'title_style',          // Input labels alignment DIV
 			'field_div_style',      // Input fields alignment DIV
 			'captcha_div_style_sm', // Small CAPTCHA DIV
@@ -274,16 +280,15 @@ class FSCF_Action {
 			'captcha_image_style',  // CAPTCHA image alignment
 			'captcha_reload_image_style', // CAPTCHA reload image alignment
 			'submit_div_style',     // Submit DIV
-
+            'border_style',         // style of the form border (if border is enabled)
 
 		     // Style of labels, fields and text
-            'border_style',         // style of the form border (if border is enabled)
             'required_style',       // required field indicator
             'required_text_style',  // required field text
 			'hint_style',           // small text hints like please enter your email again
             'error_style',          // Input validation messages
             'redirect_style',       // Redirecting message
-
+            'fieldset_style',       // style of the fieldset box (for field)
             'label_style',          // Field labels
   			'option_label_style',   // Options labels
 
@@ -291,16 +296,15 @@ class FSCF_Action {
   			'captcha_input_style',  // CAPTCHA input field
  			'textarea_style',       // Input Textarea
             'select_style',         // Input Select
- 			'checkbox_style',       // Input checkbox and radio
+ 			'checkbox_style',       // Input checkbox
+            'radio_style',          // Input radio
+            'placeholder_style',    // placeholder style
 
 			'button_style',         // Submit button
 			'reset_style',          // Reset button
-			'powered_by_style',     // the "powered by" link 
-
-
-            'field_size',
-            'text_cols',
-            'text_rows'
+            'vcita_button_style',     // vCita button
+            'vcita_div_button_style', // vCita button div box
+			'powered_by_style',     // the "powered by" link
 
             );
 

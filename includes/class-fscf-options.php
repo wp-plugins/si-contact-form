@@ -1537,6 +1537,18 @@ if (self::$form_options['external_style'] == 'true') {
 .fscf-button-vcita       { <?php echo self::$form_options['vcita_button_style']; ?> }
 .fscf-button-div-vcita   { <?php echo self::$form_options['vcita_div_button_style']; ?> }
 .fscf-powered-by         { <?php echo self::$form_options['powered_by_style']; ?> }
+
+/* Placeholder Style - WebKit browsers - Safari, Chrome */
+::-webkit-input-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }
+
+/* Placeholder Style - Mozilla Firefox 4 - 18 */
+:-moz-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }
+
+/* Placeholder Style - Mozilla Firefox 19+ */
+::-moz-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }
+
+/* Placeholder Style - Internet Explorer 10+ */
+:-ms-input-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }
 </pre>
 <?php } ?>
 </div>
@@ -1830,6 +1842,14 @@ if( self::$form_options['external_style'] == 'true' ) {
         <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_radio_style_tip');"><?php _e('help', 'si-contact-form'); ?></a></span>
         <div class="fscf_tip" id="si_contact_radio_style_tip">
         <?php _e('Use to adjust the style inside the form input radio field types.', 'si-contact-form'); ?>
+        </div>
+        <br />
+
+        <label for="<?php echo self::$form_option_name;?>[placeholder_style]"><?php _e('Placeholder text', 'si-contact-form'); ?>:</label>
+		<span class="fscf_style_inline"><input class="fscf_style_text" <?php echo $readonly ?> name="<?php echo self::$form_option_name;?>[placeholder_style]" id="si_contact_placeholder_style" type="text" value="<?php echo esc_attr(self::$form_options['placeholder_style']);  ?>" />
+        <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_placeholder_style_tip');"><?php _e('help', 'si-contact-form'); ?></a></span>
+        <div class="fscf_tip" id="si_contact_placeholder_style_tip">
+        <?php _e('Use to adjust the style of the placeholder text.', 'si-contact-form'); ?>
         </div>
         <br />
 
@@ -3382,6 +3402,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 			    'form_style'           => 'width:99%; max-width:555px;',   // Form DIV, how wide is the form DIV
                 'left_box_style'       => 'float:left; width:55%; max-width:270px;',   // left box DIV, container for vcita
                 'right_box_style'      => 'float:left; width:235px;',   // right box DIV, container for vcita
+                'clear_style'          => 'clear:both;',   // clear both
 		        'field_left_style'     => 'clear:left; float:left; width:99%; max-width:550px; margin-right:10px;',   // field left
                 'field_prefollow_style' => 'clear:left; float:left; width:99%; max-width:250px; margin-right:10px;',   // field pre follow
 		        'field_follow_style'   => 'float:left; padding-left:10px; width:99%; max-width:250px;',   // field follow
@@ -3412,6 +3433,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 				'form_style'			 => 'width:655px;', // how wide is the form DIV
                 'left_box_style'         => 'float:left; width:450px;',   // left box DIV, container for vcita
                 'right_box_style'        => 'float:left; width:235px;',   // right box DIV, container for vcita
+                'clear_style'            => 'clear:both;',   // clear both
 		        'field_left_style'       => 'clear:left; float:left; margin-right:10px;',   // field left
                 'field_prefollow_style'  => 'clear:left; float:left; margin-right:10px;',   // field pre follow
 		        'field_follow_style'     => 'float:left; padding-left:10px;',   // field follow
@@ -3454,17 +3476,13 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 				'select_style'			 => 'text-align:left;',	// Input Select
  			    'checkbox_style'         => 'width:13px;', // Input checkbox
                 'radio_style'            => 'width:13px;', // Input radio
+                'placeholder_style'      => 'opacity:0.5; color:#333333;', // placeholder style
 
 				'button_style'			 => 'cursor:pointer; margin:0;', // Submit button 
 				'reset_style'			 => 'cursor:pointer; margin:0;', // Reset button 
 				'vcita_button_style'     => 'text-decoration:none; display:block; text-align:center; background:linear-gradient(to bottom, #ed6a31 0%, #e55627 100%); color:#fff !important; padding:10px;', // vCita button
                 'vcita_div_button_style' => 'border-left:1px dashed #ccc; margin-top:25px; height:50px; padding:8px 20px;', // vCita button div box
-
 				'powered_by_style'		 => 'font-size:x-small; font-weight:normal; padding-top:5px; text-align:center;', // the "powered by" link
-                // XXX disabling text field size, textarea cols rows settings, to use CSS instead
-				//'field_size'			 => '39',
-				//'text_cols'			 => '30',
-				//'text_rows'			 => '10',
 
 
 			);

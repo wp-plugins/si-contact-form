@@ -174,6 +174,14 @@ var fscf_styles = "\n\
 .fscf-button-vcita       { <?php echo self::$form_options['vcita_button_style']; ?> }\n\
 .fscf-button-div-vcita   { <?php echo self::$form_options['vcita_div_button_style']; ?> }\n\
 .fscf-powered-by         { <?php echo self::$form_options['powered_by_style']; ?> }\n\
+/* Placeholder Style - WebKit browsers - Safari, Chrome */\n\
+::-webkit-input-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }\n\
+/* Placeholder Style - Mozilla Firefox 4 - 18 */\n\
+:-moz-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }\n\
+/* Placeholder Style - Mozilla Firefox 19+ */\n\
+::-moz-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }\n\
+/* Placeholder Style - Internet Explorer 10+ */\n\
+:-ms-input-placeholder { <?php echo self::$form_options['placeholder_style']; ?> }\n\
 </style>\n\
 ";
 jQuery(document).ready(function($) {
@@ -679,26 +687,29 @@ $string .= '
 
 		$string .= '</div>';	// closes fscf-container
 		$string .= "
-<div ".self::get_this_css('clear_style')."></div>\n" . self::$form_options['after_form_note'];
-if (self::$placeholder) {
+<div ".self::get_this_css('clear_style')."></div>\n" . self::$form_options['placeholder_style'];
+if (self::$placeholder && self::$form_options['external_style'] == 'false') {
+
+   $placeholder_style = self::$form_options['placeholder_style'];
+   if ( preg_match( "/^style=\"(.*)\"$/i", $placeholder_style, $matches ) )
+			$placeholder_style = $matches[1];
+   if ( preg_match( "/^class=\"(.*)\"$/i", $placeholder_style, $matches ) )
+			$placeholder_style = $matches[1];
+
 $string .= '
 <style type="text/css">
 
-   /* WebKit browsers */
-   input:focus::-webkit-input-placeholder { color:transparent; }
-   textarea:focus::-webkit-input-placeholder { color:transparent; }
+/* Placeholder Style - WebKit browsers - Safari, Chrome */
+::-webkit-input-placeholder { '.$placeholder_style.' }
 
-   /* Mozilla Firefox 4 to 18 */
-   input:focus:-moz-placeholder { color:transparent; }
-   textarea:focus:-moz-placeholder { color:transparent; }
+/* Placeholder Style - Mozilla Firefox 4 - 18 */
+:-moz-placeholder { '.$placeholder_style.' }
 
-   /* Mozilla Firefox 19+ */
-   input:focus::-moz-placeholder { color:transparent; }
-   textarea:focus::-moz-placeholder { color:transparent; }
+/* Placeholder Style - Mozilla Firefox 19+ */
+::-moz-placeholder { '.$placeholder_style.' }
 
-   /* Internet Explorer 10+ */
-   input:-ms-input-placeholder { color:#999; }
-   textarea:-ms-input-placeholder { color:#999; }
+/* Placeholder Style - Internet Explorer 10+ */
+:-ms-input-placeholder { '.$placeholder_style.' }
 
 </style>
 ';
