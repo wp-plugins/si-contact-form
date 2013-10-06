@@ -50,8 +50,18 @@ class FSCF_Import {
 
 		// ***** Import form options *****
         $max_fields_shim = 8;
-        if($force == 'force')
+
+        if($force == 'force') {
+              // force is when they pressed the button import from 3.xx, they are warned this replaces the 4.xx forms
                self::$global_options['form_list'] = array(); // delete current form list
+               // delete current 4.xx forms
+               delete_option('fs_contact_global');
+
+               // delete up to 100 forms (a unique configuration for each contact form)
+               for ($i = 1; $i <= 100; $i++) {
+                 delete_option("fs_contact_form$i");
+               }
+        }
 		for ($frm=1; $frm<=self::$global_options['max_form_num']; $frm++) {
 			$old_opt_name = 'si_contact_form';
 			$old_opt_name .= ($frm==1) ? '': $frm;
@@ -60,14 +70,7 @@ class FSCF_Import {
 
 
             if($force == 'force') {
-                    // force is when they pressed the button import from 3.xx, they are warned this replaces the 4.xx forms
-                    // delete current 4.xx forms
-                    delete_option('fs_contact_global');
 
-                    // delete up to 100 forms (a unique configuration for each contact form)
-                    for ($i = 1; $i <= 100; $i++) {
-                       delete_option("fs_contact_form$i");
-                    }
 
             } else {
                    // Make sure that the options for this form doesn't already exist
