@@ -49,7 +49,7 @@ class FSCF_Action {
 				FSCF_Options::delete_form();
 				break;
             case esc_attr__('Import forms from 3.xx version', 'si-contact-form'):
-				FSCF_Util::import_forced();
+				FSCF_Util::import_forced('force');
 				break;
 			default:
 			}  // end switch

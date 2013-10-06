@@ -21,7 +21,7 @@ class FSCF_Import {
 		'radio'
 	);
 	
-	static function import_old_version() {
+	static function import_old_version( $force = '' ) {
 		
 //		global $fscf_special_slugs;		// List of reserve slug names
 		
@@ -50,22 +50,37 @@ class FSCF_Import {
 
 		// ***** Import form options *****
         $max_fields_shim = 8;
+        if($force == 'force')
+               self::$global_options['form_list'] = array(); // delete current form list
 		for ($frm=1; $frm<=self::$global_options['max_form_num']; $frm++) {
 			$old_opt_name = 'si_contact_form';
 			$old_opt_name .= ($frm==1) ? '': $frm;
 			self::$old_form_options = get_option($old_opt_name);
 			if ( ! self::$old_form_options ) continue;
 
-			// Make sure that the options for this form doesn't already exist
-			self::$form_options = FSCF_Util::get_form_options($frm, $use_defaults=false);
-			if ( self::$form_options ) continue;
+
+            if($force == 'force') {
+                    // force is when they pressed the button import from 3.xx, they are warned this replaces the 4.xx forms
+                    // delete current 4.xx forms
+                    delete_option('fs_contact_global');
+
+                    // delete up to 100 forms (a unique configuration for each contact form)
+                    for ($i = 1; $i <= 100; $i++) {
+                       delete_option("fs_contact_form$i");
+                    }
+
+            } else {
+                   // Make sure that the options for this form doesn't already exist
+                   self::$form_options = FSCF_Util::get_form_options($frm, $use_defaults=false);
+			       if ( self::$form_options ) continue;
+            }
 
             // if max fields is missing it will be 8, or the value of the last one in the loop.
             if (isset(self::$old_form_options['max_fields']) && self::$old_form_options['max_fields'] > 0)
                 $max_fields_shim = self::$old_form_options['max_fields'];
             else
                self::$old_form_options['max_fields'] = $max_fields_shim;
-  
+
 			$new_form_options = self::convert_form_options(self::$old_form_options, self::$old_form_options['max_fields']);
 
 			// Save the imported form

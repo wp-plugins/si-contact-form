@@ -80,7 +80,7 @@ class FSCF_Util {
 		return;
 	}
 
-	static function import_forced() {
+	static function import_forced($force = '') {
             // conditionally imports old settings only if they exist
 
 			// see if upgrading from an older version
@@ -88,7 +88,7 @@ class FSCF_Util {
 			if ($old_global_options) {
                 // import now
 				require_once FSCF_PATH . 'includes/class-fscf-import.php';
-				FSCF_Import::import_old_version();
+				FSCF_Import::import_old_version($force);
 			} else {
 				// old options did not exist
 				self::$global_options = FSCF_Util::get_global_options();
@@ -583,7 +583,7 @@ class FSCF_Util {
             'select_style'         => 'text-align:left;',  // Input Select
  			'checkbox_style'       => 'width:13px;',  // Input checkbox
             'radio_style'          => 'width:13px;',  // Input radio
-            'placeholder_style'    => 'opacity:0.5; color:#333333;', // placeholder style
+            'placeholder_style'    => 'opacity:0.6; color:#333333;', // placeholder style
 
 			'button_style'         => 'cursor:pointer; margin:0;', // Submit button
 			'reset_style'          => 'cursor:pointer; margin:0;', // Reset button
