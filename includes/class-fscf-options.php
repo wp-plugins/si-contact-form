@@ -2366,6 +2366,13 @@ if( self::$form_options['external_style'] == 'true' ) {
 		</div>
 		<br />
 
+		<input name="<?php echo self::$form_option_name; ?>[email_inline_label]" id="fs_contact_email_inline_label" type="checkbox" <?php if ( self::$form_options['email_inline_label'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
+		<label for="fs_contact_email_inline_label"><?php _e( 'Enable to have the email labels on same line as values.', 'si-contact-form' ); ?></label>
+		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_email_inline_label_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
+		<div class="fscf_tip" id="si_contact_email_inline_label_tip">
+		<?php _e( 'Enable if you want the email labels on same line as values. Normally the email labels are on separate lines as the values.', 'si-contact-form' ) ?>
+		</div>
+		<br />
 
 		<input name="<?php echo self::$form_option_name; ?>[email_hide_empty]" id="fs_contact_email_hide_empty" type="checkbox" <?php if ( self::$form_options['email_hide_empty'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
 		<label for="fs_contact_email_hide_empty"><?php _e( 'Enable to skip names of non-required and unfilled-out fields in emails.', 'si-contact-form' ); ?></label>
@@ -3499,7 +3506,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 			 'email_html', 'akismet_disable', 'captcha_enable', 'akismet_send_anyway',
 			 'captcha_small','email_hide_empty', 'email_keep_attachments','print_form_enable',
 			 'captcha_perm', 'honeypot_enable', 'redirect_enable', 'redirect_query', 'redirect_email_off',
-			 'silent_email_off', 'export_email_off', 'ex_fields_after_msg',
+			 'silent_email_off', 'export_email_off', 'ex_fields_after_msg', 'email_inline_label',
 			 'textarea_html_allow', 'enable_areyousure', 'auto_respond_enable', 'auto_respond_html',
 			 'req_field_indicator_enable', 'req_field_label_enable', 'border_enable',
 			 'aria_required', 'auto_fill_enable', 'enable_reset', 'enable_credit_link'

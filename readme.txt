@@ -269,7 +269,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 == Changelog ==
 
 
-= 4.0.11 =
+= 4.0.11 & 4.0.12 =
 - (06 Oct 2013) - Improved placeholder text to work on older browsers.
 - Added new style setting for "Placeholder text" so you can change placeholder text color if you want.
 - Note: if you are using the External CSS setting you should import the new placeholder css, click "View custom CSS" on the Styles tab to see it.

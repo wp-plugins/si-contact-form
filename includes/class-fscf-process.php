@@ -153,11 +153,8 @@ class FSCF_Process {
 		self::$email_fields['name_to'] = ( isset( $contact['CONTACT'] ) ) ? FSCF_Util::clean_input( $contact['CONTACT'] ) : '';
 
         // some people want labels and fields inline, some want the fields on new line
-        $inline_labels = false;
-        //filter hook to switch on inline labels for the email fields.
-        $inline_labels = apply_filters( 'si_contact_use_inline_email_labels', $inline_labels,  self::$form_id_num);
         $inline_or_newline = self::$php_eol;
-        if ($inline_labels)
+        if ( self::$form_options['email_inline_label'] == 'true' )
           $inline_or_newline = ' ';
 
 		// Start the email message
