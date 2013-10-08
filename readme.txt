@@ -154,7 +154,7 @@ You can and should [make a backup of your forms](http://www.fastsecurecontactfor
 = I upgraded from version 3.xx, to 4.xx and my forms and settings did not import =
 
 The forms should have imported. In some rare cases, they don't import. Sorry for any inconvenience. 
-If you have version 4.0.7 or higher, click the button on the Tools tab "Import forms from 3.xx version". 
+Update to the latest version, click the button on the Tools tab "Import forms from 3.xx version". 
 
 More help is on this help page:
 [I upgraded to 4.xx version and my forms did not import](http://www.fastsecurecontactform.com/forms-did-not-import)
@@ -268,6 +268,10 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.13 =
+- (08 Oct 2013) - Bux fix: some forms would fail to import when label had some Non-US-ASCII or Chinese characters.
+- Bux fix: Form save error when tag had some Non-US-ASCII or Chinese characters.  
+- Bux fix: button on the Tools tab "Import forms from 3.xx version" did not always work correctly.
 
 = 4.0.11 & 4.0.12 =
 - (06 Oct 2013) - Improved placeholder text to work on older browsers.

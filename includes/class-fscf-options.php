@@ -3578,13 +3578,29 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 				if ( empty($field['slug']) ) {
 					// no slug, so make one from the label
 					// the sanitize title function encodes UTF-8 characters, so we need to undo that
-					$field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($field['label']))), 0, FSCF_MAX_SLUG_LEN );
+
+                    // this line croaked on some chinese characters
+				    //$field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($field['label']))), 0, FSCF_MAX_SLUG_LEN );
+
+                    $field['slug'] = remove_accents($field['label']);
+                    $field['slug'] = preg_replace('~([^a-zA-Z\d_ .-])~', '', $field['slug']);
+                    $field['slug'] = substr( urldecode(sanitize_title_with_dashes($field['slug'])), 0, FSCF_MAX_SLUG_LEN );
+                    if ($field['slug'] == '')
+                       $field['slug'] = 'na';
 					if ( '-' == substr( $field['slug'], strlen($field['slug'])-1, 1) )
 							$field['slug'] = substr( $field['slug'], 0, strlen($field['slug'])-1);
 					$slug_changed = true;
 				} else if ( empty(self::$form_options['fields'][$key]['slug']) || ( $field['slug'] != self::$form_options['fields'][$key]['slug'] ) ) {
-					// The has changed, so sanitize it
-					$field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($field['slug']))), 0, FSCF_MAX_SLUG_LEN );
+					// The slug has changed, so sanitize it
+                    
+                    // this line croaked on some chinese characters
+				    //$field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($field['slug']))), 0, FSCF_MAX_SLUG_LEN );
+
+                    $field['slug'] = remove_accents($field['slug']);
+                    $field['slug'] = preg_replace('~([^a-zA-Z\d_ .-])~', '', $field['slug']);
+                    $field['slug'] = substr( urldecode(sanitize_title_with_dashes($field['slug'])), 0, FSCF_MAX_SLUG_LEN );
+                    if ($field['slug'] == '')
+                       $field['slug'] = 'na';
 					$slug_changed = true;
 				}
 				

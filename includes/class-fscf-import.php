@@ -32,7 +32,7 @@ class FSCF_Import {
 		if ( empty( self::$old_global_options ) ) {
 			return;
 		}
-
+//print_r(self::$old_global_options)."<br>\n";
 		self::$global_options = FSCF_Util::get_global_options();
 
         // import a few global options
@@ -47,7 +47,7 @@ class FSCF_Import {
 		// the number of existing forms
 		if ( ! empty( self::$old_global_options['max_forms'] ) )
 			self::$global_options['max_form_num'] = self::$old_global_options['max_forms'];
-
+//print 'max_form_num:'.self::$global_options['max_form_num']."<br>\n";
 		// ***** Import form options *****
         $max_fields_shim = 8;
 
@@ -63,6 +63,7 @@ class FSCF_Import {
                }
         }
 		for ($frm=1; $frm<=self::$global_options['max_form_num']; $frm++) {
+//print 'importing form:'.$frm."<br>\n";
 			$old_opt_name = 'si_contact_form';
 			$old_opt_name .= ($frm==1) ? '': $frm;
 			self::$old_form_options = get_option($old_opt_name);
@@ -85,10 +86,13 @@ class FSCF_Import {
                self::$old_form_options['max_fields'] = $max_fields_shim;
 
 			$new_form_options = self::convert_form_options(self::$old_form_options, self::$old_form_options['max_fields']);
-
+//print_r($new_form_options)."<br>\n";
 			// Save the imported form
 			$form_option_name = 'fs_contact_form' . $frm;
 			// Add form name to the form list...
+            if ($new_form_options['form_name'] == '')
+                       $new_form_options['form_name'] = __( 'imported', 'si-contact-form' );
+
 			self::$global_options['form_list'][$frm] = $new_form_options['form_name'];
 			update_option ( $form_option_name, $new_form_options );
 
@@ -99,13 +103,17 @@ class FSCF_Import {
         // recalibrate max_form_num to the highest form number (not count)
         ksort( self::$global_options['form_list'] );
         self::$global_options['max_form_num'] = max(array_keys(self::$global_options['form_list']));
+//print_r(self::$global_options)."<br>\n";
 		update_option( 'fs_contact_global', self::$global_options );
 
 		// Display a notice on the admin page
-		FSCF_Util::add_admin_notice(__( 'Fast Secure Contact Form has imported settings from the old version.', 'si-contact-form' ), 'updated');	
+		FSCF_Util::add_admin_notice(__( 'Fast Secure Contact Form has imported settings from the old version.', 'si-contact-form' ), 'updated');
+
+        // Force reload of global and form options
+		FSCF_Options::unload_options();
 		
 	}  // end function import_old_version
-	
+
 	
 	static function convert_form_options( $old_options, $max_fields ) {
 		// Converts form options from version 3.x to 4.x
@@ -206,12 +214,22 @@ class FSCF_Import {
 
 				// Create the slug for the field from the field label
 				// the sanitize title function encodes UTF-8 characters, so we need to undo that
-				$new_field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($new_field['label']))), 0, FSCF_MAX_SLUG_LEN );
+
+                // this line croaked on some chinese characters
+				//$new_field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($new_field['label']))), 0, FSCF_MAX_SLUG_LEN );
+
+//echo 'slug before:'.$new_field['label']."<br>\n";
+                $new_field['slug'] = remove_accents($new_field['label']);
+                $new_field['slug'] = preg_replace('~([^a-zA-Z\d_ .-])~', '', $new_field['slug']);
+                $new_field['slug'] = substr( urldecode(sanitize_title_with_dashes($new_field['slug'])), 0, FSCF_MAX_SLUG_LEN );
+                if ($new_field['slug'] == '')
+                   $new_field['slug'] = 'na';
 				if ( '-' == substr( $new_field['slug'], strlen($new_field['slug'])-1, 1) )
 						$new_field['slug'] = substr( $new_field['slug'], 0, strlen($new_field['slug'])-1);
 
 				// Make sure the slug is unique
 				$new_field['slug'] = FSCF_Options::check_slug($new_field['slug'], $slug_list);
+//echo 'slug jafter:'.$new_field['slug']."<br>\n";
 				$slug_list[] = $new_field['slug'];
 
 				$new_options['fields'][] = $new_field;

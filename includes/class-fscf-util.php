@@ -376,7 +376,7 @@ class FSCF_Util {
 			 'domain_protect_names' => '',
 			 'email_check_dns' => 'false',
 			 'email_html' => 'false',
-			 'email_inline_label' => 'false',             
+			 'email_inline_label' => 'false',
              'email_hide_empty' => 'false',
              'print_form_enable' => 'false',
              'email_keep_attachments' => 'false',
