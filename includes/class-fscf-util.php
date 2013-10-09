@@ -337,7 +337,7 @@ class FSCF_Util {
 		self::$global_defaults = array(
 			'fscf_version'		  => FSCF_VERSION,
 			'donated'			  => 'false',
-            'vcita_auto_install'  => 'true',  // vCita Global Settings
+            'vcita_auto_install'  => 'false',  // vCita Global Settings
             'vcita_dismiss'       => 'false', // vCita Global Settings
             'vcita_initialized'   => 'false', // vCita Global Settings
             'vcita_show_disable_msg'   => 'false', // vCita Global Settings
@@ -475,7 +475,7 @@ class FSCF_Util {
 			 'error_correct'        => '',
              'error_spambot'        => '',
 			 'fields'				=> array(),
-		     'vcita_scheduling_button' => 'true',
+		     'vcita_scheduling_button' => 'false',
 		     'vcita_scheduling_button_css' => '',
 		     'vcita_scheduling_button_label' => '',
 		     'vcita_active_engage'  => 'false',
@@ -487,7 +487,7 @@ class FSCF_Util {
 		     'vcita_confirm_token'	=> '',
 		     'vcita_confirm_tokens'	=> '',
 	    	 'vcita_initialized'	=> 'false',
-             'vcita_link'	        => 'true',
+             'vcita_link'	        => 'false',
 		     'vcita_first_name'	    => '',
 		     'vcita_last_name'	    => '',
 		     'vcita_scheduling_button_label' => 'Schedule an Appointment',
