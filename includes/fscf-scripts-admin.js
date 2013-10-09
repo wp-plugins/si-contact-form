@@ -94,15 +94,6 @@ jQuery(document).ready(function(){
 	
 //	jQuery( "#tab-list" ).attr('display', 'block');
 	jQuery('#tab-list').css('visibility','visible'); 
-	jQuery('#si_contact_vcita_enabled').click(function(){
-	  if(jQuery(this).is(':checked')){
-	    jQuery('#si_contact_vcita_scheduling_button').attr('checked', 'checked');
-	    jQuery('#si_contact_vcita_link').attr('checked', 'checked');
-	  } else {
-	    jQuery('#si_contact_vcita_scheduling_button').removeAttr('checked');
-	    jQuery('#si_contact_vcita_link').removeAttr('checked');
-	  }
-	});
 	jQuery("a.show-in-popup").click(function(e ){
     popupCenter(jQuery(this).attr('href'), 800, 650, jQuery(this).data().popup_window);
     e.stopPropagation();

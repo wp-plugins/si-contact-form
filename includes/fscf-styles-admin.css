@@ -126,12 +126,12 @@ a:focus {outline:none !important;}
  */
 .vcita-btn-label{ width: 120px; display: block; float: left; line-height: 24px; }
 .vcita_options_container { max-width:100%; }
-.vcita_inner_box { padding-left:30px; }
+.vcita_inner_box { padding-left:0px; }
 .scheduling_button_box { padding-left:15px; }
 .active_enage_help_tip { padding-left:17px; }
 .privacy_box { float:right; }
 .privacy_box a { cursor:pointer; }
-.scheduler_not_conected_note { margin-top:5px; background: #F9CB9C; border: 1px solid #ccc; padding:5px;}
+.scheduler_not_conected_note { margin-top:10px; background: #F9CB9C; border: 1px solid #ccc; padding:5px;}
 .vcita-label { width:100px; }
 .contact_vcita_email_tip { text-align:left; display:none }
 .vcita-help { cursor: pointer; vertical-align: middle;}

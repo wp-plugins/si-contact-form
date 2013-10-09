@@ -2952,94 +2952,97 @@ if( self::$form_options['external_style'] == 'true' ) {
     <div class="clear"></div>
     <fieldset class="fscf_settings_group">
       <div class="vcita_options_container">
-        <p class="submit">
-			<input id="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Changes', 'si-contact-form'); ?>" onclick="document.pressed=this.value" name="submit" />
-		</p>
-         <p>Enhance your Contact Form with Online Scheduling. Let your clients book appointments and request services online. <a target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/integrations/fast_secure/how_it_works">Watch how it works</a></p>
-         <input name="<?php echo self::$form_option_name;?>[vcita_enabled]" type="checkbox" class="vcita-chkbox" id="si_contact_vcita_enabled" <?php if ( self::$form_options['vcita_enabled'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-         <label class="vcita-label" for="si_contact_vcita_enabled"><?php _e('Enable Online Scheduling with vCita', 'si-contact-form') ?></label><br>
+      <p class="submit">
+			  <input id="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Changes', 'si-contact-form'); ?>" onclick="document.pressed=this.value" name="submit" />
+		   </p>
+       <div style="margin-left:8px;">
+	       <p>Enhance your Contact Form with Online Scheduling. Let your clients book appointments and request services online. <a target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/integrations/fast_secure/how_it_works">Watch how it works</a></p>
+	       <b>Contact Requests should be sent to this email:</b></br>
+	           <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
 
-         <div class="vcita_inner_box">
-           <br />
-           <input name="<?php echo self::$form_option_name;?>[vcita_scheduling_button]" type="checkbox" class="vcita-chkbox" id="si_contact_vcita_scheduling_button" <?php if ( self::$form_options['vcita_scheduling_button'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-           <label class="vcita-label" for="si_contact_vcita_scheduling_button"><?php _e('Add a scheduling button to your form', 'si-contact-form') ?></label>
-            &nbsp;<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('scheduling_button_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a><br />
+	             <?php FSCF_Process::vcita_disable_init_msg(self::$form_options, self::$global_options) ?>
+	             <span style="vertical-align: middle;"><?php echo esc_attr(self::$form_options['vcita_email']); ?></span>
+	             <a onclick="toggleVisibility('change_account_box');" class="vcita-help">Change/Add Email Address</a>
+	             <div id="change_account_box" style="display:none;margin-top:6px;">
+	               <input style='display:none;' id='vcita_change_email_action' type='submit' name='vcita_change_email_action'/>
+	               To change/add email address go to 
+	               <a href='http://<?php echo self::$global_options['vcita_site'] ?>/settings?section=profile&email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank'>Profile Settings</a>
+	               <div style="margin-top:8px;">If you changed your email address please update the new address below so it will be reflected in the plugin</div>
+	               <div style="margin-top:3px;">
+	                 New email 
+	                 <input name="<?php echo self::$form_option_name;?>[vcita_changed_email]" id="si_contact_vcita_changed_email" type='text'/>
+	                 <a title="<?php _e('Change Email', 'si-contact-form'); ?>" target="_blank" onclick="document.getElementById('vcita_change_email_action').click();return false;" class="vcita-help button-primary no-save-changes"><?php _e('Update Email', 'si-contact-form'); ?></a>
+	                 <a onclick="toggleVisibility('change_account_box');" class="vcita-help">Cancel</a>
+	               </div>  
+	             </div>
+	             <br /><br /><a href='http://<?php echo self::$global_options['vcita_site'] ?>/settings?section=services&email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank' class="button-primary">Scheduling Settings</a>
+	             <a href='http://<?php echo self::$global_options['vcita_site'] ?>/my/widgets/active_engage/edit?email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank' class="button-primary">ActiveEngage Settings</a>
+	             <input style='display:none;' id='vcita_disconnect_button' type='submit' name='vcita_disconnect'/>
+	           <?php else : ?>
 
-           <div class="scheduling_button_box">
-             <span class="fscf_tip" style="display:none;" id="scheduling_button_tip">"Schedule an appointment" button will be added next to your contact form<br></span>
-             <br /><label for="<?php echo self::$form_option_name;?>[vcita_scheduling_button_label]"><?php _e('Button Label:', 'si-contact-form'); ?></label>
-             <input style="width:189px;" name="<?php echo self::$form_option_name;?>[vcita_scheduling_button_label]" id="si_contact_vcita_scheduling_button_label" type="text" value="<?php echo esc_attr(self::$form_options['vcita_scheduling_button_label']); ?>" /><br />
-             <br />Button CSS can be edited in the Styles tab.
-             <br /><br />
-             <input name="<?php echo self::$form_option_name;?>[vcita_link]" type="checkbox" class="vcita-chkbox" id="si_contact_vcita_link" <?php if ( self::$form_options['vcita_link'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-             <label class="vcita-label" for="si_contact_vcita_link"><?php _e('Show call for action below the button:', 'si-contact-form') ?></label>
-             <input style="width:500px;" name="<?php echo self::$form_option_name;?>[vcita_scheduling_link_text]" id="si_contact_vcita_scheduling_link_text" type="text" value="<?php echo esc_attr(self::$form_options['vcita_scheduling_link_text']); ?>" /><br />
-           </div>
+	             <div class="scheduler_not_conected_note">Note: Your scheduler is not connected to your email yet - first name and last name are required</div><br>
+	             <label class="vcita-btn-label" for="<?php echo self::$form_option_name;?>[vcita_email_new]"><?php _e('Email:', 'si-contact-form') ?></label>
+	             <input name="<?php echo self::$form_option_name;?>[vcita_email_new]" id="si_contact_vcita_email_new" type="text" value="<?php echo esc_attr(self::$form_options['vcita_email_new']); ?>"  />
+	             &nbsp;
+	             <a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('contact_vcita_email_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
+	             <div class="fscf_tip" id="contact_vcita_email_tip" >
+	               <?php _e('Your email and name will only be used to send you meeting requests and additional communication from vCita, and will not be shared with your clients or third party.', 'si-contact-form'); ?>
+	             </div>
+	             <div style="margin-top:5px;">
+	               <label class="vcita-btn-label" for="<?php echo self::$form_option_name;?>[vcita_first_name]"><?php _e('First Name:', 'si-contact-form') ?></label>
+	               <input name="<?php echo self::$form_option_name;?>[vcita_first_name]" id="si_contact_vcita_first_name" type="text" value="<?php echo esc_attr(self::$form_options['vcita_first_name']); ?>"  />
+	             </div>
+	             <div style="margin-top:5px;">
+	               <label class="vcita-btn-label" for="<?php echo self::$form_option_name;?>[vcita_last_name]"><?php _e('Last Name:', 'si-contact-form') ?></label>
+	               <input name="<?php echo self::$form_option_name;?>[vcita_last_name]" id="si_contact_vcita_last_name" type="text" value="<?php echo esc_attr(self::$form_options['vcita_last_name']); ?>"  />
+	             </div>  
+	           <?php endif ?>
+	         </br></br>
+	         <b>Scheduling</b>
+	         <div class="vcita_inner_box">
+	           <br />
+	           <input name="<?php echo self::$form_option_name;?>[vcita_scheduling_button]" type="checkbox" class="vcita-chkbox" id="si_contact_vcita_scheduling_button" <?php if ( self::$form_options['vcita_scheduling_button'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
+	           <label class="vcita-label" for="si_contact_vcita_scheduling_button"><?php _e('Add a scheduling button to your form', 'si-contact-form') ?></label>
+	            &nbsp;<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('scheduling_button_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a><br />
 
-           <br />
+	           <div class="scheduling_button_box">
+	             <span class="fscf_tip" style="display:none;" id="scheduling_button_tip">"Schedule an appointment" button will be added next to your contact form<br></span>
+	             <br /><label for="<?php echo self::$form_option_name;?>[vcita_scheduling_button_label]"><?php _e('Button Label:', 'si-contact-form'); ?></label>
+	             <input style="width:189px;" name="<?php echo self::$form_option_name;?>[vcita_scheduling_button_label]" id="si_contact_vcita_scheduling_button_label" type="text" value="<?php echo esc_attr(self::$form_options['vcita_scheduling_button_label']); ?>" /><br />
+	             <br />Button CSS can be edited in the Styles tab.
+	             <br /><br />
+	             <input name="<?php echo self::$form_option_name;?>[vcita_link]" type="checkbox" class="vcita-chkbox" id="si_contact_vcita_link" <?php if ( self::$form_options['vcita_link'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
+	             <label class="vcita-label" for="si_contact_vcita_link"><?php _e('Show call for action below the button:', 'si-contact-form') ?></label>
+	             <input style="width:500px;" name="<?php echo self::$form_option_name;?>[vcita_scheduling_link_text]" id="si_contact_vcita_scheduling_link_text" type="text" value="<?php echo esc_attr(self::$form_options['vcita_scheduling_link_text']); ?>" /><br />
+	           </div>
+	           <br />
+	           <br />
+	         </div>
+	           <b>Get more Leads</b>
+	         <div class="vcita_inner_box">
+	           <br />  
+	           <input name="<?php echo self::$form_option_name;?>[vcita_active_engage]" id="si_contact_vcita_active_engage" class="vcita-chkbox" type="checkbox" <?php if ( self::$form_options['vcita_active_engage'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
+	           <label class="vcita-label" for="si_contact_vcita_active_engage"><?php _e('ActiveEngage - Add a contact label on every page', 'si-contact-form'); ?></label>
+	           &nbsp;<a onclick="toggleVisibility('active_enage_help_tip');" class="vcita-help">Help</a><br>
 
-           <br />
-           <input name="<?php echo self::$form_option_name;?>[vcita_active_engage]" id="si_contact_vcita_active_engage" class="vcita-chkbox" type="checkbox" <?php if ( self::$form_options['vcita_active_engage'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-           <label class="vcita-label" for="si_contact_vcita_active_engage"><?php _e('ActiveEngage - Add a contact label on every page', 'si-contact-form'); ?></label>
-           &nbsp;<a onclick="toggleVisibility('active_enage_help_tip');" class="vcita-help">Help</a><br>
-
-           <span class="fscf_tip" id="active_enage_help_tip">A "Contact" label will be added to the bottom of every web page and will display a customized invitation. ActiveEngage has proven to double leads on business websites by encouraging visitors to leave a message, schedule an appointment or request a service. <a target="_blank" href="http://www.vcita.com/software/contact_form_plugins_lead_generation">Learn More</a></span><br />
-           <input style='display:none;' id='vcita_disable_button' type='submit' name='vcita_disable'/>
-           <br />
-           <b>Appointment request should be sent to this email:</b><br /><br />
-
-           <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
-
-             <?php FSCF_Process::vcita_disable_init_msg(self::$form_options, self::$global_options) ?>
-             <span style="vertical-align: middle;"><?php echo esc_attr(self::$form_options['vcita_email']); ?></span>
-             <a onclick="toggleVisibility('change_account_box');" class="vcita-help">Change/Add Email Address</a>
-             <div id="change_account_box" style="display:none;margin-top:6px;">
-               <input style='display:none;' id='vcita_change_email_action' type='submit' name='vcita_change_email_action'/>
-               To change/add email address go to 
-               <a href='http://<?php echo self::$global_options['vcita_site'] ?>/settings?section=profile&email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank'>Profile Settings</a>
-               <div style="margin-top:8px;">If you changed your email address please update the new address below so it will be reflected in the plugin</div>
-               <div style="margin-top:3px;">
-                 New email 
-                 <input name="<?php echo self::$form_option_name;?>[vcita_changed_email]" id="si_contact_vcita_changed_email" type='text'/>
-                 <a title="<?php _e('Change Email', 'si-contact-form'); ?>" target="_blank" onclick="document.getElementById('vcita_change_email_action').click();return false;" class="vcita-help button-primary no-save-changes"><?php _e('Update Email', 'si-contact-form'); ?></a>
-                 <a onclick="toggleVisibility('change_account_box');" class="vcita-help">Cancel</a>
-               </div>  
-             </div>
-             <br /><br /><a href='http://<?php echo self::$global_options['vcita_site'] ?>/settings?section=services&email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank' class="button-primary">Scheduling Settings</a>
-             <a href='http://<?php echo self::$global_options['vcita_site'] ?>/my/widgets/active_engage/edit?email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank' class="button-primary">ActiveEngage Settings</a><br><br>
-             <input style='display:none;' id='vcita_disconnect_button' type='submit' name='vcita_disconnect'/>
-             <div class="privacy_box">
-               <a title="<?php _e('Change Account', 'si-contact-form'); ?>" target="_blank" onclick="confirmChangeAccount()"><?php _e('Change Account', 'si-contact-form'); ?></a>
-               <a title="<?php _e('More about vCita', 'si-contact-form'); ?>" target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/integrations/fast_secure/more_from_vcita"><?php _e('More about vCita', 'si-contact-form'); ?></a>
-               <a title="<?php _e('Help/Faq', 'si-contact-form'); ?>" href="http://support.vcita.com/categories/20062431-FAQs-and-Guides" target='_blank'><?php _e('Help/Faq', 'si-contact-form'); ?></a>
-             </div>
-
-           <?php else : ?>
-
-             <div class="scheduler_not_conected_note">Note: Your scheduler is not connected to your email yet</div><br>
-             <label class="vcita-btn-label" for="<?php echo self::$form_option_name;?>[vcita_email_new]"><?php _e('Email:', 'si-contact-form') ?></label>
-             <input name="<?php echo self::$form_option_name;?>[vcita_email_new]" id="si_contact_vcita_email_new" type="text" value="<?php echo esc_attr(self::$form_options['vcita_email_new']); ?>"  />
-             &nbsp;
-             <a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('contact_vcita_email_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
-             <br />
-             <div class="fscf_tip" id="contact_vcita_email_tip" >
-               <?php _e('Your email and name will only be used to send you meeting requests and additional communication from vCita, and will not be shared with your clients or third party.', 'si-contact-form'); ?>
-             </div>
-             <br/>
-             <label class="vcita-btn-label" for="<?php echo self::$form_option_name;?>[vcita_first_name]"><?php _e('First Name:', 'si-contact-form') ?></label>
-             <input name="<?php echo self::$form_option_name;?>[vcita_first_name]" id="si_contact_vcita_first_name" type="text" value="<?php echo esc_attr(self::$form_options['vcita_first_name']); ?>"  />
-             <br/>
-             <label class="vcita-btn-label" for="<?php echo self::$form_option_name;?>[vcita_last_name]"><?php _e('Last Name:', 'si-contact-form') ?></label>
-             <input name="<?php echo self::$form_option_name;?>[vcita_last_name]" id="si_contact_vcita_last_name" type="text" value="<?php echo esc_attr(self::$form_options['vcita_last_name']); ?>"  />
-             <br/><br/>
-             <div class="privacy_box">
-               <a title="<?php _e('Privacy Policy', 'si-contact-form'); ?>" target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/about/privacy_policy"><?php _e('Privacy Policy', 'si-contact-form'); ?></a>
-               <a title="<?php _e('Click for Help!', 'si-contact-form'); ?>" href="http://support.vcita.com/categories/20062431-FAQs-and-Guides" target='_blank'"><?php _e('Help', 'si-contact-form'); ?></a>
-             </div>
-
-           <?php endif ?>
-      </div>  
-    </div>
+	           <span class="fscf_tip" id="active_enage_help_tip">A "Contact" label will be added to the bottom of every web page and will display a customized invitation. ActiveEngage has proven to double leads on business websites by encouraging visitors to leave a message, schedule an appointment or request a service. <a target="_blank" href="http://www.vcita.com/software/contact_form_plugins_lead_generation">Learn More</a></span><br />
+	           <input style='display:none;' id='vcita_disable_button' type='submit' name='vcita_disable'/>
+	      </div>
+	      <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
+	        <div class="privacy_box">
+            <a title="<?php _e('Change Account', 'si-contact-form'); ?>" target="_blank" onclick="confirmChangeAccount()"><?php _e('Change Account', 'si-contact-form'); ?></a>
+            <a title="<?php _e('More about vCita', 'si-contact-form'); ?>" target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/integrations/fast_secure/more_from_vcita"><?php _e('More about vCita', 'si-contact-form'); ?></a>
+            <a title="<?php _e('Help/Faq', 'si-contact-form'); ?>" href="http://support.vcita.com/categories/20062431-FAQs-and-Guides" target='_blank'><?php _e('Help/Faq', 'si-contact-form'); ?></a>
+	        </div>
+	      <?php else : ?>
+	        <br/><br/>
+          <div class="privacy_box">
+            <a title="<?php _e('Privacy Policy', 'si-contact-form'); ?>" target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/about/privacy_policy"><?php _e('Privacy Policy', 'si-contact-form'); ?></a>
+             <a title="<?php _e('Click for Help!', 'si-contact-form'); ?>" href="http://support.vcita.com/categories/20062431-FAQs-and-Guides" target='_blank'"><?php _e('Help', 'si-contact-form'); ?></a>
+          </div>
+	      <?php endif ?>  
+	    </div>  
+	  </div>
   </fieldset>
     <?php
   } // end function meeting_settings_callback()
@@ -3278,26 +3281,24 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 	static function vcita_update_details($text) {
       
     self::$global_options = FSCF_Util::get_global_options();
-    if(!isset($text['vcita_enabled']))
-      $text['vcita_enabled'] = 'false';
     if(!isset($text['vcita_scheduling_button']))
       $text['vcita_scheduling_button'] = 'false';
     if(!isset($text['vcita_active_engage']))
       $text['vcita_active_engage'] = 'false';
+    if(!isset($text['vcita_link']))
+      $text['vcita_link'] = 'false';
 
     if (isset($_POST['vcita_disconnect'])) {
       $text = FSCF_Process::vcita_disconnect_form($text);
     } else if (isset($_POST['vcita_disable'])) {
     	$text['vcita_scheduling_button'] = 'false';
-    	$text['vcita_enabled'] = 'false';
     	self::$global_options['vcita_dismiss'] = 'true';
     	self::$global_options['vcita_show_disable_msg'] = 'true';
     	update_option( 'fs_contact_global', self::$global_options );
     } else if (isset($_POST['vcita_change_email_action']) && $text['vcita_changed_email'] != "") {
       $text['vcita_email'] = trim($text['vcita_changed_email']);
-    } else if(self::$form_options['vcita_approved'] == 'false' && isset($text['vcita_email_new']) && trim($text['vcita_email_new']) != ""){
+    } else if(self::$form_options['vcita_approved'] == 'false' && isset($text['vcita_email_new']) && trim($text['vcita_email_new']) != "" && isset($text['vcita_first_name']) && trim($text['vcita_first_name']) != "" && isset($text['vcita_last_name']) && trim($text['vcita_last_name']) != ""){
         $text['vcita_approved'] = 'true';
-        $text['vcita_enabled'] = 'true';
         $text['vcita_email'] = trim($text['vcita_email_new']);
 
         $text = FSCF_Process::vcita_create_or_validate_user($text, self::$global_options);
@@ -3938,7 +3939,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 */
 
         $show_vcita = 0;
-     if (self::$form_options['vcita_enabled'] != 'true' && self::$form_options['vcita_scheduling_button'] != 'true') {
+     if (self::$form_options['vcita_active_engage'] != 'true' && self::$form_options['vcita_scheduling_button'] != 'true') {
 		$show_vcita = 1;
      }
         self::$ads = array();

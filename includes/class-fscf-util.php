@@ -180,6 +180,10 @@ class FSCF_Util {
             // makes placeholder work on old browsers
             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
         }
+        if ( isset(FSCF_Display::$add_vcita_active_engage) && FSCF_Display::$add_vcita_active_engage ) {
+           // adds vCita Active Engage to form footer
+           echo FSCF_Display::$add_vcita_active_engage;
+        }
 	}
 	
 	static function admin_notice() {
@@ -471,7 +475,6 @@ class FSCF_Util {
 			 'error_correct'        => '',
              'error_spambot'        => '',
 			 'fields'				=> array(),
-		     'vcita_enabled'        => 'true',
 		     'vcita_scheduling_button' => 'true',
 		     'vcita_scheduling_button_css' => '',
 		     'vcita_scheduling_button_label' => '',
@@ -480,8 +483,7 @@ class FSCF_Util {
 		     'vcita_uid'            => '',
 		     'vcita_email'          => '',
                                                 // disabled because was causing signups on click "save changes" on any tab
-		     //'vcita_email_new'      => ((get_option('admin_email') == 'user@example.com') ? '' : get_option('admin_email')),
-             'vcita_email_new'      => '',
+		     'vcita_email_new'      => ((get_option('admin_email') == 'user@example.com') ? '' : get_option('admin_email')),
 		     'vcita_confirm_token'	=> '',
 		     'vcita_confirm_tokens'	=> '',
 	    	 'vcita_initialized'	=> 'false',
@@ -584,7 +586,7 @@ class FSCF_Util {
 
 			'button_style'         => 'cursor:pointer; margin:0;', // Submit button
 			'reset_style'          => 'cursor:pointer; margin:0;', // Reset button
-			'vcita_button_style'   => 'text-decoration:none; display:block; text-align:center; background:linear-gradient(to bottom, #ed6a31 0%, #e55627 100%); color:#fff !important; padding:10px;',
+			'vcita_button_style'   => 'text-decoration:none; display:block; text-align:center; background:linear-gradient(to bottom, #ed6a31 0%, #e55627 100%); color:#fff !important; padding:8px;',
             'vcita_div_button_style' => 'border-left:1px dashed #ccc; margin-top:25px; padding:8px 20px;', // vCita button div box
  			'powered_by_style'     => 'font-size:x-small; font-weight:normal; padding-top:5px; text-align:center;', // the "powered by" link
 
