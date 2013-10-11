@@ -181,7 +181,7 @@ class FSCF_Util {
             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
         }
         if ( isset(FSCF_Display::$add_vcita_active_engage) && FSCF_Display::$add_vcita_active_engage ) {
-           // adds vCita Active Engage to form footer
+           // adds vCita Active Engage to form footer only when enabled on the scheduler tab
            echo FSCF_Display::$add_vcita_active_engage;
         }
 	}
@@ -476,13 +476,11 @@ class FSCF_Util {
              'error_spambot'        => '',
 			 'fields'				=> array(),
 		     'vcita_scheduling_button' => 'false',
-		     'vcita_scheduling_button_css' => '',
 		     'vcita_scheduling_button_label' => '',
 		     'vcita_active_engage'  => 'false',
 		     'vcita_approved'       => 'false',
 		     'vcita_uid'            => '',
 		     'vcita_email'          => '',
-                                                // disabled because was causing signups on click "save changes" on any tab
 		     'vcita_email_new'      => ((get_option('admin_email') == 'user@example.com') ? '' : get_option('admin_email')),
 		     'vcita_confirm_token'	=> '',
 		     'vcita_confirm_tokens'	=> '',

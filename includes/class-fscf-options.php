@@ -3022,10 +3022,10 @@ if( self::$form_options['external_style'] == 'true' ) {
 	         <div class="vcita_inner_box">
 	           <br />  
 	           <input name="<?php echo self::$form_option_name;?>[vcita_active_engage]" id="si_contact_vcita_active_engage" class="vcita-chkbox" type="checkbox" <?php if ( self::$form_options['vcita_active_engage'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-	           <label class="vcita-label" for="si_contact_vcita_active_engage"><?php _e('ActiveEngage - Add a contact label on every page', 'si-contact-form'); ?></label>
+	           <label class="vcita-label" for="si_contact_vcita_active_engage"><?php _e('ActiveEngage - Add a contact label on every page your form is on.', 'si-contact-form'); ?></label>
 	           &nbsp;<a onclick="toggleVisibility('active_enage_help_tip');" class="vcita-help">Help</a><br>
 
-	           <span class="fscf_tip" id="active_enage_help_tip">A "Contact" label will be added to the bottom of every web page and will display a customized invitation. ActiveEngage has proven to double leads on business websites by encouraging visitors to leave a message, schedule an appointment or request a service. <a target="_blank" href="http://www.vcita.com/software/contact_form_plugins_lead_generation">Learn More</a></span><br />
+	           <span class="fscf_tip" id="active_enage_help_tip">A "Contact" label will be added to the bottom of every web page your form is on and will display a customized invitation. ActiveEngage has proven to double leads on business websites by encouraging visitors to leave a message, schedule an appointment or request a service. <a target="_blank" href="http://www.vcita.com/software/contact_form_plugins_lead_generation">Learn More</a></span><br />
 	           <input style='display:none;' id='vcita_disable_button' type='submit' name='vcita_disable'/>
 	      </div>
 	      <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
