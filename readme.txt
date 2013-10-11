@@ -270,7 +270,8 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 = 4.0.14 =
 - (11 Oct 2013) - Bux fix: view /print button did not work with some plugins.
-- Bux fix: fix schedule a meeting button user preference default problem. 
+- Bux fix: fix schedule a meeting button user preference default problem.
+- updated German (de_DE) translation. 
 
 = 4.0.13 =
 - (08 Oct 2013) - Bux fix: some forms would fail to import when label had some Non-US-ASCII or Chinese characters.
