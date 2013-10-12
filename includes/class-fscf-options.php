@@ -2945,6 +2945,10 @@ if( self::$form_options['external_style'] == 'true' ) {
 	static function meeting_settings_callback() {
          // don't use form tags, this is already inside a form
 
+          // prevent stuck condition with blank uid
+          if ( self::$form_options['vcita_approved'] == 'true' && empty( self::$form_options['vcita_uid'] ) )
+                self::$form_options['vcita_approved'] = 'false';
+
     ?>
     <input name="<?php echo self::$form_option_name;?>[vcita_approved]" id="si_contact_vcita_approved" type="hidden" value="<?php echo esc_attr( self::$form_options['vcita_approved']); ?>" />
     <input name="<?php echo self::$form_option_name;?>[vcita_uid]" id="si_contact_vcita_uid" type="hidden" value="<?php echo esc_attr( self::$form_options['vcita_uid']); ?>" />
@@ -2958,7 +2962,7 @@ if( self::$form_options['external_style'] == 'true' ) {
        <div style="margin-left:8px;">
 	       <p>Enhance your Contact Form with Online Scheduling. Let your clients book appointments and request services online. <a target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/integrations/fast_secure/how_it_works">Watch how it works</a></p>
 	       <b>Contact Requests should be sent to this email:</b></br>
-	           <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
+	           <?php if ( self::$form_options['vcita_approved'] == 'true') : ?>
 
 	             <?php FSCF_Process::vcita_disable_init_msg(self::$form_options, self::$global_options) ?>
 	             <span style="vertical-align: middle;"><?php echo esc_attr(self::$form_options['vcita_email']); ?></span>
@@ -3017,7 +3021,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 	           </div>
 	           <br />
 	         </div>
-	      <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
+	      <?php if ( self::$form_options['vcita_approved'] == 'true' )  : ?>
 	        <div class="privacy_box">
             <a title="<?php _e('Change Account', 'si-contact-form'); ?>" target="_blank" onclick="confirmChangeAccount()"><?php _e('Change Account', 'si-contact-form'); ?></a>
             <a title="<?php _e('More about vCita', 'si-contact-form'); ?>" target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/integrations/fast_secure/more_from_vcita"><?php _e('More about vCita', 'si-contact-form'); ?></a>
@@ -3029,7 +3033,8 @@ if( self::$form_options['external_style'] == 'true' ) {
             <a title="<?php _e('Privacy Policy', 'si-contact-form'); ?>" target="_blank" href="http://<?php echo self::$global_options['vcita_site'] ?>/about/privacy_policy"><?php _e('Privacy Policy', 'si-contact-form'); ?></a>
              <a title="<?php _e('Click for Help!', 'si-contact-form'); ?>" href="http://support.vcita.com/categories/20062431-FAQs-and-Guides" target='_blank'"><?php _e('Help', 'si-contact-form'); ?></a>
           </div>
-	      <?php endif ?>  
+	      <?php endif ?>
+
 	    </div>  
 	  </div>
   </fieldset>
@@ -3279,7 +3284,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
       $text = FSCF_Process::vcita_disconnect_form($text);
     } else if (isset($_POST['vcita_disable'])) {
     	$text['vcita_scheduling_button'] = 'false';
-    	$text['vcita_link'] = 'false';         
+    	$text['vcita_link'] = 'false';
     	self::$global_options['vcita_dismiss'] = 'true';
     	self::$global_options['vcita_show_disable_msg'] = 'true';
     	update_option( 'fs_contact_global', self::$global_options );

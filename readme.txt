@@ -268,7 +268,8 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-- allow HTML in "Your message has been sent, thank you." custom label.
+= 4.0.15 =
+- (12 Oct 2013) - allow HTML in "Your message has been sent, thank you." custom label.
 - Bug fix: the attrubutes setting was not working on name, email, subject, fields.
 - Bug fix: schedule a meeting button could show when not activated.
 
