@@ -36,7 +36,7 @@ class FSCF_Import {
 		self::$global_options = FSCF_Util::get_global_options();
 
         // import a few global options
-		$copy_fields = array( 'donated', 'vcita_auto_install', 'vcita_dismiss' );
+		$copy_fields = array( 'donated', 'vcita_dismiss' );
 		foreach ( $copy_fields as $field ) {
 			if ( ! empty( self::$old_global_options[$field] ) )
 				self::$global_options[$field] = self::$old_global_options[$field];

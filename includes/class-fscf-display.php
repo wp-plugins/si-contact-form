@@ -20,7 +20,7 @@ class FSCF_Display {
 	static $req_field_ind, $ctf_field_size, $form_action_url, $aria_required;
 	static $have_attach = '';
 	static $printed_tooltip_filetypes;
-	static $add_fscf_script, $add_placeholder_script, $add_vcita_active_engage;
+	static $add_fscf_script, $add_placeholder_script;
 
 	static function process_short_code($atts) {
 		// Process shortcode and display the form
@@ -117,8 +117,6 @@ class FSCF_Display {
             $string = "\n\n<!-- Fast Secure Contact Form plugin " . FSCF_VERSION . " - begin - FastSecureContactForm.com -->
 <div ".self::get_this_css('clear_style')."></div>\n" . self::$form_options['welcome'];
 			$string = self::display_form($string);
-			//$string = self::display_vcita_active_engage($string, self::$form_options, self::$global_options);
-            self::$add_vcita_active_engage = self::display_vcita_active_engage(self::$form_options, self::$global_options);
 		}
 
 		return($string);
@@ -319,7 +317,7 @@ $('head').append(fscf_styles);
         if( !empty(self::$form_options['form_attributes']) )
                 $form_attributes = self::$form_options['form_attributes'].' ';
 
-        if (self::$form_options['vcita_scheduling_button'] == 'true')
+        if (self::$form_options['vcita_scheduling_button'] == 'true' && self::is_vcita_activated() )
 	         $string .= "\n<div ".'id="fscf_div_left_box' . self::$form_id_num . '" '.self::get_this_css('left_box_style').">";
 
 $string .= '
@@ -490,7 +488,7 @@ $string .= '
                     $string .= '<div id="fscf_div_field' . self::$form_id_num.'_'.$key.'" ';
                     // find out if this field preceeds a follow field or vcita enabled (narrow), else it needs to be (wide)
                     if ( ( isset(self::$form_options['fields'][$key+1] ) && self::$form_options['fields'][$key+1]['follow'] == 'true' )
-                      || ( self::$form_options['vcita_scheduling_button'] == 'true' )
+                      || ( self::$form_options['vcita_scheduling_button'] == 'true' && self::is_vcita_activated() )
                        )
                       $string .= self::get_this_css('field_prefollow_style').'>'; // narrow
                     else
@@ -676,9 +674,9 @@ $string .= '
 				. "</a></p>\n";
 		}
 
-        if (self::$form_options['vcita_scheduling_button'] == 'true') {
+        if ( self::$form_options['vcita_scheduling_button'] == 'true' && self::is_vcita_activated() ) {
            $string .= "</div>\n<div ".'id="fscf_div_right_box' . self::$form_id_num . '" '.self::get_this_css('right_box_style').">\n";
-		   $string = self::display_vcita_scheduler_button($string, self::$form_options, self::$global_options);
+		   $string = self::display_vcita_scheduler_button( $string );
 		   $string .= "\n</div>\n";
         }
 
@@ -2073,55 +2071,31 @@ newwin.document.close()
         //filter hook for form action URL
 		return apply_filters( 'si_contact_form_action_url', $form_action_url,  self::$form_id_num);
 
-	}  // end function form_action_url	
+	}  // end function form_action_url
 
-	static function display_vcita_scheduler_button($string, $form_options, $global_options) {
-	  if ($form_options['vcita_scheduling_button'] == 'true'){
+   	static function is_vcita_activated() {
+         if ( self::$form_options['vcita_approved'] == 'true' && !empty( self::$form_options['vcita_uid'] ) )
+              return true;
+         else
+              return false;
+    }
+
+	static function display_vcita_scheduler_button( $string ) {
+      // vcita_scheduling_button enabled and is_vcita_activated has already been checked
+	  if (self::$form_options['vcita_scheduling_button'] == 'true'){
         $string .= '<div id="fscf_button_div_vcita' . self::$form_id_num . '" '.self::get_this_css('vcita_div_button_style'). ">\n<a ".'id="fscf_button_vcita' . self::$form_id_num . '" ' . self::get_this_css('vcita_button_style');
-	    if($form_options['vcita_approved'] == 'true' && !empty($form_options['vcita_uid'])){
-		     $string .=  " target='_blank' class='vcita-set-meeting' href=\"http://".$global_options['vcita_site']."/meeting_scheduler?v=" . self::$form_options['vcita_uid'] . "\"";
-		} else {
-		  	 $string .=  " onclick=\"alert('You need to configure your Fast Secure Contact Form / Scheduling settings tab');\"";
-		}
-		$string .= '>' . $form_options['vcita_scheduling_button_label'].'</a>';
-        if ($form_options['vcita_link'] == 'true')
-           $scheduling_link = $form_options['vcita_scheduling_link_text'];
+		$string .=  " target='_blank' class='vcita-set-meeting' href=\"http://".self::$global_options['vcita_site']."/meeting_scheduler?v=" . self::$form_options['vcita_uid'] . "\"";
+		$string .= '>' . self::$form_options['vcita_scheduling_button_label'].'</a>';
+        if (self::$form_options['vcita_link'] == 'true')
+           $scheduling_link = self::$form_options['vcita_scheduling_link_text'];
            $scheduling_link = str_replace("Online Scheduling","<a target=\"_blank\" href=\"http://www.vcita.com/software/online_scheduling\">Online Scheduling</a>", $scheduling_link);
            $string .= "\n<div ". self::get_this_css('powered_by_style') . ">" . $scheduling_link . "</div>\n";
            $string .= "</div>";
-		}
+	 }
 
 	  return($string);
   }	// end function display_vcita_scheduler_button
 
-  static function display_vcita_active_engage($form_options, $global_options) {
-	  if ($form_options['vcita_scheduling_button'] == 'true' || $form_options['vcita_active_engage'] == 'true'){
-           $string = "\n<!-- FSCF vCita Active Engage for Form # ".self::$form_id_num." begin -->\n";
-	       if($global_options['vcita_site'] == 'www.vcita.com'){
-	          $uid = '360c3394'; // demo vcita user;
-	       } else if($global_options['vcita_site'] == 'www.meet2know.com') {
-	          $uid = 'd06ad557';
-	       } else {
-              $uid = 'a743a56d';
-	       }
-	       if($form_options['vcita_approved'] == 'true')
-	    	  $uid = self::$form_options['vcita_uid'];
-		   $string .= "<script type='text/javascript' charset='utf-8'>\n";
-		   if ($form_options['vcita_active_engage'] == 'false'){
-              $string .= "\nwindow.vcita_options = {};\n";
-              $string .= "\nwindow.vcita_options.active_engage = false;\n";
-           }
-           $string .= "var vcHost = document.location.protocol == \"https:\" ? \"https:\" : \"http:\";\n";
-           $string .= "document.write(unescape(\"%3Cscript src='\" + vcHost + \"//".$global_options['vcita_site']."/widgets/active_engage/";
-           $string .= $uid;
-           $string .= "/loader.js' type='text/javascript'%3E%3C/script%3E\"));";
-           $string .= "\n</script>\n";
-           $string .= "<!-- FSCF vCita Active Engage for Form # ".self::$form_id_num." end -->\n";
-
-           return($string);
-	   	}
-
-  }	// end function display_vcita_active_engage
 	
 }  // end class FSCF_Display
 

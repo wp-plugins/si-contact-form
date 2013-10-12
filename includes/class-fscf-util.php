@@ -180,10 +180,6 @@ class FSCF_Util {
             // makes placeholder work on old browsers
             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
         }
-        if ( isset(FSCF_Display::$add_vcita_active_engage) && FSCF_Display::$add_vcita_active_engage ) {
-           // adds vCita Active Engage to form footer only when enabled on the scheduler tab
-           echo FSCF_Display::$add_vcita_active_engage;
-        }
 	}
 	
 	static function admin_notice() {
@@ -477,7 +473,6 @@ class FSCF_Util {
 			 'fields'				=> array(),
 		     'vcita_scheduling_button' => 'false',
 		     'vcita_scheduling_button_label' => '',
-		     'vcita_active_engage'  => 'false',
 		     'vcita_approved'       => 'false',
 		     'vcita_uid'            => '',
 		     'vcita_email'          => '',

@@ -268,15 +268,19 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+- allow HTML in "Your message has been sent, thank you." custom label.
+- Bug fix: the attrubutes setting was not working on name, email, subject, fields.
+- Bug fix: schedule a meeting button could show when not activated.
+
 = 4.0.14 =
-- (11 Oct 2013) - Bux fix: view /print button did not work with some plugins.
-- Bux fix: fix schedule a meeting button user preference default problem.
+- (11 Oct 2013) - Bug fix: view /print button did not work with some plugins.
+- Bug fix: schedule a meeting button user preference default problem.
 - updated German (de_DE) translation. 
 
 = 4.0.13 =
 - (08 Oct 2013) - Bux fix: some forms would fail to import when label had some Non-US-ASCII or Chinese characters.
-- Bux fix: Form save error when tag had some Non-US-ASCII or Chinese characters.  
-- Bux fix: button on the Tools tab "Import forms from 3.xx version" did not always work correctly.
+- Bug fix: Form save error when tag had some Non-US-ASCII or Chinese characters.  
+- Bug fix: button on the Tools tab "Import forms from 3.xx version" did not always work correctly.
 
 = 4.0.11 & 4.0.12 =
 - (06 Oct 2013) - Improved placeholder text to work on older browsers.
@@ -285,7 +289,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 - added new setting to Advanced tab "Enable to have the email labels on same line as values".
 - updated German (de_DE) translation.
 - Bug fix: copy styles was not copying all of the style settings.
-- Bux fix: button on the Tools tab "Import forms from 3.xx version" did not work correctly.
+- Bug fix: button on the Tools tab "Import forms from 3.xx version" did not work correctly.
 
 = 4.0.10 =
 - (03 Oct 2013) - Bug fix: Activation generates "unexpected output" notice to admin.

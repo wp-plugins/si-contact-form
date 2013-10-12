@@ -2976,7 +2976,6 @@ if( self::$form_options['external_style'] == 'true' ) {
 	               </div>  
 	             </div>
 	             <br /><br /><a href='http://<?php echo self::$global_options['vcita_site'] ?>/settings?section=services&email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank' class="button-primary">Scheduling Settings</a>
-	             <a href='http://<?php echo self::$global_options['vcita_site'] ?>/my/widgets/active_engage/edit?email=<?php echo self::$form_options['vcita_email'] ?>' target='_blank' class="button-primary">ActiveEngage Settings</a>
 	             <input style='display:none;' id='vcita_disconnect_button' type='submit' name='vcita_disconnect'/>
 	           <?php else : ?>
 
@@ -3014,20 +3013,10 @@ if( self::$form_options['external_style'] == 'true' ) {
 	             <input name="<?php echo self::$form_option_name;?>[vcita_link]" type="checkbox" class="vcita-chkbox" id="si_contact_vcita_link" <?php if ( self::$form_options['vcita_link'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
 	             <label class="vcita-label" for="si_contact_vcita_link"><?php _e('Show call for action below the button:', 'si-contact-form') ?></label>
 	             <input style="width:500px;" name="<?php echo self::$form_option_name;?>[vcita_scheduling_link_text]" id="si_contact_vcita_scheduling_link_text" type="text" value="<?php echo esc_attr(self::$form_options['vcita_scheduling_link_text']); ?>" /><br />
+                 <input style='display:none;' id='vcita_disable_button' type='submit' name='vcita_disable'/>
 	           </div>
 	           <br />
-	           <br />
 	         </div>
-	           <b>Get more Leads</b>
-	         <div class="vcita_inner_box">
-	           <br />  
-	           <input name="<?php echo self::$form_option_name;?>[vcita_active_engage]" id="si_contact_vcita_active_engage" class="vcita-chkbox" type="checkbox" <?php if ( self::$form_options['vcita_active_engage'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-	           <label class="vcita-label" for="si_contact_vcita_active_engage"><?php _e('ActiveEngage - Add a contact label on every page your form is on.', 'si-contact-form'); ?></label>
-	           &nbsp;<a onclick="toggleVisibility('active_enage_help_tip');" class="vcita-help">Help</a><br>
-
-	           <span class="fscf_tip" id="active_enage_help_tip">A "Contact" label will be added to the bottom of every web page your form is on and will display a customized invitation. ActiveEngage has proven to double leads on business websites by encouraging visitors to leave a message, schedule an appointment or request a service. <a target="_blank" href="http://www.vcita.com/software/contact_form_plugins_lead_generation">Learn More</a></span><br />
-	           <input style='display:none;' id='vcita_disable_button' type='submit' name='vcita_disable'/>
-	      </div>
 	      <?php if (self::$form_options['vcita_approved'] == 'true') : ?>
 	        <div class="privacy_box">
             <a title="<?php _e('Change Account', 'si-contact-form'); ?>" target="_blank" onclick="confirmChangeAccount()"><?php _e('Change Account', 'si-contact-form'); ?></a>
@@ -3283,8 +3272,6 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
     self::$global_options = FSCF_Util::get_global_options();
     if(!isset($text['vcita_scheduling_button']))
       $text['vcita_scheduling_button'] = 'false';
-    if(!isset($text['vcita_active_engage']))
-      $text['vcita_active_engage'] = 'false';
     if(!isset($text['vcita_link']))
       $text['vcita_link'] = 'false';
 
@@ -3292,6 +3279,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
       $text = FSCF_Process::vcita_disconnect_form($text);
     } else if (isset($_POST['vcita_disable'])) {
     	$text['vcita_scheduling_button'] = 'false';
+    	$text['vcita_link'] = 'false';         
     	self::$global_options['vcita_dismiss'] = 'true';
     	self::$global_options['vcita_show_disable_msg'] = 'true';
     	update_option( 'fs_contact_global', self::$global_options );
@@ -3521,7 +3509,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		}
 
 		// Sanitize settings fields
-		$html_fields = array( 'welcome', 'after_form_note', 'req_field_indicator' );
+		$html_fields = array( 'welcome', 'after_form_note', 'req_field_indicator', 'text_message_sent' );
 		if ( 'true' == $text['auto_respond_html'] ) $html_fields[] = 'auto_respond_message';
 		foreach ( $text as $key => $value ) {
 			if ( is_string($value) ) {
@@ -3939,7 +3927,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 */
 
         $show_vcita = 0;
-     if (self::$form_options['vcita_active_engage'] != 'true' && self::$form_options['vcita_scheduling_button'] != 'true') {
+     if (self::$form_options['vcita_scheduling_button'] != 'true') {
 		$show_vcita = 1;
      }
         self::$ads = array();
