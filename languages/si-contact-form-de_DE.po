@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Fast Secure Contact Form v4.0.13\n"
+"Project-Id-Version: Fast Secure Contact Form v4.0.15\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
 "POT-Creation-Date: 2013-09-29 21:05:33+00:00\n"
-"PO-Revision-Date: 2013-10-10 05:40:45+0000\n"
+"PO-Revision-Date: 2013-10-21 05:33:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: Pierre Sudarovich\n"
 "MIME-Version: 1.0\n"
@@ -26,15 +26,15 @@ msgid "You do not have permissions for managing this option"
 msgstr "Sie haben keine Berechtigung, diese Einstellung zu ändern."
 
 #: includes/class-fscf-action.php:27
-#: includes/class-fscf-options.php:3119
-#: includes/class-fscf-options.php:3159
+#: includes/class-fscf-options.php:3113
+#: includes/class-fscf-options.php:3153
 #: includes/class-fscf-util.php:155
 #@ si-contact-form
 msgid "Copy Settings"
 msgstr "Einstellungen kopieren"
 
 #: includes/class-fscf-action.php:30
-#: includes/class-fscf-options.php:3243
+#: includes/class-fscf-options.php:3237
 #: includes/class-fscf-util.php:161
 #, fuzzy
 #@ si-contact-form
@@ -42,19 +42,19 @@ msgid "Reset Styles on all forms"
 msgstr "Stile aller Formulare zurücksetzen."
 
 #: includes/class-fscf-action.php:33
-#: includes/class-fscf-options.php:3195
-#: includes/class-fscf-options.php:3221
+#: includes/class-fscf-options.php:3189
+#: includes/class-fscf-options.php:3215
 #: includes/class-fscf-util.php:157
 #@ si-contact-form
 msgid "Restore Settings"
 msgstr "Einstellungen wiederherstellen"
 
 #: includes/class-fscf-action.php:36
-#: includes/class-fscf-options.php:3112
+#: includes/class-fscf-options.php:3106
 #: includes/class-fscf-util.php:154
 #@ si-contact-form
 msgid "Send Test"
-msgstr "Sende Test"
+msgstr "Test senden"
 
 #: includes/class-fscf-action.php:39
 #: includes/class-fscf-options.php:867
@@ -68,23 +68,23 @@ msgstr "Feld hinzufügen"
 #, fuzzy
 #@ si-contact-form
 msgid "Add Form"
-msgstr "Alle Formulare"
+msgstr "Formular hinzufügen"
 
 #: includes/class-fscf-action.php:45
-#: includes/class-fscf-options.php:3233
+#: includes/class-fscf-options.php:3227
 #: includes/class-fscf-util.php:160
 #, fuzzy
 #@ si-contact-form
 msgid "Reset Form"
-msgstr "Zurücksetzen"
+msgstr "Formular zurücksetzen"
 
 #: includes/class-fscf-action.php:48
-#: includes/class-fscf-options.php:3238
+#: includes/class-fscf-options.php:3232
 #: includes/class-fscf-util.php:162
 #, fuzzy
 #@ si-contact-form
 msgid "Delete Form"
-msgstr "Alle Formulare"
+msgstr "Formular löschen"
 
 #: includes/class-fscf-action.php:116
 #@ si-contact-form
@@ -114,7 +114,7 @@ msgid "Styles have been reset on all forms."
 msgstr "Die Stile aller Formulare wurden zurückgesetzt."
 
 #: includes/class-fscf-action.php:332
-#: includes/class-fscf-display.php:678
+#: includes/class-fscf-display.php:673
 #: includes/class-fscf-options.php:2484
 #@ si-contact-form
 msgid "Fast Secure Contact Form"
@@ -124,7 +124,7 @@ msgstr "Fast Secure Contact Form"
 #, fuzzy
 #@ si-contact-form
 msgid "Test email to "
-msgstr "Test-E-Mail an"
+msgstr "Test-E-Mail an "
 
 #: includes/class-fscf-action.php:336
 #@ si-contact-form
@@ -224,18 +224,13 @@ msgid "Contact Form Shortcode Error: Invalid form number in shortcode."
 msgstr "Contact Form Shortcode Fehler: ungültige Formularnummer im Shortcode."
 
 #: includes/class-fscf-display.php:58
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Contact Form Shortcode Error: Form %s does not exist"
 msgstr "Contact Form Shortcode Fehler: Formular %s existiert nicht"
 
-#: includes/class-fscf-display.php:76
-#@ si-contact-form
-msgid "Contact Form Shortcode Error: Using shorcode attributes requires the PHP sessions setting to be enabled in form settings."
-msgstr "Contact Form Shortcode Fehler: die Nutzung von Shortcode-Eigenschaften erfordert die Aktivierung der PHP-Session-Einstellungen in den Formulareinstellungen."
-
 #: includes/class-fscf-display.php:94
-#: includes/class-fscf-display.php:391
+#: includes/class-fscf-display.php:389
 #: includes/class-fscf-options.php:385
 #: includes/class-fscf-options.php:393
 #: includes/class-fscf-options.php:412
@@ -244,35 +239,35 @@ msgstr "Contact Form Shortcode Fehler: die Nutzung von Shortcode-Eigenschaften e
 msgid "Preview Form"
 msgstr "Vorschau Multi-Forms"
 
-#: includes/class-fscf-display.php:343
+#: includes/class-fscf-display.php:341
 #, fuzzy
 #@ si-contact-form
 msgid "Attachments are only supported when the Send Email function is set to WordPress. You can find this setting on the contact form settings page."
 msgstr "Attachments werden nur unterstützt, wenn die EMail-Sendefunktion WordPress gesetzt ist. Sie können diese Einstellung auf der Kontaktformular Edit-Seite finden."
 
-#: includes/class-fscf-display.php:346
+#: includes/class-fscf-display.php:344
 #@ si-contact-form
 msgid "The temporary folder for the attachment field does not exist."
 msgstr "Der Temporärordner für das Anhangfeld existiert nicht."
 
-#: includes/class-fscf-display.php:348
+#: includes/class-fscf-display.php:346
 #@ si-contact-form
 msgid "The temporary folder for the attachment field is not writable."
 msgstr "Der Temporärordner für den Anhang ist schreibgeschützt."
 
-#: includes/class-fscf-display.php:359
+#: includes/class-fscf-display.php:357
 #: includes/class-fscf-options.php:1998
 #@ si-contact-form
 msgid "Please make corrections below and try again."
 msgstr "Bitte korrigieren Sie Ihre Angaben und versuchen Sie es erneut."
 
-#: includes/class-fscf-display.php:372
+#: includes/class-fscf-display.php:370
 #, fuzzy
 #@ si-contact-form
 msgid "ERROR: Misconfigured email address in options."
 msgstr "FEHLER: Die E-Mail-Adresse in den Einstellungen ist fehlerhaft."
 
-#: includes/class-fscf-display.php:409
+#: includes/class-fscf-display.php:407
 #: includes/class-fscf-options.php:1926
 #: includes/class-fscf-options.php:1928
 #, fuzzy
@@ -280,56 +275,56 @@ msgstr "FEHLER: Die E-Mail-Adresse in den Einstellungen ist fehlerhaft."
 msgid "indicates required field"
 msgstr "(kennzeichnet erforderliches Eingabefeld)"
 
-#: includes/class-fscf-display.php:418
+#: includes/class-fscf-display.php:416
 #: includes/class-fscf-options.php:1935
 #, fuzzy
 #@ si-contact-form
 msgid "Select a contact:"
 msgstr "Kontakt auswählen:"
 
-#: includes/class-fscf-display.php:425
+#: includes/class-fscf-display.php:423
 #: includes/class-fscf-options.php:1936
 #@ si-contact-form
 msgid "Select"
 msgstr "Auswahl"
 
-#: includes/class-fscf-display.php:640
+#: includes/class-fscf-display.php:635
 #@ si-contact-form
 msgid "Leave this field empty"
 msgstr "Lassen sie dieses Feld leer"
 
-#: includes/class-fscf-display.php:649
+#: includes/class-fscf-display.php:644
 #: includes/class-fscf-options.php:1947
 #@ si-contact-form
 msgid "Submit"
 msgstr "senden"
 
-#: includes/class-fscf-display.php:654
+#: includes/class-fscf-display.php:649
 #: includes/class-fscf-options.php:1949
 #@ si-contact-form
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: includes/class-fscf-display.php:662
+#: includes/class-fscf-display.php:657
 #: includes/class-fscf-options.php:1948
 #@ si-contact-form
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: includes/class-fscf-display.php:663
+#: includes/class-fscf-display.php:658
 #@ si-contact-form
 msgid "Do you really want to reset the form?"
 msgstr "Wollen Sie das Formular wirklich zurücksetzen?"
 
-#: includes/class-fscf-display.php:677
+#: includes/class-fscf-display.php:672
 #: includes/class-fscf-options.php:2484
 #@ si-contact-form
 msgid "Powered by"
 msgstr "Unterstützt von"
 
-#: includes/class-fscf-display.php:777
+#: includes/class-fscf-display.php:772
 #: includes/class-fscf-options.php:1938
-#: includes/class-fscf-options.php:2992
+#: includes/class-fscf-options.php:2995
 #: includes/class-fscf-process.php:686
 #: includes/class-fscf-process.php:694
 #: includes/class-fscf-process.php:704
@@ -337,9 +332,9 @@ msgstr "Unterstützt von"
 msgid "First Name:"
 msgstr "Vorname:"
 
-#: includes/class-fscf-display.php:809
+#: includes/class-fscf-display.php:798
 #: includes/class-fscf-options.php:1939
-#: includes/class-fscf-options.php:2996
+#: includes/class-fscf-options.php:2999
 #: includes/class-fscf-process.php:688
 #: includes/class-fscf-process.php:700
 #: includes/class-fscf-process.php:710
@@ -347,350 +342,350 @@ msgstr "Vorname:"
 msgid "Last Name:"
 msgstr "Nachname:"
 
-#: includes/class-fscf-display.php:843
+#: includes/class-fscf-display.php:826
 #: includes/class-fscf-options.php:1937
-#: includes/class-fscf-util.php:508
+#: includes/class-fscf-util.php:501
 #@ si-contact-form
 msgid "Name:"
 msgstr "Name:"
 
-#: includes/class-fscf-display.php:881
+#: includes/class-fscf-display.php:858
 #: includes/class-fscf-options.php:1941
 #: includes/class-fscf-process.php:697
 #@ si-contact-form
 msgid "Middle Initial:"
 msgstr "Mittel Initialien:"
 
-#: includes/class-fscf-display.php:908
+#: includes/class-fscf-display.php:885
 #: includes/class-fscf-options.php:1940
 #: includes/class-fscf-process.php:707
 #@ si-contact-form
 msgid "Middle Name:"
 msgstr "Mittel Name:"
 
-#: includes/class-fscf-display.php:972
+#: includes/class-fscf-display.php:946
 #: includes/class-fscf-options.php:1942
-#: includes/class-fscf-options.php:2984
-#: includes/class-fscf-util.php:515
+#: includes/class-fscf-options.php:2987
+#: includes/class-fscf-util.php:508
 #, fuzzy
 #@ si-contact-form
 msgid "Email:"
 msgstr "E-Mail:"
 
-#: includes/class-fscf-display.php:1006
+#: includes/class-fscf-display.php:974
 #: includes/class-fscf-options.php:1943
 #@ si-contact-form
 msgid "Re-enter Email:"
 msgstr "E-Mal-Adresse erneut eingeben:"
 
-#: includes/class-fscf-display.php:1047
-#: includes/class-fscf-display.php:1171
+#: includes/class-fscf-display.php:1010
+#: includes/class-fscf-display.php:1109
 #: includes/class-fscf-options.php:1944
-#: includes/class-fscf-util.php:523
+#: includes/class-fscf-util.php:516
 #@ si-contact-form
 msgid "Subject:"
 msgstr "Betreff:"
 
-#: includes/class-fscf-display.php:1102
+#: includes/class-fscf-display.php:1055
 #: includes/class-fscf-options.php:1945
-#: includes/class-fscf-util.php:530
+#: includes/class-fscf-util.php:523
 #@ si-contact-form
 msgid "Message:"
-msgstr "Nachricht"
+msgstr "Nachricht:"
 
-#: includes/class-fscf-display.php:1158
+#: includes/class-fscf-display.php:1096
 #@ si-contact-form
 msgid "Error: No options were entered for a select field in settings."
 msgstr "Fehler: Es wurden keine Optionen für das gewählte Feld in den Einstellungen vorgegeben."
 
-#: includes/class-fscf-display.php:1236
+#: includes/class-fscf-display.php:1170
 #, fuzzy
 #@ si-contact-form
 msgid "Error: No options were entered for a checkbox-multiple field in settings."
 msgstr "Fehler: Ein Mehrfach-Checkbox Feld ist nicht richtig konfiguriert."
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1254
 #: includes/class-fscf-options.php:1316
-#: includes/class-fscf-options.php:3631
+#: includes/class-fscf-options.php:3624
 #: includes/class-fscf-process.php:382
 #@ si-contact-form
 msgid "mm/dd/yyyy"
 msgstr "mm/tt/jjjj"
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1255
 #: includes/class-fscf-options.php:1317
-#: includes/class-fscf-options.php:3632
+#: includes/class-fscf-options.php:3625
 #: includes/class-fscf-process.php:383
 #@ si-contact-form
 msgid "dd/mm/yyyy"
 msgstr "tt/mm/jjjj"
 
-#: includes/class-fscf-display.php:1322
+#: includes/class-fscf-display.php:1256
 #: includes/class-fscf-options.php:1318
-#: includes/class-fscf-options.php:3633
+#: includes/class-fscf-options.php:3626
 #: includes/class-fscf-process.php:384
 #@ si-contact-form
 msgid "mm-dd-yyyy"
 msgstr "mm-tt-jjjj"
 
-#: includes/class-fscf-display.php:1323
+#: includes/class-fscf-display.php:1257
 #: includes/class-fscf-options.php:1319
-#: includes/class-fscf-options.php:3634
+#: includes/class-fscf-options.php:3627
 #: includes/class-fscf-process.php:385
 #@ si-contact-form
 msgid "dd-mm-yyyy"
 msgstr "tt-mm-jjjj"
 
-#: includes/class-fscf-display.php:1324
+#: includes/class-fscf-display.php:1258
 #: includes/class-fscf-options.php:1320
-#: includes/class-fscf-options.php:3635
+#: includes/class-fscf-options.php:3628
 #: includes/class-fscf-process.php:386
 #@ si-contact-form
 msgid "mm.dd.yyyy"
 msgstr "mm.tt.jjjj"
 
-#: includes/class-fscf-display.php:1325
+#: includes/class-fscf-display.php:1259
 #: includes/class-fscf-options.php:1321
-#: includes/class-fscf-options.php:3636
+#: includes/class-fscf-options.php:3629
 #: includes/class-fscf-process.php:387
 #@ si-contact-form
 msgid "dd.mm.yyyy"
 msgstr "tt.mm.jjjj"
 
-#: includes/class-fscf-display.php:1326
+#: includes/class-fscf-display.php:1260
 #: includes/class-fscf-options.php:1322
-#: includes/class-fscf-options.php:3637
+#: includes/class-fscf-options.php:3630
 #: includes/class-fscf-process.php:388
 #@ si-contact-form
 msgid "yyyy/mm/dd"
 msgstr "jjjj/mm/tt"
 
-#: includes/class-fscf-display.php:1327
+#: includes/class-fscf-display.php:1261
 #: includes/class-fscf-options.php:1323
-#: includes/class-fscf-options.php:3638
+#: includes/class-fscf-options.php:3631
 #: includes/class-fscf-process.php:389
 #@ si-contact-form
 msgid "yyyy-mm-dd"
 msgstr "jjjj-mm-tt"
 
-#: includes/class-fscf-display.php:1328
+#: includes/class-fscf-display.php:1262
 #: includes/class-fscf-options.php:1324
-#: includes/class-fscf-options.php:3639
+#: includes/class-fscf-options.php:3632
 #: includes/class-fscf-process.php:390
 #@ si-contact-form
 msgid "yyyy.mm.dd"
 msgstr "jjjj.mm.tt"
 
-#: includes/class-fscf-display.php:1358
+#: includes/class-fscf-display.php:1292
 #: includes/class-fscf-options.php:1975
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Acceptable file types: %s."
 msgstr "Zulässige Datei-Typen: %s."
 
-#: includes/class-fscf-display.php:1360
+#: includes/class-fscf-display.php:1294
 #: includes/class-fscf-options.php:1977
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Maximum file size: %s."
 msgstr "Maximale Datei-Größe: %s."
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "Su"
 msgstr "So"
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "Mo"
 msgstr "Mo"
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "Tu"
 msgstr "Di"
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "We"
 msgstr "Mi"
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "Th"
 msgstr "Do"
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "Fr"
 msgstr "Fr"
 
-#: includes/class-fscf-display.php:1383
+#: includes/class-fscf-display.php:1317
 #@ si-contact-form
 msgid "Sa"
 msgstr "Sa"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Jan"
 msgstr "Jan"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Feb"
 msgstr "Feb"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Mar"
 msgstr "Mär"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Apr"
 msgstr "Apr"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "May"
 msgstr "Mai"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Jun"
 msgstr "Jun"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Jul"
 msgstr "Jul"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Aug"
 msgstr "Aug"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Sep"
 msgstr "Sep"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Oct"
 msgstr "Okt"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Nov"
 msgstr "Nov"
 
-#: includes/class-fscf-display.php:1384
+#: includes/class-fscf-display.php:1318
 #@ si-contact-form
 msgid "Dec"
 msgstr "Dez"
 
-#: includes/class-fscf-display.php:1385
+#: includes/class-fscf-display.php:1319
 #@ si-contact-form
 msgid "Go to the next month"
 msgstr "Nächster Monat"
 
-#: includes/class-fscf-display.php:1386
+#: includes/class-fscf-display.php:1320
 #@ si-contact-form
 msgid "Go to the previous month"
 msgstr "Vorheriger Monat"
 
-#: includes/class-fscf-display.php:1387
+#: includes/class-fscf-display.php:1321
 #@ si-contact-form
 msgid "Clear"
 msgstr "Löschen"
 
-#: includes/class-fscf-display.php:1388
+#: includes/class-fscf-display.php:1322
 #@ si-contact-form
 msgid "Clears any dates selected on the calendar"
 msgstr "Löscht bereits ausgewählte Datumseingaben"
 
-#: includes/class-fscf-display.php:1389
+#: includes/class-fscf-display.php:1323
 #@ si-contact-form
 msgid "This is the maximum range"
 msgstr "Maximale Kalender-Reichweite"
 
-#: includes/class-fscf-display.php:1488
+#: includes/class-fscf-display.php:1422
 #@ si-contact-form
 msgid "AM"
 msgstr "AM"
 
-#: includes/class-fscf-display.php:1488
+#: includes/class-fscf-display.php:1422
 #@ si-contact-form
 msgid "PM"
 msgstr "PM"
 
-#: includes/class-fscf-display.php:1544
+#: includes/class-fscf-display.php:1478
 #: includes/class-fscf-options.php:601
-#: includes/class-fscf-util.php:366
-#: includes/class-fscf-util.php:646
+#: includes/class-fscf-util.php:362
+#: includes/class-fscf-util.php:639
 #@ si-contact-form
 msgid "Webmaster"
 msgstr "Webmaster"
 
-#: includes/class-fscf-display.php:1900
+#: includes/class-fscf-display.php:1834
 #@ si-contact-form
 msgid "ERROR: si-contact-form.php plugin says GD image support not detected in PHP!"
 msgstr "FEHLER: Das Plugin si-contact-form.php konnte die GD-Image-Unterstützung in PHP nicht finden!"
 
-#: includes/class-fscf-display.php:1901
+#: includes/class-fscf-display.php:1835
 #@ si-contact-form
 msgid "Contact your web host and ask them why GD image support is not enabled for PHP."
 msgstr "Kontaktieren Sie Ihren Web-Hoster und bitten Sie um die Aktivierung der GD-Image-Unterstützung in PHP."
 
-#: includes/class-fscf-display.php:1905
+#: includes/class-fscf-display.php:1839
 #@ si-contact-form
 msgid "ERROR: si-contact-form.php plugin says imagepng function not detected in PHP!"
 msgstr "FEHLER: Das Plugin si-contact-form.php konnte die PHP-Funktion imagepng nicht ausführen."
 
-#: includes/class-fscf-display.php:1906
+#: includes/class-fscf-display.php:1840
 #@ si-contact-form
 msgid "Contact your web host and ask them why imagepng function is not enabled for PHP."
 msgstr "Kontaktieren Sie Ihren Web-Hoster und bitten Sie um die Aktivierung der Funktion imagepng in PHP."
 
-#: includes/class-fscf-display.php:1910
+#: includes/class-fscf-display.php:1844
 #@ si-contact-form
 msgid "ERROR: si-contact-form.php plugin says captcha_library not found."
 msgstr "FEHLER: Das Plugin si-contact-form.php konnte die Captcha-Bibliothek nicht finden."
 
-#: includes/class-fscf-display.php:1956
-#: includes/class-fscf-display.php:1958
+#: includes/class-fscf-display.php:1890
+#: includes/class-fscf-display.php:1892
 #: includes/class-fscf-options.php:1971
 #@ si-contact-form
 msgid "CAPTCHA Image"
 msgstr "CAPTCHA-Bild"
 
-#: includes/class-fscf-display.php:1967
-#: includes/class-fscf-display.php:1974
+#: includes/class-fscf-display.php:1901
+#: includes/class-fscf-display.php:1908
 #: includes/class-fscf-options.php:1973
 #@ si-contact-form
 msgid "Refresh Image"
 msgstr "Bild aktualisieren"
 
-#: includes/class-fscf-display.php:1983
+#: includes/class-fscf-display.php:1917
 #: includes/class-fscf-options.php:1946
 #@ si-contact-form
 msgid "CAPTCHA Code:"
 msgstr "CAPTCHA Code:"
 
-#: includes/class-fscf-display.php:2019
+#: includes/class-fscf-display.php:1953
 #: includes/class-fscf-options.php:1950
 #@ si-contact-form
 msgid "Your message has been sent, thank you."
 msgstr "Ihre Nachricht wurde gesendet. Vielen Dank."
 
-#: includes/class-fscf-display.php:2024
-#: includes/class-fscf-display.php:2025
+#: includes/class-fscf-display.php:1958
+#: includes/class-fscf-display.php:1959
 #@ si-contact-form
 msgid "Redirecting"
 msgstr "Weiterleitung"
 
-#: includes/class-fscf-display.php:2032
+#: includes/class-fscf-display.php:1966
 #: includes/class-fscf-options.php:1951
 #@ si-contact-form
 msgid "View / Print your message"
@@ -703,8 +698,8 @@ msgid "Fast Secure Contact Form has imported settings from the old version."
 msgstr "Fast Secure Contact Form Optionen"
 
 #: includes/class-fscf-import.php:196
-#: includes/class-fscf-options.php:3572
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#: includes/class-fscf-options.php:3565
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Field %s"
 msgstr "Feld %s"
@@ -726,8 +721,8 @@ msgid "FS Contact Form"
 msgstr "FS Contact Form"
 
 #: includes/class-fscf-options.php:95
-#: includes/class-fscf-options.php:3167
-#: includes/class-fscf-options.php:3187
+#: includes/class-fscf-options.php:3161
+#: includes/class-fscf-options.php:3181
 #: includes/class-fscf-util.php:156
 #@ si-contact-form
 msgid "Backup Settings"
@@ -738,55 +733,55 @@ msgstr "Backup Einstellungen"
 #, fuzzy
 #@ si-contact-form
 msgid "Basic Settings"
-msgstr "Backup Einstellungen"
+msgstr "Basis-Einstellungen"
 
 #: includes/class-fscf-options.php:111
 #, fuzzy
 #@ si-contact-form
 msgid "Email Settings"
-msgstr "Einstellungen"
+msgstr "E-Mail-Einstellungen"
 
 #: includes/class-fscf-options.php:118
 #, fuzzy
 #@ si-contact-form
 msgid "Field Settings"
-msgstr "Einstellungen"
+msgstr "Feldeinstellungen"
 
 #: includes/class-fscf-options.php:125
 #, fuzzy
 #@ si-contact-form
 msgid "Style Settings"
-msgstr "Einstellungen kopieren"
+msgstr "Style-Einstellungen"
 
 #: includes/class-fscf-options.php:132
 #, fuzzy
 #@ si-contact-form
 msgid "Field Label Settings"
-msgstr "Einstellungen wiederherstellen"
+msgstr "Einstellungen Feldbezeichnung"
 
 #: includes/class-fscf-options.php:139
 #, fuzzy
 #@ si-contact-form
 msgid "Tooltip Label Settings"
-msgstr "Einstellungen kopieren"
+msgstr "Einstellungen Tooltip-Beschriftung"
 
 #: includes/class-fscf-options.php:146
 #, fuzzy
 #@ si-contact-form
 msgid "Error Message Settings"
-msgstr "Einstellungen wiederherstellen"
+msgstr "Einstellungen Fehlermeldungen"
 
 #: includes/class-fscf-options.php:154
 #, fuzzy
 #@ si-contact-form
 msgid "CAPTCHA Settings"
-msgstr "Einstellungen kopieren"
+msgstr "CAPTCHA-Einstellungen"
 
 #: includes/class-fscf-options.php:161
 #, fuzzy
 #@ si-contact-form
 msgid "Akismet Settings"
-msgstr "Einstellungen wiederherstellen"
+msgstr "Akismet-Einstellungen"
 
 #: includes/class-fscf-options.php:168
 #, fuzzy
@@ -804,7 +799,7 @@ msgstr "Einstellungen Bestätigungs E-Mail"
 #, fuzzy
 #@ si-contact-form
 msgid "Redirect Settings"
-msgstr "Einstellungen wiederherstellen"
+msgstr "Einstellungen Umleitung"
 
 #: includes/class-fscf-options.php:190
 #@ si-contact-form
@@ -847,7 +842,7 @@ msgstr "Eingabefelder"
 #, fuzzy
 #@ si-contact-form
 msgid "Styles"
-msgstr "Style"
+msgstr "Styles"
 
 #: includes/class-fscf-options.php:250
 #, fuzzy
@@ -942,7 +937,7 @@ msgid "Changelog"
 msgstr "Änderungsprotokoll"
 
 #: includes/class-fscf-options.php:353
-#: includes/class-fscf-options.php:3100
+#: includes/class-fscf-options.php:3094
 #@ si-contact-form
 msgid "FAQ"
 msgstr "FAQ"
@@ -951,13 +946,13 @@ msgstr "FAQ"
 #, fuzzy
 #@ si-contact-form
 msgid "Support Forum"
-msgstr "Unterstützung"
+msgstr "Support-Forum"
 
 #: includes/class-fscf-options.php:355
 #, fuzzy
 #@ si-contact-form
 msgid "Support Ticket"
-msgstr "Unterstützung"
+msgstr "Support-Ticket"
 
 #: includes/class-fscf-options.php:356
 #@ si-contact-form
@@ -979,14 +974,14 @@ msgstr "vCita Meeting Scheduler wurde ausgeschaltet."
 #, fuzzy
 #@ si-contact-form
 msgid "Fast Secure Contact Form Settings"
-msgstr "Fast Secure Contact Form Optionen"
+msgstr "Einstellungen Fast Secure Contact Form"
 
 #: includes/class-fscf-options.php:393
 #: includes/class-fscf-options.php:411
 #, fuzzy
 #@ si-contact-form
 msgid "Edit Form"
-msgstr "Einträge bearbeiten"
+msgstr "Formular bearbeiten"
 
 #: includes/class-fscf-options.php:394
 #, fuzzy
@@ -995,7 +990,7 @@ msgid "Select a Form"
 msgstr "Formular auswählen"
 
 #: includes/class-fscf-options.php:402
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Form %d: %s"
 msgstr "Formular %d: %s"
@@ -1026,8 +1021,8 @@ msgstr "Laden..."
 #: includes/class-fscf-options.php:2318
 #: includes/class-fscf-options.php:2505
 #: includes/class-fscf-options.php:2752
-#: includes/class-fscf-options.php:2956
-#: includes/class-fscf-options.php:3092
+#: includes/class-fscf-options.php:2960
+#: includes/class-fscf-options.php:3086
 #: includes/class-fscf-util.php:153
 #@ si-contact-form
 msgid "Save Changes"
@@ -1074,7 +1069,7 @@ msgstr "Achtung: Die Aktivierung dieser Einstellung erfordert die \"E-Mail von\"
 #, fuzzy
 #@ si-contact-form
 msgid "I have donated to help contribute for the development of this awesome plugin."
-msgstr "Ich habe gespendet, weil ich die Entwicklung dieses Kontaktformulars unterstütze."
+msgstr "Ich habe gespendet, weil ich die Entwicklung dieses tollen Kontaktformulars unterstütze."
 
 #: includes/class-fscf-options.php:540
 #@ si-contact-form
@@ -1100,7 +1095,7 @@ msgstr "Diese Nachricht schließen"
 #, fuzzy
 #@ si-contact-form
 msgid "Usage:"
-msgstr "Gebrauch"
+msgstr "Anwendung:"
 
 #: includes/class-fscf-options.php:552
 #@ si-contact-form
@@ -1217,8 +1212,8 @@ msgstr "Füge den Shortcode in eine Seite, einen Beitrag oder ein Text Widget ei
 #: includes/class-fscf-options.php:2888
 #: includes/class-fscf-options.php:2923
 #: includes/class-fscf-options.php:2932
-#: includes/class-fscf-options.php:2987
-#: includes/class-fscf-options.php:3006
+#: includes/class-fscf-options.php:2990
+#: includes/class-fscf-options.php:3009
 #@ si-contact-form
 msgid "help"
 msgstr "Hilfe"
@@ -1349,9 +1344,9 @@ msgstr "Formular %d Bezeichnnug"
 #: includes/class-fscf-options.php:2888
 #: includes/class-fscf-options.php:2923
 #: includes/class-fscf-options.php:2932
-#: includes/class-fscf-options.php:2987
-#: includes/class-fscf-options.php:3006
-#: includes/class-fscf-options.php:3041
+#: includes/class-fscf-options.php:2990
+#: includes/class-fscf-options.php:3009
+#: includes/class-fscf-options.php:3034
 #@ si-contact-form
 msgid "Click for Help!"
 msgstr "Für Hilfe klicken!"
@@ -1365,13 +1360,13 @@ msgstr "Geben Sie eine Bezeichnung für das Formular. Dies ist anderswo nicht ve
 #: includes/class-fscf-options.php:570
 #@ si-contact-form
 msgid "Welcome introduction"
-msgstr "Formular Überschrift: "
+msgstr "Willkommenseinführung"
 
 #: includes/class-fscf-options.php:574
 #, fuzzy
 #@ si-contact-form
 msgid "This is printed before the form. HTML is allowed."
-msgstr "Dieser Text erscheint über dem Formular."
+msgstr "Dieser Text erscheint über dem Formular. HTML ist zulässig."
 
 #: includes/class-fscf-options.php:650
 #: includes/class-fscf-options.php:652
@@ -1381,13 +1376,13 @@ msgid "ERROR: Misconfigured \"Email To\" address."
 msgstr "FEHLER: Falsch konfigurierte \"Email an\" Adresse"
 
 #: includes/class-fscf-options.php:656
-#: includes/class-fscf-options.php:3104
+#: includes/class-fscf-options.php:3098
 #@ si-contact-form
 msgid "Warning: Your web host has the mail() function disabled. PHP cannot send email."
 msgstr "Achtung: Ihr Web-Hoster scheint den PHP-Befehl mail() abgeschaltet zu haben. PHP kann daher keine E-Mails versenden."
 
 #: includes/class-fscf-options.php:657
-#: includes/class-fscf-options.php:3105
+#: includes/class-fscf-options.php:3099
 #@ si-contact-form
 msgid "Have them fix it. Or you can install the \"WP Mail SMTP\" plugin and configure it to use SMTP."
 msgstr "Lassen Sie das ändern/reparieren, oder installieren Sie das \"WP Mail SMTP\" und konfigurieren Sie alles für einen SMTP-E-Mail-Versand."
@@ -1407,7 +1402,7 @@ msgstr "E-Mail-Adresse, an die die Nachricht geschickt wird (Ihre E-Mail). Für 
 #, fuzzy
 #@ si-contact-form
 msgid "If you add multiple email addresses, a drop down list will be created on the contact form. Each contact can have a name and an email address separated by a comma. Separate each contact by pressing enter. If you need to add more than one contact, follow this example:"
-msgstr "Die E-Mail-Adressen, an die die Nachrichten verschickt werden sollen (Ihre E-Mail). Fügen Sie hier soviele Adressen hinzu, wie Sie wollen. Die Auswahlbox im Kontaktformular wird automatisch erweitert. Jeder Kontakt hat einen Namen und eine E-Mail-Adresse, die durch Komma getrennt werden. Jeder Kontakt steht in einer eigenen Zeile. Falls Sie mehr als einen Kontakt hinzufügen möchten, folgen Sie folgendem Beispiel:"
+msgstr "Wenn Sie meherere E-Mail-Adressen hinzufügen, wird im Kontaktformular eine Auswahlliste erzeugt. Jeder Kontakt kann eigene, durch Komma getrennte Namen und E-Mail-Adressen erhalten. Trennen Sie jeden Kontakt durch Auslösen der ENTER-Taste. Wenn Sie mehr als einen Kontakt hinzufügen wollen, folgen Sie bitte dem Beispiel:"
 
 #: includes/class-fscf-options.php:665
 #, fuzzy
@@ -1418,7 +1413,7 @@ msgstr "Die E-Mail-Adressen, an die die Nachrichten verschickt werden sollen (Ih
 #: includes/class-fscf-options.php:666
 #@ si-contact-form
 msgid "If you need to use a comma in the name, escape it with a back slash, like this: \\,"
-msgstr "Wenn Sie ein Komma im Namen verwenden müssen, setzen Sie einen Backslash davor, wie zB hier: \\,"
+msgstr "Wenn Sie ein Komma im Namen verwenden müssen, setzen Sie einen Backslash davor, wie z.B. hier: \\,"
 
 #: includes/class-fscf-options.php:670
 #@ si-contact-form
@@ -1733,7 +1728,7 @@ msgstr "Das Textfeld ist für einzeilige Texteingabe. Das Textarea Feld ist für
 #, fuzzy
 #@ si-contact-form
 msgid "Checkbox field:"
-msgstr "Betreff Feld:"
+msgstr "Markierungsfeld:"
 
 #: includes/class-fscf-options.php:893
 #@ si-contact-form
@@ -1867,7 +1862,7 @@ msgstr "Feldeigenschaften:"
 #: includes/class-fscf-options.php:932
 #@ si-contact-form
 msgid "Some of these field properties apply only to certain field types.  Properties irrelevant for the selected field type will be ignored."
-msgstr ""
+msgstr "Einige dieser Feldeigenschaften gelten nur für bestimmte Feldtypen. Irrelevante Eigenschaften für den ausgewählten Feldtyp werden ignoriert."
 
 #: includes/class-fscf-options.php:935
 #@ si-contact-form
@@ -1877,7 +1872,7 @@ msgstr "Kennzeichen:"
 #: includes/class-fscf-options.php:936
 #@ si-contact-form
 msgid "The field Tag is used to identify the field for email settings, shortcodes, and query variables.  Field tags must be unique.  If you leave the Tag entry blank, one will be generated for you based on the field name.  If you change a field name, you might want to change the tag to match.  Or just delete the tag, and a new one will be generated for you."
-msgstr ""
+msgstr "Das Feld Tag wird verwendet, um das Feld für die E-Mail-Einstellungen, Kurzwahlnummern und Abfragevariablen zu identifizieren.  Feldmarken müssen eindeutig sein.  Wenn Sie den Tag-Eintrag leer lassen, wird eine für Sie basierend auf den Feldnamen generiert.  Wenn Sie einen Feldnamen ändern, empfiehlt es sich, das Tag entsprechend zu ändern.  Oder löschen Sie einfach das Tag und es wird für Sie ein neues erzeugt."
 
 #: includes/class-fscf-options.php:938
 #, fuzzy
@@ -1888,7 +1883,7 @@ msgstr "Standard Option:"
 #: includes/class-fscf-options.php:939
 #@ si-contact-form
 msgid "Use to pre-fill a value for the field. For select and radio fields, enter the number of the option to pre-select (1 = first item, etc.).  For select-multiple and checkbox-multiple, enter the list item number(s) to pre-select separated by commas.  For a checkbox, enter \"1\" to pre-check the box."
-msgstr ""
+msgstr "Verwenden, um einen Wert für das Feld vorzubelegen. Für Mehrfachauswahlfelder und Mehrfachauswahl-Kontrollkästchen, geben Sie die Nummer der Option zur Vorauswahl (1 = erste Element, etc..) an. Für Mehrfachauswahlfelder und Mehrfachauswahl-Kontrollkästchen geben Sie die vorzuwählende(n) Eintragnummer(n), ggf. durch Kommas getrennt, an. Zur Vorauswahl einse einzelnen Kontrollkästchens geben Sie eine \"1\" vor."
 
 #: includes/class-fscf-options.php:941
 #@ si-contact-form
@@ -1898,22 +1893,22 @@ msgstr "Standard als Platzhalter:"
 #: includes/class-fscf-options.php:942
 #@ si-contact-form
 msgid "Check this setting if you want the default text to be a placeholder inside the form field. The placeholder is a short hint that is displayed in the input field before the user enters a value. Works with the following input types only: name, email, subject, message, text, textarea, url, and password. This setting is sometimes used along with the \"Hide label\" setting."
-msgstr ""
+msgstr "Aktivieren Sie diese Einstellung, wenn der Standardtext zu einen Platzhalter innerhalb dss Formularfeldes sein soll. Der Platzhalter ist ein kurzer Hinweis der im Eingabefeld angezeigt wird, bevor der Benutzer einen Wert eingibt. Er arbeitet nur mit der folgenden Eingabe-Typen zusammen: Name, E-Mail, Betreff, Nachricht, Text, Textarea, Url und Passwort. Diese Einstellung wird manchmal zusammen mit der \"Beschriftung verbergen\"-Einstellung verwendet."
 
 #: includes/class-fscf-options.php:943
 #@ si-contact-form
 msgid "When using \"Default as placeholder\" setting with \"Enable double email entry\" setting enabled. The \"Default\" setting should be in this example format: \"Email==Re-enter Email\". Separate words with == separators."
-msgstr ""
+msgstr "Wenn \"Standardeinstellung als Platzhalter\"-Einstellung mit \"Aktiviere doppelte E-Mail-Eingabe\" aktiviert ist. Die \"Standardeinstellung\" sollte in diesem Beispielformat: \"E-Mail==E-Mail erneut eingeben\" sein. Trennen Sie Wörter mit == Separatoren."
 
 #: includes/class-fscf-options.php:944
 #@ si-contact-form
 msgid "When using \"Default as placeholder\" setting with \"First Name, Last Name\" setting enabled. The \"Default\" setting should be in this example format: \"First Name==Last Name\". Separate words with == separators."
-msgstr ""
+msgstr "Wenn \"Standardeinstellung als Platzhalter\"-Einstellung mit \"Vorname, Nachname\" aktiviert ist. Die \"Standardeinstellung\" sollte in diesem Beispielformat: \"Vorname==Nachname\" sein. Trennen Sie Wörter mit == Separatoren."
 
 #: includes/class-fscf-options.php:945
 #@ si-contact-form
 msgid "When using \"Default as placeholder\" setting with \"First Name, Middle Name, Last Name\" setting enabled. The \"Default\" setting should be in this example format: \"First Name==Middle Name==Last Name\". Separate words with == separators."
-msgstr ""
+msgstr "Wenn \"Standardeinstellung als Platzhalter\"-Einstellung mit \"Vorname, Mittelname, Nachname\" aktiviert ist. Die \"Standardeinstellung\" sollte in diesem Beispielformat: \"Vorname==Mittelname==Nachname\" sein. Trennen Sie Wörter mit == Separatoren."
 
 #: includes/class-fscf-options.php:948
 #, fuzzy
@@ -1936,17 +1931,17 @@ msgstr "Optionen wählen:"
 #: includes/class-fscf-options.php:953
 #@ si-contact-form
 msgid "List of options for select, select-multiple, radio, and checkbox-multiple field types.  Type the options, one per line. This entry is required for these field types."
-msgstr ""
+msgstr "Liste der Optionen für Auswahlfeldtypen, Mehrfachauswahlfeldtypen und Radio-Feldtypen und Mehrfachauswahl-Kontrollkästchen-Feldtypen.  Geben Sie die Optionen zeilenweise vor. Dieser Eintrag ist für diese Feldtypen erforderlich."
 
 #: includes/class-fscf-options.php:954
 #@ si-contact-form
 msgid "The first option of a select field type can be in brackets to indicate that it must be selected, example: [Please select]."
-msgstr ""
+msgstr "Die erste Option eines Auswahlfeld-Typs kann in Klammern stehen um anzugeben, dass es ausgewählt werden muss. Beispiel: [Bitte auswählen]."
 
 #: includes/class-fscf-options.php:955
 #@ si-contact-form
 msgid "If you add options as a key==value set (use == to separate) the value will show on the form and the key will show in the email."
-msgstr ""
+msgstr "Wenn Sie Optionen als Schlüssel==Werte-Set hinzufügen (verwenden Sie == um zu trennen) wird der Wert auf dem Formular ausgewiesen und der Schlüssel wird in der E-Mail angezeigt."
 
 #: includes/class-fscf-options.php:958
 #@ si-contact-form
@@ -1956,7 +1951,7 @@ msgstr "Inline:"
 #: includes/class-fscf-options.php:959
 #@ si-contact-form
 msgid "If checked, checkboxes and radio buttons appear horizontally on one line instead of vertically one per line."
-msgstr ""
+msgstr "Wenn diese Option aktiviert ist, erscheinen Kontrollkästchen und Optionsfelder horizontal in einer Zeile statt jeweils vertikal pro Zeile."
 
 #: includes/class-fscf-options.php:961
 #@ si-contact-form
@@ -1971,7 +1966,7 @@ msgstr "Verwenden um die Anzahl der zulässigen Zeichen für ein Textfeld zu beg
 #: includes/class-fscf-options.php:963
 #@ si-contact-form
 msgid " This will not change the size of the field on the form.  To change that, use the size attribute (see below), or your add a width attribute to the \"Input text fields\" setting on the Styles tab."
-msgstr ""
+msgstr " Dies ändert nicht die Größe des Feldes auf dem Formular.  Um das zu ändern, verwenden Sie die Größen-Eigenschaft (siehe unten), oder Sie fügen eine Breiten-Eigenschaft zu den \"Eingabe Textfelder\"-Einstellung der Styles-Registerkarte hinzu."
 
 #: includes/class-fscf-options.php:965
 #@ si-contact-form
@@ -2026,7 +2021,7 @@ msgstr "Regex Fehlernachricht:"
 #: includes/class-fscf-options.php:978
 #@ si-contact-form
 msgid "Use to customize a message to alert the user when the form fails to validate a regex after post. Example: Please only enter numbers. For use with validation regex only."
-msgstr ""
+msgstr "Verwenden Sie dies um einen Warnhinheis an den Benutzer anzupassen, wenn die Prüfung des Formulars auf \"Regex nach Post\" fehlschlägt. Beispiel: Bitte nur Zahlen eingeben. Nur für die Verwendung mit Validation Regex."
 
 #: includes/class-fscf-options.php:980
 #, fuzzy
@@ -2059,7 +2054,7 @@ msgstr "Dem vorherigen Feld folgen:"
 #: includes/class-fscf-options.php:987
 #@ si-contact-form
 msgid "Check this setting if you want this field to show on the form following the previous field on the same line. For example, you could put state, and zip on one line. This feature seems to be limited to two fields, and it is only compatible with the \"labels on top\" style on a wide theme."
-msgstr ""
+msgstr "Überprüfen Sie diese Einstellung, wenn Sie dieses Feld auf dem Formular nach dem vorherigen Feld in derselben Zeile anzeigen möchten. Beispielsweise könnten Sie Staat und PLZ in eine Zeile setzen. Diese Funktion scheint auf zwei Felder beschränkt zu sein, und es ist nur zu dem \"Bezeichnungen oben\"-Stil eines breiten Themes kompatibel."
 
 #: includes/class-fscf-options.php:1037
 #@ si-contact-form
@@ -2075,12 +2070,12 @@ msgstr "(Standardfeld)"
 #: includes/class-fscf-options.php:1059
 #@ si-contact-form
 msgid "Caution: \"Default as placeholder\" setting requires \"Default\" setting to be filled in. Correct this on the Fields tab and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: \"Standardeinstellung als Platzhalter\" erfordert den Eintrag \"Standardeinstellung\". Korrigieren Sie dies auf der Felder-Registerkarte und klicken Sie auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1062
 #@ si-contact-form
 msgid "Caution: \"Default as placeholder\" setting requires \"Default\" setting to be filled in. Correct this in the field details and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: \"Standardeinstellung als Platzhalter\" erfordert, dass \"Standardeinstellung\" ausgefüllt wird. Korrigieren Sie dies in den Feld-Details und klicken Sie auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1069
 #@ si-contact-form
@@ -2106,23 +2101,23 @@ msgstr "Vorname, Mittelname, Nachname"
 #, php-format
 #@ si-contact-form
 msgid "Caution: Name field format \"%s\" requires the \"Default\" setting to be in this example format: %s. Separate words with == separators, or empty the \"Default\" setting. Correct this on the Fields tab and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: das Name-Feld-Format \"%s\" erfordert die \"Standardeinstellung\" um in diesem Beispielformat dargestellt zu werden: %s. Trennen Sie Wörter mit ==-Separatoren oder entfernen Sie die \"Standardeinstellung\". Korrigieren Sie dies auf der Felder-Registerkarte und klicken Sie auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1089
 #, php-format
 #@ si-contact-form
 msgid "Caution: Name field format \"%s\" requires the \"Default\" setting to be in this example format: %s. Separate words with == separators, or empty the \"Default\" setting. Correct this in the field details and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: das Name-Feld-Format \"%s\" erfordert die \"Standardeinstellung\" um in diesem Beispielformat dargestellt zu werden: %s. Trennen Sie Wörter mit ==-Separatoren oder entfernen Sie die \"Standardeinstellung\". Korrigieren Sie dies auf der Felder-Registerkarte und klicken Sie auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1097
 #@ si-contact-form
 msgid "Caution: When \"Enable double email entry\" setting is enabled, the \"Default\" setting should be in this example format: Email==Re-enter Email. Separate words with == separators, or empty the \"Default\" setting. Correct this on the Fields tab and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: Wenn die \"Doppelten E-Mail-Eintrag aktivieren\"-Einstellung aktiviert ist, sollte die \"Standardeinstellung\" in diesem Format vorliegen: Email==E-Mail erneut eingeben. Trennen Sie Wörter mit == Separatoren oder leeren Sie die \"Standardeinstellung\". Korrigieren Sie dies auf der Felder-Registerkarte und klicken Sie auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1099
 #@ si-contact-form
 msgid "Caution: \"When Enable double email entry\" setting is enabled, the \"Default\" setting should be in this example format: Email==Re-enter Email. Separate words with == separators, or empty the \"Default\" setting. Correct this in the field details and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: Wenn die \"Doppelten E-Mail-Eintrag aktivieren\"-Einstellung aktiviert ist, sollte die \"Standardeinstellung\" in diesem Format vorliegen: Email==E-Mail erneut eingeben. Trennen Sie Wörter mit == Separatoren oder leeren Sie die \"Standardeinstellung\". Korrigieren Sie dies auf der Felder-Registerkarte und klicken Sie auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1117
 #@ si-contact-form
@@ -2456,42 +2451,42 @@ msgstr "Spezifische CSS ansehen"
 #: includes/class-fscf-options.php:1485
 #@ si-contact-form
 msgid "By default, the FSCF form styles are editable below when using \"Internal Style Sheet CSS\". The style is included inline in the form HTML."
-msgstr ""
+msgstr "Standardmäßig können die FSCF-Formularformate bei Verwendung von \"Internes Stylesheet CSS\" unten bearbeitet werden. Der Stil ist interner Bestandteil des Formular-HTML."
 
 #: includes/class-fscf-options.php:1486
 #@ si-contact-form
 msgid "CSS experts will like the flexibility of using their own custom style sheet by enabling \"External Style Sheet CSS\","
-msgstr ""
+msgstr "CSS-Experten werden die Flexibilität der Nutzung benutzerdefinierter Stilvorlagen mögen. Aktivieren Sie hierzu \"Externe Stilvorlage CSS\","
 
 #: includes/class-fscf-options.php:1487
 #@ si-contact-form
 msgid "then the FSCF CSS will NOT be included inline in the form HTML, and the custom CSS below must be included in the style.css of the theme. Be sure to remember this if you switch your theme later on."
-msgstr ""
+msgstr "dann ist die FSCF CSS nicht Bestandteil des Formular-HTML, und die untenstehende, benutzerdefinierte CSS muss in die style.css des Themas übernommen werden. Achten Sie darauf, wenn Sie Ihr Thema später wechseln."
 
 #: includes/class-fscf-options.php:1489
 #@ si-contact-form
 msgid "Premium themes may have added support for Fast Secure Contact Form style in the theme's style.css. Select \"External Style Sheet CSS\" when instructed by the theme's installation instructions."
-msgstr ""
+msgstr "Premium-Themes könnten eventuell Unterstützung für \"Fast Secure Contact Form\"-Stile in der style.css des Themes enthalten. Wählen Sie \"Externe Stylesheet CSS\", falls Sie in den Installationsanweisungen eines Themes hierzu aufgefordert werden."
 
 #: includes/class-fscf-options.php:1491
 #@ si-contact-form
 msgid "Note: if you use the setting \"reset the alignment styles to labels on left(or top)\", or \"Reset the styles of labels, field inputs, buttons, and text\", then the custom CSS below will reflect the changes. You would have to edit your custom CSS again to see the changes on the form."
-msgstr ""
+msgstr "Hinweis: Verwenden Sie die Einstellung \"Ausrichtung-Styles für Bezeichnungen auf Links (oder oben) zurücksetzen\" oder \"Styles der Bezeichnungen, Feldeingaben, Schaltflächen und Texte zurücksetzen\", wird die untenstehende, benutzerdefinierte CSS die Änderungen übernehmen. Sie müssen Ihre benutzerdefinierten CSS erneut editieren, um die Änderungen auf dem Formular sichtbar zu machen."
 
 #: includes/class-fscf-options.php:1497
 #@ si-contact-form
 msgid "External Style Sheet CSS for experts and theme builders:"
-msgstr ""
+msgstr "Externe Stylesheet-CSS für Experten und Theme-Ersteller:"
 
 #: includes/class-fscf-options.php:1562
 #@ si-contact-form
 msgid "Caution: \"External Style Sheet CSS\" is enabled in the Styles tab. This setting requires your theme's style.css to include the custom CSS. You can get the custom CSS on the Styles tab. Be sure your theme includes the custom CSS from this plugin, if it does not, then add the custom CSS to your theme or change the setting back to \"Internal Style Sheet CSS\"."
-msgstr ""
+msgstr "Achtung: \"Externes Stylesheet-CSS\" wurde in der Styles-Registerkarte aktiviert. Diese Einstellung erfordert, dass das Theme Ihrer style.css im benutzerdefinierten CSS enthalten ist. Sie erhalten Sie die benutzerdefinierte CSS auf die Styles-Registerkarte. Stellen Sie sicher, dass Ihr Theme das benutzerdefinierten CSS dieses Plugins enthält. Falls nicht, fügen Sie das benutzerdefinierte CSS Ihrem Thema hinzu oder ändern Sie die Einstellung zurück zu \"Internes Stylesheet CSS\"."
 
 #: includes/class-fscf-options.php:1566
 #@ si-contact-form
 msgid "Note: \"Internal Style Sheet CSS\" fields below are not editable while \"External Style Sheet CSS\" is enabled."
-msgstr ""
+msgstr "Hinweis: \"Internes Stylesheet CSS\"-Felder können nicht bearbeitet werden, während die \"Externe Stylesheet CSS\" aktiviert ist."
 
 #: includes/class-fscf-options.php:1572
 #@ si-contact-form
@@ -2507,7 +2502,7 @@ msgstr "Verwenden um die Formular Feld-Beschriftungen zu gestalten. "
 #: includes/class-fscf-options.php:1576
 #@ si-contact-form
 msgid "You can also check \"reset the alignment\" to return to defaults and make the labels on top or to the left."
-msgstr ""
+msgstr "Um zu den Standardwerten zurückzukehren, können Sie \"Ausrichtung zurücksetzen\" auswählen oder setzen Sie die Bezeichnungen nach oben oder links."
 
 #: includes/class-fscf-options.php:1586
 #, fuzzy
@@ -2541,7 +2536,7 @@ msgstr "Formular DIV"
 #: includes/class-fscf-options.php:1598
 #@ si-contact-form
 msgid "Use to adjust the style in the form wrapping DIV."
-msgstr ""
+msgstr "Verwenden Sie dies, um den Stil in Fromular-Wrapping-DIV anzupassen."
 
 #: includes/class-fscf-options.php:1602
 #@ si-contact-form
@@ -2552,7 +2547,7 @@ msgstr "Linke Box DIV"
 #, fuzzy
 #@ si-contact-form
 msgid "Use to adjust the style in the left box vCita container DIV."
-msgstr "CSS für Text der Senden Taste."
+msgstr "Anwenden, um den Stl der linken Box des VCita-Container-DIV anzupassen."
 
 #: includes/class-fscf-options.php:1610
 #@ si-contact-form
@@ -2563,7 +2558,7 @@ msgstr "Rechte Box DIV"
 #, fuzzy
 #@ si-contact-form
 msgid "Use to adjust the style in the right box vCita container DIV."
-msgstr "CSS für Text der Senden Taste."
+msgstr "Anwenden, um den Stl der rechten Box des VCita-Container-DIV anzupassen."
 
 #: includes/class-fscf-options.php:1618
 #, fuzzy
@@ -2629,7 +2624,7 @@ msgstr "Eingabefelder Ausrichtung DIV"
 #: includes/class-fscf-options.php:1662
 #@ si-contact-form
 msgid "Use to adjust the style in the form input field alignment wrapping DIVs."
-msgstr ""
+msgstr "Verwenden Sie dies, um den Stil in den Formular-Eingabefeld-Ausrichtung-Wrapping-DIVs anzupassen."
 
 #: includes/class-fscf-options.php:1666
 #, fuzzy
@@ -2693,7 +2688,7 @@ msgstr "CSS für Text der Senden Taste."
 #: includes/class-fscf-options.php:1706
 #@ si-contact-form
 msgid "Form Fieldset Box"
-msgstr ""
+msgstr "Fieldset-Box im Formular"
 
 #: includes/class-fscf-options.php:1710
 #, fuzzy
@@ -2704,7 +2699,7 @@ msgstr "Stellen Sie hier den Stil des Rahmens des Kontaktformulars ein (falls Ra
 #: includes/class-fscf-options.php:1717
 #@ si-contact-form
 msgid "Style of labels, field inputs, buttons, and text:"
-msgstr ""
+msgstr "Styles der Bezeichnungen, Feldeingaben, Schaltflächen und Texte:"
 
 #: includes/class-fscf-options.php:1720
 #, fuzzy
@@ -2762,12 +2757,12 @@ msgstr "Verwenden um die Formular Feld-Beschriftungen zu gestalten. "
 #: includes/class-fscf-options.php:1759
 #@ si-contact-form
 msgid "Input validation messages"
-msgstr ""
+msgstr "Eingabeüberprüfung Nachrichten"
 
 #: includes/class-fscf-options.php:1763
 #@ si-contact-form
 msgid "Use to adjust the style of form input validation messages."
-msgstr ""
+msgstr "Verwenden, um den Stil der Formulareingabeüberprüfungs-Nachrichten anzupassen."
 
 #: includes/class-fscf-options.php:1767
 #, fuzzy
@@ -2783,7 +2778,7 @@ msgstr "Verwenden um den Stil für die \"umgeleitet\" Nachricht nach dem Formula
 #: includes/class-fscf-options.php:1775
 #@ si-contact-form
 msgid "Field Fieldset Box"
-msgstr ""
+msgstr "Fieldset-Box im Feld"
 
 #: includes/class-fscf-options.php:1779
 #, fuzzy
@@ -2819,7 +2814,7 @@ msgstr "Verwenden um die Formular Feld-Beschriftungen zu gestalten. "
 #, fuzzy
 #@ si-contact-form
 msgid "Input text fields"
-msgstr "Größe des Eingabefeldes"
+msgstr "Eingabe Textfelder"
 
 #: includes/class-fscf-options.php:1804
 #, fuzzy
@@ -2831,12 +2826,12 @@ msgstr "Verwenden um die Formular Feld-Beschriftungen zu gestalten. "
 #, fuzzy
 #@ si-contact-form
 msgid "Input text field CAPTCHA"
-msgstr "Größe des Eingabefeldes"
+msgstr "Eingabe Textfeld CAPTCHA"
 
 #: includes/class-fscf-options.php:1812
 #@ si-contact-form
 msgid "Use to adjust the style in the CAPTCHA code input text field."
-msgstr ""
+msgstr "Nutzen, um den Stil des CAPTCHA-Code-Texteingabefeldes einzustellen."
 
 #: includes/class-fscf-options.php:1816
 #, fuzzy
@@ -2854,7 +2849,7 @@ msgstr "Verwenden um die Formular Feld-Beschriftungen zu gestalten. "
 #, fuzzy
 #@ si-contact-form
 msgid "Input select fields"
-msgstr "Größe des Eingabefeldes"
+msgstr "Eingabe Auswahlfelder"
 
 #: includes/class-fscf-options.php:1828
 #, fuzzy
@@ -2866,7 +2861,7 @@ msgstr "Verwenden um den Stil aller Auswahl Liste Feldtypen, einschließlich Bet
 #, fuzzy
 #@ si-contact-form
 msgid "Input checkbox fields"
-msgstr "Größe des Eingabefeldes"
+msgstr "Eingabe Ankreuzfelder"
 
 #: includes/class-fscf-options.php:1836
 #, fuzzy
@@ -2906,29 +2901,29 @@ msgstr "CSS für Reset Taste"
 #: includes/class-fscf-options.php:1868
 #@ si-contact-form
 msgid "Use to adjust the style for the form reset button text, if enabled."
-msgstr ""
+msgstr "Verwenden, um den Stil für den Formular-Zurücksetzen-Schaltflächeentext anzupassen (falls aktiviert)."
 
 #: includes/class-fscf-options.php:1872
 #@ si-contact-form
 msgid "vCita appointment button"
-msgstr ""
+msgstr "vCita Termin-Schaltfläche"
 
 #: includes/class-fscf-options.php:1876
 #, fuzzy
 #@ si-contact-form
 msgid "Use to adjust the style for the vcita schedule appointment button."
-msgstr "CSS für Text der Senden Taste."
+msgstr "Anwenden, um den Stl die VCita-Planungs-Terminschaltfläche anzupassen."
 
 #: includes/class-fscf-options.php:1880
 #@ si-contact-form
 msgid "vCita appointment button DIV box"
-msgstr ""
+msgstr "vCita Termin-Schaltfläche DIV-Box"
 
 #: includes/class-fscf-options.php:1884
 #, fuzzy
 #@ si-contact-form
 msgid "Use to adjust the style for the vcita schedule appointment button DIV box."
-msgstr "CSS für Text der Senden Taste."
+msgstr "Anwenden, um den Stl der VCita-Planungs-Terminschaltflächen DIV-Box anzupassen."
 
 #: includes/class-fscf-options.php:1888
 #, fuzzy
@@ -2939,7 +2934,7 @@ msgstr "CSS für \"Powered by\" Meldung"
 #: includes/class-fscf-options.php:1892
 #@ si-contact-form
 msgid "Use to adjust the style for the \"powered by\" message link."
-msgstr ""
+msgstr "Nutzen, um den Stil der \"powered by\"-Nachrichtenverknüpfung einzustellen."
 
 #: includes/class-fscf-options.php:1897
 #@ si-contact-form
@@ -3066,10 +3061,10 @@ msgstr "Ungültige URL."
 
 #: includes/class-fscf-options.php:2028
 #: includes/class-fscf-process.php:397
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Please select a valid date in this format: %s."
-msgstr "Bitte wählen Sie ein gültiges Datum in diesem Format: %s"
+msgstr "Bitte wählen Sie ein gültiges Datum in diesem Format: %s."
 
 #: includes/class-fscf-options.php:2031
 #: includes/class-fscf-process.php:418
@@ -3251,7 +3246,7 @@ msgstr "Weiterleitung aktivieren, nachdem die Nachricht gesendet wurde."
 #: includes/class-fscf-options.php:2184
 #@ si-contact-form
 msgid "If enabled: After a user sends a message, the web browser will display \"message sent\" for x seconds, then redirect to the redirect URL. This can be used to redirect to the blog home page, or a custom \"Thank You\" page."
-msgstr ""
+msgstr "Falls aktiviert: Nachdem ein Benutzer eine Nachricht sendet, zeigt der Webbrowser \"Nachricht gesendet\" für X Sekunden, dann leitet er zur Umleitungs-URL um. Dies kann verwendet werden, um zur Blog-Homepage oder einer benutzerdefinierte \"Danke\"-Seite umzuleten."
 
 #: includes/class-fscf-options.php:2188
 #@ si-contact-form
@@ -3261,7 +3256,7 @@ msgstr "Umleitungsverzögerung in Sekunden"
 #: includes/class-fscf-options.php:2192
 #@ si-contact-form
 msgid "How many seconds the web browser will display \"message sent\" before redirecting to the redirect URL. Values of 0-60 are allowed."
-msgstr ""
+msgstr "Wie viele Sekunden \"Nachricht gesendet\" vor der Umleitung auf die Umleitungs-URL im Web-Browser angezeigt wird. Werte von 0-60 sind zulässig."
 
 #: includes/class-fscf-options.php:2196
 #@ si-contact-form
@@ -3271,7 +3266,7 @@ msgstr "Weiterleitungsziel"
 #: includes/class-fscf-options.php:2200
 #@ si-contact-form
 msgid "The form will redirect to this URL after success. This can be used to redirect to the blog home page, or a custom \"Thank You\" page."
-msgstr ""
+msgstr "Das Formular wird nach Erfolg zu dieser URL weiterleiten. Dies kann zur Umleitung auf die Blog-Homepage oder eine benutzerdefinierte \"Danke\"-Seite verwendet werden."
 
 #: includes/class-fscf-options.php:2201
 #: includes/class-fscf-options.php:2554
@@ -3292,22 +3287,22 @@ msgstr "Achtung: Nach Aktivierung dieser Einstellung muss das \"Aktivieren umlei
 #: includes/class-fscf-options.php:2212
 #@ si-contact-form
 msgid "Enable posted data to be sent as a query string on the redirect URL."
-msgstr ""
+msgstr "Aktivieren Sie die gesendeten Daten, um Sie als Abfragezeichenfolge auf die Umleitungs-URL zu schicken."
 
 #: includes/class-fscf-options.php:2215
 #@ si-contact-form
 msgid "If enabled: The posted data is sent to the redirect URL. This can be used to send the posted data via GET query string to a another form."
-msgstr ""
+msgstr "Falls aktiviert: die gesendeten Daten werden an die Umleitungs-URL gesendet. Dies kann verwendet werden, um die gesendeten Daten über eine GET-Abfragezeichenfolge an ein anderes Formular zu senden."
 
 #: includes/class-fscf-options.php:2218
 #@ si-contact-form
 msgid "FAQ: Posted data can be sent as a query string on the redirect URL"
-msgstr ""
+msgstr "FAQ: Bereitgestellte Daten können als Abfragezeichenfolge auf die Umleitungs-URL gesendet werden"
 
 #: includes/class-fscf-options.php:2224
 #@ si-contact-form
 msgid "Query string fields to ignore"
-msgstr ""
+msgstr "Zu ignorierende Abfrage-String-Felder"
 
 #: includes/class-fscf-options.php:2227
 #, fuzzy
@@ -3341,7 +3336,7 @@ msgstr "Verfügbare Felder in diesem Formular:"
 #: includes/class-fscf-options.php:2243
 #@ si-contact-form
 msgid "Query string fields to rename"
-msgstr ""
+msgstr "Umzubenennede Abfrage-String-Felder"
 
 #: includes/class-fscf-options.php:2246
 #, fuzzy
@@ -3354,7 +3349,7 @@ msgstr "Optional Liste von Feldnamen für die Felder, die vor dem Datenexport um
 #: includes/class-fscf-options.php:2690
 #@ si-contact-form
 msgid "Type the old field tag separated by the equals character, then type the new tag, like this: oldname=newname"
-msgstr ""
+msgstr "Schreiben Sie den alten Feld-Tag, dann - durch ein Gleichheitszeichen getrennt - den neuen Feld-Tag. Beispiel: Alter_Tag=Neuer_Tag"
 
 #: includes/class-fscf-options.php:2249
 #: includes/class-fscf-options.php:2274
@@ -3369,28 +3364,28 @@ msgstr "Beispiele:"
 #: includes/class-fscf-options.php:2267
 #@ si-contact-form
 msgid "Query string key value pairs to add"
-msgstr ""
+msgstr "Hinzuzufügende Schlüssel-Wert-Paare für Verbindungszeichenfolgen-Abfrage"
 
 #: includes/class-fscf-options.php:2270
 #: includes/class-fscf-options.php:2608
 #: includes/class-fscf-options.php:2711
 #@ si-contact-form
 msgid "Optional list of key value pairs that need to be added."
-msgstr ""
+msgstr "Optionale Liste von Schlüssel-Wert-Paaren, die hinzugefügt werden müssen."
 
 #: includes/class-fscf-options.php:2271
 #: includes/class-fscf-options.php:2609
 #: includes/class-fscf-options.php:2712
 #@ si-contact-form
 msgid "Sometimes the outgoing connection will require fields that were not posted on your form."
-msgstr ""
+msgstr "Manchmal erfordert die ausgehende Verbindung Felder, die aus Ihrem Formular nicht gesendet werden."
 
 #: includes/class-fscf-options.php:2273
 #: includes/class-fscf-options.php:2611
 #: includes/class-fscf-options.php:2714
 #@ si-contact-form
 msgid "Type the key separated by the equals character, then type the value, like this: key=value"
-msgstr ""
+msgstr "Geben Sie den Schlüssel, dann geben Sie Wert vor. Die Trennung erfolgt durch ein Gleichheitszeichen. Beispiel: Schlüssel=Wert"
 
 #: includes/class-fscf-options.php:2288
 #@ si-contact-form
@@ -3412,12 +3407,12 @@ msgstr "Achtung: Sie haben E-Mail-Versand in den Einstellungen unten ausgeschalt
 #: includes/class-fscf-options.php:2302
 #@ si-contact-form
 msgid "Disable email sending (use only when required while you have enabled query string on the redirect URL)."
-msgstr ""
+msgstr "Senden der E-Mail abschalten (nur nutzen falls notwendig z.B. während Sie den Abfrageausdruck zur umgeleiteten URL aktiviert haben)."
 
 #: includes/class-fscf-options.php:2305
 #@ si-contact-form
 msgid "No email will be sent to you!! The posted data will ONLY be sent to the redirect URL. This can be used to send the posted data via GET query string to a another form. Note: the confirmation email will still be sent if it is enabled."
-msgstr ""
+msgstr "Sie werden keine E-Mail erhalten! Die gesendeten Daten werden nur an die Umleitungs-URL gesendet. Dies kann verwendet werden, um die gesendeten Daten über eine GET-Abfragezeichenfolge an ein anderes Formular zu senden. Hinweis: die Bestätigungs-E-Mail wird trotz Aktivierung gesendet."
 
 #: includes/class-fscf-options.php:2320
 #, fuzzy
@@ -3454,18 +3449,18 @@ msgstr "Hinweis: Anhänge werden nur unterstützt , wenn Sie die \" WordPress \"
 #: includes/class-fscf-options.php:2340
 #@ si-contact-form
 msgid "Submit button input attributes"
-msgstr ""
+msgstr "Übermittlschaltflächen-Eingabeattribute"
 
 #: includes/class-fscf-options.php:2344
 #@ si-contact-form
 msgid "Use to add submit button input attributes."
-msgstr ""
+msgstr "Anwenden, um Übermittlschaltflächen-Eingabeattribute hinzuzufügen."
 
 #: includes/class-fscf-options.php:2345
 #: includes/class-fscf-options.php:2355
 #@ si-contact-form
 msgid "Useful for tracking a form submission with Google Analytics. example:"
-msgstr ""
+msgstr "Nützlich für die Verfolgung einer Formular-Übertragung mit Google Analytics. Beispiel:"
 
 #: includes/class-fscf-options.php:2350
 #@ si-contact-form
@@ -3490,12 +3485,12 @@ msgstr "Aktivieren, wenn die E-Mail im HTML-Format gesendet werden soll. HTML-Fo
 #: includes/class-fscf-options.php:2378
 #@ si-contact-form
 msgid "Enable to skip names of non-required and unfilled-out fields in emails."
-msgstr ""
+msgstr "Aktivieren, um die Namen nicht erforderlicher und unausgefüllter Felder in E-Mails zu überspringen."
 
 #: includes/class-fscf-options.php:2381
 #@ si-contact-form
 msgid "Enable if you want the email message to skip names of non-required and unfilled-out fields."
-msgstr ""
+msgstr "Aktivieren, um in der E-Mail-Nachricht, die Namen der nicht erforderlichen und unausgefüllten Felder zu überspringen."
 
 #: includes/class-fscf-options.php:2386
 #@ si-contact-form
@@ -3505,27 +3500,27 @@ msgstr "Aktivieren, um E-Mail-Anhänge nicht auf dem Server zu löschen."
 #: includes/class-fscf-options.php:2389
 #@ si-contact-form
 msgid "Enable if you want the email attachments to not be deleted automatically. They will stay in the /plugins/si-contact-form/attachments folder until you delete them."
-msgstr ""
+msgstr "Zu aktivieren, falls die E-Mail-Anhänge nicht automatisch gelöscht werden sollen. Sie werden im Ordner /plugins/si-contact-form/attachments verbleiben, bis Sie sie löschen."
 
 #: includes/class-fscf-options.php:2390
 #@ si-contact-form
 msgid "Note: use this feature at your own risk, because storing the files there could potentially expose privacy if the files uploaded contain private information."
-msgstr ""
+msgstr "Hinweis: die Verwendung dieser Funktion geschieht auf eigenes Risiko, da das Speichern der Dateien an diesem Ort möglicherweise die Privatsphäre verletzt, falls die hochgeladenen Dateien private Informationen enthalten."
 
 #: includes/class-fscf-options.php:2395
 #@ si-contact-form
 msgid "Enable to add a \"view / print message\" button after message sent."
-msgstr ""
+msgstr "Aktivieren, um eine \"Nachrichten ansehen / drucken\"-Schaltfläche hinzuzufügen, nachdem dieNachricht gesendet wurde."
 
 #: includes/class-fscf-options.php:2398
 #@ si-contact-form
 msgid "Enable if you want add a \"view / print message\" button after message sent. This feature will be skipped if the \"redirect after the message sends\" is also enabled."
-msgstr ""
+msgstr "Aktivieren, wenn nach Absendung einer Nachricht eine \"Nachricht anschauen / drucken\"-Schaltfläche hinzugefügt werden soll. Dieses Feature wird übersprungen, falls die \"Umleitung nach Nachrichtenversand\" ebenfalls aktiviert ist."
 
 #: includes/class-fscf-options.php:2399
 #@ si-contact-form
 msgid "Note: the message content will be viewable and could potentially expose privacy if the messages contain private information."
-msgstr ""
+msgstr "Hinweis: der Nachrichteninhalt wird sichtbar sein und verletzt möglicherweise die Privatsphäre, falls die Nachrichten private Informationen enthalten."
 
 #: includes/class-fscf-options.php:2404
 #@ si-contact-form
@@ -3557,7 +3552,7 @@ msgstr "E-Mail enthält ausführliche Informationen über den Absender. Wie IP-A
 #: includes/class-fscf-options.php:2418
 #@ si-contact-form
 msgid "Install the <a href=\"http://wordpress.org/extend/plugins/visitor-maps/\">Visitor Maps plugin</a> to enable geolocation and then city, state, country will automatically be included."
-msgstr ""
+msgstr "Installieren Sie das <a href=\"http://wordpress.org/extend/plugins/visitor-maps/\">Visitor Maps Plugin</a> um die Ortsbestimmung zu aktivieren. Stadt, Bundesland und Land werden dann automatisch übernommen."
 
 #: includes/class-fscf-options.php:2424
 #, fuzzy
@@ -3578,7 +3573,7 @@ msgstr "PHP-Sessions aktivieren."
 #: includes/class-fscf-options.php:2435
 #@ si-contact-form
 msgid "Enables PHP session handling. Default is not enabled. You can enable this setting to use PHP sessions for shortcode attributes and the CAPTCHA. PHP Sessions must be supported by your web host or there may be session errors. This setting affects all forms."
-msgstr ""
+msgstr "Aktiviert das PHP-Session-Handling. Standard ist nicht aktiviert. Sie können mithilfe dieser Einstellung PHP-Sessions für Shortcode-Attribute und das CAPTCHA aktivieren. PHP-Sessions müssen von Ihrem Webhost unterstützt werden oder es kommt zu Störungen in der Session. Diese Einstellung betrifft alle Formulare."
 
 #: includes/class-fscf-options.php:2445
 #: includes/class-fscf-options.php:2453
@@ -3589,18 +3584,18 @@ msgstr "Es gibt ein Problem mit dem Ordner/Verzeichnis"
 #: includes/class-fscf-options.php:2447
 #@ si-contact-form
 msgid "The directory is not found, a <a href=\"http://codex.wordpress.org/Changing_File_Permissions\" target=\"_blank\">permissions</a> problem may have prevented this directory from being created."
-msgstr ""
+msgstr "Das Verzeichnis wurde nicht gefunden, ein Problem mit den <a href=\"http://codex.wordpress.org/Changing_File_Permissions\" target=\"_blank\">Berechtigungen</a> könnte die Erstellung verhindert haben."
 
 #: includes/class-fscf-options.php:2449
 #: includes/class-fscf-options.php:2461
 #@ si-contact-form
 msgid "Fixing the actual problem is recommended, but you can check this setting on the contact form options page: \"Use PHP Sessions\" and the captcha will work this way just fine (as long as PHP Sessions are supported by your web host)."
-msgstr ""
+msgstr "Es wird empfohlen, dass eigentliche Problem zu lösen, aber Sie können diese Einstellung auf der Seite \\\"Optionen Kontaktformular\\\" überprüfen: \"PHP-Sessions verwenden\" und das Captcha wird in dieser Weise gut funktionieren (solange PHP-Sessions von Ihrem Webhost unterstützt werden)."
 
 #: includes/class-fscf-options.php:2454
 #@ si-contact-form
 msgid "The directory Unwritable (<a href=\"http://codex.wordpress.org/Changing_File_Permissions\" target=\"_blank\">fix permissions</a>)"
-msgstr ""
+msgstr "Das Verzeichnis ist nicht beschreibbar (<a href=\"http://codex.wordpress.org/Changing_File_Permissions\" target=\"_blank\"Berechtigungen korrigieren</a>)"
 
 #: includes/class-fscf-options.php:2455
 #@ si-contact-form
@@ -3610,7 +3605,7 @@ msgstr "Zugelassen ist/sind: "
 #: includes/class-fscf-options.php:2459
 #@ si-contact-form
 msgid "Fixing this may require assigning 0755 permissions or higher (e.g. 0777 on some hosts. Try 0755 first, because 0777 is sometimes too much and will not work.)"
-msgstr ""
+msgstr "Dies zu beheben erfordert 0755-Berechtigungen oder höher (z.B. 0777 auf einigen Hosts. Versuchen Sie zuerst 0755, da 0777 manchmal zu viel ist und nicht funktioniert.)"
 
 #: includes/class-fscf-options.php:2468
 #@ si-contact-form
@@ -3652,7 +3647,7 @@ msgstr "Dieser Text erscheint über dem Formular."
 #: includes/class-fscf-options.php:2507
 #@ si-contact-form
 msgid "Posted form data can be sent silently to a remote form using the method GET or POST."
-msgstr ""
+msgstr "Gesendete Formulardaten können im Hintergrund zu einem entfernten Formular mit der Methode GET oder POST gesendet werden."
 
 #: includes/class-fscf-options.php:2509
 #@ si-contact-form
@@ -3662,7 +3657,7 @@ msgstr "FAQ: Senden Sie die Formulardaten zu einer anderen Site."
 #: includes/class-fscf-options.php:2513
 #@ si-contact-form
 msgid "Silent Remote Sending:"
-msgstr ""
+msgstr "Stille Remote-Übertragung:"
 
 #: includes/class-fscf-options.php:2517
 #@ si-contact-form
@@ -3682,12 +3677,12 @@ msgstr "Eingeschaltet: Methode POST"
 #: includes/class-fscf-options.php:2535
 #@ si-contact-form
 msgid "If enabled: After a user sends a message, the form can silently send the posted data to a third party remote URL. This can be used for a third party service such as a mailing list API."
-msgstr ""
+msgstr "Falls aktiviert: Nachdem ein Benutzer eine Nachricht sendet, kann das Formular im Hintergrund die gesendeten Daten an eine dritte Remote-URL senden. Dies kann für einen Fremdanbieter-Dienst wie z.B. eine Mailing-List-API verwendet werden."
 
 #: includes/class-fscf-options.php:2537
 #@ si-contact-form
 msgid "Select method GET or POST based on the remote API requirement."
-msgstr ""
+msgstr "Wählen Sie die Methode GET oder POST auf der Grundlage der Remote-API-Anforderung."
 
 #: includes/class-fscf-options.php:2544
 #@ si-contact-form
@@ -3697,17 +3692,17 @@ msgstr "Warnung : Bei Aktivierung dieser Einstellung muss das \"Silent Remote UR
 #: includes/class-fscf-options.php:2549
 #@ si-contact-form
 msgid "Silent Remote URL"
-msgstr ""
+msgstr "Stille Remote-URL"
 
 #: includes/class-fscf-options.php:2553
 #@ si-contact-form
 msgid "The form will silently send the form data to this URL after success. This can be used for a third party service such as a mailing list API."
-msgstr ""
+msgstr "Das Formular sendet nach Erfolf im Hintergrund die Formulardaten an diese URL. Dies kann für einen Fremdanbieter-Dienst wie z.B. eine Mailing-List-API verwendet werden."
 
 #: includes/class-fscf-options.php:2562
 #@ si-contact-form
 msgid "Silent send fields to ignore"
-msgstr ""
+msgstr "Felder, die von der stillen Übertragung ausgeschlossen werden sollen"
 
 #: includes/class-fscf-options.php:2565
 #, fuzzy
@@ -3718,7 +3713,7 @@ msgstr "Optionale Liste von Feldnamen für die Felder, die Sie nicht in den Date
 #: includes/class-fscf-options.php:2581
 #@ si-contact-form
 msgid "Silent send fields to rename"
-msgstr ""
+msgstr "Felder, die bei der stillen Übertragung umbenannt werden sollen"
 
 #: includes/class-fscf-options.php:2584
 #, fuzzy
@@ -3729,7 +3724,7 @@ msgstr "Optional Liste von Feldnamen für die Felder, die vor dem Datenexport um
 #: includes/class-fscf-options.php:2605
 #@ si-contact-form
 msgid "Silent send key value pairs to add"
-msgstr ""
+msgstr "Schlüsselwertpaare, die bei der stillen Übertragung hinzugefügt werden sollen"
 
 #: includes/class-fscf-options.php:2626
 #@ si-contact-form
@@ -3744,18 +3739,18 @@ msgstr "Achtung: Sie haben E-Mail-Senden des Silent Remote Sender ausgeschaltet.
 #: includes/class-fscf-options.php:2640
 #@ si-contact-form
 msgid "Disable email sending (use only when required while you have enabled silent remote sending)."
-msgstr ""
+msgstr "Deaktiviert das Senden von E-Mails (Verwendung nur im Bedarfsfall bei Einsatz der Stillen Remote-Übertragung)."
 
 #: includes/class-fscf-options.php:2643
 #@ si-contact-form
 msgid "No email will be sent to you! The posted data will ONLY be sent to the silent remote URL. This can be used for a third party service such as a mailing list API. Note: the confirmation email will still be sent if it is enabled."
-msgstr ""
+msgstr "Sie werden keine E-Mail erhalten! Die gesendeten Daten werden nur an der Stille-Remote-URL gesendet. Dies kann für einen Fremdanbieter-Dienst wie z.B. eine Mailing-List-API verwendet werden. Hinweis: die Bestätigungs-E-Mail wird noch gesendet, falls dies aktiviert ist."
 
 #: includes/class-fscf-options.php:2657
 #, php-format
 #@ si-contact-form
 msgid "Posted fields data can be exported to another plugin such as the <a href=\"%s\" target=\"_new\">Contact Form DB plugin</a>."
-msgstr ""
+msgstr "Geschriebene Felddaten können in ein anderes Plugin (z.B. in <a href=\"%s\" target=\"_new\">Plugin Contact Form DB</a>) exportiert werden."
 
 #: includes/class-fscf-options.php:2659
 #@ si-contact-form
@@ -3787,7 +3782,7 @@ msgstr "Optional Liste von Feldnamen für die Felder, die vor dem Datenexport um
 #: includes/class-fscf-options.php:2708
 #@ si-contact-form
 msgid "Data export key value pairs to add"
-msgstr ""
+msgstr "Datenexport Schlüssel-Wert-Paare hinzufügen"
 
 #: includes/class-fscf-options.php:2728
 #@ si-contact-form
@@ -3802,7 +3797,7 @@ msgstr "E-Mail-Sendung ausschalten (optional)."
 #: includes/class-fscf-options.php:2738
 #@ si-contact-form
 msgid "No email will be sent to you! The posted data will ONLY be sent to the data export. Note: the confirmation email will still be sent if it is enabled."
-msgstr ""
+msgstr "Sie werden keine E-Mail erhalten! Die gesendeten Daten werden NUR für den Datenexport gesendet. Hinweis: die Bestätigungs-E-Mail wird noch gesendet, wenn dies aktiviert ist."
 
 #: includes/class-fscf-options.php:2757
 #, fuzzy
@@ -3848,7 +3843,7 @@ msgstr "Honeypot-Spambot-Falle aktivieren."
 #: includes/class-fscf-options.php:2782
 #@ si-contact-form
 msgid "Enables hidden empty field honyepot trap for spam bots. For best results, do not enable unless you have a spam problem."
-msgstr ""
+msgstr "Ermöglicht \"verstecktes Leerfeld\" für Honyepot-Falle für Spam-Bots. Um optimale Ergebnisse zu erzielen, aktivieren Sie dies nicht - es sei denn, Sie haben ein Spam-Problem."
 
 #: includes/class-fscf-options.php:2793
 #@ si-contact-form
@@ -3991,7 +3986,7 @@ msgstr "(empfohlen)."
 #: includes/class-fscf-options.php:2925
 #@ si-contact-form
 msgid "Helps prevent automated spam bots posting from off-site forms. If you have multiple domains for your site, list additional names below."
-msgstr ""
+msgstr "Verhindert, dass automatisierte Spam-Bots von Off-Site-Formularen senden. Wenn Sie mehrere Domains für Ihre Website haben, führen Sie deren Namen zusätzliche unten auf."
 
 #: includes/class-fscf-options.php:2930
 #@ si-contact-form
@@ -4001,275 +3996,270 @@ msgstr "Zusätzlich erlaubte Domänennamen (optional)"
 #: includes/class-fscf-options.php:2934
 #@ si-contact-form
 msgid "List additional domains for your site, one per line, without http:// and without www. Example: mywebsite.com"
-msgstr ""
+msgstr "Listen Sie weitere Domains für Ihre Website zeilenweise auf - ohne http:// und ohne www. Beispiel: mywebsite.com"
 
-#: includes/class-fscf-options.php:3005
+#: includes/class-fscf-options.php:3008
 #@ si-contact-form
 msgid "Add a scheduling button to your form"
-msgstr ""
+msgstr "Eine Planungs-Schaltfläche Ihrem Formular hinzufügen"
 
-#: includes/class-fscf-options.php:3010
+#: includes/class-fscf-options.php:3013
 #, fuzzy
 #@ si-contact-form
 msgid "Button Label:"
 msgstr "Schaltflächenbeschriftung:"
 
-#: includes/class-fscf-options.php:3015
+#: includes/class-fscf-options.php:3018
 #@ si-contact-form
 msgid "Show call for action below the button:"
-msgstr ""
+msgstr "Zeigen Sie den Handlungsbedarf unterhalb der Schaltfäche an:"
 
-#: includes/class-fscf-options.php:3025
-#@ si-contact-form
-msgid "ActiveEngage - Add a contact label on every page"
-msgstr ""
-
-#: includes/class-fscf-options.php:2974
+#: includes/class-fscf-options.php:2978
 #, fuzzy
 #@ si-contact-form
 msgid "Change Email"
 msgstr "Änderungsprotokoll"
 
-#: includes/class-fscf-options.php:2974
+#: includes/class-fscf-options.php:2978
 #, fuzzy
 #@ si-contact-form
 msgid "Update Email"
 msgstr "Email Adresse"
 
-#: includes/class-fscf-options.php:3033
+#: includes/class-fscf-options.php:3026
 #, fuzzy
 #@ si-contact-form
 msgid "Change Account"
 msgstr "Änderungsprotokoll"
 
-#: includes/class-fscf-options.php:3034
+#: includes/class-fscf-options.php:3027
 #@ si-contact-form
 msgid "More about vCita"
 msgstr "Mehr über vCita"
 
-#: includes/class-fscf-options.php:3035
+#: includes/class-fscf-options.php:3028
 #@ si-contact-form
 msgid "Help/Faq"
 msgstr "Hilfe/FAQ"
 
-#: includes/class-fscf-options.php:2989
+#: includes/class-fscf-options.php:2992
 #@ si-contact-form
 msgid "Your email and name will only be used to send you meeting requests and additional communication from vCita, and will not be shared with your clients or third party."
-msgstr ""
+msgstr "Ihr E-Mail-Adresse und Ihr Name werden nur eingesetzt, um Ihnen Besprechungsanfragen und zusätliche Informationen zuzustellen. Ihre Daten werden nicht an Ihre Klienten oder Dritte weitergegeben."
 
-#: includes/class-fscf-options.php:3040
+#: includes/class-fscf-options.php:3033
 #@ si-contact-form
 msgid "Privacy Policy"
 msgstr "Datenschutzrichtlinien"
 
-#: includes/class-fscf-options.php:3041
+#: includes/class-fscf-options.php:3034
 #@ si-contact-form
 msgid "Help"
 msgstr "Hilfe"
 
-#: includes/class-fscf-options.php:3090
+#: includes/class-fscf-options.php:3084
 #@ si-contact-form
 msgid "Warning: You have unsaved changes.  To avoid losing your changes, you should changes before using the tools on this page."
-msgstr ""
+msgstr "Warnung: Sie haben ungespeicherte Änderungen. Um zu vermeiden, dass Ihre Änderungen verloren gehen, sollten Sie die Änderungen speichern, bevor Sie die Werkzeuge dieser Seite verwenden."
 
-#: includes/class-fscf-options.php:3097
+#: includes/class-fscf-options.php:3091
 #, fuzzy
 #@ si-contact-form
 msgid "Send a Test Email"
 msgstr "Sende eine Test-E-Mail"
 
-#: includes/class-fscf-options.php:3098
+#: includes/class-fscf-options.php:3092
 #@ si-contact-form
 msgid "If you are not receiving email from your form, try this test because it can display troubleshooting information."
 msgstr "Wenn Sie von Ihrer Form keine  E-Mail erhalten, versuchen Sie diesen Test, er kann Informationen zur Fehlerbehebung anzuzeigen."
 
-#: includes/class-fscf-options.php:3099
+#: includes/class-fscf-options.php:3093
 #@ si-contact-form
 msgid "There are settings you can use to try to fix email delivery problems, see this FAQ for help:"
 msgstr "Es gibt Einstellungen, die Sie versuchen können, um E-Mail-Versand Probleme zu beheben Sie finden diese in der FAQ Hilfe."
 
-#: includes/class-fscf-options.php:3101
+#: includes/class-fscf-options.php:3095
 #@ si-contact-form
 msgid "Type an email address here and then click Send Test to generate a test email."
 msgstr "Geben Sie hier eine E-Mail-Adresse ein und drücken Sie dann \"Sende Test\" um eine Test-E-Mail zu verschicken."
 
-#: includes/class-fscf-options.php:3109
+#: includes/class-fscf-options.php:3103
 #: includes/class-fscf-process.php:162
 #@ si-contact-form
 msgid "To:"
 msgstr "An:"
 
-#: includes/class-fscf-options.php:3120
+#: includes/class-fscf-options.php:3114
 #@ si-contact-form
 msgid "This tool can copy your contact form settings from this form number to any of your other forms."
-msgstr ""
+msgstr "Dieses Tool kann Ihre Kontakt-Formular-Einstellungen aus dieser Formularnummer auf eines Ihrer anderen Formulare übertragen."
 
-#: includes/class-fscf-options.php:3121
+#: includes/class-fscf-options.php:3115
 #@ si-contact-form
 msgid "Use to copy just the style settings, or all the settings from this form."
-msgstr ""
+msgstr "Verwenden, um nur die Stileinstellungen oder alle Einstellungen dieses Formulars zu kopieren."
 
-#: includes/class-fscf-options.php:3122
+#: includes/class-fscf-options.php:3116
 #@ si-contact-form
 msgid "It is a good idea to backup all forms with the backup tool before you use this copy tool. Changes are permanent!"
-msgstr ""
+msgstr " Es ist wäre gut, alle Formulare mit dem Backup-Tool zu sichern, bevor Sie dieses Kopierwerkzeug verwenden. Die Änderungen sind dauerhaft!"
 
-#: includes/class-fscf-options.php:3124
+#: includes/class-fscf-options.php:3118
 #@ si-contact-form
 msgid "What to copy:"
 msgstr "Was zu kopieren ist:"
 
-#: includes/class-fscf-options.php:3128
+#: includes/class-fscf-options.php:3122
 #, php-format
 #@ si-contact-form
 msgid "Form %d - all settings"
 msgstr "Formular %d - alle Einstellungen"
 
-#: includes/class-fscf-options.php:3129
+#: includes/class-fscf-options.php:3123
 #, php-format
 #@ si-contact-form
 msgid "Form %d - style settings"
 msgstr "Formular %d - Stil-Einstellungen"
 
-#: includes/class-fscf-options.php:3141
+#: includes/class-fscf-options.php:3135
 #, php-format
 #@ si-contact-form
 msgid "Select a form to copy form %d settings to:"
 msgstr "Wähle Sie ein Formular auf das die Einstellungen des Formulars %d übertragen werden sollen:"
 
-#: includes/class-fscf-options.php:3144
-#: includes/class-fscf-options.php:3173
-#: includes/class-fscf-options.php:3202
+#: includes/class-fscf-options.php:3138
+#: includes/class-fscf-options.php:3167
+#: includes/class-fscf-options.php:3196
 #@ si-contact-form
 msgid "All Forms"
 msgstr "Alle Formulare"
 
-#: includes/class-fscf-options.php:3149
-#: includes/class-fscf-options.php:3178
-#: includes/class-fscf-options.php:3208
+#: includes/class-fscf-options.php:3143
+#: includes/class-fscf-options.php:3172
+#: includes/class-fscf-options.php:3202
 #@ si-contact-form
 msgid "(this form) "
 msgstr "(diese Formular) "
 
-#: includes/class-fscf-options.php:3150
-#: includes/class-fscf-options.php:3179
-#: includes/class-fscf-options.php:3209
-#: includes/class-fscf-util.php:282
+#: includes/class-fscf-options.php:3144
+#: includes/class-fscf-options.php:3173
+#: includes/class-fscf-options.php:3203
+#: includes/class-fscf-util.php:278
 #, fuzzy
 #@ si-contact-form
 msgid "Form"
 msgstr "Formular:"
 
-#: includes/class-fscf-options.php:3168
+#: includes/class-fscf-options.php:3162
 #@ si-contact-form
 msgid "This tool can save a backup of your contact form settings."
 msgstr "Dieses Tool sichert die Einstellungen Ihrer Kontakt-Formulare."
 
-#: includes/class-fscf-options.php:3169
+#: includes/class-fscf-options.php:3163
 #@ si-contact-form
 msgid "Use to transfer one, or all, of your forms from one site to another. Or just make a backup to save."
-msgstr ""
+msgstr "Verwenden, um eine oder alle Ihre Formulare von einem Ort zum anderen zu übertragen. Oder erstellen Sie zur Speicherung einfach eine Sicherungskopie."
 
-#: includes/class-fscf-options.php:3170
+#: includes/class-fscf-options.php:3164
 #@ si-contact-form
 msgid "Select a form to backup:"
 msgstr "Ein Formular zum Sichern auswählen:"
 
-#: includes/class-fscf-options.php:3196
+#: includes/class-fscf-options.php:3190
 #@ si-contact-form
 msgid "This tool can restore a backup of your contact form settings. If you have previously made a backup, you can restore one or all your forms."
-msgstr ""
+msgstr "Dieses Tool kann eine Sicherung Ihrer Kontakt-Formular-Einstellungen wiederherstellen. Wenn Sie vorher ein Backup gemacht haben, können Sie ein einzelnes oder alle Formulare wiederherstellen."
 
-#: includes/class-fscf-options.php:3197
+#: includes/class-fscf-options.php:3191
 #@ si-contact-form
 msgid "It is a good idea to backup all forms with the backup tool before you restore any. Changes are permanent!"
-msgstr ""
+msgstr "Es ist anzuraten, alle Formulare mit dem Backup-Tool zu sichern, bevor Sie eine Wiederherstellung starten. Die Änderungen sind dauerhaft!"
 
-#: includes/class-fscf-options.php:3198
+#: includes/class-fscf-options.php:3192
 #@ si-contact-form
 msgid "Select a form to restore:"
 msgstr "Ein Formular zur Wiederherstellung auswählen:"
 
-#: includes/class-fscf-options.php:3217
+#: includes/class-fscf-options.php:3211
 #@ si-contact-form
 msgid "Upload Backup File:"
 msgstr "Upload Backup-Datei:"
 
-#: includes/class-fscf-options.php:3229
+#: includes/class-fscf-options.php:3223
 #@ si-contact-form
 msgid "Reset and Delete"
 msgstr "Zurücksetzen und Löschen"
 
-#: includes/class-fscf-options.php:3230
+#: includes/class-fscf-options.php:3224
 #@ si-contact-form
 msgid "These options will premanantly affect all tabs on this form. (Form 1 cannot be deleted)."
-msgstr ""
+msgstr "Diese Optionen werden dauerhaft alle Registerkarten in diesem Formular beeinflussen. (Formular 1 kann nicht gelöscht werden)."
 
-#: includes/class-fscf-options.php:3234
+#: includes/class-fscf-options.php:3228
 #@ si-contact-form
 msgid "Reset this form to the default values."
 msgstr "Dieses Formular auf die Standardwerte zurücksetzen."
 
-#: includes/class-fscf-options.php:3239
+#: includes/class-fscf-options.php:3233
 #@ si-contact-form
 msgid "Delete this form permanently."
 msgstr "Dieses Formular endgültig löschen."
 
-#: includes/class-fscf-options.php:3244
+#: includes/class-fscf-options.php:3238
 #@ si-contact-form
 msgid "Reset default style settings on all forms."
 msgstr "Stil-Einstellungen bei allen Formularen auf die Standardwerte zurücksetzen."
 
-#: includes/class-fscf-options.php:3573
+#: includes/class-fscf-options.php:3566
 #, php-format
 #@ si-contact-form
 msgid "Field label cannot be blank.  Label set to \"Field  %s\". To delete a field, use the delete option."
-msgstr ""
+msgstr "Feldbezeichnung darf nicht leer sein. Bezeichnung wird auf \"Feld %s\" gesetzt. Um ein Feld zu löschen, verwenden Sie die Löschoption."
 
-#: includes/class-fscf-options.php:3622
+#: includes/class-fscf-options.php:3615
 #, php-format
 #@ si-contact-form
 msgid "Select options are required for the %s field."
 msgstr "Auswahloptionen sind für das Feld %s erforderlich."
 
-#: includes/class-fscf-options.php:3641
+#: includes/class-fscf-options.php:3634
 #, php-format
 #@ si-contact-form
 msgid "Default date for %s is not correctly formatted. Format should be %s."
-msgstr ""
+msgstr "Das Standarddatum für %s ist nicht korrekt formatiert. Das Format sollte %s sein."
 
-#: includes/class-fscf-options.php:3792
+#: includes/class-fscf-options.php:3785
 #@ si-contact-form
 msgid "A new field has been added. Now you must edit the field name and details, then click <b>Save Changes</b>."
-msgstr ""
+msgstr "Ein neues Feld wurde hinzugefügt. Jetzt müssen Sie die Feldnamen und die Details bearbeiten. Klicken Sie anschliessend auf <b>Änderungen speichern</b>."
 
-#: includes/class-fscf-options.php:3805
-#: includes/class-fscf-util.php:363
+#: includes/class-fscf-options.php:3798
+#: includes/class-fscf-util.php:359
 #, fuzzy
 #@ si-contact-form
 msgid "New Form"
 msgstr "Neues Formular"
 
-#: includes/class-fscf-options.php:3814
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#: includes/class-fscf-options.php:3807
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Form %d has been added."
 msgstr "Formular %d wurde hinzugefügt."
 
-#: includes/class-fscf-options.php:3827
+#: includes/class-fscf-options.php:3820
 #, php-format
 #@ si-contact-form
 msgid "Form %d has been reset to the default settings."
 msgstr "Formular %d wurde auf die Standardeinstellungen zurückgesetzt."
 
-#: includes/class-fscf-options.php:3840
+#: includes/class-fscf-options.php:3833
 #, php-format
 #@ si-contact-form
 msgid "An error has occured.  Form %d could not be deleted."
 msgstr "Es ist ein Fehler aufgetreten. Formular %d konnte nicht gelöscht werden."
 
-#: includes/class-fscf-options.php:3849
-#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format
+#: includes/class-fscf-options.php:3842
+#, fuzzy, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format, php-format
 #@ si-contact-form
 msgid "Form %d has been deleted."
 msgstr "Formular %d wurde gelöscht."
@@ -4398,7 +4388,7 @@ msgstr "Die CAPTCHA-Sicherheitsprüfung war fehlerhaft. Bitte noch mal versuchen
 #: includes/class-fscf-process.php:1084
 #@ si-contact-form
 msgid "Akismet determined your message is spam. This can be caused by the message content, your email address, or your IP address being on the Akismet spam system. The administrator can turn off Akismet for the form on the form edit menu."
-msgstr ""
+msgstr "Akismet hat festgestellt, dass es sich bei Ihrer Nachricht um Spam handelt. Dies kann durch den Inhalt der Nachricht, Ihre E-Mail-Adresse oder Ihre IP-Adresse auf dem Akismet-Spam-System verursacht werden. Der Administrator kann Akismet für das Formular im Menü \"Formular bearbeiten\" deaktivieren."
 
 #: includes/class-fscf-process.php:1089
 #@ si-contact-form
@@ -4429,7 +4419,7 @@ msgstr "genehmigt"
 #: includes/class-fscf-process.php:1285
 #@ si-contact-form
 msgid "Illegal characters in POST. Possible email injection attempt"
-msgstr ""
+msgstr "Ungültige Zeichen im POST. Möglicher E-Mail-Injection-Versuch"
 
 #: includes/class-fscf-process.php:1237
 #@ si-contact-form
@@ -4445,7 +4435,7 @@ msgstr "Ungültiges POST"
 #, php-format
 #@ si-contact-form
 msgid "Invalid HTTP_REFERER domain. The domain name posted from does not match the allowed domain names from the form edit Security tab: %s"
-msgstr ""
+msgstr "Ungültige HTTP_REFERER-Domain. Der Absender-Domain-Name entspricht nicht den zulässigen Domain-Namen aus der Registerkarte \"Formular bearbeiten\", \"Sicherheit\": %s"
 
 #: includes/class-fscf-process.php:1429
 #, php-format
@@ -4456,7 +4446,7 @@ msgstr "Formular: %d"
 #: includes/class-fscf-util.php:98
 #@ si-contact-form
 msgid "<b>Warning</b>: Fast Secure Contact Form cannot import settings because the previous version is too old. Installed as new."
-msgstr ""
+msgstr "<b>Warnung</b>: Fast Secure Contact Form kann die Einstellungen nicht importieren, da die vorherige Version zu alt ist. Es wurde neu installiert."
 
 #: includes/class-fscf-util.php:158
 #@ si-contact-form
@@ -4468,37 +4458,37 @@ msgstr "Sind Sie sicher, dass Sie diese Änderung dauerhaft durchführen wollen?
 msgid "You have unsaved changes."
 msgstr "Sie haben Ihre Änderungen nicht gesichert."
 
-#: includes/class-fscf-util.php:219
+#: includes/class-fscf-util.php:215
 #@ si-contact-form
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: includes/class-fscf-util.php:364
-#: includes/class-fscf-util.php:642
+#: includes/class-fscf-util.php:360
+#: includes/class-fscf-util.php:635
 #@ si-contact-form
 msgid "<p>Comments or questions are welcome.</p>"
 msgstr "<p>Ihre Fragen und Anmerkungen sind jederzeit willkommen.</p>"
 
-#: includes/class-fscf-util.php:372
-#: includes/class-fscf-util.php:650
+#: includes/class-fscf-util.php:368
+#: includes/class-fscf-util.php:643
 #@ si-contact-form
 msgid "Contact:"
 msgstr "Kontakt:"
 
-#: includes/class-fscf-util.php:435
+#: includes/class-fscf-util.php:431
 #, fuzzy
 #@ si-contact-form
 msgid "Contact Form"
 msgstr "Kontakt-Formular:"
 
-#: includes/class-fscf-util.php:612
+#: includes/class-fscf-util.php:605
 #, fuzzy
 #@ si-contact-form
 msgid "New Field:"
 msgstr "Neues Feld:"
 
 #: includes/class-fscf-action.php:51
-#: includes/class-fscf-options.php:3252
+#: includes/class-fscf-options.php:3246
 #: includes/class-fscf-util.php:163
 #@ si-contact-form
 msgid "Import forms from 3.xx version"
@@ -4507,29 +4497,29 @@ msgstr "Formulare aus den Versionen 3.xx importieren"
 #: includes/class-fscf-action.php:562
 #@ si-contact-form
 msgid "Restore failed: Selected All to restore, but backup form is missing."
-msgstr ""
+msgstr "Wiederherstellung fehlgeschlagen: Alles wurde zur Wiederherstellung ausgewählt, aber das Backup-Formular fehlt."
 
 #: includes/class-fscf-options.php:497
 #@ si-contact-form
 msgid "Settings have been imported from a previous version. Please check over the settings to be sure that everything is all right. Also, please go to the Tools tab and click \"Reset default style settings on all forms\" so that all the new style changes are set for your imported forms."
-msgstr ""
+msgstr "Einstellungen wurden von einer früheren Version importiert. Bitte überprüfen Sie die Einstellungen, um sicherzustellen, dass alles in Ordnung ist. Bitte gehen Sie auch auf die Werkzeuge-Registerkarte und klicken Sie auf \"Stil-Standardeinstellungen für alle Formulare zurücksetzen\", so dass die neuen Stiländerungen für Ihre importierten Formulare festgelegt werden können."
 
 #: includes/class-fscf-options.php:1108
 #@ si-contact-form
 msgid "Caution: Duplicate field label. Now you must change the field label on the Fields tab and click <b>Save Changes</b>"
-msgstr ""
+msgstr "Achtung: Doppelte Feldbezeichnung. Sie müssen die Feldbezeichnung auf der Felder-Registerkarte ändern. Klicken Sie anschliessend auf <b>Änderungen speichern</b>"
 
 #: includes/class-fscf-options.php:1111
 #@ si-contact-form
 msgid "Caution: Duplicate field label. Change the field label and click <b>Save Changes</b>"
 msgstr "Achtung: Doppelte Feldbezeichnung. Ändern Sie die Feldbezeichnung und klicken Sie anschließend auf <b>Änderungen speichern</b>"
 
-#: includes/class-fscf-options.php:3253
+#: includes/class-fscf-options.php:3247
 #@ si-contact-form
 msgid "Note: this button will replace the current 4.xx settings and forms with your old version 3.xx ones!"
-msgstr ""
+msgstr "Hinweis: diese Schaltfläche wird die aktuellen 4.xx-Einstellungen und Formulare durch Ihre Einstellungen/Formulare der Version 3.xx ersetzen!"
 
-#: includes/class-fscf-options.php:3257
+#: includes/class-fscf-options.php:3251
 #@ si-contact-form
 msgid "3.xx version forms are not available for import, the import button is disabled."
 msgstr "Formulare der 3.xx-Version können nicht importiert werden, die Import-Schaltfläche ist deaktiviert."
@@ -4552,10 +4542,15 @@ msgstr "Aktivieren, um die E-Mail-Bezeichnungen in der selben Zeile wie die Wert
 #: includes/class-fscf-options.php:2373
 #@ si-contact-form
 msgid "Enable if you want the email labels on same line as values. Normally the email labels are on separate lines as the values."
-msgstr ""
+msgstr "Aktivieren, um die E-Mail-Bezeichnungen auf derselben Zeile wie die Werte auszugeben. Normalerweise sind die E-Mail-Bezeichnungen und Werte auf separaten Zeilen ausgewiesen."
 
 #: includes/class-fscf-import.php:94
 #@ si-contact-form
 msgid "imported"
 msgstr "importiert"
+
+#: includes/class-fscf-display.php:76
+#@ si-contact-form
+msgid "Contact Form Shortcode Error: Using shorcode attributes requires the PHP sessions setting to be enabled on the Advanced tab in form settings."
+msgstr "Contact Form Shortcode Fehler: Bei Verwendung von Shorcode-Attributen müssen die PHP-Session-Einstellungen auf der Registerkarte \"Erweitert\" in den Formulareinstellungen aktiviert sein."
 
