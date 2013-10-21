@@ -230,7 +230,7 @@ class FSCF_Process {
 					self::validate_email_type($field['slug'], $field['req'] );
                 else if ( 'url' == $field['type'] ) // extra field email type
 					self::validate_url_type($field['slug'], $field['req'] );
-				else if ( 'true' == $field['req'] && empty($_POST[$field['slug']]) ) {
+				else if ( 'true' == $field['req'] && $_POST[$field['slug']] == '' ) {
 					self::$form_errors[$field['slug']] = ( self::$form_options['error_field'] != '') ? self::$form_options['error_field'] : __('This field is required.', 'si-contact-form');
 				}
 			}
@@ -265,7 +265,7 @@ class FSCF_Process {
                     if ( 'hidden' == $field['type'] )
                             self::$form_data[$field['slug']] = FSCF_Util::clean_input($field['default']); // use the default, not the form input
 					if ( 'full_name' != $field['slug'] && 'email' != $field['slug']  ) {
-                        if ( empty( self::$form_data[$field['slug']] ) && self::$form_options['email_hide_empty'] == 'true' ) {
+                        if ( self::$form_data[$field['slug']] == '' && self::$form_options['email_hide_empty'] == 'true' ) {
 
                         } else {
                                 self::$email_msg .= self::make_bold( $field['label'] ) . $inline_or_newline;
@@ -333,7 +333,7 @@ class FSCF_Process {
 						   }
 					  }
                     }
-                    if ( empty( $chosen ) && self::$form_options['email_hide_empty'] == 'true' ) {
+                    if ( $chosen == '' && self::$form_options['email_hide_empty'] == 'true' ) {
 
                     } else {
                             self::$email_msg .= self::make_bold( $field['label'] ) . $inline_or_newline;
@@ -368,7 +368,7 @@ class FSCF_Process {
 						        }
                         }
 					}
-					if ( empty( $chosen ) && self::$form_options['email_hide_empty'] == 'true' ) {
+					if ( $chosen == '' && self::$form_options['email_hide_empty'] == 'true' ) {
 
                     } else {
                             self::$email_msg .= self::make_bold( $field['label'] ) . $inline_or_newline;
@@ -675,7 +675,7 @@ class FSCF_Process {
 		// Add the name to the email message
 		switch ( self::$form_options['name_format'] ) {
 			case 'name':
-                if ( empty(self::$form_data['full_name']) && self::$form_options['email_hide_empty'] == 'true' ) {
+                if ( self::$form_data['full_name'] == '' && self::$form_options['email_hide_empty'] == 'true' ) {
 
                 } else {
                         self::$email_msg .= self::make_bold( $field['label'] ) . $inline_or_newline;
@@ -1414,7 +1414,7 @@ class FSCF_Process {
 			// subject can include posted data names feature:
             if (self::$selected_subject != '')
                 $subj = self::$form_options['email_subject'] . ' ' . self::$selected_subject; // came from a select field
-			else if ( !empty(self::$form_data['subject']) )
+			else if ( self::$form_data['subject'] != '' )
 				$subj = self::$form_options['email_subject'] . ' ' . self::$form_data['subject']; // came from text field
 			else
 				$subj = self::$form_options['email_subject'];  // was not required, use the options
