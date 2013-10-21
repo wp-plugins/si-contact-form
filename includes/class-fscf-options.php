@@ -2225,7 +2225,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		  <a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_redirect_ignore_tip');"><?php echo __( 'help', 'si-contact-form' ); ?></a><br />
 		  <div class="fscf_tip" id="si_contact_redirect_ignore_tip">
 		<?php _e( 'Optional list of field tags for fields you do not want included in the query string.', 'si-contact-form' ) ?><br />
-		<?php _e( 'Start each entry on a new line.', 'si-contact-form' ); ?><br />
+		<?php _e( 'Start each entry on a new line.', 'si-contact-form' ); ?><br /><br />
 		<?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		<?php
@@ -2249,7 +2249,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		<?php _e( 'Examples:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		from_name=name<br />
-		from_email=email</span><br />
+		from_email=email</span><br /><br />
 		<?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		<?php
@@ -2292,9 +2292,9 @@ if( self::$form_options['external_style'] == 'true' ) {
 
 		<?php
 		if ( self::$form_options['redirect_email_off'] == 'true' && self::$form_options['redirect_enable'] == 'true' && self::$form_options['redirect_query'] == 'true' ) {
-			?><div id="message" class="updated"><strong><?php echo __( 'Warning: You have turned off email sending in the redirect settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' ); ?></strong></div><?php
+			?><div id="message" class="updated"><strong><?php echo __( 'Just a reminder: You have turned off email sending in the redirect settings below. If that is what you intended, then ignore this message.', 'si-contact-form' ); ?></strong></div><?php
 			echo '<div class="fsc-notice">';
-			echo __( 'Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' );
+			echo __( 'Just a reminder: You have turned off email sending in the setting below. If that is what you intended, then ignore this message.', 'si-contact-form' );
 			echo "</div>\n";
 		}
 		?>
@@ -2563,7 +2563,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		  <a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_silent_ignore_tip');"><?php echo __( 'help', 'si-contact-form' ); ?></a><br />
 		  <div class="fscf_tip" id="si_contact_silent_ignore_tip">
 		<?php _e( 'Optional list of field tags for fields you do not want included.', 'si-contact-form' ) ?><br />
-		<?php _e( 'Start each entry on a new line.', 'si-contact-form' ); ?><br />
+		<?php _e( 'Start each entry on a new line.', 'si-contact-form' ); ?><br /><br />
 		<?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		<?php
@@ -2587,7 +2587,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		<?php _e( 'Examples:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		from_name=name<br />
-		from_email=email</span><br />
+		from_email=email</span><br /><br />
 		<?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		<?php
@@ -2667,7 +2667,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_export_ignore_tip');"><?php echo __( 'help', 'si-contact-form' ); ?></a><br />
 		<div class="fscf_tip" id="si_contact_export_ignore_tip">
 		<?php _e( 'Optional list of field tag for fields you do not want included in the data export.', 'si-contact-form' ) ?><br />
-		<?php _e( 'Start each entry on a new line.', 'si-contact-form' ); ?><br />
+		<?php _e( 'Start each entry on a new line.', 'si-contact-form' ); ?><br /><br />
 		<?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		<?php
@@ -2691,7 +2691,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		<?php _e( 'Examples:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		from_name=name<br />
-		from_email=email</span><br />
+		from_email=email</span><br /><br />
 		<?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
 		<span style="margin: 2px 0" dir="ltr"><br />
 		<?php
@@ -3774,6 +3774,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		   self::$av_fld_arr[] = 'akismet';
 
 		self::$av_fld_arr[] = 'date_time';
+        self::$av_fld_arr[] = 'ip_address';
 		self::$av_fld_subj_arr[] = 'form_label';
 
 	}	// function set_fld_array()

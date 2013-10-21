@@ -486,6 +486,8 @@ class FSCF_Process {
 
 		self::$email_fields['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
 
+        self::$email_fields['ip_address'] = (isset( $_SERVER['REMOTE_ADDR'] )) ? $_SERVER['REMOTE_ADDR'] : 'n/a'; 
+
 		self::check_captcha();
 
         // check honeypot, if enabled
