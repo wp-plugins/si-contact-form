@@ -24,11 +24,11 @@ window.onbeforeunload = function() {
 // If the form has changed, set a hidden field to "1"
 jQuery(document).ready(function(){
     // for a list of possible selectors in the statement below, see http://www.w3schools.com/jquery/jquery_ref_selectors.asp
-    jQuery("#optionsform").change(function() {
+    jQuery("#fscf-optionsform").change(function() {
         jQuery("input[name='form-changed']").val('1'); // XXX do I even use form-changed ?
 		// Ignore changes on tab 8 (Tools) and tab 9 (Newsletter) since these are beyond the form and not saved in the options table
 		var tabId = jQuery("li.ui-state-active").attr("id");
-		tabId = tabId.substr(3);
+		tabId = tabId.substr(8); //fscf-tab4
         if (tabId < 8) {
 			fscf_warning = true;
 			// Turn on notices to save changes
@@ -41,7 +41,7 @@ jQuery(document).ready(function(){
     jQuery(".submit").click(function() {
 //		alert('Button pressed was ' + document.pressed);
 		var tools_url = document.getElementById("tools-admin-url").value;
-		var myform = document.getElementById("optionsform");
+		var myform = document.getElementById("fscf-optionsform");
 //		alert('Tools url is ' + tools_url);
 		var resp;
 		// Find out which button was pressed
@@ -50,13 +50,13 @@ jQuery(document).ready(function(){
 				fscf_submit = true;		// Don't issue a warning about leaving the page
 				// Store the tab ID for use in the validate function
 				var tabId = jQuery("li.ui-state-active").attr("id");
-				tabId = tabId.substr(3);
+				tabId = tabId.substr(8); //fscf-tab4
 				jQuery("input[name='current_tab']").val(tabId);
-//				document.optionsform.action = "options.php";  // This is now the default
+//				document.fscf-optionsform.action = "options.php";  // This is now the default
 				break;
 			case fscf_transl.send_test:
 				// the following line doesn't work in IE because WP adds a hidden field named 'action'
-				// document.optionsform.action = tools_url;
+				// document.fscf-optionsform.action = tools_url;
 				myform.setAttribute( "action", tools_url );
 				break;
 			case fscf_transl.copy_settings:
@@ -83,17 +83,16 @@ jQuery(document).ready(function(){
 		opacity: 0.6,
 		cursor: 'move',
 		axis: 'y',
-		update: function() {
-			// XXX what is dad_update_order for?  Do I even need it?
-			var order = $(this).sortable('serialize') + '&action=dad_update_order';
-			$.post(ajaxurl, order, function(response) {
-				// alert(response); 
-			});
-		}
+		//update: function() {
+            //var order = $(this).sortable('serialize');
+			//$.post(ajaxurl, order, function(response) {
+				// alert(response);
+			//});
+	   //	}
 	});
-	
+
 //	jQuery( "#tab-list" ).attr('display', 'block');
-	jQuery('#tab-list').css('visibility','visible'); 
+	jQuery('#fscf-tab-list').css('visibility','visible');
 	jQuery("a.show-in-popup").click(function(e ){
     popupCenter(jQuery(this).attr('href'), 800, 650, jQuery(this).data().popup_window);
     e.stopPropagation();
@@ -171,7 +170,7 @@ function fscf_get_url(strip_form) {
 //	var tabId = jQuery("li.ui-tabs-selected").attr("id");
 	var tabId = jQuery("li.ui-state-active").attr("id");
 //	alert('Tab ID is ' + tabId);
-	if ( typeof(tabId)=='string' ) tabId = tabId.substr(3);
+	if ( typeof(tabId)=='string' ) tabId = tabId.substr(8); //fscf-tab4
 	else tabId = '1';
 	if ( ! typeof(tabId)=='number' ) tabId = '1';
 
@@ -187,7 +186,7 @@ function fscf_get_url(strip_form) {
 	}
 //	var i = 1;
 //	while ( i < parts.length ) {
-//		if ( ! ( ( no_form && ( "fscf_form=" == parts[i].substr(0,10))) || ( "fscf_tab=" == parts[i].substr(0,9) ) ) ) 
+//		if ( ! ( ( no_form && ( "fscf_form=" == parts[i].substr(0,10))) || ( "fscf_tab=" == parts[i].substr(0,9) ) ) )
 //			theUrl = theUrl + "&" + parts[i];
 //		i++;
 //		}
@@ -332,7 +331,7 @@ function fscf_submit_preview($conf) {
 	if (resp) {
 		// Submit the form
 //		alert('Submit the form now..');
-		var myform = document.getElementById("optionsform");
+		var myform = document.getElementById("fscf-optionsform");
 		myform.setAttribute( "action", document.URL );
 	} else {
 		// Don't submit the form
@@ -349,7 +348,7 @@ function fscf_reset_preview($conf) {
 	var resp = confirm($conf);
 	if (resp) {
 //		alert('The form will be reset');
-		var myform = document.getElementById("optionsform");
+		var myform = document.getElementById("fscf-optionsform");
 		myform.setAttribute( "action", document.URL );
 		return(true);
 	} 

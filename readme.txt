@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: http://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
-Tested up to: 3.6.1
+Tested up to: 3.7
 Stable tag: trunk
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -233,28 +233,6 @@ How to update a translation of Fast Secure Contact Form for WordPress
 http://www.fastsecurecontactform.com/how-to-update-translation
 
 
-= This contact form sends email with UTF-8 character encoding for US and International character support. =
-
-English-language users will experience little to no impact. Any non-English questions or messages submitted will have unicode character encoding so that when you receive the email, the language will still be viewable.
-
-If you receive an email with international characters and the characters look garbled with symbols and strange characters, your email program may need to be set as follows:
-
-How to set incoming messages character encoding to Unicode(UTF-8) in various mail clients:
-
-Evolution:
-View > Character Encoding > Unicode
-
-Outlook Express 6, Windows Mail:
-Please check "Tools->Options->Read->International Settings". Un-check "Use default encoding format for all incoming messages" 
-Now select "View->Encoding", select "Unicode(UTF-8)"
-
-Mozilla Thunderbird:
-Click on Inbox.
-Select "View->Character Encoding", select "Unicode(UTF-8)"
-
-Gmail:
-No setting necessary, it just works.
-
 For more help... [See the official FAQ at FastSecureContactForm.com](http://www.fastsecurecontactform.com/faq-wordpress-version)
 
 = What is the "Schedule an appointment" button on my contact form? = 
@@ -268,8 +246,13 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-- Bug fix: some fields would not validate if value was zero.
+= 4.0.16 =
+- (25 Oct 2013) - Bug fix: some fields would not validate if value was zero.
+- Bug fix: tags for time field types were not working in the confirmation email or subject.
+- Bug fix: admin css improvements to avoid conflicting plugins.
 - Added ip_address as an available data send / export field.
+- Added setting to the Advanced tab to enable and HTML anchor tag on the form POST URL.
+- updated German (de_DE) translation. 
 
 = 4.0.15 =
 - (12 Oct 2013) - allow HTML in "Your message has been sent, thank you." custom label.
@@ -317,7 +300,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 = 4.0.6 =
 - (29 Sep 2013) - Version 4.0.6 is fiinally released after one year of programming by Mike Challis and Ken Carlson and 6 weeks of beta testing.
 - Most notable changes:
-– All new code base with better use of class structure.
+- All new code base with better use of class structure.
 - New user interface with tabs.
 - New 'Fields' tab where you can re-order the display sequence of all the fields via a drag and drop interface.
 - The standard fields (name,email,subject,message) can now be manipulated and re-ordered along with the extra fields in the new 'Fields' tab.
@@ -329,7 +312,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 - Updated Online Meeting Scheduler by vCita on the new 'Scheduler' tab.
 - Updated 'Constant Contact' plugin integration for the new 'Newsletter' settings tab.
 - PHP Sessions are no longer enabled by default allowing for best compatibility with servers, caching, themes, and other plugins. This should resolve any PHP sessions related issues some users had.
-– Added filter hooks for 3rd party plugins and custom modifications.
+- Added filter hooks for 3rd party plugins and custom modifications.
 - Improved validation of time fields.
 - Improved CAPTCHA images.
 - More optimized HTML indents when view source.
@@ -482,7 +465,7 @@ Premium themes can now add support for Fast Secure Contact Form style in the the
 - Updated Meeting Scheduler - by vCita is still being developed for the new 'Meeting' settings tab.
 - Updated 'Constant Contact' plugin integration for the new 'Newsletter' settings tab.
 - PHP Sessions are no longer enabled by default allowing for best compatibility with servers, caching, themes, and other plugins. This should resolve many sessions related issues some users had.
-– Added filter hooks for 3rd party plugins.
+- Added filter hooks for 3rd party plugins.
 - Removed HTML before/after field divs.
 - Relocated some email settings from 'Basic Settings' to 'Advanced' tab.
 - Editorial change: E-mail is now Email, e-mail is email
@@ -508,5 +491,5 @@ Premium themes can now add support for Fast Secure Contact Form style in the the
 - (07 Jul 2013) - Fixed CAPTCHA PHP warning on some servers.
 - Added better date input validation.
 
-[Fast Secure Contact Form – WordPress changelog archive](http://www.fastsecurecontactform.com/changelog-archive)
+[Fast Secure Contact Form - WordPress changelog archive](http://www.fastsecurecontactform.com/changelog-archive)
 

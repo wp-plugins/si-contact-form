@@ -437,6 +437,7 @@ class FSCF_Process {
 
                     } else {
                             self::$email_msg .= self::make_bold( $field['label'] ) . $inline_or_newline;
+                            self::$email_fields[$field['slug']] = $concat_time;
 					        self::$email_msg .= $concat_time . self::$php_eol . self::$php_eol;
                     }
 					break;

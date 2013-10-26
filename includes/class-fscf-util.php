@@ -172,7 +172,7 @@ class FSCF_Util {
 
 		if ( isset(FSCF_Display::$add_fscf_script) && FSCF_Display::$add_fscf_script ) {
 			// only include if a form is on this page or post
-			wp_enqueue_script( 'jquery-ui-core' ); // needed for the feature "Has the form already been submitted?  If so, reset the form"
+		   	wp_enqueue_script( 'jquery-ui-core' ); // needed for the feature "Has the form already been submitted?  If so, reset the form"
 			//wp_enqueue_style( 'fscf-styles', plugins_url( 'si-contact-form/includes/fscf-styles.css' ), false, FSCF_BUILD );
 			wp_enqueue_script( 'fscf_scripts', plugins_url( 'si-contact-form/includes/fscf-scripts.js' ), false, FSCF_BUILD );
 		}
@@ -374,6 +374,7 @@ class FSCF_Util {
 			 'sender_info_enable' => 'true',
 			 'domain_protect' => 'true',
 			 'domain_protect_names' => '',
+			 'anchor_enable' => 'true',
 			 'email_check_dns' => 'false',
 			 'email_html' => 'false',
 			 'email_inline_label' => 'false',

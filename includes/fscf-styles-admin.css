@@ -19,7 +19,7 @@ fieldset.fscf_field > select {width:14em;}
 fieldset.fscf_option {padding:10px;}
 /*  See Edits made below by Zack Katz */
 /*
-#optionsform fieldset {border: 1px solid #A9A9A9; background: #F1F1F1; font:13px Arial, Helvetica, sans-serif;}
+#fscf-optionsform fieldset {border: 1px solid #A9A9A9; background: #F1F1F1; font:13px Arial, Helvetica, sans-serif;}
 .form-tab {background:#F1F1F1; display:block; font-weight:bold; padding:7px 20px; float:left; font-size:13px; margin-bottom:-1px; border:1px solid #B8B8B8; border-bottom:none;}
 .ui-tabs-panel > h3 {background:#F1F1F1; display:block; font-weight:bold; padding:7px 20px; float:left; font-size:13px; margin-bottom:-1px; border:1px solid #B8B8B8; border-bottom:none;}
 */
@@ -106,13 +106,13 @@ a:focus {outline:none !important;}
 /**
  * Tab content
  */
-#optionsform fieldset {border: 1px solid #ccc; background: #f8f8f8; padding: 10px 10px 15px; }
+#fscf-optionsform fieldset {border: 1px solid #ccc; background: #f8f8f8; padding: 10px 10px 15px; }
 
 /* Sortable fields in Fields tab */
-#optionsform fieldset fieldset {border: none; border-bottom: 1px solid #ccc; }
-#optionsform fieldset fieldset:last-child {border: none; }
-#optionsform fieldset.ui-sortable fieldset { border-bottom: 2px dotted #5E5E5E}
-#optionsform fieldset fieldset legend { padding: 10px 0 0;}
+#fscf-optionsform fieldset fieldset {border: none; border-bottom: 1px solid #ccc; }
+#fscf-optionsform fieldset fieldset:last-child {border: none; }
+#fscf-optionsform fieldset.ui-sortable fieldset { border-bottom: 2px dotted #5E5E5E}
+#fscf-optionsform fieldset fieldset legend { padding: 10px 0 0;}
 .fscf_field_details { background: #eee; padding: 10px 15px; border: 1px dotted #ccc; border-top: none; border-bottom: 4px solid #ddd; margin-top: 5px;}
 .form-tab { display: none; background:#eee; display:block; font-weight:bold; padding:7px 20px; float:left; font-size:13px; margin-bottom:-1px; border:1px solid; border-bottom:none;}
 .ui-tabs-panel > h3 { font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif; display:block; font-weight:100; padding:7px 20px 7px 0; float:left; font-size:20px; margin-bottom:-.1em; }

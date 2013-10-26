@@ -320,9 +320,12 @@ $('head').append(fscf_styles);
         if (self::$form_options['vcita_scheduling_button'] == 'true' && self::is_vcita_activated() )
 	         $string .= "\n<div ".'id="fscf_div_left_box' . self::$form_id_num . '" '.self::get_this_css('left_box_style').">";
 
+        $anchor = '';
+        if ( self::$form_options['anchor_enable'] == 'true' )
+           $anchor = '#FSContact' . self::$form_id_num;
+
 $string .= '
-<form ' . self::$have_attach . 'action="' . esc_url( self::$form_action_url ) . '#FSContact'
-				. self::$form_id_num . '" id="fscf_form' . self::$form_id_num . '" '.$form_attributes.'method="post">
+<form ' . self::$have_attach . 'action="' . esc_url( self::$form_action_url ) . $anchor . '" id="fscf_form' . self::$form_id_num . '" '.$form_attributes.'method="post">
 ';
 
 		if ( self::$form_options['border_enable'] == 'true' ) {
@@ -1622,6 +1625,7 @@ $string .= "    </div>";
 						// see if a single option was specified
 						$ind = self::get_var(self::$form_id_num,$fld_name);
 						if ( is_numeric($ind) && isset($opts_array[+$ind-1]) ) {
+                            // XXX to do: it would be nice to allow query input of key # or opt value
 							$selected[] = $ind;
 						} else if ( '' != $field['default'] ) {
 							// Get the value from the default setting
