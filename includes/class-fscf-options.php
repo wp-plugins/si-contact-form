@@ -408,8 +408,8 @@ class FSCF_Options {
 				&nbsp;<input id="preview" class="button-primary" type="submit" value="<?php
 				// When submit button is pressed, this will override the value of the hidden field
 				// named ctf_action
-				if ( $preview ) _e('Edit Form', 'si-contact-form'); 
-				else _e('Preview Form', 'si-contact-form'); 
+				if ( $preview ) _e('Edit Form', 'si-contact-form');
+				else _e('Preview Form', 'si-contact-form');
 				?>" name="ctf_action" />
 			</span>
 
@@ -538,7 +538,7 @@ class FSCF_Options {
 		<img src="<?php echo plugins_url( 'si-contact-form/includes/si-contact-form.jpg' ); ?>" class="fscf_left fscf_img" width="250" height="185" alt="Mike Challis" /><br />
 		<?php _e('Mike Challis says: "Hello, I have spent hundreds of hours coding this plugin just for you. If you are satisfied with my programs and support please consider making a small donation. If you are not able to, that is OK.', 'si-contact-form'); ?>
 		<?php echo ' '; _e('Suggested donation: $25, $20, $15, $10, $5, $3. Donations can be made with your PayPal account, or securely using any of the major credit cards. Please also review my plugin."', 'si-contact-form'); ?>
-		 <br /><a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form" target="_blank"><?php _e('Review this plugin now', 'si-contact-form'); ?></a>.
+		 <br /><a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form?rate=5#postform" target="_blank"><?php _e('Review this plugin now', 'si-contact-form'); ?></a>.
 		<br /><br />
 		<a style="cursor:pointer;" title="Close" onclick="toggleVisibility('si_contact_mike_challis_tip');"><?php _e('Close this message', 'si-contact-form'); ?></a>
 
