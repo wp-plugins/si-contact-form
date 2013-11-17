@@ -19,8 +19,8 @@ class FSCF_Display {
 	static $email_msg_print, $contacts;
 	static $req_field_ind, $ctf_field_size, $form_action_url, $aria_required;
 	static $have_attach = '';
-	static $printed_tooltip_filetypes;
-	static $add_fscf_script, $add_placeholder_script;
+	static $printed_tooltip_filetypes, $fscf_use_window_onload;
+	static $add_fscf_script, $add_placeholder_script, $add_date_js_array, $add_date_js;
 
 	static function process_short_code($atts) {
 		// Process shortcode and display the form
@@ -102,6 +102,10 @@ class FSCF_Display {
 			// Form was processed and has no errors--display thank you message
 			$string = self::display_thank_you();
 		} else {
+            if (!isset(self::$add_date_js)) {
+                 self::$add_date_js_array = array();
+                 self::$add_date_js = '';
+            }
 			if ( ! empty(FSCF_Process::$form_errors) && FSCF_Process::$form_id_num == self::$form_id_num ) {
 				// The form was processed, but had errors
 				if ( ! empty(FSCF_Process::$form_data) ) {
@@ -302,9 +306,9 @@ $('head').append(fscf_styles);
 		self::$style['submit'] = self::convert_css(self::$form_options['button_style']);
 		self::$style['reset'] = self::convert_css(self::$form_options['reset_style']);
 
-	   //	self::$ctf_field_size = absint( self::$form_options['field_size'] );
-
 		self::$aria_required = ' aria-required="true" ';
+
+        $hidden = "\n";
 
 		if ( self::$contact_error )  // this is for some people who hide the form in a div, if there are validation errors, unhide it
 			self::$form_options['form_style'] = str_replace( 'display: none;', '', self::$form_options['form_style'] );
@@ -349,10 +353,11 @@ $string .= '
 				self::set_form_error("fscf_attach_dir$frm_id", __( 'The temporary folder for the attachment field is not writable.', 'si-contact-form' ) );
 			} else {
 				// delete files over 3 minutes old in the attachment directory
-				self::clean_temp_dir( FSCF_ATTACH_DIR, 3 );
+                // full directory sweep cleanup
+				//self::clean_temp_dir( FSCF_ATTACH_DIR, 3 );
 			}
 		}
-		
+
      	// print input error message
 		if ( self::$contact_error ) {
 			// There are errors, so print the generic error message
@@ -379,7 +384,7 @@ $string .= '
 				$hidden_fields = self::get_hidden_fields();
 				if ( ! empty( $hidden_fields ) ) {
 					foreach ( $hidden_fields as $key => $value ) {
-						$string .= "\n" . '   <input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />'. "\n";
+						$hidden .= "\n" . '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />'. "\n";
 					}
 				}
 			} else {
@@ -388,21 +393,14 @@ $string .= '
 		}
 
 		// Add a hidden field if this is the admin preview, so that we return to the preview after submit
-		if ( is_admin() ) {
-			$string .= '<input type="hidden" name="ctf_action" value="' . __('Preview Form', 'si-contact-form') . '" />
-';
-		}
+		if ( is_admin() )
+			$hidden .= '<input type="hidden" name="ctf_action" value="' . __('Preview Form', 'si-contact-form') . '" />'. "\n";
 
-		$string .= '<input type="hidden" name="fscf_submitted" value="0" />
-';
+		$hidden .= '<input type="hidden" name="fscf_submitted" value="0" />'. "\n";
+		$hidden .= '<input type="hidden" name="fs_postonce_'.self::$form_id_num.'" value="'. wp_hash( time() ).','.time() .'" />'. "\n";
+		$hidden .= '<input type="hidden" name="si_contact_action" value="send" />'. "\n";
+        $hidden .= '<input type="hidden" name="form_id" value="' . self::$form_id_num . '" />'. "\n";
 
-		// form forgery detection token.
-		$string .= '<input type="hidden" name="fs_postonce_'.self::$form_id_num.'" value="'. wp_hash( time() ).','.time() .'" />
-';
-
-		$string .= '<input type="hidden" name="si_contact_action" value="send" />
-<input type="hidden" name="form_id" value="' . self::$form_id_num . '" />
-';
 
 		if ( self::$form_options['req_field_label_enable'] == 'true' && self::$form_options['req_field_indicator_enable'] == 'true' ) {
             $string .= "\n".'<div id="fscf_required'.self::$form_id_num.'">' . "\n";
@@ -445,8 +443,7 @@ $string .= '
 </div>
 ';
 		} else {
-			$string .= '<input type="hidden" name="mailto_id" value="1" />
-';
+			$hidden .= '<input type="hidden" name="mailto_id" value="1" />'. "\n";
 		}
 
 		$open_fieldset = false;	// is a fieldset field open?
@@ -614,8 +611,8 @@ $string .= '
         $string = apply_filters( 'si_contact_display_after_fields', $string, self::$style, self::$form_errors, self::$form_id_num );
 
 		// Are there any date fields?
-		if ( count($date_fields) > 0 ) 
-			$string .= self::setup_calendar($date_fields);
+		if ( count($date_fields) > 0 )
+			self::setup_calendar($date_fields);
 
 		
 		// ********** Display stuff at the bottom of form **********
@@ -668,8 +665,10 @@ $string .= '
 			$string .= "</fieldset>\n";
 		}
 
+        $string .= $hidden;
+
 		// Close the form
-		$string .= "</form>\n";
+		$string .= "\n</form>\n";
 
 		if ( self::$form_options['enable_credit_link'] == 'true' ) {
 			$string .= "\n    <p " . self::convert_css( self::$form_options['powered_by_style'] ) . '>' . __( 'Powered by', 'si-contact-form' )
@@ -713,9 +712,8 @@ $string .= '
 </style>
 ';
 }
-		$string .= '
-<!-- Fast Secure Contact Form plugin '.FSCF_VERSION.' - end - FastSecureContactForm.com -->
-';
+
+		$string .= "\n".'<!-- Fast Secure Contact Form plugin '.FSCF_VERSION.' - end - FastSecureContactForm.com -->'. "\n";
 
 		return($string);
 	}	// end function display_form()
@@ -1308,70 +1306,51 @@ $string .= "    </div>";
 	
 	static function setup_calendar($date_fields) {
 		// Set up the popup calendar display for date fields
-		$string = '';
-		$temp = plugins_url( 'date/ctf_epoch_styles.css?' . time(), FSCF_FILE );
-		$string .=
-		'<script type="text/javascript">
-			var ctf_css = document.createElement(\'link\');
-			ctf_css.rel = \'stylesheet\';
-			ctf_css.type = \'text/css\';
-			ctf_css.href = \'' . plugins_url( 'date/ctf_epoch_styles.css?' . time(), FSCF_FILE ) . '\';
-			document.getElementsByTagName(\'head\')[0].appendChild(ctf_css);
-			var ctf_daylist = new Array( \'' . __( 'Su', 'si-contact-form' ) . '\',\'' . __( 'Mo', 'si-contact-form' ) . '\',\'' . __( 'Tu', 'si-contact-form' ) . '\',\'' . __( 'We', 'si-contact-form' ) . '\',\'' . __( 'Th', 'si-contact-form' ) . '\',\'' . __( 'Fr', 'si-contact-form' ) . '\',\'' . __( 'Sa', 'si-contact-form' ) . '\',\'' . __( 'Su', 'si-contact-form' ) . '\',\'' . __( 'Mo', 'si-contact-form' ) . '\',\'' . __( 'Tu', 'si-contact-form' ) . '\',\'' . __( 'We', 'si-contact-form' ) . '\',\'' . __( 'Th', 'si-contact-form' ) . '\',\'' . __( 'Fr', 'si-contact-form' ) . '\',\'' . __( 'Sa', 'si-contact-form' ) . '\' );
-			var ctf_months_sh = new Array( \'' . __( 'Jan', 'si-contact-form' ) . '\',\'' . __( 'Feb', 'si-contact-form' ) . '\',\'' . __( 'Mar', 'si-contact-form' ) . '\',\'' . __( 'Apr', 'si-contact-form' ) . '\',\'' . __( 'May', 'si-contact-form' ) . '\',\'' . __( 'Jun', 'si-contact-form' ) . '\',\'' . __( 'Jul', 'si-contact-form' ) . '\',\'' . __( 'Aug', 'si-contact-form' ) . '\',\'' . __( 'Sep', 'si-contact-form' ) . '\',\'' . __( 'Oct', 'si-contact-form' ) . '\',\'' . __( 'Nov', 'si-contact-form' ) . '\',\'' . __( 'Dec', 'si-contact-form' ) . '\' );
-			var ctf_monthup_title = \'' . __( 'Go to the next month', 'si-contact-form' ) . '\';
-			var ctf_monthdn_title = \'' . __( 'Go to the previous month', 'si-contact-form' ) . '\';
-			var ctf_clearbtn_caption = \'' . __( 'Clear', 'si-contact-form' ) . '\';
-			var ctf_clearbtn_title = \'' . __( 'Clears any dates selected on the calendar', 'si-contact-form' ) . '\';
-			var ctf_maxrange_caption = \'' . __( 'This is the maximum range', 'si-contact-form' ) . '\';
-			var ctf_cal_start_day = ' . self::$form_options['cal_start_day'] . ';
-			var ctf_date_format = \'';
+
+        foreach ( $date_fields as $v ) {
+		   self::$add_date_js_array[] = self::$form_id_num . '_' . $v;
+		}
+
+	   if	( self::$add_date_js == '' ) { // only add for 1st form with date fields
+		self::$add_date_js = '
+<!-- Fast Secure Contact Form plugin - begin date field js - form '.self::$form_id_num.' -->
+<script type="text/javascript">
+  var ctf_daylist = new Array( \'' . __( 'Su', 'si-contact-form' ) . '\',\'' . __( 'Mo', 'si-contact-form' ) . '\',\'' . __( 'Tu', 'si-contact-form' ) . '\',\'' . __( 'We', 'si-contact-form' ) . '\',\'' . __( 'Th', 'si-contact-form' ) . '\',\'' . __( 'Fr', 'si-contact-form' ) . '\',\'' . __( 'Sa', 'si-contact-form' ) . '\',\'' . __( 'Su', 'si-contact-form' ) . '\',\'' . __( 'Mo', 'si-contact-form' ) . '\',\'' . __( 'Tu', 'si-contact-form' ) . '\',\'' . __( 'We', 'si-contact-form' ) . '\',\'' . __( 'Th', 'si-contact-form' ) . '\',\'' . __( 'Fr', 'si-contact-form' ) . '\',\'' . __( 'Sa', 'si-contact-form' ) . '\' );
+  var ctf_months_sh = new Array( \'' . __( 'Jan', 'si-contact-form' ) . '\',\'' . __( 'Feb', 'si-contact-form' ) . '\',\'' . __( 'Mar', 'si-contact-form' ) . '\',\'' . __( 'Apr', 'si-contact-form' ) . '\',\'' . __( 'May', 'si-contact-form' ) . '\',\'' . __( 'Jun', 'si-contact-form' ) . '\',\'' . __( 'Jul', 'si-contact-form' ) . '\',\'' . __( 'Aug', 'si-contact-form' ) . '\',\'' . __( 'Sep', 'si-contact-form' ) . '\',\'' . __( 'Oct', 'si-contact-form' ) . '\',\'' . __( 'Nov', 'si-contact-form' ) . '\',\'' . __( 'Dec', 'si-contact-form' ) . '\' );
+  var ctf_monthup_title = \'' . __( 'Go to the next month', 'si-contact-form' ) . '\';
+  var ctf_monthdn_title = \'' . __( 'Go to the previous month', 'si-contact-form' ) . '\';
+  var ctf_clearbtn_caption = \'' . __( 'Clear', 'si-contact-form' ) . '\';
+  var ctf_clearbtn_title = \'' . __( 'Clears any dates selected on the calendar', 'si-contact-form' ) . '\';
+  var ctf_maxrange_caption = \'' . __( 'This is the maximum range', 'si-contact-form' ) . '\';
+  var ctf_cal_start_day = ' . self::$form_options['cal_start_day'] . ';
+  var ctf_date_format = \'';
 
 		if ( self::$form_options['date_format'] == 'mm/dd/yyyy' )
-			$string .= 'm/d/Y';
+			self::$add_date_js .= 'm/d/Y';
 		if ( self::$form_options['date_format'] == 'dd/mm/yyyy' )
-			$string .= 'd/m/Y';
+			self::$add_date_js .= 'd/m/Y';
 		if ( self::$form_options['date_format'] == 'mm-dd-yyyy' )
-			$string .= 'm-d-Y';
+			self::$add_date_js .= 'm-d-Y';
 		if ( self::$form_options['date_format'] == 'dd-mm-yyyy' )
-			$string .= 'd-m-Y';
+			self::$add_date_js .= 'd-m-Y';
 		if ( self::$form_options['date_format'] == 'mm.dd.yyyy' )
-			$string .= 'm.d.Y';
+			self::$add_date_js .= 'm.d.Y';
 		if ( self::$form_options['date_format'] == 'dd.mm.yyyy' )
-			$string .= 'd.m.Y';
+			self::$add_date_js .= 'd.m.Y';
 		if ( self::$form_options['date_format'] == 'yyyy/mm/dd' )
-			$string .= 'Y/m/d';
+			self::$add_date_js .= 'Y/m/d';
 		if ( self::$form_options['date_format'] == 'yyyy-mm-dd' )
-			$string .= 'Y-m-d';
+			self::$add_date_js .= 'Y-m-d';
 		if ( self::$form_options['date_format'] == 'yyyy.mm.dd' )
-			$string .= 'Y.m.d';
+			self::$add_date_js .= 'Y.m.d';
 
-		$string .= '\';
-		</script>
-		<script type="text/javascript" src="'.plugins_url('date/ctf_epoch_classes.js?'.time(), FSCF_FILE ).'"></script>
-		<script type="text/javascript">
-		var ';
-		$date_var_string = '';
-		foreach ( $date_fields as $v ) {
-			$date_var_string .= 'dp_cal' . self::$form_id_num . '_' . "$v,";
-		}
-		$date_var_string = substr( $date_var_string, 0, -1 );
-		$string .= "$date_var_string;\n";
-        $use_window_onload = true;
-        //filter hook to suppress window.onload = function(){} for sites where it can only happen once per page.
-        $use_window_onload = apply_filters( 'si_contact_use_window_onload', $use_window_onload,  self::$form_id_num);
-        if ($use_window_onload)
-		    $string .= 'window.onload = function () {
+		self::$add_date_js .= '\';
 ';
-		foreach ( $date_fields as $v ) {
-			$string .= 'dp_cal'. self::$form_id_num . '_' . "$v  = new Epoch('epoch_popup" . self::$form_id_num . '_' . "$v','popup',document.getElementById('fscf_field" . self::$form_id_num . '_' . "$v'));\n";
-		}
-        if ($use_window_onload)
-		   $string .= "};\n";
+        self::$fscf_use_window_onload = true;
+        //filter hook to suppress window.onload = function(){} for sites where it can only happen once per page.
+        self::$fscf_use_window_onload = apply_filters( 'si_contact_use_window_onload', self::$fscf_use_window_onload,  self::$form_id_num);
+        }
 
-        $string .= "</script>\n";
-
-		return($string);
 	}	// end function setup_calendar()
 
 	static function display_field_time($key, $field) {
@@ -1959,14 +1938,14 @@ $string .= "    </div>";
 		if (FSCF_Process::$redirect_enable == 'true') {
 			$ctf_thank_you .= '
 		<br />
-		<img src="'.plugins_url( 'si-contact-form/includes/ctf-loading.gif' ).'" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />'.
-		__('Redirecting', 'si-contact-form');
+		<img id="fscf_redirect_image'.self::$form_id_num.'" src="'.plugins_url( 'si-contact-form/includes/ctf-loading.gif' ).'" alt="'.esc_attr(__('Redirecting', 'si-contact-form')).'" />'.
+		'<span id="fscf_redirect_word'.self::$form_id_num.'">'.__('Redirecting', 'si-contact-form').'</span>';
 		} else {
          if (self::$form_options['print_form_enable'] == 'true'){
 
  $ctf_thank_you .= '
 <br />
-<input type="button" value="';
+<input type="button" id="fscf_print_button'.self::$form_id_num.'" value="';
  $ctf_thank_you .= (self::$form_options['text_print_button'] != '') ? self::$form_options['text_print_button'] : __('View / Print your message', 'si-contact-form');
  $ctf_thank_you .= '" onclick="fscfPrintContent(\'fscf_print_div\'); return false;" />
 <div id="fscf_print_div" style="display:none">

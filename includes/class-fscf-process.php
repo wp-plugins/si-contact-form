@@ -88,7 +88,7 @@ class FSCF_Process {
 			   self::email_sent_cleanup_attachments();
             self::email_sent_redirect();
 		}
-		
+
 		if ( ! empty(self::$uploaded_files) ) {
 			// unlink (delete) attachment temp files
 			foreach ( (array) self::$uploaded_files as $path ) {
@@ -1417,7 +1417,7 @@ class FSCF_Process {
 			// subject can include posted data names feature:
             if (self::$selected_subject != '')
                 $subj = self::$form_options['email_subject'] . ' ' . self::$selected_subject; // came from a select field
-			else if ( self::$form_data['subject'] != '' )
+			else if ( isset(self::$form_data['subject']) && self::$form_data['subject'] != '' )
 				$subj = self::$form_options['email_subject'] . ' ' . self::$form_data['subject']; // came from text field
 			else
 				$subj = self::$form_options['email_subject'];  // was not required, use the options
@@ -1661,6 +1661,8 @@ class FSCF_Process {
 			if ( $ctf_redirect_url == '#' ) {  // if you put # for the redirect URL it will redirect to the same page the form is on regardless of the page.
 				$ctf_redirect_url = self::$form_action_url;
 			}
+            // filter hook for changing the redirect URL. You could make a function that changes it based on fields
+            $ctf_redirect_url = apply_filters( 'si_contact_redirect_url', $ctf_redirect_url, self::$email_fields,  self::$form_data['mailto_id'], self::$form_id_num);
 
 			// redirect query string code
 			if ( self::$form_options['redirect_query'] == 'true' ) {
@@ -1789,7 +1791,7 @@ class FSCF_Process {
 			}
 		}
 		return $count;
-	}  // end function clean_temp_dir	
+	}  // end function clean_temp_dir
 
 	static function make_bold( $label ) {
 		// makes bold html email labels

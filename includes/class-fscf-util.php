@@ -55,7 +55,7 @@ class FSCF_Util {
 			// adds "Settings" link to the plugin action page
 			add_filter( 'plugin_action_links', 'FSCF_Util::fscf_plugin_action_links',10,2);
 		} else {
-              add_action( 'wp_footer', 'FSCF_Util::enqueue_scripts' );
+              add_action( 'wp_footer', 'FSCF_Util::fscf_wp_footer' );
 		}
 
 		return;
@@ -121,14 +121,6 @@ class FSCF_Util {
 		}
 	}
 
-    static function fscf_admin_footer() {
-		// add placeholder javascript in form preview page only if needed
-        if ( isset(FSCF_Display::$placeholder) && FSCF_Display::$placeholder) {
-             // makes placeholder work on old browsers
-             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
-        }
-    }
-
 	static function enqueue_admin_scripts( $hook ) {
 		// Add jquery and css for tabs on options page only for this plugin
 		if( strpos ( $hook, 'si-contact-form' ) > 0 ) {
@@ -167,7 +159,36 @@ class FSCF_Util {
 		}
 	}
 
-	static function enqueue_scripts() {
+    static function add_date_js() {
+         // add js for forms with date fields
+
+        wp_enqueue_style( 'fscf_date_style', plugins_url( 'si-contact-form/date/ctf_epoch_styles.css' ), false, FSCF_BUILD );
+        wp_enqueue_script( 'fscf_date_js', plugins_url( 'si-contact-form/date/ctf_epoch_classes.js' ), false, FSCF_BUILD );
+
+        echo FSCF_Display::$add_date_js;
+
+        $string = '  var';
+		$date_var_string = '';
+		foreach ( FSCF_Display::$add_date_js_array as $v ) {
+			$date_var_string .= ' dp_cal' . "$v,";
+		}
+		$date_var_string = substr( $date_var_string, 0, -1 );
+		$string .= "$date_var_string;\n";
+        if (FSCF_Display::$fscf_use_window_onload)
+		    $string .= '  window.onload = function () {
+';
+		foreach ( FSCF_Display::$add_date_js_array as $v ) {
+			$string .= "    dp_cal$v = new Epoch('epoch_popup$v','popup',document.getElementById('fscf_field$v'));\n";
+		}
+        if (FSCF_Display::$fscf_use_window_onload)
+		   $string .= "  };\n";
+        $string .= "</script>\n";
+        $string .= "<!-- Fast Secure Contact Form plugin - end date field js -->\n\n";
+
+        echo $string;
+    }
+
+	static function fscf_wp_footer() {
 		// Add js and css needed for the forms
 
 		if ( isset(FSCF_Display::$add_fscf_script) && FSCF_Display::$add_fscf_script ) {
@@ -180,8 +201,24 @@ class FSCF_Util {
             // makes placeholder work on old browsers
             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
         }
+        if ( isset(FSCF_Display::$add_date_js) && FSCF_Display::$add_date_js != '' ) {
+            // add js for forms with date fields
+            FSCF_Util::add_date_js();
+        }
 	}
-	
+
+    static function fscf_admin_footer() {
+		// add placeholder javascript in form preview page only if needed
+        if ( isset(FSCF_Display::$placeholder) && FSCF_Display::$placeholder) {
+             // makes placeholder work on old browsers
+             wp_enqueue_script( 'fscf_placeholders', plugins_url( 'si-contact-form/includes/fscf-placeholders.min.js' ), false, FSCF_BUILD );
+        }
+        if ( isset(FSCF_Display::$add_date_js) && FSCF_Display::$add_date_js != '' ) {
+            // add js for forms with date fields
+            FSCF_Util::add_date_js();
+        }
+    }
+
 	static function admin_notice() {
 		// Displays admin notices, if any, at top of admin screen
 		// The notice will appear the next time the WP 'admin_notices' action occurs
