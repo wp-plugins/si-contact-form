@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Fast Secure Contact Form package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Fast Secure Contact Form 4.0.16\n"
+"Project-Id-Version: Fast Secure Contact Form 4.0.17\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2013-10-26 02:47:20+00:00\n"
+"POT-Creation-Date: 2013-11-18 18:20:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,22 +17,22 @@ msgid "You do not have permissions for managing this option"
 msgstr ""
 
 #: includes/class-fscf-action.php:27 includes/class-fscf-options.php:3119
-#: includes/class-fscf-options.php:3159 includes/class-fscf-util.php:155
+#: includes/class-fscf-options.php:3159 includes/class-fscf-util.php:147
 msgid "Copy Settings"
 msgstr ""
 
 #: includes/class-fscf-action.php:30 includes/class-fscf-options.php:3243
-#: includes/class-fscf-util.php:161
+#: includes/class-fscf-util.php:153
 msgid "Reset Styles on all forms"
 msgstr ""
 
 #: includes/class-fscf-action.php:33 includes/class-fscf-options.php:3195
-#: includes/class-fscf-options.php:3221 includes/class-fscf-util.php:157
+#: includes/class-fscf-options.php:3221 includes/class-fscf-util.php:149
 msgid "Restore Settings"
 msgstr ""
 
 #: includes/class-fscf-action.php:36 includes/class-fscf-options.php:3112
-#: includes/class-fscf-util.php:154
+#: includes/class-fscf-util.php:146
 msgid "Send Test"
 msgstr ""
 
@@ -45,17 +45,17 @@ msgid "Add Form"
 msgstr ""
 
 #: includes/class-fscf-action.php:45 includes/class-fscf-options.php:3233
-#: includes/class-fscf-util.php:160
+#: includes/class-fscf-util.php:152
 msgid "Reset Form"
 msgstr ""
 
 #: includes/class-fscf-action.php:48 includes/class-fscf-options.php:3238
-#: includes/class-fscf-util.php:162
+#: includes/class-fscf-util.php:154
 msgid "Delete Form"
 msgstr ""
 
 #: includes/class-fscf-action.php:51 includes/class-fscf-options.php:3252
-#: includes/class-fscf-util.php:163
+#: includes/class-fscf-util.php:155
 msgid "Import forms from 3.xx version"
 msgstr ""
 
@@ -79,9 +79,9 @@ msgstr ""
 msgid "Styles have been reset on all forms."
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (Fast Secure Contact Form 4.0.16)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Fast Secure Contact Form 4.0.17)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: includes/class-fscf-action.php:332 includes/class-fscf-display.php:676
+#: includes/class-fscf-action.php:332 includes/class-fscf-display.php:675
 #: includes/class-fscf-options.php:2490
 msgid "Fast Secure Contact Form"
 msgstr ""
@@ -180,337 +180,337 @@ msgid ""
 "sessions setting to be enabled on the Advanced tab in form settings."
 msgstr ""
 
-#: includes/class-fscf-display.php:94 includes/class-fscf-display.php:392
+#: includes/class-fscf-display.php:94 includes/class-fscf-display.php:397
 #: includes/class-fscf-options.php:385 includes/class-fscf-options.php:393
 #: includes/class-fscf-options.php:412
 msgid "Preview Form"
 msgstr ""
 
-#: includes/class-fscf-display.php:344
+#: includes/class-fscf-display.php:348
 msgid ""
 "Attachments are only supported when the Send Email function is set to "
 "WordPress. You can find this setting on the contact form settings page."
 msgstr ""
 
-#: includes/class-fscf-display.php:347
+#: includes/class-fscf-display.php:351
 msgid "The temporary folder for the attachment field does not exist."
 msgstr ""
 
-#: includes/class-fscf-display.php:349
+#: includes/class-fscf-display.php:353
 msgid "The temporary folder for the attachment field is not writable."
 msgstr ""
 
-#: includes/class-fscf-display.php:360 includes/class-fscf-options.php:1997
+#: includes/class-fscf-display.php:365 includes/class-fscf-options.php:1997
 msgid "Please make corrections below and try again."
 msgstr ""
 
-#: includes/class-fscf-display.php:373
+#: includes/class-fscf-display.php:378
 msgid "ERROR: Misconfigured email address in options."
 msgstr ""
 
-#: includes/class-fscf-display.php:410 includes/class-fscf-options.php:1925
+#: includes/class-fscf-display.php:408 includes/class-fscf-options.php:1925
 #: includes/class-fscf-options.php:1927
 msgid "indicates required field"
 msgstr ""
 
-#: includes/class-fscf-display.php:419 includes/class-fscf-options.php:1934
+#: includes/class-fscf-display.php:417 includes/class-fscf-options.php:1934
 msgid "Select a contact:"
 msgstr ""
 
-#: includes/class-fscf-display.php:426 includes/class-fscf-options.php:1935
+#: includes/class-fscf-display.php:424 includes/class-fscf-options.php:1935
 msgid "Select"
 msgstr ""
 
-#: includes/class-fscf-display.php:638
+#: includes/class-fscf-display.php:635
 msgid "Leave this field empty"
 msgstr ""
 
-#: includes/class-fscf-display.php:647 includes/class-fscf-options.php:1946
+#: includes/class-fscf-display.php:644 includes/class-fscf-options.php:1946
 msgid "Submit"
 msgstr ""
 
-#: includes/class-fscf-display.php:652 includes/class-fscf-options.php:1948
+#: includes/class-fscf-display.php:649 includes/class-fscf-options.php:1948
 msgid "Are you sure?"
 msgstr ""
 
-#: includes/class-fscf-display.php:660 includes/class-fscf-options.php:1947
+#: includes/class-fscf-display.php:657 includes/class-fscf-options.php:1947
 msgid "Reset"
 msgstr ""
 
-#: includes/class-fscf-display.php:661
+#: includes/class-fscf-display.php:658
 msgid "Do you really want to reset the form?"
 msgstr ""
 
-#: includes/class-fscf-display.php:675 includes/class-fscf-options.php:2490
+#: includes/class-fscf-display.php:674 includes/class-fscf-options.php:2490
 msgid "Powered by"
 msgstr ""
 
-#: includes/class-fscf-display.php:775 includes/class-fscf-options.php:1937
+#: includes/class-fscf-display.php:773 includes/class-fscf-options.php:1937
 #: includes/class-fscf-options.php:3001 includes/class-fscf-process.php:689
 #: includes/class-fscf-process.php:697 includes/class-fscf-process.php:707
 msgid "First Name:"
 msgstr ""
 
-#: includes/class-fscf-display.php:801 includes/class-fscf-options.php:1938
+#: includes/class-fscf-display.php:799 includes/class-fscf-options.php:1938
 #: includes/class-fscf-options.php:3005 includes/class-fscf-process.php:691
 #: includes/class-fscf-process.php:703 includes/class-fscf-process.php:713
 msgid "Last Name:"
 msgstr ""
 
-#: includes/class-fscf-display.php:829 includes/class-fscf-options.php:1936
-#: includes/class-fscf-util.php:502
+#: includes/class-fscf-display.php:827 includes/class-fscf-options.php:1936
+#: includes/class-fscf-util.php:539
 msgid "Name:"
 msgstr ""
 
-#: includes/class-fscf-display.php:861 includes/class-fscf-options.php:1940
+#: includes/class-fscf-display.php:859 includes/class-fscf-options.php:1940
 #: includes/class-fscf-process.php:700
 msgid "Middle Initial:"
 msgstr ""
 
-#: includes/class-fscf-display.php:888 includes/class-fscf-options.php:1939
+#: includes/class-fscf-display.php:886 includes/class-fscf-options.php:1939
 #: includes/class-fscf-process.php:710
 msgid "Middle Name:"
 msgstr ""
 
-#: includes/class-fscf-display.php:949 includes/class-fscf-options.php:1941
-#: includes/class-fscf-options.php:2993 includes/class-fscf-util.php:509
+#: includes/class-fscf-display.php:947 includes/class-fscf-options.php:1941
+#: includes/class-fscf-options.php:2993 includes/class-fscf-util.php:546
 msgid "Email:"
 msgstr ""
 
-#: includes/class-fscf-display.php:977 includes/class-fscf-options.php:1942
+#: includes/class-fscf-display.php:975 includes/class-fscf-options.php:1942
 msgid "Re-enter Email:"
 msgstr ""
 
-#: includes/class-fscf-display.php:1013 includes/class-fscf-display.php:1112
-#: includes/class-fscf-options.php:1943 includes/class-fscf-util.php:517
+#: includes/class-fscf-display.php:1011 includes/class-fscf-display.php:1110
+#: includes/class-fscf-options.php:1943 includes/class-fscf-util.php:554
 msgid "Subject:"
 msgstr ""
 
-#: includes/class-fscf-display.php:1058 includes/class-fscf-options.php:1944
-#: includes/class-fscf-util.php:524
+#: includes/class-fscf-display.php:1056 includes/class-fscf-options.php:1944
+#: includes/class-fscf-util.php:561
 msgid "Message:"
 msgstr ""
 
-#: includes/class-fscf-display.php:1099
+#: includes/class-fscf-display.php:1097
 msgid "Error: No options were entered for a select field in settings."
 msgstr ""
 
-#: includes/class-fscf-display.php:1173
+#: includes/class-fscf-display.php:1171
 msgid ""
 "Error: No options were entered for a checkbox-multiple field in settings."
 msgstr ""
 
-#: includes/class-fscf-display.php:1257 includes/class-fscf-options.php:1315
+#: includes/class-fscf-display.php:1255 includes/class-fscf-options.php:1315
 #: includes/class-fscf-options.php:3630 includes/class-fscf-process.php:382
 msgid "mm/dd/yyyy"
 msgstr ""
 
-#: includes/class-fscf-display.php:1258 includes/class-fscf-options.php:1316
+#: includes/class-fscf-display.php:1256 includes/class-fscf-options.php:1316
 #: includes/class-fscf-options.php:3631 includes/class-fscf-process.php:383
 msgid "dd/mm/yyyy"
 msgstr ""
 
-#: includes/class-fscf-display.php:1259 includes/class-fscf-options.php:1317
+#: includes/class-fscf-display.php:1257 includes/class-fscf-options.php:1317
 #: includes/class-fscf-options.php:3632 includes/class-fscf-process.php:384
 msgid "mm-dd-yyyy"
 msgstr ""
 
-#: includes/class-fscf-display.php:1260 includes/class-fscf-options.php:1318
+#: includes/class-fscf-display.php:1258 includes/class-fscf-options.php:1318
 #: includes/class-fscf-options.php:3633 includes/class-fscf-process.php:385
 msgid "dd-mm-yyyy"
 msgstr ""
 
-#: includes/class-fscf-display.php:1261 includes/class-fscf-options.php:1319
+#: includes/class-fscf-display.php:1259 includes/class-fscf-options.php:1319
 #: includes/class-fscf-options.php:3634 includes/class-fscf-process.php:386
 msgid "mm.dd.yyyy"
 msgstr ""
 
-#: includes/class-fscf-display.php:1262 includes/class-fscf-options.php:1320
+#: includes/class-fscf-display.php:1260 includes/class-fscf-options.php:1320
 #: includes/class-fscf-options.php:3635 includes/class-fscf-process.php:387
 msgid "dd.mm.yyyy"
 msgstr ""
 
-#: includes/class-fscf-display.php:1263 includes/class-fscf-options.php:1321
+#: includes/class-fscf-display.php:1261 includes/class-fscf-options.php:1321
 #: includes/class-fscf-options.php:3636 includes/class-fscf-process.php:388
 msgid "yyyy/mm/dd"
 msgstr ""
 
-#: includes/class-fscf-display.php:1264 includes/class-fscf-options.php:1322
+#: includes/class-fscf-display.php:1262 includes/class-fscf-options.php:1322
 #: includes/class-fscf-options.php:3637 includes/class-fscf-process.php:389
 msgid "yyyy-mm-dd"
 msgstr ""
 
-#: includes/class-fscf-display.php:1265 includes/class-fscf-options.php:1323
+#: includes/class-fscf-display.php:1263 includes/class-fscf-options.php:1323
 #: includes/class-fscf-options.php:3638 includes/class-fscf-process.php:390
 msgid "yyyy.mm.dd"
 msgstr ""
 
-#: includes/class-fscf-display.php:1295 includes/class-fscf-options.php:1974
+#: includes/class-fscf-display.php:1293 includes/class-fscf-options.php:1974
 msgid "Acceptable file types: %s."
 msgstr ""
 
-#: includes/class-fscf-display.php:1297 includes/class-fscf-options.php:1976
+#: includes/class-fscf-display.php:1295 includes/class-fscf-options.php:1976
 msgid "Maximum file size: %s."
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "Su"
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "Mo"
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "Tu"
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "We"
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "Th"
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "Fr"
 msgstr ""
 
-#: includes/class-fscf-display.php:1320
+#: includes/class-fscf-display.php:1318
 msgid "Sa"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Jan"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Feb"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Mar"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Apr"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "May"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Jun"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Jul"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Aug"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Sep"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Oct"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Nov"
 msgstr ""
 
-#: includes/class-fscf-display.php:1321
+#: includes/class-fscf-display.php:1319
 msgid "Dec"
 msgstr ""
 
-#: includes/class-fscf-display.php:1322
+#: includes/class-fscf-display.php:1320
 msgid "Go to the next month"
 msgstr ""
 
-#: includes/class-fscf-display.php:1323
+#: includes/class-fscf-display.php:1321
 msgid "Go to the previous month"
 msgstr ""
 
-#: includes/class-fscf-display.php:1324
+#: includes/class-fscf-display.php:1322
 msgid "Clear"
 msgstr ""
 
-#: includes/class-fscf-display.php:1325
+#: includes/class-fscf-display.php:1323
 msgid "Clears any dates selected on the calendar"
 msgstr ""
 
-#: includes/class-fscf-display.php:1326
+#: includes/class-fscf-display.php:1324
 msgid "This is the maximum range"
 msgstr ""
 
-#: includes/class-fscf-display.php:1425
+#: includes/class-fscf-display.php:1404
 msgid "AM"
 msgstr ""
 
-#: includes/class-fscf-display.php:1425
+#: includes/class-fscf-display.php:1404
 msgid "PM"
 msgstr ""
 
-#: includes/class-fscf-display.php:1481 includes/class-fscf-options.php:600
-#: includes/class-fscf-util.php:362 includes/class-fscf-util.php:640
+#: includes/class-fscf-display.php:1460 includes/class-fscf-options.php:600
+#: includes/class-fscf-util.php:399 includes/class-fscf-util.php:677
 msgid "Webmaster"
 msgstr ""
 
-#: includes/class-fscf-display.php:1838
+#: includes/class-fscf-display.php:1817
 msgid ""
 "ERROR: si-contact-form.php plugin says GD image support not detected in PHP!"
 msgstr ""
 
-#: includes/class-fscf-display.php:1839
+#: includes/class-fscf-display.php:1818
 msgid ""
 "Contact your web host and ask them why GD image support is not enabled for "
 "PHP."
 msgstr ""
 
-#: includes/class-fscf-display.php:1843
+#: includes/class-fscf-display.php:1822
 msgid ""
 "ERROR: si-contact-form.php plugin says imagepng function not detected in PHP!"
 msgstr ""
 
-#: includes/class-fscf-display.php:1844
+#: includes/class-fscf-display.php:1823
 msgid ""
 "Contact your web host and ask them why imagepng function is not enabled for "
 "PHP."
 msgstr ""
 
-#: includes/class-fscf-display.php:1848
+#: includes/class-fscf-display.php:1827
 msgid "ERROR: si-contact-form.php plugin says captcha_library not found."
 msgstr ""
 
-#: includes/class-fscf-display.php:1894 includes/class-fscf-display.php:1896
+#: includes/class-fscf-display.php:1873 includes/class-fscf-display.php:1875
 #: includes/class-fscf-options.php:1970
 msgid "CAPTCHA Image"
 msgstr ""
 
-#: includes/class-fscf-display.php:1905 includes/class-fscf-display.php:1912
+#: includes/class-fscf-display.php:1884 includes/class-fscf-display.php:1891
 #: includes/class-fscf-options.php:1972
 msgid "Refresh Image"
 msgstr ""
 
-#: includes/class-fscf-display.php:1921 includes/class-fscf-options.php:1945
+#: includes/class-fscf-display.php:1900 includes/class-fscf-options.php:1945
 msgid "CAPTCHA Code:"
 msgstr ""
 
-#: includes/class-fscf-display.php:1957 includes/class-fscf-options.php:1949
+#: includes/class-fscf-display.php:1936 includes/class-fscf-options.php:1949
 msgid "Your message has been sent, thank you."
 msgstr ""
 
-#: includes/class-fscf-display.php:1962 includes/class-fscf-display.php:1963
+#: includes/class-fscf-display.php:1941 includes/class-fscf-display.php:1942
 msgid "Redirecting"
 msgstr ""
 
-#: includes/class-fscf-display.php:1970 includes/class-fscf-options.php:1950
+#: includes/class-fscf-display.php:1949 includes/class-fscf-options.php:1950
 msgid "View / Print your message"
 msgstr ""
 
@@ -539,7 +539,7 @@ msgid "FS Contact Form"
 msgstr ""
 
 #: includes/class-fscf-options.php:95 includes/class-fscf-options.php:3167
-#: includes/class-fscf-options.php:3187 includes/class-fscf-util.php:156
+#: includes/class-fscf-options.php:3187 includes/class-fscf-util.php:148
 msgid "Backup Settings"
 msgstr ""
 
@@ -748,7 +748,7 @@ msgstr ""
 #: includes/class-fscf-options.php:2176 includes/class-fscf-options.php:2317
 #: includes/class-fscf-options.php:2511 includes/class-fscf-options.php:2758
 #: includes/class-fscf-options.php:2966 includes/class-fscf-options.php:3092
-#: includes/class-fscf-util.php:153
+#: includes/class-fscf-util.php:145
 msgid "Save Changes"
 msgstr ""
 
@@ -3528,7 +3528,7 @@ msgid "(this form) "
 msgstr ""
 
 #: includes/class-fscf-options.php:3150 includes/class-fscf-options.php:3179
-#: includes/class-fscf-options.php:3209 includes/class-fscf-util.php:278
+#: includes/class-fscf-options.php:3209 includes/class-fscf-util.php:315
 msgid "Form"
 msgstr ""
 
@@ -3620,7 +3620,7 @@ msgid ""
 "then click <b>Save Changes</b>."
 msgstr ""
 
-#: includes/class-fscf-options.php:3805 includes/class-fscf-util.php:359
+#: includes/class-fscf-options.php:3805 includes/class-fscf-util.php:396
 msgid "New Form"
 msgstr ""
 
@@ -3789,31 +3789,31 @@ msgid ""
 "previous version is too old. Installed as new."
 msgstr ""
 
-#: includes/class-fscf-util.php:158
+#: includes/class-fscf-util.php:150
 msgid "Are you sure you want to permanently make this change?"
 msgstr ""
 
-#: includes/class-fscf-util.php:159
+#: includes/class-fscf-util.php:151
 msgid "You have unsaved changes."
 msgstr ""
 
-#: includes/class-fscf-util.php:215
+#: includes/class-fscf-util.php:252
 msgid "Settings"
 msgstr ""
 
-#: includes/class-fscf-util.php:360 includes/class-fscf-util.php:636
+#: includes/class-fscf-util.php:397 includes/class-fscf-util.php:673
 msgid "<p>Comments or questions are welcome.</p>"
 msgstr ""
 
-#: includes/class-fscf-util.php:368 includes/class-fscf-util.php:644
+#: includes/class-fscf-util.php:405 includes/class-fscf-util.php:681
 msgid "Contact:"
 msgstr ""
 
-#: includes/class-fscf-util.php:432
+#: includes/class-fscf-util.php:469
 msgid "Contact Form"
 msgstr ""
 
-#: includes/class-fscf-util.php:606
+#: includes/class-fscf-util.php:643
 msgid "New Field:"
 msgstr ""
 
