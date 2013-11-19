@@ -246,7 +246,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-- Update German and Turkish Languages.
+- Update German, French, and Turkish Languages.
 
 = 4.0.17 =
 - (17 Nov 2013) - Bug fix: calendar js conflict when two forms are on same page with date fields.
