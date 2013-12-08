@@ -162,7 +162,7 @@ class FSCF_Util {
     static function add_date_js() {
          // add js for forms with date fields
 
-        wp_enqueue_style( 'fscf_date_style', plugins_url( 'si-contact-form/date/ctf_epoch_styles.css' ), false, FSCF_BUILD );
+        //wp_enqueue_style( 'fscf_date_style', plugins_url( 'si-contact-form/date/ctf_epoch_styles.css' ), false, FSCF_BUILD );
         wp_enqueue_script( 'fscf_date_js', plugins_url( 'si-contact-form/date/ctf_epoch_classes.js' ), false, FSCF_BUILD );
 
         echo FSCF_Display::$add_date_js;
@@ -182,10 +182,26 @@ class FSCF_Util {
 		}
         if (FSCF_Display::$fscf_use_window_onload)
 		   $string .= "  };\n";
-        $string .= "</script>\n";
-        $string .= "<!-- Fast Secure Contact Form plugin - end date field js -->\n\n";
 
+        $string .= "</script>\n";
         echo $string;
+?>
+<script type="text/javascript">
+//<![CDATA[
+var fscf_css = "\n\
+<style type='text/css'>\n\
+@import url('<?php echo plugins_url( 'si-contact-form/date/ctf_epoch_styles.css').'?ver='.FSCF_BUILD; ?>');\n\
+</style>\n\
+";
+jQuery(document).ready(function($) {
+$('head').append(fscf_css);
+});
+//]]>
+</script>
+<?php
+
+        echo "<!-- Fast Secure Contact Form plugin - end date field js -->\n\n";
+
     }
 
 	static function fscf_wp_footer() {

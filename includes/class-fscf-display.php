@@ -1061,7 +1061,7 @@ $string .= '      <label ';
 $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>'
 				. self::echo_if_error( 'message' ) . "\n      <textarea ";
 			$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('textarea_style');
-			$string .= ' id="fscf_field'.self::$form_id_num.'_'.$key . '" name="message" ' . self::$aria_required;
+			$string .= ' id="fscf_field'.self::$form_id_num.'_'.$key . '" name="message" cols="30" rows="10" ' . self::$aria_required;
 	        if($field['attributes'] != '')
 					  $string .= ' '.$field['attributes'];
              if ( 'true' == $field['placeholder'] && $field['default'] != '') {
@@ -1073,7 +1073,7 @@ $string .= "    </div>\n    <div " . self::get_this_css('field_div_style') . '>'
 			$string	.= "\n    <div " . self::get_this_css('field_div_style') . '>' . self::echo_if_error( $field['slug'] ) . "\n"
 				.'      <textarea ';
 			$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('textarea_style');
-			$string .= ' id="fscf_field' . self::$form_id_num . '_' . $key . '" name="' . $field['slug'] . '" ' . self::$aria_required;
+			$string .= ' id="fscf_field' . self::$form_id_num . '_' . $key . '" name="' . $field['slug'] . '" cols="30" rows="10" ' . self::$aria_required;
 			if ( $field['attributes'] != '' )
 				$string .= ' ' . $field['attributes'];
               if ( 'true' == $field['placeholder'] && $field['default'] != '') {

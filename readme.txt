@@ -246,6 +246,12 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+
+= 4.0.18 =
+- (07 Dec 2013) - Bug fix: query into hidden field type was not working.
+- Bug fix: Standard field labels did not translate in email message.
+- Bug fix: Standard field labels changed on the Labels tab did not change in email message.
+- Bug fix: fixed HTML validation errors for datepicker css and for textarea.
 - Update German, French, and Turkish Languages.
 
 = 4.0.17 =
