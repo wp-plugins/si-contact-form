@@ -3915,28 +3915,13 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
         <img src="' . plugins_url( 'si-contact-form/includes/images/vcita_banner.jpg').'" class="fscf_centered" /></a>
 ';
 
-        $themefuse = '  <a href="http://themefuse.com/amember/aff/go?r=6664&amp;i=46" target="_blank">
-        <img src="http://themefuse.com/amember/file/get/path/.banners.505787138b254/i/6664" class="fscf_centered" /></a>
-';
 
-        $sharasale1 = '  <a href="http://www.shareasale.com/r.cfm?b=415758&u=861636&m=41388&urllink=&afftrack=" target="_blank">
-        <img src="' . plugins_url( 'si-contact-form/includes/images/Feature-Fast-300x250.jpeg').'" class="fscf_centered" /></a>
-';
-
-        $sharasale2 = '  <a href="http://www.shareasale.com/r.cfm?b=415758&u=861636&m=41388&urllink=&afftrack=" target="_blank">
-        <img src="' . plugins_url( 'si-contact-form/includes/images/WPE_Orange_300x250.jpg').'" class="fscf_centered" /></a>
-';
-
-        $sharasale3 = '  <a href="http://www.shareasale.com/r.cfm?b=415758&u=861636&m=41388&urllink=&afftrack=" target="_blank">
-        <img src="' . plugins_url( 'si-contact-form/includes/images/WPE_New_300x250.jpg').'" class="fscf_centered" /></a>
-';
-
-/*        $hostgator = '
+        $hostgator = '
         '.sprintf(__('"I recommend <a href="%s" target="_blank">HostGator Web Hosting</a>. All my sites are hosted there. The prices are great and they offer compatibility for WordPress. If you click this link and start an account at HostGator, I get a small commission." - Mike Challis', 'si-contact-form'), 'http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml').
    '
     <a href="http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml" target="_blank"><img title="'.esc_attr(__('Web Site Hosting', 'si-contact-form')).'" alt="'. esc_attr(__('Web Site Hosting', 'si-contact-form')).'" src="'.plugins_url( 'si-contact-form/includes/images/hostgator-blog.gif' ).'" width="100" height="100" /></a>
 ';
-*/
+
 
         $show_vcita = 0;
      if (self::$form_options['vcita_scheduling_button'] != 'true') {
@@ -3946,18 +3931,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 
      if ($show_vcita)
 		self::$ads[] = $vcita;
-		self::$ads[] = $themefuse;
-		self::$ads[] = $sharasale1;
-
-     if ($show_vcita)
-		self::$ads[] = $vcita;
-		self::$ads[] = $themefuse;
-		self::$ads[] = $sharasale2;
-
-     if ($show_vcita)
-		self::$ads[] = $vcita;
-		self::$ads[] = $themefuse;
-		self::$ads[] = $sharasale3;
+		self::$ads[] = $hostgator;
 
 
 		}	// end function define_ads()
