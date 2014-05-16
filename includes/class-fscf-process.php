@@ -159,6 +159,9 @@ class FSCF_Process {
 
 		// Start the email message
         // XXX someone might want to change To: , could add a setting
+        self::$email_fields['name_to'] = str_replace('&#39;',"'",self::$email_fields['name_to']);
+        self::$email_fields['name_to'] = str_replace('&quot;','"',self::$email_fields['name_to']);
+        self::$email_fields['name_to'] = str_replace('&amp;','&',self::$email_fields['name_to']);
 		self::$email_msg = self::make_bold( __( 'To:', 'si-contact-form' ) ) . $inline_or_newline . self::$email_fields['name_to'] .self::$php_eol.self::$php_eol;
 	
 		// ********* Now process the fields set up in Options **********
@@ -1007,7 +1010,7 @@ class FSCF_Process {
 		$string = '';
 		// Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
 		if ( self::$form_options['akismet_disable'] == 'false' ) { // per form disable feature
-             // check if akismet is activated, version 2.x or 3.x 
+             // check if akismet is activated, version 2.x or 3.x
              if ( ( is_callable( array( 'Akismet', 'http_post' ) ) || function_exists( 'akismet_http_post' ) ) && get_option( 'wordpress_api_key' ) ) {
 				global $akismet_api_host, $akismet_api_port;
 				$c['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
