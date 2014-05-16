@@ -2829,7 +2829,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 		<?php
 		$akismet_installed = 0;
 		if ( self::$form_options['akismet_disable'] == 'false' ) {
-			if ( function_exists( 'akismet_verify_key' ) ) {
+			if ( is_callable( array( 'Akismet', 'verify_key' ) ) || function_exists( 'akismet_verify_key' ) ) {
 				if ( ! isset( self::$form_options['akismet_check'] ) ) {
 					echo '<span style="background-color:#99CC99;">' . __( 'Akismet is installed.', 'si-contact-form' ) . '</span>';
 					$akismet_installed = 1;
@@ -2842,7 +2842,10 @@ if( self::$form_options['external_style'] == 'true' ) {
 					if ( empty( $key ) ) {
 						$key_status = 'empty';
 					} else {
-						$key_status = akismet_verify_key( $key );
+                        if ( is_callable( array( 'Akismet', 'verify_key' ) ) )
+						    $key_status = Akismet::verify_key( $key );  // akismet 3.xx
+                        else
+                             $key_status = akismet_verify_key( $key );  // akismet 2.xx
 					}
 					if ( $key_status == 'valid' ) {
 						$akismet_installed = 1;
@@ -2864,7 +2867,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 				  <input name="<?php echo self::$form_option_name; ?>[akismet_check]" id="si_contact_akismet_check" type="checkbox" value="true" />
 				  <label for="<?php echo self::$form_option_name; ?>[akismet_check]"><?php _e( 'Check this and click "Save Changes" to determine if Akismet key is active.', 'si-contact-form' ); ?></label>
 				<br />
-				<?php echo '<a href="' . admin_url( "plugins.php?page=akismet-key-config" ) . '">' . __( 'Configure Akismet', 'si-contact-form' ) . '</a>'; ?>
+				<?php echo '<a href="' . admin_url( "options-general.php?page=akismet-key-config" ) . '">' . __( 'Configure Akismet', 'si-contact-form' ) . '</a>'; ?>
 				<?php
 			} else {
 				echo '<div class="fsc-notice">' . __( 'Akismet plugin is not installed or is deactivated.', 'si-contact-form' ) . '</div>';
@@ -3227,7 +3230,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		
 		<fieldset class="fscf_settings_group">
 		<legend><strong><?php _e( 'Reset and Delete', 'si-contact-form' ); ?></strong></legend>
-		<strong><?php _e('These options will premanantly affect all tabs on this form. (Form 1 cannot be deleted).', 'si-contact-form' ); ?></strong>
+		<strong><?php _e('These options will permanantly affect all tabs on this form. (Form 1 cannot be deleted).', 'si-contact-form' ); ?></strong>
 		<br /><br/>
 
 		<input type="button" name="reset" value="<?php esc_attr_e( 'Reset Form', 'si-contact-form' ); ?>" onclick="fscf_reset_form()" />

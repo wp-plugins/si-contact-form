@@ -1007,7 +1007,8 @@ class FSCF_Process {
 		$string = '';
 		// Check with Akismet, but only if Akismet is installed, activated, and has a KEY. (Recommended for spam control).
 		if ( self::$form_options['akismet_disable'] == 'false' ) { // per form disable feature
-			if ( function_exists( 'akismet_http_post' ) && get_option( 'wordpress_api_key' ) ) {
+             // check if akismet is activated, version 2.x or 3.x 
+             if ( ( is_callable( array( 'Akismet', 'http_post' ) ) || function_exists( 'akismet_http_post' ) ) && get_option( 'wordpress_api_key' ) ) {
 				global $akismet_api_host, $akismet_api_port;
 				$c['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 				$c['user_agent'] = (isset( $_SERVER['HTTP_USER_AGENT'] )) ? $_SERVER['HTTP_USER_AGENT'] : '';
@@ -1038,7 +1039,13 @@ class FSCF_Process {
 						$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
 				}
 				//echo "test $akismet_api_host, $akismet_api_port, $query_string"; exit;
-				$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+
+                if ( is_callable( array( 'Akismet', 'http_post' ) ) ) { // Akismet v3.0+
+	                $response = Akismet::http_post( $query_string, 'comment-check' );
+                } else {  // Akismet v2.xx
+	                $response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+	            }
+
 				if ( 'true' == $response[1] ) {
 					if ( self::$form_options['akismet_send_anyway'] == 'false' ) {
 						self::$form_errors['akismet'] = (self::$form_options['error_input'] != '') ? self::$form_options['error_input'] : __( 'Invalid Input - Spam?', 'si-contact-form' );
@@ -1059,7 +1066,7 @@ class FSCF_Process {
 					$string .= __( 'Akismet Spam Check: passed', 'si-contact-form' ) . self::$php_eol;
 					self::$email_fields['akismet'] = __( 'passed', 'si-contact-form' );
 				}
-			} // end if(function_exists('akismet_http_post')){
+            }
 		}
 		return($string);
 
@@ -1414,6 +1421,11 @@ class FSCF_Process {
             // not sure if this is needed because the From: header is always set
 			//@ini_set( 'sendmail_from', self::$email_fields['from_email'] );
 
+          /*  print $header;
+             print '----';
+             print $header_php;
+            exit;*/
+
 			// Check for safe mode
 			$safe_mode = ((boolean) @ini_get( 'safe_mode' ) === false) ? 0 : 1;
 
@@ -1457,7 +1469,7 @@ class FSCF_Process {
 					@wp_mail( self::$email_fields['email_to'], self::$email_fields['subject'], self::$email_msg, $header, $attach_this_mail );
 				} else {
                     //echo 'header:'.$header.'<br>'.'to:'.self::$email_fields['email_to'].'<br>'.'subject:'.self::$email_fields['subject'].'<br>'.'message:'.self::$email_msg.'<br>';
-					@wp_mail( self::$email_fields['email_to'], self::$email_fields['subject'], self::$email_msg, $header );
+          		@wp_mail( self::$email_fields['email_to'], self::$email_fields['subject'], self::$email_msg, $header );
 				}
 			}
 		} // end if (!$email_off) {
