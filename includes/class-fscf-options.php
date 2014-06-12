@@ -806,7 +806,7 @@ class FSCF_Options {
 		}
 		?>
 		<input name="<?php echo self::$form_option_name;?>[email_from_enforced]" id="fs_contact_email_from_enforced" type="checkbox" <?php if ( self::$form_options['email_from_enforced'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-		<label for="fs_contact_email_from_enforced"><?php _e( 'Enable ONLY when web host requires "Mail From" strictly tied to site.(optional, rarely needed)', 'si-contact-form' ); ?></label>
+		<label for="fs_contact_email_from_enforced"><?php _e( 'Enable ONLY when web host requires "Mail From" strictly tied to site.(recommended, <a href="http://www.fastsecurecontactform.com/yahoo-com-dmarc-policy" target="_new">see FAQ</a>)', 'si-contact-form' ); ?></label>
 		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_email_from_enforced_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
 		<div class="fscf_tip" id="si_contact_email_from_enforced_tip">
 		<?php _e( 'If your form does not send any email, then set the "Return-path address" setting above to an address on the same web domain as your web site. If email still does not send, try checking this setting.', 'si-contact-form' ) ?>
@@ -3918,6 +3918,18 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
         <img src="' . plugins_url( 'si-contact-form/includes/images/vcita_banner.jpg').'" class="fscf_centered" /></a>
 ';
 
+        $sharasale1 = '  <a href="http://www.shareasale.com/r.cfm?b=415758&u=861636&m=41388&urllink=&afftrack=" target="_blank">
+        <img src="' . plugins_url( 'si-contact-form/includes/images/Feature-Fast-300x250.jpeg').'" class="fscf_centered" /></a>
+';
+
+        $sharasale2 = '  <a href="http://www.shareasale.com/r.cfm?b=415758&u=861636&m=41388&urllink=&afftrack=" target="_blank">
+        <img src="' . plugins_url( 'si-contact-form/includes/images/WPE_Orange_300x250.jpg').'" class="fscf_centered" /></a>
+';
+
+        $sharasale3 = '  <a href="http://www.shareasale.com/r.cfm?b=415758&u=861636&m=41388&urllink=&afftrack=" target="_blank">
+        <img src="' . plugins_url( 'si-contact-form/includes/images/WPE_New_300x250.jpg').'" class="fscf_centered" /></a>
+';
+
 
         $hostgator = '
         '.sprintf(__('"I recommend <a href="%s" target="_blank">HostGator Web Hosting</a>. All my sites are hosted there. The prices are great and they offer compatibility for WordPress. If you click this link and start an account at HostGator, I get a small commission." - Mike Challis', 'si-contact-form'), 'http://secure.hostgator.com/~affiliat/cgi-bin/affiliates/clickthru.cgi?id=mchallis-fscwp&amp;page=http://www.hostgator.com/apps/wordpress-hosting.shtml').
@@ -3934,7 +3946,15 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 
      if ($show_vcita)
 		self::$ads[] = $vcita;
-		self::$ads[] = $hostgator;
+		self::$ads[] = $sharasale1;
+
+     if ($show_vcita)
+		self::$ads[] = $vcita;
+		self::$ads[] = $sharasale2;
+
+     if ($show_vcita)
+		self::$ads[] = $vcita;
+		self::$ads[] = $sharasale3;
 
 
 		}	// end function define_ads()

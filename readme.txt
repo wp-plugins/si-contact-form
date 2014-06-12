@@ -246,8 +246,10 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-- akismet 3.xx compatible
-- Bug fix: ampersand and quotes were showing as entity in the To: name in the email 
+= 4.0.20 =
+- (11 Jun 2014) - akismet 3.xx compatible.
+- Bug fix: ampersand and quotes were showing as entity in the To: name in the email.
+- Better explanation of an email setting. 
 
 = 4.0.19 =
 - (15 May 2014) - Removed themefuse ad (their site was flagged by Google as possibly infected).
