@@ -785,15 +785,15 @@ class FSCF_Options {
 
         <br />
 		<label for="fs_contact_email_from"><?php _e( 'Return-path address (recommended)', 'si-contact-form' ); ?>:</label> <br /><?php _e( 'Set this to a real email address on the SAME domain as your web site.', 'si-contact-form' ); ?><br />
+        <?php _e( 'For best results, the "Email To" and the "Return-path address" should be separate email addresses on the SAME DOMAIN as your web site.', 'si-contact-form' ); ?><br />
 		<input name="<?php echo self::$form_option_name;?>[email_from]" id="fs_contact_email_from" type="text" value="<?php echo esc_attr( self::$form_options['email_from'] ); ?>" size="40" />
 		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_email_from_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
 		<div class="fscf_tip" id="si_contact_email_from_tip">
-        <?php _e('Server email address the messages are sent from. Some web hosts do not allow PHP to send email unless the Return-path email address is set. It must be set to a real email address on your site domain, or mail will NOT SEND! (They do this to help prevent spam.) If your form does not send any email, enter your site email address, then test the form again.', 'si-contact-form' ); ?>
-        <?php _e('This setting is required by Dreamhost, GoDaddy, many others, and is also recommended for gmail users to prevent email from going to spam folder.', 'si-contact-form' ); ?>
+        <?php _e('Return-path address sets an email header for the address the messages are sent from. Some web hosts do not allow PHP to send email unless the Return-path email address header is set. It must be set to a real email address on your site domain, or mail will NOT SEND! (They do this to help prevent spam.)', 'si-contact-form' ); ?>
+        <?php _e('This setting is required by Yahoo, AOL, Comcast, Dreamhost, GoDaddy, and most others now.', 'si-contact-form' ); ?>
 		<br />
 		<?php _e( 'Enter just an email: user1@example.com', 'si-contact-form' ); ?><br />
-		<?php _e( 'Or enter name and email: webmaster,user1@example.com', 'si-contact-form' ); ?><br />
-        <?php _e( 'For best results the "Email To" and the "Return-path address" should be separate email addresses on the SAME DOMAIN as your web site.', 'si-contact-form' ); ?>
+		<?php _e( 'Or enter name and email: webmaster,user1@example.com', 'si-contact-form' ); ?>
 		</div>
 		<br />
         <br />
@@ -806,10 +806,11 @@ class FSCF_Options {
 		}
 		?>
 		<input name="<?php echo self::$form_option_name;?>[email_from_enforced]" id="fs_contact_email_from_enforced" type="checkbox" <?php if ( self::$form_options['email_from_enforced'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
-		<label for="fs_contact_email_from_enforced"><?php _e( 'Enable ONLY when web host requires "Mail From" strictly tied to site.(recommended, <a href="http://www.fastsecurecontactform.com/yahoo-com-dmarc-policy" target="_new">see FAQ</a>)', 'si-contact-form' ); ?></label>
+		<label for="fs_contact_email_from_enforced"><?php _e( 'Enable when web host requires "Mail From" strictly tied to site. (recommended, <a href="http://www.fastsecurecontactform.com/yahoo-com-dmarc-policy" target="_new">see FAQ</a>)', 'si-contact-form' ); ?></label>
 		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_email_from_enforced_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
 		<div class="fscf_tip" id="si_contact_email_from_enforced_tip">
-		<?php _e( 'If your form does not send any email, then set the "Return-path address" setting above to an address on the same web domain as your web site. If email still does not send, try checking this setting.', 'si-contact-form' ) ?>
+        <?php _e( 'This setting is for DMARC Compliance and is required by Yahoo, AOL, Comcast, Dreamhost, GoDaddy, and most others now.', 'si-contact-form' ); ?><br />
+		<?php _e( 'The email will appear to be from your site email address, but because the email header "Reply-to" is set as the form user\'s email address, you should be able to just hit reply and email back to the real sender. Also you will see the sender address in the message content, so it is still possible to send mail to them if the "Reply-to" is ignored by your email program.', 'si-contact-form' ) ?>
 		</div>
 		<br />
         <br />
@@ -2636,9 +2637,9 @@ if( self::$form_options['external_style'] == 'true' ) {
 				   
 		<?php
 		if ( self::$form_options['silent_email_off'] == 'true' && self::$form_options['silent_send'] != 'off' ) {
-			?><div id="message" class="updated"><strong><?php echo __( 'Warning: You have turned off email sending in the Silent Remote Send settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' ); ?></strong></div><?php
+			?><div id="message" class="updated"><strong><?php echo __( 'Just a reminder: You have turned off email sending in the Silent Remote Send settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' ); ?></strong></div><?php
 			echo '<div class="fsc-error">';
-			echo __( 'Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' );
+			echo __( 'Just a reminder: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' );
 			echo "</div>\n";
 		}
 		?>
@@ -2731,10 +2732,10 @@ if( self::$form_options['external_style'] == 'true' ) {
 				   
 		<?php
 		if ( self::$form_options['export_email_off'] == 'true' ) {
-			?><div id="message" class="updated"><strong><?php echo __( 'Warning: You have turned off email sending in the data export settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' ); ?></strong></div><?php
+			?><div id="message" class="updated"><strong><?php echo __( 'Just a reminder: You have turned off email sending in the data export settings below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' ); ?></strong></div><?php
 			echo '<div class="fsc-notice">';
-			echo __( 'Warning: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' );
-			echo "</div\n";
+			echo __( 'Just a reminder: You have turned off email sending in the setting below. This is just a reminder in case that was a mistake. If that is what you intended, then ignore this message.', 'si-contact-form' );
+			echo "</div>\n";
 		}
 		?>
 		<input name="<?php echo self::$form_option_name; ?>[export_email_off]" id="si_contact_export_email_off" type="checkbox" <?php if ( self::$form_options['export_email_off'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
@@ -3947,14 +3948,17 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
      if ($show_vcita)
 		self::$ads[] = $vcita;
 		self::$ads[] = $sharasale1;
+        self::$ads[] = $hostgator;
 
      if ($show_vcita)
 		self::$ads[] = $vcita;
 		self::$ads[] = $sharasale2;
+        self::$ads[] = $hostgator;
 
      if ($show_vcita)
 		self::$ads[] = $vcita;
 		self::$ads[] = $sharasale3;
+        self::$ads[] = $hostgator;
 
 
 		}	// end function define_ads()

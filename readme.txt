@@ -246,6 +246,10 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.21 =
+- (21 Jun 2014) - Fixed broken "Disable email sending" for data export.
+- Better explanation of email settings. 
+
 = 4.0.20 =
 - (11 Jun 2014) - akismet 3.xx compatible.
 - Bug fix: ampersand and quotes were showing as entity in the To: name in the email.

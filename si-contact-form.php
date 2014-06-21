@@ -3,7 +3,7 @@
 Plugin Name: Fast Secure Contact Form
 Plugin URI: http://www.FastSecureContactForm.com/
 Description: Fast Secure Contact Form for WordPress. An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with. <a href="plugins.php?page=si-contact-form/si-contact-form.php">Settings</a> | <a href="http://www.FastSecureContactForm.com/donate">Donate</a>
-Version: 4.0.20
+Version: 4.0.21
 Author: Mike Challis, Ken Carlson
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -37,7 +37,7 @@ if ( strpos(strtolower($_SERVER['SCRIPT_NAME']),strtolower(basename(__FILE__))) 
 /********************
  * Global constants
  ********************/
-define( 'FSCF_VERSION', '4.0.20' );
+define( 'FSCF_VERSION', '4.0.21' );
 define( 'FSCF_BUILD', '154');		// Used to force load of latest .js files
 define( 'FSCF_FILE', __FILE__ );	               // /path/to/wp-content/plugins/si-contact-form/si-contact-form.php
 define( 'FSCF_PATH', plugin_dir_path(__FILE__) );  // /path/to/wp-content/plugins/si-contact-form/
