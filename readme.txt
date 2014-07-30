@@ -1,7 +1,7 @@
 === Fast Secure Contact Form ===
 Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
-Donate link: http://www.FastSecureContactForm.com/donate
+Donate link: https://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
 Tested up to: 3.9.1
@@ -21,7 +21,7 @@ Features: easy form edit, multiple forms, confirmation emails, no templates to m
 
 = Help Keep This Plugin Free =
 
-If you find this plugin useful to you, please consider [__making a small donation__](http://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - [__Mike Challis__](http://profiles.wordpress.org/users/MikeChallis/)
+If you find this plugin useful to you, please consider [__making a donation__](https://www.fastsecurecontactform.com/donate) to help contribute to my time invested and to further development. Thanks for your kind support! - [__Mike Challis__](http://profiles.wordpress.org/users/MikeChallis/)
 
 
 Features:
@@ -245,6 +245,9 @@ You can enable or disable this option in the "Scheduling" tab of your contact fo
 If you have additional questions visit [vCita Support Page](http://support.vcita.com)
 
 == Changelog ==
+
+= 4.0.22 =
+- (29 Jul 2014) - Fixed support links
 
 = 4.0.21 =
 - (21 Jun 2014) - Fixed broken "Disable email sending" for data export.

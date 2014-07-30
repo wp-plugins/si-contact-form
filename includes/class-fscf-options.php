@@ -354,7 +354,7 @@ class FSCF_Options {
 <a href="http://wordpress.org/support/plugin/si-contact-form" target="_blank"><?php _e('Support Forum', 'si-contact-form'); ?></a> |
 <a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php _e('Support Ticket', 'si-contact-form'); ?></a> |
 <a href="http://wordpress.org/support/view/plugin-reviews/si-contact-form?rate=5#postform" target="_blank"><?php _e('Rate This', 'si-contact-form'); ?></a> |
-<a href="http://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a>
+<a href="https://www.fastsecurecontactform.com/donate" target="_blank"><?php _e('Donate', 'si-contact-form'); ?></a>
 </p>
 
 <?php
@@ -521,7 +521,7 @@ class FSCF_Options {
 		. '" onclick="toggleVisibility(\'si_contact_mike_challis_tip\')"><br />' .  __('More from Mike Challis', 'si-contact-form') .'</a>
 	<br /> <br />
 	</div>
-	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5KKKX5BK5HHW2">
+	<a href="https://www.fastsecurecontactform.com/donate">
 	<img src="' . FSCF_URL . 'includes/btn_donate_LG.gif" width="92" height="26"/></a>
 	<br /><br /></div>';
 
