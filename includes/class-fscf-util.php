@@ -717,7 +717,7 @@ $('head').append(fscf_css);
 	   // MX records are not mandatory for email delivery, this is why this function also checks A and CNAME records.
 	   // if the checkdnsrr function does not exist (skip this extra check, the syntax check will have to do)
 	   // checkdnsrr available in Linux: PHP 4.3.0 and higher & Windows: PHP 5.3.0 and higher
-	   if (self::$form_options['email_check_dns'] == 'true') {
+	   if (!empty(FSCF_Process::$form_options['email_check_dns']) && FSCF_Process::$form_options['email_check_dns'] == 'true') {
 		  if( function_exists('checkdnsrr') ) {
 			 list($user,$domain) = explode('@',$email);
 			 if(!checkdnsrr($domain.'.', 'MX') &&
