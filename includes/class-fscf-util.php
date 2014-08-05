@@ -482,6 +482,7 @@ $('head').append(fscf_css);
 			 'auto_fill_enable' => 'true',
              'form_attributes' => '',
              'submit_attributes' => '',
+             'success_page_html' => '', 
 			 'title_border' => __( 'Contact Form', 'si-contact-form' ),
 			 'title_dept' => '',
 			 'title_select' => '',

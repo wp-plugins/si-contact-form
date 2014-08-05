@@ -2035,7 +2035,14 @@ newwin.document.close()
 		}
 		$ctf_thank_you .= '
 </div>
-<!-- Fast Secure Contact Form plugin '.esc_html(FSCF_VERSION).' - end - FastSecureContactForm.com -->
+';
+
+if (!empty(self::$form_options['success_page_html'])) {
+      $ctf_thank_you .= self::$form_options['success_page_html'] .'
+';
+
+}
+		$ctf_thank_you .= '<!-- Fast Secure Contact Form plugin '.esc_html(FSCF_VERSION).' - end - FastSecureContactForm.com -->
 ';
 
      //filter hook for thank_you_message

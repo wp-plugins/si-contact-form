@@ -246,6 +246,10 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.23 =
+- (05 Aug 2014) - Added "Success page additional HTML" setting to the Advanced tab. This is printed on the success page after the message sent text. Useful for tracking a conversion with Google Analytics. Put the Google Code for Conversion Page here. HTML is allowed.
+- Fixed email DNS check setting was ignored.
+
 = 4.0.22 =
 - (29 Jul 2014) - Fixed support links
 

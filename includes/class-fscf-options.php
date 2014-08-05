@@ -2492,11 +2492,19 @@ if( self::$form_options['external_style'] == 'true' ) {
         <br />
 
         <div><br />
-        <label for="fs_contact_after_form_note"><?php _e('After form message', 'si-contact-form'); ?>:</label><br />
+        <label for="fs_contact_after_form_note"><?php _e('After form additional HTML', 'si-contact-form'); ?>:</label><br />
         <textarea rows="3" cols="40" name="<?php echo self::$form_option_name;?>[after_form_note]" id="fs_contact_after_form_note"><?php echo esc_textarea(self::$form_options['after_form_note']); ?></textarea>
         <a style="cursor:pointer;" title="<?php esc_attr_e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_after_form_note_tip');"><?php _e('help', 'si-contact-form'); ?></a>
         </div><div class="fscf_tip" id="si_contact_after_form_note_tip">
         <?php _e('This is printed after the form. HTML is allowed.', 'si-contact-form');?>
+        </div>
+
+        <div><br />
+        <label for="fs_contact_success_page_html"><?php _e('Success page additional HTML', 'si-contact-form'); ?>:</label><br />
+        <textarea rows="3" cols="40" name="<?php echo self::$form_option_name;?>[success_page_html]" id="fs_contact_success_page_html"><?php echo esc_textarea(self::$form_options['success_page_html']); ?></textarea>
+        <a style="cursor:pointer;" title="<?php esc_attr_e('Click for Help!', 'si-contact-form'); ?>" onclick="toggleVisibility('si_contact_success_page_html_tip');"><?php _e('help', 'si-contact-form'); ?></a>
+        </div><div class="fscf_tip" id="si_contact_success_page_html_tip">
+        <?php _e('This is printed on the success page after the message sent text. Useful for tracking a conversion with Google Analytics. Put the Google Code for Conversion Page here. HTML is allowed.', 'si-contact-form');?>
         </div>
 
 		</fieldset>
@@ -3524,7 +3532,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		}
 
 		// Sanitize settings fields
-		$html_fields = array( 'welcome', 'after_form_note', 'req_field_indicator', 'text_message_sent' );
+		$html_fields = array( 'welcome', 'after_form_note', 'req_field_indicator', 'text_message_sent', 'success_page_html' );
 		if ( 'true' == $text['auto_respond_html'] ) $html_fields[] = 'auto_respond_message';
 		foreach ( $text as $key => $value ) {
 			if ( is_string($value) ) {
