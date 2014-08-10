@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fast Secure Contact Form 4.0.24\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
-"POT-Creation-Date: 2014-08-10 21:05:48+00:00\n"
+"POT-Creation-Date: 2014-08-10 21:11:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Send Test"
 msgstr ""
 
-#: includes/class-fscf-action.php:39 includes/class-fscf-options.php:867
+#: includes/class-fscf-action.php:39
 msgid "Add Field"
 msgstr ""
 
@@ -1261,6 +1261,10 @@ msgstr ""
 
 #: includes/class-fscf-options.php:853
 msgid "fieldset(box-close)"
+msgstr ""
+
+#: includes/class-fscf-options.php:867
+msgid "Add New Field"
 msgstr ""
 
 #: includes/class-fscf-options.php:874
