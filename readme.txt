@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
-Tested up to: 3.9.1
+Tested up to: 3.9.2
 Stable tag: trunk
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -245,6 +245,10 @@ You can enable or disable this option in the "Scheduling" tab of your contact fo
 If you have additional questions visit [vCita Support Page](http://support.vcita.com)
 
 == Changelog ==
+
+= 4.0.24 =
+- (10 Aug 2014) - Fix 'Add New Field' button not working on German translation.
+- Added Silent Conditional Field and value settings for the silent send feature on the Advanced tab. Use this optional setting to conditionally disable silent sending unless this field tag and value are selected and submitted. Example usage: Your form has a checkbox to "signup for our newsletter" with the tag "signup-newsletter". You do a silent send to MailChimp to sign up people to the newsletter but you want to disable the silent send if the checkbox is left unchecked. For this example you will set the Silent Conditional Field to "signup-newsletter" and the Silent Conditional Value to "selected", this will only match the field tag and value when the checkbox is selected on the form.
 
 = 4.0.23 =
 - (05 Aug 2014) - Added "Success page additional HTML" setting to the Advanced tab. This is printed on the success page after the message sent text. Useful for tracking a conversion with Google Analytics. Put the Google Code for Conversion Page here. HTML is allowed.

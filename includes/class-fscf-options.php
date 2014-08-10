@@ -2634,6 +2634,35 @@ if( self::$form_options['external_style'] == 'true' ) {
 		  <br />
 		 </td></tr>
 		 </table>
+
+       	<label for="<?php echo self::$form_option_name; ?>[silent_conditional_field]"><?php _e( 'Silent Conditional Field (optional)', 'si-contact-form' ); ?>:</label>
+		<input name="<?php echo self::$form_option_name; ?>[silent_conditional_field]" id="si_contact_silent_conditional_field" type="text" value="<?php echo self::$form_options['silent_conditional_field']; ?>" size="50" />
+		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_silent_conditional_field_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
+		<div class="fscf_tip" id="si_contact_silent_conditional_field_tip">
+		<?php _e( 'Use this optional setting to conditionally disable silent sending unless this field tag and value are selected and submitted.', 'si-contact-form' ); ?><br />
+		<?php _e( 'Example usage: Your form has a checkbox to "signup for our newsletter" with the tag "signup-newsletter". You do a silent send to MailChimp to sign up people to the newsletter but you want to disable the silent send if the checkbox is left unchecked.', 'si-contact-form' ); ?><br />
+        <?php _e( 'For this example you will set the Silent Conditional Field to "signup-newsletter" and the Silent Conditional Value to "selected", this will match the field tag and value when the checkbox is selected on the form.', 'si-contact-form' ); ?><br />
+        <?php _e( 'Available fields on this form:', 'si-contact-form' ); ?>
+		<span style="margin: 2px 0" dir="ltr"><br /><br />
+		<?php
+		// show available fields
+		foreach ( self::$av_fld_arr as $i )
+			echo "$i<br />";
+		?>
+		</span>
+		</div>
+		<br />
+
+       	<label for="<?php echo self::$form_option_name; ?>[silent_conditional_value]"><?php _e( 'Silent Conditional Value (optional)', 'si-contact-form' ); ?>:</label>
+		<input name="<?php echo self::$form_option_name; ?>[silent_conditional_value]" id="si_contact_silent_conditional_value" type="text" value="<?php echo self::$form_options['silent_conditional_value']; ?>" size="50" />
+		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_silent_conditional_value_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
+		<div class="fscf_tip" id="si_contact_silent_conditional_value_tip">
+		<?php _e( 'Use this optional setting to conditionally disable silent sending unless this field tag and value are selected and submitted.', 'si-contact-form' ); ?><br />
+		<?php _e( 'Example usage: Your form has a checkbox to "signup for our newsletter" with the tag signup-newsletter. You do a silent send to MailChimp to sign up people to the newsletter but you want to disable the silent send if the checkbox is left unchecked.', 'si-contact-form' ); ?><br />
+        <?php _e( 'For this example you will set the Silent Conditional Field to "signup-newsletter" and the Silent Conditional Value to "selected", this will match the field tag and value when the checkbox is selected on the form.', 'si-contact-form' ); ?><br />
+        <?php _e( 'For checkbox field types use "selected" for this setting, for other field types put the value that shows up in the email when this field is selected.', 'si-contact-form' ); ?><br />
+		</div>
+		<br />
 			 
 		<?php
 		if ( self::$form_options['silent_email_off'] == 'true' && (self::$form_options['silent_send'] == 'off' || self::$form_options['silent_url'] == '') ) {

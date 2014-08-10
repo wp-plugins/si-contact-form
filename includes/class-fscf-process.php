@@ -1552,9 +1552,18 @@ class FSCF_Process {
 				@wp_mail( self::$email_fields['from_email'], $subj, $msg, $header );
 			}
 		}  // end if confirmation email (autoresponder)
-		
+
+       // added optional condition for silent send
+       $silent_ok = 1;
+       if ( !empty(self::$form_options['silent_conditional_field']) && !empty(self::$form_options['silent_conditional_value']) ) {
+           if ( isset(self::$email_fields[self::$form_options['silent_conditional_field']]) && self::$email_fields[self::$form_options['silent_conditional_field']] == self::$form_options['silent_conditional_value'] )
+             $silent_ok = 1;
+           else
+             $silent_ok = 0;
+       }
+
 		// Silent sending?
-		if ( self::$form_options['silent_send'] == 'get' && !empty(self::$form_options['silent_url']) ) {
+		if ( self::$form_options['silent_send'] == 'get' && !empty(self::$form_options['silent_url']) && $silent_ok ) {
 			// build query string
 			$query_string = self::export_convert( self::$email_fields, self::$form_options['silent_rename'], self::$form_options['silent_ignore'], self::$form_options['silent_add'], 'query' );
             echo $query_string;
@@ -1568,7 +1577,7 @@ class FSCF_Process {
 			//echo $silent_result;
 		}
 
-		if ( self::$form_options['silent_send'] == 'post' && !empty(self::$form_options['silent_url']) ) {
+		if ( self::$form_options['silent_send'] == 'post' && !empty(self::$form_options['silent_url']) && $silent_ok ) {
 			// build post_array
 			$post_array = self::export_convert( self::$email_fields, self::$form_options['silent_rename'], self::$form_options['silent_ignore'], self::$form_options['silent_add'], 'array' );
 			$silent_result = wp_remote_post( self::$form_options['silent_url'], array( 'body'		 => $post_array, 'timeout'	 => 20, 'sslverify'	 => false ) );
