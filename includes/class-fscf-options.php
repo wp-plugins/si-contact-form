@@ -858,13 +858,13 @@ class FSCF_Options {
 			'select-multiple',
 			'radio'
 		);
-		
+
 		// Display the field options ?>
 		<div class="clear"></div>
 		<fieldset class="fscf_settings_group fscf_field_settings">
         <div>
         <?php if( empty(self::$new_field_added) ) { ?>
-        <div class="fscf_right" style="padding:7px;"><input type="button" class="button-primary" name="new_field" value="Add New Field" onclick="fscf_add_field('<?php _e('Add Field', 'si-contact-form'); ?>');" /></div>
+        <div class="fscf_right" style="padding:7px;"><input type="button" class="button-primary" name="new_field" value="<?php esc_attr_e('Add New Field', 'si-contact-form'); ?>" onclick="fscf_add_field('<?php echo esc_js('Add Field', 'si-contact-form'); ?>');" /></div>
         <?php  } ?>
         <p class="submit">
 		<input id="submit2" class="button-primary" type="submit" value="<?php esc_attr_e('Save Changes', 'si-contact-form'); ?>" onclick="document.pressed=this.value" name="submit" />
