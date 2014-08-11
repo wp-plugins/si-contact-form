@@ -246,6 +246,9 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.25 =
+- (11 Aug 2014) - Fix 'Add New Field' button not working on German translation. last fix was not working.
+
 = 4.0.24 =
 - (10 Aug 2014) - Fix 'Add New Field' button not working on German translation.
 - Added Silent Conditional Field and value settings for the silent send feature on the Advanced tab. Use this optional setting to conditionally disable silent sending unless this field tag and value are selected and submitted. Example usage: Your form has a checkbox to "signup for our newsletter" with the tag "signup-newsletter". You do a silent send to MailChimp to sign up people to the newsletter but you want to disable the silent send if the checkbox is left unchecked. For this example you will set the Silent Conditional Field to "signup-newsletter" and the Silent Conditional Value to "selected", this will only match the field tag and value when the checkbox is selected on the form.

@@ -57,7 +57,7 @@ if ( isset($_GET['prefix']) && is_string($_GET['prefix']) && preg_match('/^[a-zA
       if ( $fh = fopen( $img->captcha_path . $prefix . '.php', 'w' ) ) {
 			fwrite( $fh, '<?php $captcha_word = \'' . $captcha_word . '\'; ?>' );
 			fclose( $fh );
-            @chmod( $img->captcha_path . $prefix . '.php', 0755 );
+            @chmod( $img->captcha_path . $prefix . '.php', 0644 );
       }
    }
    unset($img);

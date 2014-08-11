@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Fast Secure Contact Form v4.0.17\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/si-contact-form\n"
 "POT-Creation-Date: 2014-08-10 21:11:23+00:00\n"
-"PO-Revision-Date: 2014-08-10 14:12-0800\n"
+"PO-Revision-Date: 2014-08-11 07:36-0800\n"
 "Last-Translator: \n"
 "Language-Team: Pierre Sudarovich\n"
 "MIME-Version: 1.0\n"
@@ -1704,7 +1704,6 @@ msgstr "Feldeinstellungen (box-close)"
 
 # @ si-contact-form
 #: includes/class-fscf-options.php:867
-#, fuzzy
 msgid "Add New Field"
 msgstr "Neues Feld"
 
