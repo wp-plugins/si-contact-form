@@ -655,13 +655,22 @@ $string .= '
 		<input type="submit" id="fscf_submit' . self::$form_id_num . '" ' . self::get_this_css('button_style') . ' value="';
 		$string .= (self::$form_options['title_submit'] != '') ? esc_attr( self::$form_options['title_submit'] ) : esc_attr( __( 'Submit', 'si-contact-form' ) );
 		$string .= '" ';
-        if( !empty(self::$form_options['submit_attributes']) )
+        $onclick = 0;
+        if( !empty(self::$form_options['submit_attributes']) ) {
                 $string .= self::$form_options['submit_attributes'].' ';
-		if ( self::$form_options['enable_areyousure'] == 'true' ) {
+             if ( preg_match( "/onclick/i", self::$form_options['submit_attributes'] ) )
+                $onclick = 1;
+        }
+		if ( self::$form_options['enable_areyousure'] == 'true' && !$onclick) {
 			$msg = (self::$form_options['title_areyousure'] != '') ? esc_html( addslashes( self::$form_options['title_areyousure'] ) ) : esc_html( addslashes( __( 'Are you sure?', 'si-contact-form' ) ) );
 			$string .= ' onclick="return confirm(\'' . $msg . '\')" ';
 
 		}
+        // only allow the submit button one click
+        if( self::$form_options['enable_submit_oneclick'] == 'true' && self::$form_options['enable_areyousure'] != 'true' && !$onclick) {
+          $msg = (self::$form_options['title_submitting'] != '') ? esc_html( addslashes( self::$form_options['title_submitting'] ) ) : esc_html( addslashes( __( 'Submitting...', 'si-contact-form' ) ) );
+          $string .= ' onclick="this.disabled=true; this.value=\''.$msg.'\'; this.form.submit();" ';
+        }
 		$string .= '/> ';
 		
 		if ( self::$form_options['enable_reset'] == 'true' ) {
@@ -2027,14 +2036,7 @@ newwin.document.close()
 }
         }
 		$ctf_thank_you .= '
-	</div>';
-
-		if (self::$form_options['border_enable'] == 'true') {
-			$ctf_thank_you .= '
-	</fieldset>';
-		}
-		$ctf_thank_you .= '
-</div>
+	</div>
 ';
 
 if (!empty(self::$form_options['success_page_html'])) {
@@ -2042,6 +2044,13 @@ if (!empty(self::$form_options['success_page_html'])) {
 ';
 
 }
+		if (self::$form_options['border_enable'] == 'true') {
+			$ctf_thank_you .= '   </fieldset>';
+		}
+		$ctf_thank_you .= '
+</div>
+';
+
 		$ctf_thank_you .= '<!-- Fast Secure Contact Form plugin '.esc_html(FSCF_VERSION).' - end - FastSecureContactForm.com -->
 ';
 

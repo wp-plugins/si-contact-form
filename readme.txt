@@ -246,6 +246,14 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.26 =
+- (24 Aug 2014) - Added a new setting on the Advanced tab "Enable to prevent double click on submit button." It is enabled by default.
+This setting disables the Submit button after click, to prevent double click on the button. Also prevents going back and submitting the form again. Note: this setting is ignored if the "Are you sure?" popup for the submit button is enabled, or when you have filled in the Submit button input attributes setting with a "onclick" attribute.
+- Fixed tags were sometimes showing in confirmation email.
+- Fixed Success page additional HTML shows outside of fieldset box.
+- Updated fscf-placeholders.min.js to version 3.0.2.
+- Updated Turkish language file
+
 = 4.0.25 =
 - (11 Aug 2014) - Fix 'Add New Field' button not working on German translation. last fix was not working.
 

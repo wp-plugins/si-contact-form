@@ -1945,6 +1945,7 @@ if( self::$form_options['external_style'] == 'true' ) {
          <label for="<?php echo self::$form_option_name;?>[title_mess]"><?php _e('Message:', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[title_mess]" id="si_contact_title_mess" type="text" value="<?php echo esc_attr(self::$form_options['title_mess']);  ?>" size="50" /><br />
          <label for="<?php echo self::$form_option_name;?>[title_capt]"><?php _e('CAPTCHA Code:', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[title_capt]" id="si_contact_title_capt" type="text" value="<?php echo esc_attr(self::$form_options['title_capt']);  ?>" size="50" /><br />
          <label for="<?php echo self::$form_option_name;?>[title_submit]"><?php _e('Submit', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[title_submit]" id="si_contact_title_submit" type="text" value="<?php echo esc_attr(self::$form_options['title_submit']);  ?>" size="50" /><br />
+         <label for="<?php echo self::$form_option_name;?>[title_submitting]"><?php _e('Submitting...', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[title_submitting]" id="si_contact_title_submitting" type="text" value="<?php echo esc_attr(self::$form_options['title_submitting']);  ?>" size="50" /><br />
          <label for="<?php echo self::$form_option_name;?>[title_reset]"><?php _e('Reset', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[title_reset]" id="si_contact_title_reset" type="text" value="<?php echo esc_attr(self::$form_options['title_reset']);  ?>" size="50" /><br />
          <label for="<?php echo self::$form_option_name;?>[title_areyousure]"><?php _e('Are you sure?', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[title_areyousure]" id="si_contact_title_areyousure" type="text" value="<?php echo esc_attr(self::$form_options['title_areyousure']);  ?>" size="50" /><br />
          <label for="<?php echo self::$form_option_name;?>[text_message_sent]"><?php _e('Your message has been sent, thank you.', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[text_message_sent]" id="si_contact_text_message_sent" type="text" value="<?php echo esc_attr(self::$form_options['text_message_sent']);  ?>" size="50" /><br />
@@ -2484,6 +2485,18 @@ if( self::$form_options['external_style'] == 'true' ) {
 		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_enable_areyousure_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
 		<div class="fscf_tip" id="si_contact_enable_areyousure_tip">
 		<?php _e( 'When a visitor clicks the form submit button, a popup message will ask "Are you sure?". This message can be changed in the "change field labels" settings on the Styles/Labels tab.', 'si-contact-form' ); ?>
+		</div>
+		<br />
+
+
+		<input name="<?php echo self::$form_option_name; ?>[enable_submit_oneclick]" id="fs_contact_enable_submit_oneclick" type="checkbox" <?php if ( self::$form_options['enable_submit_oneclick'] == 'true' ) echo 'checked="checked"'; ?> value="true" />
+		<label for="fs_contact_enable_submit_oneclick"><?php _e( 'Enable to prevent double click on submit button.', 'si-contact-form' ); ?></label>
+		<a style="cursor:pointer;" title="<?php esc_attr_e( 'Click for Help!', 'si-contact-form' ); ?>" onclick="toggleVisibility('si_contact_enable_submit_oneclick_tip');"><?php _e( 'help', 'si-contact-form' ); ?></a>
+		<div class="fscf_tip" id="si_contact_enable_submit_oneclick_tip">
+		<?php _e( 'This setting disables the Submit button after click, to prevent double click on button. Also prevents going back and submit the form again.', 'si-contact-form' );
+        echo ' ';
+        _e( 'Note: this setting is ignored if the "Are you sure?" popup for the submit button is enabled, or when you have filled in the Submit button input attributes setting with a "onclick" attribute.', 'si-contact-form' );
+        ?>
 		</div>
 		<br />
 
@@ -3548,7 +3561,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 			 'captcha_small','email_hide_empty', 'email_keep_attachments','print_form_enable',
 			 'captcha_perm', 'honeypot_enable', 'redirect_enable', 'redirect_query', 'redirect_email_off',
 			 'silent_email_off', 'export_email_off', 'ex_fields_after_msg', 'email_inline_label',
-			 'textarea_html_allow', 'enable_areyousure', 'auto_respond_enable', 'auto_respond_html',
+			 'textarea_html_allow', 'enable_areyousure', 'enable_submit_oneclick', 'auto_respond_enable', 'auto_respond_html',
 			 'req_field_indicator_enable', 'req_field_label_enable', 'border_enable', 'anchor_enable',
 			 'aria_required', 'auto_fill_enable', 'enable_reset', 'enable_credit_link'
 		);
@@ -3745,7 +3758,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 
 	static function set_fld_array() {
 		// Set up the list of available tags for email
-			
+
 		self::get_options();
 
 		self::$av_fld_arr  = array();  // used to show available field tags this form
@@ -3777,7 +3790,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 					   }
 					}
 					break;
-				
+
 				case FSCF_EMAIL_FIELD :
 					// email
 					self::$autoresp_ok = 1; // used in autoresp settings below
@@ -3787,14 +3800,14 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 					   self::$autoresp_ok = 0;
 					}
 					break;
-				
+
 				case FSCF_SUBJECT_FIELD :
 					break;
 
 				case FSCF_MESSAGE_FIELD :
 					$msg_key = $key;	// this is used below
 					break;
-				
+
 				default :
 					// This is an added field
 
