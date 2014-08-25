@@ -246,6 +246,8 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+- Fix After form additional HTML was not printing on form.
+
 = 4.0.26 =
 - (24 Aug 2014) - Added a new setting on the Advanced tab "Enable to prevent double click on submit button." It is enabled by default.
 This setting disables the Submit button after click, to prevent double click on the button. Also prevents going back and submitting the form again. Note: this setting is ignored if the "Are you sure?" popup for the submit button is enabled, or when you have filled in the Submit button input attributes setting with a "onclick" attribute.

@@ -734,6 +734,9 @@ $string .= '
 ';
 }
 
+        if ( !empty( self::$form_options['after_form_note'] ) )
+           $string .= self::$form_options['after_form_note'];
+
 		$string .= "\n".'<!-- Fast Secure Contact Form plugin '.FSCF_VERSION.' - end - FastSecureContactForm.com -->'. "\n";
 
 		return($string);
