@@ -107,7 +107,7 @@ Requirements/Restrictions:
 
 1. Install automatically through the `Plugins`, `Add New` menu in WordPress, or upload the `si-contact-form` folder to the `/wp-content/plugins/` directory. 
 
-2. Activate the plugin through the `Plugins` menu in WordPress. On the Admin screen use the Plugins side menu to select FS Contact Form configure the forms.  
+2. Activate the plugin through the `Plugins` menu in WordPress. On the Admin screen use the Plugins side menu to select FS Contact Form to configure the forms.  
 
 3. You must add this shortcode `[si-contact-form form='1']` in a Page, Post, or Text Widget. You can find this shortcode on the Basic Settings tab of any form. Here is how to add the shortcode: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si-contact-form form='1']` in the page. Uncheck `Allow Comments`, then click `Publish`. 
 
@@ -115,8 +115,9 @@ Requirements/Restrictions:
 
 5. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
 
-For best mail delivery results, be sure to properly configure the email settings on the Basic Settings tab:
+= For best mail delivery results, be sure to properly configure the email settings on the Basic Settings tab: =
 
+Read the following instructions and watch the YouTube video below:
 
 Set the "Return-path address" setting to a real email address on the SAME domain as your web site. This step really is ALWAYS necessary so mail is properly identified as originating from your server. For best results the "Email To" and the "Return-path address" should ALWAYS be separate REAL email addresses on the SAME DOMAIN as your web site (don't skip this important step!).
 
@@ -138,8 +139,10 @@ The email you receive will appear to be from your site email address, but becaus
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
+Follow the instructions above, but if you still need help...
 
-[See FAQ page: How to troubleshoot mail delivery](http://www.fastsecurecontactform.com/email-does-not-send)
+
+[See the FAQ page: How to troubleshoot mail delivery](http://www.fastsecurecontactform.com/email-does-not-send)
 
 
 == Screenshots ==
