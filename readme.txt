@@ -13,6 +13,8 @@ An easy and powerful form builder that lets your visitors send you email. Blocks
 
 Easily create and add forms to WordPress. Fields are easy to add, remove, and re-order. The contact form will let the user send emails to a site's admin, and also send a meeting request to talk over phone or video.
 
+[youtube https://www.youtube.com/watch?v=HM7MXUSGh50]
+
 Features: easy form edit, multiple forms, confirmation emails, no templates to mess with, and an option to redirect visitors to any URL after the message is sent. Includes CAPTCHA and Akismet support to block spammers. Spam is no longer a problem. You can add extra fields of any type: text, textarea, checkbox, checkbox-multiple, radio, select, select-multiple, attachment, date, time, hidden, password, and fieldset.
 
 * [FastSecureContactForm.com](http://www.fastsecurecontactform.com/)
@@ -105,14 +107,34 @@ Requirements/Restrictions:
 
 1. Install automatically through the `Plugins`, `Add New` menu in WordPress, or upload the `si-contact-form` folder to the `/wp-content/plugins/` directory. 
 
-2. Activate the plugin through the `Plugins` menu in WordPress. Look for the Settings link to configure the Options. 
+2. Activate the plugin through the `Plugins` menu in WordPress. On the Admin screen use the Plugins side menu to select FS Contact Form configure the forms.  
 
-3. Add the shortcode `[si-contact-form form='1']` in a Page, Post, or Text Widget. Here is how: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si-contact-form form='1']` in the page, uncheck `Allow Comments`, click `Publish`. 
+3. You must add this shortcode `[si-contact-form form='1']` in a Page, Post, or Text Widget. You can find this shortcode on the Basic Settings tab of any form. Here is how to add the shortcode: Log into your blog admin dashboard. Click `Pages`, click `Add New`, add a title to your page, enter the shortcode `[si-contact-form form='1']` in the page. Uncheck `Allow Comments`, then click `Publish`. 
 
 4. Test an email from your form.
 
 5. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
 
+For best mail delivery results, be sure to properly configure the email settings on the Basic Settings tab.
+Watch this [YouTube video demonstrating the basic settings in Fast Secure Contact Form](https://www.youtube.com/watch?v=HM7MXUSGh50)
+
+Set the “Return-path address” setting to a real email address on the SAME domain as your web site. This step really is ALWAYS necessary so mail is properly identified as originating from your server. For best results the “Email To” and the “Return-path address” should ALWAYS be separate REAL email addresses on the SAME DOMAIN as your web site (don’t skip this important step!).
+
+Some people will like to set the “Email To” to a gmail.com, outlook.com, or some other webmail address (if that is what you want, go ahead and try it), but the “Return-path address” should ALWAYS be set to a real email addresses on the SAME DOMAIN as your web site. If you try a webmail address and your mail is not sending, try changing the "Email to" address to a REAL email addresses on the SAME DOMAIN as your web site. You can still deliver it to your webmail address by forwarding the email from a setting in your hosting control panel, or [configuring your webmail to fetch a mail account](https://support.google.com/mail/answer/21289?hl=en).
+
+Next step, check this setting box:
+Enable when web host requires “Mail From” strictly tied to site (don’t skip this important step!).
+
+Click "Save Changes", then test your form's mail delivery by sending a message from the form on your page. When testing your form on your page, do not fill out the email field with the same email address as the “Email To” or “Return-path address”. Use a different email address because some server's security settings do not allow email to send from/to the same address.
+
+If you have other forms in use, be sure to repeat these settings for each form.
+
+Now your email is properly configured for best delivery. Your form Email should now be DMARC compliant for users who submit your form with yahoo, aol, comcast, or any other provider who now requires DMARC compliance.
+
+The email you receive will appear to be from your site email address, but because the email header “Reply-to” is set as the form user’s email address. You should be able to just hit reply and send email back to the real sender. Also you should see the sender's email address in the message content. So it is still possible to send mail to that address if the “Reply-to” is somehow ignored by your email program.
+
+
+[youtube https://www.youtube.com/watch?v=HM7MXUSGh50]
 
 = I just installed this and do not get any email from it, what could be wrong? =
 
