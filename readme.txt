@@ -115,23 +115,23 @@ Requirements/Restrictions:
 
 5. Updates are automatic. Click on "Upgrade Automatically" if prompted from the admin menu. If you ever have to manually upgrade, simply deactivate, uninstall, and repeat the installation steps with the new version.
 
-For best mail delivery results, be sure to properly configure the email settings on the Basic Settings tab.
-Watch this [YouTube video demonstrating the basic settings in Fast Secure Contact Form](https://www.youtube.com/watch?v=HM7MXUSGh50)
+For best mail delivery results, be sure to properly configure the email settings on the Basic Settings tab:
 
-Set the “Return-path address” setting to a real email address on the SAME domain as your web site. This step really is ALWAYS necessary so mail is properly identified as originating from your server. For best results the “Email To” and the “Return-path address” should ALWAYS be separate REAL email addresses on the SAME DOMAIN as your web site (don’t skip this important step!).
 
-Some people will like to set the “Email To” to a gmail.com, outlook.com, or some other webmail address (if that is what you want, go ahead and try it), but the “Return-path address” should ALWAYS be set to a real email addresses on the SAME DOMAIN as your web site. If you try a webmail address and your mail is not sending, try changing the "Email to" address to a REAL email addresses on the SAME DOMAIN as your web site. You can still deliver it to your webmail address by forwarding the email from a setting in your hosting control panel, or [configuring your webmail to fetch a mail account](https://support.google.com/mail/answer/21289?hl=en).
+Set the "Return-path address" setting to a real email address on the SAME domain as your web site. This step really is ALWAYS necessary so mail is properly identified as originating from your server. For best results the "Email To" and the "Return-path address" should ALWAYS be separate REAL email addresses on the SAME DOMAIN as your web site (don't skip this important step!).
+
+Some people will like to set the "Email To" to a gmail.com, outlook.com, or some other webmail address (if that is what you want, go ahead and try it), but the "Return-path address" should ALWAYS be set to a real email addresses on the SAME DOMAIN as your web site. If you try a webmail address and your mail is not sending, try changing the "Email to" address to a REAL email addresses on the SAME DOMAIN as your web site. You can still deliver it to your webmail address by forwarding the email from a setting in your hosting control panel, or [configuring your webmail to fetch a mail account](https://support.google.com/mail/answer/21289?hl=en).
 
 Next step, check this setting box:
-Enable when web host requires “Mail From” strictly tied to site (don’t skip this important step!).
+Enable when web host requires "Mail From" strictly tied to site (don't skip this important step!).
 
-Click "Save Changes", then test your form's mail delivery by sending a message from the form on your page. When testing your form on your page, do not fill out the email field with the same email address as the “Email To” or “Return-path address”. Use a different email address because some server's security settings do not allow email to send from/to the same address.
+Click "Save Changes", then test your form's mail delivery by sending a message from the form on your page. When testing your form on your page, do not fill out the email field with the same email address as the "Email To" or "Return-path address". Use a different email address because some server's security settings do not allow email to send from/to the same address.
 
 If you have other forms in use, be sure to repeat these settings for each form.
 
 Now your email is properly configured for best delivery. Your form Email should now be DMARC compliant for users who submit your form with yahoo, aol, comcast, or any other provider who now requires DMARC compliance.
 
-The email you receive will appear to be from your site email address, but because the email header “Reply-to” is set as the form user’s email address. You should be able to just hit reply and send email back to the real sender. Also you should see the sender's email address in the message content. So it is still possible to send mail to that address if the “Reply-to” is somehow ignored by your email program.
+The email you receive will appear to be from your site email address, but because the email header "Reply-to" is set as the form user's email address. You should be able to just hit reply and send email back to the real sender. Also you should see the sender's email address in the message content. So it is still possible to send mail to that address if the "Reply-to" is somehow ignored by your email program.
 
 
 [youtube https://www.youtube.com/watch?v=HM7MXUSGh50]
