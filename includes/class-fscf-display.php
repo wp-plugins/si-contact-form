@@ -358,6 +358,34 @@ $string .= '
 			}
 		}
 
+      // check for custom post types, returns the global static self::$post_types_slugs
+      // none of the field slugs can be the same as a post type rewrite_slug
+      // or you will get "page not found" when posting the form with that field filled in
+      $pt_args = array('public' => true,'_builtin' => false);
+      $post_types = get_post_types( $pt_args, 'objects' );
+      $slug_list = array();
+      $post_types_slugs = array('post','page','attachment','revision');
+      if ( $post_types ) {
+         foreach ( $post_types as $post_type ) {
+              $post_types_slugs[] = ( isset( $post_type->rewrite_slug ) ) ? $post_type->rewrite_slug : $post_type->name;
+         }
+        // print_r($post_types_slugs);
+
+        foreach ( self::$form_options['fields'] as $key => $field ) {
+          $slug_list[] = $field['slug'];
+        }
+        //print_r($slug_list);
+
+        foreach ($post_types_slugs as $key => $slug) {
+            if ( in_array( strtolower( $slug ), $slug_list ) ) {
+             	$string .= '
+		<div id="fscf_form_error_email' . self::$form_id_num . '" ' . self::get_this_css('error_style') . '>' .sprintf( __( 'Warning: one of your field tags conflicts with the post type redirect tag "%s". To automatically correct this, click the <b>Save Changes</b> button on the form edit page.', 'si-contact-form' ), $slug )
+         . "\n    </div>\n";
+            }
+
+        }
+      }
+
      	// print input error message
 		if ( self::$contact_error ) {
 			// There are errors, so print the generic error message

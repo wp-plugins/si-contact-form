@@ -15,6 +15,7 @@ class FSCF_Options {
 	static $av_fld_arr, $av_fld_subj_arr;		// list of avail field tags
 	static $autoresp_ok, $new_field_added, $new_field_key;
 	static $ads, $ads_used;	// array of ads, list of ads used
+    static $post_types_slugs = array('post','page','attachment','revision');
 
 	static function get_form_num() {
 		// Set the number of the current form
@@ -990,7 +991,25 @@ class FSCF_Options {
 		<div class="clear"></div>
 
 		<?php
-           // fill in any missing defaults
+
+        // none of the field slugs can be the same as a post type rewrite_slug
+        // or you will get "page not found" when posting the form with that field filled in
+        self::get_post_types_slugs();
+        $slug_list = array();
+        foreach ( self::$form_options['fields'] as $key => $field ) {
+          $slug_list[] = $field['slug'];
+        }
+        $bad_slug_list = array();
+        foreach (self::$post_types_slugs as $key => $slug) {
+            if ( in_array( strtolower( $slug ), $slug_list ) ) {
+              echo '<div id="message" class="error">';
+			  echo sprintf( __( 'Warning: one of your field tags conflicts with the post type redirect tag "%s". To automatically correct this, click the <b>Save Changes</b> button.', 'si-contact-form' ), $slug );
+			  echo "</div>\n";
+              $bad_slug_list[] = $slug;
+            }
+        }
+
+         // fill in any missing defaults
         $field_opt_defaults = array(
           'hide_label'	 => 'false',
           'placeholder'	 => 'false',
@@ -1052,6 +1071,11 @@ class FSCF_Options {
 				echo '<div class="fsc-notice">' . self::$new_field_added . '</div>' . "\n";
                 self::$new_field_key = $key+1;
 			}
+            if ( in_array( strtolower( $field['slug'] ), $bad_slug_list ) ) {
+              echo '<div class="fsc-error">' . sprintf( __( 'Warning: one of your field tags conflicts with the post type redirect tag "%s". To automatically correct this, click the <b>Save Changes</b> button.', 'si-contact-form' ), $field['slug'] )  . '</div>' . "\n";
+            }
+
+
             // warn if placeholder is missing the Default text
 			if ( $field['placeholder'] == 'true' && $field['default'] == '' ) {
                if (!$placeholder_error) {
@@ -1196,7 +1220,7 @@ class FSCF_Options {
 			} ?>
 
 		   <label for="<?php echo 'fs_contact_field'. +$key+1 .'_slug' ?>"><?php echo __('Tag', 'si-contact-form'); ?>:</label>
-		   <input name="<?php echo $field_opt_name.'[slug]' ?>" id="<?php echo 'fs_contact_field'. +$key+1 .'_slug' ?>" type="text" 
+		   <input name="<?php echo $field_opt_name.'[slug]' ?>" id="<?php echo 'fs_contact_field'. +$key+1 .'_slug' ?>" type="text"
 				  value="<?php echo esc_attr($field['slug']); ?>" <?php
 				  if ( $field['standard'] != '0' ) echo ' readonly'; ?> size="45" />	
 		   
@@ -3596,6 +3620,20 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 			'select-multiple',
 			'radio'
 		);
+
+        // none of the field slugs can be the same as a post type rewrite_slug
+        // or you will get "page not found" when posting the form with that field filled in
+        self::get_post_types_slugs();
+        $slug_list = array();
+        foreach ( self::$form_options['fields'] as $key => $field ) {
+          $slug_list[] = $field['slug'];
+        }
+        $bad_slugs = array();
+        foreach (self::$post_types_slugs as $key => $slug) {
+            if ( in_array( strtolower( $slug ), $slug_list ) )
+               $bad_slugs[] = $slug;
+        }
+
 		foreach ( $text['fields'] as $key => $field ) {
 			if ( isset( $field['delete'] ) && "true" == $field['delete'] ) {
 				// Delete the field
@@ -3629,6 +3667,10 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 
 				// Sanitize the slug
 				$slug_changed = false;
+                if ( !empty($field['slug']) && in_array( strtolower( $field['slug'] ), $bad_slugs ) )
+                  $slug_changed = true;
+
+
 				if ( empty($field['slug']) ) {
 					// no slug, so make one from the label
 					// the sanitize title function encodes UTF-8 characters, so we need to undo that
@@ -3719,11 +3761,30 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		return( $text );
 	}	// end function validate($text);
 
+
+    static function get_post_types_slugs() {
+
+      // check for custom post types, returns the global static self::$post_types_slugs
+      // none of the field slugs can be the same as a post type rewrite_slug
+      // or you will get "page not found" when posting the form with that field filled in
+
+      $pt_args = array('public' => true,'_builtin' => false);
+      $post_types = get_post_types( $pt_args, 'objects' );
+
+      if ( $post_types ) {
+         foreach ( $post_types as $post_type ) {
+              self::$post_types_slugs[] = ( isset( $post_type->rewrite_slug ) ) ? $post_type->rewrite_slug : $post_type->name;
+         }
+      }
+   }
+
 	static function check_slug($slug, $slug_list) {
 		// Checks the slug, and adds a number if necessary to make it unique
 		//   $slug -- the slug to be checked
 		//   $slug_list -- a list of existing slugs
 		// Returns the new slug
+
+        $slug_list  = array_merge( self::$post_types_slugs, $slug_list );
 
 		// Duplicates have a two digit number appended to the end to make them unique
 		// XXX do I neeed any messages about changing the slug?

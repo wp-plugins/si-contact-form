@@ -141,7 +141,6 @@ The email you receive will appear to be from your site email address, but becaus
 
 Follow the instructions above, but if you still need help...
 
-
 [See the FAQ page: How to troubleshoot mail delivery](http://www.fastsecurecontactform.com/email-does-not-send)
 
 
@@ -271,7 +270,9 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-- Fix After form additional HTML was not printing on form.
+= 4.0.27 =
+- (09 Sep 2014) - Fix 'After form additional HTML' was not printing on form.
+- Fix to check for conflicting post types and show a warning. None of the field slugs can be the same as a post type rewrite_slug or you will get "page not found" when posting the form with that field filled in. In this new version, if you have this conflict there will be a warning on the form and on the form edit page. Warning: one of your field tags conflicts with the post type redirect tag "tag name". To automatically correct this, click the "Save Changes" button on the form edit page. Also the form editor will not let a conflict happen while editing, but a conflict can still happen if you add custom post types. So if you add any custom post types, be sure to check your forms for any warning messages.
 
 = 4.0.26 =
 - (24 Aug 2014) - Added a new setting on the Advanced tab "Enable to prevent double click on submit button." It is enabled by default.
