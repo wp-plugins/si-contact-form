@@ -3625,8 +3625,10 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
         // or you will get "page not found" when posting the form with that field filled in
         self::get_post_types_slugs();
         $slug_list = array();
-        foreach ( self::$form_options['fields'] as $key => $field ) {
-          $slug_list[] = $field['slug'];
+        if( isset(self::$form_options) && (!empty(self::$form_options['fields']))  ) {
+           foreach ( self::$form_options['fields'] as $key => $field ) {
+             $slug_list[] = $field['slug'];
+           }
         }
         $bad_slugs = array();
         foreach (self::$post_types_slugs as $key => $slug) {
