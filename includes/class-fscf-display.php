@@ -249,15 +249,29 @@ $('head').append(fscf_styles);
 
   static function get_honeypot_slugs($fields) {
   // filter a list of field names that are not currently used on the form
-		$decoy_fields = array( 'address','suite','company','phone','title','city','state','fax','newsletter','webites','zipcode','address2','firstname','lastname','birthday');
+	 $decoy_fields = array( 'address','suite','company','phone','title','city','state','fax','newsletter','webites','zipcode','address2','firstname','lastname','birthday');
 
-		if ($fields && is_array($fields)) {
-			foreach ($decoy_fields as $index => $decoy) {
-				if (isset($fields[$decoy])) {
+      // check for custom post types,
+      // none of the field slugs can be the same as a post type rewrite_slug
+      // or you will get "page not found" when posting the form with that field filled in
+
+      $pt_args = array('public' => true,'_builtin' => false);
+      $post_types = get_post_types( $pt_args, 'objects' );
+      $pt_slugs = array();
+      if ( $post_types ) {
+         foreach ( $post_types as $post_type ) {
+              $pt_slugs[] = ( isset( $post_type->rewrite_slug ) ) ? $post_type->rewrite_slug : $post_type->name;
+         }
+      }
+
+	  if ($fields && is_array($fields)) {
+		  foreach ($decoy_fields as $index => $decoy) {
+				if (isset($fields[$decoy]))  // decoy field matches a form field, remove the decoy from list
 					unset($decoy_fields[$index]);
-				}
-			}
-		}
+                if (!empty($pt_slugs) && in_array( $decoy, $pt_slugs ) )
+                    unset($decoy_fields[$index]); // decoy field matches a custom post type, remove the decoy from list
+		  }
+	  }
 
 		sort($decoy_fields);
 		return $decoy_fields;
@@ -1334,7 +1348,16 @@ $string .= "    </div>";
 			"\n      <input ";
 		$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('field_style');
 		$string .= ' type="text" id="fscf_field' . self::$form_id_num . '_' . $key . '" name="' . $field['slug'] . '" value="';
-		$string .= ( isset( self::$form_content[$field['slug']] ) && self::$form_content[$field['slug']] != '') ? esc_attr( self::$form_content[$field['slug']] ) : $cal_date_array[self::$form_options['date_format']];
+		if ( isset( self::$form_content[$field['slug']] ) && self::$form_content[$field['slug']] != '') {
+        	      $string .=  esc_attr( self::$form_content[$field['slug']] );
+        } else {
+                if ($field['default'] == '[today]') {
+                    $date_formatting  = self::convert_date_for_php();
+                    $string .=  esc_attr( date($date_formatting) );
+                } else {
+             	    $string .= $cal_date_array[self::$form_options['date_format']];
+                }
+        }
 		$string .= '" ' . self::$aria_required . ' size="15" ';
 		if ( $field['attributes'] != '' )
 			$string .= ' ' . $field['attributes'];
@@ -1342,7 +1365,30 @@ $string .= "    </div>";
 
 		return($string);
 	}	// end function display_field_date
-	
+
+    static function convert_date_for_php() {
+
+       $date_format = self::$form_options['date_format'];
+
+    // find the delimiter of the date_format setting: slash, dash, or dot
+    if (strpos($date_format,'/')) {
+      $delim = '/'; $regexdelim = '\/';
+    } else if (strpos($date_format,'-')) {
+       $delim = '-'; $regexdelim = '-';
+    } else if (strpos($date_format,'.')) {
+      $delim = '.';  $regexdelim = '\.';
+    }
+
+    if ( $date_format == "mm${delim}dd${delim}yyyy" )
+        return "m${delim}d${delim}Y";
+	if ( $date_format == "dd${delim}mm${delim}yyyy" )
+        return "d${delim}m${delim}Y";
+	if ( $date_format == "yyyy${delim}mm${delim}dd" )
+       return "Y${delim}m${delim}d";
+
+       return "m${delim}d${delim}Y"; ;
+   }
+
 	static function display_field_attachment($key, $field) {
 		$string = '';
 		

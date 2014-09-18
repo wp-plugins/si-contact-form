@@ -937,7 +937,8 @@ class FSCF_Options {
 			<?php echo __('The field Tag is used to identify the field for email settings, shortcodes, and query variables.  Field tags must be unique.  If you leave the Tag entry blank, one will be generated for you based on the field name.  If you change a field name, you might want to change the tag to match.  Or just delete the tag, and a new one will be generated for you.', 'si-contact-form'); ?></p>
 
 			<p><strong><?php echo __('Default:', 'si-contact-form'); ?></strong><br />
-            <?php echo __('Use to pre-fill a value for the field. For select and radio fields, enter the number of the option to pre-select (1 = first item, etc.).  For select-multiple and checkbox-multiple, enter the list item number(s) to pre-select separated by commas.  For a checkbox, enter "1" to pre-check the box.', 'si-contact-form'); ?></p>
+            <?php echo __('Use to pre-fill a value for the field. For select and radio fields, enter the number of the option to pre-select (1 = first item, etc.).  For select-multiple and checkbox-multiple, enter the list item number(s) to pre-select separated by commas.  For a checkbox, enter "1" to pre-check the box.', 'si-contact-form'); ?>
+            <?php echo ' '; echo __('For a date field, you can enter any date in the configured format. Or to show today\'s date as default, just put the word today in brackets. example: [today].', 'si-contact-form'); ?></p>
 
             <p><strong><?php echo __('Default as placeholder:', 'si-contact-form'); ?></strong><br />
 			<?php echo __('Check this setting if you want the default text to be a placeholder inside the form field. The placeholder is a short hint that is displayed in the input field before the user enters a value. Works with the following input types only: name, email, subject, message, text, textarea, url, and password. This setting is sometimes used along with the "Hide label" setting.', 'si-contact-form'); ?>
@@ -3723,7 +3724,7 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 
 			// If date type field, check format of default (if any)
 			if ( 'date' == $field['type'] && '' != $field['default'] ) {
-				if ( !FSCF_Process::validate_date( $field['default'], self::$current_form ) ) {
+				if ($field['default'] != '[today]' && !FSCF_Process::validate_date( $field['default'], self::$current_form ) ) {
 					$cal_date_array = array(
 						'mm/dd/yyyy' => esc_html( __( 'mm/dd/yyyy', 'si-contact-form' ) ),
 						'dd/mm/yyyy' => esc_html( __( 'dd/mm/yyyy', 'si-contact-form' ) ),
