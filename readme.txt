@@ -272,7 +272,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 = 4.0.29 =
 - (18 Sep 2014) - Fix the validate email function is updated for new generic top-level domains (gTLDs) released in 2014 and beyond. Allows up to 12 characters like .training, .photography, .company, etc. 
-- Fix honypot field slug will never conflict with custom post type.
+- Fix so honeypot field slug will never conflict with custom post types.
 - Add new feature for Default field properties: For the Default setting of a date field type, you can enter any date in the configured format. Or to show today's date as default, just put the word today in brackets. example: [today].
 
 = 4.0.28 =
