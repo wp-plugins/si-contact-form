@@ -238,7 +238,7 @@ The following translations are included in the download zip file:
 * Portuguese Brazil (pt_BR) - Translated by [Rui Alao]
 * Romanian (ro_RO) - Translated by [Anunturi Jibo](http://www.jibo.ro)
 * Russian (ru_RU) - Translated by [Iflexion](http://www.iflexion.com/)
-* Spanish (es_ES) - Translated by [Valentin Yonte Rodriguez](http://www.activosenred.com/)
+* Spanish (es_ES) - Translated by [Manuel](http://www.mbrsolution.com/)
 * Swedish (sv_SE) - Translated by [Daniel Persson](http://walktheline.boplatsen.se/)
 * Traditional Chinese, Taiwan (zh_TW) - Translated by [Cjh]
 * Turkish (tr_TR) - Translated by [Tolga](http://www.tapcalap.com/)
@@ -269,6 +269,9 @@ You can enable or disable this option in the "Scheduling" tab of your contact fo
 If you have additional questions visit [vCita Support Page](http://support.vcita.com)
 
 == Changelog ==
+
+= 4.0.30 =
+- (23 Sep 2014) - Translated Spanish 100% (es_ES) - Translated by [Manuel](http://www.mbrsolution.com/)
 
 = 4.0.29 =
 - (18 Sep 2014) - Fix the validate email function is updated for new generic top-level domains (gTLDs) released in 2014 and beyond. Allows up to 12 characters like .training, .photography, .company, etc. 
