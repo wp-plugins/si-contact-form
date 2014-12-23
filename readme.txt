@@ -100,7 +100,7 @@ CAPTCHA Image Support:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 3.4.2+ and WPMU (Wordpress 3.6+ is highly recommended)
+ * Works with Wordpress 3.4.2+ and WPMU (Wordpress 4+ is highly recommended)
  * PHP5 
 
 == Installation ==
