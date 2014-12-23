@@ -1572,6 +1572,9 @@ class FSCF_Process {
              $silent_ok = 0;
        }
 
+         // filter hook for modifying the email_fields array
+        self::$email_fields = apply_filters('si_contact_email_fields_posted', self::$email_fields, self::$form_id_num);
+
 		// Silent sending?
 		if ( self::$form_options['silent_send'] == 'get' && !empty(self::$form_options['silent_url']) && $silent_ok ) {
 			// build query string
@@ -1596,9 +1599,6 @@ class FSCF_Process {
 			}
 			//echo $silent_result;
 		}
-
-        // filter hook for modifying the email_fields array before export
-        self::$email_fields = apply_filters('si_contact_email_fields_posted', self::$email_fields, self::$form_id_num);
 
 		// Export option
 		// filter posted data based on admin settings

@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -269,6 +269,10 @@ You can enable or disable this option in the "Scheduling" tab of your contact fo
 If you have additional questions visit [vCita Support Page](http://support.vcita.com)
 
 == Changelog ==
+
+= 4.0.31 =
+- (22 Dec 2014) - Move the filter hook si_contact_email_fields_posted to before Silent Remote Sending.
+- add new advanced tab setting "Enable Internationalized Domain Names when checking for a valid email address". Because this setting relaxes the email validation check considerably, do not enable unless you have to allow Russian, Japanese, Chinese, etc. characters in the email address. 
 
 = 4.0.30 =
 - (23 Sep 2014) - Translated Spanish 100% (es_ES) - Translated by [Manuel](http://www.mbrsolution.com/)

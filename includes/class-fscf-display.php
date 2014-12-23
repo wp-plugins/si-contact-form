@@ -1097,8 +1097,9 @@ $string .= '      <label ';
 $string .= "    </div>";
 		}
         $type = $field['type'];
-        if ( 'email' == $field['type'] || 'url' == $field['type']) // XXX fix this later? email or url type was breaking the 'already posted' javascript
-           $type = 'text';
+        //if ( 'email' == $field['type'] || 'url' == $field['type']) // XXX fix this later? email or url type was breaking the 'already posted' javascript
+        //   $type = 'text';
+        // Since then I have changed the 'already posted' javascript, so try email and url types again.
         $string .= "\n    <div " . self::get_this_css('field_div_style') . '>' . self::echo_if_error( $field['slug'] ) ."\n"
 		. '      <input ';
 		$string .= ($field['input_css'] != '') ? self::convert_css( $field['input_css'] ) : self::get_this_css('field_style');
