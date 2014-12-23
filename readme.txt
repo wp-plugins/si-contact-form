@@ -270,9 +270,10 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-= 4.0.31 =
+= 4.0.32 =
 - (22 Dec 2014) - Move the filter hook si_contact_email_fields_posted to before Silent Remote Sending.
-- add new advanced tab setting "Enable Internationalized Domain Names when checking for a valid email address". Because this setting relaxes the email validation check considerably, do not enable unless you have to allow Russian, Japanese, Chinese, etc. characters in the email address. 
+- add new advanced tab setting "Enable Internationalized Domain Names when checking for a valid email address". Because this setting relaxes the email validation check considerably, do not enable unless you have to allow Russian, Japanese, Chinese, etc. characters in the email address.
+- Fix so field tags can have upper case characters.
 
 = 4.0.30 =
 - (23 Sep 2014) - Translated Spanish 100% (es_ES) - Translated by [Manuel](http://www.mbrsolution.com/)

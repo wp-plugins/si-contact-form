@@ -3707,11 +3707,11 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 					// the sanitize title function encodes UTF-8 characters, so we need to undo that
 
                     // this line croaked on some chinese characters
-				    //$field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($field['label']))), 0, FSCF_MAX_SLUG_LEN );
+				    //$field['slug'] = substr( urldecode(self::sanitize_slug_with_dashes(remove_accents($field['label']))), 0, FSCF_MAX_SLUG_LEN );
 
                     $field['slug'] = remove_accents($field['label']);
                     $field['slug'] = preg_replace('~([^a-zA-Z\d_ .-])~', '', $field['slug']);
-                    $field['slug'] = substr( urldecode(sanitize_title_with_dashes($field['slug'])), 0, FSCF_MAX_SLUG_LEN );
+                    $field['slug'] = substr( urldecode(self::sanitize_slug_with_dashes($field['slug'])), 0, FSCF_MAX_SLUG_LEN );
                     if ($field['slug'] == '')
                        $field['slug'] = 'na';
 					if ( '-' == substr( $field['slug'], strlen($field['slug'])-1, 1) )
@@ -3721,11 +3721,11 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 					// The slug has changed, so sanitize it
                     
                     // this line croaked on some chinese characters
-				    //$field['slug'] = substr( urldecode(sanitize_title_with_dashes(remove_accents($field['slug']))), 0, FSCF_MAX_SLUG_LEN );
+				    //$field['slug'] = substr( urldecode(self::sanitize_slug_with_dashes(remove_accents($field['slug']))), 0, FSCF_MAX_SLUG_LEN );
 
                     $field['slug'] = remove_accents($field['slug']);
                     $field['slug'] = preg_replace('~([^a-zA-Z\d_ .-])~', '', $field['slug']);
-                    $field['slug'] = substr( urldecode(sanitize_title_with_dashes($field['slug'])), 0, FSCF_MAX_SLUG_LEN );
+                    $field['slug'] = substr( urldecode(self::sanitize_slug_with_dashes($field['slug'])), 0, FSCF_MAX_SLUG_LEN );
                     if ($field['slug'] == '')
                        $field['slug'] = 'na';
 					$slug_changed = true;
@@ -3791,6 +3791,30 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		}
 		return( $text );
 	}	// end function validate($text);
+
+
+    static function sanitize_slug_with_dashes( $title, $raw_title = '' ) {
+          $title = strip_tags($title);
+	      // Preserve escaped octets.
+	      $title = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $title);
+          // Remove percent signs that are not part of an octet.
+	      $title = str_replace('%', '', $title);
+	      // Restore octets.
+	      $title = preg_replace('|---([a-fA-F0-9][a-fA-F0-9])---|', '%$1', $title);
+
+	      if (seems_utf8($title)) {
+	            $title = utf8_uri_encode($title, 200);
+	      }
+	      $title = preg_replace('/&.+?;/', '', $title); // kill entities
+          $title = str_replace('.', '-', $title);
+	      $title = preg_replace('/[^%a-zA-Z0-9 _-]/', '', $title);
+	      $title = preg_replace('/\s+/', '-', $title);
+          $title = preg_replace('|-+|', '-', $title);
+	      $title = trim($title, '-');
+
+        return $title;
+	}
+    // function sanitize_title_with_dashes
 
 
     static function get_post_types_slugs() {
