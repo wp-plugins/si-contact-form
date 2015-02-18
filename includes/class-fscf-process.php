@@ -1579,7 +1579,7 @@ class FSCF_Process {
 		if ( self::$form_options['silent_send'] == 'get' && !empty(self::$form_options['silent_url']) && $silent_ok ) {
 			// build query string
 			$query_string = self::export_convert( self::$email_fields, self::$form_options['silent_rename'], self::$form_options['silent_ignore'], self::$form_options['silent_add'], 'query' );
-            echo $query_string;
+            //echo $query_string;
 			if ( !preg_match( "/\?/", self::$form_options['silent_url'] ) )
 				$silent_result = wp_remote_get( self::$form_options['silent_url'] . '?' . $query_string, array( 'timeout'	 => 20, 'sslverify'	 => false ) );
 			else

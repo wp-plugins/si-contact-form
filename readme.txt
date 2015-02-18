@@ -270,6 +270,12 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+
+= 4.0.33 =
+- (17 Feb 2015) - fixed fscf_init_languages priority
+- fixed a print array was left active during silent send
+- updated turkish language file
+ 
 = 4.0.32 =
 - (22 Dec 2014) - Move the filter hook si_contact_email_fields_posted to before Silent Remote Sending.
 - add new advanced tab setting "Enable Internationalized Domain Names when checking for a valid email address". Because this setting relaxes the email validation check considerably, do not enable unless you have to allow Russian, Japanese, Chinese, etc. characters in the email address.

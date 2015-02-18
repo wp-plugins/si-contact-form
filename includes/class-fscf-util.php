@@ -17,7 +17,7 @@ class FSCF_Util {
         // Come here when the plugin is run
 
         // load plugin textdomain for languages
-		add_action('plugins_loaded', 'FSCF_Util::fscf_init_languages',1);
+		add_action('plugins_loaded', 'FSCF_Util::fscf_init_languages');
 
         // imports old settings on plugin activate or first time upgrade from 3.xx to 4.xx
         add_action('init', 'FSCF_Util::import',1);
