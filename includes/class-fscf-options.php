@@ -3588,8 +3588,8 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 				'captcha_input_style'	 => 'text-align:left; margin:0; width:50px;', // CAPTCHA input field
  			    'textarea_style'         => 'text-align:left; margin:0; width:99%; max-width:250px; height:120px;', // Input Textarea 
 				'select_style'			 => 'text-align:left;',	// Input Select
- 			    'checkbox_style'         => 'width:13px;', // Input checkbox
-                'radio_style'            => 'width:13px;', // Input radio
+ 			    'checkbox_style'         => 'width:22px; height:32px;', // Input checkbox
+                'radio_style'            => 'width:22px; height:32px;', // Input radio
                 'placeholder_style'      => 'opacity:0.6; color:#333333;', // placeholder style
 
 				'button_style'			 => 'cursor:pointer; margin:0;', // Submit button 
@@ -3730,14 +3730,15 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
                        $field['slug'] = 'na';
 					$slug_changed = true;
 				}
-				
+
 				// Make sure the slug is unique
 				if ( $slug_changed ) {
 					$text['fields'][$key]['slug'] = self::check_slug( $field['slug'], $slug_list );
 				}
 			}
-			$slug_list[] = $text['fields'][$key]['slug'];
-			
+            if( isset( $text['fields'][$key]['slug'] ) )
+			  $slug_list[] = $text['fields'][$key]['slug'];
+
 			// If a select type field, make sure the select options list is not empty
 			if ( in_array( $field['type'], $select_type_fields ) ) {
                  // remove blank lines and trim options

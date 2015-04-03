@@ -4,7 +4,7 @@ Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.FastSecureContactForm.com/donate
 Tags: Akismet, captcha, contact, contact form, form, mail, email, spam, multilingual, wpmu
 Requires at least: 3.4.2
-Tested up to: 4.1
+Tested up to: 4.1.1
 Stable tag: trunk
 
 An easy and powerful form builder that lets your visitors send you email. Blocks all automated spammers. No templates to mess with.
@@ -270,6 +270,19 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.34 =
+- (03 Apr 2015) - added a new filter hook to allow modifying the $user_info array. The user info is displayed at the end of the email
+- changed the default CSS for Radio and Checkbox field inputs to comply with [google webmaster tools mobile friendly test](https://www.google.com/webmasters/tools/mobile-friendly/). The tap targets were too close for radio and checkbox fields on mobile devices.
+CSS changes made in an update will only change the defaults for new forms you add, not any existing ones. This is to respect any settings you might have made yourself on the forms you have now.
+
+Please adjust these settings manually on any existing forms with radio or checkbox fields:
+Edit each of your forms on the form edit page, click on the Styles tab
+Change these two settings, like so:
+Input checkbox fields: width:22px; height:32px;
+Input radio fields: width:22px; height:32px;
+
+Click the Save Changes button, repeat for your other forms.
+The defaults settings were: width:13px; 
 
 = 4.0.33 =
 - (17 Feb 2015) - fixed fscf_init_languages priority

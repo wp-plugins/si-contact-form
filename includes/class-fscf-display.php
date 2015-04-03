@@ -715,7 +715,7 @@ $string .= '
         }
 		$string .= '/> ';
 		
-		if ( self::$form_options['enable_reset'] == 'true' ) {
+		if ( !self::$contact_error && self::$form_options['enable_reset'] == 'true' ) {
 			$string .= '<input type="reset" id="fscf_reset' . self::$form_id_num . '" ' . self::get_this_css('reset_style') . ' value="';
 			$string .= (self::$form_options['title_reset'] != '') ? esc_attr( self::$form_options['title_reset'] ) : esc_attr( __( 'Reset', 'si-contact-form' ) );
 			$msg = addslashes( __( 'Do you really want to reset the form?', 'si-contact-form' ) );

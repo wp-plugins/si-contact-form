@@ -192,7 +192,7 @@ class FSCF_Process {
 					self::$form_data[$field['slug']] = FSCF_Util::clean_input( $_POST[$field['slug']] );
 			}
 			// Set up values for unchecked checkboxes and unselected radio types
-			else if ( 'checkbox' == $field['type'] || 'radio' == $field['type'] ) 
+			else if ( 'checkbox' == $field['type'] || 'radio' == $field['type'] )
 				self::$form_data[$field['slug']] = '';
 			else if ( 'checkbox-multiple' == $field['type'] )
 				self::$form_data[$field['slug']] = array();
@@ -484,7 +484,7 @@ class FSCF_Process {
 						self::$email_msg .= self::make_bold( $key ) . $inline_or_newline . stripslashes( $value ) . self::$php_eol . self::$php_eol;
 						self::$email_fields[$key] = $value;
 					}
-				}				
+				}
 				}
 		}
 
@@ -502,7 +502,7 @@ class FSCF_Process {
 
 		self::$email_fields['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
 
-        self::$email_fields['ip_address'] = (isset( $_SERVER['REMOTE_ADDR'] )) ? $_SERVER['REMOTE_ADDR'] : 'n/a'; 
+        self::$email_fields['ip_address'] = (isset( $_SERVER['REMOTE_ADDR'] )) ? $_SERVER['REMOTE_ADDR'] : 'n/a';
 
 		self::check_captcha();
 
@@ -790,7 +790,7 @@ class FSCF_Process {
 
 	static function validate_attach( $slug, $req, $label, $inline_or_newline ) {
 		// validates and saves uploaded file attchments for file attach field types.
-		// also sets errors if the file did not upload or was not accepted.	
+		// also sets errors if the file did not upload or was not accepted.
 		// Test if a file was selected for attach.
 		$field_file['name'] = '';
 		if ( isset( $_FILES[$slug] ) )
@@ -907,42 +907,51 @@ class FSCF_Process {
 				if ( $li['country_code'] == 'US' ) {
 					$geo_loc = $li['city_name'];
 					if ( $li['state_code'] != '' )
-						$geo_loc = $li['city_name'] . ', ' . strtoupper( $li['state_code'] );
+						$geo_loc = $li['city_name'] . ', ' . strtoupper( $li['state_code'] ) . self::$php_eol;
 				} else {	  // all non us countries
-					$geo_loc = $li['city_name'] . ', ' . strtoupper( $li['country_code'] );
+					$geo_loc = $li['city_name'] . ', ' . strtoupper( $li['country_code'] ) . self::$php_eol;
 				}
 			} else {
-				$geo_loc = '~ ' . $li['country_name'];
+				$geo_loc = '~ ' . $li['country_name'] . self::$php_eol;
 			}
+            $geo_loc .= 'http://maps.google.com/maps?q='. $li['latitude'] . ','. $li['longitude'];
 		}
 		// add some info about sender to the email message
 		$userdomain = '';
 		$userdomain = gethostbyaddr( $_SERVER['REMOTE_ADDR'] );
 		$user_info_string = '';
+        $user_info = array();
 		if ( self::$form_options['email_html'] == 'true' )
 			$user_info_string = '<div style="background:#eee;border:1px solid gray;color:gray;padding:1em;margin:1em 0;">';
 		if ( $user_ID != '' ) {
 			//user logged in
 			if ( $current_user->user_login != '' )
-				$user_info_string .= __( 'From a WordPress user', 'si-contact-form' ) . ': ' . $current_user->user_login . self::$php_eol;
+				$user_info['wp_user'] = __( 'From a WordPress user', 'si-contact-form' ) . ': ' . $current_user->user_login;
 			if ( $current_user->user_email != '' )
-				$user_info_string .= __( 'User email', 'si-contact-form' ) . ': ' . $current_user->user_email . self::$php_eol;
+			   	$user_info['wp_user_email'] = __( 'User email', 'si-contact-form' ) . ': ' . $current_user->user_email;
 			if ( $current_user->user_firstname != '' )
-				$user_info_string .= __( 'User first name', 'si-contact-form' ) . ': ' . $current_user->user_firstname . self::$php_eol;
+				$user_info['wp_user_first_name'] = __( 'User first name', 'si-contact-form' ) . ': ' . $current_user->user_firstname;
 			if ( $current_user->user_lastname != '' )
-				$user_info_string .= __( 'User last name', 'si-contact-form' ) . ': ' . $current_user->user_lastname . self::$php_eol;
+				$user_info['wp_user_last_name'] = __( 'User last name', 'si-contact-form' ) . ': ' . $current_user->user_lastname;
 			if ( $current_user->display_name != '' )
-				$user_info_string .= __( 'User display name', 'si-contact-form' ) . ': ' . $current_user->display_name . self::$php_eol;
+			    $user_info['wp_user_display_name'] = __( 'User display name', 'si-contact-form' ) . ': ' . $current_user->display_name;
 		}
-		$user_info_string .= __( 'Sent from (ip address)', 'si-contact-form' ) . ': ' . esc_attr( $_SERVER['REMOTE_ADDR'] ) . " ($userdomain)" . self::$php_eol;
+		$user_info['wp_user_ip'] = __( 'Sent from (ip address)', 'si-contact-form' ) . ': ' . esc_attr( $_SERVER['REMOTE_ADDR'] ) . " ($userdomain)";
 		if ( $geo_loc != '' ) {
-			$user_info_string .= __( 'Location', 'si-contact-form' ) . ': ' . $geo_loc . self::$php_eol;
+			$user_info['wp_user_location'] = __( 'Location', 'si-contact-form' ) . ': ' . $geo_loc;
 			self::$form_data['sender_location'] = __( 'Location', 'si-contact-form' ) . ': ' . $geo_loc;
 		}
-		$user_info_string .= __( 'Date/Time', 'si-contact-form' ) . ': ' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), time() ) . self::$php_eol;
-		$user_info_string .= __( 'Coming from (referer)', 'si-contact-form' ) . ': ' . esc_url( self::$form_action_url ) . self::$php_eol;
-		$user_info_string .= __( 'Using (user agent)', 'si-contact-form' ) . ': ' . FSCF_Util::clean_input( $_SERVER['HTTP_USER_AGENT'] ) . self::$php_eol . self::$php_eol;
-		if ( self::$form_options['email_html'] == 'true' )
+	    $user_info['wp_user_date'] = __( 'Date/Time', 'si-contact-form' ) . ': ' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), time() );
+		$user_info['wp_user_referer'] = __( 'Coming from (referer)', 'si-contact-form' ) . ': ' . esc_url( self::$form_action_url );
+		$user_info['wp_user_agent'] = __( 'Using (user agent)', 'si-contact-form' ) . ': ' . FSCF_Util::clean_input( $_SERVER['HTTP_USER_AGENT'] ) . self::$php_eol;
+
+        // filter hook to allow modify $user_info array
+        $user_info = apply_filters('si_contact_user_info', $user_info, self::$form_id_num);
+
+        foreach ($user_info as $k => $v) {
+                $user_info_string .= $v . self::$php_eol;
+        }
+  		if ( self::$form_options['email_html'] == 'true' )
 			$user_info_string .= '</div>';
 
 		return($user_info_string);

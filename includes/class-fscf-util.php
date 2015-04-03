@@ -633,8 +633,8 @@ $('head').append(fscf_css);
   			'captcha_input_style'  => 'text-align:left; margin:0; width:50px;', // CAPTCHA input field
  			'textarea_style'       => 'text-align:left; margin:0; width:99%; max-width:250px; height:120px;',  // Input Textarea
             'select_style'         => 'text-align:left;',  // Input Select
- 			'checkbox_style'       => 'width:13px;',  // Input checkbox
-            'radio_style'          => 'width:13px;',  // Input radio
+ 			'checkbox_style'       => 'width:22px; height:32px;',  // Input checkbox
+            'radio_style'          => 'width:22px; height:32px;',  // Input radio
             'placeholder_style'    => 'opacity:0.6; color:#333333;', // placeholder style
 
 			'button_style'         => 'cursor:pointer; margin:0;', // Submit button
