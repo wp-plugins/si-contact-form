@@ -270,7 +270,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
-= 4.0.35 =
+= 4.0.36 =
 - (02 May 2015) - Fixed possible xss vulnerability with add_query_arg() and remove_query_arg() usage.
 - Improved timezone compliance with WP standards.
 

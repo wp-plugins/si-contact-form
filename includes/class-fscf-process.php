@@ -1685,13 +1685,13 @@ class FSCF_Process {
                // use wp_redirect when timeout seconds is 0.
                // So now if you set the timeout to 0 seconds, then post the form, it gets instantly redirected to the redirect URL
                // and you are responsible to display the "your message has been sent, thank you" message there.
-               wp_redirect( $ctf_redirect_url );
+               wp_redirect( esc_url_raw($ctf_redirect_url) );
 		       exit;
            }
 
 			// meta refresh page timer feature
             // allows some seconds to to display the "your message has been sent, thank you" message.
-			self::$meta_string = "<meta http-equiv=\"refresh\" content=\"$ctf_redirect_timeout;URL=$ctf_redirect_url\">\n";
+			self::$meta_string = "<meta http-equiv=\"refresh\" content=\"$ctf_redirect_timeout;URL=".esc_url($ctf_redirect_url)."\">\n";
 			if (is_admin())
 				add_action('admin_head', 'FSCF_Process::meta_refresh',1);
 			else
