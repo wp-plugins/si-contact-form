@@ -271,8 +271,9 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 == Changelog ==
 
 = 4.0.36 =
-- (02 May 2015) - Fixed possible xss vulnerability with add_query_arg() and remove_query_arg() usage.
+- (02 May 2015) - Fixed possible xss vulnerability with add_query_arg(), remove_query_arg() and esc_url() usage.
 - Improved timezone compliance with WP standards.
+
 
 = 4.0.34 =
 - (03 Apr 2015) - added a new filter hook to allow modifying the $user_info array. The user info is displayed at the end of the email
