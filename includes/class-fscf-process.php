@@ -497,10 +497,10 @@ class FSCF_Process {
         if (self::$form_options['print_form_enable'] == 'true') {
           self::$email_msg_print = self::$email_msg;
           //self::$email_msg_print .= self::make_bold( 'Time:' ) . $inline_or_newline;
-		  //self::$email_msg_print .= date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
+		  //self::$email_msg_print .= date_i18n(get_option('date_format').' '.get_option('time_format'), current_time('timestamp') );
         }
 
-		self::$email_fields['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), time() );
+		self::$email_fields['date_time'] = date_i18n(get_option('date_format').' '.get_option('time_format'), current_time('timestamp') );
 
         self::$email_fields['ip_address'] = (isset( $_SERVER['REMOTE_ADDR'] )) ? $_SERVER['REMOTE_ADDR'] : 'n/a';
 
@@ -941,7 +941,7 @@ class FSCF_Process {
 			$user_info['wp_user_location'] = __( 'Location', 'si-contact-form' ) . ': ' . $geo_loc;
 			self::$form_data['sender_location'] = __( 'Location', 'si-contact-form' ) . ': ' . $geo_loc;
 		}
-	    $user_info['wp_user_date'] = __( 'Date/Time', 'si-contact-form' ) . ': ' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), time() );
+	    $user_info['wp_user_date'] = __( 'Date/Time', 'si-contact-form' ) . ': ' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), current_time('timestamp') );
 		$user_info['wp_user_referer'] = __( 'Coming from (referer)', 'si-contact-form' ) . ': ' . esc_url( self::$form_action_url );
 		$user_info['wp_user_agent'] = __( 'Using (user agent)', 'si-contact-form' ) . ': ' . FSCF_Util::clean_input( $_SERVER['HTTP_USER_AGENT'] ) . self::$php_eol;
 
