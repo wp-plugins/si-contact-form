@@ -1518,6 +1518,8 @@ class FSCF_Process {
             foreach ( self::$av_tags_subj_arr as $i ) {
 			  $subj = str_replace( '[' . $i . ']', '', $subj );
 		    }
+            // filter hook for modifying the autoresponder email subject(great for adding a ticket number)
+            $subj = apply_filters('si_contact_autoresp_email_subject', $subj, self::$form_id_num);
 
 			// wordwrap email message
 			$msg = wordwrap( $msg, 70, self::$php_eol );
@@ -1596,7 +1598,7 @@ class FSCF_Process {
 			if ( !is_wp_error( $silent_result ) ) {
 				$silent_result = wp_remote_retrieve_body( $silent_result );
 			}
-			//echo $silent_result;
+		   //	print_r($silent_result);
 		}
 
 		if ( self::$form_options['silent_send'] == 'post' && !empty(self::$form_options['silent_url']) && $silent_ok ) {
@@ -1606,7 +1608,7 @@ class FSCF_Process {
 			if ( !is_wp_error( $silent_result ) ) {
 				$silent_result = wp_remote_retrieve_body( $silent_result );
 			}
-			//echo $silent_result;
+		   //	print_r($silent_result);
 		}
 
 		// Export option
@@ -1678,20 +1680,21 @@ class FSCF_Process {
 				else
 					$ctf_redirect_url .= '&' . $query_string;
 			}
-
 			$ctf_redirect_timeout = absint(self::$form_options['redirect_seconds']); // time in seconds to wait before loading another Web page
-
+                   // echo $ctf_redirect_url; exit;
             if ($ctf_redirect_timeout == 0 ) {
                // use wp_redirect when timeout seconds is 0.
                // So now if you set the timeout to 0 seconds, then post the form, it gets instantly redirected to the redirect URL
                // and you are responsible to display the "your message has been sent, thank you" message there.
-               wp_redirect( esc_url_raw($ctf_redirect_url) );
+               //wp_redirect( $ctf_redirect_url );
+               header("Location: $ctf_redirect_url");
 		       exit;
            }
 
 			// meta refresh page timer feature
             // allows some seconds to to display the "your message has been sent, thank you" message.
-			self::$meta_string = "<meta http-equiv=\"refresh\" content=\"$ctf_redirect_timeout;URL=".esc_url($ctf_redirect_url)."\">\n";
+            // note $ctf_redirect_url query_string is already url encoded
+			self::$meta_string = "<meta http-equiv=\"refresh\" content=\"$ctf_redirect_timeout;URL=".$ctf_redirect_url."\">\n";
 			if (is_admin())
 				add_action('admin_head', 'FSCF_Process::meta_refresh',1);
 			else
