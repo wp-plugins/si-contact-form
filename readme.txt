@@ -273,7 +273,7 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 = 4.0.37 =
 - (25 May 2015) - fixed bug: redirect url encoding.
-- fixed bug: the auto form fill feature will now automatically make the name and email form fields readonly when the feature is enabled to auto fill the logged on user's name and email. Non-logged in users can still edit those fields to enter their own name and email. Note: administrator is ignored, has to fill in the fields those always. 
+- fixed bug: the auto form fill feature will now automatically make the name and email form fields readonly when the feature is enabled to auto fill the logged on user's name and email. Non-logged in users can still edit those fields to enter their own name and email. Note: administrator is ignored, always has to fill in the fields. 
 - fixed bug: placeholder was not working on password field type.
 - added filter to modify autoresponder subject. This is useful for adding a ticket number.
 
