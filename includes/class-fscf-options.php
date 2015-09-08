@@ -1955,7 +1955,7 @@ if( self::$form_options['external_style'] == 'true' ) {
 <br />
 
         <input name="<?php echo self::$form_option_name;?>[req_field_label_enable]" id="si_contact_req_field_label_enable" type="checkbox" <?php if ( self::$form_options['req_field_label_enable'] == 'true' ) echo ' checked="checked" '; ?> value="true" />
-        <label for="<?php echo self::$form_option_name;?>[req_field_label_enable]"><?php _e('Enable required field label on contact form:', 'si-contact-form') ?></label> <?php echo (self::$form_options['tooltip_required'] != '') ? self::$form_options['req_field_indicator'] .self::$form_options['tooltip_required'] : self::$form_options['req_field_indicator'] . __('indicates required field', 'si-contact-form'); ?><br />
+        <label for="<?php echo self::$form_option_name;?>[req_field_label_enable]"><?php _e('Enable required field label on contact form:', 'si-contact-form') ?></label> <?php echo esc_html( (self::$form_options['tooltip_required'] != '') ? self::$form_options['req_field_indicator'] .self::$form_options['tooltip_required'] : self::$form_options['req_field_indicator'] . __('indicates required field', 'si-contact-form') ); ?><br />
 
         <label for="<?php echo self::$form_option_name;?>[tooltip_required]"><?php _e('indicates required field', 'si-contact-form'); ?></label><input name="<?php echo self::$form_option_name;?>[tooltip_required]" id="si_contact_tooltip_required" type="text" value="<?php echo esc_attr(self::$form_options['tooltip_required']);  ?>" size="50" /><br />
 
@@ -3629,10 +3629,11 @@ if (!function_exists('sicf_ctct_admin_form')) { // skip if the plugin is already
 		// Sanitize settings fields
 		$html_fields = array( 'welcome', 'after_form_note', 'req_field_indicator', 'text_message_sent', 'success_page_html' );
 		if ( 'true' == $text['auto_respond_html'] ) $html_fields[] = 'auto_respond_message';
+        if ( defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML ) // do not allow unfiltered HTML
+            $html_fields = array( );
 		foreach ( $text as $key => $value ) {
 			if ( is_string($value) ) {
 				if ( in_array( $key, $html_fields ) ) {
-					//$text[$key] = wp_filter_kses( $value );  //strips too much
                     $text[$key] = $value;
 				}
 				else $text[$key] = strip_tags( $value );

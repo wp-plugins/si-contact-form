@@ -270,6 +270,8 @@ If you have additional questions visit [vCita Support Page](http://support.vcita
 
 == Changelog ==
 
+= 4.0.38 =
+- (07 Sep 2015) - Fix: There are five form settings fields where unfiltered HTML is allowed by form Administrators by design. The problem fixed was that the setting DISALLOW_UNFILTERED_HTML was not being checked before allowing HTML. This issue was reported by Sathish from Cyber Security Works Pvt Ltd.
 
 = 4.0.37 =
 - (25 May 2015) - fixed bug: redirect url encoding.
